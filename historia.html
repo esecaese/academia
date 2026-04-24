@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Historia del Paraguay — Resumen</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F7F3EC;
+    --ink: #1C1A16;
+    --ink-muted: #5C5748;
+    --ink-faint: #A09888;
+    --red: #9B2A2A;
+    --red-light: #F5E8E8;
+    --gold: #B8860B;
+    --gold-light: #FAF3DC;
+    --teal: #1B5E5A;
+    --teal-light: #E3F0EF;
+    --navy: #1A2E4A;
+    --navy-light: #E5EBF4;
+    --border: rgba(28,26,22,0.14);
+    --border-strong: rgba(28,26,22,0.28);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* Decorative top border */
+  body::before {
+    content: '';
+    display: block;
+    height: 5px;
+    background: repeating-linear-gradient(90deg, var(--red) 0, var(--red) 24px, var(--gold) 24px, var(--gold) 48px, var(--teal) 48px, var(--teal) 72px, var(--navy) 72px, var(--navy) 96px);
+  }
+
+  .page {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+  }
+
+  /* Header */
+  header {
+    text-align: center;
+    margin-bottom: 4rem;
+    padding-bottom: 2rem;
+    border-bottom: 1.5px solid var(--border);
+    position: relative;
+  }
+
+  header::after {
+    content: '✦  ✦  ✦';
+    position: absolute;
+    bottom: -0.7em;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--cream);
+    padding: 0 12px;
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 6px;
+  }
+
+  .eyebrow {
+    font-family: 'Source Serif 4', serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red);
+    font-weight: 400;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .subtitle {
+    color: var(--ink-muted);
+    font-size: 14px;
+    font-style: italic;
+  }
+
+  /* Timeline spine */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 0;
+    bottom: 0;
+    width: 1.5px;
+    background: linear-gradient(to bottom, var(--red), var(--gold), var(--teal), var(--navy));
+    opacity: 0.3;
+  }
+
+  /* Section headings */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 3rem 0 1.5rem;
+    position: relative;
+    left: -32px;
+    width: calc(100% + 32px);
+  }
+
+  .section-divider::before {
+    content: '';
+    display: block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .section-divider.colonial::before { background: var(--teal); }
+  .section-divider.independiente::before { background: var(--navy); }
+  .section-divider.tematico::before { background: var(--gold); }
+  .section-divider.antecedentes::before { background: var(--red); }
+
+  .section-divider h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .section-divider .section-range {
+    font-size: 12px;
+    font-style: italic;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+
+  .section-divider .line {
+    flex: 1;
+    height: 0.5px;
+    background: var(--border);
+  }
+
+  /* Cards */
+  .card {
+    background: white;
+    border: 0.5px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+
+  .card:hover { box-shadow: 0 2px 16px rgba(28,26,22,0.07); }
+
+  .card-header {
+    padding: 14px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    user-select: none;
+  }
+
+  .card-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .card-header-text { flex: 1; }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+
+  .card-dates {
+    font-size: 11px;
+    color: var(--ink-faint);
+    font-style: italic;
+    margin-top: 1px;
+  }
+
+  .card-chevron {
+    font-size: 11px;
+    color: var(--ink-faint);
+    transition: transform 0.25s;
+    flex-shrink: 0;
+  }
+
+  .card.open .card-chevron { transform: rotate(90deg); }
+
+  .card-body {
+    display: none;
+    padding: 0 20px 18px;
+    border-top: 0.5px solid var(--border);
+  }
+
+  .card.open .card-body { display: block; }
+
+  /* Color themes per period */
+  .card.teal .card-dot { background: var(--teal); }
+  .card.teal .card-header { background: var(--teal-light); }
+  .card.teal .card-title { color: var(--teal); }
+
+  .card.navy .card-dot { background: var(--navy); }
+  .card.navy .card-header { background: var(--navy-light); }
+  .card.navy .card-title { color: var(--navy); }
+
+  .card.gold .card-dot { background: var(--gold); }
+  .card.gold .card-header { background: var(--gold-light); }
+  .card.gold .card-title { color: #7A5800; }
+
+  .card.red .card-dot { background: var(--red); }
+  .card.red .card-header { background: var(--red-light); }
+  .card.red .card-title { color: var(--red); }
+
+  /* Sub-periods inside a card body */
+  .sub-list { margin-top: 14px; }
+
+  .sub-item {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 0 16px;
+    padding: 10px 0;
+    border-bottom: 0.5px solid var(--border);
+    align-items: start;
+  }
+
+  .sub-item:last-child { border-bottom: none; }
+
+  .sub-year {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--ink-faint);
+    font-style: italic;
+    padding-top: 2px;
+    text-align: right;
+    padding-right: 16px;
+    border-right: 1.5px solid var(--border);
+  }
+
+  .sub-content { padding-left: 4px; }
+
+  .sub-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+
+  .sub-desc {
+    font-size: 13px;
+    color: var(--ink-muted);
+    line-height: 1.6;
+  }
+
+  /* Info blocks */
+  .info-block {
+    background: var(--cream);
+    border-left: 3px solid var(--border-strong);
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 0 4px 4px 0;
+    font-size: 13px;
+    color: var(--ink-muted);
+    line-height: 1.65;
+  }
+
+  .info-block.highlight {
+    border-left-color: var(--gold);
+    background: var(--gold-light);
+    color: var(--ink);
+  }
+
+  .info-block.important {
+    border-left-color: var(--red);
+    background: var(--red-light);
+  }
+
+  .info-block.note {
+    border-left-color: var(--teal);
+    background: var(--teal-light);
+  }
+
+  strong { font-weight: 700; color: var(--ink); }
+  em { font-style: italic; }
+
+  /* Casta grid */
+  .casta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+    margin: 12px 0;
+  }
+
+  .casta-card {
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    padding: 10px 12px;
+    background: white;
+  }
+
+  .casta-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .casta-desc {
+    font-size: 11.5px;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+
+  /* Tags */
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+
+  .tag {
+    font-size: 10.5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 0.5px solid;
+    letter-spacing: 0.03em;
+  }
+
+  .tag-teal { background: var(--teal-light); color: var(--teal); border-color: rgba(27,94,90,0.3); }
+  .tag-navy { background: var(--navy-light); color: var(--navy); border-color: rgba(26,46,74,0.3); }
+  .tag-red { background: var(--red-light); color: var(--red); border-color: rgba(155,42,42,0.3); }
+  .tag-gold { background: var(--gold-light); color: #7A5800; border-color: rgba(184,134,11,0.3); }
+
+  /* Two-column note */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+  @media (max-width: 520px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* Section label */
+  .label {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 14px 0 6px;
+  }
+
+  /* Tratados */
+  .tratado-row {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    padding: 5px 0;
+    border-bottom: 0.5px solid var(--border);
+    font-size: 13px;
+  }
+  .tratado-row:last-child { border-bottom: none; }
+  .tratado-year { font-style: italic; color: var(--gold); font-size: 11px; min-width: 32px; }
+
+  /* Numbered list for antecedentes */
+  .numbered-list { counter-reset: item; list-style: none; margin: 10px 0; }
+  .numbered-list li {
+    counter-increment: item;
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: var(--ink-muted);
+    line-height: 1.6;
+    align-items: start;
+  }
+  .numbered-list li::before {
+    content: counter(item);
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--red);
+    line-height: 1.2;
+    text-align: right;
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 0.5px solid var(--border);
+    text-align: center;
+    font-size: 12px;
+    color: var(--ink-faint);
+    font-style: italic;
+  }
+
+  /* Animate open */
+  .card.open .card-body {
+    animation: slideDown 0.2s ease;
+  }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header>
+    <div class="eyebrow">Apuntes de cátedra</div>
+    <h1>Historia del Paraguay</h1>
+    <p class="subtitle">Periodización completa — Del periodo colonial a la apertura democrática</p>
+  </header>
+
+  <div class="timeline">
+
+    <!-- ══════ PERIODO COLONIAL ══════ -->
+    <div class="section-divider colonial">
+      <h2>Periodo Colonial</h2>
+      <span class="section-range">1537 – 1811</span>
+      <div class="line"></div>
+    </div>
+
+    <!-- Prehistoria -->
+    <div class="card teal">
+      <div class="card-header" onclick="toggle(this)">
+        <div class="card-dot"></div>
+        <div class="card-header-text">
+          <div class="card-title">Prehistoria y Paraguay Prehispánico</div>
+          <div class="card-dates">Antes de 1537</div>
+        </div>
+        <span class="card-chevron">▶</span>
+      </div>
+      <div class="card-body">
+        <div class="info-block">
+          Sub-período previo a la llegada española. Poblaciones indígenas guaraníes y otras etnias habitaban el territorio. La prehistoria paraguaya y el Paraguay prehispánico constituyen la primera gran subdivisión del periodo colonial, antes de la fundación de Asunción en 1537.
+        </div>
+      </div>
+    </div>
+
+    <!-- La Conquista -->
+    <div class="card teal">
+      <div class="card-header" onclick="toggle(this)">
+        <div class="card-dot"></div>
+        <div class="card-header-text">
+          <div class="card-title">La Conquista</div>
+          <div class="card-dates">1537 – 1617</div>
+        </div>
+        <span class="card-chevron">▶</span>
+      </div>
+      <div class="card-body">
+        <div class="info-block">
+          Fundación de Asunción. Imperio español bajo la dinastía <strong>Habsburgo</strong>. División territorial del Guairá histórico realizada por <strong>Hernandarias</strong>, primer gobernador criollo del Río de la Plata.
+        </div>
+
+        <div class="label">Corona española: Habsburgos</div>
+        <div class="info-block highlight">
+          <strong>Carlos I de Austria (Habsburgo)</strong> — Rey de España y Sacro Emperador Romano. Gobernó en el período inicial de la conquista. Los Habsburgos no respetaban las comunas españolas tradicionales, lo que más tarde generaría las ideas comuneras.
+        </div>
+        <div class="info-block note">
+          <strong>Nota importante:</strong> Carlos I de Austria (Habsburgo) y Carlos de Borbón son personas <em>completamente distintas</em>, de dinastías distintas. Los Habsburgos gobernaron hasta ~1700. Los Borbones llegaron después con reformas centralizadoras. El "Carlos de Borbón" relevante para este período es <strong>Carlos III</strong> (1759–1788).
+        </div>
+
+        <div class="label">Unión Ibérica</div>
+        <div class="info-block">
+          La corona portuguesa fue temporalmente absorbida por la española bajo los Habsburgos, pero la administración siguió siendo <em>portuguesa</em>. Portugal conservó sus propias leyes, instituciones y administración colonial.
+        </div>
+      </div>
+    </div>
+
+    <!-- Aislamiento -->
+    <div class="card teal">
+      <div class="card-header" onclick="toggle(this)">
+        <div class="card-dot"></div>
+        <div class="card-header-text">
+          <div class="card-title">Aislamiento y Retroceso</div>
+          <div class="card-dates">1617 – 1721</div>
+        </div>
+        <span class="card-chevron">▶</span>
+      </div>
+      <div class="card-body">
+        <div class="info-block">
+          Período de aislamiento territorial y retroceso económico. Presencia de <strong>Antequera y Castro</strong>. Conflictos entre el cabildo y las autoridades coloniales, con disputas sobre el poder de los jesuitas y sus misiones autogestionadas.
+        </div>
+        <div class="info-block important">
+          En 1717/18 — Primera revolución por la corrupción del gobernador <strong>Diego Balmaceda</strong>, apoyada por los jesuitas. Llega Antequera y Castro para expulsar a los jesuitas, ya que los Borbones preferían diócesis sobre misiones que se autogestionaban.
+        </div>
+
+        <div class="label">Tratados territoriales</div>
+        <div class="tratado-row"><span class="tratado-year">1750</span><span><strong>Tratado de Madrid</strong> — Delimitación de fronteras entre España y Portugal en América del Sur.</span></div>
+        <div class="tratado-row"><span class="tratado-year">1777</span><span><strong>Tratado de San Ildefonso</strong> — Redefinición de límites, modifica al de Madrid.</span></div>
+      </div>
+    </div>
+
+    <!-- Revolución Comunera -->
+    <div class="card teal open">
+      <div class="card-header" onclick="toggle(this)">
+        <div class="card-dot"></div>
+        <div class="card-header-text">
+          <div class="card-title">Inicio de la Identidad — Revolución Comunera</div>
+          <div class="card-dates">1721 – 1811</div>
+        </div>
+        <span class="card-chevron">▶</span>
+      </div>
+      <div class="card-body">
+        <div class="info-block">
+          Surgimiento de la identidad paraguaya. Ideas importadas de los comuneros <em>españoles</em> que resistían a los Habsburgos. Fue mucho tiempo antes de la independencia: sin testigos vivos al momento de 1811, sin documentos escritos de los próceres que lo mencionaran directamente.
+        </div>
+
+        <div class="label">Dos etapas</div>
+        <div class="sub-list">
+          <div class="sub-item">
+            <div class="sub-year">1ª revolución<br>1717/18</div>
+            <div class="sub-content">
+              <div class="sub-name">Contra Balmaceda</div>
+              <div class="sub-desc">Iniciada por la corrupción del gobernador Diego Balmaceda con participación del cabildo. Llegada de Antequera y Castro. Expulsión de los jesuitas (los Borbones no querían misiones autogestionadas).</div>
+            </div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-year">2ª revolución<br>Mompox</div>
+            <div class="sub-content">
+              <div class="sub-name">Revolución de los campesinos</div>
+              <div class="sub-desc">Gestionada por campesinos. Mayor base popular que la primera revolución.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ══════ SISTEMA DE CASTAS ══════ -->
+    <div class="section-divider tematico">
+      <h2>Sistema de Castas Colonial</h2>
+      <div class="line"></div>
+    </div>
+
+    <div class="card gold open">
+      <div class="card-header" onclick="toggle(this)">
+        <div class="card-dot"></div>
+        <div class="card-header-text">
+          <div class="card-title">Estructura social en América</div>
+          <div class="card-dates">Época colonial</div>
+        </div>
+        <span class="card-chevron">▶</span>
+      </div>
+      <div class="card-body">
+
+        <div class="label">Estructura feudal europea</div>
+        <div class="info-block highlight">
+          <strong>Sistema estamental:</strong> Rey → Alto clero → Bajo clero → Pueblo
+        </div>
+
+        <div class="label">Castas en América</div>
+        <div class="casta-grid">
+          <div class="casta-card">
+            <div class="casta-name">Blancos</div>
+            <div class="casta-desc"><strong>Peninsulares</strong> (nacidos en España) y <strong>criollos</strong> (nacidos en América). En Paraguay, jurídicamente no había criollos.</div>
+          </div>
+          <div class="casta-card">
+            <div class="casta-name">Mestizos</div>
+            <div class="casta-desc">Hijos de blanco e indígena.</div>
+          </div>
+          <div class="casta-card">
+            <div class="casta-name">Indios reducidos</div>
+            <div class="casta-desc">En encomiendas. Desaparecieron entre <strong>1820–1840</strong>.<br><br>
+              • <strong>Mita</strong> — encomienda temporal<br>
+              • <strong>Yanaconas</strong> — encomienda permanente<br>
+              • <strong>Naboria</strong> — servicio personal
+            </div>
+          </div>
+          <div class="casta-card">
+            <div class="casta-name">Indios de monte</div>
+            <div class="casta-desc">Fuera del sistema de reducciones.</div>
+          </div>
+          <div class="casta-card">
+            <div class="casta-name">Negros (libres)</div>
+            <div class="casta-desc"><strong>Libertos:</strong> compraban su libertad (plateros, sastres, etc.). Sin derechos jurídicos; pagaban impuesto anual de plata. La <strong>Fortaleza de Emboscada</strong> fue creada para eximir ese pago.</div>
+          </div>
+          <div class="casta-card">
+            <div class="casta-name">Negros (esclavos)</div>
+            <div class="casta-desc">Sin libertad ni derechos.</div>
+          </div>
+        </div>
+
+        <div class="label">Subdivisiones raciales</div>
+        <div class="two-col">
+          <div class="info-block">
+            <strong>Negro</strong> — 100% africano<br>
+            <strong>Mulato</strong> — 50% (hijo de blanco y negro)<br>
+            <strong>Cuarterón</strong> — 25% (hijo de mulato y blanco)<br>
+            <strong>Zambo</strong> — hijo de negro e indio
+          </div>
+          <div class="info-block note">
+            La <strong>Fortaleza de Emboscada</strong> fue creada para que los libertos no tuvieran que pagar el impuesto anual de plata necesario para mantener su condición de libres.
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ══════ ANTECEDENTES ══════ -->
+    <div class="section-divider antecedentes">
+      <h2>Antecedentes de la Independencia</h2>
+      <div class="line"></div>
+    </div>
+
+    <div class="card red open">
+      <div class="card-header" onclick="toggle(this)">
+        <div class="card-dot"></div>
+        <div class="card-header-text">
+          <div class="card-title">Causas de la Independencia Nacional</div>
+          <div class="card-dates">Fines del s. XVIII – 1811</div>
+        </div>
+        <span class="card-chevron">▶</span>
+      </div>
+      <div class="card-body">
+        <ol class="numbered-list">
+          <li>
+            <div>
+              <strong>Revolución Comunera</strong> — Iniciada por ideas de comuneros españoles contra los Habsburgos. Sin testigos vivos ni documentos al momento de la independencia. Dos etapas: contra Balmaceda (1717/18) y la de Mompox (campesinos).
+            </div>
+          </li>
+          <li>
+            <div>
+              <strong>Túpac Amaru</strong> — Más relevante que la comunera por tener testigos vivos. Cansado de los nuevos impuestos borbónicos, buscó la independencia del virreinato.
+            </div>
+          </li>
+          <li>
+            <div>
+              <strong>La Ilustración</strong> — Cambio del paradigma: de la monarquía por tradición a un gobierno basado en la razón y el contrato social.
+            </div>
+          </li>
+          <li>
+            <div>
+              <strong>Independencia de EE.UU.</strong> — Las 13 colonias tenían gobernación autónoma y estatutos. La Guerra de los 7 Años (victoria inglesa) generó nuevos impuestos y la ideología: <em>"no taxation without representation"</em>.
+            </div>
+          </li>
+          <li>
+            <div>
+              <strong>Revolución Francesa y Napoleón</strong> — España era aliada de Napoleón. La Batalla de Trafalgar (España y Francia pierden el control de los mares). Invasiones británicas a Bs. As. (1806/07): militares paraguayos participan en la defensa, aumentando el orgullo criollo. En <strong>1808</strong> Napoleón apresa a Carlos IV y Fernando VII; José Bonaparte es nombrado rey. Los portugueses huyen a Brasil con la marina británica.
+            </div>
+          </li>
+        </ol>
+
+        <div class="label">La cadena de eventos (1810–1811)</div>
+        <div class="sub-list">
+          <div class="sub-item">
+            <div class="sub-year">25 mayo<br>1810</div>
+            <div class="sub-content">
+              <div class="sub-name">Junta de Gobierno de Buenos Aires</div>
+              <div class="sub-desc">Las colonias sin autoridad clara buscan autonomía. Bs. As. expulsa al virrey y crea la Junta, que se encarga del Virreinato del Río de la Plata. Envía a <strong>Pedro Espínola</strong> al Paraguay.</div>
+            </div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-year">Congreso<br>Velazco</div>
+            <div class="sub-content">
+              <div class="sub-name">Congreso Provincial</div>
+              <div class="sub-desc">Paraguay se separa de Bs. As., no reconoce a la Junta pero mantiene amistad. Velazco convoca el congreso.</div>
+            </div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-year">Batalla<br>Paraguarí</div>
+            <div class="sub-content">
+              <div class="sub-name">Invasión de Belgrano</div>
+              <div class="sub-desc">Velazco comete errores (pone el comando en la iglesia). Belgrano ataca de madrugada. <strong>Cañas y Gamarra</strong> contraatacan al ver que los porteños saqueaban pueblos; Belgrano retrocede a la fortaleza de Tacuary pero es liberado.</div>
+            </div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-year">Misión<br>Abreu</div>
+            <div class="sub-content">
+              <div class="sub-name">Conspiración portuguesa</div>
+              <div class="sub-desc">Misión secreta del Tte. Abreu: ofrecer a Velazco integrarse al Imperio Portugués a cambio de protección contra Bs. As.</div>
+            </div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-year">14 mayo<br>1811</div>
+            <div class="sub-content">
+              <div class="sub-name">El Golpe — Nacimiento del Paraguay independiente</div>
+              <div class="sub-desc">Los próceres (reunidos en la <strong>Casa Martínez Saens</strong>) toman armas y cañones y los colocan frente a la casa de Velazco. Se crea el <strong>Triunvirato</strong>: Dr. Francia + dos peninsulares + Velazco. Velazco es pronto expulsado por conspirar para volver al poder.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ══════ PERIODO INDEPENDIENTE ══════ -->
+    <div class="section-divider independiente">
+      <h2>Periodo Independiente</h2>
+      <span class="section-range">1811 – 2026</span>
+      <div class="line"></div>
+    </div>
+
+    <!-- PY Independiente -->
+    <div class="card navy open">
+      <div class="card-header" onclick="toggle(this)">
+        <div class="card-dot"></div>
+        <div class="card-header-text">
+          <div class="card-title">Paraguay Independiente</div>
+          <div class="card-dates">1811 – 1870</div>
+        </div>
+        <span class="card-chevron">▶</span>
+      </div>
+      <div class="card-body">
+        <div class="sub-list">
+          <div class="sub-item">
+            <div class="sub-year">1er<br>Congreso</div>
+            <div class="sub-content">
+              <div class="sub-name">Junta Superior de Gobierno</div>
+              <div class="sub-desc">Formada por <strong>Pedro Juan Caballero, Fernando de la Mora</strong> y el <strong>Dr. Francia</strong>. Nota del 20 de julio: no reconocen a Bs. As., juran lealtad a Fernando VII. Banda del 6 de enero de 1812: anhelo de educación gratuita y 2ª misión de Belgrano (reconocimiento mutuo, sin supremacía, con amistad).</div>
+            </div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-year">1813<br>Europa</div>
+            <div class="sub-content">
+              <div class="sub-name">Napoleón pierde terreno</div>
+              <div class="sub-desc">Fernando VII es liberado y vuelve a la corona. La crisis entre peninsulares y criollos se maximiza. Conflictos internos en la Junta Superior entre Francia y De la Mora.</div>
+            </div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-year">2do<br>Congreso<br>1813</div>
+            <div class="sub-content">
+              <div class="sub-name">Paraguay es República — tres resoluciones</div>
+              <div class="sub-desc">
+                1. <strong>El Paraguay es República</strong><br>
+                2. Se crea el <strong>Reglamento de Gobierno</strong><br>
+                3. Se crea la concentración de poder con <strong>dos cónsules: Francia y Yegros</strong><br><br>
+                <em>Importante: no se firmó acta de independencia formal en este congreso.</em>
+              </div>
+            </div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-year">25 nov.<br>1842</div>
+            <div class="sub-content">
+              <div class="sub-name">Acta de Independencia</div>
+              <div class="sub-desc">Se crea el Acta formal y se distribuye a todo el país: iglesias, comandos militares. El <strong>25 de diciembre</strong> se realiza la lectura y juramento oficial.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Estado Liberal -->
+    <div class="card navy">
+      <div class="card-header" onclick="toggle(this)">
+        <div class="card-dot"></div>
+        <div class="card-header-text">
+          <div class="card-title">Estado Liberal</div>
+          <div class="card-dates">1870 – 1940</div>
+        </div>
+        <span class="card-chevron">▶</span>
+      </div>
+      <div class="card-body">
+        <div class="sub-list">
+          <div class="sub-item">
+            <div class="sub-year">1880–1904</div>
+            <div class="sub-content">
+              <div class="sub-name">Primera Hegemonía Colorada</div>
+              <div class="sub-desc">Dominio del Partido Colorado en el poder político.</div>
+            </div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-year">1904–1940</div>
+            <div class="sub-content">
+              <div class="sub-name">Primera Hegemonía Liberal</div>
+              <div class="sub-desc">El Partido Liberal toma el control del gobierno.</div>
+            </div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-year">1932–1935</div>
+            <div class="sub-content">
+              <div class="sub-name">Guerra del Chaco</div>
+              <div class="sub-desc">Conflicto bélico con Bolivia por el territorio del Chaco Boreal. Paraguay resulta victorioso.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Estado Autoritario -->
+    <div class="card navy">
+      <div class="card-header" onclick="toggle(this)">
+        <div class="card-dot"></div>
+        <div class="card-header-text">
+          <div class="card-title">Estado Autoritario</div>
+          <div class="card-dates">1940 – 1989</div>
+        </div>
+        <span class="card-chevron">▶</span>
+      </div>
+      <div class="card-body">
+        <div class="info-block">
+          Regímenes autoritarios con concentración del poder. Incluye la dictadura de <strong>Alfredo Stroessner</strong> (1954–1989), uno de los gobiernos más prolongados de América Latina.
+        </div>
+      </div>
+    </div>
+
+    <!-- Apertura Democrática -->
+    <div class="card navy">
+      <div class="card-header" onclick="toggle(this)">
+        <div class="card-dot"></div>
+        <div class="card-header-text">
+          <div class="card-title">Apertura Democrática</div>
+          <div class="card-dates">1989 – 2026</div>
+        </div>
+        <span class="card-chevron">▶</span>
+      </div>
+      <div class="card-body">
+        <div class="info-block">
+          Transición democrática iniciada con el golpe de Estado del <strong>3 de febrero de 1989</strong>. Proceso de consolidación institucional, elecciones libres y apertura política que continúa hasta el presente.
+        </div>
+        <div class="tags">
+          <span class="tag tag-navy">Constitución 1992</span>
+          <span class="tag tag-navy">Multipartidismo</span>
+          <span class="tag tag-navy">Alternancia de poder</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end timeline -->
+
+  <footer>
+    Resumen elaborado en base a apuntes de cátedra · Historia del Paraguay
+  </footer>
+
+</div>
+
+<script>
+  function toggle(header) {
+    const card = header.closest('.card');
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
