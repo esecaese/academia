@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sostenibilidad de la Deuda - MRE</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Librería local para generar QR sin depender de APIs externas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         body { background-color: #f8fafc; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         .slide-enter { animation: fadeIn 0.4s ease-out forwards; }
@@ -35,6 +37,9 @@
 
         .img-container { text-align: center; margin-top: 1rem; }
         .img-container img { max-height: 320px; border-radius: 0.5rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); margin: 0 auto; }
+        
+        /* Contenedor del QR */
+        #qrcode img { margin: 0 auto; }
     </style>
 </head>
 <body class="h-screen flex flex-col items-center justify-center overflow-hidden">
@@ -81,10 +86,9 @@
         const isPresenter = FORZAR_MODO_PRESENTADOR || isPresenterFromURL;
 
         // =========================================================================
-        // GENERADOR DE QR DINÁMICO
+        // URL BASE PARA EL GENERADOR DE QR
         // =========================================================================
         const baseUrl = window.location.origin + window.location.pathname;
-        const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' + encodeURIComponent(baseUrl);
 
         // =========================================================================
         // CONFIGURACIÓN DE FIREBASE
@@ -121,7 +125,8 @@
                         </div>
                         
                         <div class="flex flex-col items-center bg-white p-3 rounded-xl shadow-md border border-gray-200">
-                            <img src="\${qrUrl}" alt="Código QR de la Presentación" class="w-28 h-28">
+                            <!-- Contenedor donde la librería pintará el QR -->
+                            <div id="qrcode" class="mb-1"></div>
                             <p class="text-[10px] text-gray-500 font-bold mt-2 uppercase tracking-wide">Escanea para seguir en vivo</p>
                         </div>
                     </div>
@@ -360,14 +365,14 @@
                 <div class="space-y-4 mt-4">
                     <div class="bg-indigo-50 p-4 rounded-xl border-l-4 border-indigo-500">
                         <strong class="text-indigo-900 text-lg">🔍 Big Data e IA contra la Evasión:</strong><br>
-                        <span class="text-sm text-gray-700">Cruzar Factura Electrónica (e-Kuatia) con registros de Aduanas (SOFIA). <br><span class="italic text-gray-500">Ejemplo: Detectar de inmediato "empresas fantasma" creadas solo para vender facturas falsas. Estas empresas generan créditos fiscales ficticios para negocios reales, robándole al Estado millones en IVA e IRE.</span></span>
+                        <span class="text-sm text-gray-700">Cruzar Factura Electrónica (e-Kuatia) con registros de Aduanas (SOFIA). <br><span class="italic text-gray-500">Ejemplo: Detectar de inmediato "esquemas de facturas falsas". Existen redes que solo emiten facturas ficticias; una empresa corrupta las compra para decir "tuve gastos" y así evadir el pago de IVA e IRE.</span></span>
                     </div>
                     <div class="bg-indigo-50 p-4 rounded-xl border-l-4 border-indigo-500">
                         <strong class="text-indigo-900 text-lg">🌐 Interoperabilidad del Estado:</strong><br>
                         <span class="text-sm text-gray-700">Conectar bases de datos institucionales para evitar fraudes. <br><span class="italic text-gray-500">Ejemplo: Cruzar datos del Registro Civil con el Ministerio de Economía para depurar la Caja Fiscal y suspender automáticamente el pago de jubilaciones a personas ya fallecidas.</span></span>
                     </div>
                 </div>`,
-                nota: "Como informático les digo: Una 'empresa fantasma' no produce nada, solo emite facturas. Un negocio corrupto le compra esa factura para decir 'tuve gastos' y no pagar IVA ni IRE. Con Inteligencia Artificial cruzando datos, detectamos esto en segundos. Recaudamos más sin exprimir al que sí cumple."
+                nota: "Como informático les digo: Un 'esquema de facturas falsas' no produce nada, solo genera papeles. Un negocio corrupto los compra para engañar a la DNIT y no pagar impuestos. Con Inteligencia Artificial cruzando datos, detectamos esto en segundos. Recaudamos más sin exprimir al que sí cumple."
             },
             {
                 html: `<div class="center h-full flex flex-col justify-center">
@@ -423,8 +428,26 @@
             slideContent.classList.remove('slide-enter');
             void slideContent.offsetWidth;
             slideContent.classList.add('slide-enter');
+            
             const data = slides[currentSlide];
             slideContent.innerHTML = isPresenter ? data.html + `<div class="notes-panel"><strong>🎙 Notas (Solo tú ves esto):</strong><br>${data.nota}</div>` : data.html;
+            
+            // Generar el QR localmente y al instante si estamos en la diapositiva 1
+            if (currentSlide === 0) {
+                const qrContainer = document.getElementById("qrcode");
+                if (qrContainer) {
+                    qrContainer.innerHTML = ""; // Limpia el contenedor por si acaso
+                    new QRCode(qrContainer, {
+                        text: baseUrl,
+                        width: 120,
+                        height: 120,
+                        colorDark : "#000000",
+                        colorLight : "#ffffff",
+                        correctLevel : QRCode.CorrectLevel.M
+                    });
+                }
+            }
+
             slideCounter.textContent = currentSlide + 1;
             document.getElementById('btn-prev').disabled = currentSlide === 0;
             document.getElementById('btn-next').disabled = currentSlide === slides.length - 1;
