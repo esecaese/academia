@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Financiamiento del Déficit Fiscal en Paraguay</title>
     
-    <!-- Tailwind CSS para estilos minimalistas -->
+    <!-- Tailwind CSS para estilos -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Chart.js para los gráficos -->
@@ -22,11 +22,11 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* slate-50 */
-            color: #0f172a; /* slate-900 */
+            background-color: #f8fafc;
+            color: #0f172a;
         }
         
-        /* Animaciones sutiles de entrada */
+        /* Animaciones */
         .fade-in-up {
             animation: fadeInUp 0.8s ease-out forwards;
             opacity: 0;
@@ -36,6 +36,7 @@
         .delay-100 { animation-delay: 100ms; }
         .delay-200 { animation-delay: 200ms; }
         .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
 
         @keyframes fadeInUp {
             to {
@@ -44,13 +45,13 @@
             }
         }
 
-        /* Estilo tipo "Diapositiva" para las secciones */
+        /* Estructura de las secciones */
         section {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 4rem 1rem;
+            padding: 5rem 1rem;
             border-bottom: 1px solid #e2e8f0;
         }
 
@@ -64,20 +65,20 @@
 </head>
 <body class="antialiased selection:bg-blue-200 selection:text-blue-900">
 
-    <!-- Navegación lateral (indicador de progreso) -->
+    <!-- Navegación lateral (Menú de puntos) -->
     <nav class="fixed right-4 top-1/2 transform -translate-y-1/2 z-50 hidden lg:flex flex-col gap-3">
         <a href="#inicio" class="w-3 h-3 rounded-full bg-slate-300 hover:bg-blue-600 transition-colors" title="Inicio"></a>
-        <a href="#intro" class="w-3 h-3 rounded-full bg-slate-300 hover:bg-blue-600 transition-colors" title="Introducción"></a>
-        <a href="#marco" class="w-3 h-3 rounded-full bg-slate-300 hover:bg-blue-600 transition-colors" title="Marco Legal"></a>
-        <a href="#datos" class="w-3 h-3 rounded-full bg-slate-300 hover:bg-blue-600 transition-colors" title="Posición"></a>
-        <a href="#fuentes" class="w-3 h-3 rounded-full bg-slate-300 hover:bg-blue-600 transition-colors" title="Fuentes de Financiamiento"></a>
+        <a href="#intro" class="w-3 h-3 rounded-full bg-slate-300 hover:bg-blue-600 transition-colors" title="Introducción y Objetivos"></a>
+        <a href="#marco" class="w-3 h-3 rounded-full bg-slate-300 hover:bg-blue-600 transition-colors" title="Marco Legal y Conceptual"></a>
+        <a href="#datos" class="w-3 h-3 rounded-full bg-slate-300 hover:bg-blue-600 transition-colors" title="Posición de la Deuda"></a>
+        <a href="#fuentes" class="w-3 h-3 rounded-full bg-slate-300 hover:bg-blue-600 transition-colors" title="Gestión Técnica"></a>
         <a href="#instrumentos" class="w-3 h-3 rounded-full bg-slate-300 hover:bg-blue-600 transition-colors" title="Instrumentos"></a>
         <a href="#conclusiones" class="w-3 h-3 rounded-full bg-slate-300 hover:bg-blue-600 transition-colors" title="Conclusiones"></a>
+        <a href="#bibliografia" class="w-3 h-3 rounded-full bg-slate-300 hover:bg-blue-600 transition-colors" title="Bibliografía"></a>
     </nav>
 
     <!-- 1. PORTADA -->
     <section id="inicio" class="relative overflow-hidden bg-slate-900 text-white">
-        <!-- Fondo decorativo abstracto -->
         <div class="absolute inset-0 opacity-20">
             <div class="absolute top-0 -left-1/4 w-1/2 h-full bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
             <div class="absolute bottom-0 -right-1/4 w-1/2 h-full bg-cyan-500 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
@@ -95,292 +96,256 @@
                 <p class="mb-2 uppercase text-sm font-semibold text-slate-400">Academia Diplomática y Consular "Carlos Antonio López"</p>
                 <p class="text-lg">Curso de Perfeccionamiento AAT</p>
             </div>
-            
-            <a href="#intro" class="inline-flex items-center gap-2 mt-16 text-white hover:text-blue-300 transition-colors">
-                <span>Comenzar presentación</span>
-                <i data-lucide="arrow-down" class="w-5 h-5 animate-bounce"></i>
-            </a>
         </div>
     </section>
 
-    <!-- 2. INTRODUCCIÓN Y OBJETIVOS -->
+    <!-- 2 & 3. INTRODUCCIÓN Y OBJETIVOS -->
     <section id="intro" class="bg-white">
         <div class="max-w-6xl mx-auto w-full">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+                
+                <!-- Introducción -->
                 <div class="fade-in-up">
                     <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-blue-100 text-blue-600 mb-6">
                         <i data-lucide="book-open"></i>
                     </div>
                     <h2 class="text-3xl md:text-4xl font-bold mb-6">Introducción</h2>
-                    <p class="text-lg text-slate-600 mb-4 leading-relaxed">
-                        Comprender el financiamiento del déficit fiscal es clave para evaluar la <strong>sostenibilidad de las finanzas públicas</strong> de Paraguay.
+                    <p class="text-slate-600 mb-4 leading-relaxed">
+                        El estudio del financiamiento del déficit fiscal resulta imperativo para comprender la sostenibilidad de las finanzas públicas nacionales. Identificar los mecanismos para cubrir las brechas financieras permite evaluar la estabilidad macroeconómica y la capacidad estatal para responder ante necesidades urgentes de inversión.
                     </p>
-                    <p class="text-lg text-slate-600 leading-relaxed mb-6">
-                        Este trabajo analiza los mecanismos que el Gobierno Nacional utiliza para cubrir la brecha entre ingresos y gastos, sin comprometer la solvencia a largo plazo.
+                    <p class="text-slate-600 leading-relaxed mb-6">
+                        La presente investigación posee una alta relevancia académica al examinar los instrumentos jurídicos y financieros utilizados por el Gobierno Nacional, centrando el enfoque en la optimización de recursos y la gestión proactiva de los pasivos soberanos.
                     </p>
-                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-                        <p class="font-semibold text-slate-800 flex items-center gap-2">
-                            <i data-lucide="crosshair" class="w-5 h-5 text-blue-500"></i> Foco Principal
-                        </p>
-                        <p class="text-slate-600 mt-2">Emisión de títulos de deuda, préstamos multilaterales y gestión de recursos propios.</p>
-                    </div>
                 </div>
 
+                <!-- Objetivos -->
                 <div class="space-y-6 fade-in-up delay-200">
-                    <div class="glass-card p-8 rounded-3xl relative overflow-hidden">
-                        <div class="absolute top-0 right-0 p-6 opacity-10">
-                            <i data-lucide="target" class="w-24 h-24"></i>
-                        </div>
-                        <h3 class="text-xl font-bold mb-4 flex items-center gap-2 text-slate-800">
+                    <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 relative overflow-hidden">
+                        <i data-lucide="target" class="absolute top-0 right-0 w-32 h-32 text-blue-500 opacity-5 transform translate-x-8 -translate-y-8"></i>
+                        
+                        <h3 class="text-xl font-bold mb-4 flex items-center gap-2 text-slate-800 relative z-10">
                             Objetivo General
                         </h3>
-                        <p class="text-slate-600 relative z-10">
-                            Analizar las dos principales modalidades de financiamiento del Estado paraguayo para cubrir el déficit fiscal, considerando su estructura normativa y aplicación práctica.
+                        <p class="text-slate-600 relative z-10 mb-8 font-medium">
+                            Analizar las principales modalidades de financiamiento utilizadas por el Estado paraguayo para cubrir el déficit fiscal, considerando su estructura normativa vigente además de su aplicación práctica.
                         </p>
-                    </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="glass-card p-6 rounded-2xl">
-                            <i data-lucide="scale" class="w-8 h-8 text-blue-500 mb-3"></i>
-                            <h4 class="font-bold text-slate-800 mb-2">Marco Legal</h4>
-                            <p class="text-sm text-slate-600">Examinar la ley que rige el sistema de crédito público (Ley N° 1535/99).</p>
-                        </div>
-                        <div class="glass-card p-6 rounded-2xl">
-                            <i data-lucide="briefcase" class="w-8 h-8 text-cyan-500 mb-3"></i>
-                            <h4 class="font-bold text-slate-800 mb-2">Instrumentos</h4>
-                            <p class="text-sm text-slate-600">Describir la operatividad de los Bonos del Tesoro y préstamos multilaterales.</p>
-                        </div>
+                        <h3 class="text-lg font-bold mb-4 text-slate-800 relative z-10">Objetivos Específicos</h3>
+                        <ul class="space-y-4 relative z-10">
+                            <li class="flex items-start gap-3 text-slate-600 text-sm">
+                                <i data-lucide="check-circle-2" class="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5"></i>
+                                <span>Examinar el marco legal vigente que rige el sistema de crédito público bajo los lineamientos de la Ley N° 1535/99.</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-slate-600 text-sm">
+                                <i data-lucide="check-circle-2" class="w-5 h-5 text-cyan-500 flex-shrink-0 mt-0.5"></i>
+                                <span>Describir las características operativas de los Bonos del Tesoro junto con los préstamos otorgados por organismos multilaterales.</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 3. MARCO CONCEPTUAL Y LEGAL -->
+    <!-- 4 & 5. MARCO CONCEPTUAL Y LEGAL -->
     <section id="marco" class="bg-slate-50">
         <div class="max-w-6xl mx-auto w-full">
-            <div class="text-center mb-16 fade-in-up">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Fundamentos</h2>
-                <p class="text-slate-500 max-w-2xl mx-auto">Conceptos básicos y la estructura normativa que regula el financiamiento estatal.</p>
-            </div>
-
+            
             <!-- Marco Conceptual -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 fade-in-up delay-100">
-                <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
-                    <div class="w-12 h-12 bg-red-50 text-red-500 rounded-full flex items-center justify-center mb-6">
-                        <i data-lucide="trending-down"></i>
+            <div class="mb-20 fade-in-up">
+                <h2 class="text-3xl font-bold mb-8 text-center">Marco Conceptual</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+                        <div class="w-12 h-12 bg-red-50 text-red-500 rounded-full flex items-center justify-center mb-6"><i data-lucide="trending-down"></i></div>
+                        <h3 class="text-xl font-bold mb-3">Déficit Fiscal</h3>
+                        <p class="text-slate-600 text-sm">Diferencia negativa resultante cuando los egresos totales superan los ingresos percibidos por la administración financiera durante un ejercicio fiscal.</p>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Déficit Fiscal</h3>
-                    <p class="text-slate-600 text-sm">Diferencia negativa que ocurre cuando los egresos totales superan los ingresos percibidos por la administración en un periodo determinado.</p>
-                </div>
-                <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
-                    <div class="w-12 h-12 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mb-6">
-                        <i data-lucide="hand-coins"></i>
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+                        <div class="w-12 h-12 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mb-6"><i data-lucide="hand-coins"></i></div>
+                        <h3 class="text-xl font-bold mb-3">Crédito Público</h3>
+                        <p class="text-slate-600 text-sm">Aptitud del Estado para captar recursos mediante el endeudamiento con el fin de financiar inversiones productivas y sociales estratégicas.</p>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Crédito Público</h3>
-                    <p class="text-slate-600 text-sm">Aptitud y capacidad del Estado para captar recursos mediante endeudamiento, con el fin de financiar inversiones productivas y operativas.</p>
-                </div>
-                <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
-                    <div class="w-12 h-12 bg-green-50 text-green-500 rounded-full flex items-center justify-center mb-6">
-                        <i data-lucide="git-merge"></i>
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+                        <div class="w-12 h-12 bg-green-50 text-green-500 rounded-full flex items-center justify-center mb-6"><i data-lucide="git-merge"></i></div>
+                        <h3 class="text-xl font-bold mb-3">Fuentes de Financiación</h3>
+                        <p class="text-slate-600 text-sm">Clasificación presupuestaria que identifica el origen técnico de los medios económicos destinados a solventar los diversos gastos estatales vigentes.</p>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Fuentes de Financiamiento</h3>
-                    <p class="text-slate-600 text-sm">Clasificación presupuestaria técnica que identifica el origen específico de los medios económicos destinados a solventar los gastos públicos.</p>
                 </div>
             </div>
 
             <!-- Marco Legal -->
             <div class="fade-in-up delay-200">
-                <h3 class="text-2xl font-bold mb-6 text-center">Estructura Normativa</h3>
+                <h2 class="text-3xl font-bold mb-8 text-center">Marco Legal</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div class="bg-slate-800 text-white p-6 rounded-2xl relative overflow-hidden group">
-                        <div class="absolute right-0 bottom-0 opacity-10 transform translate-x-4 translate-y-4 group-hover:scale-110 transition-transform"><i data-lucide="landmark" class="w-24 h-24"></i></div>
-                        <h4 class="font-bold text-lg mb-2">Constitución 1992</h4>
-                        <p class="text-slate-400 text-sm">Base constitucional que ampara y regula la gestión del déficit y la deuda.</p>
+                    <div class="bg-slate-800 text-white p-6 rounded-2xl">
+                        <h4 class="font-bold text-lg mb-2 text-blue-300">Constitución Nacional (1992)</h4>
+                        <p class="text-slate-300 text-sm">Preceptos primordiales que amparan la gestión del déficit y la deuda del Estado.</p>
                     </div>
-                    <div class="bg-slate-800 text-white p-6 rounded-2xl relative overflow-hidden group">
-                        <div class="absolute right-0 bottom-0 opacity-10 transform translate-x-4 translate-y-4 group-hover:scale-110 transition-transform"><i data-lucide="file-text" class="w-24 h-24"></i></div>
-                        <h4 class="font-bold text-lg mb-2">Ley N° 1535/99</h4>
-                        <p class="text-slate-400 text-sm">Eje regulador central de la Administración Financiera del Estado.</p>
+                    <div class="bg-slate-800 text-white p-6 rounded-2xl">
+                        <h4 class="font-bold text-lg mb-2 text-blue-300">Ley N° 1535/99</h4>
+                        <p class="text-slate-300 text-sm">Administración Financiera del Estado: constituye el eje regulador para toda operación de crédito.</p>
                     </div>
-                    <div class="bg-slate-800 text-white p-6 rounded-2xl relative overflow-hidden group">
-                        <div class="absolute right-0 bottom-0 opacity-10 transform translate-x-4 translate-y-4 group-hover:scale-110 transition-transform"><i data-lucide="shield-check" class="w-24 h-24"></i></div>
-                        <h4 class="font-bold text-lg mb-2">Ley N° 5098/13</h4>
-                        <p class="text-slate-400 text-sm">Responsabilidad Fiscal: establece topes estrictos al desequilibrio financiero.</p>
+                    <div class="bg-slate-800 text-white p-6 rounded-2xl">
+                        <h4 class="font-bold text-lg mb-2 text-blue-300">Ley N° 5098/13</h4>
+                        <p class="text-slate-300 text-sm">Responsabilidad Fiscal: establece topes rigurosos al desequilibrio financiero.</p>
                     </div>
-                    <div class="bg-slate-800 text-white p-6 rounded-2xl relative overflow-hidden group">
-                        <div class="absolute right-0 bottom-0 opacity-10 transform translate-x-4 translate-y-4 group-hover:scale-110 transition-transform"><i data-lucide="calendar" class="w-24 h-24"></i></div>
-                        <h4 class="font-bold text-lg mb-2">Decretos Anuales</h4>
-                        <p class="text-slate-400 text-sm">Precisan operativamente los límites de emisión para cada ejercicio fiscal.</p>
+                    <div class="bg-slate-800 text-white p-6 rounded-2xl">
+                        <h4 class="font-bold text-lg mb-2 text-blue-300">Decretos Anuales</h4>
+                        <p class="text-slate-300 text-sm">Reglamentaciones que precisan los límites de emisión autorizados para cada ejercicio específico.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 4. POSICIÓN DE LA DEUDA (GRÁFICO) -->
+    <!-- 6. DESARROLLO: POSICIÓN DE LA DEUDA (GRÁFICO) -->
     <section id="datos" class="bg-white">
         <div class="max-w-6xl mx-auto w-full">
+            <div class="text-center mb-12 fade-in-up">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Desarrollo de la Investigación</h2>
+                <p class="text-slate-500">Posición macroeconómica y fortaleza estructural de la deuda pública.</p>
+            </div>
+
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class="fade-in-up">
-                    <span class="text-blue-600 font-semibold tracking-wider text-sm uppercase mb-2 block">Contexto Macro</span>
-                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Posición de la Deuda Pública</h2>
-                    <p class="text-lg text-slate-600 mb-8">
-                        Paraguay se posiciona significativamente por debajo del promedio regional de países con calificación similar, reflejando una gestión proactiva orientada a la estabilidad macroeconómica.
+                <div class="fade-in-up delay-100">
+                    <p class="text-lg text-slate-600 mb-6 leading-relaxed">
+                        El nivel de deuda pública constituye una fortaleza estructural, situándose significativamente por debajo del promedio regional. A febrero de 2026, la relación Deuda/PIB alcanzó un <strong>36,7%</strong>, nivel considerado plenamente manejable frente al 56% del promedio de países con calificación Baa (Grado de Inversión).
                     </p>
                     
-                    <div class="space-y-6">
-                        <div class="flex items-start gap-4">
-                            <div class="bg-blue-100 p-3 rounded-xl text-blue-600 mt-1">
-                                <i data-lucide="dollar-sign"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-2xl font-bold text-slate-800">USD 15.908 M</h4>
-                                <p class="text-slate-500 text-sm">Saldo de la deuda externa (febrero 2026).</p>
-                            </div>
+                    <div class="grid grid-cols-2 gap-4 mt-8">
+                        <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100">
+                            <i data-lucide="wallet" class="text-blue-500 mb-3 w-8 h-8"></i>
+                            <h4 class="text-2xl font-bold text-slate-800">USD 18.142,6 M</h4>
+                            <p class="text-slate-500 text-xs mt-1">Saldo Deuda Admin. Central (Inicios 2026)</p>
                         </div>
-                        <div class="flex items-start gap-4">
-                            <div class="bg-amber-100 p-3 rounded-xl text-amber-600 mt-1">
-                                <i data-lucide="award"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-2xl font-bold text-slate-800">Calificación Ba1</h4>
-                                <p class="text-slate-500 text-sm">Otorgada por Moody's — una clara ventaja competitiva frente a pares regionales.</p>
-                            </div>
+                        <div class="bg-cyan-50 p-6 rounded-2xl border border-cyan-100">
+                            <i data-lucide="bar-chart-3" class="text-cyan-500 mb-3 w-8 h-8"></i>
+                            <h4 class="text-2xl font-bold text-slate-800">1,5% PIB</h4>
+                            <p class="text-slate-500 text-xs mt-1">Meta de convergencia del déficit fiscal legal</p>
                         </div>
                     </div>
                 </div>
                 
                 <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 fade-in-up delay-200">
-                    <h3 class="text-lg font-bold text-center mb-6 text-slate-700">Relación Deuda / PIB (%)</h3>
+                    <h3 class="text-lg font-bold text-center mb-6 text-slate-700">Razón Deuda / PIB (%)</h3>
                     <div class="relative h-64 w-full">
                         <canvas id="debtChart"></canvas>
                     </div>
-                    <p class="text-xs text-center text-slate-400 mt-4">* Datos a febrero de 2026. Considerado manejable por organismos internacionales.</p>
+                    <p class="text-xs text-center text-slate-400 mt-4">* Umbral de deuda para economías sólidas (CAF): 50% - 60%.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 5. FUENTES DE FINANCIAMIENTO (FF20 Y FF10) -->
+    <!-- 6.1 y 6.2 FUENTES DE FINANCIAMIENTO Y DESDOLARIZACIÓN -->
     <section id="fuentes" class="bg-slate-900 text-white">
         <div class="max-w-6xl mx-auto w-full">
             <div class="text-center mb-16 fade-in-up">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Mecanismos de Financiamiento</h2>
-                <p class="text-slate-400 max-w-2xl mx-auto">Las dos vías principales que utiliza el Estado para gestionar su liquidez y solvencia.</p>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Gestión Técnica de Financiamiento</h2>
+                <p class="text-slate-400">Articulación mediante el Crédito Público (FF 20) y Recursos del Tesoro (FF 10).</p>
+            </div>
+
+            <!-- Destacado: Desdolarización -->
+            <div class="bg-gradient-to-r from-blue-900 to-cyan-900 rounded-3xl p-8 mb-8 border border-blue-500/30 fade-in-up delay-100 flex flex-col md:flex-row items-center gap-8 shadow-lg">
+                <div class="bg-white/10 p-4 rounded-full">
+                    <i data-lucide="arrow-down-up" class="w-12 h-12 text-cyan-300"></i>
+                </div>
+                <div>
+                    <span class="bg-cyan-500/20 text-cyan-300 px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase mb-3 inline-block">Hito de Política Financiera</span>
+                    <h3 class="text-2xl font-bold mb-2">Proceso de Desdolarización</h3>
+                    <p class="text-slate-300 text-sm">
+                        Iniciado a finales de 2023, Paraguay emitió bonos en guaraníes en mercados internacionales por <strong>USD 1.100 millones</strong>. Actualmente, el <strong>17,9%</strong> de la deuda pública está en moneda local, reduciendo la vulnerabilidad ante fluctuaciones del tipo de cambio.
+                    </p>
+                </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- FF 20 -->
-                <div class="bg-slate-800 rounded-3xl p-8 border border-slate-700 fade-in-up delay-100 hover:border-blue-500 transition-colors">
-                    <div class="flex justify-between items-center mb-8">
-                        <div class="bg-blue-500/20 text-blue-400 px-4 py-1.5 rounded-full text-sm font-bold tracking-wide">FF 20</div>
-                        <i data-lucide="globe-2" class="w-8 h-8 text-slate-400"></i>
+                <div class="bg-slate-800 rounded-3xl p-8 border border-slate-700 fade-in-up delay-200">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-md text-sm font-bold">FF 20</div>
+                        <h3 class="text-xl font-bold">Recursos del Crédito Público</h3>
                     </div>
-                    <h3 class="text-2xl font-bold mb-6">Crédito Público</h3>
                     
-                    <div class="space-y-6">
-                        <div>
-                            <h4 class="text-blue-400 font-semibold mb-2 flex items-center gap-2">
-                                <i data-lucide="receipt" class="w-4 h-4"></i> Gestión de Pasivos (Bonos)
-                            </h4>
-                            <p class="text-slate-300 text-sm">
-                                Ejecución de la Ley N° 6638/2020 para recompra de bonos (vencimiento 2026). Se rescató el <strong>45% del valor nominal</strong> (saldo: USD 332,06 M), reduciendo notablemente el riesgo de refinanciamiento.
-                            </p>
-                        </div>
-                        <div>
-                            <h4 class="text-blue-400 font-semibold mb-2 flex items-center gap-2">
-                                <i data-lucide="building" class="w-4 h-4"></i> Organismos Multilaterales
-                            </h4>
-                            <p class="text-slate-300 text-sm">
-                                Concentran el <strong>52,7%</strong> de la cartera externa (BID y CAF lideran). El servicio de deuda en el primer bimestre de 2025 fue de USD 113,7 millones.
-                            </p>
-                        </div>
-                        <div class="bg-slate-700/50 p-4 rounded-xl">
-                            <p class="text-sm"><strong>Destino:</strong> Más del 75% del financiamiento externo se inyecta en infraestructura de transporte y proyectos eléctricos.</p>
-                        </div>
-                    </div>
+                    <ul class="space-y-4 text-sm text-slate-300">
+                        <li class="flex gap-3">
+                            <i data-lucide="landmark" class="w-5 h-5 text-blue-400 flex-shrink-0"></i>
+                            <span><strong>Bonos Soberanos:</strong> Mayor proporción del financiamiento, alcanzando USD 8.236,5 millones.</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <i data-lucide="globe" class="w-5 h-5 text-blue-400 flex-shrink-0"></i>
+                            <span><strong>Multilaterales:</strong> Constituyen el 40,5% de la cartera externa (BID, CAF), orientados a infraestructura vial y eléctrica.</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <i data-lucide="refresh-ccw" class="w-5 h-5 text-blue-400 flex-shrink-0"></i>
+                            <span><strong>Gestión de Pasivos:</strong> (Ley N° 6638/2020) Rescate del 77,9% del Bono 2026 y recompras anticipadas del Bono 2027, extendiendo la vida promedio de la deuda.</span>
+                        </li>
+                    </ul>
                 </div>
 
                 <!-- FF 10 -->
-                <div class="bg-slate-800 rounded-3xl p-8 border border-slate-700 fade-in-up delay-200 hover:border-cyan-500 transition-colors">
-                    <div class="flex justify-between items-center mb-8">
-                        <div class="bg-cyan-500/20 text-cyan-400 px-4 py-1.5 rounded-full text-sm font-bold tracking-wide">FF 10</div>
-                        <i data-lucide="piggy-bank" class="w-8 h-8 text-slate-400"></i>
+                <div class="bg-slate-800 rounded-3xl p-8 border border-slate-700 fade-in-up delay-300">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="bg-cyan-500/20 text-cyan-400 px-3 py-1 rounded-md text-sm font-bold">FF 10</div>
+                        <h3 class="text-xl font-bold">Recursos del Tesoro</h3>
                     </div>
-                    <h3 class="text-2xl font-bold mb-6">Recursos del Tesoro & BCP</h3>
                     
-                    <div class="space-y-6">
-                        <div>
-                            <h4 class="text-cyan-400 font-semibold mb-2 flex items-center gap-2">
-                                <i data-lucide="settings" class="w-4 h-4"></i> Gestión Interna
-                            </h4>
-                            <p class="text-slate-300 text-sm">
-                                El Estado optimiza el capital utilizando saldos no ejecutados y realizando reasignaciones estratégicas. Esto permite cubrir necesidades sin incurrir en deuda innecesaria.
-                            </p>
-                        </div>
-                        <div>
-                            <h4 class="text-cyan-400 font-semibold mb-2 flex items-center gap-2">
-                                <i data-lucide="refresh-cw" class="w-4 h-4"></i> Adelantos del BCP
-                            </h4>
-                            <p class="text-slate-300 text-sm">
-                                El Banco Central del Paraguay otorga adelantos de corto plazo. Funcionan como soporte temporal ante desfases estacionales de recaudación, asegurando la operatividad.
-                            </p>
-                        </div>
-                        <div class="bg-slate-700/50 p-4 rounded-xl mt-auto">
-                            <p class="text-sm"><strong>Meta:</strong> Convergencia hacia el tope del <strong>1,5% del PIB</strong> conforme dicta la Ley de Responsabilidad Fiscal.</p>
-                        </div>
-                    </div>
+                    <ul class="space-y-4 text-sm text-slate-300">
+                        <li class="flex gap-3">
+                            <i data-lucide="layout-dashboard" class="w-5 h-5 text-cyan-400 flex-shrink-0"></i>
+                            <span><strong>Saldos y Adelantos:</strong> Mecanismos internos para cubrir desfases temporales de recaudación sin recurrir a deuda externa más costosa.</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <i data-lucide="banknote" class="w-5 h-5 text-cyan-400 flex-shrink-0"></i>
+                            <span><strong>Desembolsos Recientes:</strong> En el primer bimestre de 2026, los desembolsos de la Administración Central sumaron USD 155,9 millones provenientes de multilaterales.</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <i data-lucide="line-chart" class="w-5 h-5 text-cyan-400 flex-shrink-0"></i>
+                            <span><strong>Eficiencia:</strong> El Estado prioriza la asignación presupuestaria para cumplir con los objetivos del plan de convergencia fiscal.</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 6. INSTRUMENTOS (Sección Visual con la Imagen Incorporada) -->
+    <!-- 6.3 INSTRUMENTOS DE LA DEUDA PÚBLICA -->
     <section id="instrumentos" class="bg-slate-50">
-        <div class="max-w-5xl mx-auto w-full">
+        <div class="max-w-6xl mx-auto w-full">
             <div class="text-center mb-12 fade-in-up">
                 <h2 class="text-3xl md:text-4xl font-bold mb-4">Instrumentos de la Deuda Pública</h2>
-                <p class="text-slate-500">Clasificación estructural de las fuentes para cubrir el déficit.</p>
+                <p class="text-slate-500">Clasificación y distribución porcentual del financiamiento.</p>
             </div>
 
-            <!-- Contenedor dual: Esquema Visual + Imagen provista -->
-            <div class="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-slate-200 fade-in-up delay-100">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch fade-in-up delay-100">
                 
-                <!-- Explicación visual basada en el texto (Diagrama CSS) -->
-                <div class="flex flex-col md:flex-row gap-8 items-center justify-center mb-12">
+                <!-- Gráfico de distribución de Instrumentos -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 flex flex-col items-center justify-center">
+                    <h3 class="text-lg font-bold text-slate-800 mb-6 w-full text-left">Participación por Instrumento</h3>
+                    <div class="relative w-full max-w-xs aspect-square">
+                        <canvas id="instrumentsChart"></canvas>
+                    </div>
                     
-                    <!-- Caja FF10 -->
-                    <div class="w-full md:w-5/12 bg-slate-50 border-2 border-dashed border-slate-300 p-6 rounded-2xl text-center relative">
-                        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-white px-3 py-1 text-xs font-bold text-slate-500 rounded-full border border-slate-200">
-                            Liquidez Operativa
+                    <div class="mt-8 w-full">
+                        <div class="flex justify-between items-center py-2 border-b border-slate-100">
+                            <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-blue-600"></span><span class="text-sm font-semibold">Bonos</span></div>
+                            <span class="font-bold text-slate-800">55,6%</span>
                         </div>
-                        <h3 class="text-xl font-bold text-slate-800 mb-2">Recursos del Tesoro</h3>
-                        <span class="inline-block bg-slate-200 text-slate-700 px-3 py-1 rounded text-sm font-bold mb-4">FF 10</span>
-                        <p class="text-sm text-slate-500">Gestión de liquidez a corto plazo, saldos y adelantos.</p>
-                    </div>
-
-                    <!-- Conector -->
-                    <div class="hidden md:flex flex-col items-center justify-center text-slate-400">
-                        <i data-lucide="arrow-left-right" class="w-8 h-8"></i>
-                        <span class="text-xs uppercase mt-2 font-semibold">Instrumentos</span>
-                    </div>
-
-                    <!-- Caja FF20 -->
-                    <div class="w-full md:w-5/12 bg-blue-50 border-2 border-blue-200 p-6 rounded-2xl text-center relative">
-                        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-blue-600 px-3 py-1 text-xs font-bold text-white rounded-full shadow-sm">
-                            Inversión a Largo Plazo
+                        <div class="flex justify-between items-center py-2 border-b border-slate-100">
+                            <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-cyan-500"></span><span class="text-sm font-semibold">Préstamos</span></div>
+                            <span class="font-bold text-slate-800">41,6%</span>
                         </div>
-                        <h3 class="text-xl font-bold text-blue-900 mb-2">Crédito Público</h3>
-                        <span class="inline-block bg-blue-200 text-blue-800 px-3 py-1 rounded text-sm font-bold mb-4">FF 20</span>
-                        <p class="text-sm text-blue-700/80">Bonos soberanos y préstamos de organismos multilaterales.</p>
+                        <div class="flex justify-between items-center py-2">
+                            <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-slate-300"></span><span class="text-sm font-semibold">Ley N° 5.074/13</span></div>
+                            <span class="font-bold text-slate-800">2,8%</span>
+                        </div>
                     </div>
-
                 </div>
 
-                <!-- Imagen del usuario cargada desde la URL provista -->
-                <div class="bg-white rounded-xl p-4 flex items-center justify-center relative shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
-                    <img src="https://esecaese.github.io/academia/intrumentos-deuda-publica.png" alt="Esquema visual de los Instrumentos de Deuda Pública" class="w-full max-w-4xl h-auto object-contain rounded-lg">
+                <!-- Imagen provista a través del link (Sin placeholders) -->
+                <div class="bg-white p-6 rounded-3xl flex flex-col items-center justify-center shadow-sm border border-slate-200">
+                    <h3 class="text-lg font-bold text-slate-800 mb-6 w-full text-left">Estructura del Financiamiento</h3>
+                    <img src="https://esecaese.github.io/academia/intrumentos-deuda-publica.png" alt="Esquema visual de los Instrumentos de Deuda Pública" class="w-full h-auto object-contain rounded-lg">
                 </div>
 
             </div>
@@ -388,146 +353,167 @@
     </section>
 
     <!-- 7. CONCLUSIONES Y RECOMENDACIONES -->
-    <section id="conclusiones" class="bg-white pb-20">
+    <section id="conclusiones" class="bg-white">
         <div class="max-w-6xl mx-auto w-full">
-            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center fade-in-up">Conclusiones y Perspectivas</h2>
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center fade-in-up">Conclusiones y Recomendaciones</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                <!-- Tarjeta 1 -->
                 <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 fade-in-up delay-100">
-                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-6">
-                        <i data-lucide="shield"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Solvencia Robusta</h3>
+                    <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-4"><i data-lucide="shield-check" class="w-5 h-5"></i></div>
+                    <h3 class="text-lg font-bold mb-3">Solvencia Robusta</h3>
                     <p class="text-slate-600 text-sm">
-                        Deuda/PIB del 40,1%, muy inferior al promedio regional del 66%. La calificación Ba1 posiciona a Paraguay ventajosamente en la región.
+                        La relación deuda/PIB se mantiene sustancialmente inferior a la de pares regionales. Esta solidez garantiza un margen de maniobra competitivo para el sostenimiento de inversiones.
                     </p>
                 </div>
                 
-                <!-- Tarjeta 2 -->
                 <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 fade-in-up delay-200">
-                    <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-6">
-                        <i data-lucide="check-circle"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Estrategia Exitosa</h3>
+                    <div class="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-4"><i data-lucide="trending-up" class="w-5 h-5"></i></div>
+                    <h3 class="text-lg font-bold mb-3">Estrategia Exitosa</h3>
                     <p class="text-slate-600 text-sm">
-                        El rescate anticipado del 45% de bonos 2026 y el sólido respaldo multilateral (BID, CAF) garantizan estabilidad y margen de maniobra fiscal.
+                        La gestión técnica de alta eficiencia operativa y las estrategias de rescate anticipado de bonos aseguran la estabilidad macroeconómica y mejoran el perfil de vencimientos.
                     </p>
                 </div>
 
-                <!-- Tarjeta 3 -->
                 <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 fade-in-up delay-300">
-                    <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mb-6">
-                        <i data-lucide="alert-circle"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Desafíos Pendientes</h3>
+                    <div class="w-10 h-10 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mb-4"><i data-lucide="alert-triangle" class="w-5 h-5"></i></div>
+                    <h3 class="text-lg font-bold mb-3">Desafíos Pendientes</h3>
                     <p class="text-slate-600 text-sm">
-                        Es imperativo fortalecer la recaudación propia, reducir la dependencia del crédito externo y lograr converger al límite del 1,5% de déficit.
+                        Es imperativo fortalecer la recaudación propia para mitigar la dependencia externa y asegurar la convergencia fiscal. Canalizar crédito solo a proyectos de alto impacto.
                     </p>
                 </div>
             </div>
 
             <!-- Gran Meta -->
-            <div class="bg-gradient-to-r from-slate-900 to-blue-900 text-white rounded-3xl p-10 text-center fade-in-up delay-400 relative overflow-hidden">
+            <div class="bg-gradient-to-r from-slate-900 to-blue-900 text-white rounded-3xl p-10 text-center fade-in-up delay-400 relative overflow-hidden shadow-xl">
                 <i data-lucide="star" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 text-white opacity-5"></i>
                 <div class="relative z-10">
-                    <span class="bg-blue-500/30 text-blue-200 px-4 py-1 rounded-full text-sm font-semibold tracking-wider uppercase mb-6 inline-block">Meta Principal</span>
+                    <span class="bg-blue-500/30 text-blue-200 px-4 py-1 rounded-full text-sm font-semibold tracking-wider uppercase mb-6 inline-block">Catalizador Definitivo</span>
                     <h3 class="text-3xl md:text-4xl font-bold mb-4">El Grado de Inversión</h3>
                     <p class="text-lg text-blue-100 max-w-3xl mx-auto">
-                        El cumplimiento estricto de la <strong>Ley de Responsabilidad Fiscal</strong> es el catalizador definitivo para consolidar a Paraguay como un emisor altamente confiable en los mercados globales.
+                        El cumplimiento estricto de la normativa vigente y la responsabilidad institucional para gestionar compromisos son claves para alcanzar el ansiado Grado de Inversión internacional.
                     </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer Simple -->
-    <footer class="bg-slate-900 text-slate-400 py-8 text-center text-sm border-t border-slate-800">
+    <!-- 8. BIBLIOGRAFÍA -->
+    <section id="bibliografia" class="bg-slate-50 py-20 min-h-0 border-none">
+        <div class="max-w-4xl mx-auto w-full fade-in-up">
+            <h2 class="text-2xl font-bold mb-8 text-slate-800 flex items-center gap-3">
+                <i data-lucide="library" class="text-blue-500"></i> Bibliografía
+            </h2>
+            <ul class="space-y-4 text-sm text-slate-600">
+                <li class="flex items-start gap-2"><i data-lucide="book" class="w-4 h-4 mt-0.5 text-slate-400 flex-shrink-0"></i> Constitución Nacional de la República del Paraguay (1992).</li>
+                <li class="flex items-start gap-2"><i data-lucide="file-text" class="w-4 h-4 mt-0.5 text-slate-400 flex-shrink-0"></i> Ley N° 1535/99 de Administración Financiera del Estado.</li>
+                <li class="flex items-start gap-2"><i data-lucide="file-text" class="w-4 h-4 mt-0.5 text-slate-400 flex-shrink-0"></i> Ley N° 5098/13 de Responsabilidad Fiscal y sus decretos reglamentarios.</li>
+                <li class="flex items-start gap-2"><i data-lucide="file-text" class="w-4 h-4 mt-0.5 text-slate-400 flex-shrink-0"></i> Ley N° 6638/2020 de Administración de Pasivos (Ley de Solvencia).</li>
+                <li class="flex items-start gap-2"><i data-lucide="bar-chart" class="w-4 h-4 mt-0.5 text-slate-400 flex-shrink-0"></i> Ministerio de Economía y Finanzas (MEF). Perfil de la Deuda Pública y Boletín Estadístico (febrero 2026).</li>
+                <li class="flex items-start gap-2"><i data-lucide="globe" class="w-4 h-4 mt-0.5 text-slate-400 flex-shrink-0"></i> Moody’s Investors Service (2021). Issuer In-Depth: Paraguay’s Debt Affordability and Credit Profile.</li>
+                <li class="flex items-start gap-2"><i data-lucide="landmark" class="w-4 h-4 mt-0.5 text-slate-400 flex-shrink-0"></i> Banco de Desarrollo de América Latina (CAF, 2021). Análisis de Sostenibilidad Fiscal para Economías Emergentes.</li>
+                <li class="flex items-start gap-2"><i data-lucide="pie-chart" class="w-4 h-4 mt-0.5 text-slate-400 flex-shrink-0"></i> Banco Central del Paraguay (BCP). Anexo Estadístico del Informe Económico y Producto Interno Bruto (2025-2026).</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-8 text-center text-sm">
         <p>Administración Financiera del Estado - Academia Diplomática y Consular</p>
     </footer>
 
-    <!-- Scripts de inicialización -->
+    <!-- Scripts de inicialización y Gráficos -->
     <script>
-        // Inicializar iconos
+        // 1. Inicializar iconos de Lucide
         lucide.createIcons();
 
-        // Configuración y renderizado del Gráfico
         document.addEventListener('DOMContentLoaded', function() {
-            const ctx = document.getElementById('debtChart').getContext('2d');
-            
-            // Configuración general de fuente para Chart.js
+            // Configuración general Chart.js
             Chart.defaults.font.family = "'Inter', sans-serif";
             Chart.defaults.color = '#64748b';
 
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Paraguay', 'Promedio Regional (Ba1)'],
-                    datasets: [{
-                        label: 'Deuda / PIB (%)',
-                        data: [40.1, 66],
-                        backgroundColor: [
-                            '#3b82f6', // blue-500
-                            '#cbd5e1'  // slate-300
-                        ],
-                        borderRadius: 8, // Bordes redondeados en las barras
-                        borderWidth: 0,
-                        barThickness: 60
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false // Ocultamos la leyenda para ser más minimalistas
-                        },
-                        tooltip: {
-                            backgroundColor: '#1e293b',
-                            padding: 12,
-                            titleFont: { size: 14 },
-                            bodyFont: { size: 14 },
-                            displayColors: false,
-                            callbacks: {
-                                label: function(context) {
-                                    return context.parsed.y + '%';
-                                }
-                            }
-                        }
+            // 2. Gráfico de Barras (Deuda / PIB)
+            const ctxDebt = document.getElementById('debtChart');
+            if (ctxDebt) {
+                new Chart(ctxDebt.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['Paraguay (2026)', 'Promedio Países Baa'],
+                        datasets: [{
+                            label: 'Deuda / PIB (%)',
+                            data: [36.7, 56.0],
+                            backgroundColor: ['#3b82f6', '#cbd5e1'],
+                            borderRadius: 8,
+                            barThickness: 60
+                        }]
                     },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 80,
-                            grid: {
-                                color: '#f1f5f9', // slate-100
-                                drawBorder: false
-                            },
-                            ticks: {
-                                callback: function(value) {
-                                    return value + '%';
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: '#1e293b',
+                                padding: 12,
+                                titleFont: { size: 14 },
+                                bodyFont: { size: 14 },
+                                displayColors: false,
+                                callbacks: {
+                                    label: function(context) { return context.parsed.y + '%'; }
                                 }
                             }
                         },
-                        x: {
-                            grid: {
-                                display: false,
-                                drawBorder: false
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 70,
+                                grid: { color: '#f1f5f9', drawBorder: false },
+                                ticks: { callback: function(value) { return value + '%'; } }
                             },
-                            ticks: {
-                                font: {
-                                    weight: '600'
-                                }
+                            x: {
+                                grid: { display: false, drawBorder: false },
+                                ticks: { font: { weight: '600' } }
                             }
-                        }
-                    },
-                    animation: {
-                        duration: 2000,
-                        easing: 'easeOutQuart'
+                        },
+                        animation: { duration: 2000, easing: 'easeOutQuart' }
                     }
-                }
-            });
+                });
+            }
+
+            // 3. Gráfico Doughnut (Instrumentos)
+            const ctxInst = document.getElementById('instrumentsChart');
+            if (ctxInst) {
+                new Chart(ctxInst.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Bonos', 'Préstamos', 'Ley N° 5.074/13'],
+                        datasets: [{
+                            data: [55.6, 41.6, 2.8],
+                            backgroundColor: ['#2563eb', '#06b6d4', '#cbd5e1'],
+                            borderWidth: 0,
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '70%',
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: '#1e293b',
+                                padding: 12,
+                                bodyFont: { size: 14 },
+                                callbacks: {
+                                    label: function(context) { return ' ' + context.label + ': ' + context.parsed + '%'; }
+                                }
+                            }
+                        },
+                        animation: { duration: 2000, easing: 'easeOutQuart', delay: 500 }
+                    }
+                });
+            }
         });
     </script>
 </body>
 </html>
+```
