@@ -4,23 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Presentación - MOF Ciberseguridad MRE</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
+    <!-- Firebase SDKs (Versión compat 9/10 para HTML puro) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        mre: {
-                            blue: '#003366',
-                            gold: '#c5a059',
-                            dark: '#0a192f',
-                            light: '#f8fafc'
-                        }
+                        mre: { blue: '#003366', gold: '#c5a059', dark: '#0a192f', light: '#f8fafc' }
                     },
                     fontFamily: {
                         sans: ['Poppins', 'sans-serif'],
@@ -32,63 +37,23 @@
     </script>
     
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden; /* Evita el scroll para que parezca presentación */
-            background-color: #0a192f;
-        }
-
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #0a192f; }
         .slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s ease-in-out, visibility 0.5s;
-            display: flex;
-            flex-direction: column;
-            background-color: white;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s; display: flex; flex-direction: column; background-color: white; overflow-y: auto;
         }
+        .slide.active { opacity: 1; visibility: visible; z-index: 10; }
+        .slide.active .animate-up { animation: slideUp 0.6s ease-out forwards; }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        
+        .bg-hero { background: linear-gradient(rgba(0, 51, 102, 0.85), rgba(0, 51, 102, 0.95)), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2070'); background-size: cover; background-position: center; }
+        #progress-bar { height: 4px; background-color: #c5a059; width: 0%; transition: width 0.3s ease; position: fixed; bottom: 0; left: 0; z-index: 50; }
 
-        .slide.active {
-            opacity: 1;
-            visibility: visible;
-            z-index: 10;
-        }
-
-        /* Animaciones para el contenido interior de las slides */
-        .slide.active .animate-up {
-            animation: slideUp 0.6s ease-out forwards;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        /* Utilidades para fondos con imágenes */
-        .bg-hero {
-            background: linear-gradient(rgba(0, 51, 102, 0.85), rgba(0, 51, 102, 0.95)), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2070');
-            background-size: cover;
-            background-position: center;
-        }
-
-        /* Barra de progreso */
-        #progress-bar {
-            height: 4px;
-            background-color: #c5a059;
-            width: 0%;
-            transition: width 0.3s ease;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            z-index: 50;
-        }
+        /* Estilos del Modal del Formulario */
+        #form-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        #form-modal.show { display: flex; }
+        .spinner { border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; width: 20px; height: 20px; animation: spin 1s linear infinite; display: none; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="text-gray-800 antialiased selection:bg-mre-gold selection:text-white relative">
@@ -97,23 +62,25 @@
     <div id="presentation-container" class="relative w-full h-full">
 
         <!-- SLIDE 1: PORTADA -->
-        <div class="slide bg-hero active items-center justify-center text-center text-white p-8">
+        <div class="slide bg-hero active items-center justify-center text-center text-white p-8 relative">
             <div class="max-w-4xl animate-up">
                 <div class="inline-block px-4 py-1 border-2 border-mre-gold rounded-full text-mre-gold font-semibold tracking-widest text-sm mb-8 uppercase">
                     República del Paraguay
                 </div>
-                <h1 class="text-5xl md:text-7xl font-serif mb-6 leading-tight">
-                    Ministerio de Relaciones Exteriores
-                </h1>
+                <h1 class="text-5xl md:text-7xl font-serif mb-6 leading-tight">Ministerio de Relaciones Exteriores</h1>
                 <p class="text-2xl text-gray-300 font-light mb-10">
                     Manual de Organización y Funciones (MOF) <br> <span class="text-mre-gold font-medium italic">Ciberseguridad y Soberanía Digital</span>
                 </p>
-                <div class="flex items-center justify-center gap-4 text-sm tracking-wider text-gray-400">
-                    <span>VERSIÓN 1.0</span>
-                    <span>|</span>
-                    <span>USO INTERNO</span>
+                <div class="flex items-center justify-center gap-4 text-sm tracking-wider text-gray-400 mb-10">
+                    <span>VERSIÓN 1.0</span><span>|</span><span>USO INTERNO</span>
                 </div>
-                <p class="mt-12 text-sm text-gray-500 animate-pulse">Usa las flechas (← →) para navegar</p>
+                
+                <!-- BOTÓN POSTULARSE -->
+                <button onclick="openForm()" class="bg-mre-gold hover:bg-yellow-600 text-white font-bold py-4 px-10 rounded-full text-lg shadow-lg transition transform hover:scale-105">
+                    <i class="fa-solid fa-file-signature mr-2"></i> Postularse a la Vacante
+                </button>
+
+                <p class="mt-8 text-sm text-gray-500 animate-pulse">Usa las flechas (← →) para navegar</p>
             </div>
         </div>
 
@@ -121,14 +88,12 @@
         <div class="slide items-center justify-center p-12 bg-mre-light">
             <div class="max-w-5xl w-full animate-up">
                 <h2 class="text-4xl font-serif text-mre-blue mb-10 border-b-2 border-mre-gold inline-block pb-2">1. Misión Institucional</h2>
-                
                 <div class="bg-white p-10 rounded-2xl shadow-xl border-l-8 border-mre-gold relative">
                     <i class="fa-solid fa-quote-left absolute top-6 left-6 text-4xl text-gray-100"></i>
                     <p class="text-2xl font-serif italic text-mre-blue leading-relaxed relative z-10">
                         Garantizar la protección, confidencialidad y disponibilidad de las comunicaciones diplomáticas, los servicios consulares y la información del Ministerio de Relaciones Exteriores a nivel mundial.
                     </p>
                 </div>
-                
                 <div class="mt-10 grid md:grid-cols-2 gap-8 text-lg text-gray-600">
                     <div class="flex items-start gap-4">
                         <i class="fa-solid fa-shield-halved text-mre-gold text-2xl mt-1"></i>
@@ -146,29 +111,19 @@
         <div class="slide items-center justify-center p-12 bg-white">
             <div class="max-w-6xl w-full animate-up">
                 <h2 class="text-4xl font-serif text-mre-blue mb-12 text-center">Estructura Jerárquica</h2>
-                
                 <div class="grid md:grid-cols-3 gap-6">
-                    <!-- Estratégico -->
                     <div class="bg-mre-light p-8 rounded-xl border border-gray-200 shadow-md text-center group hover:bg-mre-blue transition duration-300">
-                        <div class="w-16 h-16 mx-auto bg-mre-blue text-white rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-mre-gold">
-                            <i class="fa-solid fa-chess-king"></i>
-                        </div>
+                        <div class="w-16 h-16 mx-auto bg-mre-blue text-white rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-mre-gold"><i class="fa-solid fa-chess-king"></i></div>
                         <h3 class="text-mre-gold font-bold tracking-widest text-sm uppercase mb-2">Nivel Estratégico</h3>
                         <p class="text-xl font-bold text-mre-blue group-hover:text-white">Dirección de Ciberseguridad y Soberanía Digital</p>
                     </div>
-                    <!-- Táctico -->
                     <div class="bg-mre-light p-8 rounded-xl border border-gray-200 shadow-md text-center group hover:bg-mre-blue transition duration-300">
-                        <div class="w-16 h-16 mx-auto bg-mre-blue text-white rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-mre-gold">
-                            <i class="fa-solid fa-chess-knight"></i>
-                        </div>
+                        <div class="w-16 h-16 mx-auto bg-mre-blue text-white rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-mre-gold"><i class="fa-solid fa-chess-knight"></i></div>
                         <h3 class="text-mre-gold font-bold tracking-widest text-sm uppercase mb-2">Nivel Táctico</h3>
                         <p class="text-xl font-bold text-mre-blue group-hover:text-white">Jefatura de Operaciones y Red Diplomática</p>
                     </div>
-                    <!-- Operativo -->
                     <div class="bg-mre-light p-8 rounded-xl border border-gray-200 shadow-md text-center group hover:bg-mre-blue transition duration-300">
-                        <div class="w-16 h-16 mx-auto bg-mre-blue text-white rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-mre-gold">
-                            <i class="fa-solid fa-chess-pawn"></i>
-                        </div>
+                        <div class="w-16 h-16 mx-auto bg-mre-blue text-white rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-mre-gold"><i class="fa-solid fa-chess-pawn"></i></div>
                         <h3 class="text-mre-gold font-bold tracking-widest text-sm uppercase mb-2">Nivel Operativo</h3>
                         <p class="text-xl font-bold text-mre-blue group-hover:text-white">Sección de Respuesta a Incidentes (SRI)</p>
                     </div>
@@ -181,30 +136,21 @@
             <div class="max-w-5xl w-full animate-up">
                 <span class="text-mre-gold font-bold tracking-widest text-sm uppercase mb-2 block">2.1 Nivel Estratégico</span>
                 <h2 class="text-4xl font-serif mb-12">Dirección de Ciberseguridad y Soberanía Digital</h2>
-                
                 <div class="grid grid-cols-2 gap-x-12 gap-y-10">
                     <div>
-                        <h4 class="text-xl font-bold text-mre-gold mb-3 flex items-center gap-3">
-                            <i class="fa-solid fa-chess"></i> Estrategia y Políticas
-                        </h4>
-                        <p class="text-gray-300 text-sm leading-relaxed">Diseñar y dirigir la estrategia de seguridad informática de la Cancillería, asesorando a los altos mandos (Ministro/a, Viceministros) sobre riesgos y su impacto en las relaciones diplomáticas.</p>
+                        <h4 class="text-xl font-bold text-mre-gold mb-3 flex items-center gap-3"><i class="fa-solid fa-chess"></i> Estrategia y Políticas</h4>
+                        <p class="text-gray-300 text-sm leading-relaxed">Diseñar y dirigir la estrategia de seguridad informática de la Cancillería, asesorando a los altos mandos sobre riesgos y su impacto en las relaciones diplomáticas.</p>
                     </div>
                     <div>
-                        <h4 class="text-xl font-bold text-mre-gold mb-3 flex items-center gap-3">
-                            <i class="fa-solid fa-lock"></i> Información Sensible
-                        </h4>
+                        <h4 class="text-xl font-bold text-mre-gold mb-3 flex items-center gap-3"><i class="fa-solid fa-lock"></i> Información Sensible</h4>
                         <p class="text-gray-300 text-sm leading-relaxed">Definir las normas de seguridad para proteger los documentos clasificados, los cables diplomáticos y las negociaciones internacionales.</p>
                     </div>
                     <div>
-                        <h4 class="text-xl font-bold text-mre-gold mb-3 flex items-center gap-3">
-                            <i class="fa-solid fa-handshake"></i> Alianzas Internacionales
-                        </h4>
+                        <h4 class="text-xl font-bold text-mre-gold mb-3 flex items-center gap-3"><i class="fa-solid fa-handshake"></i> Alianzas Internacionales</h4>
                         <p class="text-gray-300 text-sm leading-relaxed">Representar al Ministerio ante agencias de ciberseguridad de otros países y organismos internacionales, fomentando la cooperación ante amenazas globales.</p>
                     </div>
                     <div>
-                        <h4 class="text-xl font-bold text-mre-gold mb-3 flex items-center gap-3">
-                            <i class="fa-solid fa-chart-pie"></i> Gestión de Inversiones
-                        </h4>
+                        <h4 class="text-xl font-bold text-mre-gold mb-3 flex items-center gap-3"><i class="fa-solid fa-chart-pie"></i> Gestión de Inversiones</h4>
                         <p class="text-gray-300 text-sm leading-relaxed">Administrar y justificar el presupuesto necesario para mantener actualizados los sistemas de defensa tecnológica en la sede central y en embajadas.</p>
                     </div>
                 </div>
@@ -216,7 +162,6 @@
             <div class="max-w-5xl w-full animate-up">
                 <span class="text-gray-500 font-bold tracking-widest text-sm uppercase mb-2 block">2.2 Nivel Táctico</span>
                 <h2 class="text-4xl font-serif text-mre-blue mb-12 border-b-2 border-mre-gold inline-block pb-2">Jefatura de Operaciones y Red Diplomática</h2>
-                
                 <div class="space-y-6">
                     <div class="flex bg-gray-50 p-6 rounded-lg border border-gray-100">
                         <div class="flex-shrink-0 mr-6 text-3xl text-mre-blue"><i class="fa-solid fa-clock"></i></div>
@@ -232,11 +177,12 @@
                             <p class="text-gray-600 mt-1">Asegurar que las conexiones y redes privadas entre la sede central (Asunción) y los consulados/embajadas funcionen de manera ininterrumpida.</p>
                         </div>
                     </div>
+                    <!-- TEXTO MODIFICADO SEGÚN SOLICITUD -->
                     <div class="flex bg-gray-50 p-6 rounded-lg border border-gray-100">
                         <div class="flex-shrink-0 mr-6 text-3xl text-mre-blue"><i class="fa-solid fa-eye"></i></div>
                         <div>
-                            <h4 class="text-lg font-bold text-mre-blue">Inteligencia de riesgos & Proveedores</h4>
-                            <p class="text-gray-600 mt-1">Análisis de campañas de espionaje dirigidas contra el gobierno y auditoría a empresas externas.</p>
+                            <h4 class="text-lg font-bold text-mre-blue">Inteligencia de riesgos & Control de proveedores</h4>
+                            <p class="text-gray-600 mt-1">Análisis de campañas de espionaje dirigidas contra el gobierno y auditoría a las empresas externas que brindan tecnología al Ministerio para asegurar que cumplen con las normas de seguridad exigidas.</p>
                         </div>
                     </div>
                 </div>
@@ -248,7 +194,6 @@
             <div class="max-w-5xl w-full animate-up">
                 <span class="text-mre-gold font-bold tracking-widest text-sm uppercase mb-2 block">2.3 Nivel Operativo</span>
                 <h2 class="text-4xl font-serif text-mre-blue mb-10">Sección de Respuesta a Incidentes (SRI)</h2>
-                
                 <div class="grid md:grid-cols-2 gap-8">
                     <div class="bg-white p-8 rounded-xl shadow-lg border-t-4 border-mre-gold">
                         <i class="fa-solid fa-bell text-3xl text-mre-gold mb-4"></i>
@@ -258,17 +203,17 @@
                     <div class="bg-white p-8 rounded-xl shadow-lg border-t-4 border-red-500">
                         <i class="fa-solid fa-bolt text-3xl text-red-500 mb-4"></i>
                         <h4 class="text-xl font-bold text-mre-blue mb-2">Reacción y Contención</h4>
-                        <p class="text-gray-600 text-sm">Actuar inmediatamente aislando computadoras o redes afectadas (incluso a distancia en embajadas) para frenar el daño.</p>
+                        <p class="text-gray-600 text-sm">Actuar inmediatamente aislando computadoras o redes afectadas para frenar el daño.</p>
                     </div>
                     <div class="bg-white p-8 rounded-xl shadow-lg border-t-4 border-mre-blue">
                         <i class="fa-solid fa-magnifying-glass text-3xl text-mre-blue mb-4"></i>
                         <h4 class="text-xl font-bold text-mre-blue mb-2">Investigación Forense</h4>
-                        <p class="text-gray-600 text-sm">Extraer e investigar evidencia digital dejada por los atacantes para descubrir cómo ingresaron y quién está detrás (ej. grupos de otros Estados).</p>
+                        <p class="text-gray-600 text-sm">Extraer e investigar evidencia digital dejada por atacantes para descubrir cómo ingresaron y quién está detrás.</p>
                     </div>
                     <div class="bg-white p-8 rounded-xl shadow-lg border-t-4 border-green-600">
                         <i class="fa-solid fa-radar text-3xl text-green-600 mb-4"></i>
                         <h4 class="text-xl font-bold text-mre-blue mb-2">Búsqueda Proactiva</h4>
-                        <p class="text-gray-600 text-sm">Realizar revisiones rutinarias en los sistemas del Ministerio para detectar intrusos "silenciosos" que burlaron barreras automáticas.</p>
+                        <p class="text-gray-600 text-sm">Revisiones rutinarias en sistemas para detectar intrusos "silenciosos" que burlaron barreras automáticas.</p>
                     </div>
                 </div>
             </div>
@@ -279,28 +224,25 @@
             <div class="max-w-6xl w-full animate-up">
                 <h2 class="text-4xl font-serif text-mre-blue mb-2">3. Procedimientos Operativos</h2>
                 <p class="text-gray-500 mb-10">El manejo de crisis requiere comunicación fluida desde el técnico hasta el área política.</p>
-                
                 <div class="flex flex-col md:flex-row gap-6">
                     <div class="flex-1 bg-mre-light p-6 rounded-lg border border-gray-200">
                         <h3 class="text-lg font-bold text-mre-blue uppercase tracking-wider mb-4 border-b border-gray-300 pb-2">Dir. Estratégica</h3>
                         <ul class="space-y-4 text-sm text-gray-700">
-                            <li><i class="fa-solid fa-caret-right text-mre-gold mr-2"></i> <strong>Gestión de crisis diplomática:</strong> Protocolo ante robo de documentos de Estado o intercepción.</li>
-                            <li><i class="fa-solid fa-caret-right text-mre-gold mr-2"></i> <strong>Coordinación Nacional:</strong> Trabajo con Defensa / Inteligencia ante hostilidad extranjera.</li>
+                            <li><i class="fa-solid fa-caret-right text-mre-gold mr-2"></i> <strong>Gestión diplomática:</strong> Protocolo ante robo de documentos.</li>
+                            <li><i class="fa-solid fa-caret-right text-mre-gold mr-2"></i> <strong>Coord. Nacional:</strong> Trabajo con Defensa / Inteligencia.</li>
                         </ul>
                     </div>
                     <div class="flex-1 bg-mre-light p-6 rounded-lg border border-gray-200">
                         <h3 class="text-lg font-bold text-mre-blue uppercase tracking-wider mb-4 border-b border-gray-300 pb-2">Jefatura Táctica</h3>
                         <ul class="space-y-4 text-sm text-gray-700">
-                            <li><i class="fa-solid fa-caret-right text-mre-gold mr-2"></i> <strong>Despliegue seguro:</strong> Revisión de laptops/móviles para diplomáticos en el exterior.</li>
-                            <li><i class="fa-solid fa-caret-right text-mre-gold mr-2"></i> <strong>Aislamiento consular:</strong> Desconexión temporal de embajadas vulneradas.</li>
+                            <li><i class="fa-solid fa-caret-right text-mre-gold mr-2"></i> <strong>Despliegue seguro:</strong> Revisión de equipos para diplomáticos.</li>
+                            <li><i class="fa-solid fa-caret-right text-mre-gold mr-2"></i> <strong>Aislamiento consular:</strong> Desconexión de embajadas vulneradas.</li>
                         </ul>
                     </div>
                     <div class="flex-1 bg-mre-light p-6 rounded-lg border border-gray-200">
                         <h3 class="text-lg font-bold text-mre-blue uppercase tracking-wider mb-4 border-b border-gray-300 pb-2">Sección Operativa</h3>
                         <ul class="space-y-4 text-sm text-gray-700">
-                            <li><i class="fa-solid fa-caret-right text-mre-gold mr-2"></i> Simulacros de espionaje.</li>
-                            <li><i class="fa-solid fa-caret-right text-mre-gold mr-2"></i> Monitoreo de fugas de datos.</li>
-                            <li><i class="fa-solid fa-caret-right text-mre-gold mr-2"></i> Contención a distancia.</li>
+                            <li><i class="fa-solid fa-caret-right text-mre-gold mr-2"></i> Simulacros de espionaje y Monitoreo de datos.</li>
                             <li><i class="fa-solid fa-caret-right text-mre-gold mr-2"></i> Manejo de evidencia legal (Convención de Viena).</li>
                         </ul>
                     </div>
@@ -308,85 +250,78 @@
             </div>
         </div>
 
-        <!-- SLIDE 8: MARCO REGULATORIO -->
-        <div class="slide items-center justify-center p-12 bg-mre-blue text-white">
-            <div class="max-w-4xl w-full animate-up">
-                <div class="text-center mb-12">
-                    <i class="fa-solid fa-scale-balanced text-5xl text-mre-gold mb-4"></i>
-                    <h2 class="text-4xl font-serif">4. Marco Regulatorio Principal</h2>
-                </div>
-                
-                <div class="bg-white/10 p-8 rounded-2xl backdrop-blur-sm border border-white/20">
-                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 text-lg">
-                        <li class="flex items-center gap-3">
-                            <i class="fa-solid fa-file-contract text-mre-gold"></i> Ley del Servicio Diplomático y Consular
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fa-solid fa-earth-americas text-mre-gold"></i> Convención de Viena (Comunicaciones Oficiales)
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fa-solid fa-shield text-mre-gold"></i> Leyes de Seg. Nacional e Inteligencia
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fa-solid fa-user-lock text-mre-gold"></i> Ley de Protección de Datos Personales
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fa-solid fa-certificate text-mre-gold"></i> Estándares ISO 27001
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fa-solid fa-book text-mre-gold"></i> Guías NIST SP 800-61 (Incidentes)
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 9: PERFIL DEL CARGO -->
+        <!-- SLIDE 8: PERFIL DEL CARGO -->
         <div class="slide items-center justify-center p-12 bg-white">
             <div class="max-w-6xl w-full animate-up">
-                <h2 class="text-4xl font-serif text-mre-blue mb-10 text-center">5. Perfil: Analista Senior de Respuesta a Incidentes</h2>
-                
+                <h2 class="text-4xl font-serif text-mre-blue mb-10 text-center">Perfil: Analista Senior de Respuesta a Incidentes</h2>
                 <div class="grid md:grid-cols-2 gap-8">
                     <!-- Académico -->
                     <div class="border border-gray-200 rounded-xl overflow-hidden shadow-sm">
-                        <div class="bg-mre-blue text-white p-4 font-bold text-lg text-center uppercase tracking-widest">
-                            Académico y Habilidades
-                        </div>
+                        <div class="bg-mre-blue text-white p-4 font-bold text-lg text-center uppercase tracking-widest">Académico y Habilidades</div>
                         <div class="p-6 space-y-4 text-sm text-gray-700">
-                            <div><strong class="text-mre-blue">Formación:</strong> Título de grado en Ing. en Sistemas, Informática, Telecomunicaciones o equivalente.</div>
-                            <hr>
-                            <div><strong class="text-mre-blue">Especialización:</strong> Posgrado o cursos avanzados comprobables en Ciberseguridad, Seguridad de la Información o Informática Forense.</div>
-                            <hr>
-                            <div><strong class="text-mre-blue">Certificaciones:</strong> Se valorará contar con certificaciones internacionales (Manejo de incidentes o forense digital).</div>
-                            <hr>
-                            <div><strong class="text-red-600">Idiomas (Excluyente):</strong> Dominio avanzado del inglés, indispensable para reportes técnicos y aliados.</div>
+                            <div><strong class="text-mre-blue">Formación:</strong> Título de grado en Ing. en Sistemas, Informática, Telecomunicaciones o equivalente.</div><hr>
+                            <div><strong class="text-mre-blue">Especialización:</strong> Posgrado en Ciberseguridad o Informática Forense.</div><hr>
+                            <div><strong class="text-red-600">Idiomas (Excluyente):</strong> Dominio avanzado del inglés.</div>
                         </div>
                     </div>
-                    
                     <!-- Experiencia -->
                     <div class="border border-gray-200 rounded-xl overflow-hidden shadow-sm">
-                        <div class="bg-mre-gold text-white p-4 font-bold text-lg text-center uppercase tracking-widest">
-                            Experiencia y Confidencialidad
-                        </div>
+                        <div class="bg-mre-gold text-white p-4 font-bold text-lg text-center uppercase tracking-widest">Experiencia y Confidencialidad</div>
                         <div class="p-6 space-y-5 text-sm text-gray-700">
-                            <div class="flex gap-3">
-                                <i class="fa-solid fa-fingerprint text-mre-gold text-xl mt-1"></i>
-                                <div><strong class="text-mre-blue block">Autorización de Seguridad</strong> Aprobar investigación de antecedentes (ausencia de antecedentes) para manejo de información clasificada.</div>
-                            </div>
-                            <div class="flex gap-3">
-                                <i class="fa-solid fa-briefcase text-mre-gold text-xl mt-1"></i>
-                                <div><strong class="text-mre-blue block">Exp. General (Excluyente)</strong> Mínimo 5 años en áreas de tecnología, redes de comunicaciones o seguridad informática.</div>
-                            </div>
-                            <div class="flex gap-3">
-                                <i class="fa-solid fa-crosshairs text-mre-gold text-xl mt-1"></i>
-                                <div><strong class="text-mre-blue block">Exp. Específica (Excluyente)</strong> Mínimo 3 años en equipos de defensa cibernética (resolución de ataques reales, malware o forense).</div>
-                            </div>
+                            <div class="flex gap-3"><i class="fa-solid fa-fingerprint text-mre-gold text-xl mt-1"></i><div><strong class="text-mre-blue block">Autorización de Seguridad</strong> Aprobar investigación de antecedentes para manejo de información clasificada.</div></div>
+                            <div class="flex gap-3"><i class="fa-solid fa-briefcase text-mre-gold text-xl mt-1"></i><div><strong class="text-mre-blue block">Exp. General (Excluyente)</strong> Mínimo 5 años en áreas de tecnología o seguridad informática.</div></div>
+                            <div class="flex gap-3"><i class="fa-solid fa-crosshairs text-mre-gold text-xl mt-1"></i><div><strong class="text-mre-blue block">Exp. Específica (Excluyente)</strong> Mínimo 3 años en equipos de defensa cibernética (resolución de ataques reales).</div></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+    </div>
+
+    <!-- MODAL DEL FORMULARIO -->
+    <div id="form-modal">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 overflow-hidden relative">
+            <div class="bg-mre-blue p-6 text-white flex justify-between items-center">
+                <h3 class="text-xl font-serif">Postulación a Vacante</h3>
+                <button onclick="closeForm()" class="text-gray-300 hover:text-white"><i class="fa-solid fa-xmark text-2xl"></i></button>
+            </div>
+            
+            <div class="p-8">
+                <!-- Mensaje de éxito (Oculto por defecto) -->
+                <div id="success-msg" class="hidden bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4 text-sm text-center">
+                    <i class="fa-solid fa-check-circle mr-2"></i> Postulación enviada con éxito.
+                </div>
+                <!-- Mensaje de error (Oculto por defecto) -->
+                <div id="error-msg" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 text-sm text-center">
+                    <i class="fa-solid fa-triangle-exclamation mr-2"></i> <span id="error-text">Ocurrió un error.</span>
+                </div>
+
+                <form id="postulacion-form" class="space-y-5">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Nombre(s) *</label>
+                        <input type="text" id="inputNombre" required class="w-full border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:border-mre-blue focus:ring-1 focus:ring-mre-blue">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Apellido(s) *</label>
+                        <input type="text" id="inputApellido" required class="w-full border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:border-mre-blue focus:ring-1 focus:ring-mre-blue">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Documento de Identidad (C.I.) *</label>
+                        <input type="number" id="inputCI" required class="w-full border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:border-mre-blue focus:ring-1 focus:ring-mre-blue">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico *</label>
+                        <input type="email" id="inputCorreo" required class="w-full border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:border-mre-blue focus:ring-1 focus:ring-mre-blue">
+                    </div>
+                    
+                    <button type="submit" id="submitBtn" class="w-full bg-mre-gold hover:bg-yellow-600 text-white font-bold py-3 px-4 rounded-lg transition flex justify-center items-center">
+                        <span id="btnText">Enviar Postulación</span>
+                        <div id="btnSpinner" class="spinner ml-2"></div>
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
 
     <!-- CONTROLES FLOTANTES -->
@@ -401,76 +336,132 @@
 
     <!-- INDICADOR DE DIAPOSITIVA -->
     <div class="fixed bottom-6 left-6 z-50 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-bold text-mre-blue shadow-lg">
-        <span id="current-slide-num">1</span> / <span id="total-slides-num">9</span>
+        <span id="current-slide-num">1</span> / <span id="total-slides-num">8</span>
     </div>
 
     <!-- BARRA DE PROGRESO -->
     <div id="progress-bar"></div>
 
-    <!-- LÓGICA DE LA PRESENTACIÓN -->
+
+    <!-- FIREBASE Y LÓGICA -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const slides = document.querySelectorAll('.slide');
-            const btnPrev = document.getElementById('btn-prev');
-            const btnNext = document.getElementById('btn-next');
-            const currentNum = document.getElementById('current-slide-num');
-            const totalNum = document.getElementById('total-slides-num');
-            const progressBar = document.getElementById('progress-bar');
+        // --- CONFIGURACIÓN DE FIREBASE (Versión Compat) ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyANDeRrN6liAFwireLLdY9szELNs7TFtBg",
+            authDomain: "academiarrhh-b4b7b.firebaseapp.com",
+            projectId: "academiarrhh-b4b7b",
+            storageBucket: "academiarrhh-b4b7b.firebasestorage.app",
+            messagingSenderId: "885021112736",
+            appId: "1:885021112736:web:18e7ce247050ecf8718cc5"
+        };
+
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // --- LÓGICA DEL FORMULARIO ---
+        const modal = document.getElementById('form-modal');
+        const form = document.getElementById('postulacion-form');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        const btnSpinner = document.getElementById('btnSpinner');
+        const successMsg = document.getElementById('success-msg');
+        const errorMsg = document.getElementById('error-msg');
+        const errorText = document.getElementById('error-text');
+
+        function openForm() {
+            modal.classList.add('show');
+            successMsg.classList.add('hidden');
+            errorMsg.classList.add('hidden');
+        }
+
+        function closeForm() {
+            modal.classList.remove('show');
+            form.reset();
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
             
-            let currentIndex = 0;
-            const totalSlides = slides.length;
-            totalNum.textContent = totalSlides;
+            // Estado de carga
+            submitBtn.disabled = true;
+            btnText.textContent = "Procesando...";
+            btnSpinner.style.display = "block";
+            successMsg.classList.add('hidden');
+            errorMsg.classList.add('hidden');
 
-            function updatePresentation() {
-                // Actualizar clases de las slides
-                slides.forEach((slide, index) => {
-                    if (index === currentIndex) {
-                        slide.classList.add('active');
-                    } else {
-                        slide.classList.remove('active');
-                    }
-                });
+            const postulanteData = {
+                nombre: document.getElementById('inputNombre').value,
+                apellido: document.getElementById('inputApellido').value,
+                documento: document.getElementById('inputCI').value,
+                correo: document.getElementById('inputCorreo').value,
+                fechaPostulacion: firebase.firestore.FieldValue.serverTimestamp(),
+                cargo: "Analista Senior de Respuesta a Incidentes"
+            };
 
-                // Actualizar números y botones
-                currentNum.textContent = currentIndex + 1;
-                btnPrev.disabled = currentIndex === 0;
-                btnNext.disabled = currentIndex === totalSlides - 1;
+            try {
+                // Guardar en la colección "postulaciones" de Firestore
+                await db.collection("postulaciones").add(postulanteData);
+                
+                // Éxito
+                form.reset();
+                successMsg.classList.remove('hidden');
+                
+                // Cerrar modal automáticamente después de 3 segundos
+                setTimeout(() => {
+                    closeForm();
+                }, 3000);
 
-                // Actualizar barra de progreso
-                const progress = ((currentIndex) / (totalSlides - 1)) * 100;
-                progressBar.style.width = `${progress}%`;
+            } catch (error) {
+                // Manejo de errores
+                console.error("Error agregando documento: ", error);
+                errorText.textContent = "No se pudo enviar. Verifica tu conexión e intenta de nuevo.";
+                errorMsg.classList.remove('hidden');
+            } finally {
+                // Restaurar botón
+                submitBtn.disabled = false;
+                btnText.textContent = "Enviar Postulación";
+                btnSpinner.style.display = "none";
             }
-
-            function goNext() {
-                if (currentIndex < totalSlides - 1) {
-                    currentIndex++;
-                    updatePresentation();
-                }
-            }
-
-            function goPrev() {
-                if (currentIndex > 0) {
-                    currentIndex--;
-                    updatePresentation();
-                }
-            }
-
-            // Event Listeners para botones
-            btnNext.addEventListener('click', goNext);
-            btnPrev.addEventListener('click', goPrev);
-
-            // Navegación con teclado (Flechas)
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowRight' || e.key === 'Space') {
-                    goNext();
-                } else if (e.key === 'ArrowLeft') {
-                    goPrev();
-                }
-            });
-
-            // Inicializar
-            updatePresentation();
         });
+
+        // --- LÓGICA DE LA PRESENTACIÓN ---
+        const slides = document.querySelectorAll('.slide');
+        const btnPrev = document.getElementById('btn-prev');
+        const btnNext = document.getElementById('btn-next');
+        const currentNum = document.getElementById('current-slide-num');
+        const totalNum = document.getElementById('total-slides-num');
+        const progressBar = document.getElementById('progress-bar');
+        
+        let currentIndex = 0;
+        const totalSlides = slides.length;
+        totalNum.textContent = totalSlides;
+
+        function updatePresentation() {
+            slides.forEach((slide, index) => {
+                if (index === currentIndex) slide.classList.add('active');
+                else slide.classList.remove('active');
+            });
+            currentNum.textContent = currentIndex + 1;
+            btnPrev.disabled = currentIndex === 0;
+            btnNext.disabled = currentIndex === totalSlides - 1;
+            progressBar.style.width = `${((currentIndex) / (totalSlides - 1)) * 100}%`;
+        }
+
+        function goNext() { if (currentIndex < totalSlides - 1) { currentIndex++; updatePresentation(); } }
+        function goPrev() { if (currentIndex > 0) { currentIndex--; updatePresentation(); } }
+
+        btnNext.addEventListener('click', goNext);
+        btnPrev.addEventListener('click', goPrev);
+        document.addEventListener('keydown', (e) => {
+            // Prevenir que las flechas cambien de slide si se está escribiendo en el formulario
+            if (modal.classList.contains('show')) return;
+            
+            if (e.key === 'ArrowRight' || e.key === 'Space') goNext();
+            else if (e.key === 'ArrowLeft') goPrev();
+        });
+
+        updatePresentation();
     </script>
 </body>
 </html>
