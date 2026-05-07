@@ -34,9 +34,14 @@
         
         #qrcode img { margin: 0 auto; }
         
-        /* Estilos Teleprompter */
-        .teleprompter-bg { background-color: #0f172a !important; color: #f8fafc !important; }
-        .teleprompter-text { font-size: 3.5rem !important; line-height: 1.5 !important; font-weight: 500; }
+        /* Estilos Teleprompter de Alto Contraste */
+        .teleprompter-bg { background-color: #000000 !important; }
+        .teleprompter-text { 
+            font-size: 4rem !important; 
+            line-height: 1.4 !important; 
+            font-weight: 800 !important; 
+            color: #fbbf24 !important; /* Amarillo brillante para máximo contraste */
+        }
     </style>
 </head>
 <body class="h-screen flex flex-col overflow-hidden">
@@ -402,7 +407,7 @@
                 presentationContainer.classList.remove('hidden');
                 controlContainer.classList.add('hidden');
                 
-                // Aplicar estilos oscuros
+                // Aplicar estilos oscuros absolutos
                 document.body.classList.add('teleprompter-bg');
                 slideContent.classList.add('teleprompter-bg', 'border-none', 'shadow-none');
                 headerBar.classList.add('hidden'); // Ocultar barra superior
@@ -474,10 +479,10 @@
                 ctrlCounter.textContent = currentSlide + 1;
             } 
             else if (ROL === 'teleprompter') {
-                // Render Teleprompter (Notas Gigantes)
+                // Render Teleprompter (Notas Gigantes de Alto Contraste)
                 slideContent.innerHTML = `
-                    <div class="mb-8 border-b border-gray-700 pb-4 flex justify-between items-end">
-                        <span class="text-2xl text-blue-400 font-bold uppercase tracking-widest">Diapositiva ${currentSlide + 1}</span>
+                    <div class="mb-10 border-b-2 border-gray-800 pb-4 flex justify-between items-end">
+                        <span class="text-3xl text-cyan-400 font-bold uppercase tracking-widest">Diapositiva ${currentSlide + 1}</span>
                     </div>
                     <p class="teleprompter-text">${data.nota}</p>
                 `;
