@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sostenibilidad de la Deuda - MRE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        body { background-color: #f8fafc; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        .slide-enter { animation: fadeIn 0.3s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .slide-content { text-align: left; }
+        .slide-content.center { text-align: center; justify-content: center; align-items: center; }
+        .slide-content h1 { font-size: 2.75rem; font-weight: 800; color: #0f172a; margin-bottom: 1.5rem; line-height: 1.2; }
+        .slide-content h2 { font-size: 2.4rem; font-weight: 700; color: #1d4ed8; margin-bottom: 1.5rem; border-bottom: 3px solid #e2e8f0; padding-bottom: 0.75rem;}
+        .slide-content p { font-size: 1.4rem; color: #334155; margin-bottom: 1.25rem; line-height: 1.6; }
+        .slide-content ul { list-style-type: none; margin-left: 0; margin-bottom: 1.5rem; padding-left: 0; }
+        .slide-content li { font-size: 1.35rem; color: #334155; margin-bottom: 1rem; position: relative; padding-left: 1.75rem; }
+        .slide-content li::before { content: "•"; color: #3b82f6; font-weight: bold; position: absolute; left: 0; font-size: 1.5rem; top: -2px; }
+        
+        /* Gráficos de Barras */
+        .bar-chart-container { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+        .bar-row { display: flex; align-items: center; gap: 15px; }
+        .bar-label { width: 340px; font-weight: 600; text-align: left; font-size: 1rem; color: #1e293b;}
+        .bar-wrapper { flex-grow: 1; background-color: #e2e8f0; height: 32px; border-radius: 6px; overflow: hidden; }
+        .bar-fill { height: 100%; display: flex; align-items: center; padding-left: 10px; color: white; font-weight: bold; font-size: 1rem;}
+        
+        /* Tarjetas de Calificación */
+        .rating-card { background: white; padding: 15px; border-radius: 12px; border: 2px solid #e2e8f0; text-align: center; flex: 1; }
+        .rating-val { font-size: 2rem; font-weight: 800; margin-top: 5px; }
+        .status-ig { color: #10b981; }
+        .status-spec { color: #f59e0b; }
+        
+        #qrcode img { margin: 0 auto; }
+        
+        /* Estilos Teleprompter de Alto Contraste */
+        .teleprompter-bg { background-color: #000000 !important; }
+        .teleprompter-text { 
+            font-size: 4rem !important; 
+            line-height: 1.4 !important; 
+            font-weight: 800 !important; 
+            color: #fbbf24 !important; /* Amarillo brillante para máximo contraste */
+        }
+    </style>
+</head>
+<body class="h-screen flex flex-col overflow-hidden">
+
+    <!-- PANTALLA DE CARGA -->
+    <div id="loading-screen" class="bg-white p-10 rounded-2xl shadow-xl max-w-sm w-full text-center space-y-4 z-50 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+        <h2 class="text-xl font-bold text-gray-800">Conectando...</h2>
+    </div>
+
+    <!-- CONTENEDOR MODO VISOR / TELEPROMPTER -->
+    <div id="presentation-container" class="hidden w-full h-full max-w-7xl mx-auto p-4 md:p-8 flex flex-col transition-colors duration-300">
+        <div class="flex justify-between items-center mb-4 px-2" id="header-bar">
+            <div class="flex items-center gap-3">
+                <div class="relative flex h-4 w-4">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-4 w-4 bg-green-500"></span>
+                </div>
+                <span id="role-badge" class="text-sm font-bold tracking-wide uppercase px-4 py-1.5 rounded-full shadow-sm"></span>
+            </div>
+            <div id="slide-indicator" class="text-gray-500 font-semibold bg-white px-5 py-2 rounded-full shadow-sm border border-gray-200 text-xl">
+                Slide <span id="slide-counter" class="text-blue-600 font-bold">1</span> / 12
+            </div>
+        </div>
+
+        <div class="flex-grow bg-white rounded-3xl shadow-xl border border-gray-200 p-8 md:p-12 overflow-y-auto slide-content flex flex-col transition-colors duration-300" id="slide-content">
+            <!-- Contenido inyectado por JS -->
+        </div>
+    </div>
+
+    <!-- CONTENEDOR MODO CONTROL (MÓVIL) -->
+    <div id="control-container" class="hidden w-full h-full bg-gray-900 flex-col">
+        <button onclick="prevSlide()" class="flex-1 bg-gray-800 text-white text-5xl sm:text-6xl font-black active:bg-gray-700 transition-colors border-b-4 border-gray-900 flex justify-center items-center shadow-inner">
+            ⬆ ATRÁS
+        </button>
+        <div class="h-28 bg-black text-white flex items-center justify-center text-4xl font-bold shadow-xl z-10">
+            SLIDE <span id="ctrl-counter" class="ml-4 text-blue-400 text-5xl">1</span><span class="text-gray-600 text-2xl ml-2">/ 12</span>
+        </div>
+        <!-- El botón siguiente es más grande para evitar errores de touch -->
+        <button onclick="nextSlide()" class="flex-[2] bg-blue-600 text-white text-6xl sm:text-7xl font-black active:bg-blue-500 transition-colors flex justify-center items-center shadow-inner">
+            SIGUIENTE ⬇
+        </button>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // =========================================================================
+        // CONFIGURACIÓN DE ROLES MEDIANTE URL (?rol=visor | teleprompter | control)
+        // =========================================================================
+        const urlParams = new URLSearchParams(window.location.search);
+        // Si no hay parámetro, por defecto es 'visor'
+        const ROL = urlParams.get('rol') || 'visor'; 
+
+        const baseUrl = window.location.origin + window.location.pathname;
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBVEOXWhRMp0Di_HKJwoXok6thV4iWiGQc",
+            authDomain: "academiaadmfin.firebaseapp.com",
+            projectId: "academiaadmfin",
+            storageBucket: "academiaadmfin.firebasestorage.app",
+            messagingSenderId: "742974542636",
+            appId: "1:742974542636:web:c5efb41171f865c7845289"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const stateDocRef = doc(db, 'presentaciones', 'presentacion-sven-aat');
+
+        // =========================================================================
+        // DIAPOSITIVAS Y GUION
+        // =========================================================================
+        const slides = [
+            {
+                html: `<div class="center h-full flex flex-col justify-center relative">
+                    <p class="text-blue-600 font-bold tracking-widest uppercase mb-2 text-sm">Dirección General de la Academia - Curso AAT</p>
+                    <h1 class="text-4xl font-extrabold text-gray-900 mb-6">Sostenibilidad de la Deuda Pública</h1>
+                    <div class="w-24 h-1.5 bg-blue-600 mx-auto mb-8 rounded-full"></div>
+                    
+                    <div class="flex items-center justify-center gap-12 mb-8">
+                        <div class="bg-gray-50 px-8 py-4 rounded-xl border border-gray-100 text-left">
+                            <p class="text-xl font-bold text-gray-800">Sven Knutson Sachelaridi</p>
+                            <p class="text-gray-500">Ministerio de Relaciones Exteriores</p>
+                            <p class="text-sm mt-2 text-blue-600 font-semibold">Análisis del PGN e Inversión</p>
+                        </div>
+                        
+                        <div class="flex flex-col items-center bg-white p-3 rounded-xl shadow-md border border-gray-200">
+                            <div id="qrcode" class="mb-1"></div>
+                            <p class="text-[10px] text-gray-500 font-bold mt-2 uppercase tracking-wide">Escanea para seguir en vivo</p>
+                        </div>
+                    </div>
+                </div>`,
+                nota: "Buenos días. Hablaremos de la deuda no como un número frío, sino como el resultado de cómo gastamos los impuestos. Los invito a escanear el QR en pantalla para que la presentación avance automáticamente en sus teléfonos junto conmigo."
+            },
+            {
+                html: `<h2>Objetivos de la Presentación</h2>
+                <div class="space-y-4 mt-4">
+                    <div class="bg-blue-50 p-4 rounded-xl border-l-4 border-blue-600 shadow-sm">
+                        <strong class="text-blue-800 text-lg block mb-1">🎯 Objetivo General</strong>
+                        <p class="text-sm text-gray-700 m-0 leading-relaxed">Analizar la sostenibilidad de la deuda pública paraguaya desde una perspectiva financiera y administrativa, evaluando su impacto real en el desarrollo del país para proponer reformas institucionales viables.</p>
+                    </div>
+                    
+                    <div class="mt-5">
+                        <strong class="text-gray-800 text-md block mb-3">📌 Objetivos Específicos</strong>
+                        <div class="space-y-2">
+                            <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm flex gap-3 items-start">
+                                <div class="bg-blue-100 text-blue-700 font-bold w-6 h-6 rounded flex items-center justify-center shrink-0 text-sm">1</div> 
+                                <p class="text-sm text-gray-700 m-0"><strong>Desglosar</strong> la rigidez del Presupuesto General de la Nación (PGN) y comprender las fuentes de financiamiento del Estado.</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm flex gap-3 items-start">
+                                <div class="bg-blue-100 text-blue-700 font-bold w-6 h-6 rounded flex items-center justify-center shrink-0 text-sm">2</div> 
+                                <p class="text-sm text-gray-700 m-0"><strong>Comparar</strong> la posición macroeconómica y las calificaciones de riesgo de Paraguay frente a la región (MERCOSUR).</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm flex gap-3 items-start">
+                                <div class="bg-blue-100 text-blue-700 font-bold w-6 h-6 rounded flex items-center justify-center shrink-0 text-sm">3</div> 
+                                <p class="text-sm text-gray-700 m-0"><strong>Proponer</strong> soluciones mediante reformas estructurales y tecnológicas para mejorar el gasto.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>`,
+                nota: "Antes de entrar a los números, quiero marcar el rumbo de esta charla. Nuestro objetivo es analizar qué tan sostenible es la deuda trazando 3 metas: 1) Entender el gasto real del Estado. 2) Compararnos con el Mercosur. Y 3) Proponer soluciones usando tecnología y reformas."
+            },
+            {
+                html: `<h2>1. La "Billetera" del Estado (Rigidez)</h2>
+                <p>El primer gran problema es la <strong>Inflexibilidad del Gasto</strong>. Casi todo el dinero que se recauda ya tiene dueño antes de ingresar a las arcas del Estado.</p>
+                <ul class="mt-8">
+                    <li class="mb-6">Entre el <strong>70% y el 80%</strong> de los impuestos se destinan a Gastos Rígidos.</li>
+                    <li>Este escenario limita la capacidad del Estado para reaccionar ante imprevistos o desarrollar infraestructura con recursos propios.</li>
+                </ul>`,
+                nota: "La rigidez significa que no hay margen de maniobra. Si hay una emergencia, no hay ahorro y debemos pedir prestado. ANALOGÍA: Es como una oficina donde el 80% del presupuesto se gasta solo en alquiler y luz; no queda dinero para comprar computadoras nuevas ni modernizar nada."
+            },
+            {
+                html: `<h2>2. Top 5: ¿A dónde van los impuestos exactos?</h2>
+                <p>Distribución de la recaudación tributaria (Datos SITUFIN - MEF):</p>
+                <div class="bar-chart-container">
+                    <div class="bar-row">
+                        <div class="bar-label">
+                            <p class="mb-0 text-base">1. Servicios Personales</p>
+                            <p class="text-xs text-gray-500 leading-tight">Sueldos, aguinaldos y beneficios de docentes, médicos, policías, militares y administrativos.</p>
+                        </div>
+                        <div class="bar-wrapper"><div class="bg-red-600 bar-fill" style="width: 55%">~55%</div></div>
+                    </div>
+                    <div class="bar-row">
+                        <div class="bar-label">
+                            <p class="mb-0 text-base">2. Caja Fiscal (Déficit)</p>
+                            <p class="text-xs text-gray-500 leading-tight">Inyección directa de impuestos (IVA/IRE) para tapar el agujero de las jubilaciones estatales.</p>
+                        </div>
+                        <div class="bar-wrapper"><div class="bg-red-400 bar-fill" style="width: 15%">~15%</div></div>
+                    </div>
+                    <div class="bar-row">
+                        <div class="bar-label">
+                            <p class="mb-0 text-base">3. Servicio de Deuda</p>
+                            <p class="text-xs text-gray-500 leading-tight">Pago exclusivo de los intereses y cuotas de préstamos o bonos emitidos en el pasado.</p>
+                        </div>
+                        <div class="bar-wrapper"><div class="bg-amber-500 bar-fill" style="width: 14%">~14%</div></div>
+                    </div>
+                    <div class="bar-row">
+                        <div class="bar-label">
+                            <p class="mb-0 text-base">4. Insumos y Consumo</p>
+                            <p class="text-xs text-gray-500 leading-tight">Compra vital de medicamentos, combustibles (patrulleras/ambulancias), y kits escolares.</p>
+                        </div>
+                        <div class="bar-wrapper"><div class="bg-blue-500 bar-fill" style="width: 9%">~9%</div></div>
+                    </div>
+                    <div class="bar-row">
+                        <div class="bar-label">
+                            <p class="mb-0 text-base">5. Inversión Física</p>
+                            <p class="text-xs text-gray-500 leading-tight">Construcción de nuevas rutas, hospitales y escuelas usando fondos propios del Estado.</p>
+                        </div>
+                        <div class="bar-wrapper"><div class="bg-green-500 bar-fill" style="width: 7%">~7%</div></div>
+                    </div>
+                </div>`,
+                nota: "Acá tienen el detalle. El puesto 1 y 2 se llevan el 70% en salarios y jubilaciones. Por eso la Inversión (el puesto 5) apenas recibe el 7% de los impuestos, y obliga al país a endeudarse para hacer obras."
+            },
+            {
+                html: `<h2>3. ¿De dónde sacamos dinero?</h2>
+                <div class="grid grid-cols-2 gap-6 mt-8">
+                    <div class="bg-blue-50 p-6 rounded-xl border border-blue-200 shadow-sm">
+                        <h3 class="font-bold text-blue-800 text-xl mb-3">🏦 Préstamos (BID/BM)</h3>
+                        <p class="text-base text-gray-700">Baratos pero burocráticos. El dinero se entrega por <strong>certificación de avance</strong> de las obras. Garantizan un control técnico estricto del gasto.</p>
+                    </div>
+                    <div class="bg-green-50 p-6 rounded-xl border border-green-200 shadow-sm">
+                        <h3 class="font-bold text-green-800 text-xl mb-3">📜 Bonos (Wall Street)</h3>
+                        <p class="text-base text-gray-700">Caros pero inmediatos. Dinero de <strong>libre disponibilidad</strong>. El mercado nos presta basándose en la confianza y calificación del país.</p>
+                    </div>
+                </div>`,
+                nota: "El BID es como el padre que te presta para estudiar y te pide las notas cada mes. El Bono es como la tarjeta de crédito que usás y el banco no te pregunta en qué gastaste, pero te cobra más caro."
+            },
+            {
+                html: `<h2>4. Evolución de la Deuda</h2>
+                <div class="w-full flex flex-col items-center mt-2">
+                    <img src="https://www.abc.com.py/resizer/v2/R3JHY5BHMVGMNH3YFS4FRWEZXY.jpg?auth=25c537abae5fed55dbf3c39a76fbe1ba48c8f87988835425a60be83ff18ecc18&width=1920&smart=true" class="w-full max-w-6xl h-auto max-h-[60vh] object-cover rounded-xl shadow-lg border border-gray-200">
+                    <p class="text-sm text-gray-500 mt-4 font-semibold tracking-wide uppercase">Crecimiento desde la pandemia 2020 (Fuente: MEF)</p>
+                </div>`,
+                nota: "Vean la explosión de la línea roja. Pasamos de un cómodo 15% de deuda a casi un 38% que ya nos empieza a apretar el zapato fuertemente a nivel país."
+            },
+            {
+                html: `<h2>5. El peligro del "Bicicleteo"</h2>
+                <div class="highlight text-3xl py-12 text-center shadow-sm">
+                    <strong>"Rollover":</strong> Emitir deuda nueva para pagar el capital de la deuda vieja que está venciendo.
+                </div>
+                <p class="text-xl mt-8 px-6 text-center text-gray-700">Si el país no reduce su déficit, llegará un momento en que todo el préstamo nuevo se use solo para pagar el anterior, sin que sobre dinero para inyectar a la economía nacional.</p>`,
+                nota: "El rollover es válido para manejar la tesorería a corto plazo, pero es muy riesgoso a largo plazo. Es el famoso 'tapar un agujero abriendo otro más grande'."
+            },
+            {
+                html: `<h2>6. Comparativa MERCOSUR (Deuda vs Ingresos)</h2>
+                <div class="w-full bg-white p-5 rounded-xl border border-gray-200 shadow-sm mt-2">
+                    <div class="flex justify-center gap-6 text-xs font-bold mb-4 border-b pb-2">
+                        <div class="flex items-center gap-1"><div class="w-3 h-3 bg-blue-600 rounded"></div> Deuda (% PIB)</div>
+                        <div class="flex items-center gap-1"><div class="w-3 h-3 bg-red-500 rounded"></div> Recaudación Tributaria (% PIB)</div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-x-8 gap-y-4">
+                        <div class="col-span-2 bg-blue-50 p-3 rounded-lg border border-blue-200">
+                            <div class="font-bold text-sm text-gray-800 mb-1">🇵🇾 PARAGUAY</div>
+                            <div class="flex flex-col gap-1">
+                                <div class="flex items-center"><div class="w-14 text-[11px] text-gray-600 font-semibold">Deuda</div><div class="bg-blue-600 h-5 rounded-r flex items-center px-2 text-xs text-white font-bold shadow-sm" style="width: 38%">38%</div></div>
+                                <div class="flex items-center"><div class="w-14 text-[11px] text-gray-600 font-semibold">Ingreso</div><div class="bg-red-500 h-5 rounded-r flex items-center px-2 text-xs text-white font-bold shadow-sm" style="width: 10.4%">10.4%</div></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="font-bold text-xs text-gray-500 mb-1">🇧🇷 BRASIL</div>
+                            <div class="flex flex-col gap-1">
+                                <div class="flex items-center"><div class="w-14 text-[10px] text-gray-400">Deuda</div><div class="bg-blue-300 h-4 rounded-r flex items-center px-1 text-[10px] text-blue-800 font-bold" style="width: 75%">75%</div></div>
+                                <div class="flex items-center"><div class="w-14 text-[10px] text-gray-400">Ingreso</div><div class="bg-red-300 h-4 rounded-r flex items-center px-1 text-[10px] text-red-800 font-bold" style="width: 33%">33%</div></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="font-bold text-xs text-gray-500 mb-1">🇦🇷 ARGENTINA</div>
+                            <div class="flex flex-col gap-1">
+                                <div class="flex items-center"><div class="w-14 text-[10px] text-gray-400">Deuda</div><div class="bg-blue-300 h-4 rounded-r flex items-center px-1 text-[10px] text-blue-800 font-bold" style="width: 85%">85%</div></div>
+                                <div class="flex items-center"><div class="w-14 text-[10px] text-gray-400">Ingreso</div><div class="bg-red-300 h-4 rounded-r flex items-center px-1 text-[10px] text-red-800 font-bold" style="width: 29%">29%</div></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="font-bold text-xs text-gray-500 mb-1">🇺🇾 URUGUAY</div>
+                            <div class="flex flex-col gap-1">
+                                <div class="flex items-center"><div class="w-14 text-[10px] text-gray-400">Deuda</div><div class="bg-blue-300 h-4 rounded-r flex items-center px-1 text-[10px] text-blue-800 font-bold" style="width: 60%">60%</div></div>
+                                <div class="flex items-center"><div class="w-14 text-[10px] text-gray-400">Ingreso</div><div class="bg-red-300 h-4 rounded-r flex items-center px-1 text-[10px] text-red-800 font-bold" style="width: 26.5%">26.5%</div></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="font-bold text-xs text-gray-500 mb-1">🇧🇴 BOLIVIA <span class="font-normal text-[9px]">(Miembro Pleno)</span></div>
+                            <div class="flex flex-col gap-1">
+                                <div class="flex items-center"><div class="w-14 text-[10px] text-gray-400">Deuda</div><div class="bg-blue-300 h-4 rounded-r flex items-center px-1 text-[10px] text-blue-800 font-bold" style="width: 80%">80%</div></div>
+                                <div class="flex items-center"><div class="w-14 text-[10px] text-gray-400">Ingreso</div><div class="bg-red-300 h-4 rounded-r flex items-center px-1 text-[10px] text-red-800 font-bold" style="width: 24%">24%</div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-sm mt-4 text-gray-600 italic font-medium text-center">No importa solo cuánto se debe, sino cuánto se recauda para pagar. Todo el bloque del MERCOSUR recauda el doble o triple que Paraguay.</p>`,
+                nota: "Muchos dicen 'estamos bien porque Argentina o Brasil deben muchísimo'. ¡Falso! Miren las barras rojas: ellos y Uruguay recaudan muchísimo más en impuestos. Deber el 38% de tu PIB cuando tu ingreso es solo del 10% asfixia al Estado."
+            },
+            {
+                html: `<h2>7. El Cuello de Botella Social</h2>
+                <p class="text-xl">Por cada <strong>100 guaraníes</strong> que la DNIT recauda:</p>
+                <div class="flex items-center justify-center gap-12 mt-10">
+                    <div class="text-center"><div class="text-6xl font-bold text-red-600 mb-2">15 Gs.</div><p class="text-lg font-semibold text-gray-600">Bancos (Deuda)</p></div>
+                    <div class="text-6xl text-gray-400">➡</div>
+                    <div class="text-center"><div class="text-6xl font-bold text-blue-600 mb-2">85 Gs.</div><p class="text-lg font-semibold text-gray-600">Resto del País</p></div>
+                </div>
+                <p class="mt-12 text-xl text-center px-8 border-l-4 border-red-500 bg-red-50 py-4 rounded-r-lg">Este <strong>Efecto Expulsión</strong> significa que el altísimo pago de intereses le resta recursos en efectivo directamente al sistema de salud y educación.</p>`,
+                nota: "15% de nuestros impuestos se van a Wall Street cada mes solo en intereses. Por eso no sobra para comprar medicamentos para los hospitales."
+            },
+            {
+                html: `<h2>8. Paraguay ante las Calificadoras</h2>
+                <p class="text-lg mb-6">Estatus actual de Paraguay en el mundo financiero (2024-2025):</p>
+                <div class="flex gap-6">
+                    <div class="rating-card border-green-500 shadow-lg scale-105">
+                        <p class="text-sm font-bold text-gray-400">MOODY'S</p>
+                        <p class="rating-val status-ig">Baa3</p>
+                        <p class="text-xs bg-green-100 text-green-700 rounded-full py-1.5 mt-2 font-bold">GRADO DE INVERSIÓN</p>
+                    </div>
+                    <div class="rating-card shadow-sm">
+                        <p class="text-sm font-bold text-gray-400">S&P GLOBAL</p>
+                        <p class="rating-val status-spec">BB+</p>
+                        <p class="text-[11px] bg-amber-100 text-amber-700 rounded-full py-1.5 mt-2 font-bold">A UN PASO (PERSPECTIVA +)</p>
+                    </div>
+                    <div class="rating-card shadow-sm">
+                        <p class="text-sm font-bold text-gray-400">FITCH RATINGS</p>
+                        <p class="rating-val status-spec">BB+</p>
+                        <p class="text-[11px] bg-amber-100 text-amber-700 rounded-full py-1.5 mt-2 font-bold">A UN PASO (ESTABLE)</p>
+                    </div>
+                </div>
+                <p class="text-base mt-8 text-center text-gray-600">Lograr que las tres agencias nos pinten de "Verde" reducirá drásticamente el costo futuro de la deuda soberana.</p>`,
+                nota: "Este es nuestro semáforo global. Moody's ya nos dio el voto de confianza. S&P y Fitch nos tienen bajo observación, a un solo escalón de subir. Nuestra imagen país en el MRE depende de mantener estos códigos estables."
+            },
+            {
+                html: `<h2>9. Mapa de Riesgo Regional</h2>
+                <p class="text-base text-gray-500 mb-4">Comparativa de seguridad crediticia (Moody's):</p>
+                <div class="bar-chart-container mt-2 gap-4">
+                    <div class="bar-row"><span class="bar-label text-base">🇨🇱 Chile (A2)</span><div class="bar-wrapper h-8"><div class="bg-green-600 bar-fill text-sm" style="width: 90%">Súper Seguro</div></div></div>
+                    <div class="bar-row"><span class="bar-label text-base">🇺🇾 Uruguay (Baa1)</span><div class="bar-wrapper h-8"><div class="bg-green-500 bar-fill text-sm" style="width: 75%">Seguro</div></div></div>
+                    <div class="bar-row"><span class="bar-label text-base font-bold text-blue-800">🇵🇾 Paraguay (Baa3)</span><div class="bar-wrapper h-8"><div class="bg-green-400 bar-fill text-sm" style="width: 60%">Límite Seguro</div></div></div>
+                    <div class="bar-row"><span class="bar-label text-base text-gray-400">🇧🇷 Brasil (Ba2)</span><div class="bar-wrapper h-8"><div class="bg-amber-400 bar-fill text-sm" style="width: 45%">Riesgo Medio</div></div></div>
+                    <div class="bar-row"><span class="bar-label text-base text-gray-400">🇦🇷 Argentina (Ca)</span><div class="bar-wrapper h-8"><div class="bg-red-600 bar-fill text-sm" style="width: 15%">Default</div></div></div>
+                </div>
+                <div class="mt-8 bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg text-base text-gray-700 shadow-sm">
+                    Estamos en el selecto grupo de países con Grado de Inversión, posicionándonos por encima de potencias económicas regionales. Proteger esta calificación es una política de Estado.
+                </div>`,
+                nota: "Miren a Paraguay en la tabla. Estamos por encima de Brasil y Argentina en confianza para los inversionistas. Es un hito histórico que debemos cuidar."
+            },
+            {
+                html: `<h2>10. Reformas y Tecnología Integrada</h2>
+                <div class="space-y-5 mt-6">
+                    <div class="bg-blue-50 p-5 rounded-xl border-l-4 border-blue-500 shadow-sm">
+                        <strong class="text-blue-800 text-xl">1. Ley del Servicio Civil:</strong> <br>
+                        <span class="text-base text-gray-700 leading-relaxed block mt-1">Frena el clientelismo exigiendo ingreso por concurso. <br><span class="italic text-gray-500 text-sm">Ejemplo: Evita contrataciones masivas sin justificación técnica en entes del Estado, deteniendo la inflación de salarios en el PGN.</span></span>
+                    </div>
+                    
+                    <div class="bg-indigo-50 p-5 rounded-xl border-l-4 border-indigo-500 shadow-sm">
+                        <strong class="text-indigo-900 text-xl">🔍 2. Inteligencia Artificial contra Evasión:</strong><br>
+                        <span class="text-base text-gray-700 leading-relaxed block mt-1">Cruce automatizado de Facturación (e-Kuatia) y Aduanas (SOFIA). <br><span class="italic text-gray-500 text-sm">Ejemplo: Detectar de inmediato la creación de "empresas fantasma" o esquemas de facturas falsas diseñadas para evadir IVA e IRE.</span></span>
+                    </div>
+
+                    <div class="bg-indigo-50 p-5 rounded-xl border-l-4 border-indigo-500 shadow-sm">
+                        <strong class="text-indigo-900 text-xl">🌐 3. Interoperabilidad Estatal:</strong><br>
+                        <span class="text-base text-gray-700 leading-relaxed block mt-1">Conexión de bases de datos para evitar fraudes en el gasto. <br><span class="italic text-gray-500 text-sm">Ejemplo: Cruzar el Registro Civil con el Ministerio de Economía para suspender automáticamente jubilaciones de personas fallecidas.</span></span>
+                    </div>
+                </div>`,
+                nota: "Estas 3 medidas salvan la economía sin subir impuestos: 1) Servicio Civil para cortar el nepotismo. 2) IA para detectar esquemas de facturas falsas que le roban IVA al Estado. 3) Interoperabilidad del Registro Civil y Hacienda para no pagar jubilaciones a fallecidos. Eso es eficiencia tecnológica."
+            },
+            {
+                html: `<div class="center h-full flex flex-col justify-center items-center">
+                    <h1 class="text-6xl font-black text-blue-700 mb-6">¡Muchas Gracias!</h1>
+                    <p class="text-2xl text-gray-600 italic mb-12 border-b-2 border-gray-200 pb-4">"La deuda de hoy es el impuesto del mañana"</p>
+                    <div class="bg-gray-50 p-8 rounded-3xl shadow-inner border border-gray-200 text-center w-full max-w-md">
+                        <p class="text-xl font-bold text-gray-800">Sven Knutson Sachelaridi</p>
+                        <p class="text-base text-gray-500 mt-2 font-medium uppercase tracking-wider">Curso de Perfeccionamiento MRE</p>
+                    </div>
+                </div>`,
+                nota: "Gracias por su atención. Como informático y funcionario, estoy convencido de que la tecnología y la voluntad política son la solución a la sostenibilidad financiera. ¡Cualquier consulta es bienvenida!"
+            }
+        ];
+
+        let currentSlide = 0;
+        let currentUser = null;
+        
+        // Elementos UI
+        const loadingScreen = document.getElementById('loading-screen');
+        const presentationContainer = document.getElementById('presentation-container');
+        const controlContainer = document.getElementById('control-container');
+        const slideContent = document.getElementById('slide-content');
+        const slideCounter = document.getElementById('slide-counter');
+        const ctrlCounter = document.getElementById('ctrl-counter');
+        const roleBadge = document.getElementById('role-badge');
+        const headerBar = document.getElementById('header-bar');
+
+        // Configuración visual según el rol
+        function applyUI() {
+            loadingScreen.classList.add('hidden');
+
+            if (ROL === 'control') {
+                // Modo Teléfono (Solo Botones)
+                presentationContainer.classList.add('hidden');
+                controlContainer.classList.remove('hidden');
+                controlContainer.classList.add('flex'); // Activa flexbox vertical
+            } 
+            else if (ROL === 'teleprompter') {
+                // Modo Notebook (Solo Notas)
+                presentationContainer.classList.remove('hidden');
+                controlContainer.classList.add('hidden');
+                
+                // Aplicar estilos oscuros absolutos
+                document.body.classList.add('teleprompter-bg');
+                slideContent.classList.add('teleprompter-bg', 'border-none', 'shadow-none');
+                headerBar.classList.add('hidden'); // Ocultar barra superior
+            } 
+            else {
+                // Modo Visor (Defecto - Pantalla Gigante)
+                presentationContainer.classList.remove('hidden');
+                controlContainer.classList.add('hidden');
+                
+                roleBadge.textContent = "📡 MODO VISOR EN VIVO";
+                roleBadge.className = "text-xs font-bold px-3 py-1 rounded-full bg-blue-100 text-blue-800 border border-blue-200 shadow-sm";
+            }
+        }
+
+        async function init() {
+            try {
+                await signInAnonymously(auth);
+                onAuthStateChanged(auth, user => {
+                    if (user) {
+                        currentUser = user;
+                        applyUI();
+                        
+                        // Todos escuchan la base de datos (Incluso el control para sincronizar el número)
+                        onSnapshot(stateDocRef, s => { 
+                            if (s.exists() && s.data().slideIndex !== undefined) { 
+                                currentSlide = s.data().slideIndex; 
+                                render(); 
+                            } 
+                        });
+                        
+                        // Si es el control, asegurarnos de inyectar el estado inicial
+                        if (ROL === 'control') {
+                            updateDB(currentSlide);
+                        }
+                    }
+                });
+            } catch (e) { 
+                console.error("Error Auth Firebase", e); 
+                loadingScreen.innerHTML = '<h2 class="text-red-600 font-bold">Error de conexión a Firebase</h2>';
+            }
+        }
+
+        // Acciones exclusivas del rol Control o teclado
+        window.nextSlide = () => { 
+            if (currentSlide < slides.length - 1 && (ROL === 'control' || ROL === 'teleprompter')) { 
+                currentSlide++; 
+                updateDB(currentSlide); 
+            } 
+        };
+        
+        window.prevSlide = () => { 
+            if (currentSlide > 0 && (ROL === 'control' || ROL === 'teleprompter')) { 
+                currentSlide--; 
+                updateDB(currentSlide); 
+            } 
+        };
+
+        async function updateDB(i) { 
+            if (currentUser) {
+                await setDoc(stateDocRef, { slideIndex: i, time: Date.now() }, { merge: true }); 
+            }
+        }
+
+        function render() {
+            const data = slides[currentSlide];
+
+            if (ROL === 'control') {
+                // Render Control
+                ctrlCounter.textContent = currentSlide + 1;
+            } 
+            else if (ROL === 'teleprompter') {
+                // Render Teleprompter (Notas Gigantes de Alto Contraste)
+                slideContent.innerHTML = `
+                    <div class="mb-10 border-b-2 border-gray-800 pb-4 flex justify-between items-end">
+                        <span class="text-3xl text-cyan-400 font-bold uppercase tracking-widest">Diapositiva ${currentSlide + 1}</span>
+                    </div>
+                    <p class="teleprompter-text">${data.nota}</p>
+                `;
+            } 
+            else {
+                // Render Visor Normal
+                slideContent.classList.remove('slide-enter');
+                void slideContent.offsetWidth; // Trigger reflow
+                slideContent.classList.add('slide-enter');
+                slideContent.innerHTML = data.html;
+                slideCounter.textContent = currentSlide + 1;
+
+                // QR Local en la primera Diapositiva
+                if (currentSlide === 0) {
+                    const qrContainer = document.getElementById("qrcode");
+                    if (qrContainer) {
+                        qrContainer.innerHTML = ""; 
+                        new QRCode(qrContainer, {
+                            text: baseUrl,
+                            width: 130,
+                            height: 130,
+                            colorDark : "#0f172a",
+                            colorLight : "#ffffff",
+                            correctLevel : QRCode.CorrectLevel.M
+                        });
+                    }
+                }
+            }
+        }
+
+        // Control por teclado (Espacio y Flechas) habilitado para Teleprompter por si acaso
+        document.addEventListener('keydown', e => { 
+            if (ROL === 'control' || ROL === 'teleprompter') { 
+                if (e.key === 'ArrowRight' || e.key === ' ') nextSlide(); 
+                if (e.key === 'ArrowLeft') prevSlide(); 
+            } 
+        });
+
+        init();
+    </script>
+</body>
+</html>
