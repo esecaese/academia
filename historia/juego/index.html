@@ -42,6 +42,16 @@
             transform: translateX(5px);
             background-color: #374151; /* gray-700 */
         }
+        select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
@@ -52,127 +62,73 @@
     </div>
 
     <script>
-        // --- BASE DE DATOS DE PREGUNTAS ---
-        // Basadas estrictamente en la guía proporcionada
-        const questions = [
-            {
-                question: "¿Cuál fue la causa inmediata de la gesta revolucionaria del 14 y 15 de mayo de 1811?",
-                options: [
-                    "La Invasión de las tropas de Manuel Belgrano.",
-                    "La traición del gobernador Velazco al intentar pactar con los portugueses (Misión Abreu).",
-                    "El inicio de la Revolución Comunera.",
-                    "La abdicación del Rey Fernando VII."
-                ],
-                correct: 1,
-                explanation: "La misión Abreu del 9 de mayo de 1811 evidenció el intento de Velazco de entregar la provincia a Portugal, lo que precipitó el golpe de los próceres."
-            },
-            {
-                question: "El Congreso de 1813 adoptó un 'Reglamento de Gobierno'. ¿Qué naturaleza tenía este documento?",
-                options: [
-                    "Era la primera Constitución Nacional del Paraguay.",
-                    "Era un tratado de paz definitivo con España y Buenos Aires.",
-                    "No era una Constitución, sino una legislación organizativa que sirvió como antecedente constitucional.",
-                    "Era una ley que nombraba al Dr. Francia como dictador perpetuo."
-                ],
-                correct: 2,
-                explanation: "Aunque ordenaba la creación del nuevo Estado, no tenía el rango de Constitución Nacional, pero sí es considerado nuestro primer antecedente constitucional."
-            },
-            {
-                question: "¿Qué sistema de gobierno se estableció en el Congreso de 1813 y quiénes lo conformaron?",
-                options: [
-                    "Un Triunvirato conformado por Francia, Velazco y Zevallos.",
-                    "Una Presidencia a cargo de Carlos Antonio López.",
-                    "Una Dictadura Temporal a cargo del Dr. Francia.",
-                    "Un Consulado compuesto por Fulgencio Yegros y el Dr. Francia."
-                ],
-                correct: 3,
-                explanation: "Se estableció el Consulado con dos cónsules. Durante este periodo, Francia gobernaba efectivamente mientras Yegros se dedicaba a actividades sociales y militares."
-            },
-            {
-                question: "Para los próceres liberales, la propuesta de la Dictadura en 1814 no se veía como una tiranía. ¿En qué se inspiraban?",
-                options: [
-                    "En la República Romana, donde era una institución temporal para salvar al Estado de un peligro.",
-                    "En el Absolutismo Ilustrado de los Reyes Borbones.",
-                    "En el Imperio Británico y su control colonial.",
-                    "En la Revolución Francesa y el reinado del terror."
-                ],
-                correct: 0,
-                explanation: "Admiraban a figuras como el romano Cincinnato. La dictadura romana se otorgaba por un periodo de tiempo corto para afrontar crisis graves, no a perpetuidad."
-            },
-            {
-                question: "¿Qué evento provocó el inicio de la 'paranoia total' y el aislamiento extremo del Dr. Francia?",
-                options: [
-                    "El rechazo de la Misión de Correia da Câmara.",
-                    "La conspiración de la Semana Santa de 1820.",
-                    "La invasión de Aimé Bonpland.",
-                    "La llegada de José Gervasio Artigas a Paraguay."
-                ],
-                correct: 1,
-                explanation: "En 1820 los próceres intentaron derrocarlo. Tras descubrirse por una confesión, Francia fusiló a Yegros y otros se suicidaron (como Pedro Juan Caballero), agudizando su tiranía."
-            },
-            {
-                question: "¿Qué caudillo de la 'Liga de los Pueblos Libres' solicitó y recibió asilo político del Dr. Francia en 1820?",
-                options: [
-                    "Francisco Ramírez.",
-                    "José Gervasio Artigas.",
-                    "Manuel Belgrano.",
-                    "Tupac Amaru II."
-                ],
-                correct: 1,
-                explanation: "Artigas, traicionado por Ramírez, fue confinado por Francia en Curuguaty. Constituye el primer asilo político oficial en América del Sur."
-            },
-            {
-                question: "El Dr. Francia cerró el Real Colegio Seminario de San Carlos suprimiendo la educación superior. ¿Qué frase usó para justificarlo?",
-                options: [
-                    "'El Estado es el único maestro'.",
-                    "'La educación es enemiga de la patria'.",
-                    "'Mientras Marte vela, Minerva duerme'.",
-                    "'La voluntad del común es superior a la del rey'."
-                ],
-                correct: 2,
-                explanation: "Marte es el dios de la guerra y Minerva la diosa de la sabiduría. Argumentaba que en tiempos de peligro bélico (guerra), la educación pasaba a un segundo plano."
-            },
-            {
-                question: "El Paraguay declaró ser una República en 1813, pero no hubo un acta formal jurada de independencia en ese momento. ¿Cuándo se solucionó este vacío legal?",
-                options: [
-                    "En el Congreso de 1814, al nombrar al dictador.",
-                    "Con la Constitución de 1870.",
-                    "En el Congreso de Tucumán en 1816.",
-                    "29 años después, con el Acta de Juramento del 25 de noviembre de 1842."
-                ],
-                correct: 3,
-                explanation: "Ante la amenaza de anexión de los vecinos tras la muerte de Francia, el Congreso de 1842 redactó y juró formalmente la independencia del Paraguay."
-            },
-            {
-                question: "¿Qué movimiento del Periodo Colonial (1717-1735) defendió la premisa de que 'la voluntad del común es superior a la del rey'?",
-                options: [
-                    "La Rebelión de Tupac Amaru II.",
-                    "La Revolución Comunera.",
-                    "Las Invasiones Inglesas.",
-                    "La Gesta de Mayo."
-                ],
-                correct: 1,
-                explanation: "Liderada por José de Antequera y Castro, la Revolución Comunera es considerada el inicio del sentimiento de identidad o 'patria' en Paraguay."
-            },
-            {
-                question: "¿Qué científico extranjero ingresó a la selva misionera y fue confinado por el Dr. Francia por casi 10 años, instalando luego un hospital y fábrica de licores?",
-                options: [
-                    "Alexander von Humboldt.",
-                    "Antônio Manuel Correia da Câmara.",
-                    "Aimé Bonpland.",
-                    "Policarpo Patiño."
-                ],
-                correct: 2,
-                explanation: "Bonpland fue apresado por ingresar a territorio disputado. Pese a las protestas mundiales, Francia nunca respondió, y Bonpland terminó viviendo feliz en Paraguay."
-            }
+        // --- GRAN BASE DE DATOS DE PREGUNTAS (Extraída de los apuntes) ---
+        const allQuestions = [
+            // Cuestiones Generales y Colonial
+            { question: "¿En qué dos grandes bloques se divide la historia paraguaya?", options: ["Prehistoria y Época Moderna.", "Periodo Colonial y Periodo Independiente.", "Conquista y Aislamiento.", "Hegemonía Liberal y Hegemonía Colorada."], correct: 1, explanation: "La historia se divide en Periodo Colonial (1537-1811) y Periodo Independiente (1811-Actualidad)." },
+            { question: "¿Con qué evento inició y terminó el periodo de 'La Conquista' (1537 - 1617)?", options: ["Inició con la fundación de Asunción y terminó con la división territorial de Hernandarias.", "Inició con la misión Abreu y terminó con la Revolución Comunera.", "Inició con los jesuitas y terminó con las Invasiones Inglesas.", "Inició con el Tratado de Madrid y terminó con la batalla de Tacuary."], correct: 0, explanation: "Inicia en 1537 (Asunción) y termina en 1617 con la pérdida del Guairá y la salida al mar dictada por Hernandarias." },
+            { question: "¿Qué dinastía española gobernaba durante el inicio de la conquista y respetaba la autonomía de las 'comunas'?", options: ["Los Borbones.", "Los Austrias (Habsburgo).", "Los Trastámara.", "La Casa de Braganza."], correct: 1, explanation: "Destaca Carlos I de España (Habsburgo), bajo cuyo reinado se respetaba la autonomía de las ciudades (comunas)." },
+            { question: "¿Qué dinastía implementó el 'Absolutismo Ilustrado' centralizando el poder y aumentando impuestos?", options: ["Habsburgo.", "Plantagenet.", "Borbón.", "Romanov."], correct: 2, explanation: "La Casa de Borbón (destacando Carlos III en el siglo XVIII) centralizó el poder, generando malestar en América." },
+            { question: "¿Qué establecía el Tratado de Madrid de 1750?", options: ["La independencia del Paraguay.", "El intercambio de territorios basado en la ocupación real (uti possidetis).", "El libre comercio en el Río de la Plata.", "La expulsión de los jesuitas."], correct: 1, explanation: "Buscaba fijar límites entre España y Portugal basándose en quién ocupaba realmente el territorio." },
+            { question: "En el sistema de castas de Paraguay, ¿quiénes eran equiparados jurídicamente con los blancos (criollos)?", options: ["Los mulatos.", "Los mancebos de la tierra.", "Los zambos.", "Los naborías."], correct: 1, explanation: "El mestizaje temprano hizo que los 'mancebos de la tierra' (hijos de españoles y guaraníes) tuvieran estatus de criollos." },
+            { question: "¿Qué era la 'Fortaleza de Emboscada'?", options: ["Una cárcel para próceres.", "Un fuerte construido por Belgrano.", "Una comunidad de negros libres que defendían la zona a cambio de no pagar impuestos.", "La residencia del Dr. Francia."], correct: 2, explanation: "Era habitada por negros libres o libertos que prestaban servicio militar defensivo a cambio de exenciones." },
+            { question: "¿Qué tipo de sistema de trabajo indígena era permanente?", options: ["La Mita.", "El Yanaconazgo.", "La Naboría.", "La Reducción."], correct: 1, explanation: "La Mita era por turnos, el Yanaconazgo era trabajo permanente, y la Naboría era servicio doméstico." },
+            
+            // Antecedentes e Independencia
+            { question: "¿Qué movimiento del Periodo Colonial (1717-1735) defendió la premisa de que 'la voluntad del común es superior a la del rey'?", options: ["La Rebelión de Tupac Amaru II.", "La Revolución Comunera.", "Las Invasiones Inglesas.", "La Gesta de Mayo."], correct: 1, explanation: "Liderada por José de Antequera y Castro, la Revolución Comunera es considerada el inicio del sentimiento de 'patria'." },
+            { question: "¿Qué efecto tuvieron las Invasiones Inglesas (1806-1807) en las milicias paraguayas?", options: ["Causaron la pérdida de territorio frente a Inglaterra.", "Hicieron que el Paraguay se independizara prematuramente.", "Adquirieron conciencia de su propia fuerza al defender Buenos Aires.", "Obligaron a firmar el Tratado de San Ildefonso."], correct: 2, explanation: "Al repeler a los ingleses en Buenos Aires, los criollos paraguayos y rioplatenses notaron que podían defenderse sin ayuda de España." },
+            { question: "¿A quién apresó Napoleón durante las Abdicaciones de Bayona (1808)?", options: ["A Manuel Belgrano.", "A Carlos III.", "A Carlos IV y Fernando VII.", "Al Dr. Francia."], correct: 2, explanation: "Napoleón apresó a los reyes españoles y nombró a su hermano José Bonaparte, lo que dejó a las colonias sin rumbo claro." },
+            { question: "¿En qué batallas fueron derrotadas las tropas invasoras del General Manuel Belgrano?", options: ["Acosta Ñu y Curupayty.", "Paraguarí y Tacuary.", "Tucumán y Salta.", "Cerro Corá y Boquerón."], correct: 1, explanation: "Belgrano fue derrotado el 19 de enero en Paraguarí y capituló el 9 de marzo de 1811 en Tacuary." },
+            { question: "¿Cuál fue la causa inmediata de la gesta revolucionaria del 14 y 15 de mayo de 1811?", options: ["La Invasión de las tropas de Manuel Belgrano.", "La traición del gobernador Velazco al intentar pactar con los portugueses (Misión Abreu).", "El inicio de la Revolución Comunera.", "La abdicación del Rey Fernando VII."], correct: 1, explanation: "La misión Abreu del 9 de mayo de 1811 evidenció el intento de Velazco de entregar la provincia a Portugal." },
+            { question: "¿Cómo estuvo compuesto el primer Triunvirato formado en 1811?", options: ["Francia, Yegros y Caballero.", "Velazco, Francia y Zevallos (y otro peninsular).", "López, Francia y Molas.", "Artigas, Belgrano y Velazco."], correct: 1, explanation: "Inicialmente tras el golpe, se formó un Triunvirato con el Dr. Francia, el exgobernador Velazco y dos españoles (Valeriano Zevallos y Juan Valeriano de Zevallos)." },
+            { question: "En el documento del 20 de julio de 1811, ¿qué posición asume la Junta Superior de Gobierno frente a Buenos Aires?", options: ["Se somete totalmente a sus dictámenes.", "Le declara la guerra.", "Declara independencia y propone una confederación.", "Pide el retorno del Rey Fernando VII."], correct: 2, explanation: "Fue la primera declaración clara de independencia de facto, proponiendo relaciones de igualdad (confederación) con Bs. As." },
+
+            // Congresos Nacionales
+            { question: "¿Qué característica especial de representatividad tuvo el Congreso de 1813?", options: ["Solo participaron españoles.", "Tuvo mil diputados, incluyendo un diputado indígena.", "Se realizó por votación de mujeres.", "Fue elegido directamente por el Rey."], correct: 1, explanation: "Fue el congreso más popular, con representantes de valles y parroquias, reuniendo 1000 diputados." },
+            { question: "El Congreso de 1813 adoptó un 'Reglamento de Gobierno'. ¿Qué naturaleza tenía este documento?", options: ["Era la primera Constitución Nacional del Paraguay.", "Era un tratado de paz definitivo.", "No era una Constitución, sino una legislación organizativa (antecedente constitucional).", "Era una ley de nombramiento del dictador perpetuo."], correct: 2, explanation: "Aunque ordenaba la creación del Estado, no tenía rango de Constitución Nacional." },
+            { question: "¿Qué dos grandes declaraciones jurídicas e institucionales se hicieron en el Congreso de 1813?", options: ["Abolición de la esclavitud y creación del Senado.", "Declaración de la República del Paraguay y creación del Consulado.", "Nombramiento de Cónsul Vitalicio y guerra a Brasil.", "Alianza con Artigas y separación de la Iglesia."], correct: 1, explanation: "Se separó definitivamente de cualquier proyecto (República) y nombró cónsules a Yegros y Francia." },
+            { question: "¿Por qué algunos historiadores consideran el 12 de octubre de 1813 como la verdadera independencia?", options: ["Porque ese día se firmó la paz con España.", "Porque antes de esa fecha se gobernaba teóricamente en representación de Fernando VII.", "Porque ese día murió Velazco.", "Porque se expulsó a los ingleses."], correct: 1, explanation: "Hasta ese Congreso, la revolución mantenía la 'máscara de Fernando VII'. En 1813 se rompe ese lazo oficialmente declarando la República." },
+            { question: "Para los próceres liberales en el Congreso de 1814, ¿en qué figura se inspiraba la propuesta de la Dictadura?", options: ["En la República Romana (Cincinnato).", "En el Imperio Británico.", "En la Revolución Francesa.", "En las monarquías absolutistas."], correct: 0, explanation: "La dictadura romana era una institución temporal para salvar al Estado de un peligro, no era sinónimo de tiranía." },
+            { question: "¿Quién propuso el nombramiento de Francia como dictador temporal (por 5 años) en 1814 y luego se opuso a la dictadura perpetua en 1816?", options: ["Pedro Juan Caballero.", "Fulgencio Yegros.", "Mariano Antonio Molas.", "Carlos Antonio López."], correct: 2, explanation: "Molas fue clave para instalar la dictadura temporal, pero fue una de las pocas voces disidentes en 1816 frente a la perpetuidad." },
+
+            // Dictadura del Dr. Francia
+            { question: "En el Congreso de 1816, además de declarar a Francia Dictador a Perpetuidad, ¿qué otra resolución fatal se tomó?", options: ["Suspender todos los congresos dejándolos a voluntad de Francia.", "Declarar la guerra a Buenos Aires.", "Prohibir el idioma guaraní.", "Cerrar las fronteras para siempre por ley."], correct: 0, explanation: "Suspendió los congresos, y Francia jamás volvió a convocar uno. El siguiente fue recién tras su muerte en 1841." },
+            { question: "¿Quiénes conformaban la principal base de apoyo social del Dr. Francia?", options: ["La antigua élite y los militares españoles.", "Los pequeños y medianos propietarios rurales.", "La jerarquía eclesiástica.", "Los caudillos rioplatenses."], correct: 1, explanation: "Estos buscaban estabilidad frente a la anarquía de las provincias vecinas." },
+            { question: "¿Cómo intentó el Dr. Francia destruir a la antigua élite española en Paraguay?", options: ["Los deportó a todos a España.", "Les prohibió casarse entre ellos; solo podían hacerlo con mulatos, negros o indios.", "Los obligó a trabajar en las minas.", "Los vendió como esclavos."], correct: 1, explanation: "Buscó que perdieran su categoría social y económica diluyéndose en el sistema de castas." },
+            { question: "A pesar del aislamiento ahogando el comercio, ¿qué puertos mantuvo habilitados el Dr. Francia?", options: ["Asunción y Concepción.", "Pilar (con Corrientes) e Itapúa (con Brasil).", "Villeta y San Antonio.", "Encarnación y Ciudad del Este."], correct: 1, explanation: "Fueron los únicos puntos de comercio rígidamente controlados por el Estado." },
+            { question: "¿Qué evento en 1820 provocó el inicio de la 'paranoia total' y el aislamiento extremo del Dr. Francia?", options: ["El rechazo a la misión diplomática de Brasil.", "La conspiración de la Semana Santa.", "La invasión de Aimé Bonpland.", "La llegada de Artigas."], correct: 1, explanation: "Al descubrirse la conspiración, Francia confiscó bienes, fusiló a Yegros (1821) y agudizó su terror de Estado." },
+            { question: "¿Quién era el temido secretario del Dr. Francia que presenciaba las torturas a los conspiradores?", options: ["Mariano Antonio Molas.", "Fulgencio Yegros.", "Policarpo Patiño.", "Pedro Juan Caballero."], correct: 2, explanation: "Patiño era el ejecutor del trabajo sucio de la dictadura tras la conspiración de 1820." },
+            { question: "¿Qué caudillo de la 'Liga de los Pueblos Libres' recibió el primer asilo político oficial de Sudamérica por parte del Dr. Francia?", options: ["Francisco Ramírez.", "José Gervasio Artigas.", "Juan Manuel de Rosas.", "Manuel Belgrano."], correct: 1, explanation: "Artigas, traicionado, huyó a Paraguay en 1820 y fue confinado en Curuguaty." },
+            { question: "¿Cómo aplicaba el Dr. Francia su política de 'no intervención' internacional?", options: ["Firmando tratados secretos con todos.", "Financiando ejércitos rebeldes en Argentina.", "Mediante la 'no contestación', ignorando los documentos diplomáticos.", "Enviando espías a las cortes europeas."], correct: 2, explanation: "Ignoraba presiones, cartas y enviados extranjeros, consolidando el aislamiento hermético." },
+            { question: "¿Qué científico extranjero fue confinado por Francia por 10 años, donde instaló un hospital y fábrica de licores?", options: ["Alexander von Humboldt.", "Antônio Manuel Correia da Câmara.", "Aimé Bonpland.", "Charles Darwin."], correct: 2, explanation: "Aimé Bonpland ingresó a territorio disputado. Francia nunca contestó los pedidos internacionales de liberación." },
+            { question: "El Dr. Francia cerró el Real Colegio Seminario de San Carlos. ¿Qué frase usó para justificarlo?", options: ["'El Estado es el único maestro'.", "'Mientras Marte vela, Minerva duerme'.", "'La religión es el opio del pueblo'.", "'La voluntad del común es superior a la del rey'."], correct: 1, explanation: "Minerva es sabiduría, Marte guerra. Argumentaba que ante el peligro externo, la educación no era prioridad." },
+            { question: "En 1824, ¿qué acción tomó el Dr. Francia respecto a las órdenes religiosas?", options: ["Las nombró ministros de gobierno.", "Ordenó su secularización y confiscó sus bienes, ampliando las 'Estancias de la Patria'.", "Expulsó al Papa del país.", "Les devolvió las misiones jesuíticas."], correct: 1, explanation: "Con esta confiscación, el Estado paraguayo se convirtió en el mayor terrateniente del país." },
+            { question: "¿Cómo quedó el Paraguay a la muerte del Dr. Francia en 1840?", options: ["Era una potencia industrial con una burguesía fuerte.", "El comercio estaba muerto y no había una clase dirigente formada.", "Estaba en guerra abierta contra Brasil y Argentina.", "Acababa de firmar una Constitución liberal."], correct: 1, explanation: "El aislamiento salvó la independencia, pero destruyó el comercio colonial y no dejó cuadros administrativos preparados." },
+            { question: "El vacío legal sobre la declaración de independencia de 1813 se solucionó finalmente en:", options: ["La Constitución de 1870.", "El Congreso de 1814.", "El Acta de Juramento del 25 de noviembre de 1842.", "El Tratado de la Triple Alianza."], correct: 2, explanation: "Ante la amenaza de anexión porteña tras la muerte de Francia, Carlos A. López y Mariano R. Alonso hicieron jurar formalmente la independencia." },
+            
+            // Periodos posteriores (Resumen)
+            { question: "¿En qué años se extendió el periodo denominado 'Primera Hegemonía Colorada'?", options: ["1904 - 1940.", "1880 - 1904.", "1940 - 1989.", "1870 - 1880."], correct: 1, explanation: "Ocurrió dentro del periodo del 'Estado Liberal', seguida luego por la Hegemonía Liberal (1904-1940)." },
+            { question: "¿En qué años ocurrió la Guerra del Chaco?", options: ["1864 - 1870.", "1932 - 1935.", "1811 - 1813.", "1989 - 1992."], correct: 1, explanation: "Fue el conflicto armado entre Paraguay y Bolivia durante el Estado Liberal." },
+            { question: "El periodo denominado 'Estado Autoritario' (1940 - 1989) estuvo marcado principalmente por:", options: ["Las misiones jesuíticas.", "Gobiernos militares y la dictadura de Alfredo Stroessner.", "El nacimiento de los partidos tradicionales.", "El auge de la Revolución Comunera."], correct: 1, explanation: "Este periodo se caracterizó por regímenes militares que culminaron en 1989 con el inicio de la apertura democrática." }
         ];
 
         // --- ESTADO DEL JUEGO ---
+        let gameQuestions = [];
         let currentQuestionIndex = 0;
         let score = 0;
         let answered = false;
 
         const appDiv = document.getElementById('app');
+
+        // Función para mezclar un array (Fisher-Yates)
+        function shuffleArray(array) {
+            let shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
 
         // --- RENDERIZADO DE PANTALLAS ---
 
@@ -180,28 +136,43 @@
             appDiv.innerHTML = `
                 <div class="p-8 text-center fade-in">
                     <div class="mb-6 flex justify-center text-primary">
-                        <svg class="w-20 h-20" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        <svg class="w-24 h-24" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                         </svg>
                     </div>
-                    <h1 class="text-3xl font-bold mb-4 text-white">Historia del Paraguay</h1>
-                    <p class="text-gray-400 mb-8 text-lg">Demuestra tus conocimientos desde la etapa colonial hasta la Dictadura del Dr. Francia.</p>
-                    <button onclick="startGame()" class="bg-primary hover:bg-primaryHover text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105 shadow-lg shadow-primary/30">
-                        Comenzar Reto
+                    <h1 class="text-3xl font-bold mb-3 text-white">Trivia: Historia del Paraguay</h1>
+                    <p class="text-gray-400 mb-6 text-sm md:text-base px-4">Pon a prueba tus conocimientos sobre la formación del Estado, dictaduras y revoluciones. Tienes un banco de ${allQuestions.length} preguntas disponibles.</p>
+                    
+                    <div class="max-w-xs mx-auto mb-8 bg-gray-800 p-4 rounded-xl border border-gray-700">
+                        <label for="question-count" class="block text-sm font-medium text-gray-300 mb-2">¿Cuántas preguntas quieres responder?</label>
+                        <select id="question-count" class="block w-full bg-gray-900 border border-gray-600 text-white rounded-lg p-3 focus:ring-primary focus:border-primary outline-none transition-colors cursor-pointer">
+                            <option value="5">5 Preguntas (Rápido)</option>
+                            <option value="10" selected>10 Preguntas (Recomendado)</option>
+                            <option value="20">20 Preguntas (Desafío)</option>
+                            <option value="all">¡Todas las preguntas! (${allQuestions.length})</option>
+                        </select>
+                    </div>
+
+                    <button onclick="initGame()" class="w-full sm:w-auto bg-primary hover:bg-primaryHover text-white font-bold py-3 px-10 rounded-full text-lg transition duration-300 transform hover:scale-105 shadow-lg shadow-primary/30">
+                        Comenzar Partida
                     </button>
                 </div>
             `;
         }
 
         function renderQuestionScreen() {
-            const q = questions[currentQuestionIndex];
-            const progress = ((currentQuestionIndex) / questions.length) * 100;
+            const q = gameQuestions[currentQuestionIndex];
+            const progress = ((currentQuestionIndex) / gameQuestions.length) * 100;
+
+            // Mezclar opciones para que no siempre la misma letra sea la correcta
+            let optionsWithIndex = q.options.map((opt, index) => ({ text: opt, isCorrect: index === q.correct }));
+            let shuffledOptions = shuffleArray(optionsWithIndex);
 
             let optionsHtml = '';
-            q.options.forEach((opt, index) => {
+            shuffledOptions.forEach((optObj, index) => {
                 optionsHtml += `
-                    <button id="btn-opt-${index}" onclick="selectAnswer(${index})" class="option-btn w-full text-left p-4 rounded-xl bg-gray-800 border border-gray-700 text-gray-200 hover:border-gray-500 mb-3 focus:outline-none">
-                        <span class="font-bold mr-2 text-gray-400">${String.fromCharCode(65 + index)}.</span> ${opt}
+                    <button id="btn-opt-${index}" onclick="selectAnswer(${index}, ${optObj.isCorrect})" class="option-btn w-full text-left p-4 rounded-xl bg-gray-800 border border-gray-700 text-gray-200 hover:border-gray-500 mb-3 focus:outline-none shadow-sm">
+                        <span class="font-bold mr-2 text-primary">${String.fromCharCode(65 + index)}.</span> ${optObj.text}
                     </button>
                 `;
             });
@@ -214,9 +185,9 @@
                     </div>
                     
                     <div class="p-6 md:p-8">
-                        <div class="flex justify-between items-center mb-6 text-sm font-semibold text-gray-400 border-b border-gray-700 pb-2">
-                            <span>Pregunta ${currentQuestionIndex + 1} de ${questions.length}</span>
-                            <span>Puntos: ${score}</span>
+                        <div class="flex justify-between items-center mb-6 text-sm font-semibold text-gray-400 border-b border-gray-700 pb-3">
+                            <span class="bg-gray-800 py-1 px-3 rounded-full border border-gray-700">Pregunta ${currentQuestionIndex + 1} de ${gameQuestions.length}</span>
+                            <span class="text-primary">Aciertos: ${score}</span>
                         </div>
                         
                         <h2 class="text-xl md:text-2xl font-semibold mb-6 text-white leading-snug">
@@ -227,13 +198,13 @@
                             ${optionsHtml}
                         </div>
 
-                        <div id="feedback-container" class="hidden rounded-xl p-5 mb-6 text-sm md:text-base border-l-4">
+                        <div id="feedback-container" class="hidden rounded-xl p-5 mb-6 text-sm md:text-base border-l-4 shadow-md fade-in">
                             <!-- Feedback de respuesta irá aquí -->
                         </div>
 
-                        <div class="flex justify-end hidden" id="next-btn-container">
-                            <button onclick="nextQuestion()" class="bg-white text-black hover:bg-gray-200 font-bold py-2 px-6 rounded-lg transition duration-200">
-                                ${currentQuestionIndex === questions.length - 1 ? 'Ver Resultados' : 'Siguiente Pregunta →'}
+                        <div class="flex justify-end hidden fade-in" id="next-btn-container">
+                            <button onclick="nextQuestion()" class="bg-white text-black hover:bg-gray-200 font-bold py-3 px-8 rounded-full transition duration-200 shadow-lg">
+                                ${currentQuestionIndex === gameQuestions.length - 1 ? 'Ver Mi Calificación' : 'Siguiente Pregunta →'}
                             </button>
                         </div>
                     </div>
@@ -242,32 +213,39 @@
         }
 
         function renderEndScreen() {
-            const percentage = Math.round((score / questions.length) * 100);
+            const percentage = Math.round((score / gameQuestions.length) * 100);
             let message = "";
             let colorClass = "text-primary";
 
-            if (percentage === 100) {
-                message = "¡Excelente! Eres un verdadero historiador paraguayo.";
+            if (percentage >= 90) {
+                message = "¡Sobresaliente! Tienes madera de gran historiador.";
                 colorClass = "text-success";
-            } else if (percentage >= 70) {
-                message = "¡Muy buen trabajo! Tienes un dominio sólido del tema.";
+            } else if (percentage >= 60) {
+                message = "¡Buen trabajo! Dominas gran parte del contexto histórico.";
                 colorClass = "text-primary";
             } else {
-                message = "Buen intento. Te recomiendo repasar un poco más la guía.";
+                message = "Buen intento. Sigue practicando para asentar mejor las fechas y datos.";
                 colorClass = "text-yellow-500";
             }
 
             appDiv.innerHTML = `
                 <div class="p-8 text-center fade-in">
-                    <div class="mb-4">
-                        <span class="text-6xl font-bold ${colorClass}">${score}</span>
-                        <span class="text-2xl text-gray-400">/ ${questions.length}</span>
+                    <h2 class="text-xl font-bold mb-6 text-gray-400 uppercase tracking-widest">Fin del Juego</h2>
+                    <div class="mb-6 relative inline-block">
+                        <svg class="w-32 h-32 transform -rotate-90">
+                            <circle cx="64" cy="64" r="60" stroke="#374151" stroke-width="8" fill="none" />
+                            <circle cx="64" cy="64" r="60" stroke="currentColor" stroke-width="8" fill="none" stroke-dasharray="377" stroke-dashoffset="${377 - (377 * percentage / 100)}" class="${colorClass} transition-all duration-1000 ease-out" />
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                            <span class="text-3xl font-bold text-white">${score}</span>
+                            <span class="text-sm text-gray-400">de ${gameQuestions.length}</span>
+                        </div>
                     </div>
-                    <h2 class="text-2xl font-bold mb-2 text-white">Resultados Finales</h2>
+                    <p class="text-lg text-white mb-2 font-semibold">${percentage}% de precisión</p>
                     <p class="text-gray-400 mb-8">${message}</p>
                     
-                    <button onclick="resetGame()" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-full transition duration-300">
-                        Jugar de Nuevo
+                    <button onclick="renderStartScreen()" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-8 border border-gray-600 rounded-full transition duration-300 shadow-md">
+                        Jugar Nueva Partida
                     </button>
                 </div>
             `;
@@ -275,38 +253,59 @@
 
         // --- LÓGICA DEL JUEGO ---
 
-        function startGame() {
+        function initGame() {
+            const countSelect = document.getElementById('question-count').value;
+            
+            // 1. Mezclar toda la base de datos de preguntas
+            const shuffledPool = shuffleArray(allQuestions);
+            
+            // 2. Seleccionar la cantidad pedida
+            if (countSelect === 'all') {
+                gameQuestions = shuffledPool;
+            } else {
+                gameQuestions = shuffledPool.slice(0, parseInt(countSelect));
+            }
+
+            // 3. Reiniciar contadores
             currentQuestionIndex = 0;
             score = 0;
             answered = false;
+            
             renderQuestionScreen();
         }
 
-        function selectAnswer(selectedIndex) {
-            if (answered) return; // Evita multiples clics
+        function selectAnswer(selectedIndex, isCorrect) {
+            if (answered) return; 
             answered = true;
 
-            const q = questions[currentQuestionIndex];
-            const isCorrect = selectedIndex === q.correct;
+            const q = gameQuestions[currentQuestionIndex];
             
             if (isCorrect) {
                 score++;
             }
 
-            // Deshabilitar botones y aplicar colores
-            for (let i = 0; i < q.options.length; i++) {
-                const btn = document.getElementById(`btn-opt-${i}`);
+            // Marcar colores en los botones
+            const optionsContainer = document.getElementById('options-container');
+            const buttons = optionsContainer.getElementsByTagName('button');
+
+            for (let i = 0; i < buttons.length; i++) {
+                const btn = buttons[i];
                 btn.disabled = true;
                 btn.classList.remove('hover:border-gray-500', 'bg-gray-800');
                 
-                if (i === q.correct) {
-                    // Respuesta correcta (verde)
+                // Extraer el evento onClick como texto para saber si esta era la correcta
+                const onClickString = btn.getAttribute('onclick');
+                const btnIsCorrect = onClickString.includes('true');
+
+                if (btnIsCorrect) {
+                    // La correcta siempre se pone en verde
                     btn.classList.add('bg-success', 'bg-opacity-20', 'border-success', 'text-success');
                 } else if (i === selectedIndex && !isCorrect) {
-                    // Respuesta incorrecta seleccionada (roja)
+                    // Si seleccionaste una mala, se pone en rojo
                     btn.classList.add('bg-error', 'bg-opacity-20', 'border-error', 'text-error');
                 } else {
-                    btn.classList.add('opacity-50', 'cursor-not-allowed');
+                    // Las demás se oscurecen
+                    btn.classList.add('opacity-40', 'cursor-not-allowed');
                 }
             }
 
@@ -316,10 +315,10 @@
             
             if (isCorrect) {
                 feedbackBox.classList.add('bg-success', 'bg-opacity-10', 'border-success', 'text-green-300');
-                feedbackBox.innerHTML = `<strong>¡Correcto!</strong> <br><span class="text-gray-300 mt-1 block">${q.explanation}</span>`;
+                feedbackBox.innerHTML = `<div class="flex items-center mb-1"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><strong class="text-lg">¡Correcto!</strong></div> <span class="text-gray-300 mt-2 block leading-relaxed">${q.explanation}</span>`;
             } else {
                 feedbackBox.classList.add('bg-error', 'bg-opacity-10', 'border-error', 'text-red-300');
-                feedbackBox.innerHTML = `<strong>Incorrecto.</strong> <br><span class="text-gray-300 mt-1 block">${q.explanation}</span>`;
+                feedbackBox.innerHTML = `<div class="flex items-center mb-1"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg><strong class="text-lg">Incorrecto.</strong></div> <span class="text-gray-300 mt-2 block leading-relaxed">${q.explanation}</span>`;
             }
 
             // Mostrar botón siguiente
@@ -329,15 +328,11 @@
         function nextQuestion() {
             answered = false;
             currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) {
+            if (currentQuestionIndex < gameQuestions.length) {
                 renderQuestionScreen();
             } else {
                 renderEndScreen();
             }
-        }
-
-        function resetGame() {
-            startGame();
         }
 
         // Inicializar
