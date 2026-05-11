@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,43 +8,169 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        body { background-color: #f8fafc; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-        .slide-enter { animation: fadeIn 0.3s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .slide-content { text-align: left; }
-        .slide-content.center { text-align: center; justify-content: center; align-items: center; }
-        .slide-content h1 { font-size: 2.75rem; font-weight: 800; color: #0f172a; margin-bottom: 1.5rem; line-height: 1.2; }
-        .slide-content h2 { font-size: 2.4rem; font-weight: 700; color: #1d4ed8; margin-bottom: 1.5rem; border-bottom: 3px solid #e2e8f0; padding-bottom: 0.75rem;}
-        .slide-content p { font-size: 1.4rem; color: #334155; margin-bottom: 1.25rem; line-height: 1.6; }
-        .slide-content ul { list-style-type: none; margin-left: 0; margin-bottom: 1.5rem; padding-left: 0; }
-        .slide-content li { font-size: 1.35rem; color: #334155; margin-bottom: 1rem; position: relative; padding-left: 1.75rem; }
-        .slide-content li::before { content: "•"; color: #3b82f6; font-weight: bold; position: absolute; left: 0; font-size: 1.5rem; top: -2px; }
-        
+        body {
+            background-color: #f8fafc;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        .slide-enter {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-content {
+            text-align: left;
+        }
+
+        .slide-content.center {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slide-content h1 {
+            font-size: 2.75rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .slide-content h2 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #1d4ed8;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #e2e8f0;
+            padding-bottom: 0.75rem;
+        }
+
+        .slide-content p {
+            font-size: 1.4rem;
+            color: #334155;
+            margin-bottom: 1.25rem;
+            line-height: 1.6;
+        }
+
+        .slide-content ul {
+            list-style-type: none;
+            margin-left: 0;
+            margin-bottom: 1.5rem;
+            padding-left: 0;
+        }
+
+        .slide-content li {
+            font-size: 1.35rem;
+            color: #334155;
+            margin-bottom: 1rem;
+            position: relative;
+            padding-left: 1.75rem;
+        }
+
+        .slide-content li::before {
+            content: "•";
+            color: #3b82f6;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            font-size: 1.5rem;
+            top: -2px;
+        }
+
         /* Gráficos de Barras */
-        .bar-chart-container { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
-        .bar-row { display: flex; align-items: center; gap: 15px; }
-        .bar-label { width: 340px; font-weight: 600; text-align: left; font-size: 1rem; color: #1e293b;}
-        .bar-wrapper { flex-grow: 1; background-color: #e2e8f0; height: 32px; border-radius: 6px; overflow: hidden; }
-        .bar-fill { height: 100%; display: flex; align-items: center; padding-left: 10px; color: white; font-weight: bold; font-size: 1rem;}
-        
+        .bar-chart-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .bar-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .bar-label {
+            width: 340px;
+            font-weight: 600;
+            text-align: left;
+            font-size: 1rem;
+            color: #1e293b;
+        }
+
+        .bar-wrapper {
+            flex-grow: 1;
+            background-color: #e2e8f0;
+            height: 32px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
         /* Tarjetas de Calificación */
-        .rating-card { background: white; padding: 15px; border-radius: 12px; border: 2px solid #e2e8f0; text-align: center; flex: 1; }
-        .rating-val { font-size: 2rem; font-weight: 800; margin-top: 5px; }
-        .status-ig { color: #10b981; }
-        .status-spec { color: #f59e0b; }
-        
-        #qrcode img { margin: 0 auto; }
-        
+        .rating-card {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            text-align: center;
+            flex: 1;
+        }
+
+        .rating-val {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-top: 5px;
+        }
+
+        .status-ig {
+            color: #10b981;
+        }
+
+        .status-spec {
+            color: #f59e0b;
+        }
+
+        #qrcode img {
+            margin: 0 auto;
+        }
+
         /* Estilos Teleprompter de Alto Contraste */
-        .teleprompter-bg { background-color: #000000 !important; }
-        .teleprompter-text { 
-            font-size: 4rem !important; 
-            line-height: 1.4 !important; 
-            font-weight: 800 !important; 
-            color: #fbbf24 !important; /* Amarillo brillante para máximo contraste */
+        .teleprompter-bg {
+            background-color: #000000 !important;
+        }
+
+        .teleprompter-text {
+            font-size: 4rem !important;
+            line-height: 1.4 !important;
+            font-weight: 800 !important;
+            color: #fbbf24 !important;
+            /* Amarillo brillante para máximo contraste */
         }
     </style>
 </head>
+
 <body class="h-screen flex flex-col overflow-hidden">
 
     <!-- PANTALLA DE CARGA -->
@@ -57,8 +184,8 @@
         <div class="flex justify-between items-center mb-4 px-2" id="header-bar">
             <div class="flex items-center gap-3">
                 <div class="relative flex h-4 w-4">
-                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                  <span class="relative inline-flex rounded-full h-4 w-4 bg-green-500"></span>
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-4 w-4 bg-green-500"></span>
                 </div>
                 <span id="role-badge" class="text-sm font-bold tracking-wide uppercase px-4 py-1.5 rounded-full shadow-sm"></span>
             </div>
@@ -96,7 +223,7 @@
         // =========================================================================
         const urlParams = new URLSearchParams(window.location.search);
         // Si no hay parámetro, por defecto es 'visor'
-        const ROL = urlParams.get('rol') || 'visor'; 
+        const ROL = urlParams.get('rol') || 'visor';
 
         const baseUrl = window.location.origin + window.location.pathname;
 
@@ -173,7 +300,8 @@
                 <ul class="mt-8">
                     <li class="mb-6">Entre el <strong>70% y el 80%</strong> de los impuestos se destinan a Gastos Rígidos.</li>
                     <li>Este escenario limita la capacidad del Estado para reaccionar ante imprevistos o desarrollar infraestructura con recursos propios.</li>
-                </ul>`,
+                </ul>
+                <p class="text-xs text-gray-400 text-right italic mt-6">Fuente: Análisis del PGN 2025 – Ministerio de Economía y Finanzas. Clasificación por objeto del gasto.</p>`,
                 nota: "La rigidez significa que no hay margen de maniobra. Si hay una emergencia, no hay ahorro y debemos pedir prestado. ANALOGÍA: Es como una oficina donde el 80% del presupuesto se gasta solo en alquiler y luz; no queda dinero para comprar computadoras nuevas ni modernizar nada."
             },
             {
@@ -215,7 +343,8 @@
                         </div>
                         <div class="bar-wrapper"><div class="bg-green-500 bar-fill" style="width: 7%">~7%</div></div>
                     </div>
-                </div>`,
+                </div>
+                <p class="text-xs text-gray-400 mt-6 text-right italic">Fuente: SITUFIN – Ministerio de Economía y Finanzas, Ejecución Presupuestaria PGN 2025</p>`,
                 nota: "Acá tienen el detalle. El puesto 1 y 2 se llevan el 70% en salarios y jubilaciones. Por eso la Inversión (el puesto 5) apenas recibe el 7% de los impuestos, y obliga al país a endeudarse para hacer obras."
             },
             {
@@ -236,7 +365,8 @@
                 html: `<h2>4. Evolución de la Deuda</h2>
                 <div class="w-full flex flex-col items-center mt-2">
                     <img src="https://www.abc.com.py/resizer/v2/R3JHY5BHMVGMNH3YFS4FRWEZXY.jpg?auth=25c537abae5fed55dbf3c39a76fbe1ba48c8f87988835425a60be83ff18ecc18&width=1920&smart=true" class="w-full max-w-6xl h-auto max-h-[60vh] object-cover rounded-xl shadow-lg border border-gray-200">
-                    <p class="text-sm text-gray-500 mt-4 font-semibold tracking-wide uppercase">Crecimiento desde la pandemia 2020 (Fuente: MEF)</p>
+                    <p class="text-sm text-gray-500 mt-4 font-semibold tracking-wide uppercase">Crecimiento desde la pandemia 2020</p>
+                    <p class="text-xs text-gray-400 text-right italic">Fuente: Ministerio de Economía y Finanzas (MEF) – Deuda del Gobierno General (% PIB), 2024</p>
                 </div>`,
                 nota: "Vean la explosión de la línea roja. Pasamos de un cómodo 15% de deuda a casi un 38% que ya nos empieza a apretar el zapato fuertemente a nivel país."
             },
@@ -267,7 +397,7 @@
                         <div>
                             <div class="font-bold text-xs text-gray-500 mb-1">🇧🇷 BRASIL</div>
                             <div class="flex flex-col gap-1">
-                                <div class="flex items-center"><div class="w-14 text-[10px] text-gray-400">Deuda</div><div class="bg-blue-300 h-4 rounded-r flex items-center px-1 text-[10px] text-blue-800 font-bold" style="width: 75%">75%</div></div>
+                                <div class="flex items-center"><div class="w-14 text-[10px] text-gray-400">Deuda</div><div class="bg-blue-300 h-4 rounded-r flex items-center px-1 text-[10px] text-blue-800 font-bold" style="width: 87%">87%</div></div>
                                 <div class="flex items-center"><div class="w-14 text-[10px] text-gray-400">Ingreso</div><div class="bg-red-300 h-4 rounded-r flex items-center px-1 text-[10px] text-red-800 font-bold" style="width: 33%">33%</div></div>
                             </div>
                         </div>
@@ -281,7 +411,7 @@
                         <div>
                             <div class="font-bold text-xs text-gray-500 mb-1">🇺🇾 URUGUAY</div>
                             <div class="flex flex-col gap-1">
-                                <div class="flex items-center"><div class="w-14 text-[10px] text-gray-400">Deuda</div><div class="bg-blue-300 h-4 rounded-r flex items-center px-1 text-[10px] text-blue-800 font-bold" style="width: 60%">60%</div></div>
+                                <div class="flex items-center"><div class="w-14 text-[10px] text-gray-400">Deuda</div><div class="bg-blue-300 h-4 rounded-r flex items-center px-1 text-[10px] text-blue-800 font-bold" style="width: 68%">68%</div></div>
                                 <div class="flex items-center"><div class="w-14 text-[10px] text-gray-400">Ingreso</div><div class="bg-red-300 h-4 rounded-r flex items-center px-1 text-[10px] text-red-800 font-bold" style="width: 26.5%">26.5%</div></div>
                             </div>
                         </div>
@@ -294,7 +424,8 @@
                         </div>
                     </div>
                 </div>
-                <p class="text-sm mt-4 text-gray-600 italic font-medium text-center">No importa solo cuánto se debe, sino cuánto se recauda para pagar. Todo el bloque del MERCOSUR recauda el doble o triple que Paraguay.</p>`,
+                <p class="text-sm mt-4 text-gray-600 italic font-medium text-center">No importa solo cuánto se debe, sino cuánto se recauda para pagar. Todo el bloque del MERCOSUR recauda el doble o triple que Paraguay.</p>
+                <p class="text-xs text-gray-400 text-right italic mt-2">Fuentes: Deuda/PIB – Datosmacro (FMI/Eurostat), cierre 2024. Recaudación tributaria/PIB – OECD Revenue Statistics LatAm 2024, S&P Global Ratings 2025.</p>`,
                 nota: "Muchos dicen 'estamos bien porque Argentina o Brasil deben muchísimo'. ¡Falso! Miren las barras rojas: ellos y Uruguay recaudan muchísimo más en impuestos. Deber el 38% de tu PIB cuando tu ingreso es solo del 10% asfixia al Estado."
             },
             {
@@ -305,31 +436,33 @@
                     <div class="text-6xl text-gray-400">➡</div>
                     <div class="text-center"><div class="text-6xl font-bold text-blue-600 mb-2">85 Gs.</div><p class="text-lg font-semibold text-gray-600">Resto del País</p></div>
                 </div>
-                <p class="mt-12 text-xl text-center px-8 border-l-4 border-red-500 bg-red-50 py-4 rounded-r-lg">Este <strong>Efecto Expulsión</strong> significa que el altísimo pago de intereses le resta recursos en efectivo directamente al sistema de salud y educación.</p>`,
+                <p class="mt-12 text-xl text-center px-8 border-l-4 border-red-500 bg-red-50 py-4 rounded-r-lg">Este <strong>Efecto Expulsión</strong> significa que el altísimo pago de intereses le resta recursos en efectivo directamente al sistema de salud y educación.</p>
+                <p class="text-xs text-gray-400 text-right italic mt-4">Fuente: S&P Global Ratings (dic/2025) – Interest/Revenues = 10.5% en 2024. Incluyendo amortización de capital, el servicio total de deuda ronda el 14-15% de los ingresos tributarios (MEF, PGN 2025).</p>`,
                 nota: "15% de nuestros impuestos se van a Wall Street cada mes solo en intereses. Por eso no sobra para comprar medicamentos para los hospitales."
             },
             {
                 html: `<h2>8. Paraguay ante las Calificadoras</h2>
-                <p class="text-lg mb-6">Estatus actual de Paraguay en el mundo financiero (2024-2025):</p>
+                <p class="text-lg mb-6">Estatus actual de Paraguay en el mundo financiero (2025-2026):</p>
                 <div class="flex gap-6">
                     <div class="rating-card border-green-500 shadow-lg scale-105">
                         <p class="text-sm font-bold text-gray-400">MOODY'S</p>
                         <p class="rating-val status-ig">Baa3</p>
                         <p class="text-xs bg-green-100 text-green-700 rounded-full py-1.5 mt-2 font-bold">GRADO DE INVERSIÓN</p>
                     </div>
-                    <div class="rating-card shadow-sm">
+                    <div class="rating-card border-green-500 shadow-lg scale-105">
                         <p class="text-sm font-bold text-gray-400">S&P GLOBAL</p>
-                        <p class="rating-val status-spec">BB+</p>
-                        <p class="text-[11px] bg-amber-100 text-amber-700 rounded-full py-1.5 mt-2 font-bold">A UN PASO (PERSPECTIVA +)</p>
+                        <p class="rating-val status-ig">BBB-</p>
+                        <p class="text-xs bg-green-100 text-green-700 rounded-full py-1.5 mt-2 font-bold">GRADO DE INVERSIÓN</p>
                     </div>
                     <div class="rating-card shadow-sm">
                         <p class="text-sm font-bold text-gray-400">FITCH RATINGS</p>
                         <p class="rating-val status-spec">BB+</p>
-                        <p class="text-[11px] bg-amber-100 text-amber-700 rounded-full py-1.5 mt-2 font-bold">A UN PASO (ESTABLE)</p>
+                        <p class="text-[11px] bg-amber-100 text-amber-700 rounded-full py-1.5 mt-2 font-bold">A UN PASO (POSITIVA)</p>
                     </div>
                 </div>
-                <p class="text-base mt-8 text-center text-gray-600">Lograr que las tres agencias nos pinten de "Verde" reducirá drásticamente el costo futuro de la deuda soberana.</p>`,
-                nota: "Este es nuestro semáforo global. Moody's ya nos dio el voto de confianza. S&P y Fitch nos tienen bajo observación, a un solo escalón de subir. Nuestra imagen país en el MRE depende de mantener estos códigos estables."
+                <p class="text-base mt-8 text-center text-gray-600">Con 2 de las 3 grandes agencias en Grado de Inversión, Paraguay consolida su acceso al mercado de capitales con tasas soberanas reducidas. La meta ahora es que Fitch complete el "triple verde".</p>
+                <p class="text-xs text-gray-400 text-right italic mt-4">Fuentes: Moody's Investors Service (26/jul/2024), S&P Global Ratings (17/dic/2025), Fitch Ratings (6/oct/2025)</p>`,
+                nota: "¡Atención! S&P nos subió a Grado de Inversión en diciembre 2025. Ya somos BBB- para ellos. Moody's nos mantiene en Baa3. Con 2 de 3 agencias en verde, nuestra deuda soberana es más barata. Fitch nos tiene en BB+ con perspectiva positiva: falta poco para el triple verde. Nuestra imagen país en el MRE depende de mantener estos códigos estables."
             },
             {
                 html: `<h2>9. Mapa de Riesgo Regional</h2>
@@ -338,12 +471,13 @@
                     <div class="bar-row"><span class="bar-label text-base">🇨🇱 Chile (A2)</span><div class="bar-wrapper h-8"><div class="bg-green-600 bar-fill text-sm" style="width: 90%">Súper Seguro</div></div></div>
                     <div class="bar-row"><span class="bar-label text-base">🇺🇾 Uruguay (Baa1)</span><div class="bar-wrapper h-8"><div class="bg-green-500 bar-fill text-sm" style="width: 75%">Seguro</div></div></div>
                     <div class="bar-row"><span class="bar-label text-base font-bold text-blue-800">🇵🇾 Paraguay (Baa3)</span><div class="bar-wrapper h-8"><div class="bg-green-400 bar-fill text-sm" style="width: 60%">Límite Seguro</div></div></div>
-                    <div class="bar-row"><span class="bar-label text-base text-gray-400">🇧🇷 Brasil (Ba2)</span><div class="bar-wrapper h-8"><div class="bg-amber-400 bar-fill text-sm" style="width: 45%">Riesgo Medio</div></div></div>
-                    <div class="bar-row"><span class="bar-label text-base text-gray-400">🇦🇷 Argentina (Ca)</span><div class="bar-wrapper h-8"><div class="bg-red-600 bar-fill text-sm" style="width: 15%">Default</div></div></div>
+                    <div class="bar-row"><span class="bar-label text-base text-gray-400">🇧🇷 Brasil (Ba1)</span><div class="bar-wrapper h-8"><div class="bg-amber-400 bar-fill text-sm" style="width: 50%">Riesgo Medio</div></div></div>
+                    <div class="bar-row"><span class="bar-label text-base text-gray-400">🇦🇷 Argentina (Caa1)</span><div class="bar-wrapper h-8"><div class="bg-red-600 bar-fill text-sm" style="width: 20%">Riesgo Alto</div></div></div>
                 </div>
                 <div class="mt-8 bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg text-base text-gray-700 shadow-sm">
                     Estamos en el selecto grupo de países con Grado de Inversión, posicionándonos por encima de potencias económicas regionales. Proteger esta calificación es una política de Estado.
-                </div>`,
+                </div>
+                <p class="text-xs text-gray-400 text-right italic mt-4">Fuente: Moody's Investors Service – Calificaciones Soberanas de Largo Plazo (actualizado a julio 2025)</p>`,
                 nota: "Miren a Paraguay en la tabla. Estamos por encima de Brasil y Argentina en confianza para los inversionistas. Es un hito histórico que debemos cuidar."
             },
             {
@@ -381,7 +515,7 @@
 
         let currentSlide = 0;
         let currentUser = null;
-        
+
         // Elementos UI
         const loadingScreen = document.getElementById('loading-screen');
         const presentationContainer = document.getElementById('presentation-container');
@@ -401,22 +535,22 @@
                 presentationContainer.classList.add('hidden');
                 controlContainer.classList.remove('hidden');
                 controlContainer.classList.add('flex'); // Activa flexbox vertical
-            } 
+            }
             else if (ROL === 'teleprompter') {
                 // Modo Notebook (Solo Notas)
                 presentationContainer.classList.remove('hidden');
                 controlContainer.classList.add('hidden');
-                
+
                 // Aplicar estilos oscuros absolutos
                 document.body.classList.add('teleprompter-bg');
                 slideContent.classList.add('teleprompter-bg', 'border-none', 'shadow-none');
                 headerBar.classList.add('hidden'); // Ocultar barra superior
-            } 
+            }
             else {
                 // Modo Visor (Defecto - Pantalla Gigante)
                 presentationContainer.classList.remove('hidden');
                 controlContainer.classList.add('hidden');
-                
+
                 roleBadge.textContent = "📡 MODO VISOR EN VIVO";
                 roleBadge.className = "text-xs font-bold px-3 py-1 rounded-full bg-blue-100 text-blue-800 border border-blue-200 shadow-sm";
             }
@@ -429,45 +563,45 @@
                     if (user) {
                         currentUser = user;
                         applyUI();
-                        
+
                         // Todos escuchan la base de datos (Incluso el control para sincronizar el número)
-                        onSnapshot(stateDocRef, s => { 
-                            if (s.exists() && s.data().slideIndex !== undefined) { 
-                                currentSlide = s.data().slideIndex; 
-                                render(); 
-                            } 
+                        onSnapshot(stateDocRef, s => {
+                            if (s.exists() && s.data().slideIndex !== undefined) {
+                                currentSlide = s.data().slideIndex;
+                                render();
+                            }
                         });
-                        
+
                         // Si es el control, asegurarnos de inyectar el estado inicial
                         if (ROL === 'control') {
                             updateDB(currentSlide);
                         }
                     }
                 });
-            } catch (e) { 
-                console.error("Error Auth Firebase", e); 
+            } catch (e) {
+                console.error("Error Auth Firebase", e);
                 loadingScreen.innerHTML = '<h2 class="text-red-600 font-bold">Error de conexión a Firebase</h2>';
             }
         }
 
         // Acciones exclusivas del rol Control o teclado
-        window.nextSlide = () => { 
-            if (currentSlide < slides.length - 1 && (ROL === 'control' || ROL === 'teleprompter')) { 
-                currentSlide++; 
-                updateDB(currentSlide); 
-            } 
-        };
-        
-        window.prevSlide = () => { 
-            if (currentSlide > 0 && (ROL === 'control' || ROL === 'teleprompter')) { 
-                currentSlide--; 
-                updateDB(currentSlide); 
-            } 
+        window.nextSlide = () => {
+            if (currentSlide < slides.length - 1 && (ROL === 'control' || ROL === 'teleprompter')) {
+                currentSlide++;
+                updateDB(currentSlide);
+            }
         };
 
-        async function updateDB(i) { 
+        window.prevSlide = () => {
+            if (currentSlide > 0 && (ROL === 'control' || ROL === 'teleprompter')) {
+                currentSlide--;
+                updateDB(currentSlide);
+            }
+        };
+
+        async function updateDB(i) {
             if (currentUser) {
-                await setDoc(stateDocRef, { slideIndex: i, time: Date.now() }, { merge: true }); 
+                await setDoc(stateDocRef, { slideIndex: i, time: Date.now() }, { merge: true });
             }
         }
 
@@ -477,7 +611,7 @@
             if (ROL === 'control') {
                 // Render Control
                 ctrlCounter.textContent = currentSlide + 1;
-            } 
+            }
             else if (ROL === 'teleprompter') {
                 // Render Teleprompter (Notas Gigantes de Alto Contraste)
                 slideContent.innerHTML = `
@@ -486,7 +620,7 @@
                     </div>
                     <p class="teleprompter-text">${data.nota}</p>
                 `;
-            } 
+            }
             else {
                 // Render Visor Normal
                 slideContent.classList.remove('slide-enter');
@@ -499,14 +633,14 @@
                 if (currentSlide === 0) {
                     const qrContainer = document.getElementById("qrcode");
                     if (qrContainer) {
-                        qrContainer.innerHTML = ""; 
+                        qrContainer.innerHTML = "";
                         new QRCode(qrContainer, {
                             text: baseUrl,
                             width: 130,
                             height: 130,
-                            colorDark : "#0f172a",
-                            colorLight : "#ffffff",
-                            correctLevel : QRCode.CorrectLevel.M
+                            colorDark: "#0f172a",
+                            colorLight: "#ffffff",
+                            correctLevel: QRCode.CorrectLevel.M
                         });
                     }
                 }
@@ -514,14 +648,15 @@
         }
 
         // Control por teclado (Espacio y Flechas) habilitado para Teleprompter por si acaso
-        document.addEventListener('keydown', e => { 
-            if (ROL === 'control' || ROL === 'teleprompter') { 
-                if (e.key === 'ArrowRight' || e.key === ' ') nextSlide(); 
-                if (e.key === 'ArrowLeft') prevSlide(); 
-            } 
+        document.addEventListener('keydown', e => {
+            if (ROL === 'control' || ROL === 'teleprompter') {
+                if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+                if (e.key === 'ArrowLeft') prevSlide();
+            }
         });
 
         init();
     </script>
 </body>
+
 </html>
