@@ -298,7 +298,7 @@
                 html: `<h2>1. La "Billetera" del Estado (Rigidez)</h2>
                 <p>El primer gran problema es la <strong>Inflexibilidad del Gasto</strong>. Casi todo el dinero que se recauda ya tiene dueño antes de ingresar a las arcas del Estado.</p>
                 <ul class="mt-8">
-                    <li class="mb-6">Entre el <strong>70% y el 80%</strong> de los impuestos se destinan a Gastos Rígidos.</li>
+                    <li class="mb-6">Más del <strong>70%</strong> de los impuestos se destinan a gastos rígidos (salarios, jubilaciones, servicio de deuda y otros compromisos legales).</li>
                     <li>Este escenario limita la capacidad del Estado para reaccionar ante imprevistos o desarrollar infraestructura con recursos propios.</li>
                 </ul>
                 <p class="text-xs text-gray-400 text-right italic mt-6">Fuente: Análisis del PGN 2025 – Ministerio de Economía y Finanzas (Portal SITUFIN). Clasificación por objeto del gasto.</p>`,
@@ -366,9 +366,9 @@
                 <div class="w-full flex flex-col items-center mt-2">
                     <img src="https://www.abc.com.py/resizer/v2/R3JHY5BHMVGMNH3YFS4FRWEZXY.jpg?auth=25c537abae5fed55dbf3c39a76fbe1ba48c8f87988835425a60be83ff18ecc18&width=1920&smart=true" class="w-full max-w-6xl h-auto max-h-[60vh] object-cover rounded-xl shadow-lg border border-gray-200">
                     <p class="text-sm text-gray-500 mt-4 font-semibold tracking-wide uppercase">Crecimiento desde la pandemia 2020</p>
-                    <p class="text-xs text-gray-400 text-right italic">Fuente: <a href="https://datosmacro.expansion.com/deuda/paraguay" target="_blank" class="text-blue-500 underline">Datosmacro – Deuda Pública de Paraguay 2014-2024 (FMI/Eurostat)</a></p>
+                    <p class="text-xs text-gray-400 text-right italic">Fuente: <a href="https://datosmacro.expansion.com/deuda/paraguay" target="_blank" class="text-blue-500 underline">Datosmacro – Deuda Pública de Paraguay 2014-2024 (datos MEF/FMI)</a>.</p>
                 </div>`,
-                nota: "Vean la explosión de la línea roja. Pasamos de un cómodo 15% de deuda a casi un 38% que ya nos empieza a apretar el zapato fuertemente a nivel país."
+                nota: "Vean la explosión de la línea roja. Pasamos de alrededor del 15% del PIB en 2014 a casi un 45% en 2024, según datos del MEF y organismos internacionales. Ese aumento ya empieza a apretar el zapato a nivel país."
             },
             {
                 html: `<h2>5. El peligro del "Bicicleteo"</h2>
@@ -378,7 +378,7 @@
                 <p class="text-xl mt-8 px-6 text-center text-gray-700">Si el país no reduce su déficit, llegará un momento en que todo el préstamo nuevo se use solo para pagar el anterior, sin que sobre dinero para inyectar a la economía nacional.</p>`,
                 nota: "El rollover es válido para manejar la tesorería a corto plazo, pero es muy riesgoso a largo plazo. Es el famoso 'tapar un agujero abriendo otro más grande'."
             },
-            {
+           {
                 html: `<h2>6. Comparativa MERCOSUR (Deuda vs Ingresos)</h2>
                 <div class="w-full bg-white p-5 rounded-xl border border-gray-200 shadow-sm mt-2">
                     <div class="flex justify-center gap-6 text-xs font-bold mb-4 border-b pb-2">
@@ -390,43 +390,77 @@
                         <div class="col-span-2 bg-blue-50 p-3 rounded-lg border border-blue-200">
                             <div class="font-bold text-sm text-gray-800 mb-1">🇵🇾 PARAGUAY</div>
                             <div class="flex flex-col gap-1">
-                                <div class="flex items-center"><div class="w-14 text-[11px] text-gray-600 font-semibold">Deuda</div><div class="bg-blue-600 h-5 rounded-r flex items-center px-2 text-xs text-white font-bold shadow-sm" style="width: 38%">38%</div></div>
-                                <div class="flex items-center"><div class="w-14 text-[11px] text-gray-600 font-semibold">Ingreso</div><div class="bg-red-500 h-5 rounded-r flex items-center px-2 text-xs text-white font-bold shadow-sm" style="width: 10.4%">10.4%</div></div>
+                                <div class="flex items-center">
+                                    <div class="w-14 text-[11px] text-gray-600 font-semibold">Deuda</div>
+                                    <div class="bg-blue-600 h-5 rounded-r flex items-center px-2 text-xs text-white font-bold shadow-sm" style="width: 45%">45%</div>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-14 text-[11px] text-gray-600 font-semibold">Ingreso</div>
+                                    <div class="bg-red-500 h-5 rounded-r flex items-center px-2 text-xs text-white font-bold shadow-sm" style="width: 10.4%">10.4%</div>
+                                </div>
                             </div>
                         </div>
+            
                         <div>
                             <div class="font-bold text-xs text-gray-500 mb-1">🇧🇷 BRASIL</div>
                             <div class="flex flex-col gap-1">
-                                <div class="flex items-center"><div class="w-14 text-[10px] text-gray-400">Deuda</div><div class="bg-blue-300 h-4 rounded-r flex items-center px-1 text-[10px] text-blue-800 font-bold" style="width: 87%">87%</div></div>
-                                <div class="flex items-center"><div class="w-14 text-[10px] text-gray-400">Ingreso</div><div class="bg-red-300 h-4 rounded-r flex items-center px-1 text-[10px] text-red-800 font-bold" style="width: 33%">33%</div></div>
+                                <div class="flex items-center">
+                                    <div class="w-14 text-[10px] text-gray-400">Deuda</div>
+                                    <div class="bg-blue-300 h-4 rounded-r flex items-center px-1 text-[10px] text-blue-800 font-bold" style="width: 87%">87%</div>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-14 text-[10px] text-gray-400">Ingreso</div>
+                                    <div class="bg-red-300 h-4 rounded-r flex items-center px-1 text-[10px] text-red-800 font-bold" style="width: 33%">33%</div>
+                                </div>
                             </div>
                         </div>
+            
                         <div>
                             <div class="font-bold text-xs text-gray-500 mb-1">🇦🇷 ARGENTINA</div>
                             <div class="flex flex-col gap-1">
-                                <div class="flex items-center"><div class="w-14 text-[10px] text-gray-400">Deuda</div><div class="bg-blue-300 h-4 rounded-r flex items-center px-1 text-[10px] text-blue-800 font-bold" style="width: 85%">85%</div></div>
-                                <div class="flex items-center"><div class="w-14 text-[10px] text-gray-400">Ingreso</div><div class="bg-red-300 h-4 rounded-r flex items-center px-1 text-[10px] text-red-800 font-bold" style="width: 29%">29%</div></div>
+                                <div class="flex items-center">
+                                    <div class="w-14 text-[10px] text-gray-400">Deuda</div>
+                                    <div class="bg-blue-300 h-4 rounded-r flex items-center px-1 text-[10px] text-blue-800 font-bold" style="width: 85%">85%</div>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-14 text-[10px] text-gray-400">Ingreso</div>
+                                    <div class="bg-red-300 h-4 rounded-r flex items-center px-1 text-[10px] text-red-800 font-bold" style="width: 29%">29%</div>
+                                </div>
                             </div>
                         </div>
+            
                         <div>
                             <div class="font-bold text-xs text-gray-500 mb-1">🇺🇾 URUGUAY</div>
                             <div class="flex flex-col gap-1">
-                                <div class="flex items-center"><div class="w-14 text-[10px] text-gray-400">Deuda</div><div class="bg-blue-300 h-4 rounded-r flex items-center px-1 text-[10px] text-blue-800 font-bold" style="width: 68%">68%</div></div>
-                                <div class="flex items-center"><div class="w-14 text-[10px] text-gray-400">Ingreso</div><div class="bg-red-300 h-4 rounded-r flex items-center px-1 text-[10px] text-red-800 font-bold" style="width: 26.5%">26.5%</div></div>
+                                <div class="flex items-center">
+                                    <div class="w-14 text-[10px] text-gray-400">Deuda</div>
+                                    <div class="bg-blue-300 h-4 rounded-r flex items-center px-1 text-[10px] text-blue-800 font-bold" style="width: 68%">68%</div>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-14 text-[10px] text-gray-400">Ingreso</div>
+                                    <div class="bg-red-300 h-4 rounded-r flex items-center px-1 text-[10px] text-red-800 font-bold" style="width: 26.5%">26.5%</div>
+                                </div>
                             </div>
                         </div>
+            
                         <div>
                             <div class="font-bold text-xs text-gray-500 mb-1">🇧🇴 BOLIVIA <span class="font-normal text-[9px]">(Miembro Pleno)</span></div>
                             <div class="flex flex-col gap-1">
-                                <div class="flex items-center"><div class="w-14 text-[10px] text-gray-400">Deuda</div><div class="bg-blue-300 h-4 rounded-r flex items-center px-1 text-[10px] text-blue-800 font-bold" style="width: 80%">80%</div></div>
-                                <div class="flex items-center"><div class="w-14 text-[10px] text-gray-400">Ingreso</div><div class="bg-red-300 h-4 rounded-r flex items-center px-1 text-[10px] text-red-800 font-bold" style="width: 24%">24%</div></div>
+                                <div class="flex items-center">
+                                    <div class="w-14 text-[10px] text-gray-400">Deuda</div>
+                                    <div class="bg-blue-300 h-4 rounded-r flex items-center px-1 text-[10px] text-blue-800 font-bold" style="width: 80%">80%</div>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-14 text-[10px] text-gray-400">Ingreso</div>
+                                    <div class="bg-red-300 h-4 rounded-r flex items-center px-1 text-[10px] text-red-800 font-bold" style="width: 24%">24%</div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <p class="text-sm mt-4 text-gray-600 italic font-medium text-center">No importa solo cuánto se debe, sino cuánto se recauda para pagar. Todo el bloque del MERCOSUR recauda el doble o triple que Paraguay.</p>
-                <p class="text-xs text-gray-400 text-right italic mt-2">Fuentes: Deuda/PIB – <a href="https://datosmacro.expansion.com/deuda/paraguay" target="_blank" class="text-blue-500 underline">Paraguay</a> | <a href="https://datosmacro.expansion.com/deuda/brasil" target="_blank" class="text-blue-500 underline">Brasil</a> | <a href="https://datosmacro.expansion.com/deuda/argentina" target="_blank" class="text-blue-500 underline">Argentina</a> | <a href="https://datosmacro.expansion.com/deuda/uruguay" target="_blank" class="text-blue-500 underline">Uruguay</a> (Datosmacro, cierre 2024). Recaudación tributaria/PIB – <a href="https://www.oecd.org/en/topics/sub-issues/global-tax-and-development/revenue-statistics-in-latin-america-and-the-caribbean.html" target="_blank" class="text-blue-500 underline">OECD Revenue Statistics LatAm 2024</a>, <a href="https://disclosure.spglobal.com/ratings/en/regulatory/article/-/view/type/HTML/id/3495879" target="_blank" class="text-blue-500 underline">S&P Global Ratings (dic/2025)</a>.</p>`,
-                nota: "Muchos dicen 'estamos bien porque Argentina o Brasil deben muchísimo'. ¡Falso! Miren las barras rojas: ellos y Uruguay recaudan muchísimo más en impuestos. Deber el 38% de tu PIB cuando tu ingreso es solo del 10% asfixia al Estado."
+                <p class="text-xs text-gray-400 text-right italic mt-2">Fuentes: Deuda/PIB – <a href="https://datosmacro.expansion.com/deuda/paraguay" target="_blank" class="text-blue-500 underline">Paraguay</a> | <a href="https://datosmacro.expansion.com/deuda/brasil" target="_blank" class="text-blue-500 underline">Brasil</a> | <a href="https://datosmacro.expansion.com/deuda/argentina" target="_blank" class="text-blue-500 underline">Argentina</a> | <a href="https://datosmacro.expansion.com/deuda/uruguay" target="_blank" class="text-blue-500 underline">Uruguay</a> (Datosmacro, cierre 2024). Recaudación tributaria/PIB – <a href="https://www.oecd.org/en/publications/revenue-statistics-in-latin-america-and-the-caribbean-2025_7594fbdd-en.html" target="_blank" class="text-blue-500 underline">OECD Revenue Statistics LAC 2025 – fichas país</a>, y serie "Tax revenue (% of GDP)" del Banco Mundial/TradingEconomics para Paraguay.</p>`,
+                nota: "Muchos dicen 'estamos bien porque Argentina o Brasil deben muchísimo'. Falso. Miren las barras rojas: ellos y Uruguay recaudan muchísimo más en impuestos. Deber cerca del 45% de tu PIB cuando tu ingreso es solo del 10% asfixia al Estado."
             },
             {
                 html: `<h2>7. El Cuello de Botella Social</h2>
