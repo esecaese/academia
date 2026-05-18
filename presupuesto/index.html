@@ -203,6 +203,19 @@
             class="flex-grow bg-white rounded-3xl shadow-xl border border-gray-200 p-8 md:p-12 overflow-y-auto slide-content flex flex-col transition-colors duration-300">
             <!-- Contenido inyectado por JS -->
         </div>
+
+        <!-- CONTROLES PARA TELEPROMPTER -->
+        <div id="teleprompter-controls"
+             class="hidden mt-4 flex justify-between gap-4">
+            <button onclick="prevSlide()"
+                class="flex-1 bg-gray-800 text-white text-2xl font-black py-3 rounded-xl active:bg-gray-700 transition-colors">
+                ⬆ ATRÁS
+            </button>
+            <button onclick="nextSlide()"
+                class="flex-1 bg-blue-600 text-white text-2xl font-black py-3 rounded-xl active:bg-blue-500 transition-colors">
+                SIGUIENTE ⬇
+            </button>
+        </div>
     </div>
 
     <!-- CONTENEDOR MODO CONTROL (MÓVIL) -->
@@ -516,7 +529,7 @@
                     S&amp;P Global Ratings (dic/2025)</a> – Interest/Revenues ≈ 10,5% en 2024. 
                     Incluyendo amortización de capital, el servicio total de deuda ronda el 14–15% de los ingresos tributarios (MEF, PGN 2025).
                 </p>`,
-                nota: "Alrededor de 11% de nuestros impuestos se va solo en intereses de la deuda, y hasta 15% si sumamos amortizaciones. Cada guaraní que va a bancos es un guaraní menos para medicamentos y escuelas."
+                nota: "Alrededor de 11% de nuestros impuestos se va solo en intereses de la deuda, y hasta 15% si sumamos amortizaciones. Cada guaraní que va a bancos es un guaraní menos para medicamentos y escuelas. Si el servicio de la deuda se mantiene en torno al 14–15% de los ingresos, cada punto adicional que suba compite directamente con rubros como medicamentos, becas o inversión en rutas."
             },
             {
                 html: `<h2>8. Paraguay ante las Calificadoras</h2>
@@ -540,7 +553,7 @@
                 </div>
                 <p class="text-base mt-8 text-center text-gray-600">
                     Con 2 de las 3 grandes agencias en Grado de Inversión, Paraguay consolida su acceso al mercado de capitales con tasas soberanas reducidas.
-                    La meta ahora es que Fitch complete el "triple verde".
+                    Perder ese grado implicaría tasas más altas para nuestros bonos, encarecer el crédito al sector privado y presionar aún más el presupuesto público.
                 </p>
                 <p class="text-xs text-gray-400 text-right italic mt-4">
                     Fuentes: 
@@ -554,7 +567,7 @@
                         Fitch: Paraguay BB+ – Outlook Positive (6/oct/2025)
                     </a>
                 </p>`,
-                nota: "¡Atención! S&P nos subió a Grado de Inversión en diciembre 2025. Ya somos BBB- para ellos. Moody's nos mantiene en Baa3. Con 2 de 3 agencias en verde, nuestra deuda soberana es más barata. Fitch nos tiene en BB+ con perspectiva positiva: falta poco para el triple verde. Nuestra imagen país en el MRE depende de mantener estos códigos estables."
+                nota: "¡Atención! S&P nos subió a Grado de Inversión en diciembre 2025. Ya somos BBB- para ellos. Moody's nos mantiene en Baa3. Con 2 de 3 agencias en verde, nuestra deuda soberana es más barata. Si perdiéramos ese grado de inversión, subiría el costo de nuestros bonos y también el del crédito para el sector privado. Para la Cancillería y nuestras misiones en el exterior, mantener este doble grado es una carta de presentación clave ante inversionistas y organismos multilaterales."
             },
             {
                 html: `<h2>9. Mapa de Riesgo Regional</h2>
@@ -670,6 +683,7 @@
         const ctrlCounter = document.getElementById('ctrl-counter');
         const roleBadge = document.getElementById('role-badge');
         const headerBar = document.getElementById('header-bar');
+        const teleprompterControls = document.getElementById('teleprompter-controls');
 
         // Configuración visual según el rol
         function applyUI() {
@@ -680,9 +694,11 @@
                 presentationContainer.classList.add('hidden');
                 controlContainer.classList.remove('hidden');
                 controlContainer.classList.add('flex'); // Activa flexbox vertical
+
+                if (teleprompterControls) teleprompterControls.classList.add('hidden');
             }
             else if (ROL === 'teleprompter') {
-                // Modo Notebook (Solo Notas)
+                // Modo Notebook (Notas + Controles)
                 presentationContainer.classList.remove('hidden');
                 controlContainer.classList.add('hidden');
 
@@ -690,11 +706,18 @@
                 document.body.classList.add('teleprompter-bg');
                 slideContent.classList.add('teleprompter-bg', 'border-none', 'shadow-none');
                 headerBar.classList.add('hidden'); // Ocultar barra superior
+
+                if (teleprompterControls) teleprompterControls.classList.remove('hidden');
             }
             else {
                 // Modo Visor (Defecto - Pantalla Gigante)
                 presentationContainer.classList.remove('hidden');
                 controlContainer.classList.add('hidden');
+
+                document.body.classList.remove('teleprompter-bg');
+                slideContent.classList.remove('teleprompter-bg', 'border-none', 'shadow-none');
+                headerBar.classList.remove('hidden');
+                if (teleprompterControls) teleprompterControls.classList.add('hidden');
 
                 roleBadge.textContent = "📡 MODO VISOR EN VIVO";
                 roleBadge.className = "text-xs font-bold px-3 py-1 rounded-full bg-blue-100 text-blue-800 border border-blue-200 shadow-sm";
