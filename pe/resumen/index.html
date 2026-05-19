@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Base de Estudio - Constitución Nacional y Ley MRE (Modo Oscuro)</title>
+  <title>Base de Estudio - Constitución Nacional y Ley MRE</title>
   <style>
     * {
       margin: 0;
@@ -19,7 +19,6 @@
       padding: 2rem 1rem;
     }
 
-    /* Contenedor principal */
     .container {
       max-width: 1280px;
       margin: 0 auto;
@@ -31,7 +30,6 @@
       border: 1px solid #1f2a3e;
     }
 
-    /* Encabezado */
     .header {
       text-align: center;
       border-bottom: 2px solid #dc2626;
@@ -44,7 +42,6 @@
       color: #facc15;
       letter-spacing: -0.3px;
       margin-bottom: 0.5rem;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
 
     .header p {
@@ -56,14 +53,12 @@
       border-radius: 40px;
     }
 
-    /* Navegación */
     .nav-container {
       background: #0f172a;
       border-radius: 20px;
       padding: 1rem 1.2rem;
       margin-bottom: 2rem;
       border: 1px solid #334155;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
     }
 
     .nav-links {
@@ -94,7 +89,6 @@
       transform: translateY(-2px);
     }
 
-    /* Secciones */
     .section {
       margin-bottom: 3rem;
       scroll-margin-top: 1rem;
@@ -110,20 +104,6 @@
       font-weight: 700;
     }
 
-    .sub-section {
-      margin-top: 2rem;
-      margin-bottom: 2rem;
-    }
-
-    .sub-section h3 {
-      font-size: 1.5rem;
-      margin-bottom: 0.75rem;
-      color: #facc15;
-      border-bottom: 2px solid #334155;
-      padding-bottom: 0.3rem;
-    }
-
-    /* Tarjetas de contenido */
     .article-card {
       background: #0f172a;
       border: 1px solid #2d3a4e;
@@ -187,15 +167,6 @@
       color: #cbd5e6;
     }
 
-    footer {
-      margin-top: 3rem;
-      text-align: center;
-      border-top: 1px solid #2d3a4e;
-      padding-top: 2rem;
-      font-size: 0.85rem;
-      color: #94a3b8;
-    }
-
     .badge {
       background: #2d3a4e;
       border-radius: 14px;
@@ -212,16 +183,25 @@
     }
     a:hover {
       color: #ffd966;
-      border-bottom: 1px solid #facc15;
     }
 
     ul, ol {
       margin-left: 1.5rem;
-      margin-top: 0.3rem;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
     }
 
     li {
       margin-bottom: 0.3rem;
+    }
+
+    /* Listas con viñetas personalizadas para mejor legibilidad */
+    .custom-list {
+      list-style-type: disc;
+    }
+
+    .custom-list li {
+      margin-left: 0.2rem;
     }
 
     @media (max-width: 700px) {
@@ -246,15 +226,14 @@
   <div class="header">
     <h1>📚 Base de estudio estructurada</h1>
     <p>Constitución Nacional del Paraguay · Ley Orgánica del MRE (Ley 1635/2020)</p>
-    <p style="margin-top: 0.5rem; font-size:0.85rem;">Artículos 238, 239, 224, 141, 143, 43, 146, 147 | Ley 1635/2020</p>
+    <p style="margin-top: 0.5rem; font-size:0.85rem;">Artículos 238, 239, 224, 141, 143, 43, 146, 147 | Resumen de toda la Ley 1635</p>
   </div>
 
-  <!-- índice rápido -->
   <div class="nav-container">
     <ul class="nav-links">
       <li><a href="#definiciones">📖 Definiciones</a></li>
       <li><a href="#constitucion">⚖️ Constitución Nacional</a></li>
-      <li><a href="#ley-mre">🏛️ Ley 1635/2020 (MRE)</a></li>
+      <li><a href="#ley-mre">🏛️ Ley 1635/2020 (resumen)</a></li>
     </ul>
   </div>
 
@@ -265,32 +244,30 @@
     <div class="article-card">
       <div class="article-title">🌐 Relaciones Internacionales</div>
       <div class="article-text">
-        <p>Conjunto de interacciones políticas, económicas, sociales, culturales y jurídicas que se desarrollan entre actores internacionales —principalmente Estados, pero también organizaciones internacionales, empresas multinacionales y actores no estatales— en el escenario global. Abarca desde la cooperación pacífica hasta las dinámicas de poder y conflicto.</p>
-        <p><span class="badge">Clave</span> Influye en la diplomacia, el derecho internacional y la formación del sistema internacional.</p>
+        <p>Conjunto de interacciones políticas, económicas, sociales, culturales y jurídicas entre actores internacionales (Estados, organizaciones internacionales, empresas multinacionales, actores no estatales). Abarca cooperación, conflicto y dinámicas de poder global.</p>
+        <p><span class="badge">Clave</span> Base para entender la diplomacia, el derecho internacional y la política exterior.</p>
       </div>
     </div>
 
     <div class="article-card">
       <div class="article-title">⚖️ Derecho Internacional Público</div>
       <div class="article-text">
-        <p>Conjunto de normas, principios y reglas que regulan las relaciones entre Estados y otros sujetos internacionales (organizaciones internacionales, movimientos de liberación, etc.). Establece derechos y obligaciones en la comunidad internacional.</p>
-        <p><strong>Fuentes:</strong> tratados, costumbre internacional, principios generales del derecho, jurisprudencia y doctrina. En Paraguay, el Art. 141 CN otorga jerarquía constitucional a los tratados celebrados válidamente.</p>
+        <p>Normas y principios que regulan relaciones entre Estados y otros sujetos internacionales. Fuentes: tratados, costumbre internacional, principios generales del derecho.</p>
+        <p>En Paraguay, el Art. 141 CN otorga jerarquía constitucional a los tratados válidamente celebrados.</p>
       </div>
     </div>
 
     <div class="article-card">
       <div class="article-title">🤝 Diplomacia</div>
       <div class="article-text">
-        <p>Instrumento y método mediante el cual los Estados (y otros sujetos) gestionan sus relaciones mutuas a través de canales oficiales, negociaciones, comunicaciones y actividades pacíficas. Es la herramienta principal para ejecutar la política exterior.</p>
-        <p><strong>Tipos:</strong> bilateral, multilateral, diplomacia pública, económica, cultural. Se rige por la Convención de Viena sobre Relaciones Diplomáticas (1961) y el derecho interno (Ley 1635/2020 en Paraguay).</p>
+        <p>Instrumento pacífico mediante el cual los Estados gestionan sus relaciones: negociación, representación, información y protección de intereses. Regulada por la Convención de Viena (1961) y la Ley 1635/2020.</p>
       </div>
     </div>
 
     <div class="article-card">
       <div class="article-title">📜 Política Exterior</div>
       <div class="article-text">
-        <p>Conjunto de decisiones, objetivos, principios y acciones que un Estado adopta para relacionarse con el resto de los actores internacionales. Define los intereses nacionales y las estrategias para alcanzarlos en el ámbito externo.</p>
-        <p>En Paraguay, es formulada por el Presidente de la República (Art. 238 CN) y ejecutada por el Ministerio de Relaciones Exteriores (Ley 1635/2020). Se basa en principios del Art. 143 CN: no intervención, autodeterminación, solución pacífica de controversias, respeto a los DDHH, e impulso a la integración regional.</p>
+        <p>Conjunto de decisiones, objetivos y acciones que un Estado adopta en el ámbito internacional. En Paraguay la formula el Presidente (Art. 238 CN) y la ejecuta el MRE, basándose en los principios del Art. 143 CN: no intervención, autodeterminación, solución pacífica, integración regional, etc.</p>
       </div>
     </div>
   </div>
@@ -298,197 +275,203 @@
   <!-- ================= PARTE II: CONSTITUCIÓN NACIONAL ================= -->
   <div id="constitucion" class="section">
     <h2 class="section-title">🇵🇾 2. Constitución Nacional del Paraguay (1992)</h2>
-    <p style="margin-bottom: 1.2rem; color: #9ca3af;">Textos oficiales conforme a la fuente <a href="https://www.bacn.gov.py/leyes-paraguayas/9580/constitucion-nacional-" target="_blank" rel="noopener">BACN - Constitución Nacional</a>. A continuación los artículos solicitados.</p>
+    <p style="margin-bottom: 1.2rem; color: #9ca3af;">Textos oficiales <a href="https://www.bacn.gov.py/leyes-paraguayas/9580/constitucion-nacional-" target="_blank" rel="noopener">BACN</a></p>
 
-    <div id="articulos-constitucion">
-      <!-- Artículo 238 -->
-      <div class="article-card">
-        <div class="article-title">Artículo 238 <span class="article-num">Deberes y atribuciones del Presidente de la República</span></div>
-        <div class="article-text">
-          <p>Son deberes y atribuciones del Presidente de la República:</p>
-          <ol style="margin-left: 1.5rem; margin-top: 0.5rem;">
-            <li>Cumplir y hacer cumplir esta Constitución y las leyes.</li>
-            <li>Representar al Estado y dirigir la administración general del país.</li>
-            <li>Proveer a la seguridad interior y exterior de la Nación, disponer de las Fuerzas Armadas para su defensa, y mantener el orden interno.</li>
-            <li>Ejercer el comando en jefe de las Fuerzas Armadas de la Nación.</li>
-            <li>Declarar los estados de excepción en la forma establecida.</li>
-            <li>Nombrar y remover a los ministros del Poder Ejecutivo y demás funcionarios.</li>
-            <li><span class="highlight">Dirigir las relaciones exteriores de la República</span>, y recibir a jefes de misiones diplomáticas extranjeras.</li>
-            <li>Concluir y firmar tratados internacionales, que deberán ser aprobados por el Congreso (conforme Art. 141).</li>
-            <li>Participar en la formación de las leyes, promulgarlas y publicarlas.</li>
-            <li>Dar cuenta al Congreso al inicio de cada período de sesiones de la situación general del país y los planes del gobierno.</li>
-            <li>Proveer los cargos vacantes del Ejecutivo.</li>
-            <li>Recaudar e invertir las rentas públicas según la ley.</li>
-            <li>Conceder indultos particulares.</li>
-            <li>Ejercer las demás atribuciones que le confieren la Constitución y las leyes.</li>
-          </ol>
-          <p><strong>Importancia:</strong> El Presidente es el director de la política exterior y Comandante en Jefe. Define el rumbo diplomático del país.</p>
-        </div>
+    <div class="article-card">
+      <div class="article-title">Artículo 238 <span class="article-num">Atribuciones del Presidente</span></div>
+      <div class="article-text">
+        <p>Dirige las relaciones exteriores, concluye y firma tratados (requieren aprobación del Congreso), es Comandante en Jefe, nombra ministros, ejerce el poder reglamentario y concede indultos.</p>
       </div>
+    </div>
 
-      <!-- Artículo 239 -->
-      <div class="article-card">
-        <div class="article-title">Artículo 239 <span class="article-num">Deberes y atribuciones del Vicepresidente</span></div>
-        <div class="article-text">
-          <p>Son deberes y atribuciones del Vicepresidente de la República:</p>
-          <ol style="margin-left: 1.5rem;">
-            <li>Sustituir de inmediato al Presidente de la República en caso de impedimento, ausencia temporal o falta definitiva, ejerciendo las atribuciones presidenciales.</li>
-            <li>Ejercer las funciones que el Poder Ejecutivo le asigne.</li>
-            <li>Actuar como nexo entre el Poder Ejecutivo y el Poder Legislativo.</li>
-          </ol>
-          <p>El Vicepresidente garantiza la continuidad del gobierno y coopera en la articulación de poderes.</p>
-        </div>
+    <div class="article-card">
+      <div class="article-title">Artículo 239 <span class="article-num">Vicepresidente</span></div>
+      <div class="article-text">
+        <p>Sustituye al Presidente en caso de impedimento o ausencia; actúa como nexo entre Ejecutivo y Legislativo; ejerce funciones que le asigne el Presidente.</p>
       </div>
+    </div>
 
-      <!-- Artículo 224 -->
-      <div class="article-card">
-        <div class="article-title">Artículo 224 <span class="article-num">Atribuciones exclusivas de la Cámara de Senadores</span></div>
-        <div class="article-text">
-          <p>Son atribuciones exclusivas de la Cámara de Senadores:</p>
-          <ol style="margin-left: 1.5rem;">
-            <li>Iniciar la consideración de proyectos sobre organización de la administración pública y juicio político.</li>
-            <li>Acordar el nombramiento de Ministros de la Corte Suprema, fiscales, contralor, directores de entes binacionales y entes oficiales de crédito.</li>
-            <li><span class="highlight">Prestar acuerdo para el nombramiento de jefes de misiones diplomáticas permanentes, conforme a la ley.</span></li>
-            <li><span class="highlight">Acordar el envío de misiones militares paraguayas al exterior y el ingreso de tropas extranjeras al territorio nacional.</span></li>
-            <li>Acordar la autorización para el tránsito de tropas extranjeras por el territorio.</li>
-            <li>Prestar acuerdo para la designación del Presidente del Banco Central, Defensor del Pueblo, y otros.</li>
-            <li>Conceder autorización al Presidente para ausentarse del país por más de quince días.</li>
-            <li>Las demás que le otorgan la Constitución y las leyes.</li>
-          </ol>
-          <p>El Senado ejerce un control clave sobre la política exterior y la designación de representantes diplomáticos.</p>
-        </div>
+    <div class="article-card">
+      <div class="article-title">Artículo 224 <span class="article-num">Atribuciones exclusivas del Senado</span></div>
+      <div class="article-text">
+        <p>Acuerda el nombramiento de jefes de misiones diplomáticas; acuerda el envío de tropas al exterior e ingreso de tropas extranjeras; autoriza la salida del Presidente por más de 15 días.</p>
       </div>
+    </div>
 
-      <!-- Artículo 141 -->
-      <div class="article-card">
-        <div class="article-title">Artículo 141 <span class="article-num">De los tratados internacionales</span></div>
-        <div class="article-text">
-          <p><strong>Texto oficial:</strong> “Los tratados internacionales válidamente celebrados, aprobados por ley del Congreso, y cuyos instrumentos de ratificación fueran canjeados o depositados, forman parte del ordenamiento legal interno con la jerarquía que determina el Artículo 137.”</p>
-          <p>El Art. 137 establece la jerarquía: <strong>Constitución > Tratados > Leyes > Decretos > Resoluciones</strong>. Por tanto, los tratados tienen rango constitucional y se ubican inmediatamente después de la Carta Magna.</p>
-          <div class="legal-note">✔️ Implicancia: Los tratados de derechos humanos, integración y comercio son de aplicación preferente frente a leyes internas.</div>
-        </div>
+    <div class="article-card">
+      <div class="article-title">Artículo 141 <span class="article-num">Tratados internacionales</span></div>
+      <div class="article-text">
+        <p>Los tratados válidamente celebrados, aprobados por ley del Congreso y ratificados, forman parte del orden interno con jerarquía constitucional (Art. 137: Constitución > Tratados > Leyes).</p>
       </div>
+    </div>
 
-      <!-- Artículo 143 -->
-      <div class="article-card">
-        <div class="article-title">Artículo 143 <span class="article-num">De las relaciones internacionales</span></div>
-        <div class="article-text">
-          <p>“La República del Paraguay, en sus relaciones internacionales, acepta el derecho internacional y se ajusta a los siguientes principios: independencia nacional; autodeterminación de los pueblos; solidaridad y cooperación internacional; igualdad jurídica entre los Estados; no intervención; solución pacífica de controversias; proscripción de la amenaza y del uso de la fuerza; respeto de los derechos humanos.”</p>
-          <p>Asimismo, <span class="highlight">propugna la integración política, económica, social y cultural de las naciones de América Latina y el Caribe</span>, con el fin de construir una comunidad regional autónoma y libre de dominación.</p>
-          <p>Éste es el pilar ideológico de la política exterior paraguaya.</p>
-        </div>
+    <div class="article-card">
+      <div class="article-title">Artículo 143 <span class="article-num">Relaciones internacionales</span></div>
+      <div class="article-text">
+        <p>Paraguay acepta el derecho internacional y se rige por: independencia nacional, autodeterminación, no intervención, solución pacífica de controversias, respeto a DDHH. Propugna la integración latinoamericana y caribeña.</p>
       </div>
+    </div>
 
-      <!-- Artículo 43 -->
-      <div class="article-card">
-        <div class="article-title">Artículo 43 <span class="article-num">Del derecho de asilo</span></div>
-        <div class="article-text">
-          <p>“El Paraguay reconoce el derecho de asilo territorial y diplomático a toda persona perseguida por motivos o delitos políticos o por delitos comunes conexos, así como por sus opiniones o por sus creencias. Las autoridades deberán otorgar de inmediato el asilo, y en su caso, facilitarán inmediatamente la salida del asilado del país. […] En el caso del asilo diplomático, el asilado queda bajo la protección del Estado asilante.”</p>
-          <p>Reafirma el compromiso humanitario y la tradición asilante del Paraguay.</p>
-        </div>
+    <div class="article-card">
+      <div class="article-title">Artículo 43 <span class="article-num">Derecho de asilo</span></div>
+      <div class="article-text">
+        <p>Reconoce asilo territorial y diplomático a perseguidos por delitos políticos o creencias. Las autoridades deben otorgarlo de inmediato.</p>
       </div>
+    </div>
 
-      <!-- Artículo 146 -->
-      <div class="article-card">
-        <div class="article-title">Artículo 146 <span class="article-num">De la nacionalidad natural</span></div>
-        <div class="article-text">
-          <p>Son de nacionalidad paraguaya natural:</p>
-          <ol style="margin-left: 1.5rem;">
-            <li>Las personas nacidas en el territorio de la República (ius soli).</li>
-            <li>Los hijos de madre o padre paraguayo al servicio de la República, nacidos en el extranjero.</li>
-            <li>Los hijos de madre o padre paraguayo nacidos en el extranjero cuando se radiquen permanentemente en el país.</li>
-            <li>Los infantes de padres ignorados recogidos en el territorio.</li>
-          </ol>
-          <p>La opción del inciso 3 se formaliza por simple declaración ante la autoridad competente.</p>
-        </div>
+    <div class="article-card">
+      <div class="article-title">Artículo 146 <span class="article-num">Nacionalidad natural</span></div>
+      <div class="article-text">
+        <p>Son paraguayos naturales: nacidos en territorio (ius soli), hijos de paraguayos al servicio de la República nacidos en el extranjero, hijos de paraguayos que se radiquen en Paraguay, e infantes de padres ignorados hallados en el país.</p>
       </div>
+    </div>
 
-      <!-- Artículo 147 -->
-      <div class="article-card">
-        <div class="article-title">Artículo 147 <span class="article-num">De la no privación de la nacionalidad natural</span></div>
-        <div class="article-text">
-          <p><strong>“Ningún paraguayo natural será privado de su nacionalidad, pero podrá renunciar voluntariamente a ella.”</strong></p>
-          <p>Garantía fundamental contra la apatridia. La nacionalidad de origen es irrenunciable por imposición estatal; solo por acto voluntario expreso se puede perder.</p>
-        </div>
+    <div class="article-card">
+      <div class="article-title">Artículo 147 <span class="article-num">No privación de la nacionalidad natural</span></div>
+      <div class="article-text">
+        <p>Ningún paraguayo natural será privado de su nacionalidad, pero puede renunciar voluntariamente a ella. Garantía contra la apatridia.</p>
       </div>
     </div>
   </div>
 
-  <!-- ================= PARTE III: LEY ORGÁNICA DEL MINISTERIO DE RELACIONES EXTERIORES ================= -->
+  <!-- ================= PARTE III: LEY ORGÁNICA DEL MRE (resumen de TODOS los artículos) ================= -->
   <div id="ley-mre" class="section">
-    <h2 class="section-title">🏛️ 3. Ley N° 1635/2020 – Orgánica del Ministerio de Relaciones Exteriores</h2>
-    <p style="margin-bottom: 1rem; color: #9ca3af;">Fuente oficial: <a href="https://www.bacn.gov.py/leyes-paraguayas/1715/ley-n-1635-org-nica-del-ministerio-de-relaciones-exteriores-br" target="_blank" rel="noopener">BACN - Ley 1635</a> (con modificaciones introducidas por Ley N° 6928/2022).</p>
+    <h2 class="section-title">🏛️ 3. Ley N° 1635/2020 – Orgánica del Ministerio de Relaciones Exteriores (Resumen de todos los artículos)</h2>
+    <p style="margin-bottom: 1rem; color: #9ca3af;">Fuente: <a href="https://www.bacn.gov.py/leyes-paraguayas/1715/ley-n-1635-org-nica-del-ministerio-de-relaciones-exteriores-br" target="_blank">BACN - Ley 1635</a> (con modificación de la Ley 6928/2022).</p>
 
+    <!-- Artículos 1 al 3 -->
     <div class="article-card">
-      <div class="article-title">Artículo 1°</div>
+      <div class="article-title">Artículos 1° - 3° <span class="article-num">Competencia y naturaleza del MRE</span></div>
       <div class="article-text">
-        <p>El manejo de las relaciones exteriores de la República del Paraguay compete al Presidente de la República, de acuerdo con lo establecido en los Artículos 238 y 239 de la Constitución Nacional.</p>
+        <p><strong>Art. 1°:</strong> El manejo de las relaciones exteriores compete al Presidente de la República (arts. 238 y 239 CN).<br>
+        <strong>Art. 2°:</strong> El MRE es el órgano que, bajo dirección del Presidente, planifica, coordina y ejecuta la política exterior.<br>
+        <strong>Art. 3°:</strong> Todos los órganos del Estado deben coordinar con el MRE cualquier gestión oficial en el exterior (unidad de acción exterior).</p>
       </div>
     </div>
 
+    <!-- Artículo 4° (funciones) -->
     <div class="article-card">
-      <div class="article-title">Artículo 2°</div>
+      <div class="article-title">Artículo 4° <span class="article-num">Funciones del MRE (modificado por Ley 6928/2022)</span></div>
       <div class="article-text">
-        <p>El Ministerio de Relaciones Exteriores es el órgano del Estado que, bajo la dirección del Presidente de la República, planifica, coordina y ejecuta la política exterior de la Nación.</p>
-      </div>
-    </div>
-
-    <div class="article-card">
-      <div class="article-title">Artículo 4° (modificado por Ley N° 6928/2022)</div>
-      <div class="article-text">
-        <p><strong>Funciones del Ministerio de Relaciones Exteriores:</strong></p>
-        <ul style="margin-left: 1.5rem; list-style: disc;">
-          <li>Proponer al Presidente de la República la política exterior y ejecutarla una vez aprobada.</li>
-          <li>Conducir las relaciones exteriores de la República.</li>
-          <li>Ejercer la representación del Estado paraguayo ante gobiernos extranjeros, organismos internacionales, sistemas de integración y tribunales internacionales.</li>
-          <li>Negociar, suscribir y tramitar la ratificación de tratados, convenciones y acuerdos internacionales.</li>
-          <li>Coordinar la participación en conferencias y organismos internacionales.</li>
-          <li>Conducir negociaciones sobre asuntos económicos internacionales, comercio exterior, integración, cooperación y emprendimientos binacionales y multinacionales.</li>
-          <li>Velar por el respeto y protección de los intereses del país y de sus nacionales en el exterior.</li>
-          <li>Recibir agentes diplomáticos extranjeros, autorizar el funcionamiento de oficinas consulares y representaciones de organismos internacionales.</li>
-          <li>Establecer y hacer cumplir el protocolo y ceremonial del Estado.</li>
-          <li><span class="highlight">Rendir informes semestrales a las Cámaras del Congreso de la Nación</span> sobre el cumplimiento de sus funciones y la política exterior aplicada.</li>
+        <ul class="custom-list">
+          <li>Proponer y ejecutar la política exterior.</li>
+          <li>Representar al Estado ante otros Estados, organismos internacionales y tribunales internacionales.</li>
+          <li>Negociar, suscribir y ratificar tratados.</li>
+          <li>Conducir negociaciones económicas, comerciales, de integración y cooperación.</li>
+          <li>Proteger los intereses del país y de los nacionales en el exterior.</li>
+          <li>Recibir agentes diplomáticos, autorizar consulados y representaciones internacionales.</li>
+          <li>Establecer el protocolo y ceremonial del Estado.</li>
+          <li><span class="highlight">Rendir informes semestrales al Congreso</span> sobre la gestión de los jefes de misión y los órganos del MRE.</li>
         </ul>
       </div>
     </div>
 
+    <!-- Artículo 5° Integración del Ministerio (FORMATO LISTA) -->
     <div class="article-card">
-      <div class="article-title">Artículo 6°</div>
+      <div class="article-title">Artículo 5° <span class="article-num">Integración del Ministerio</span></div>
       <div class="article-text">
-        <p>La Cancillería es el órgano central del Ministerio de Relaciones Exteriores. Dirige y coordina la actividad de las misiones diplomáticas, las representaciones permanentes, las delegaciones y las oficinas consulares. <strong>Sólo a ella compete pronunciarse sobre temas de política internacional del Paraguay.</strong></p>
+        <p>El MRE se integra con:</p>
+        <ul class="custom-list">
+          <li>a) la Cancillería;</li>
+          <li>b) las misiones diplomáticas;</li>
+          <li>c) las representaciones permanentes ante organismos internacionales;</li>
+          <li>d) las misiones especiales;</li>
+          <li>e) las oficinas consulares.</li>
+        </ul>
       </div>
     </div>
 
+    <!-- Artículo 6° -->
     <div class="article-card">
-      <div class="article-title">Artículo 8° y régimen de carrera</div>
+      <div class="article-title">Artículo 6° <span class="article-num">Centralidad de la Cancillería</span></div>
       <div class="article-text">
-        <p>La Carrera Diplomática y Consular se rige por la Ley N° 1335/1999, complementando la presente. Los agentes diplomáticos deben cumplir principios de lealtad, eficiencia, idoneidad, transparencia y defensa de los intereses nacionales.</p>
+        <p>La Cancillería es el órgano central del MRE. Dirige y coordina todas las representaciones en el exterior. <span class="highlight">Sólo a ella compete pronunciarse sobre temas de política internacional del Paraguay.</span></p>
       </div>
     </div>
 
+    <!-- Artículo 7° Conformación de la Cancillería (FORMATO LISTA) -->
     <div class="article-card">
-      <div class="article-title">Disposiciones complementarias</div>
+      <div class="article-title">Artículo 7° <span class="article-num">Conformación de la Cancillería</span></div>
       <div class="article-text">
-        <p>Las misiones diplomáticas, representaciones permanentes, delegaciones y oficinas consulares constituyen los órganos desconcentrados del MRE en el exterior. El Ministro de Relaciones Exteriores es el Jefe de la Cancillería y tiene la representación inmediata del Ministerio.</p>
-        <div class="legal-note">✅ La ley fortalece la institucionalidad diplomática, establece controles parlamentarios (informes semestrales) y centraliza en la Cancillería la conducción técnica de la política exterior.</div>
+        <p>La Cancillería está compuesta por:</p>
+        <ul class="custom-list">
+          <li>a) el Ministro de Relaciones Exteriores;</li>
+          <li>b) los Viceministros;</li>
+          <li>c) las direcciones generales;</li>
+          <li>d) las direcciones y demás unidades previstas en la ley o sus reglamentos.</li>
+        </ul>
       </div>
     </div>
 
-    <!-- Relación entre definiciones y leyes -->
+    <!-- Artículo 8° Ministro -->
+    <div class="article-card">
+      <div class="article-title">Artículo 8° <span class="article-num">Ministro de Relaciones Exteriores</span></div>
+      <div class="article-text">
+        <p>Es la autoridad superior del MRE. Asiste al Presidente en la formulación de la política exterior y en el mantenimiento de las relaciones exteriores.</p>
+      </div>
+    </div>
+
+    <!-- Artículos 9° al 11° (Viceministros) -->
+    <div class="article-card">
+      <div class="article-title">Artículos 9° - 11° <span class="article-num">Viceministros</span></div>
+      <div class="article-text">
+        <p><strong>Art. 9°:</strong> Habrá tres Viceministros designados por el Poder Ejecutivo, a propuesta del Ministro.<br>
+        <strong>Art. 10°:</strong> El Viceministro de Relaciones Exteriores se encarga de la política bilateral y multilateral.<br>
+        <strong>Art. 11°:</strong> El Viceministro de Relaciones Económicas e Integración se ocupa de comercio exterior e integración; el Viceministro de Administración y Asuntos Técnicos dirige la gestión administrativa y de personal.</p>
+      </div>
+    </div>
+
+    <!-- Artículo 12° Direcciones Generales -->
+    <div class="article-card">
+      <div class="article-title">Artículo 12° <span class="article-num">Direcciones Generales</span></div>
+      <div class="article-text">
+        <p>El Ministro, mediante resolución, establecerá las direcciones generales necesarias para el cumplimiento de las funciones. Cada Viceministerio contará con las direcciones generales que determine el reglamento.</p>
+      </div>
+    </div>
+
+    <!-- Artículos 13° al 17° (misiones en el exterior) -->
+    <div class="article-card">
+      <div class="article-title">Artículos 13° - 17° <span class="article-num">Misiones diplomáticas y consulares</span></div>
+      <div class="article-text">
+        <p><strong>Art. 13°:</strong> Las misiones diplomáticas y representaciones permanentes se crean por decreto del Poder Ejecutivo, previo informe del MRE.<br>
+        <strong>Art. 14°:</strong> Los jefes de misión son designados por el Presidente, con acuerdo del Senado (art. 224 CN).<br>
+        <strong>Art. 15°:</strong> Las oficinas consulares se establecen por decreto del Poder Ejecutivo; sus titulares son funcionarios de carrera diplomática.<br>
+        <strong>Art. 16°:</strong> Las misiones especiales se crean para fines específicos y tienen carácter temporal.<br>
+        <strong>Art. 17°:</strong> Todos los funcionarios del servicio exterior deben actuar conforme a la Constitución, los tratados y la política exterior dictada por el Presidente.</p>
+      </div>
+    </div>
+
+    <!-- Artículos 18° al 21° (régimen de personal) -->
+    <div class="article-card">
+      <div class="article-title">Artículos 18° - 21° <span class="article-num">Régimen de personal</span></div>
+      <div class="article-text">
+        <p><strong>Art. 18°:</strong> El personal del MRE y del servicio exterior se rige por la Ley N° 1335/1999 "Del Servicio Diplomático y Consular".<br>
+        <strong>Art. 19°:</strong> Los funcionarios deben cumplir los principios de lealtad, eficiencia, idoneidad y transparencia.<br>
+        <strong>Art. 20°:</strong> El MRE debe contar con un Manual de Organización y Funciones.<br>
+        <strong>Art. 21°:</strong> La Academia Diplomática y Consular "Carlos Antonio López" es la institución de formación y capacitación del personal diplomático.</p>
+      </div>
+    </div>
+
+    <!-- Nota adicional sobre la modificación 2022 -->
+    <div class="legal-note">
+      📌 <strong>Modificación introducida por Ley N° 6928/2022:</strong> Se agregó el inciso i) al Artículo 4°, que obliga al MRE a rendir informes semestrales al Congreso sobre la gestión de los jefes de misión diplomática y los órganos del Ministerio. Esto fortalece el control legislativo de la política exterior.
+    </div>
+
+    <!-- Relación sinóptica -->
     <div style="background: #0f172a; border-radius: 18px; padding: 1.2rem; margin-top: 1rem; border: 1px solid #334155;">
       <h4 style="margin-bottom: 0.8rem; color:#facc15;">🔗 Relación sinóptica: conceptos + normativa</h4>
-      <ul style="margin-left: 1.2rem;">
-        <li><strong>Relaciones internacionales</strong> → Marco del Art. 143 CN (principios y aceptación del DI).</li>
-        <li><strong>Derecho internacional público</strong> → Art. 141 CN (jerarquía constitucional de tratados) y Art. 143 (aceptación del DI).</li>
-        <li><strong>Diplomacia</strong> → Ley 1635/2020 (representación, negociación, protocolo) y Art. 224 CN (acuerdo del Senado para jefes de misiones).</li>
-        <li><strong>Política exterior</strong> → Art. 238 CN (dirección por el Presidente), Art. 143 CN (principios) y Ley 1635 (ejecución a cargo del MRE).</li>
+      <ul class="custom-list">
+        <li><strong>Relaciones internacionales</strong> → Art. 143 CN (principios rectores).</li>
+        <li><strong>Derecho internacional público</strong> → Art. 141 CN (jerarquía de tratados) y Art. 143.</li>
+        <li><strong>Diplomacia</strong> → Ley 1635/2020 (representación, negociación, protocolo) y Art. 224 CN (acuerdo del Senado para jefes de misión).</li>
+        <li><strong>Política exterior</strong> → Art. 238 CN (dirección presidencial), Art. 143 CN (principios) y Ley 1635/2020 (ejecución a cargo del MRE).</li>
       </ul>
     </div>
   </div>
 
   <footer>
-    <p>Base de estudio elaborada con fines académicos. Textos basados en la Constitución Nacional del Paraguay (1992) y Ley N° 1635/2020, conforme a la Biblioteca y Archivo del Congreso Nacional (BACN).</p>
-    <p style="margin-top: 0.5rem;">📌 Referencias: <a href="https://www.bacn.gov.py/leyes-paraguayas/9580/constitucion-nacional-" target="_blank">Constitución Nacional</a> | <a href="https://www.bacn.gov.py/leyes-paraguayas/1715/ley-n-1635-org-nica-del-ministerio-de-relaciones-exteriores-br" target="_blank">Ley 1635/2020 MRE</a></p>
+    <p>Textos basados en la Constitución Nacional del Paraguay (1992) y Ley N° 1635/2020, conforme a BACN.</p>
+    <p>📌 Referencias: <a href="https://www.bacn.gov.py/leyes-paraguayas/9580/constitucion-nacional-" target="_blank">Constitución Nacional</a> | <a href="https://www.bacn.gov.py/leyes-paraguayas/1715/ley-n-1635-org-nica-del-ministerio-de-relaciones-exteriores-br" target="_blank">Ley 1635/2020 MRE</a> | <a href="https://www.bacn.gov.py/leyes-paraguayas/10527/ley-n-6928-modifica-y-amplia-el-articulo-4-de-la-ley-n-16352000-organica-del-ministerio-de-relaciones-exteriores" target="_blank">Ley 6928/2022</a></p>
   </footer>
 </div>
 </body>
