@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,6 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Base de Estudio - Constitución Nacional y Ley MRE</title>
   <style>
+    :root {
+      --bg-dark: #0a0f1a;
+      --bg-card: #111827;
+      --bg-card-hover: #162032;
+      --bg-inner: #0f172a;
+      --border-color: #2d3a4e;
+      --text-main: #e2e8f0;
+      --text-muted: #9ca3af;
+      --accent-red: #ef4444;
+      --accent-yellow: #facc15;
+      --accent-blue: #60a5fa;
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -13,210 +27,234 @@
 
     body {
       font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-      background-color: #0a0f1a;
-      color: #e2e8f0;
-      line-height: 1.6;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.7;
       padding: 2rem 1rem;
     }
 
     .container {
-      max-width: 1280px;
+      max-width: 1000px; /* Un poco más estrecho para facilitar la lectura tipo libro */
       margin: 0 auto;
-      background-color: #111827;
-      border-radius: 28px;
-      box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.6);
+      background-color: var(--bg-card);
+      border-radius: 24px;
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7);
       overflow: hidden;
-      padding: 2rem 2rem 3rem 2rem;
-      border: 1px solid #1f2a3e;
+      padding: 2.5rem;
+      border: 1px solid var(--border-color);
     }
 
     .header {
       text-align: center;
-      border-bottom: 2px solid #dc2626;
+      border-bottom: 2px solid var(--accent-red);
       margin-bottom: 2rem;
       padding-bottom: 1.5rem;
     }
 
     .header h1 {
       font-size: 2.2rem;
-      color: #facc15;
+      color: var(--text-main);
       letter-spacing: -0.3px;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.8rem;
     }
 
     .header p {
-      font-size: 1rem;
-      color: #9ca3af;
-      background: #1e293b;
+      font-size: 1.05rem;
+      color: #cbd5e1;
+    }
+
+    .header-sub {
+      margin-top: 0.5rem; 
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      background: var(--bg-inner);
       display: inline-block;
-      padding: 0.3rem 1rem;
+      padding: 0.4rem 1.2rem;
       border-radius: 40px;
+      border: 1px solid var(--border-color);
     }
 
     .nav-container {
-      background: #0f172a;
-      border-radius: 20px;
-      padding: 1rem 1.2rem;
-      margin-bottom: 2rem;
-      border: 1px solid #334155;
+      background: var(--bg-inner);
+      border-radius: 16px;
+      padding: 1rem;
+      margin-bottom: 2.5rem;
+      border: 1px solid var(--border-color);
     }
 
     .nav-links {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 0.75rem 1.5rem;
+      gap: 0.8rem 1.5rem;
       list-style: none;
     }
 
     .nav-links li a {
       text-decoration: none;
-      font-weight: 600;
-      background: #1e293b;
-      padding: 0.5rem 1.2rem;
-      border-radius: 40px;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
       color: #cbd5e6;
       transition: all 0.2s ease;
-      border: 1px solid #334155;
-      font-size: 0.9rem;
-      display: inline-block;
+      border: 1px solid transparent;
+      font-size: 0.95rem;
     }
 
     .nav-links li a:hover {
-      background-color: #dc2626;
-      color: white;
-      border-color: #dc2626;
-      transform: translateY(-2px);
+      background-color: rgba(239, 68, 68, 0.1);
+      color: var(--accent-red);
+      border-color: rgba(239, 68, 68, 0.3);
     }
 
     .section {
-      margin-bottom: 3rem;
-      scroll-margin-top: 1rem;
+      margin-bottom: 3.5rem;
+      scroll-margin-top: 2rem;
     }
 
     .section-title {
-      font-size: 1.9rem;
-      border-left: 6px solid #facc15;
+      font-size: 1.8rem;
+      border-left: 5px solid var(--accent-red);
       padding-left: 1rem;
       margin-bottom: 1.5rem;
-      margin-top: 0.5rem;
-      color: #facc15;
-      font-weight: 700;
+      color: #ffffff;
+      font-weight: 600;
     }
 
     .article-card {
-      background: #0f172a;
-      border: 1px solid #2d3a4e;
-      border-radius: 20px;
-      padding: 1.2rem 1.5rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      transition: all 0.2s;
+      background: var(--bg-inner);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.2rem;
+      transition: background-color 0.2s;
     }
 
     .article-card:hover {
-      border-color: #facc1560;
-      background: #131e2c;
+      background: var(--bg-card-hover);
     }
 
     .article-title {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-weight: 700;
-      color: #f87171;
-      margin-bottom: 0.5rem;
+      color: var(--accent-yellow);
+      margin-bottom: 0.8rem;
       display: flex;
-      align-items: baseline;
+      align-items: center;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      gap: 0.8rem;
     }
 
     .article-num {
-      background: #2d3a4e;
+      background: rgba(250, 204, 21, 0.15);
       padding: 0.2rem 0.8rem;
-      border-radius: 30px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: #facc15;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent-yellow);
+      border: 1px solid rgba(250, 204, 21, 0.3);
     }
 
     .article-text {
-      margin-top: 0.75rem;
-      font-size: 1rem;
-      color: #e2e8f0;
+      font-size: 1.05rem;
+      color: var(--text-main);
     }
 
     .article-text p {
       margin-bottom: 0.8rem;
     }
 
+    .article-text p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* NUEVO ESTILO DE RESALTADO (Reemplaza el fondo amarillo) */
     .highlight {
-      background-color: #facc1520;
-      color: #fde047;
-      padding: 0.1rem 0.3rem;
-      border-radius: 6px;
-      font-weight: 500;
+      color: var(--accent-blue);
+      font-weight: 600;
+      border-bottom: 2px dotted rgba(96, 165, 250, 0.6);
+      padding-bottom: 1px;
+    }
+
+    /* NUEVO ESTILO DE NOTA CLAVE (Reemplaza el "botón" que rompía la lectura) */
+    .nota-clave {
+      display: block;
+      margin-top: 1rem;
+      padding: 0.8rem 1rem;
+      background: rgba(96, 165, 250, 0.08);
+      border-left: 3px solid var(--accent-blue);
+      border-radius: 0 8px 8px 0;
+      font-size: 0.95rem;
+      color: #bfdbfe;
+    }
+    
+    .nota-clave strong {
+      color: var(--accent-blue);
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+      margin-right: 0.5rem;
     }
 
     .legal-note {
-      background: #1e293b;
-      padding: 0.8rem 1.2rem;
-      border-radius: 16px;
-      font-size: 0.9rem;
-      border-left: 4px solid #3b82f6;
-      margin: 1rem 0;
-      color: #cbd5e6;
-    }
-
-    .badge {
-      background: #2d3a4e;
-      border-radius: 14px;
-      padding: 0.2rem 0.8rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: #facc15;
+      background: rgba(59, 130, 246, 0.1);
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      margin: 1.5rem 0;
+      color: #dbeafe;
     }
 
     a {
-      color: #facc15;
+      color: var(--accent-blue);
       text-decoration: none;
-      border-bottom: 1px dotted #facc1560;
+      transition: color 0.2s;
     }
+    
     a:hover {
-      color: #ffd966;
+      color: #93c5fd;
+      text-decoration: underline;
     }
 
-    ul, ol {
-      margin-left: 1.5rem;
-      margin-top: 0.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    li {
-      margin-bottom: 0.3rem;
-    }
-
-    /* Listas con viñetas personalizadas para mejor legibilidad */
     .custom-list {
-      list-style-type: disc;
+      list-style-type: none;
+      margin-left: 0.5rem;
     }
 
     .custom-list li {
-      margin-left: 0.2rem;
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .custom-list li::before {
+      content: "•";
+      color: var(--accent-red);
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
     }
 
     @media (max-width: 700px) {
       .container {
-        padding: 1.2rem;
+        padding: 1.5rem 1rem;
       }
       .section-title {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
       }
       .article-title {
         font-size: 1.2rem;
-      }
-      .nav-links li a {
-        padding: 0.3rem 1rem;
-        font-size: 0.8rem;
       }
     }
   </style>
@@ -224,9 +262,9 @@
 <body>
 <div class="container">
   <div class="header">
-    <h1>📚 Base de estudio estructurada</h1>
+    <h1>📚 Base de Estudio Estructurada</h1>
     <p>Constitución Nacional del Paraguay · Ley Orgánica del MRE (Ley 1635/2020)</p>
-    <p style="margin-top: 0.5rem; font-size:0.85rem;">Artículos 238, 239, 224, 141, 143, 43, 146, 147 | Resumen de toda la Ley 1635</p>
+    <div class="header-sub">Artículos 238, 239, 224, 141, 143, 43, 146, 147 | Resumen de toda la Ley 1635</div>
   </div>
 
   <div class="nav-container">
@@ -239,239 +277,231 @@
 
   <!-- ================= PARTE I: DEFINICIONES ================= -->
   <div id="definiciones" class="section">
-    <h2 class="section-title">📘 1. Definiciones fundamentales</h2>
+    <h2 class="section-title">1. Definiciones fundamentales</h2>
 
     <div class="article-card">
       <div class="article-title">🌐 Relaciones Internacionales</div>
       <div class="article-text">
         <p>Conjunto de interacciones políticas, económicas, sociales, culturales y jurídicas entre actores internacionales (Estados, organizaciones internacionales, empresas multinacionales, actores no estatales). Abarca cooperación, conflicto y dinámicas de poder global.</p>
-        <p><span class="badge">Clave</span> Base para entender la diplomacia, el derecho internacional y la política exterior.</p>
+        <div class="nota-clave">
+          <strong>💡 Punto clave:</strong> Es la base conceptual para entender la diplomacia, el derecho internacional y la política exterior.
+        </div>
       </div>
     </div>
 
     <div class="article-card">
       <div class="article-title">⚖️ Derecho Internacional Público</div>
       <div class="article-text">
-        <p>Normas y principios que regulan relaciones entre Estados y otros sujetos internacionales. Fuentes: tratados, costumbre internacional, principios generales del derecho.</p>
-        <p>En Paraguay, el Art. 141 CN otorga jerarquía constitucional a los tratados válidamente celebrados.</p>
+        <p>Normas y principios que regulan relaciones entre Estados y otros sujetos internacionales. Sus fuentes principales son los tratados, la costumbre internacional y los principios generales del derecho.</p>
+        <p>En Paraguay, el Art. 141 de la Constitución Nacional otorga jerarquía constitucional a los tratados válidamente celebrados.</p>
       </div>
     </div>
 
     <div class="article-card">
       <div class="article-title">🤝 Diplomacia</div>
       <div class="article-text">
-        <p>Instrumento pacífico mediante el cual los Estados gestionan sus relaciones: negociación, representación, información y protección de intereses. Regulada por la Convención de Viena (1961) y la Ley 1635/2020.</p>
+        <p>Instrumento pacífico mediante el cual los Estados gestionan sus relaciones: negociación, representación, información y protección de intereses. Está regulada internacionalmente por la Convención de Viena (1961) y a nivel interno por la Ley 1635/2020.</p>
       </div>
     </div>
 
     <div class="article-card">
       <div class="article-title">📜 Política Exterior</div>
       <div class="article-text">
-        <p>Conjunto de decisiones, objetivos y acciones que un Estado adopta en el ámbito internacional. En Paraguay la formula el Presidente (Art. 238 CN) y la ejecuta el MRE, basándose en los principios del Art. 143 CN: no intervención, autodeterminación, solución pacífica, integración regional, etc.</p>
+        <p>Conjunto de decisiones, objetivos y acciones que un Estado adopta en el ámbito internacional. En Paraguay la formula el Presidente de la República (Art. 238 CN) y la ejecuta el MRE, basándose en los principios del Art. 143 CN (no intervención, autodeterminación, solución pacífica, integración regional, etc.).</p>
       </div>
     </div>
   </div>
 
   <!-- ================= PARTE II: CONSTITUCIÓN NACIONAL ================= -->
   <div id="constitucion" class="section">
-    <h2 class="section-title">🇵🇾 2. Constitución Nacional del Paraguay (1992)</h2>
-    <p style="margin-bottom: 1.2rem; color: #9ca3af;">Textos oficiales <a href="https://www.bacn.gov.py/leyes-paraguayas/9580/constitucion-nacional-" target="_blank" rel="noopener">BACN</a></p>
+    <h2 class="section-title">2. Constitución Nacional del Paraguay (1992)</h2>
+    <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Textos oficiales disponibles en la <a href="https://www.bacn.gov.py/leyes-paraguayas/9580/constitucion-nacional-" target="_blank" rel="noopener">BACN</a>.</p>
 
     <div class="article-card">
       <div class="article-title">Artículo 238 <span class="article-num">Atribuciones del Presidente</span></div>
       <div class="article-text">
-        <p>Dirige las relaciones exteriores, concluye y firma tratados (requieren aprobación del Congreso), es Comandante en Jefe, nombra ministros, ejerce el poder reglamentario y concede indultos.</p>
+        <p><strong>Atribuciones del Presidente:</strong> Dirige las relaciones exteriores, concluye y firma tratados (los cuales requieren aprobación del Congreso), es Comandante en Jefe, nombra ministros, ejerce el poder reglamentario y concede indultos.</p>
       </div>
     </div>
 
     <div class="article-card">
       <div class="article-title">Artículo 239 <span class="article-num">Vicepresidente</span></div>
       <div class="article-text">
-        <p>Sustituye al Presidente en caso de impedimento o ausencia; actúa como nexo entre Ejecutivo y Legislativo; ejerce funciones que le asigne el Presidente.</p>
+        <p><strong>Rol del Vicepresidente:</strong> Sustituye al Presidente en caso de impedimento o ausencia; actúa como nexo entre el Poder Ejecutivo y el Legislativo; ejerce funciones que le asigne el Presidente.</p>
       </div>
     </div>
 
     <div class="article-card">
       <div class="article-title">Artículo 224 <span class="article-num">Atribuciones exclusivas del Senado</span></div>
       <div class="article-text">
-        <p>Acuerda el nombramiento de jefes de misiones diplomáticas; acuerda el envío de tropas al exterior e ingreso de tropas extranjeras; autoriza la salida del Presidente por más de 15 días.</p>
+        <p><strong>Atribuciones exclusivas del Senado:</strong> Acuerda el nombramiento de jefes de misiones diplomáticas; acuerda el envío de tropas al exterior e ingreso de tropas extranjeras; autoriza la salida del Presidente del país por más de 15 días.</p>
       </div>
     </div>
 
     <div class="article-card">
       <div class="article-title">Artículo 141 <span class="article-num">Tratados internacionales</span></div>
       <div class="article-text">
-        <p>Los tratados válidamente celebrados, aprobados por ley del Congreso y ratificados, forman parte del orden interno con jerarquía constitucional (Art. 137: Constitución > Tratados > Leyes).</p>
+        <p><strong>Sobre los tratados internacionales:</strong> Los tratados válidamente celebrados, aprobados por ley del Congreso y ratificados, forman parte del orden interno con jerarquía constitucional. (Orden de prelación Art. 137: Constitución > Tratados > Leyes).</p>
       </div>
     </div>
 
     <div class="article-card">
       <div class="article-title">Artículo 143 <span class="article-num">Relaciones internacionales</span></div>
       <div class="article-text">
-        <p>Paraguay acepta el derecho internacional y se rige por: independencia nacional, autodeterminación, no intervención, solución pacífica de controversias, respeto a DDHH. Propugna la integración latinoamericana y caribeña.</p>
+        <p><strong>En sus relaciones internacionales:</strong> Paraguay acepta el derecho internacional y se rige por los principios de: independencia nacional, autodeterminación, no intervención, solución pacífica de controversias y respeto a los Derechos Humanos. Propugna la solidaridad y la integración latinoamericana y caribeña.</p>
       </div>
     </div>
 
     <div class="article-card">
       <div class="article-title">Artículo 43 <span class="article-num">Derecho de asilo</span></div>
       <div class="article-text">
-        <p>Reconoce asilo territorial y diplomático a perseguidos por delitos políticos o creencias. Las autoridades deben otorgarlo de inmediato.</p>
+        <p><strong>Sobre el derecho de asilo:</strong> Se reconoce el derecho de asilo territorial y diplomático a cualquier persona perseguida por delitos políticos o por sus creencias. Las autoridades deben otorgarlo de inmediato.</p>
       </div>
     </div>
 
     <div class="article-card">
       <div class="article-title">Artículo 146 <span class="article-num">Nacionalidad natural</span></div>
       <div class="article-text">
-        <p>Son paraguayos naturales: nacidos en territorio (ius soli), hijos de paraguayos al servicio de la República nacidos en el extranjero, hijos de paraguayos que se radiquen en Paraguay, e infantes de padres ignorados hallados en el país.</p>
+        <p><strong>Nacionalidad natural:</strong> Son paraguayos naturales:</p>
+        <ul class="custom-list">
+            <li>Los nacidos en el territorio de la República (ius soli).</li>
+            <li>Los hijos de padres paraguayos que, hallándose uno o ambos al servicio de la República, nazcan en el extranjero.</li>
+            <li>Los hijos de padres paraguayos nacidos en el extranjero que se radiquen en Paraguay en forma permanente.</li>
+            <li>Los infantes de padres ignorados hallados en territorio nacional.</li>
+        </ul>
       </div>
     </div>
 
     <div class="article-card">
-      <div class="article-title">Artículo 147 <span class="article-num">No privación de la nacionalidad natural</span></div>
+      <div class="article-title">Artículo 147 <span class="article-num">No privación de la nacionalidad</span></div>
       <div class="article-text">
-        <p>Ningún paraguayo natural será privado de su nacionalidad, pero puede renunciar voluntariamente a ella. Garantía contra la apatridia.</p>
+        <p><strong>No privación de la nacionalidad:</strong> Ningún paraguayo natural será privado de su nacionalidad, pero podrá renunciar voluntariamente a ella. Esta es una garantía constitucional contra la apatridia.</p>
       </div>
     </div>
   </div>
 
-  <!-- ================= PARTE III: LEY ORGÁNICA DEL MRE (resumen de TODOS los artículos) ================= -->
+  <!-- ================= PARTE III: LEY ORGÁNICA DEL MRE ================= -->
   <div id="ley-mre" class="section">
-    <h2 class="section-title">🏛️ 3. Ley N° 1635/2020 – Orgánica del Ministerio de Relaciones Exteriores (Resumen de todos los artículos)</h2>
-    <p style="margin-bottom: 1rem; color: #9ca3af;">Fuente: <a href="https://www.bacn.gov.py/leyes-paraguayas/1715/ley-n-1635-org-nica-del-ministerio-de-relaciones-exteriores-br" target="_blank">BACN - Ley 1635</a> (con modificación de la Ley 6928/2022).</p>
+    <h2 class="section-title">3. Ley N° 1635/2020 – Orgánica del MRE</h2>
+    <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Fuente: <a href="https://www.bacn.gov.py/leyes-paraguayas/1715/ley-n-1635-org-nica-del-ministerio-de-relaciones-exteriores-br" target="_blank">BACN - Ley 1635</a> (incluye modificación de la Ley 6928/2022).</p>
 
-    <!-- Artículos 1 al 3 -->
     <div class="article-card">
-      <div class="article-title">Artículos 1° - 3° <span class="article-num">Competencia y naturaleza del MRE</span></div>
+      <div class="article-title">Artículos 1° al 3° <span class="article-num">Competencia y naturaleza</span></div>
       <div class="article-text">
-        <p><strong>Art. 1°:</strong> El manejo de las relaciones exteriores compete al Presidente de la República (arts. 238 y 239 CN).<br>
-        <strong>Art. 2°:</strong> El MRE es el órgano que, bajo dirección del Presidente, planifica, coordina y ejecuta la política exterior.<br>
-        <strong>Art. 3°:</strong> Todos los órganos del Estado deben coordinar con el MRE cualquier gestión oficial en el exterior (unidad de acción exterior).</p>
+        <p><strong>Competencia y naturaleza:</strong></p>
+        <ul class="custom-list">
+            <li><strong>Art. 1°:</strong> El manejo de las relaciones exteriores compete al Presidente de la República.</li>
+            <li><strong>Art. 2°:</strong> El MRE es el órgano que, bajo dirección del Presidente, planifica, coordina y ejecuta la política exterior.</li>
+            <li><strong>Art. 3°:</strong> Todos los órganos del Estado deben coordinar con el MRE cualquier gestión oficial en el exterior para garantizar la unidad de acción exterior.</li>
+        </ul>
       </div>
     </div>
 
-    <!-- Artículo 4° (funciones) -->
     <div class="article-card">
-      <div class="article-title">Artículo 4° <span class="article-num">Funciones del MRE (modificado por Ley 6928/2022)</span></div>
+      <div class="article-title">Artículo 4° <span class="article-num">Funciones del MRE</span></div>
       <div class="article-text">
+        <p><strong>Funciones del MRE:</strong></p>
         <ul class="custom-list">
           <li>Proponer y ejecutar la política exterior.</li>
-          <li>Representar al Estado ante otros Estados, organismos internacionales y tribunales internacionales.</li>
+          <li>Representar al Estado ante otros Estados, organismos y tribunales internacionales.</li>
           <li>Negociar, suscribir y ratificar tratados.</li>
           <li>Conducir negociaciones económicas, comerciales, de integración y cooperación.</li>
           <li>Proteger los intereses del país y de los nacionales en el exterior.</li>
           <li>Recibir agentes diplomáticos, autorizar consulados y representaciones internacionales.</li>
           <li>Establecer el protocolo y ceremonial del Estado.</li>
-          <li><span class="highlight">Rendir informes semestrales al Congreso</span> sobre la gestión de los jefes de misión y los órganos del MRE.</li>
+          <li>Debe <span class="highlight">rendir informes semestrales al Congreso</span> sobre la gestión de los jefes de misión y los órganos del MRE (Modificación Ley 6928/2022).</li>
         </ul>
       </div>
     </div>
 
-    <!-- Artículo 5° Integración del Ministerio (FORMATO LISTA) -->
     <div class="article-card">
       <div class="article-title">Artículo 5° <span class="article-num">Integración del Ministerio</span></div>
       <div class="article-text">
-        <p>El MRE se integra con:</p>
+        <p><strong>Integración del Ministerio:</strong> El MRE se integra estructuralmente con:</p>
         <ul class="custom-list">
-          <li>a) la Cancillería;</li>
-          <li>b) las misiones diplomáticas;</li>
-          <li>c) las representaciones permanentes ante organismos internacionales;</li>
-          <li>d) las misiones especiales;</li>
-          <li>e) las oficinas consulares.</li>
+          <li>a) La Cancillería;</li>
+          <li>b) Las misiones diplomáticas;</li>
+          <li>c) Las representaciones permanentes ante organismos internacionales;</li>
+          <li>d) Las misiones especiales;</li>
+          <li>e) Las oficinas consulares.</li>
         </ul>
       </div>
     </div>
 
-    <!-- Artículo 6° -->
     <div class="article-card">
       <div class="article-title">Artículo 6° <span class="article-num">Centralidad de la Cancillería</span></div>
       <div class="article-text">
-        <p>La Cancillería es el órgano central del MRE. Dirige y coordina todas las representaciones en el exterior. <span class="highlight">Sólo a ella compete pronunciarse sobre temas de política internacional del Paraguay.</span></p>
+        <p><strong>Centralidad de la Cancillería:</strong> La Cancillería es el órgano central del MRE. Dirige y coordina todas las representaciones en el exterior. <span class="highlight">Sólo a ella compete pronunciarse sobre temas de política internacional del Paraguay.</span></p>
       </div>
     </div>
 
-    <!-- Artículo 7° Conformación de la Cancillería (FORMATO LISTA) -->
     <div class="article-card">
-      <div class="article-title">Artículo 7° <span class="article-num">Conformación de la Cancillería</span></div>
+      <div class="article-title">Artículo 7° y 8° <span class="article-num">Conformación y Autoridad</span></div>
       <div class="article-text">
-        <p>La Cancillería está compuesta por:</p>
+        <p><strong>Conformación y Autoridad:</strong></p>
+        <p><strong>Conformación de la Cancillería (Art. 7°):</strong> Está compuesta por el Ministro, los Viceministros, las direcciones generales y demás unidades previstas por reglamento.</p>
+        <p><strong>El Ministro (Art. 8°):</strong> Es la autoridad superior del MRE. Asiste al Presidente en la formulación de la política exterior y el mantenimiento de las relaciones.</p>
+      </div>
+    </div>
+
+    <div class="article-card">
+      <div class="article-title">Artículos 9° al 12° <span class="article-num">Viceministros y Direcciones</span></div>
+      <div class="article-text">
+        <p><strong>Viceministros y Direcciones:</strong> Existen tres Viceministerios designados por el Ejecutivo (Art. 9°):</p>
         <ul class="custom-list">
-          <li>a) el Ministro de Relaciones Exteriores;</li>
-          <li>b) los Viceministros;</li>
-          <li>c) las direcciones generales;</li>
-          <li>d) las direcciones y demás unidades previstas en la ley o sus reglamentos.</li>
+            <li><strong>Relaciones Exteriores (Art. 10°):</strong> Encargado de la política bilateral y multilateral.</li>
+            <li><strong>Relaciones Económicas e Integración (Art. 11°):</strong> Comercio exterior e integración.</li>
+            <li><strong>Administración y Asuntos Técnicos (Art. 11°):</strong> Gestión administrativa y de personal.</li>
+            </ul>
+        <p><strong>Direcciones Generales (Art. 12°):</strong> El Ministro las establecerá mediante resolución según las necesidades de cada Viceministerio.</p>
+      </div>
+    </div>
+
+    <div class="article-card">
+      <div class="article-title">Artículos 13° al 17° <span class="article-num">Misiones en el exterior</span></div>
+      <div class="article-text">
+        <p><strong>Misiones en el exterior:</strong></p>
+        <ul class="custom-list">
+            <li><strong>Creación:</strong> Se crean por decreto del Poder Ejecutivo, previo informe del MRE (Art. 13°). Las oficinas consulares también se establecen por decreto (Art. 15°).</li>
+            <li><strong>Designación:</strong> Los jefes de misión son designados por el Presidente con acuerdo del Senado (Art. 14°).</li>
+            <li><strong>Misiones especiales:</strong> Se crean para fines específicos y tienen carácter estrictamente temporal (Art. 16°).</li>
+            <li><strong>Conducta:</strong> Todos los funcionarios deben actuar conforme a la Constitución, los tratados y la política dictada por el Presidente (Art. 17°).</li>
         </ul>
       </div>
     </div>
 
-    <!-- Artículo 8° Ministro -->
     <div class="article-card">
-      <div class="article-title">Artículo 8° <span class="article-num">Ministro de Relaciones Exteriores</span></div>
+      <div class="article-title">Artículos 18° al 21° <span class="article-num">Régimen de Personal</span></div>
       <div class="article-text">
-        <p>Es la autoridad superior del MRE. Asiste al Presidente en la formulación de la política exterior y en el mantenimiento de las relaciones exteriores.</p>
+        <p><strong>Régimen de Personal:</strong></p>
+        <p>El personal se rige por la <strong>Ley N° 1335/1999 "Del Servicio Diplomático y Consular"</strong> (Art. 18°). Deben cumplir con principios de lealtad, eficiencia y transparencia (Art. 19°).</p>
+        <p>La institución encargada de la formación y capacitación del personal diplomático es la <strong>Academia Diplomática y Consular "Carlos Antonio López"</strong> (Art. 21°).</p>
       </div>
     </div>
 
-    <!-- Artículos 9° al 11° (Viceministros) -->
-    <div class="article-card">
-      <div class="article-title">Artículos 9° - 11° <span class="article-num">Viceministros</span></div>
-      <div class="article-text">
-        <p><strong>Art. 9°:</strong> Habrá tres Viceministros designados por el Poder Ejecutivo, a propuesta del Ministro.<br>
-        <strong>Art. 10°:</strong> El Viceministro de Relaciones Exteriores se encarga de la política bilateral y multilateral.<br>
-        <strong>Art. 11°:</strong> El Viceministro de Relaciones Económicas e Integración se ocupa de comercio exterior e integración; el Viceministro de Administración y Asuntos Técnicos dirige la gestión administrativa y de personal.</p>
-      </div>
-    </div>
-
-    <!-- Artículo 12° Direcciones Generales -->
-    <div class="article-card">
-      <div class="article-title">Artículo 12° <span class="article-num">Direcciones Generales</span></div>
-      <div class="article-text">
-        <p>El Ministro, mediante resolución, establecerá las direcciones generales necesarias para el cumplimiento de las funciones. Cada Viceministerio contará con las direcciones generales que determine el reglamento.</p>
-      </div>
-    </div>
-
-    <!-- Artículos 13° al 17° (misiones en el exterior) -->
-    <div class="article-card">
-      <div class="article-title">Artículos 13° - 17° <span class="article-num">Misiones diplomáticas y consulares</span></div>
-      <div class="article-text">
-        <p><strong>Art. 13°:</strong> Las misiones diplomáticas y representaciones permanentes se crean por decreto del Poder Ejecutivo, previo informe del MRE.<br>
-        <strong>Art. 14°:</strong> Los jefes de misión son designados por el Presidente, con acuerdo del Senado (art. 224 CN).<br>
-        <strong>Art. 15°:</strong> Las oficinas consulares se establecen por decreto del Poder Ejecutivo; sus titulares son funcionarios de carrera diplomática.<br>
-        <strong>Art. 16°:</strong> Las misiones especiales se crean para fines específicos y tienen carácter temporal.<br>
-        <strong>Art. 17°:</strong> Todos los funcionarios del servicio exterior deben actuar conforme a la Constitución, los tratados y la política exterior dictada por el Presidente.</p>
-      </div>
-    </div>
-
-    <!-- Artículos 18° al 21° (régimen de personal) -->
-    <div class="article-card">
-      <div class="article-title">Artículos 18° - 21° <span class="article-num">Régimen de personal</span></div>
-      <div class="article-text">
-        <p><strong>Art. 18°:</strong> El personal del MRE y del servicio exterior se rige por la Ley N° 1335/1999 "Del Servicio Diplomático y Consular".<br>
-        <strong>Art. 19°:</strong> Los funcionarios deben cumplir los principios de lealtad, eficiencia, idoneidad y transparencia.<br>
-        <strong>Art. 20°:</strong> El MRE debe contar con un Manual de Organización y Funciones.<br>
-        <strong>Art. 21°:</strong> La Academia Diplomática y Consular "Carlos Antonio López" es la institución de formación y capacitación del personal diplomático.</p>
-      </div>
-    </div>
-
-    <!-- Nota adicional sobre la modificación 2022 -->
     <div class="legal-note">
-      📌 <strong>Modificación introducida por Ley N° 6928/2022:</strong> Se agregó el inciso i) al Artículo 4°, que obliga al MRE a rendir informes semestrales al Congreso sobre la gestión de los jefes de misión diplomática y los órganos del Ministerio. Esto fortalece el control legislativo de la política exterior.
+      📌 <strong>Modificación importante (Ley N° 6928/2022):</strong> Se agregó un inciso al Artículo 4° que obliga al MRE a rendir informes semestrales al Congreso sobre la gestión de sus misiones. Esto fortalece el control legislativo sobre la política exterior.
     </div>
 
-    <!-- Relación sinóptica -->
-    <div style="background: #0f172a; border-radius: 18px; padding: 1.2rem; margin-top: 1rem; border: 1px solid #334155;">
-      <h4 style="margin-bottom: 0.8rem; color:#facc15;">🔗 Relación sinóptica: conceptos + normativa</h4>
+    <!-- Relación sinóptica mejorada -->
+    <div style="background: rgba(0,0,0,0.2); border-radius: 16px; padding: 1.5rem; margin-top: 2rem; border: 1px solid var(--border-color);">
+      <h4 style="margin-bottom: 1rem; color: var(--text-main); font-size: 1.1rem;">🔗 Relación normativa para el examen:</h4>
       <ul class="custom-list">
-        <li><strong>Relaciones internacionales</strong> → Art. 143 CN (principios rectores).</li>
-        <li><strong>Derecho internacional público</strong> → Art. 141 CN (jerarquía de tratados) y Art. 143.</li>
-        <li><strong>Diplomacia</strong> → Ley 1635/2020 (representación, negociación, protocolo) y Art. 224 CN (acuerdo del Senado para jefes de misión).</li>
-        <li><strong>Política exterior</strong> → Art. 238 CN (dirección presidencial), Art. 143 CN (principios) y Ley 1635/2020 (ejecución a cargo del MRE).</li>
+        <li><strong>Relaciones internacionales</strong> ➔ Art. 143 CN (Principios rectores).</li>
+        <li><strong>Derecho internacional público</strong> ➔ Art. 141 CN (Jerarquía de tratados).</li>
+        <li><strong>Diplomacia</strong> ➔ Art. 224 CN (Acuerdo del Senado) y Ley 1635/2020.</li>
+        <li><strong>Política exterior</strong> ➔ Art. 238 CN (Dirección presidencial) y Ley 1635/2020 (Ejecución del MRE).</li>
       </ul>
     </div>
   </div>
 
   <footer>
-    <p>Textos basados en la Constitución Nacional del Paraguay (1992) y Ley N° 1635/2020, conforme a BACN.</p>
-    <p>📌 Referencias: <a href="https://www.bacn.gov.py/leyes-paraguayas/9580/constitucion-nacional-" target="_blank">Constitución Nacional</a> | <a href="https://www.bacn.gov.py/leyes-paraguayas/1715/ley-n-1635-org-nica-del-ministerio-de-relaciones-exteriores-br" target="_blank">Ley 1635/2020 MRE</a> | <a href="https://www.bacn.gov.py/leyes-paraguayas/10527/ley-n-6928-modifica-y-amplia-el-articulo-4-de-la-ley-n-16352000-organica-del-ministerio-de-relaciones-exteriores" target="_blank">Ley 6928/2022</a></p>
+    <p>Textos basados en la Constitución Nacional del Paraguay (1992) y Ley N° 1635/2020.</p>
+    <p style="margin-top: 0.5rem;">
+      📌 Enlaces oficiales: 
+      <a href="https://www.bacn.gov.py/leyes-paraguayas/9580/constitucion-nacional-" target="_blank">Constitución Nacional</a> | 
+      <a href="https://www.bacn.gov.py/leyes-paraguayas/1715/ley-n-1635-org-nica-del-ministerio-de-relaciones-exteriores-br" target="_blank">Ley 1635/2020 MRE</a>
+    </p>
   </footer>
 </div>
 </body>
