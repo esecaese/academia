@@ -60,7 +60,7 @@ La Ley N° 1.030, sancionada el 23 de julio de 1997, tiene por objeto "actualiza
 
 El esquema de la Ley N° 1.030/97 se caracteriza por:
 
-- **Tasas fijas en guaraníes**: El monto a pagar por cada legalización o apostilla se determina multiplicando una cantidad fija de jornales mínimos (por ejemplo, 2,23 jornales para apostilla de firma) por el valor vigente del jornal mínimo diario establecido por el Poder Ejecutivo.
+- **Tasas fijas en guaraníes**: El monto a pagar por cada legalización o apostilla se determina multiplicando una cantidad fija de jornales mínimos (por ejemplo, 2 jornales para apostilla de firma) por el valor vigente del jornal mínimo diario establecido por el Poder Ejecutivo.
 - **Actualización periódica implícita**: Al estar referenciada al jornal mínimo, la tasa se actualiza automáticamente cada vez que el Poder Ejecutivo modifica el salario mínimo, sin necesidad de una nueva ley.
 - **Aplicación nacional**: La ley rige exclusivamente para los servicios prestados por la Dirección de Legalizaciones en Asunción, no para consulados en el exterior.
 
