@@ -150,7 +150,7 @@ Finalmente, fue vinculado a la **"conspiración de 1820"** contra el Dictador, a
 
 De esta manera, el héroe que había asegurado el éxito de la revolución independentista murió ejecutado por el mismo Estado que contribuyó a fundar.
 
-### 2.6 Homenajes actuales (aclaración necesaria)
+### 2.6 Homenajes actuales 
 
 - **En Asunción**:  
 
