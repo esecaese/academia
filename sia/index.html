@@ -172,7 +172,10 @@
                             <option value="Presencial">Presencial</option>
                             <option value="Validacion Previa">Validación Previa</option>
                         </select>
-                        <button id="btnReasignarSeleccionados" class="bg-amber-500 text-white px-4 py-2 rounded-xl"><i class="fas fa-exchange-alt mr-1"></i> Reasignar</button><button id="btnLimpiarSeleccion" class="bg-gray-300 px-4 py-2 rounded-xl"><i class="fas fa-times mr-1"></i> Limpiar</button>
+                        <button id="btnReasignarSeleccionados" class="bg-amber-500 hover:bg-amber-600 text-white px-3 py-2 rounded-xl text-sm transition-colors" title="Cambiar Institución"><i class="fas fa-building mr-1"></i> Inst.</button>
+                        <button id="btnCambiarEmision" class="bg-indigo-500 hover:bg-indigo-600 text-white px-3 py-2 rounded-xl text-sm transition-colors" title="Cambiar Emisión Masiva"><i class="fas fa-rss mr-1"></i> Emisión</button>
+                        <button id="btnCambiarFirma" class="bg-teal-500 hover:bg-teal-600 text-white px-3 py-2 rounded-xl text-sm transition-colors" title="Cambiar Firma Masiva"><i class="fas fa-file-signature mr-1"></i> Firma</button>
+                        <button id="btnLimpiarSeleccion" class="bg-gray-300 hover:bg-gray-400 px-3 py-2 rounded-xl text-sm transition-colors"><i class="fas fa-times mr-1"></i> Limpiar</button>
                     </div>
                 </div>
                 <div id="tramitesContainer" class="overflow-x-auto">
@@ -309,6 +312,24 @@
             <div id="modalTextoAyuda" class="text-gray-700 whitespace-pre-wrap max-h-96 overflow-y-auto text-sm leading-relaxed"></div>
             <div class="mt-5 text-right">
                 <button id="closeModalFooterBtn" class="bg-gray-200 hover:bg-gray-300 px-5 py-2 rounded-xl text-sm">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para cambiar campos masivamente (NUEVO) -->
+    <div id="modalCambioMasivo" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-[150]">
+        <div class="bg-white rounded-2xl max-w-sm w-full mx-4 p-6 shadow-2xl">
+            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                <h3 id="modalCambioTitulo" class="font-bold text-gray-800 text-lg">Cambiar Valor</h3>
+                <button type="button" id="btnCerrarModalCambio1" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+            </div>
+            <div class="mb-5">
+                <label id="modalCambioLabel" class="block text-sm font-medium text-gray-700 mb-2">Seleccione el nuevo valor:</label>
+                <select id="modalCambioSelect" class="w-full border rounded-xl px-4 py-2 text-sm text-gray-700 focus:ring focus:ring-blue-200 focus:outline-none"></select>
+            </div>
+            <div class="flex justify-end gap-3">
+                <button type="button" id="btnCerrarModalCambio2" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-xl text-sm font-medium transition-colors">Cancelar</button>
+                <button type="button" id="btnConfirmarCambioMasivo" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-medium transition-colors shadow-md">Aplicar Cambio</button>
             </div>
         </div>
     </div>
@@ -687,12 +708,102 @@
         }
         let tramitesUnsub;
         function subscribeTramites() { if (tramitesUnsub) tramitesUnsub(); tramitesUnsub = onSnapshot(tramitesCol, (snap) => { allTramites = snap.docs.map(d => ({ id: d.id, ...d.data() })); renderTramitesGrouped(allTramites); }); }
+        
         document.getElementById("globalSearchInput").addEventListener("input", (e) => { currentSearchTerm = e.target.value; renderTramitesGrouped(allTramites); });
         document.getElementById("filterFirmaSelect").addEventListener("change", (e) => { filterFirma = e.target.value; renderTramitesGrouped(allTramites); });
         document.getElementById("filterEmisionSelect").addEventListener("change", (e) => { filterEmision = e.target.value; renderTramitesGrouped(allTramites); });
-        document.getElementById("tramiteForm").addEventListener("submit", saveTramite);
-        document.getElementById("cancelTramiteEdit").addEventListener("click", resetTramiteForm);
-        document.getElementById("btnReasignarSeleccionados").onclick = () => { const inst = prompt("Nombre o ID de la institución destino:"); if (!inst) return; let destId = null; for (let [id, nombre] of institucionesMap.entries()) if (id === inst || nombre.toLowerCase() === inst.toLowerCase()) { destId = id; break; } if (!destId) { showToast("Institución no encontrada", "error"); return; } reasignarSeleccionados(destId); };
+        
+        // Asignación de eventos limpia
+        const formTramite = document.getElementById("tramiteForm");
+        const btnCancelEdit = document.getElementById("cancelTramiteEdit");
+        const btnReasignar = document.getElementById("btnReasignarSeleccionados");
+        
+        formTramite.removeEventListener("submit", saveTramite);
+        formTramite.addEventListener("submit", saveTramite);
+        
+        btnCancelEdit.removeEventListener("click", resetTramiteForm);
+        btnCancelEdit.addEventListener("click", resetTramiteForm);
+
+        btnReasignar.onclick = () => { 
+            const inst = prompt("Nombre o ID de la institución destino:"); 
+            if (!inst) return; 
+            let destId = null; 
+            for (let [id, nombre] of institucionesMap.entries()) {
+                if (id === inst || nombre.toLowerCase() === inst.toLowerCase()) { destId = id; break; } 
+            }
+            if (!destId) { showToast("Institución no encontrada", "error"); return; } 
+            reasignarSeleccionados(destId); 
+        };
+        
+        // === Lógica Modal Cambio Masivo Integrada y Segura ===
+        let configCambioMasivo = null;
+
+        function abrirModalCambioMasivo(campo, campoLabel, opciones) {
+            if (selectedTramiteIds.size === 0) return showToast("No hay trámites seleccionados", "error");
+            
+            configCambioMasivo = { campo, campoLabel };
+            
+            document.getElementById("modalCambioTitulo").innerText = `Cambiar ${campoLabel}`;
+            document.getElementById("modalCambioSelect").innerHTML = '<option value="">-- Seleccione una opción --</option>' + 
+                opciones.map(o => `<option value="${escapeHtml(o)}">${escapeHtml(o)}</option>`).join('');
+                
+            document.getElementById("modalCambioMasivo").classList.remove("hidden");
+        }
+
+        const cerrarModalCambio = () => {
+            document.getElementById("modalCambioMasivo").classList.add("hidden");
+            configCambioMasivo = null;
+        };
+        
+        document.getElementById("btnCerrarModalCambio1").onclick = cerrarModalCambio;
+        document.getElementById("btnCerrarModalCambio2").onclick = cerrarModalCambio;
+
+        document.getElementById("btnConfirmarCambioMasivo").onclick = async () => {
+            if (!configCambioMasivo) return;
+            const valorFinal = document.getElementById("modalCambioSelect").value;
+            if (!valorFinal) return showToast("Debe seleccionar una opción", "error");
+
+            const { campo, campoLabel } = configCambioMasivo;
+            const btn = document.getElementById("btnConfirmarCambioMasivo");
+            
+            // Bloqueamos botón y mostramos estado de carga
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Procesando...';
+
+            try {
+                const batch = writeBatch(db);
+                let count = 0;
+                for (let id of selectedTramiteIds) {
+                    let updateData = { updatedAt: new Date() };
+                    updateData[campo] = valorFinal;
+                    batch.update(doc(tramitesCol, id), updateData);
+                    count++;
+                    if (count % 450 === 0) await batch.commit();
+                }
+                if (count % 450 !== 0 || count === 0) await batch.commit();
+                
+                showToast(`${selectedTramiteIds.size} trámite(s) actualizados con ${campoLabel}: "${valorFinal}"`);
+                selectedTramiteIds.clear();
+                renderTramitesGrouped(allTramites);
+                cerrarModalCambio();
+            } catch (err) {
+                showToast("Error: " + err.message, "error");
+            } finally {
+                // Restauramos el botón
+                btn.disabled = false;
+                btn.innerText = 'Aplicar Cambio';
+            }
+        };
+
+        // Vinculamos los botones al nuevo modal
+        document.getElementById("btnCambiarEmision").onclick = () => {
+            abrirModalCambioMasivo('tipoEmision', 'Tipo de Emisión', ["Automatica", "Externa", "Presencial", "Validacion Previa"]);
+        };
+
+        document.getElementById("btnCambiarFirma").onclick = () => {
+            abrirModalCambioMasivo('tipoFirma', 'Tipo de Firma', ["Firma electronica y/o verificable", "Olografa"]);
+        };
+
         document.getElementById("btnLimpiarSeleccion").onclick = () => { selectedTramiteIds.clear(); renderTramitesGrouped(allTramites); };
         document.getElementById("refreshAllBtn").onclick = async () => { await loadInstituciones(); showToast("Actualizado"); };
 
