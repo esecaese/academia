@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Sistema MRE - Trámites y Unificación</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
@@ -25,15 +25,8 @@
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .loading-spinner {
@@ -46,13 +39,8 @@
         }
 
         @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .tab-active {
@@ -61,69 +49,31 @@
             font-weight: 600;
         }
 
-        .tramite-row.selected {
-            background-color: #dbeafe;
-        }
-
-        .texto-ayuda-row {
-            background-color: #f9fafb;
-            border-top: 1px solid #e5e7eb;
-            cursor: pointer;
-        }
-
-        .texto-ayuda-row:hover {
-            background-color: #f3f4f6;
-        }
-
-        .ts-wrapper {
-            width: 100%;
-        }
-
-        .ts-control {
-            border-radius: 0.5rem;
-            border-color: #d1d5db;
-            font-size: 0.875rem;
-        }
-
-        .col-check {
-            width: 40px;
-        }
-
-        .col-nombre {
-            width: 280px;
-        }
-
-        .col-emision-firma {
-            width: 160px;
-        }
-
-        .col-validaciones {
-            width: 140px;
-        }
-
-        .col-acciones {
-            width: 180px;
-        }
-
-        .inst-row:hover {
-            background-color: #f3f4f6;
-            transition: background-color 0.15s ease;
-        }
-
-        .tramite-row.bloqueado {
-            background-color: #f0fdf4;
-        }
+        .tramite-row.selected { background-color: #dbeafe; }
+        .texto-ayuda-row { background-color: #f9fafb; border-top: 1px solid #e5e7eb; cursor: pointer; }
+        .texto-ayuda-row:hover { background-color: #f3f4f6; }
+        .ts-wrapper { width: 100%; }
+        .ts-control { border-radius: 0.5rem; border-color: #d1d5db; font-size: 0.875rem; }
+        
+        .col-check { width: 40px; }
+        .col-nombre { width: 280px; }
+        .col-emision-firma { width: 160px; }
+        .col-validaciones { width: 140px; }
+        .col-acciones { width: 180px; }
+        
+        .inst-row:hover { background-color: #f3f4f6; transition: background-color 0.15s ease; }
+        .tramite-row.bloqueado { background-color: #f0fdf4; }
     </style>
 </head>
 
-<body class="bg-gradient-to-br from-gray-50 to-gray-100">
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
 
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6">
         <div class="mb-6 flex flex-wrap justify-between items-center gap-3 bg-white/50 backdrop-blur-sm p-4 rounded-2xl shadow-sm">
             <div>
                 <h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">📋 Gestión de Trámites MRE</h1>
             </div>
-            <button id="refreshAllBtn" class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-xl text-sm transition-all"><i class="fas fa-sync-alt mr-1"></i> Refrescar</button>
+            <button id="refreshAllBtn" class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-xl text-sm transition-all"><i class="fas fa-sync-alt mr-1"></i> Refrescar BD</button>
         </div>
 
         <div class="flex flex-wrap border-b border-gray-200 gap-2 mb-6">
@@ -133,6 +83,7 @@
             <button data-tab="fusion" class="tab-btn py-2 px-5 font-medium text-gray-600 hover:text-blue-700 transition-all">🔄 Fusionar</button>
             <button hidden data-tab="reemplazo" class="tab-btn py-2 px-5 font-medium text-gray-600 hover:text-blue-700 transition-all">🔧 Reemplazo global</button>
             <button data-tab="ayuda-masiva" class="tab-btn py-2 px-5 font-medium text-gray-600 hover:text-blue-700 transition-all">📝 Texto por emisión</button>
+            <button data-tab="respaldos" class="tab-btn py-2 px-5 font-medium text-gray-600 hover:text-blue-700 transition-all">💾 Respaldos y Exportación</button>
         </div>
 
         <!-- Trámites -->
@@ -158,8 +109,8 @@
             <div class="bg-white rounded-2xl shadow-lg p-6">
                 <div class="flex flex-wrap justify-between items-center mb-5 gap-3">
                     <h2 class="text-xl font-semibold">📋 Trámites registrados</h2>
-                    <div class="flex flex-wrap gap-3 items-center">
-                        <div class="relative"><i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i><input type="text" id="globalSearchInput" placeholder="Buscar..." class="pl-9 pr-4 py-2 border rounded-xl w-64"></div>
+                    <div class="flex flex-wrap gap-2 items-center">
+                        <div class="relative"><i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i><input type="text" id="globalSearchInput" placeholder="Buscar..." class="pl-9 pr-4 py-2 border rounded-xl w-64 text-sm focus:outline-none focus:ring focus:ring-blue-100"></div>
                         <select id="filterFirmaSelect" class="border rounded-xl px-3 py-2 text-sm text-gray-600">
                             <option value="">Firma: todas</option>
                             <option value="Olografa">Ológrafa</option>
@@ -172,29 +123,33 @@
                             <option value="Presencial">Presencial</option>
                             <option value="Validacion Previa">Validación Previa</option>
                         </select>
+                        
+                        <!-- Barra de Herramientas Masivas -->
+                        <span class="h-6 w-px bg-gray-300 mx-1"></span>
                         <button id="btnReasignarSeleccionados" class="bg-amber-500 hover:bg-amber-600 text-white px-3 py-2 rounded-xl text-sm transition-colors" title="Cambiar Institución"><i class="fas fa-building mr-1"></i> Inst.</button>
                         <button id="btnCambiarEmision" class="bg-indigo-500 hover:bg-indigo-600 text-white px-3 py-2 rounded-xl text-sm transition-colors" title="Cambiar Emisión Masiva"><i class="fas fa-rss mr-1"></i> Emisión</button>
                         <button id="btnCambiarFirma" class="bg-teal-500 hover:bg-teal-600 text-white px-3 py-2 rounded-xl text-sm transition-colors" title="Cambiar Firma Masiva"><i class="fas fa-file-signature mr-1"></i> Firma</button>
-                        <button id="btnLimpiarSeleccion" class="bg-gray-300 hover:bg-gray-400 px-3 py-2 rounded-xl text-sm transition-colors"><i class="fas fa-times mr-1"></i> Limpiar</button>
+                        <button id="btnCambiarAyudaSeleccionados" class="bg-violet-500 hover:bg-violet-600 text-white px-3 py-2 rounded-xl text-sm transition-colors" title="Cambiar Texto de Ayuda Masivo"><i class="fas fa-comment-alt mr-1"></i> Ayuda</button>
+                        <button id="btnLimpiarSeleccion" class="bg-gray-300 hover:bg-gray-400 px-3 py-2 rounded-xl text-sm transition-colors" title="Limpiar selección"><i class="fas fa-times mr-1"></i> Limpiar</button>
                     </div>
                 </div>
                 <div id="tramitesContainer" class="overflow-x-auto">
                     <div class="text-center py-10">
                         <div class="loading-spinner mx-auto"></div>
-                        <p>Cargando...</p>
+                        <p class="mt-2 text-gray-500">Cargando trámites...</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Instituciones con buscador y hover -->
+        <!-- Instituciones -->
         <div id="tab-instituciones" class="tab-content hidden">
             <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
                 <h2 class="text-xl font-semibold mb-4"><i class="fas fa-building text-green-600 mr-2"></i> Nueva / Editar Institución</h2>
                 <form id="institucionForm" class="flex flex-col sm:flex-row gap-4">
-                    <input type="text" id="institucionNombre" placeholder="Nombre" class="flex-1 border rounded-xl px-4 py-2">
-                    <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded-xl">Guardar</button>
-                    <button type="button" id="cancelInstitucionEdit" class="bg-gray-200 px-5 py-2 rounded-xl hidden">Cancelar</button>
+                    <input type="text" id="institucionNombre" placeholder="Nombre de la Institución" class="flex-1 border rounded-xl px-4 py-2 focus:outline-none focus:ring focus:ring-green-100">
+                    <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded-xl hover:bg-green-700 transition-colors">Guardar</button>
+                    <button type="button" id="cancelInstitucionEdit" class="bg-gray-200 px-5 py-2 rounded-xl hidden hover:bg-gray-300 transition-colors">Cancelar</button>
                 </form>
             </div>
             <div class="bg-white rounded-2xl shadow-lg p-6">
@@ -202,7 +157,7 @@
                     <h2 class="text-xl font-semibold">🏢 Listado de instituciones</h2>
                     <div class="relative">
                         <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>
-                        <input type="text" id="institucionesSearchInput" placeholder="Buscar institución..." class="pl-9 pr-4 py-2 border rounded-xl w-64 text-sm">
+                        <input type="text" id="institucionesSearchInput" placeholder="Buscar institución..." class="pl-9 pr-4 py-2 border rounded-xl w-64 text-sm focus:outline-none focus:ring focus:ring-blue-100">
                     </div>
                 </div>
                 <div id="institucionesList" class="overflow-x-auto"></div>
@@ -213,8 +168,8 @@
         <div id="tab-importar" class="tab-content hidden">
             <div class="bg-white rounded-2xl shadow-lg p-6">
                 <h2 class="text-xl font-semibold mb-2">📂 Importación masiva</h2>
-                <p class="text-sm text-gray-600 mb-4">Codificación automática (Windows-1252 / UTF-8).</p>
-                <div class="flex flex-col sm:flex-row gap-4"><input type="file" id="csvImportFile" accept=".csv" class="flex-1 border rounded-xl p-2"><button id="importCsvBtn" class="bg-emerald-600 text-white px-5 py-2 rounded-xl"><i class="fas fa-upload mr-1"></i> Importar</button><button id="downloadCsvTemplate" class="bg-gray-200 px-5 py-2 rounded-xl">📎 Ejemplo CSV</button></div>
+                <p class="text-sm text-gray-600 mb-4">Codificación automática adaptativa (UTF-8 / Windows-1252).</p>
+                <div class="flex flex-col sm:flex-row gap-4"><input type="file" id="csvImportFile" accept=".csv" class="flex-1 border rounded-xl p-2"><button id="importCsvBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-xl transition-colors"><i class="fas fa-upload mr-1"></i> Importar</button><button id="downloadCsvTemplate" class="bg-gray-200 hover:bg-gray-300 px-5 py-2 rounded-xl transition-all">📎 Ejemplo CSV</button></div>
                 <div id="importProgress" class="mt-4 text-sm hidden bg-gray-100 p-3 rounded-xl"></div>
             </div>
         </div>
@@ -223,15 +178,15 @@
         <div id="tab-fusion" class="tab-content hidden">
             <div class="bg-white rounded-2xl shadow-lg p-6">
                 <h2 class="text-xl font-semibold mb-2">🔄 Fusionar instituciones duplicadas</h2>
-                <p class="text-sm text-gray-600 mb-5">Selecciona origen (a eliminar) y destino (conservar).</p>
+                <p class="text-sm text-gray-600 mb-5">Selecciona origen (se eliminará) y destino (conservará todos los trámites asociados).</p>
                 <div class="grid md:grid-cols-2 gap-6">
-                    <div><label class="block text-sm font-medium mb-1">Origen</label><select id="fusionOrigen" class="w-full"></select></div>
-                    <div><label class="block text-sm font-medium mb-1">Destino</label><select id="fusionDestino" class="w-full"></select></div>
-                </div><button id="btnFusionar" class="mt-6 bg-red-700 text-white px-6 py-2 rounded-xl"><i class="fas fa-code-branch mr-1"></i> Fusionar</button>
+                    <div><label class="block text-sm font-medium mb-1">Institución Origen (Duplicada)</label><select id="fusionOrigen" class="w-full"></select></div>
+                    <div><label class="block text-sm font-medium mb-1">Institución Destino (Correcta)</label><select id="fusionDestino" class="w-full"></select></div>
+                </div><button id="btnFusionar" class="mt-6 bg-red-700 hover:bg-red-800 text-white px-6 py-2 rounded-xl transition-all"><i class="fas fa-code-branch mr-1"></i> Fusionar e Integrar</button>
             </div>
         </div>
 
-        <!-- Reemplazo global (texto ayuda + corrección tipo firma) -->
+        <!-- Reemplazo global -->
         <div id="tab-reemplazo" class="tab-content hidden">
             <div class="bg-white rounded-2xl shadow-lg p-6">
                 <h2 class="text-xl font-semibold mb-4"><i class="fas fa-globe text-purple-600 mr-2"></i> Reemplazo global</h2>
@@ -239,93 +194,190 @@
                 <!-- Sección para texto de ayuda -->
                 <div class="border-b pb-4 mb-4">
                     <h3 class="font-medium text-lg mb-2">📝 Reemplazar en texto de ayuda</h3>
-                    <p class="text-sm text-gray-600 mb-3">Corrige errores masivos en el campo "Texto de ayuda".</p>
+                    <p class="text-sm text-gray-600 mb-3">Corrige términos u ortografía masivamente en el campo "Texto de ayuda".</p>
                     <div class="grid md:grid-cols-2 gap-4">
-                        <div><label class="block text-sm font-medium">Texto a buscar</label><input type="text" id="buscarTexto" placeholder="Ej: olograma" class="w-full border rounded-xl px-4 py-2 mt-1"></div>
-                        <div><label class="block text-sm font-medium">Reemplazar con</label><input type="text" id="reemplazarTexto" placeholder="Ej: olografa" class="w-full border rounded-xl px-4 py-2 mt-1"></div>
+                        <div><label class="block text-sm font-medium">Texto a buscar</label><input type="text" id="buscarTexto" placeholder="Ej: olograma" class="w-full border rounded-xl px-4 py-2 mt-1 focus:outline-none focus:ring focus:ring-purple-100"></div>
+                        <div><label class="block text-sm font-medium">Reemplazar con</label><input type="text" id="reemplazarTexto" placeholder="Ej: olografa" class="w-full border rounded-xl px-4 py-2 mt-1 focus:outline-none focus:ring focus:ring-purple-100"></div>
                     </div>
-                    <div class="mt-3 flex gap-3">
-                        <button id="btnPrevisualizarReemplazo" class="bg-blue-100 hover:bg-blue-200 text-blue-800 px-4 py-2 rounded-xl text-sm"><i class="fas fa-eye mr-1"></i> Previsualizar</button>
-                        <button id="btnEjecutarReemplazo" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl text-sm"><i class="fas fa-play mr-1"></i> Ejecutar reemplazo</button>
+                    <div class="mt-4 flex gap-3">
+                        <button id="btnPrevisualizarReemplazo" class="bg-blue-100 hover:bg-blue-200 text-blue-800 px-4 py-2 rounded-xl text-sm transition-all"><i class="fas fa-eye mr-1"></i> Previsualizar</button>
+                        <button id="btnEjecutarReemplazo" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl text-sm transition-all"><i class="fas fa-play mr-1"></i> Ejecutar reemplazo</button>
+                    </div>
+                    <div id="previewReemplazo" class="mt-4 text-sm hidden bg-gray-50 border p-4 rounded-xl max-h-60 overflow-y-auto">
+                        <h4 class="font-bold mb-2">Trámites que se verán modificados:</h4>
+                        <div id="listaPreview"></div>
                     </div>
                 </div>
 
-                <!-- Sección específica para corregir tipo de firma: olograma -> olografa -->
+                <!-- Sección específica para corregir tipo de firma -->
                 <div>
                     <h3 class="font-medium text-lg mb-2">✏️ Corregir tipo de firma</h3>
-                    <p class="text-sm text-gray-600 mb-3">Cambia automáticamente todos los trámites que tengan <strong>"Olograma"</strong> a <strong>"Olografa"</strong> (error común).</p>
-                    <button id="btnCorregirTipoFirma" class="bg-amber-600 hover:bg-amber-700 text-white px-5 py-2 rounded-xl text-sm"><i class="fas fa-magic mr-1"></i> Corregir tipo de firma (olograma → olografa)</button>
-                    <div id="previewTipoFirma" class="mt-3 text-sm hidden bg-gray-50 p-3 rounded-xl"></div>
+                    <p class="text-sm text-gray-600 mb-3">Corrige automáticamente todos los trámites erróneos que digan <strong>"Olograma"</strong> por el término correcto <strong>"Olografa"</strong>.</p>
+                    <button id="btnCorregirTipoFirma" class="bg-amber-600 hover:bg-amber-700 text-white px-5 py-2 rounded-xl text-sm transition-all"><i class="fas fa-magic mr-1"></i> Corregir tipo de firma (olograma → olografa)</button>
+                    <div id="previewTipoFirma" class="mt-3 text-sm hidden bg-gray-50 p-3 rounded-xl border border-amber-200"></div>
                 </div>
             </div>
         </div>
+
+        <!-- Texto de ayuda masivo por tipo de emisión -->
+        <div id="tab-ayuda-masiva" class="tab-content hidden">
+            <div class="bg-white rounded-2xl shadow-lg p-6">
+                <h2 class="text-xl font-semibold mb-2"><i class="fas fa-layer-group text-indigo-500 mr-2"></i> Asignación masiva de texto de ayuda por emisión</h2>
+                <p class="text-sm text-gray-600 mb-6">Selecciona un tipo de emisión y asigna el mismo texto de ayuda a todos sus trámites. Puede dejarse en blanco para borrar el texto existente de forma masiva.</p>
+
+                <div class="grid md:grid-cols-2 gap-5 mb-5">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Tipo de emisión</label>
+                        <select id="ayudaMasivaEmision" class="w-full border rounded-xl px-4 py-2 text-sm text-gray-700 focus:outline-none focus:ring">
+                            <option value="">-- Seleccionar --</option>
+                            <option value="Automatica">Automática</option>
+                            <option value="Externa">Externa</option>
+                            <option value="Presencial">Presencial</option>
+                            <option value="Validacion Previa">Validación Previa</option>
+                        </select>
+                    </div>
+                    <div class="flex items-end">
+                        <button id="btnPreviewAyudaMasiva" class="bg-blue-100 hover:bg-blue-200 text-blue-800 px-4 py-2 rounded-xl text-sm transition-all"><i class="fas fa-eye mr-1"></i> Ver trámites afectados</button>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-1">Nuevo texto de ayuda <span class="text-gray-400 font-normal">(puede dejarse vacío)</span></label>
+                    <textarea id="ayudaMasivaTexto" rows="5" class="w-full border rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring focus:ring-indigo-100" placeholder="Escriba el texto de ayuda o déjelo en blanco..."></textarea>
+                </div>
+
+                <div id="ayudaMasivaPreview" class="hidden mb-5 bg-gray-50 border rounded-xl p-4 text-sm">
+                    <p id="ayudaMasivaPreviewCount" class="font-semibold text-gray-700 mb-2"></p>
+                    <ul id="ayudaMasivaPreviewLista" class="max-h-52 overflow-y-auto divide-y text-gray-600"></ul>
+                </div>
+
+                <div class="flex gap-3">
+                    <button id="btnEjecutarAyudaMasiva" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-xl text-sm transition-all"><i class="fas fa-bolt mr-1"></i> Aplicar a todos los trámites</button>
+                </div>
+                <div id="ayudaMasivaResult" class="hidden mt-4 text-sm bg-green-50 text-green-800 border border-green-200 rounded-xl p-3"></div>
+            </div>
+        </div>
+
+        <!-- Respaldos e Intercambio de Datos -->
+        <div id="tab-respaldos" class="tab-content hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- Exportar CSV -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3"><i class="fas fa-file-csv text-emerald-600 mr-2"></i>Exportar Base de Datos (CSV)</h3>
+                        <p class="text-sm text-gray-600 mb-6 leading-relaxed">
+                            Genera y descarga un archivo en formato CSV. Este archivo sigue exactamente el formato de plantilla de importación, permitiendo reimportar la base de datos de manera limpia en el futuro o en otros sistemas del MRE.
+                        </p>
+                    </div>
+                    <button id="btnExportarCsv" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-md transition-all flex items-center justify-center gap-2">
+                        <i class="fas fa-download"></i> Exportar Trámites a CSV
+                    </button>
+                </div>
+
+                <!-- Backup Completo JSON -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3"><i class="fas fa-database text-blue-600 mr-2"></i>Copia de Seguridad Completa (JSON)</h3>
+                        <p class="text-sm text-gray-600 mb-6 leading-relaxed">
+                            Crea una instantánea integral de la base de datos en formato JSON que contiene la totalidad de las <strong>Instituciones</strong> y <strong>Trámites</strong> guardados, incluyendo sus relaciones, flags de bloqueo e históricos de actualización.
+                        </p>
+                    </div>
+                    <button id="btnExportarJson" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-md transition-all flex items-center justify-center gap-2">
+                        <i class="fas fa-file-archive"></i> Descargar Backup Completo (JSON)
+                    </button>
+                </div>
+
+                <!-- Restaurar Copia JSON -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:col-span-2">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3"><i class="fas fa-history text-amber-600 mr-2"></i>Restaurar Copia de Seguridad</h3>
+                    <p class="text-sm text-gray-600 mb-6">
+                        Permite recuperar la base de datos del sistema utilizando una copia de seguridad previamente descargada en formato JSON.
+                    </p>
+
+                    <div class="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center hover:bg-gray-50 transition-colors mb-6 cursor-pointer relative" id="dropArea">
+                        <input type="file" id="jsonBackupFile" accept=".json" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                        <div class="pointer-events-none">
+                            <i class="fas fa-file-import text-4xl text-gray-400 mb-3"></i>
+                            <span class="block text-sm font-semibold text-gray-700" id="jsonFileNameLabel">Selecciona o arrastra el archivo de backup (.json)</span>
+                            <span class="block text-xs text-gray-400 mt-1">Soporta solo formatos .json válidos generados por este sistema</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 mb-6">
+                        <h4 class="font-bold text-amber-900 text-sm mb-3 flex items-center gap-2">
+                            <i class="fas fa-exclamation-triangle"></i> Método de Restauración Requerido:
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <label class="p-3 bg-white rounded-xl border border-gray-200 shadow-sm flex items-start gap-3 cursor-pointer hover:border-amber-400 transition-all">
+                                <input type="radio" name="restoreMethod" value="merge" checked class="mt-1 accent-amber-600">
+                                <div>
+                                    <span class="block text-sm font-bold text-gray-800">Combinar con datos actuales</span>
+                                    <span class="block text-xs text-gray-500 mt-1">Inserta los trámites e instituciones de la copia respetando los registros existentes.</span>
+                                </div>
+                            </label>
+                            <label class="p-3 bg-white rounded-xl border border-gray-200 shadow-sm flex items-start gap-3 cursor-pointer hover:border-red-400 transition-all">
+                                <input type="radio" name="restoreMethod" value="overwrite" class="mt-1 accent-red-600">
+                                <div>
+                                    <span class="block text-sm font-bold text-red-700">Reemplazar Base de Datos</span>
+                                    <span class="block text-xs text-gray-500 mt-1">Borra de forma definitiva y completa todas las instituciones y trámites existentes e introduce el contenido del backup.</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end gap-3">
+                        <button id="btnRestaurarJson" class="px-6 py-3 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl shadow-md transition-all flex items-center gap-2">
+                            <i class="fas fa-cloud-upload-alt"></i> Procesar y Restaurar Backup
+                        </button>
+                    </div>
+
+                    <div id="restoreProgress" class="hidden mt-6 p-4 bg-gray-100 rounded-xl border border-gray-200">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-bold text-gray-700" id="restoreProgressText">Inicializando restauración...</span>
+                            <span class="text-sm font-extrabold text-blue-600" id="restoreProgressPercent">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                            <div class="bg-blue-600 h-full rounded-full transition-all duration-300" id="restoreProgressBar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 
+    <!-- Toast Notifications -->
     <div id="toast" class="toast hidden"></div>
 
-    <!-- Texto de ayuda masivo por tipo de emisión -->
-    <div id="tab-ayuda-masiva" class="tab-content hidden">
-        <div class="bg-white rounded-2xl shadow-lg p-6">
-            <h2 class="text-xl font-semibold mb-2"><i class="fas fa-layer-group text-indigo-500 mr-2"></i> Asignación masiva de texto de ayuda por tipo de emisión</h2>
-            <p class="text-sm text-gray-600 mb-6">Seleccioná un tipo de emisión y asigná el mismo texto de ayuda a todos sus trámites. Puede dejarse en blanco para borrar el texto existente.</p>
-
-            <div class="grid md:grid-cols-2 gap-5 mb-5">
-                <div>
-                    <label class="block text-sm font-medium mb-1">Tipo de emisión</label>
-                    <select id="ayudaMasivaEmision" class="w-full border rounded-xl px-4 py-2 text-sm text-gray-700">
-                        <option value="">-- Seleccionar --</option>
-                        <option value="Automatica">Automática</option>
-                        <option value="Externa">Externa</option>
-                        <option value="Presencial">Presencial</option>
-                        <option value="Validacion Previa">Validación Previa</option>
-                    </select>
-                </div>
-                <div class="flex items-end">
-                    <button id="btnPreviewAyudaMasiva" class="bg-blue-100 hover:bg-blue-200 text-blue-800 px-4 py-2 rounded-xl text-sm"><i class="fas fa-eye mr-1"></i> Ver trámites afectados</button>
-                </div>
-            </div>
-
-            <div class="mb-4">
-                <label class="block text-sm font-medium mb-1">Nuevo texto de ayuda <span class="text-gray-400 font-normal">(puede dejarse vacío)</span></label>
-                <textarea id="ayudaMasivaTexto" rows="5" class="w-full border rounded-xl px-4 py-2 text-sm" placeholder="Escriba el texto de ayuda o déjelo en blanco para todos los trámites del tipo seleccionado..."></textarea>
-            </div>
-
-            <div id="ayudaMasivaPreview" class="hidden mb-5 bg-gray-50 border rounded-xl p-4 text-sm">
-                <p id="ayudaMasivaPreviewCount" class="font-semibold text-gray-700 mb-2"></p>
-                <ul id="ayudaMasivaPreviewLista" class="max-h-52 overflow-y-auto divide-y text-gray-600"></ul>
-            </div>
-
-            <div class="flex gap-3">
-                <button id="btnEjecutarAyudaMasiva" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-xl text-sm"><i class="fas fa-bolt mr-1"></i> Aplicar a todos los trámites</button>
-            </div>
-            <div id="ayudaMasivaResult" class="hidden mt-4 text-sm bg-green-50 text-green-800 border border-green-200 rounded-xl p-3"></div>
-        </div>
-    </div>
-
-    <!-- Modal para texto de ayuda -->
+    <!-- Modal para texto de ayuda completo -->
     <div id="modalAyuda" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50">
         <div class="bg-white rounded-2xl max-w-lg w-full mx-4 p-6 shadow-2xl">
             <div class="flex justify-between items-center border-b pb-3 mb-4">
                 <h3 class="font-bold text-gray-800 text-lg"><i class="fas fa-info-circle text-blue-500 mr-2"></i>Texto de ayuda completo</h3>
-                <button id="closeModalBtn" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+                <button id="closeModalBtn" class="text-gray-400 hover:text-gray-600 text-2xl focus:outline-none">&times;</button>
             </div>
             <div id="modalTextoAyuda" class="text-gray-700 whitespace-pre-wrap max-h-96 overflow-y-auto text-sm leading-relaxed"></div>
             <div class="mt-5 text-right">
-                <button id="closeModalFooterBtn" class="bg-gray-200 hover:bg-gray-300 px-5 py-2 rounded-xl text-sm">Cerrar</button>
+                <button id="closeModalFooterBtn" class="bg-gray-200 hover:bg-gray-300 px-5 py-2 rounded-xl text-sm transition-all">Cerrar</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal para cambiar campos masivamente (NUEVO) -->
+    <!-- Modal Dinámico para cambios masivos (Actualizado para TextArea) -->
     <div id="modalCambioMasivo" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-[150]">
-        <div class="bg-white rounded-2xl max-w-sm w-full mx-4 p-6 shadow-2xl">
+        <div class="bg-white rounded-2xl max-w-md w-full mx-4 p-6 shadow-2xl">
             <div class="flex justify-between items-center border-b pb-3 mb-4">
                 <h3 id="modalCambioTitulo" class="font-bold text-gray-800 text-lg">Cambiar Valor</h3>
-                <button type="button" id="btnCerrarModalCambio1" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+                <button type="button" id="btnCerrarModalCambio1" class="text-gray-400 hover:text-gray-600 text-2xl focus:outline-none">&times;</button>
             </div>
             <div class="mb-5">
-                <label id="modalCambioLabel" class="block text-sm font-medium text-gray-700 mb-2">Seleccione el nuevo valor:</label>
+                <label id="modalCambioLabel" class="block text-sm font-medium text-gray-700 mb-2">Seleccione o ingrese el nuevo valor:</label>
+                <!-- Selector (Firma, Emisión) -->
                 <select id="modalCambioSelect" class="w-full border rounded-xl px-4 py-2 text-sm text-gray-700 focus:ring focus:ring-blue-200 focus:outline-none"></select>
+                <!-- Area de texto (Texto de Ayuda) -->
+                <textarea id="modalCambioTextarea" rows="4" class="hidden w-full border rounded-xl px-4 py-2 text-sm text-gray-700 focus:ring focus:ring-blue-200 focus:outline-none" placeholder="Escriba el texto de ayuda masivo..."></textarea>
             </div>
             <div class="flex justify-end gap-3">
                 <button type="button" id="btnCerrarModalCambio2" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-xl text-sm font-medium transition-colors">Cancelar</button>
@@ -368,12 +420,12 @@
         function sortByAlpha(arr, key) { return [...arr].sort((a, b) => normalizeString(key(a)).localeCompare(normalizeString(key(b)))); }
         function toTitleCase(t) { if (!t) return ''; return t.toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '); }
         function toSentenceCase(t) { if (!t) return ''; return t.toLowerCase().replace(/(^\w{1}|\.\s+\w{1})/g, m => m.toUpperCase()); }
+        
         document.getElementById("normalizeNombreBtn").onclick = () => document.getElementById("tramiteNombre").value = toTitleCase(document.getElementById("tramiteNombre").value);
         document.getElementById("normalizeAyudaBtn").onclick = () => document.getElementById("tramiteAyuda").value = toSentenceCase(document.getElementById("tramiteAyuda").value);
 
-        // CORREGIDO: Cambiar "Olograma" por "Olografa" en las opciones fijas
         function setupFixedSelects() {
-            const tipos = ["Apostilla", "Legalización"], origenes = ["Extranjero", "Nacional"], emisiones = ["Automatica", "Externa", "Presencial", "Validacion Previa"], firmas = ["Firma electronica y/o verificable", "Olografa"]; // Aquí el cambio
+            const tipos = ["Apostilla", "Legalización"], origenes = ["Extranjero", "Nacional"], emisiones = ["Automatica", "Externa", "Presencial", "Validacion Previa"], firmas = ["Firma electronica y/o verificable", "Olografa"];
             const mkOpt = (a) => a.map(v => ({ value: v, text: v }));
             if (tsTipoTramite) tsTipoTramite.destroy();
             if (tsOrigen) tsOrigen.destroy();
@@ -382,7 +434,7 @@
             tsTipoTramite = new TomSelect("#tramiteTipo", { options: mkOpt(sortByAlpha(tipos, t => t)), create: false, sortField: "text", searchField: ["text"], placeholder: "Buscar...", items: ["Legalización"] });
             tsOrigen = new TomSelect("#tramiteOrigen", { options: mkOpt(sortByAlpha(origenes, o => o)), create: false, sortField: "text", searchField: ["text"], placeholder: "Buscar...", items: ["Nacional"] });
             tsEmision = new TomSelect("#tramiteEmision", { options: mkOpt(sortByAlpha(emisiones, e => e)), create: false, sortField: "text", searchField: ["text"], placeholder: "Buscar...", items: ["Presencial"] });
-            tsFirma = new TomSelect("#tramiteFirma", { options: mkOpt(sortByAlpha(firmas, f => f)), create: false, sortField: "text", searchField: ["text"], placeholder: "Buscar...", items: ["Olografa"] }); // valor por defecto actualizado
+            tsFirma = new TomSelect("#tramiteFirma", { options: mkOpt(sortByAlpha(firmas, f => f)), create: false, sortField: "text", searchField: ["text"], placeholder: "Buscar...", items: ["Olografa"] });
         }
 
         function updateInstitucionSelect() {
@@ -465,18 +517,24 @@
             await loadInstituciones();
         }
 
+        // BATCH BUG FIX: Implementado sistema estricto de reinicio de Batch en Cascada
         async function updateInstitucionNombreEnTramites(institucionId, nuevoNombre) {
             const q = query(tramitesCol, where("institucionId", "==", institucionId));
             const snap = await getDocs(q);
             if (snap.empty) return;
-            const batch = writeBatch(db);
+            
+            let batch = writeBatch(db);
             let count = 0;
-            snap.forEach(docSnap => {
+            for (const docSnap of snap.docs) {
                 batch.update(doc(tramitesCol, docSnap.id), { institucionNombre: nuevoNombre, updatedAt: new Date() });
                 count++;
-            });
-            await batch.commit();
-            showToast(`Nombre actualizado en ${count} trámites`);
+                if (count % 450 === 0) {
+                    await batch.commit();
+                    batch = writeBatch(db);
+                }
+            }
+            if (count % 450 !== 0) await batch.commit();
+            showToast(`Nombre actualizado en ${count} trámites vinculados.`);
         }
 
         document.getElementById("institucionForm").addEventListener("submit", async (e) => {
@@ -484,7 +542,7 @@
             const nombre = document.getElementById("institucionNombre").value.trim();
             if (!nombre) return showToast("Ingrese nombre", "error");
             const exists = Array.from(institucionesMap.values()).some(n => n.toLowerCase() === nombre.toLowerCase());
-            if (exists && !currentEditInstitucionId) return showToast("Ya existe", "error");
+            if (exists && !currentEditInstitucionId) return showToast("Ya existe esa Institución", "error");
             try {
                 if (currentEditInstitucionId) {
                     const oldNombre = institucionesMap.get(currentEditInstitucionId);
@@ -505,7 +563,6 @@
         });
         document.getElementById("cancelInstitucionEdit").onclick = () => { document.getElementById("institucionNombre").value = ""; currentEditInstitucionId = null; document.getElementById("cancelInstitucionEdit").classList.add("hidden"); };
 
-        // TRÁMITES con grilla robusta
         async function saveTramite(e) {
             e.preventDefault();
             const instId = tsInstitucion.getValue();
@@ -513,7 +570,7 @@
             const nombre = document.getElementById("tramiteNombre").value.trim();
             if (!nombre) return showToast("Nombre requerido", "error");
             const duplicate = allTramites.some(t => t.institucionId === instId && t.nombreTramite?.toLowerCase() === nombre.toLowerCase() && t.id !== currentEditTramiteId);
-            if (duplicate) return showToast("Ya existe", "error");
+            if (duplicate) return showToast("Trámite duplicado para esta institución", "error");
             const data = {
                 institucionId: instId, institucionNombre: institucionesMap.get(instId),
                 nombreTramite: nombre, tipoTramite: tsTipoTramite.getValue(),
@@ -555,7 +612,7 @@
             if (tsEmision) tsEmision.setValue(t.tipoEmision);
             if (tsFirma) tsFirma.setValue(t.tipoFirma);
             document.getElementById("tramiteValidarFirma").checked = t.validarContraFirma || false;
-            document.getElementById("tramiteValidarElectronica").checked = t.validarFirmaElectronica || false;
+            document.getElementById("tramiteValidarElectronica").checked = t.validarFirmaElectronica || false; // BUG FIXED: Cleaned phantom element lookup
             document.getElementById("tramiteAyuda").value = t.textoAyuda || "";
             document.getElementById("tramiteFormTitle").innerHTML = "✏️ Editando Trámite";
             document.getElementById("cancelTramiteEdit").classList.remove("hidden");
@@ -563,18 +620,31 @@
         }
         async function deleteTramite(id, nombre) { if (confirm(`Eliminar "${nombre}"?`)) { await deleteDoc(doc(tramitesCol, id)); showToast("Eliminado"); } }
         async function toggleBloqueo(id, esBloqueado) { await updateDoc(doc(tramitesCol, id), { bloqueado: !esBloqueado, updatedAt: new Date() }); showToast(!esBloqueado ? "Trámite bloqueado (terminado)" : "Trámite reactivado (pendiente)"); }
+        
+        // BATCH BUG FIX: Sistema seguro de reasignación
         async function reasignarSeleccionados(nuevaInstId) {
             if (selectedTramiteIds.size === 0) return showToast("No hay seleccionados", "error");
             if (!nuevaInstId) return showToast("Seleccione institución destino", "error");
             const nuevaNombre = institucionesMap.get(nuevaInstId);
             if (!nuevaNombre) return;
-            const batch = writeBatch(db);
-            for (let id of selectedTramiteIds) batch.update(doc(tramitesCol, id), { institucionId: nuevaInstId, institucionNombre: nuevaNombre, updatedAt: new Date() });
-            await batch.commit();
+            
+            let batch = writeBatch(db);
+            let count = 0;
+            for (let id of selectedTramiteIds) {
+                batch.update(doc(tramitesCol, id), { institucionId: nuevaInstId, institucionNombre: nuevaNombre, updatedAt: new Date() });
+                count++;
+                if (count % 450 === 0) {
+                    await batch.commit();
+                    batch = writeBatch(db);
+                }
+            }
+            if (count % 450 !== 0) await batch.commit();
+            
             showToast(`${selectedTramiteIds.size} trámite(s) reasignados a "${nuevaNombre}"`);
             selectedTramiteIds.clear();
             document.getElementById("globalSearchInput").dispatchEvent(new Event('input'));
         }
+
         function filterTramitesBySearch(tramites, term) {
             let result = tramites;
             if (term.trim()) {
@@ -585,6 +655,7 @@
             if (filterEmision) result = result.filter(tr => normalizeString(tr.tipoEmision || '') === normalizeString(filterEmision));
             return result;
         }
+
         function renderTramitesGrouped(tramites) {
             const filtered = filterTramitesBySearch(tramites, currentSearchTerm);
             const container = document.getElementById("tramitesContainer");
@@ -662,6 +733,7 @@
             container.innerHTML = html;
             attachTramitesEvents();
         }
+
         function attachTramitesEvents() {
             document.querySelectorAll('.tramite-checkbox').forEach(cb => {
                 cb.onchange = () => {
@@ -706,6 +778,7 @@
                 };
             });
         }
+
         let tramitesUnsub;
         function subscribeTramites() { if (tramitesUnsub) tramitesUnsub(); tramitesUnsub = onSnapshot(tramitesCol, (snap) => { allTramites = snap.docs.map(d => ({ id: d.id, ...d.data() })); renderTramitesGrouped(allTramites); }); }
         
@@ -713,7 +786,6 @@
         document.getElementById("filterFirmaSelect").addEventListener("change", (e) => { filterFirma = e.target.value; renderTramitesGrouped(allTramites); });
         document.getElementById("filterEmisionSelect").addEventListener("change", (e) => { filterEmision = e.target.value; renderTramitesGrouped(allTramites); });
         
-        // Asignación de eventos limpia
         const formTramite = document.getElementById("tramiteForm");
         const btnCancelEdit = document.getElementById("cancelTramiteEdit");
         const btnReasignar = document.getElementById("btnReasignarSeleccionados");
@@ -735,17 +807,30 @@
             reasignarSeleccionados(destId); 
         };
         
-        // === Lógica Modal Cambio Masivo Integrada y Segura ===
+        // === Lógica Modal Cambio Masivo Integrada y Segura (BATCH FIX) ===
         let configCambioMasivo = null;
 
-        function abrirModalCambioMasivo(campo, campoLabel, opciones) {
+        function abrirModalCambioMasivo(campo, campoLabel, opciones, esAreaDeTexto = false) {
             if (selectedTramiteIds.size === 0) return showToast("No hay trámites seleccionados", "error");
             
-            configCambioMasivo = { campo, campoLabel };
+            configCambioMasivo = { campo, campoLabel, esAreaDeTexto };
             
             document.getElementById("modalCambioTitulo").innerText = `Cambiar ${campoLabel}`;
-            document.getElementById("modalCambioSelect").innerHTML = '<option value="">-- Seleccione una opción --</option>' + 
-                opciones.map(o => `<option value="${escapeHtml(o)}">${escapeHtml(o)}</option>`).join('');
+            document.getElementById("modalCambioLabel").innerText = `Ingrese el nuevo ${campoLabel.toLowerCase()}:`;
+
+            const selectEl = document.getElementById("modalCambioSelect");
+            const textareaEl = document.getElementById("modalCambioTextarea");
+
+            if (esAreaDeTexto) {
+                selectEl.classList.add("hidden");
+                textareaEl.classList.remove("hidden");
+                textareaEl.value = "";
+            } else {
+                textareaEl.classList.add("hidden");
+                selectEl.classList.remove("hidden");
+                selectEl.innerHTML = '<option value="">-- Seleccione una opción --</option>' + 
+                    opciones.map(o => `<option value="${escapeHtml(o)}">${escapeHtml(o)}</option>`).join('');
+            }
                 
             document.getElementById("modalCambioMasivo").classList.remove("hidden");
         }
@@ -760,54 +845,63 @@
 
         document.getElementById("btnConfirmarCambioMasivo").onclick = async () => {
             if (!configCambioMasivo) return;
-            const valorFinal = document.getElementById("modalCambioSelect").value;
-            if (!valorFinal) return showToast("Debe seleccionar una opción", "error");
+            
+            const valorFinal = configCambioMasivo.esAreaDeTexto 
+                ? document.getElementById("modalCambioTextarea").value.trim()
+                : document.getElementById("modalCambioSelect").value;
+
+            if (!configCambioMasivo.esAreaDeTexto && !valorFinal) {
+                return showToast("Debe seleccionar una opción", "error");
+            }
 
             const { campo, campoLabel } = configCambioMasivo;
             const btn = document.getElementById("btnConfirmarCambioMasivo");
             
-            // Bloqueamos botón y mostramos estado de carga
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Procesando...';
 
             try {
-                const batch = writeBatch(db);
+                let batch = writeBatch(db); // BATCH RE-INIT FIX
                 let count = 0;
                 for (let id of selectedTramiteIds) {
                     let updateData = { updatedAt: new Date() };
                     updateData[campo] = valorFinal;
                     batch.update(doc(tramitesCol, id), updateData);
                     count++;
-                    if (count % 450 === 0) await batch.commit();
+                    if (count % 450 === 0) {
+                        await batch.commit();
+                        batch = writeBatch(db); // BATCH RE-INIT FIX
+                    }
                 }
-                if (count % 450 !== 0 || count === 0) await batch.commit();
+                if (count % 450 !== 0) await batch.commit(); // BUG FIXED
                 
-                showToast(`${selectedTramiteIds.size} trámite(s) actualizados con ${campoLabel}: "${valorFinal}"`);
+                showToast(`${selectedTramiteIds.size} trámite(s) actualizados con ${campoLabel}.`);
                 selectedTramiteIds.clear();
                 renderTramitesGrouped(allTramites);
                 cerrarModalCambio();
             } catch (err) {
                 showToast("Error: " + err.message, "error");
             } finally {
-                // Restauramos el botón
                 btn.disabled = false;
                 btn.innerText = 'Aplicar Cambio';
             }
         };
 
-        // Vinculamos los botones al nuevo modal
         document.getElementById("btnCambiarEmision").onclick = () => {
-            abrirModalCambioMasivo('tipoEmision', 'Tipo de Emisión', ["Automatica", "Externa", "Presencial", "Validacion Previa"]);
+            abrirModalCambioMasivo('tipoEmision', 'Tipo de Emisión', ["Automatica", "Externa", "Presencial", "Validacion Previa"], false);
         };
 
         document.getElementById("btnCambiarFirma").onclick = () => {
-            abrirModalCambioMasivo('tipoFirma', 'Tipo de Firma', ["Firma electronica y/o verificable", "Olografa"]);
+            abrirModalCambioMasivo('tipoFirma', 'Tipo de Firma', ["Firma electronica y/o verificable", "Olografa"], false);
+        };
+
+        document.getElementById("btnCambiarAyudaSeleccionados").onclick = () => {
+            abrirModalCambioMasivo('textoAyuda', 'Texto de Ayuda', [], true);
         };
 
         document.getElementById("btnLimpiarSeleccion").onclick = () => { selectedTramiteIds.clear(); renderTramitesGrouped(allTramites); };
-        document.getElementById("refreshAllBtn").onclick = async () => { await loadInstituciones(); showToast("Actualizado"); };
+        document.getElementById("refreshAllBtn").onclick = async () => { await loadInstituciones(); showToast("BD Sincronizada"); };
 
-        // Búsqueda en instituciones
         const institucionesSearch = document.getElementById("institucionesSearchInput");
         if (institucionesSearch) {
             institucionesSearch.addEventListener("input", (e) => {
@@ -816,7 +910,7 @@
             });
         }
 
-        // ========== REEMPLAZO GLOBAL EN TEXTO DE AYUDA ==========
+        // ========== REEMPLAZO GLOBAL EN TEXTO DE AYUDA (BATCH FIX) ==========
         async function obtenerTramitesAfectados(buscar, reemplazar) {
             if (!buscar.trim()) return [];
             const snap = await getDocs(tramitesCol);
@@ -838,10 +932,10 @@
             const previewDiv = document.getElementById("previewReemplazo");
             const lista = document.getElementById("listaPreview");
             previewDiv.classList.remove("hidden");
-            if (afectados.length === 0) { lista.innerHTML = '<p class="text-gray-500">No se encontraron trámites.</p>'; return; }
+            if (afectados.length === 0) { lista.innerHTML = '<p class="text-gray-500">No se encontraron trámites con ese término.</p>'; return; }
             let html = `<ul class="divide-y">`;
             afectados.forEach(a => {
-                html += `<li class="py-2"><span class="font-medium">${escapeHtml(a.nombre)}</span><br><span class="text-xs text-gray-500">Original: ${escapeHtml(a.textoOriginal.substring(0, 100))}${a.textoOriginal.length > 100 ? '…' : ''}</span><br><span class="text-xs text-green-600">Nuevo: ${escapeHtml(a.textoNuevo.substring(0, 100))}</span></li>`;
+                html += `<li class="py-2"><span class="font-medium">${escapeHtml(a.nombre)}</span><br><span class="text-xs text-gray-500">Original: ${escapeHtml(a.textoOriginal.substring(0, 100))}${a.textoOriginal.length > 100 ? '…' : ''}</span><br><span class="text-xs text-green-600 font-medium">Nuevo: ${escapeHtml(a.textoNuevo.substring(0, 100))}</span></li>`;
             });
             html += `</ul><p class="mt-2 text-sm font-semibold">Total a modificar: ${afectados.length}</p>`;
             lista.innerHTML = html;
@@ -853,21 +947,26 @@
             if (!confirm(`⚠️ Reemplazar "${buscar}" por "${reemplazar}" en TODOS los trámites. ¿Continuar?`)) return;
             const afectados = await obtenerTramitesAfectados(buscar, reemplazar);
             if (afectados.length === 0) { showToast("No hay trámites para modificar", "info"); return; }
-            const batch = writeBatch(db);
+            
+            let batch = writeBatch(db); // BATCH RE-INIT FIX
             let count = 0;
             for (const a of afectados) {
                 batch.update(doc(tramitesCol, a.id), { textoAyuda: a.textoNuevo, updatedAt: new Date() });
                 count++;
-                if (count % 450 === 0) { await batch.commit(); }
+                if (count % 450 === 0) { 
+                    await batch.commit(); 
+                    batch = writeBatch(db); 
+                }
             }
-            if (count % 450 !== 0 || count === 0) await batch.commit();
+            if (count % 450 !== 0) await batch.commit();
+            
             showToast(`✅ Reemplazo completado: ${count} trámites actualizados.`);
             document.getElementById("previewReemplazo").classList.add("hidden");
             document.getElementById("buscarTexto").value = "";
             document.getElementById("reemplazarTexto").value = "";
         };
 
-        // ========== CORRECCIÓN ESPECÍFICA: TIPO DE FIRMA "Olograma" → "Olografa" ==========
+        // ========== CORRECCIÓN ESPECÍFICA: TIPO DE FIRMA "Olograma" → "Olografa" (BATCH FIX) ==========
         document.getElementById("btnCorregirTipoFirma").onclick = async () => {
             const q = query(tramitesCol, where("tipoFirma", "==", "Olograma"));
             const snap = await getDocs(q);
@@ -878,56 +977,152 @@
             const afectados = snap.docs.map(docSnap => ({ id: docSnap.id, nombre: docSnap.data().nombreTramite }));
             const previewDiv = document.getElementById("previewTipoFirma");
             previewDiv.classList.remove("hidden");
-            let html = `<p class="font-medium">Se actualizarán ${afectados.length} trámites:</p><ul class="max-h-40 overflow-y-auto text-sm">`;
-            afectados.forEach(a => { html += `<li>${escapeHtml(a.nombre)}</li>`; });
-            html += `</ul><button id="confirmarCorreccion" class="mt-2 bg-red-600 text-white px-3 py-1 rounded text-xs">Confirmar corrección</button>`;
+            let html = `<p class="font-medium">Se actualizarán ${afectados.length} trámites:</p><ul class="max-h-40 overflow-y-auto text-sm my-2 divide-y">`;
+            afectados.forEach(a => { html += `<li class="py-1">${escapeHtml(a.nombre)}</li>`; });
+            html += `</ul><button id="confirmarCorreccion" class="mt-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl text-xs transition-colors">Confirmar corrección</button>`;
             previewDiv.innerHTML = html;
+            
             document.getElementById("confirmarCorreccion").onclick = async () => {
-                const batch = writeBatch(db);
+                let batch = writeBatch(db);
                 let count = 0;
                 for (const a of afectados) {
                     batch.update(doc(tramitesCol, a.id), { tipoFirma: "Olografa", updatedAt: new Date() });
                     count++;
-                    if (count % 450 === 0) await batch.commit();
+                    if (count % 450 === 0) {
+                        await batch.commit();
+                        batch = writeBatch(db);
+                    }
                 }
-                if (count % 450 !== 0 || count === 0) await batch.commit();
+                if (count % 450 !== 0) await batch.commit();
+                
                 showToast(`✅ ${count} trámites actualizados: "Olograma" → "Olografa"`);
                 previewDiv.classList.add("hidden");
-                // Recargar datos para reflejar cambios
                 await subscribeTramites();
             };
         };
 
-        // Import CSV (funcional)
+        // ========== Import CSV Seguro (ENCODING & BATCH FIX) ==========
         async function importCSV(file) {
             return new Promise((res, rej) => {
-                const reader = new FileReader(); reader.onload = async (e) => {
-                    let csv = new TextDecoder("windows-1252").decode(e.target.result); if (csv.includes("�")) csv = new TextDecoder("utf-8").decode(e.target.result); Papa.parse(csv, {
+                const reader = new FileReader(); 
+                reader.onload = async (e) => {
+                    // FIX: Decodificar primero en UTF-8 puro, que es el estándar universal
+                    let csv = new TextDecoder("utf-8").decode(e.target.result); 
+                    // Si el archivo tenía acentos latinos (windows-1252) guardados sin UTF8,
+                    // el navegador mostrará el carácter de reemplazo "". En ese caso, forzamos a Windows-1252.
+                    if (csv.includes("")) {
+                        csv = new TextDecoder("windows-1252").decode(e.target.result); 
+                    }
+                    
+                    Papa.parse(csv, {
                         header: true, delimiter: ";", skipEmptyLines: true, complete: async (results) => {
-                            const rows = results.data; if (!rows.length) rej("CSV vacío"); const progress = document.getElementById("importProgress"); progress.classList.remove("hidden"); progress.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Procesando...`; let added = 0, skipped = 0; const batch = writeBatch(db); let batchSize = 0; for (const row of rows) {
-                                let instNombre = (row["INSTITUCIÓN"] || "").trim(); const nombreDoc = (row["TIPO DE DOCUMENTO"] || "").trim(); if (!instNombre || !nombreDoc) { skipped++; continue; } instNombre = instNombre.replace(/Ã©/g, 'é').replace(/Ã±/g, 'ñ').replace(/Ã³/g, 'ó').replace(/Ã¡/g, 'á').replace(/Ã­/g, 'í'); let instId = null; for (let [id, name] of institucionesMap.entries()) if (name.toLowerCase() === instNombre.toLowerCase()) { instId = id; break; } if (!instId) { const newRef = doc(institucionesCol); batch.set(newRef, { nombre: instNombre, createdAt: new Date() }); instId = newRef.id; batchSize++; institucionesMap.set(instId, instNombre); } const yaExiste = allTramites.some(t => t.institucionId === instId && t.nombreTramite?.toLowerCase() === nombreDoc.toLowerCase()); if (yaExiste) { skipped++; continue; } const tipoTram = (row["TIPO DE TRAMITE"] || "Legalización").trim(); let origen = (row["ORIGEN"] || "N").trim(); origen = origen === "N" ? "Nacional" : origen === "E" ? "Extranjero" : origen; let tipoEmision = (row["TIPO DE EMISION"] || "Presencial").trim(); let tipoFirma = (row["TIPO DE FIRMA"] || "O").trim(); tipoFirma = tipoFirma === "E" ? "Firma electronica y/o verificable" : (tipoFirma === "O" ? "Olografa" : tipoFirma); // ya corrige a olografa
+                            const rows = results.data; 
+                            if (!rows.length) rej("CSV vacío"); 
+                            const progress = document.getElementById("importProgress"); 
+                            progress.classList.remove("hidden"); 
+                            progress.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Procesando...`; 
+                            
+                            let added = 0, skipped = 0; 
+                            let batch = writeBatch(db); // BATCH FIX INIT
+                            let batchSize = 0; 
+                            
+                            for (const row of rows) {
+                                let instNombre = (row["INSTITUCIÓN"] || "").trim(); 
+                                const nombreDoc = (row["TIPO DE DOCUMENTO"] || "").trim(); 
+                                if (!instNombre || !nombreDoc) { skipped++; continue; } 
+                                
+                                // Opcional: Reemplazo legacy en caso de mala decodificación externa previa
+                                instNombre = instNombre.replace(/Ã©/g, 'é').replace(/Ã±/g, 'ñ').replace(/Ã³/g, 'ó').replace(/Ã¡/g, 'á').replace(/Ã­/g, 'í'); 
+                                
+                                let instId = null; 
+                                for (let [id, name] of institucionesMap.entries()) {
+                                    if (name.toLowerCase() === instNombre.toLowerCase()) { instId = id; break; } 
+                                }
+                                
+                                if (!instId) {
+                                    const newRef = doc(institucionesCol); 
+                                    batch.set(newRef, { nombre: instNombre, createdAt: new Date() }); 
+                                    instId = newRef.id; 
+                                    batchSize++; 
+                                    institucionesMap.set(instId, instNombre);
+                                } 
+                                
+                                const yaExiste = allTramites.some(t => t.institucionId === instId && t.nombreTramite?.toLowerCase() === nombreDoc.toLowerCase()); 
+                                if (yaExiste) { skipped++; continue; } 
+                                
+                                const tipoTram = (row["TIPO DE TRAMITE"] || "Legalización").trim(); 
+                                let origen = (row["ORIGEN"] || "N").trim(); 
+                                origen = origen === "N" ? "Nacional" : (origen === "E" ? "Extranjero" : origen); 
+                                let tipoEmision = (row["TIPO DE EMISION"] || "Presencial").trim(); 
+                                let tipoFirma = (row["TIPO DE FIRMA"] || "O").trim(); 
+                                tipoFirma = tipoFirma === "E" ? "Firma electronica y/o verificable" : (tipoFirma === "O" ? "Olografa" : tipoFirma);
                                 const valFirma = (row["VALIDAR CONTRA FIRMA"] || "N").toUpperCase() === "S";
                                 const valElect = (row["VALIDAR FIRMA ELECTRONICA"] || "N").toUpperCase() === "S";
-                                const tramiteData = { institucionId: instId, institucionNombre: instNombre, nombreTramite: nombreDoc, tipoTramite: tipoTram, textoAyuda: (row["TEXTO DE AYUDA"] || "").trim(), origen, tipoEmision, tipoFirma, validarContraFirma: valFirma, validarFirmaElectronica: valElect, createdAt: new Date(), updatedAt: new Date() };
+                                
+                                const tramiteData = { 
+                                    institucionId: instId, institucionNombre: instNombre, nombreTramite: nombreDoc, 
+                                    tipoTramite: tipoTram, textoAyuda: (row["TEXTO DE AYUDA"] || "").trim(), 
+                                    origen, tipoEmision, tipoFirma, validarContraFirma: valFirma, 
+                                    validarFirmaElectronica: valElect, createdAt: new Date(), updatedAt: new Date() 
+                                };
                                 batch.set(doc(tramitesCol), tramiteData);
-                                batchSize++; added++;
-                                if (batchSize >= 450) { await batch.commit(); batchSize = 0; }
+                                batchSize++; 
+                                added++;
+                                
+                                if (batchSize >= 450) { 
+                                    await batch.commit(); 
+                                    batch = writeBatch(db); // BATCH FIX RE-INIT
+                                    batchSize = 0; 
+                                }
                             }
                             if (batchSize > 0) await batch.commit();
-                            progress.innerHTML = `<i class="fas fa-check-circle text-green-600"></i> Importación: ${added} nuevos, ${skipped} omitidos.`;
-                            setTimeout(() => progress.classList.add("hidden"), 4000);
+                            
+                            progress.innerHTML = `<i class="fas fa-check-circle text-green-600"></i> Importación completada: ${added} nuevos cargados, ${skipped} omitidos/duplicados.`;
+                            setTimeout(() => progress.classList.add("hidden"), 5000);
                             await loadInstituciones();
                             res();
                         }, error: rej
                     });
-                }; reader.onerror = () => rej("Error al leer"); reader.readAsArrayBuffer(file);
+                }; 
+                reader.onerror = () => rej("Error al leer archivo del navegador"); 
+                reader.readAsArrayBuffer(file);
             });
         }
         document.getElementById("importCsvBtn").onclick = async () => { const file = document.getElementById("csvImportFile").files[0]; if (!file) return showToast("Seleccione archivo", "error"); try { await importCSV(file); showToast("Importación exitosa"); document.getElementById("csvImportFile").value = ""; } catch (e) { showToast("Error: " + e, "error"); } };
-        document.getElementById("downloadCsvTemplate").onclick = () => { const headers = ["INSTITUCIÓN", "TIPO DE DOCUMENTO", "TIPO DE TRAMITE", "TEXTO DE AYUDA", "ORIGEN", "TIPO DE EMISION", "TIPO DE FIRMA", "VALIDAR CONTRA FIRMA", "VALIDAR FIRMA ELECTRONICA"]; const row = ["Corte Suprema de Justicia", "ACTUACIÓN NOTARIAL", "Legalización", "Texto con acentos: ñ, é, á", "N", "Presencial", "O", "S", "N"]; const csv = [headers.join(";"), row.join(";")].join("\n"); const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" }); const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "ejemplo_tramites.csv"; a.click(); };
-        document.getElementById("btnFusionar").onclick = async () => { const origen = tsFusionOrigen.getValue(), destino = tsFusionDestino.getValue(); if (!origen || !destino) return showToast("Seleccione ambas", "error"); if (origen === destino) return showToast("Deben ser diferentes", "error"); const origenNombre = institucionesMap.get(origen), destinoNombre = institucionesMap.get(destino); if (confirm(`¿Mover trámites de "${origenNombre}" a "${destinoNombre}" y eliminar "${origenNombre}"?`)) { const q = query(tramitesCol, where("institucionId", "==", origen)); const tramitesOrigen = await getDocs(q); const batch = writeBatch(db); tramitesOrigen.forEach(docSnap => batch.update(doc(tramitesCol, docSnap.id), { institucionId: destino, institucionNombre: destinoNombre, updatedAt: new Date() })); batch.delete(doc(institucionesCol, origen)); await batch.commit(); showToast(`Fusionado: ${tramitesOrigen.size} trámites movidos`); await loadInstituciones(); } };
+        document.getElementById("downloadCsvTemplate").onclick = () => { const headers = ["INSTITUCIÓN", "TIPO DE DOCUMENTO", "TIPO DE TRAMITE", "TEXTO DE AYUDA", "ORIGEN", "TIPO DE EMISION", "TIPO DE FIRMA", "VALIDAR CONTRA FIRMA", "VALIDAR FIRMA ELECTRONICA"]; const row = ["Corte Suprema de Justicia", "ACTUACIÓN NOTARIAL", "Legalización", "Texto informativo de ayuda para este trámite", "N", "Presencial", "O", "S", "N"]; const csv = [headers.join(";"), row.join(";")].join("\n"); const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" }); const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "ejemplo_tramites.csv"; a.click(); };
+        
+        // FUSIÓN (BATCH FIX)
+        document.getElementById("btnFusionar").onclick = async () => { 
+            const origen = tsFusionOrigen.getValue(), destino = tsFusionDestino.getValue(); 
+            if (!origen || !destino) return showToast("Seleccione ambas", "error"); 
+            if (origen === destino) return showToast("Deben ser diferentes", "error"); 
+            const origenNombre = institucionesMap.get(origen), destinoNombre = institucionesMap.get(destino); 
+            
+            if (confirm(`¿Mover trámites de "${origenNombre}" a "${destinoNombre}" y eliminar "${origenNombre}"?`)) { 
+                const q = query(tramitesCol, where("institucionId", "==", origen)); 
+                const tramitesOrigen = await getDocs(q); 
+                
+                let batch = writeBatch(db); 
+                let count = 0;
+                
+                for (const docSnap of tramitesOrigen.docs) {
+                    batch.update(doc(tramitesCol, docSnap.id), { institucionId: destino, institucionNombre: destinoNombre, updatedAt: new Date() });
+                    count++;
+                    if (count % 450 === 0) {
+                        await batch.commit();
+                        batch = writeBatch(db);
+                    }
+                }
+                
+                batch.delete(doc(institucionesCol, origen)); 
+                await batch.commit(); 
+                
+                showToast(`Fusionado: ${tramitesOrigen.size} trámites movidos a la nueva institución`); 
+                await loadInstituciones(); 
+            } 
+        };
 
-        // ========== TEXTO DE AYUDA MASIVO POR TIPO DE EMISIÓN ==========
+        // ========== TEXTO DE AYUDA MASIVO POR TIPO DE EMISIÓN (BATCH FIX) ==========
         document.getElementById("btnPreviewAyudaMasiva").onclick = () => {
             const emision = document.getElementById("ayudaMasivaEmision").value;
             if (!emision) { showToast("Seleccione un tipo de emisión", "error"); return; }
@@ -947,19 +1142,256 @@
             const afectados = allTramites.filter(t => normalizeString(t.tipoEmision || '') === normalizeString(emision));
             if (!afectados.length) { showToast("No hay trámites con ese tipo de emisión", "error"); return; }
             if (!confirm(`¿Asignar el texto de ayuda a ${afectados.length} trámite(s) con emisión "${emision}"? Esta acción reemplazará el texto existente.`)) return;
-            const batch = writeBatch(db);
+            
+            let batch = writeBatch(db);
             let count = 0;
             for (const t of afectados) {
                 batch.update(doc(tramitesCol, t.id), { textoAyuda: nuevoTexto, updatedAt: new Date() });
                 count++;
-                if (count % 450 === 0) await batch.commit();
+                if (count % 450 === 0) {
+                    await batch.commit();
+                    batch = writeBatch(db);
+                }
             }
-            if (count % 450 !== 0 || count === 0) await batch.commit();
+            if (count % 450 !== 0) await batch.commit();
+            
             const resultDiv = document.getElementById("ayudaMasivaResult");
             resultDiv.classList.remove("hidden");
             resultDiv.innerHTML = `<i class="fas fa-check-circle mr-1"></i> ${count} trámite(s) actualizados correctamente.`;
             document.getElementById("ayudaMasivaPreview").classList.add("hidden");
             showToast(`✅ ${count} trámites actualizados`);
+        };
+
+        // ========== EXPORTACIONES Y COPIAS DE SEGURIDAD (JSON/CSV) ==========
+
+        // 1. Exportar CSV
+        document.getElementById("btnExportarCsv").onclick = () => {
+            if (allTramites.length === 0) return showToast("No hay trámites en memoria para exportar", "error");
+
+            const rows = allTramites.map(t => ({
+                "INSTITUCIÓN": t.institucionNombre || "",
+                "TIPO DE DOCUMENTO": t.nombreTramite || "",
+                "TIPO DE TRAMITE": t.tipoTramite || "Legalización",
+                "TEXTO DE AYUDA": t.textoAyuda || "",
+                "ORIGEN": t.origen === "Nacional" ? "N" : (t.origen === "Extranjero" ? "E" : t.origen),
+                "TIPO DE EMISION": t.tipoEmision || "Presencial",
+                "TIPO DE FIRMA": t.tipoFirma === "Firma electronica y/o verificable" ? "E" : (t.tipoFirma === "Olografa" ? "O" : t.tipoFirma),
+                "VALIDAR CONTRA FIRMA": t.validarContraFirma ? "S" : "N",
+                "VALIDAR FIRMA ELECTRONICA": t.validarFirmaElectronica ? "S" : "N"
+            }));
+
+            const csv = Papa.unparse(rows, { delimiter: ";" });
+            const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" });
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = `mre_export_tramites_${new Date().toISOString().slice(0, 10)}.csv`;
+            a.click();
+            showToast("Base de datos exportada a CSV con éxito");
+        };
+
+        // 2. Exportar JSON
+        document.getElementById("btnExportarJson").onclick = async () => {
+            const btn = document.getElementById("btnExportarJson");
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Preparando respaldo...';
+
+            try {
+                const instSnap = await getDocs(institucionesCol);
+                const listInst = [];
+                instSnap.forEach(d => listInst.push({ id: d.id, ...d.data() }));
+
+                const tramSnap = await getDocs(tramitesCol);
+                const listTram = [];
+                tramSnap.forEach(d => listTram.push({ id: d.id, ...d.data() }));
+
+                const backupData = {
+                    metadata: {
+                        fechaCreacion: new Date().toISOString(),
+                        plataforma: "Sistema MRE - Trámites",
+                        totalInstituciones: listInst.length,
+                        totalTramites: listTram.length
+                    },
+                    instituciones: listInst,
+                    tramites: listTram
+                };
+
+                const jsonString = JSON.stringify(backupData, null, 2);
+                const blob = new Blob([jsonString], { type: "application/json;charset=utf-8" });
+                const a = document.createElement("a");
+                a.href = URL.createObjectURL(blob);
+                a.download = `mre_backup_completo_${new Date().toISOString().slice(0, 10)}.json`;
+                a.click();
+                showToast("Copia de seguridad (JSON) descargada con éxito");
+            } catch (err) {
+                showToast("Error en descarga: " + err.message, "error");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        };
+
+        // 3. Restaurar JSON (ESTABA CORRECTO, YA TENÍA EL FIX INCORPORADO)
+        const backupFileInput = document.getElementById("jsonBackupFile");
+        backupFileInput.onchange = (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                document.getElementById("jsonFileNameLabel").innerHTML = `<i class="fas fa-file-code text-blue-500 mr-1"></i> ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+            } else {
+                document.getElementById("jsonFileNameLabel").innerText = "Selecciona o arrastra el archivo de backup (.json)";
+            }
+        };
+
+        document.getElementById("btnRestaurarJson").onclick = async () => {
+            const file = backupFileInput.files[0];
+            if (!file) return showToast("Por favor, seleccione un archivo JSON", "error");
+
+            const method = document.querySelector('input[name="restoreMethod"]:checked').value;
+
+            if (method === "overwrite") {
+                const confirmacion = confirm("⚠️ ADVERTENCIA EXTREMA ⚠️\n\nHa seleccionado el método de SOBREESCRITURA. Esto borrará permanentemente todos los trámites e instituciones de la base de datos de producción antes de importar el backup.\n\n¿Desea continuar con la eliminación e importación de la copia de seguridad?");
+                if (!confirmacion) return;
+            }
+
+            const progressDiv = document.getElementById("restoreProgress");
+            const progressText = document.getElementById("restoreProgressText");
+            const progressPercent = document.getElementById("restoreProgressPercent");
+            const progressBar = document.getElementById("restoreProgressBar");
+            const btn = document.getElementById("btnRestaurarJson");
+
+            btn.disabled = true;
+            progressDiv.classList.remove("hidden");
+            progressBar.style.backgroundColor = "";
+
+            const updateProgress = (text, percent) => {
+                progressText.innerText = text;
+                progressPercent.innerText = `${percent}%`;
+                progressBar.style.width = `${percent}%`;
+            };
+
+            const reader = new FileReader();
+            reader.onload = async (event) => {
+                try {
+                    const data = JSON.parse(event.target.result);
+                    if (!data.instituciones || !data.tramites) {
+                        throw new Error("El archivo seleccionado no cumple con el formato estándar de base de datos MRE.");
+                    }
+
+                    const backupInst = data.instituciones;
+                    const backupTram = data.tramites;
+
+                    // A. Proceso de limpieza para SOBREESCRITURA
+                    if (method === "overwrite") {
+                        updateProgress("Evaluando registros en base de datos de producción...", 10);
+                        const currentInstSnap = await getDocs(institucionesCol);
+                        const currentTramSnap = await getDocs(tramitesCol);
+
+                        const totalEliminar = currentInstSnap.size + currentTramSnap.size;
+                        let eliminados = 0;
+
+                        if (totalEliminar > 0) {
+                            let deleteBatch = writeBatch(db);
+                            let ops = 0;
+
+                            for (const d of currentInstSnap.docs) {
+                                deleteBatch.delete(doc(institucionesCol, d.id));
+                                ops++; eliminados++;
+                                if (ops >= 400) {
+                                    await deleteBatch.commit();
+                                    deleteBatch = writeBatch(db); // BATCH RE-INIT CORRECTO
+                                    ops = 0;
+                                    let prg = Math.round((eliminados / totalEliminar) * 30 + 10);
+                                    updateProgress(`Borrando base de datos anterior... (${prg}%)`, prg);
+                                }
+                            }
+
+                            for (const d of currentTramSnap.docs) {
+                                deleteBatch.delete(doc(tramitesCol, d.id));
+                                ops++; eliminados++;
+                                if (ops >= 400) {
+                                    await deleteBatch.commit();
+                                    deleteBatch = writeBatch(db);
+                                    ops = 0;
+                                    let prg = Math.round((eliminados / totalEliminar) * 30 + 10);
+                                    updateProgress(`Borrando base de datos anterior... (${prg}%)`, prg);
+                                }
+                            }
+                            if (ops > 0) await deleteBatch.commit();
+                        }
+                    }
+
+                    // B. Guardado de Instituciones
+                    updateProgress("Procesando e inyectando instituciones...", 45);
+                    let instBatch = writeBatch(db);
+                    let instOps = 0;
+                    let instProcesadas = 0;
+
+                    for (const inst of backupInst) {
+                        const { id, ...instData } = inst;
+                        if (instData.createdAt) instData.createdAt = new Date(instData.createdAt.seconds ? instData.createdAt.seconds * 1000 : instData.createdAt);
+                        else instData.createdAt = new Date();
+
+                        instBatch.set(doc(institucionesCol, id), instData);
+                        instOps++; instProcesadas++;
+
+                        if (instOps >= 400) {
+                            await instBatch.commit();
+                            instBatch = writeBatch(db);
+                            instOps = 0;
+                            let prg = Math.round(45 + (instProcesadas / backupInst.length) * 20);
+                            updateProgress(`Escribiendo instituciones... (${prg}%)`, prg);
+                        }
+                    }
+                    if (instOps > 0) await instBatch.commit();
+
+                    // C. Guardado de Trámites
+                    updateProgress("Procesando e inyectando trámites...", 70);
+                    let tramBatch = writeBatch(db);
+                    let tramOps = 0;
+                    let tramProcesados = 0;
+
+                    for (const tram of backupTram) {
+                        const { id, ...tramData } = tram;
+                        if (tramData.createdAt) tramData.createdAt = new Date(tramData.createdAt.seconds ? tramData.createdAt.seconds * 1000 : tramData.createdAt);
+                        else tramData.createdAt = new Date();
+                        
+                        if (tramData.updatedAt) tramData.updatedAt = new Date(tramData.updatedAt.seconds ? tramData.updatedAt.seconds * 1000 : tramData.updatedAt);
+                        else tramData.updatedAt = new Date();
+
+                        tramBatch.set(doc(tramitesCol, id), tramData);
+                        tramOps++; tramProcesados++;
+
+                        if (tramOps >= 400) {
+                            await tramBatch.commit();
+                            tramBatch = writeBatch(db);
+                            tramOps = 0;
+                            let prg = Math.round(70 + (tramProcesados / backupTram.length) * 25);
+                            updateProgress(`Escribiendo trámites... (${prg}%)`, prg);
+                        }
+                    }
+                    if (tramOps > 0) await tramBatch.commit();
+
+                    updateProgress("Copia de seguridad restaurada de forma limpia.", 100);
+                    showToast(`✅ Copia de seguridad cargada: ${backupInst.length} instituciones y ${backupTram.length} trámites sincronizados.`);
+
+                    await loadInstituciones();
+
+                    setTimeout(() => {
+                        progressDiv.classList.add("hidden");
+                        btn.disabled = false;
+                        backupFileInput.value = "";
+                        document.getElementById("jsonFileNameLabel").innerText = "Selecciona o arrastra el archivo de backup (.json)";
+                        document.querySelector('[data-tab="tramites"]').click();
+                    }, 1500);
+
+                } catch (err) {
+                    showToast("Fallo en la lectura: " + err.message, "error");
+                    progressText.innerText = "Error detectado en restauración";
+                    progressBar.style.backgroundColor = "#ef4444";
+                    btn.disabled = false;
+                }
+            };
+            reader.readAsText(file);
         };
 
         // Modal cerrar
@@ -969,7 +1401,15 @@
 
         setupFixedSelects();
         const tabs = document.querySelectorAll(".tab-btn"), contents = document.querySelectorAll(".tab-content");
-        tabs.forEach(btn => btn.onclick = () => { const id = btn.dataset.tab; contents.forEach(c => c.classList.add("hidden")); document.getElementById(`tab-${id}`).classList.remove("hidden"); tabs.forEach(b => b.classList.remove("tab-active")); btn.classList.add("tab-active"); if (id === "instituciones" || id === "fusion") loadInstituciones(); if (id === "tramites") subscribeTramites(); });
+        tabs.forEach(btn => btn.onclick = () => { 
+            const id = btn.dataset.tab; 
+            contents.forEach(c => c.classList.add("hidden")); 
+            document.getElementById(`tab-${id}`).classList.remove("hidden"); 
+            tabs.forEach(b => b.classList.remove("tab-active")); 
+            btn.classList.add("tab-active"); 
+            if (id === "instituciones" || id === "fusion" || id === "respaldos") loadInstituciones(); 
+            if (id === "tramites") subscribeTramites(); 
+        });
         document.querySelector(".tab-btn").click();
         loadInstituciones();
         subscribeTramites();
