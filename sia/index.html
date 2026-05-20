@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Sistema MRE - Trámites y Unificación</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
+    <style>
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: #1f2937;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 0.2s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .loading-spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #2563eb;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .tab-active {
+            border-bottom: 3px solid #2563eb;
+            color: #1e40af;
+            font-weight: 600;
+        }
+
+        .tramite-row.selected {
+            background-color: #dbeafe;
+        }
+
+        .texto-ayuda-row {
+            background-color: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+            cursor: pointer;
+        }
+
+        .texto-ayuda-row:hover {
+            background-color: #f3f4f6;
+        }
+
+        .ts-wrapper {
+            width: 100%;
+        }
+
+        .ts-control {
+            border-radius: 0.5rem;
+            border-color: #d1d5db;
+            font-size: 0.875rem;
+        }
+
+        .col-check {
+            width: 40px;
+        }
+
+        .col-nombre {
+            width: 280px;
+        }
+
+        .col-emision-firma {
+            width: 160px;
+        }
+
+        .col-validaciones {
+            width: 140px;
+        }
+
+        .col-acciones {
+            width: 180px;
+        }
+
+        .inst-row:hover {
+            background-color: #f3f4f6;
+            transition: background-color 0.15s ease;
+        }
+
+        .tramite-row.bloqueado {
+            background-color: #f0fdf4;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-gray-50 to-gray-100">
+
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6">
+        <div class="mb-6 flex flex-wrap justify-between items-center gap-3 bg-white/50 backdrop-blur-sm p-4 rounded-2xl shadow-sm">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">📋 Gestión de Trámites MRE</h1>
+            </div>
+            <button id="refreshAllBtn" class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-xl text-sm transition-all"><i class="fas fa-sync-alt mr-1"></i> Refrescar</button>
+        </div>
+
+        <div class="flex flex-wrap border-b border-gray-200 gap-2 mb-6">
+            <button data-tab="tramites" class="tab-btn py-2 px-5 font-medium text-gray-600 hover:text-blue-700 transition-all rounded-t-lg">📄 Trámites</button>
+            <button data-tab="instituciones" class="tab-btn py-2 px-5 font-medium text-gray-600 hover:text-blue-700 transition-all">🏛️ Instituciones</button>
+            <button data-tab="importar" class="tab-btn py-2 px-5 font-medium text-gray-600 hover:text-blue-700 transition-all">📁 Importar CSV</button>
+            <button data-tab="fusion" class="tab-btn py-2 px-5 font-medium text-gray-600 hover:text-blue-700 transition-all">🔄 Fusionar</button>
+            <button hidden data-tab="reemplazo" class="tab-btn py-2 px-5 font-medium text-gray-600 hover:text-blue-700 transition-all">🔧 Reemplazo global</button>
+            <button data-tab="ayuda-masiva" class="tab-btn py-2 px-5 font-medium text-gray-600 hover:text-blue-700 transition-all">📝 Texto por emisión</button>
+        </div>
+
+        <!-- Trámites -->
+        <div id="tab-tramites" class="tab-content">
+            <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-5"><i class="fas fa-plus-circle text-blue-500 text-2xl mr-2"></i> <span id="tramiteFormTitle">Nuevo Trámite</span></h2>
+                <form id="tramiteForm" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    <div class="lg:col-span-1"><label class="block text-sm font-medium mb-1">Institución *</label><select id="tramiteInstitucion" required class="w-full"></select></div>
+                    <div class="lg:col-span-1"><label class="block text-sm font-medium mb-1">Nombre *</label>
+                        <div class="flex gap-2"><input type="text" id="tramiteNombre" required class="flex-1 border rounded-xl px-4 py-2"><button type="button" id="normalizeNombreBtn" class="bg-purple-100 hover:bg-purple-200 text-purple-700 px-3 rounded-xl text-sm"><i class="fas fa-magic mr-1"></i> Normalizar</button></div>
+                    </div>
+                    <div><label class="block text-sm font-medium mb-1">Tipo</label><select id="tramiteTipo" class="w-full"></select></div>
+                    <div><label class="block text-sm font-medium mb-1">Origen</label><select id="tramiteOrigen" class="w-full"></select></div>
+                    <div><label class="block text-sm font-medium mb-1">Emisión</label><select id="tramiteEmision" class="w-full"></select></div>
+                    <div><label class="block text-sm font-medium mb-1">Firma</label><select id="tramiteFirma" class="w-full"></select></div>
+                    <div class="flex gap-6 items-center lg:col-span-2"><label class="flex items-center gap-2"><input type="checkbox" id="tramiteValidarFirma"> Validar firma</label><label class="flex items-center gap-2"><input type="checkbox" id="tramiteValidarElectronica"> Validar e-firma</label></div>
+                    <div class="lg:col-span-3"><label class="block text-sm font-medium mb-1">Texto de ayuda</label>
+                        <div class="flex gap-2"><textarea id="tramiteAyuda" rows="3" class="flex-1 border rounded-xl px-4 py-2"></textarea><button type="button" id="normalizeAyudaBtn" class="bg-purple-100 hover:bg-purple-200 text-purple-700 px-3 rounded-xl text-sm"><i class="fas fa-magic mr-1"></i> Normalizar</button></div>
+                    </div>
+                    <div class="lg:col-span-3 flex justify-end gap-3"><button type="button" id="cancelTramiteEdit" class="px-5 py-2 bg-gray-200 rounded-xl hidden">Cancelar</button><button type="submit" class="px-6 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl shadow-md"><i class="fas fa-save mr-2"></i> Guardar</button></div>
+                </form>
+            </div>
+            <div class="bg-white rounded-2xl shadow-lg p-6">
+                <div class="flex flex-wrap justify-between items-center mb-5 gap-3">
+                    <h2 class="text-xl font-semibold">📋 Trámites registrados</h2>
+                    <div class="flex flex-wrap gap-3 items-center">
+                        <div class="relative"><i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i><input type="text" id="globalSearchInput" placeholder="Buscar..." class="pl-9 pr-4 py-2 border rounded-xl w-64"></div>
+                        <select id="filterFirmaSelect" class="border rounded-xl px-3 py-2 text-sm text-gray-600">
+                            <option value="">Firma: todas</option>
+                            <option value="Olografa">Ológrafa</option>
+                            <option value="Firma electronica y/o verificable">Electrónica</option>
+                        </select>
+                        <select id="filterEmisionSelect" class="border rounded-xl px-3 py-2 text-sm text-gray-600">
+                            <option value="">Emisión: todas</option>
+                            <option value="Automatica">Automática</option>
+                            <option value="Externa">Externa</option>
+                            <option value="Presencial">Presencial</option>
+                            <option value="Validacion Previa">Validación Previa</option>
+                        </select>
+                        <button id="btnReasignarSeleccionados" class="bg-amber-500 text-white px-4 py-2 rounded-xl"><i class="fas fa-exchange-alt mr-1"></i> Reasignar</button><button id="btnLimpiarSeleccion" class="bg-gray-300 px-4 py-2 rounded-xl"><i class="fas fa-times mr-1"></i> Limpiar</button>
+                    </div>
+                </div>
+                <div id="tramitesContainer" class="overflow-x-auto">
+                    <div class="text-center py-10">
+                        <div class="loading-spinner mx-auto"></div>
+                        <p>Cargando...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instituciones con buscador y hover -->
+        <div id="tab-instituciones" class="tab-content hidden">
+            <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4"><i class="fas fa-building text-green-600 mr-2"></i> Nueva / Editar Institución</h2>
+                <form id="institucionForm" class="flex flex-col sm:flex-row gap-4">
+                    <input type="text" id="institucionNombre" placeholder="Nombre" class="flex-1 border rounded-xl px-4 py-2">
+                    <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded-xl">Guardar</button>
+                    <button type="button" id="cancelInstitucionEdit" class="bg-gray-200 px-5 py-2 rounded-xl hidden">Cancelar</button>
+                </form>
+            </div>
+            <div class="bg-white rounded-2xl shadow-lg p-6">
+                <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+                    <h2 class="text-xl font-semibold">🏢 Listado de instituciones</h2>
+                    <div class="relative">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>
+                        <input type="text" id="institucionesSearchInput" placeholder="Buscar institución..." class="pl-9 pr-4 py-2 border rounded-xl w-64 text-sm">
+                    </div>
+                </div>
+                <div id="institucionesList" class="overflow-x-auto"></div>
+            </div>
+        </div>
+
+        <!-- Importar CSV -->
+        <div id="tab-importar" class="tab-content hidden">
+            <div class="bg-white rounded-2xl shadow-lg p-6">
+                <h2 class="text-xl font-semibold mb-2">📂 Importación masiva</h2>
+                <p class="text-sm text-gray-600 mb-4">Codificación automática (Windows-1252 / UTF-8).</p>
+                <div class="flex flex-col sm:flex-row gap-4"><input type="file" id="csvImportFile" accept=".csv" class="flex-1 border rounded-xl p-2"><button id="importCsvBtn" class="bg-emerald-600 text-white px-5 py-2 rounded-xl"><i class="fas fa-upload mr-1"></i> Importar</button><button id="downloadCsvTemplate" class="bg-gray-200 px-5 py-2 rounded-xl">📎 Ejemplo CSV</button></div>
+                <div id="importProgress" class="mt-4 text-sm hidden bg-gray-100 p-3 rounded-xl"></div>
+            </div>
+        </div>
+
+        <!-- Fusión -->
+        <div id="tab-fusion" class="tab-content hidden">
+            <div class="bg-white rounded-2xl shadow-lg p-6">
+                <h2 class="text-xl font-semibold mb-2">🔄 Fusionar instituciones duplicadas</h2>
+                <p class="text-sm text-gray-600 mb-5">Selecciona origen (a eliminar) y destino (conservar).</p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div><label class="block text-sm font-medium mb-1">Origen</label><select id="fusionOrigen" class="w-full"></select></div>
+                    <div><label class="block text-sm font-medium mb-1">Destino</label><select id="fusionDestino" class="w-full"></select></div>
+                </div><button id="btnFusionar" class="mt-6 bg-red-700 text-white px-6 py-2 rounded-xl"><i class="fas fa-code-branch mr-1"></i> Fusionar</button>
+            </div>
+        </div>
+
+        <!-- Reemplazo global (texto ayuda + corrección tipo firma) -->
+        <div id="tab-reemplazo" class="tab-content hidden">
+            <div class="bg-white rounded-2xl shadow-lg p-6">
+                <h2 class="text-xl font-semibold mb-4"><i class="fas fa-globe text-purple-600 mr-2"></i> Reemplazo global</h2>
+
+                <!-- Sección para texto de ayuda -->
+                <div class="border-b pb-4 mb-4">
+                    <h3 class="font-medium text-lg mb-2">📝 Reemplazar en texto de ayuda</h3>
+                    <p class="text-sm text-gray-600 mb-3">Corrige errores masivos en el campo "Texto de ayuda".</p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div><label class="block text-sm font-medium">Texto a buscar</label><input type="text" id="buscarTexto" placeholder="Ej: olograma" class="w-full border rounded-xl px-4 py-2 mt-1"></div>
+                        <div><label class="block text-sm font-medium">Reemplazar con</label><input type="text" id="reemplazarTexto" placeholder="Ej: olografa" class="w-full border rounded-xl px-4 py-2 mt-1"></div>
+                    </div>
+                    <div class="mt-3 flex gap-3">
+                        <button id="btnPrevisualizarReemplazo" class="bg-blue-100 hover:bg-blue-200 text-blue-800 px-4 py-2 rounded-xl text-sm"><i class="fas fa-eye mr-1"></i> Previsualizar</button>
+                        <button id="btnEjecutarReemplazo" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl text-sm"><i class="fas fa-play mr-1"></i> Ejecutar reemplazo</button>
+                    </div>
+                </div>
+
+                <!-- Sección específica para corregir tipo de firma: olograma -> olografa -->
+                <div>
+                    <h3 class="font-medium text-lg mb-2">✏️ Corregir tipo de firma</h3>
+                    <p class="text-sm text-gray-600 mb-3">Cambia automáticamente todos los trámites que tengan <strong>"Olograma"</strong> a <strong>"Olografa"</strong> (error común).</p>
+                    <button id="btnCorregirTipoFirma" class="bg-amber-600 hover:bg-amber-700 text-white px-5 py-2 rounded-xl text-sm"><i class="fas fa-magic mr-1"></i> Corregir tipo de firma (olograma → olografa)</button>
+                    <div id="previewTipoFirma" class="mt-3 text-sm hidden bg-gray-50 p-3 rounded-xl"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <!-- Texto de ayuda masivo por tipo de emisión -->
+    <div id="tab-ayuda-masiva" class="tab-content hidden">
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+            <h2 class="text-xl font-semibold mb-2"><i class="fas fa-layer-group text-indigo-500 mr-2"></i> Asignación masiva de texto de ayuda por tipo de emisión</h2>
+            <p class="text-sm text-gray-600 mb-6">Seleccioná un tipo de emisión y asigná el mismo texto de ayuda a todos sus trámites. Puede dejarse en blanco para borrar el texto existente.</p>
+
+            <div class="grid md:grid-cols-2 gap-5 mb-5">
+                <div>
+                    <label class="block text-sm font-medium mb-1">Tipo de emisión</label>
+                    <select id="ayudaMasivaEmision" class="w-full border rounded-xl px-4 py-2 text-sm text-gray-700">
+                        <option value="">-- Seleccionar --</option>
+                        <option value="Automatica">Automática</option>
+                        <option value="Externa">Externa</option>
+                        <option value="Presencial">Presencial</option>
+                        <option value="Validacion Previa">Validación Previa</option>
+                    </select>
+                </div>
+                <div class="flex items-end">
+                    <button id="btnPreviewAyudaMasiva" class="bg-blue-100 hover:bg-blue-200 text-blue-800 px-4 py-2 rounded-xl text-sm"><i class="fas fa-eye mr-1"></i> Ver trámites afectados</button>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-1">Nuevo texto de ayuda <span class="text-gray-400 font-normal">(puede dejarse vacío)</span></label>
+                <textarea id="ayudaMasivaTexto" rows="5" class="w-full border rounded-xl px-4 py-2 text-sm" placeholder="Escriba el texto de ayuda o déjelo en blanco para todos los trámites del tipo seleccionado..."></textarea>
+            </div>
+
+            <div id="ayudaMasivaPreview" class="hidden mb-5 bg-gray-50 border rounded-xl p-4 text-sm">
+                <p id="ayudaMasivaPreviewCount" class="font-semibold text-gray-700 mb-2"></p>
+                <ul id="ayudaMasivaPreviewLista" class="max-h-52 overflow-y-auto divide-y text-gray-600"></ul>
+            </div>
+
+            <div class="flex gap-3">
+                <button id="btnEjecutarAyudaMasiva" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-xl text-sm"><i class="fas fa-bolt mr-1"></i> Aplicar a todos los trámites</button>
+            </div>
+            <div id="ayudaMasivaResult" class="hidden mt-4 text-sm bg-green-50 text-green-800 border border-green-200 rounded-xl p-3"></div>
+        </div>
+    </div>
+
+    <!-- Modal para texto de ayuda -->
+    <div id="modalAyuda" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+        <div class="bg-white rounded-2xl max-w-lg w-full mx-4 p-6 shadow-2xl">
+            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                <h3 class="font-bold text-gray-800 text-lg"><i class="fas fa-info-circle text-blue-500 mr-2"></i>Texto de ayuda completo</h3>
+                <button id="closeModalBtn" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+            </div>
+            <div id="modalTextoAyuda" class="text-gray-700 whitespace-pre-wrap max-h-96 overflow-y-auto text-sm leading-relaxed"></div>
+            <div class="mt-5 text-right">
+                <button id="closeModalFooterBtn" class="bg-gray-200 hover:bg-gray-300 px-5 py-2 rounded-xl text-sm">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, getDocs, query, where, writeBatch, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCmdp2GT8aRxZgDHPMAJd6GLvoSwImPVJo",
+            authDomain: "mretramites.firebaseapp.com",
+            projectId: "mretramites",
+            storageBucket: "mretramites.firebasestorage.app",
+            messagingSenderId: "204193445023",
+            appId: "1:204193445023:web:cf3f728210197e1ace1eaa"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const institucionesCol = collection(db, "instituciones");
+        const tramitesCol = collection(db, "tramites");
+
+        let institucionesMap = new Map();
+        let allTramites = [];
+        let currentEditTramiteId = null, currentEditInstitucionId = null;
+        let selectedTramiteIds = new Set();
+        let currentSearchTerm = "";
+        let filterFirma = "";
+        let filterEmision = "";
+        let institucionesSearchTerm = "";
+
+        let tsInstitucion, tsFusionOrigen, tsFusionDestino, tsTipoTramite, tsOrigen, tsEmision, tsFirma;
+
+        function showToast(msg, type = "success") { const t = document.getElementById("toast"); t.textContent = msg; t.className = `toast ${type === "error" ? "bg-red-600" : "bg-green-600"}`; t.classList.remove("hidden"); setTimeout(() => t.classList.add("hidden"), 3500); }
+        function escapeHtml(s) { if (!s) return ''; return s.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[m]); }
+        function normalizeString(s) { return s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
+        function sortByAlpha(arr, key) { return [...arr].sort((a, b) => normalizeString(key(a)).localeCompare(normalizeString(key(b)))); }
+        function toTitleCase(t) { if (!t) return ''; return t.toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '); }
+        function toSentenceCase(t) { if (!t) return ''; return t.toLowerCase().replace(/(^\w{1}|\.\s+\w{1})/g, m => m.toUpperCase()); }
+        document.getElementById("normalizeNombreBtn").onclick = () => document.getElementById("tramiteNombre").value = toTitleCase(document.getElementById("tramiteNombre").value);
+        document.getElementById("normalizeAyudaBtn").onclick = () => document.getElementById("tramiteAyuda").value = toSentenceCase(document.getElementById("tramiteAyuda").value);
+
+        // CORREGIDO: Cambiar "Olograma" por "Olografa" en las opciones fijas
+        function setupFixedSelects() {
+            const tipos = ["Apostilla", "Legalización"], origenes = ["Extranjero", "Nacional"], emisiones = ["Automatica", "Externa", "Presencial", "Validacion Previa"], firmas = ["Firma electronica y/o verificable", "Olografa"]; // Aquí el cambio
+            const mkOpt = (a) => a.map(v => ({ value: v, text: v }));
+            if (tsTipoTramite) tsTipoTramite.destroy();
+            if (tsOrigen) tsOrigen.destroy();
+            if (tsEmision) tsEmision.destroy();
+            if (tsFirma) tsFirma.destroy();
+            tsTipoTramite = new TomSelect("#tramiteTipo", { options: mkOpt(sortByAlpha(tipos, t => t)), create: false, sortField: "text", searchField: ["text"], placeholder: "Buscar...", items: ["Legalización"] });
+            tsOrigen = new TomSelect("#tramiteOrigen", { options: mkOpt(sortByAlpha(origenes, o => o)), create: false, sortField: "text", searchField: ["text"], placeholder: "Buscar...", items: ["Nacional"] });
+            tsEmision = new TomSelect("#tramiteEmision", { options: mkOpt(sortByAlpha(emisiones, e => e)), create: false, sortField: "text", searchField: ["text"], placeholder: "Buscar...", items: ["Presencial"] });
+            tsFirma = new TomSelect("#tramiteFirma", { options: mkOpt(sortByAlpha(firmas, f => f)), create: false, sortField: "text", searchField: ["text"], placeholder: "Buscar...", items: ["Olografa"] }); // valor por defecto actualizado
+        }
+
+        function updateInstitucionSelect() {
+            const opts = [{ value: "", text: "-- Seleccionar --" }];
+            const sorted = sortByAlpha(Array.from(institucionesMap.entries()), ([, n]) => n);
+            for (let [id, nombre] of sorted) opts.push({ value: id, text: nombre });
+            const val = tsInstitucion ? tsInstitucion.getValue() : "";
+            if (tsInstitucion) tsInstitucion.destroy();
+            tsInstitucion = new TomSelect("#tramiteInstitucion", { options: opts, create: false, sortField: "text", searchField: ["text"], placeholder: "Buscar...", items: val && institucionesMap.has(val) ? [val] : [] });
+        }
+        function updateFusionSelects() {
+            const opts = [{ value: "", text: "-- Seleccionar --" }];
+            const sorted = sortByAlpha(Array.from(institucionesMap.entries()), ([, n]) => n);
+            for (let [id, nombre] of sorted) opts.push({ value: id, text: nombre });
+            const oVal = tsFusionOrigen ? tsFusionOrigen.getValue() : "", dVal = tsFusionDestino ? tsFusionDestino.getValue() : "";
+            if (tsFusionOrigen) tsFusionOrigen.destroy();
+            if (tsFusionDestino) tsFusionDestino.destroy();
+            tsFusionOrigen = new TomSelect("#fusionOrigen", { options: opts, create: false, sortField: "text", searchField: ["text"], placeholder: "Buscar...", items: oVal && institucionesMap.has(oVal) ? [oVal] : [] });
+            tsFusionDestino = new TomSelect("#fusionDestino", { options: opts, create: false, sortField: "text", searchField: ["text"], placeholder: "Buscar...", items: dVal && institucionesMap.has(dVal) ? [dVal] : [] });
+        }
+
+        async function loadInstituciones() {
+            const snap = await getDocs(institucionesCol);
+            institucionesMap.clear();
+            snap.forEach(d => institucionesMap.set(d.id, d.data().nombre));
+            renderInstitucionesList();
+            updateInstitucionSelect();
+            updateFusionSelects();
+        }
+
+        function renderInstitucionesList() {
+            const term = institucionesSearchTerm.trim();
+            let filtered = Array.from(institucionesMap.entries());
+            if (term) {
+                const normalizedTerm = normalizeString(term);
+                filtered = filtered.filter(([, nombre]) => normalizeString(nombre).includes(normalizedTerm));
+            }
+            const sorted = sortByAlpha(filtered, ([, nombre]) => nombre);
+            const cont = document.getElementById("institucionesList");
+            if (!sorted.length) {
+                cont.innerHTML = '<p class="text-gray-500 text-center py-6">No se encontraron instituciones.</p>';
+                return;
+            }
+            let html = `<div class="overflow-x-auto"><table class="min-w-full bg-white"><thead class="bg-gray-50"><tr><th class="p-3 text-left">Nombre</th><th class="p-3 text-center">Acciones</th></tr></thead><tbody>`;
+            for (let [id, nombre] of sorted) {
+                html += `<tr class="border-b inst-row transition-colors duration-150 hover:bg-gray-100">
+                        <td class="p-3 font-medium">${escapeHtml(nombre)}</td>
+                        <td class="p-3 text-center">
+                            <button class="edit-inst-btn text-blue-600 mr-3 hover:text-blue-800" data-id="${id}" data-name="${escapeHtml(nombre)}"><i class="fas fa-edit"></i> Editar</button>
+                            <button class="delete-inst-btn text-red-600 hover:text-red-800" data-id="${id}" data-name="${escapeHtml(nombre)}"><i class="fas fa-trash-alt"></i> Eliminar</button>
+                        </td>
+                    </tr>`;
+            }
+            cont.innerHTML = html + `</tbody></div>`;
+            attachInstitucionEvents();
+        }
+
+        function attachInstitucionEvents() {
+            document.querySelectorAll('.edit-inst-btn').forEach(btn => {
+                btn.onclick = () => {
+                    document.getElementById("institucionNombre").value = btn.dataset.name;
+                    currentEditInstitucionId = btn.dataset.id;
+                    document.getElementById("cancelInstitucionEdit").classList.remove("hidden");
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                };
+            });
+            document.querySelectorAll('.delete-inst-btn').forEach(btn => {
+                btn.onclick = async () => {
+                    if (confirm(`¿Eliminar "${btn.dataset.name}"?`)) await deleteInstitucion(btn.dataset.id, btn.dataset.name);
+                };
+            });
+        }
+
+        async function deleteInstitucion(id, nombre) {
+            const q = query(tramitesCol, where("institucionId", "==", id));
+            const snap = await getDocs(q);
+            if (!snap.empty) { showToast(`No se puede eliminar "${nombre}": tiene ${snap.size} trámites`, "error"); return; }
+            await deleteDoc(doc(institucionesCol, id));
+            showToast("Institución eliminada");
+            await loadInstituciones();
+        }
+
+        async function updateInstitucionNombreEnTramites(institucionId, nuevoNombre) {
+            const q = query(tramitesCol, where("institucionId", "==", institucionId));
+            const snap = await getDocs(q);
+            if (snap.empty) return;
+            const batch = writeBatch(db);
+            let count = 0;
+            snap.forEach(docSnap => {
+                batch.update(doc(tramitesCol, docSnap.id), { institucionNombre: nuevoNombre, updatedAt: new Date() });
+                count++;
+            });
+            await batch.commit();
+            showToast(`Nombre actualizado en ${count} trámites`);
+        }
+
+        document.getElementById("institucionForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const nombre = document.getElementById("institucionNombre").value.trim();
+            if (!nombre) return showToast("Ingrese nombre", "error");
+            const exists = Array.from(institucionesMap.values()).some(n => n.toLowerCase() === nombre.toLowerCase());
+            if (exists && !currentEditInstitucionId) return showToast("Ya existe", "error");
+            try {
+                if (currentEditInstitucionId) {
+                    const oldNombre = institucionesMap.get(currentEditInstitucionId);
+                    await updateDoc(doc(institucionesCol, currentEditInstitucionId), { nombre });
+                    if (oldNombre !== nombre) {
+                        await updateInstitucionNombreEnTramites(currentEditInstitucionId, nombre);
+                    }
+                    showToast("Institución actualizada y trámites sincronizados");
+                } else {
+                    await addDoc(institucionesCol, { nombre, createdAt: new Date() });
+                    showToast("Institución agregada");
+                }
+                document.getElementById("institucionNombre").value = "";
+                currentEditInstitucionId = null;
+                document.getElementById("cancelInstitucionEdit").classList.add("hidden");
+                await loadInstituciones();
+            } catch (err) { showToast(err.message, "error"); }
+        });
+        document.getElementById("cancelInstitucionEdit").onclick = () => { document.getElementById("institucionNombre").value = ""; currentEditInstitucionId = null; document.getElementById("cancelInstitucionEdit").classList.add("hidden"); };
+
+        // TRÁMITES con grilla robusta
+        async function saveTramite(e) {
+            e.preventDefault();
+            const instId = tsInstitucion.getValue();
+            if (!instId) return showToast("Seleccione institución", "error");
+            const nombre = document.getElementById("tramiteNombre").value.trim();
+            if (!nombre) return showToast("Nombre requerido", "error");
+            const duplicate = allTramites.some(t => t.institucionId === instId && t.nombreTramite?.toLowerCase() === nombre.toLowerCase() && t.id !== currentEditTramiteId);
+            if (duplicate) return showToast("Ya existe", "error");
+            const data = {
+                institucionId: instId, institucionNombre: institucionesMap.get(instId),
+                nombreTramite: nombre, tipoTramite: tsTipoTramite.getValue(),
+                origen: tsOrigen.getValue(), tipoEmision: tsEmision.getValue(),
+                tipoFirma: tsFirma.getValue(),
+                validarContraFirma: document.getElementById("tramiteValidarFirma").checked,
+                validarFirmaElectronica: document.getElementById("tramiteValidarElectronica").checked,
+                textoAyuda: document.getElementById("tramiteAyuda").value,
+                updatedAt: new Date()
+            };
+            try {
+                if (currentEditTramiteId) await updateDoc(doc(tramitesCol, currentEditTramiteId), data);
+                else await addDoc(tramitesCol, { ...data, createdAt: new Date() });
+                showToast(currentEditTramiteId ? "Actualizado" : "Agregado");
+                resetTramiteForm();
+            } catch (err) { showToast(err.message, "error"); }
+        }
+        function resetTramiteForm() {
+            document.getElementById("tramiteForm").reset();
+            document.getElementById("tramiteValidarFirma").checked = false;
+            document.getElementById("tramiteValidarElectronica").checked = false;
+            currentEditTramiteId = null;
+            document.getElementById("tramiteFormTitle").innerHTML = "Nuevo Trámite";
+            document.getElementById("cancelTramiteEdit").classList.add("hidden");
+            selectedTramiteIds.clear();
+            if (tsTipoTramite) tsTipoTramite.setValue("Legalización");
+            if (tsOrigen) tsOrigen.setValue("Nacional");
+            if (tsEmision) tsEmision.setValue("Presencial");
+            if (tsFirma) tsFirma.setValue("Olografa");
+            if (tsInstitucion) tsInstitucion.setValue("");
+        }
+        function editTramite(t) {
+            if (t.bloqueado) return showToast("El trámite está bloqueado. Desbloquéalo primero.", "error");
+            currentEditTramiteId = t.id;
+            if (tsInstitucion) tsInstitucion.setValue(t.institucionId);
+            document.getElementById("tramiteNombre").value = t.nombreTramite;
+            if (tsTipoTramite) tsTipoTramite.setValue(t.tipoTramite);
+            if (tsOrigen) tsOrigen.setValue(t.origen);
+            if (tsEmision) tsEmision.setValue(t.tipoEmision);
+            if (tsFirma) tsFirma.setValue(t.tipoFirma);
+            document.getElementById("tramiteValidarFirma").checked = t.validarContraFirma || false;
+            document.getElementById("tramiteValidarElectronica").checked = t.validarFirmaElectronica || false;
+            document.getElementById("tramiteAyuda").value = t.textoAyuda || "";
+            document.getElementById("tramiteFormTitle").innerHTML = "✏️ Editando Trámite";
+            document.getElementById("cancelTramiteEdit").classList.remove("hidden");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+        async function deleteTramite(id, nombre) { if (confirm(`Eliminar "${nombre}"?`)) { await deleteDoc(doc(tramitesCol, id)); showToast("Eliminado"); } }
+        async function toggleBloqueo(id, esBloqueado) { await updateDoc(doc(tramitesCol, id), { bloqueado: !esBloqueado, updatedAt: new Date() }); showToast(!esBloqueado ? "Trámite bloqueado (terminado)" : "Trámite reactivado (pendiente)"); }
+        async function reasignarSeleccionados(nuevaInstId) {
+            if (selectedTramiteIds.size === 0) return showToast("No hay seleccionados", "error");
+            if (!nuevaInstId) return showToast("Seleccione institución destino", "error");
+            const nuevaNombre = institucionesMap.get(nuevaInstId);
+            if (!nuevaNombre) return;
+            const batch = writeBatch(db);
+            for (let id of selectedTramiteIds) batch.update(doc(tramitesCol, id), { institucionId: nuevaInstId, institucionNombre: nuevaNombre, updatedAt: new Date() });
+            await batch.commit();
+            showToast(`${selectedTramiteIds.size} trámite(s) reasignados a "${nuevaNombre}"`);
+            selectedTramiteIds.clear();
+            document.getElementById("globalSearchInput").dispatchEvent(new Event('input'));
+        }
+        function filterTramitesBySearch(tramites, term) {
+            let result = tramites;
+            if (term.trim()) {
+                const t = normalizeString(term);
+                result = result.filter(tr => normalizeString(tr.nombreTramite).includes(t) || normalizeString(tr.institucionNombre || "").includes(t) || normalizeString(tr.tipoTramite || "").includes(t) || normalizeString(tr.origen || "").includes(t) || normalizeString(tr.tipoEmision || "").includes(t) || normalizeString(tr.tipoFirma || "").includes(t) || normalizeString(tr.textoAyuda || "").includes(t));
+            }
+            if (filterFirma) result = result.filter(tr => normalizeString(tr.tipoFirma || '') === normalizeString(filterFirma));
+            if (filterEmision) result = result.filter(tr => normalizeString(tr.tipoEmision || '') === normalizeString(filterEmision));
+            return result;
+        }
+        function renderTramitesGrouped(tramites) {
+            const filtered = filterTramitesBySearch(tramites, currentSearchTerm);
+            const container = document.getElementById("tramitesContainer");
+            if (!filtered.length) {
+                container.innerHTML = '<div class="text-center py-12 text-gray-500">🔍 No se encontraron trámites.</div>';
+                return;
+            }
+            const grupos = new Map();
+            filtered.forEach(t => {
+                const instId = t.institucionId;
+                const instName = t.institucionNombre || "Sin institución";
+                if (!grupos.has(instId)) grupos.set(instId, { nombre: instName, tramites: [] });
+                grupos.get(instId).tramites.push(t);
+            });
+            const gruposOrdenados = sortByAlpha(Array.from(grupos.entries()), ([, g]) => g.nombre);
+            let html = "";
+            for (let [instId, grupo] of gruposOrdenados) {
+                const tramitesOrd = sortByAlpha(grupo.tramites, t => t.nombreTramite);
+                html += `<div class="border rounded-xl mb-6 shadow-sm">
+                        <div class="bg-gray-100 px-4 py-3 font-bold flex justify-between">
+                            <span><i class="fas fa-building mr-2 text-blue-600"></i> ${escapeHtml(grupo.nombre)}</span>
+                            <span class="text-xs bg-white px-2 py-1 rounded-full">${tramitesOrd.length} trámites</span>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full border-collapse">
+                                <thead class="bg-gray-50 text-xs">
+                                    <tr>
+                                        <th class="col-check p-2"><input type="checkbox" id="selectAllInst-${instId}" class="select-all-inst" data-inst="${instId}"></th>
+                                        <th class="col-nombre p-2 text-left">Trámite</th>
+                                        <th class="col-emision-firma p-2">Emisión / Firma</th>
+                                        <th class="col-validaciones p-2">Validaciones</th>
+                                        <th class="col-acciones p-2">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>`;
+                for (let t of tramitesOrd) {
+                    const isSel = selectedTramiteIds.has(t.id);
+                    const emiFirma = `${t.tipoEmision || '—'} / ${t.tipoFirma === 'Firma electronica y/o verificable' ? 'Firma electrónica' : (t.tipoFirma || '—')}`;
+                    const valTexto = `Firma: ${t.validarContraFirma ? 'Sí' : 'No'} / E-firma: ${t.validarFirmaElectronica ? 'Sí' : 'No'}`;
+                    const editBtn = t.bloqueado
+                        ? `<button class="text-gray-300 mr-2 cursor-not-allowed text-xs" disabled title="Bloqueado"><i class="fas fa-edit mr-1"></i>Editar</button>`
+                        : `<button class="edit-tramite-btn text-blue-600 mr-2 text-xs" data-id="${t.id}" title="Editar"><i class="fas fa-edit mr-1"></i>Editar</button>`;
+                    const lockIcon = t.bloqueado ? 'lock-open' : 'lock';
+                    const lockClass = t.bloqueado ? 'text-green-600' : 'text-orange-500';
+                    const lockTitle = t.bloqueado ? 'Reactivar (pasar a pendiente)' : 'Bloquear (marcar como terminado)';
+                    const lockLabel = t.bloqueado ? 'Reactivar' : 'Bloquear';
+                    const lockBtn = `<button class="toggle-bloqueo-btn ${lockClass} text-xs" data-id="${t.id}" data-bloqueado="${t.bloqueado ? '1' : '0'}" title="${lockTitle}"><i class="fas fa-${lockIcon} mr-1"></i>${lockLabel}</button>`;
+                    const bloqBadge = t.bloqueado ? ` <span class="text-xs bg-green-100 text-green-700 px-1 rounded ml-1">Terminado</span>` : '';
+                    html += `<tr class="border-b hover:bg-gray-50 tramite-row${isSel ? ' selected' : ''}${t.bloqueado ? ' bloqueado' : ''}" data-id="${t.id}">
+                            <td class="p-2"><input type="checkbox" class="tramite-checkbox" data-id="${t.id}" ${isSel ? 'checked' : ''}></td>
+                            <td class="p-2">
+                                <div class="font-medium">${escapeHtml(t.nombreTramite)}${bloqBadge}</div>
+                                <div class="text-xs text-gray-500">${escapeHtml(t.tipoTramite)} - ${escapeHtml(t.origen)}</div>
+                            </td>
+                            <td class="p-2 text-xs">${escapeHtml(emiFirma)}</td>
+                            <td class="p-2 text-xs">${escapeHtml(valTexto)}</td>
+                            <td class="p-2 whitespace-nowrap">
+                                ${editBtn}${lockBtn}
+                            </td>
+                        </tr>`;
+                    const ayudaTexto = t.textoAyuda || '—';
+                    const ayudaCorta = ayudaTexto.length > 200 ? ayudaTexto.substring(0, 200) + '…' : ayudaTexto;
+                    html += `<tr class="texto-ayuda-row" data-ayuda="${escapeHtml(ayudaTexto)}">
+                            <td colspan="5" class="p-2 text-xs text-gray-600 bg-gray-50 italic cursor-pointer hover:bg-gray-100">
+                                <i class="fas fa-comment-dots mr-1 text-gray-400"></i> ${escapeHtml(ayudaCorta)} 
+                                <span class="text-blue-500 text-xs ml-2"><i class="fas fa-expand-alt"></i> ver completo</span>
+                            </td>
+                         </tr>`;
+                }
+                html += `</tbody>
+                            </table>
+                        </div>
+                    </div>`;
+            }
+            container.innerHTML = html;
+            attachTramitesEvents();
+        }
+        function attachTramitesEvents() {
+            document.querySelectorAll('.tramite-checkbox').forEach(cb => {
+                cb.onchange = () => {
+                    const id = cb.dataset.id;
+                    if (cb.checked) selectedTramiteIds.add(id);
+                    else selectedTramiteIds.delete(id);
+                    const row = cb.closest('.tramite-row');
+                    if (row) row.classList.toggle('selected', cb.checked);
+                };
+            });
+            document.querySelectorAll('.select-all-inst').forEach(btn => {
+                btn.onchange = () => {
+                    const grupoDiv = btn.closest('.border');
+                    if (grupoDiv) {
+                        const chks = grupoDiv.querySelectorAll('.tramite-checkbox');
+                        chks.forEach(ch => {
+                            ch.checked = btn.checked;
+                            const tid = ch.dataset.id;
+                            if (btn.checked) selectedTramiteIds.add(tid);
+                            else selectedTramiteIds.delete(tid);
+                            const row = ch.closest('.tramite-row');
+                            if (row) row.classList.toggle('selected', btn.checked);
+                        });
+                    }
+                };
+            });
+            document.querySelectorAll('.edit-tramite-btn').forEach(btn => {
+                btn.onclick = () => {
+                    const id = btn.dataset.id;
+                    const tramite = allTramites.find(t => t.id === id);
+                    if (tramite) editTramite(tramite);
+                };
+            });
+            document.querySelectorAll('.toggle-bloqueo-btn').forEach(btn => {
+                btn.onclick = () => toggleBloqueo(btn.dataset.id, btn.dataset.bloqueado === '1');
+            });
+            document.querySelectorAll('.texto-ayuda-row').forEach(row => {
+                row.onclick = (e) => {
+                    const ayuda = row.getAttribute('data-ayuda') || '';
+                    document.getElementById("modalTextoAyuda").innerText = ayuda;
+                    document.getElementById("modalAyuda").classList.remove("hidden");
+                };
+            });
+        }
+        let tramitesUnsub;
+        function subscribeTramites() { if (tramitesUnsub) tramitesUnsub(); tramitesUnsub = onSnapshot(tramitesCol, (snap) => { allTramites = snap.docs.map(d => ({ id: d.id, ...d.data() })); renderTramitesGrouped(allTramites); }); }
+        document.getElementById("globalSearchInput").addEventListener("input", (e) => { currentSearchTerm = e.target.value; renderTramitesGrouped(allTramites); });
+        document.getElementById("filterFirmaSelect").addEventListener("change", (e) => { filterFirma = e.target.value; renderTramitesGrouped(allTramites); });
+        document.getElementById("filterEmisionSelect").addEventListener("change", (e) => { filterEmision = e.target.value; renderTramitesGrouped(allTramites); });
+        document.getElementById("tramiteForm").addEventListener("submit", saveTramite);
+        document.getElementById("cancelTramiteEdit").addEventListener("click", resetTramiteForm);
+        document.getElementById("btnReasignarSeleccionados").onclick = () => { const inst = prompt("Nombre o ID de la institución destino:"); if (!inst) return; let destId = null; for (let [id, nombre] of institucionesMap.entries()) if (id === inst || nombre.toLowerCase() === inst.toLowerCase()) { destId = id; break; } if (!destId) { showToast("Institución no encontrada", "error"); return; } reasignarSeleccionados(destId); };
+        document.getElementById("btnLimpiarSeleccion").onclick = () => { selectedTramiteIds.clear(); renderTramitesGrouped(allTramites); };
+        document.getElementById("refreshAllBtn").onclick = async () => { await loadInstituciones(); showToast("Actualizado"); };
+
+        // Búsqueda en instituciones
+        const institucionesSearch = document.getElementById("institucionesSearchInput");
+        if (institucionesSearch) {
+            institucionesSearch.addEventListener("input", (e) => {
+                institucionesSearchTerm = e.target.value;
+                renderInstitucionesList();
+            });
+        }
+
+        // ========== REEMPLAZO GLOBAL EN TEXTO DE AYUDA ==========
+        async function obtenerTramitesAfectados(buscar, reemplazar) {
+            if (!buscar.trim()) return [];
+            const snap = await getDocs(tramitesCol);
+            const afectados = [];
+            snap.forEach(docSnap => {
+                const data = docSnap.data();
+                const texto = data.textoAyuda || "";
+                if (texto.includes(buscar)) {
+                    afectados.push({ id: docSnap.id, nombre: data.nombreTramite, textoOriginal: texto, textoNuevo: texto.replaceAll(buscar, reemplazar) });
+                }
+            });
+            return afectados;
+        }
+        document.getElementById("btnPrevisualizarReemplazo").onclick = async () => {
+            const buscar = document.getElementById("buscarTexto").value;
+            const reemplazar = document.getElementById("reemplazarTexto").value;
+            if (!buscar.trim()) { showToast("Ingrese texto a buscar", "error"); return; }
+            const afectados = await obtenerTramitesAfectados(buscar, reemplazar);
+            const previewDiv = document.getElementById("previewReemplazo");
+            const lista = document.getElementById("listaPreview");
+            previewDiv.classList.remove("hidden");
+            if (afectados.length === 0) { lista.innerHTML = '<p class="text-gray-500">No se encontraron trámites.</p>'; return; }
+            let html = `<ul class="divide-y">`;
+            afectados.forEach(a => {
+                html += `<li class="py-2"><span class="font-medium">${escapeHtml(a.nombre)}</span><br><span class="text-xs text-gray-500">Original: ${escapeHtml(a.textoOriginal.substring(0, 100))}${a.textoOriginal.length > 100 ? '…' : ''}</span><br><span class="text-xs text-green-600">Nuevo: ${escapeHtml(a.textoNuevo.substring(0, 100))}</span></li>`;
+            });
+            html += `</ul><p class="mt-2 text-sm font-semibold">Total a modificar: ${afectados.length}</p>`;
+            lista.innerHTML = html;
+        };
+        document.getElementById("btnEjecutarReemplazo").onclick = async () => {
+            const buscar = document.getElementById("buscarTexto").value;
+            const reemplazar = document.getElementById("reemplazarTexto").value;
+            if (!buscar.trim()) { showToast("Ingrese texto a buscar", "error"); return; }
+            if (!confirm(`⚠️ Reemplazar "${buscar}" por "${reemplazar}" en TODOS los trámites. ¿Continuar?`)) return;
+            const afectados = await obtenerTramitesAfectados(buscar, reemplazar);
+            if (afectados.length === 0) { showToast("No hay trámites para modificar", "info"); return; }
+            const batch = writeBatch(db);
+            let count = 0;
+            for (const a of afectados) {
+                batch.update(doc(tramitesCol, a.id), { textoAyuda: a.textoNuevo, updatedAt: new Date() });
+                count++;
+                if (count % 450 === 0) { await batch.commit(); }
+            }
+            if (count % 450 !== 0 || count === 0) await batch.commit();
+            showToast(`✅ Reemplazo completado: ${count} trámites actualizados.`);
+            document.getElementById("previewReemplazo").classList.add("hidden");
+            document.getElementById("buscarTexto").value = "";
+            document.getElementById("reemplazarTexto").value = "";
+        };
+
+        // ========== CORRECCIÓN ESPECÍFICA: TIPO DE FIRMA "Olograma" → "Olografa" ==========
+        document.getElementById("btnCorregirTipoFirma").onclick = async () => {
+            const q = query(tramitesCol, where("tipoFirma", "==", "Olograma"));
+            const snap = await getDocs(q);
+            if (snap.empty) {
+                showToast("No se encontraron trámites con tipo de firma 'Olograma'.", "info");
+                return;
+            }
+            const afectados = snap.docs.map(docSnap => ({ id: docSnap.id, nombre: docSnap.data().nombreTramite }));
+            const previewDiv = document.getElementById("previewTipoFirma");
+            previewDiv.classList.remove("hidden");
+            let html = `<p class="font-medium">Se actualizarán ${afectados.length} trámites:</p><ul class="max-h-40 overflow-y-auto text-sm">`;
+            afectados.forEach(a => { html += `<li>${escapeHtml(a.nombre)}</li>`; });
+            html += `</ul><button id="confirmarCorreccion" class="mt-2 bg-red-600 text-white px-3 py-1 rounded text-xs">Confirmar corrección</button>`;
+            previewDiv.innerHTML = html;
+            document.getElementById("confirmarCorreccion").onclick = async () => {
+                const batch = writeBatch(db);
+                let count = 0;
+                for (const a of afectados) {
+                    batch.update(doc(tramitesCol, a.id), { tipoFirma: "Olografa", updatedAt: new Date() });
+                    count++;
+                    if (count % 450 === 0) await batch.commit();
+                }
+                if (count % 450 !== 0 || count === 0) await batch.commit();
+                showToast(`✅ ${count} trámites actualizados: "Olograma" → "Olografa"`);
+                previewDiv.classList.add("hidden");
+                // Recargar datos para reflejar cambios
+                await subscribeTramites();
+            };
+        };
+
+        // Import CSV (funcional)
+        async function importCSV(file) {
+            return new Promise((res, rej) => {
+                const reader = new FileReader(); reader.onload = async (e) => {
+                    let csv = new TextDecoder("windows-1252").decode(e.target.result); if (csv.includes("�")) csv = new TextDecoder("utf-8").decode(e.target.result); Papa.parse(csv, {
+                        header: true, delimiter: ";", skipEmptyLines: true, complete: async (results) => {
+                            const rows = results.data; if (!rows.length) rej("CSV vacío"); const progress = document.getElementById("importProgress"); progress.classList.remove("hidden"); progress.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Procesando...`; let added = 0, skipped = 0; const batch = writeBatch(db); let batchSize = 0; for (const row of rows) {
+                                let instNombre = (row["INSTITUCIÓN"] || "").trim(); const nombreDoc = (row["TIPO DE DOCUMENTO"] || "").trim(); if (!instNombre || !nombreDoc) { skipped++; continue; } instNombre = instNombre.replace(/Ã©/g, 'é').replace(/Ã±/g, 'ñ').replace(/Ã³/g, 'ó').replace(/Ã¡/g, 'á').replace(/Ã­/g, 'í'); let instId = null; for (let [id, name] of institucionesMap.entries()) if (name.toLowerCase() === instNombre.toLowerCase()) { instId = id; break; } if (!instId) { const newRef = doc(institucionesCol); batch.set(newRef, { nombre: instNombre, createdAt: new Date() }); instId = newRef.id; batchSize++; institucionesMap.set(instId, instNombre); } const yaExiste = allTramites.some(t => t.institucionId === instId && t.nombreTramite?.toLowerCase() === nombreDoc.toLowerCase()); if (yaExiste) { skipped++; continue; } const tipoTram = (row["TIPO DE TRAMITE"] || "Legalización").trim(); let origen = (row["ORIGEN"] || "N").trim(); origen = origen === "N" ? "Nacional" : origen === "E" ? "Extranjero" : origen; let tipoEmision = (row["TIPO DE EMISION"] || "Presencial").trim(); let tipoFirma = (row["TIPO DE FIRMA"] || "O").trim(); tipoFirma = tipoFirma === "E" ? "Firma electronica y/o verificable" : (tipoFirma === "O" ? "Olografa" : tipoFirma); // ya corrige a olografa
+                                const valFirma = (row["VALIDAR CONTRA FIRMA"] || "N").toUpperCase() === "S";
+                                const valElect = (row["VALIDAR FIRMA ELECTRONICA"] || "N").toUpperCase() === "S";
+                                const tramiteData = { institucionId: instId, institucionNombre: instNombre, nombreTramite: nombreDoc, tipoTramite: tipoTram, textoAyuda: (row["TEXTO DE AYUDA"] || "").trim(), origen, tipoEmision, tipoFirma, validarContraFirma: valFirma, validarFirmaElectronica: valElect, createdAt: new Date(), updatedAt: new Date() };
+                                batch.set(doc(tramitesCol), tramiteData);
+                                batchSize++; added++;
+                                if (batchSize >= 450) { await batch.commit(); batchSize = 0; }
+                            }
+                            if (batchSize > 0) await batch.commit();
+                            progress.innerHTML = `<i class="fas fa-check-circle text-green-600"></i> Importación: ${added} nuevos, ${skipped} omitidos.`;
+                            setTimeout(() => progress.classList.add("hidden"), 4000);
+                            await loadInstituciones();
+                            res();
+                        }, error: rej
+                    });
+                }; reader.onerror = () => rej("Error al leer"); reader.readAsArrayBuffer(file);
+            });
+        }
+        document.getElementById("importCsvBtn").onclick = async () => { const file = document.getElementById("csvImportFile").files[0]; if (!file) return showToast("Seleccione archivo", "error"); try { await importCSV(file); showToast("Importación exitosa"); document.getElementById("csvImportFile").value = ""; } catch (e) { showToast("Error: " + e, "error"); } };
+        document.getElementById("downloadCsvTemplate").onclick = () => { const headers = ["INSTITUCIÓN", "TIPO DE DOCUMENTO", "TIPO DE TRAMITE", "TEXTO DE AYUDA", "ORIGEN", "TIPO DE EMISION", "TIPO DE FIRMA", "VALIDAR CONTRA FIRMA", "VALIDAR FIRMA ELECTRONICA"]; const row = ["Corte Suprema de Justicia", "ACTUACIÓN NOTARIAL", "Legalización", "Texto con acentos: ñ, é, á", "N", "Presencial", "O", "S", "N"]; const csv = [headers.join(";"), row.join(";")].join("\n"); const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" }); const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "ejemplo_tramites.csv"; a.click(); };
+        document.getElementById("btnFusionar").onclick = async () => { const origen = tsFusionOrigen.getValue(), destino = tsFusionDestino.getValue(); if (!origen || !destino) return showToast("Seleccione ambas", "error"); if (origen === destino) return showToast("Deben ser diferentes", "error"); const origenNombre = institucionesMap.get(origen), destinoNombre = institucionesMap.get(destino); if (confirm(`¿Mover trámites de "${origenNombre}" a "${destinoNombre}" y eliminar "${origenNombre}"?`)) { const q = query(tramitesCol, where("institucionId", "==", origen)); const tramitesOrigen = await getDocs(q); const batch = writeBatch(db); tramitesOrigen.forEach(docSnap => batch.update(doc(tramitesCol, docSnap.id), { institucionId: destino, institucionNombre: destinoNombre, updatedAt: new Date() })); batch.delete(doc(institucionesCol, origen)); await batch.commit(); showToast(`Fusionado: ${tramitesOrigen.size} trámites movidos`); await loadInstituciones(); } };
+
+        // ========== TEXTO DE AYUDA MASIVO POR TIPO DE EMISIÓN ==========
+        document.getElementById("btnPreviewAyudaMasiva").onclick = () => {
+            const emision = document.getElementById("ayudaMasivaEmision").value;
+            if (!emision) { showToast("Seleccione un tipo de emisión", "error"); return; }
+            const afectados = allTramites.filter(t => normalizeString(t.tipoEmision || '') === normalizeString(emision));
+            const previewDiv = document.getElementById("ayudaMasivaPreview");
+            const countEl = document.getElementById("ayudaMasivaPreviewCount");
+            const listaEl = document.getElementById("ayudaMasivaPreviewLista");
+            previewDiv.classList.remove("hidden");
+            countEl.textContent = `${afectados.length} trámite(s) serán actualizados:`;
+            if (!afectados.length) { listaEl.innerHTML = '<li class="py-1 text-gray-500 italic">Ningún trámite encontrado con ese tipo de emisión.</li>'; return; }
+            listaEl.innerHTML = sortByAlpha(afectados, t => t.nombreTramite).map(t => `<li class="py-1"><span class="font-medium">${escapeHtml(t.institucionNombre || '—')}</span> — ${escapeHtml(t.nombreTramite)}</li>`).join('');
+        };
+        document.getElementById("btnEjecutarAyudaMasiva").onclick = async () => {
+            const emision = document.getElementById("ayudaMasivaEmision").value;
+            if (!emision) { showToast("Seleccione un tipo de emisión", "error"); return; }
+            const nuevoTexto = document.getElementById("ayudaMasivaTexto").value;
+            const afectados = allTramites.filter(t => normalizeString(t.tipoEmision || '') === normalizeString(emision));
+            if (!afectados.length) { showToast("No hay trámites con ese tipo de emisión", "error"); return; }
+            if (!confirm(`¿Asignar el texto de ayuda a ${afectados.length} trámite(s) con emisión "${emision}"? Esta acción reemplazará el texto existente.`)) return;
+            const batch = writeBatch(db);
+            let count = 0;
+            for (const t of afectados) {
+                batch.update(doc(tramitesCol, t.id), { textoAyuda: nuevoTexto, updatedAt: new Date() });
+                count++;
+                if (count % 450 === 0) await batch.commit();
+            }
+            if (count % 450 !== 0 || count === 0) await batch.commit();
+            const resultDiv = document.getElementById("ayudaMasivaResult");
+            resultDiv.classList.remove("hidden");
+            resultDiv.innerHTML = `<i class="fas fa-check-circle mr-1"></i> ${count} trámite(s) actualizados correctamente.`;
+            document.getElementById("ayudaMasivaPreview").classList.add("hidden");
+            showToast(`✅ ${count} trámites actualizados`);
+        };
+
+        // Modal cerrar
+        document.getElementById("closeModalBtn").onclick = () => document.getElementById("modalAyuda").classList.add("hidden");
+        document.getElementById("closeModalFooterBtn").onclick = () => document.getElementById("modalAyuda").classList.add("hidden");
+        window.onclick = (e) => { if (e.target === document.getElementById("modalAyuda")) document.getElementById("modalAyuda").classList.add("hidden"); };
+
+        setupFixedSelects();
+        const tabs = document.querySelectorAll(".tab-btn"), contents = document.querySelectorAll(".tab-content");
+        tabs.forEach(btn => btn.onclick = () => { const id = btn.dataset.tab; contents.forEach(c => c.classList.add("hidden")); document.getElementById(`tab-${id}`).classList.remove("hidden"); tabs.forEach(b => b.classList.remove("tab-active")); btn.classList.add("tab-active"); if (id === "instituciones" || id === "fusion") loadInstituciones(); if (id === "tramites") subscribeTramites(); });
+        document.querySelector(".tab-btn").click();
+        loadInstituciones();
+        subscribeTramites();
+    </script>
+</body>
+
+</html>
