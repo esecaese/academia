@@ -144,13 +144,13 @@ A pesar de su participación decisiva, tanto Troche como sus 34 hombres **no rec
 
 Tras la independencia, el doctor **José Gaspar Rodríguez de Francia** se consolidó en el poder y gobernó con mano de hierro entre 1814 y 1840. Los próceres de mayo que pudieran hacerle sombra fueron apartados o directamente perseguidos.
 
-Troche tuvo **roces con las autoridades** durante el franquismo. Fue acusado ante el dictador por su "avasallador influjo en el Cabildo" de Curuguaty, por lo que Francia ordenó su traslado a Asunción. Los vecinos de su ciudad natal reclamaron su restitución "por ser el único hombre capaz de asesorar al Ayuntamiento", pero Francia no accedió al pedido.
+Troche tuvo **roces con las autoridades**. Fue acusado ante el dictador por su "avasallador influjo en el Cabildo" de Curuguaty, por lo que Francia ordenó su traslado a Asunción. Los vecinos de su ciudad natal reclamaron su restitución "por ser el único hombre capaz de asesorar al Ayuntamiento", pero Francia no accedió al pedido.
 
 Finalmente, fue vinculado a la **"conspiración de 1820"** contra el Dictador, acusado de ser **"porteñista"** (simpatizante de Buenos Aires). Fue arrestado y pasó largos años en prisión. El trágico desenlace está documentado en el **libro de inhumaciones de la Catedral de Asunción**, donde se registró su muerte el **24 de marzo de 1840** con la frase **"pasado por las armas"**. Es decir, fue fusilado por orden del doctor Francia.
 
 De esta manera, el héroe que había asegurado el éxito de la revolución independentista murió ejecutado por el mismo Estado que contribuyó a fundar.
 
-### 2.6 Homenajes actuales 
+### 2.6 Homenajes actuales (aclaración necesaria)
 
 - **En Asunción**:  
 
