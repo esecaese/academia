@@ -119,7 +119,7 @@ Troche tuvo **roces con las autoridades** durante el franquismo. Fue acusado ant
 Troche sobrevivió al gobierno del doctor Francia **apartándose por completo de la vida política**, lo que le permitió llegar hasta 1840 sin correr la suerte de otros próceres que fueron ejecutados o murieron en prisión. Sin embargo, ese mismo silencio político **condenó su nombre al olvido**.
 
 Hoy en día, Mauricio José Troche y los 34 curuguateños son recordados en algunos pocos lugares:  
-- Una **plaza en Asunción** lleva el nombre de "Plaza Capitán Mauricio José Troche y sus 34 curuguateños".  
+- Una **plaza en Asunción** lleva el nombre de "Plaza 34 curuguateños".  
 - La ciudad de **Curuguaty** honra su memoria cada 14 y 15 de mayo.  
 - Existe un **Colegio Nacional "34 Curuguateños"** en esa misma ciudad.
 
