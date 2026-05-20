@@ -1,25 +1,34 @@
-# Trabajo Práctico: Los 34 curuguateños – Héroes de Paraguarí, Tacuarí y la Independencia
+# Trabajo Práctico: Los 34 curuguateños – Héroes de Paraguarí, Tacuarí, la Independencia y el martirio
 
 ---
 
 ## Portada
 
-**Título:** Los 34 curuguateños: Héroes de Paraguarí, Tacuarí y la Independencia  
-**Alumno:** [Tu nombre completo]  
-**Asignatura:** [Nombre de la materia]  
-**Docente:** [Nombre del profesor]  
-**Institución:** [Nombre del colegio/universidad]  
-**Fecha de entrega:** [Día/Mes/Año]
+**Título:** Los 34 curuguateños: Héroes de Paraguarí, Tacuarí, la Independencia y el martirio bajo el doctor Francia  
+
+**Alumno:** Sven Knutson Sachelaridi
+
+**Asignatura:** Historia del Paraguay
+
+**Docente:** Claudio José Fuentes Armadans  
+
+**Institución:** Academia Diplomática y Consular “Carlos Antonio López”
+
+**Fecha de entrega:** Mayo/2026
 
 ---
 
 ## Índice
 
 1. Introducción .................................................................... 2  
+
 2. Desarrollo ......................................................................... 4  
+
 3. Conclusión ........................................................................ 9  
+
 4. Recomendaciones (autocríticas) ........................................... 10  
-5. Bibliografía ....................................................................... 10  
+
+5. Bibliografía ....................................................................... 11  
 
 ---
 
@@ -31,36 +40,57 @@ El proceso independentista del Paraguay ha sido tradicionalmente narrado a parti
 
 Se trataba de un puñado de milicianos oriundos de la villa de Curuguaty, comandados por el capitán **Mauricio José Troche**. Estos hombres no solo participaron activamente en la defensa del territorio contra el ejército de Manuel Belgrano en 1811, sino que, semanas después, se convirtieron en pieza clave de la revolución independentista: **custodiaban el cuartel de armas de Asunción y lo entregaron a los patriotas sin necesidad de disparar un solo tiro**.
 
-Este trabajo se propone **rescatar del olvido** a estos 34 hombres, analizando su participación en las batallas de Paraguarí y Tacuarí, así como su rol estratégico en la madrugada del 15 de mayo de 1811. La elección del tema se justifica por la necesidad de **visibilizar a los protagonistas anónimos** de nuestra historia y comprender cómo la independencia fue también obra de milicianos humildes, y no solo de los grandes próceres.
+Sin embargo, la historia de Troche no tuvo un final feliz. Años después, durante el gobierno del doctor Francia, fue acusado de conspiración y **fusilado el 24 de marzo de 1840**. Este trabajo se propone **rescatar del olvido** a estos 34 hombres, analizando su participación en las batallas de Paraguarí y Tacuarí, su rol estratégico en la madrugada del 15 de mayo de 1811, y su trágico desenlace a manos del mismo Estado que ayudaron a fundar.
 
 ### 1.2 Preguntas de investigación
 
 - ¿Quiénes eran los 34 curuguateños y cuál era su origen?
+
 - ¿Qué rol cumplieron en las batallas de Paraguarí y Tacuarí contra las fuerzas de Belgrano?
+
 - ¿Por qué fueron retenidos en Asunción tras la derrota de los invasores y qué cuartel custodiaban?
-- ¿Cómo influyó la lealtad del capitán Troche hacia sus hombres para que la toma del cuartel fuera incruenta?
-- ¿Qué reconocimiento recibieron posteriormente y por qué fueron prácticamente olvidados?
+
+- ¿Cómo influyó la lealtad del capitán Troche para que la toma del cuartel fuera incruenta?
+
+- ¿Qué reconocimiento recibieron posteriormente y por qué fueron olvidados?
+
+- **¿Cómo y por qué fue ejecutado Mauricio José Troche durante el gobierno del doctor Francia?**
 
 ### 1.3 Objetivos de investigación
 
 **Objetivo general**  
-Reconstruir la participación histórica de los 34 curuguateños en el proceso de independencia del Paraguay, desde sus orígenes coloniales hasta la consolidación del doctor Francia en el poder.
+
+Reconstruir la participación histórica de los 34 curuguateños en el proceso de independencia del Paraguay, desde sus orígenes coloniales hasta su trágico final bajo el doctor Francia.
 
 **Objetivos específicos**  
+
 - Describir el contexto colonial de Curuguaty y la formación de milicias locales.  
+
 - Relatar la actuación del contingente curuguateño en las batallas de Paraguarí (19 de enero de 1811) y Tacuarí (9 de marzo de 1811).  
+
 - Explicar cómo y por qué fueron destacados en la custodia del Cuartel de la Plaza (o Cuartel de la Ribera) en Asunción.  
+
 - Analizar la entrega del cuartel a Pedro Juan Caballero y Vicente Ignacio Iturbe durante la madrugada del 15 de mayo de 1811.  
-- Evaluar las razones del escaso reconocimiento histórico a Mauricio José Troche y sus 34 hombres, especialmente durante el gobierno del doctor Francia.
+
+- Describir el arresto, la prisión y el fusilamiento de Mauricio José Troche el 24 de marzo de 1840.  
+
+- Evaluar las razones del escaso reconocimiento histórico a Troche y sus 34 hombres.
 
 ### 1.4 Descripción del desarrollo
 
 El desarrollo se organiza de la siguiente manera:  
-- **Apartado 2.1**: Antecedentes coloniales de Curuguaty (fundación, características demográficas y milicias).  
-- **Apartado 2.2**: Participación en Paraguarí y Tacuarí (contexto de las batallas y rol específico de los curuguateños).  
-- **Apartado 2.3**: De la defensa del territorio a la revolución (por qué fueron retenidos en Asunción y qué cuartel guardaban).  
-- **Apartado 2.4**: La entrega del cuartel el 15 de mayo de 1811 (desarrollo de los hechos).  
-- **Apartado 2.5**: De la independencia al doctor Francia (qué pasó con ellos tras la revolución y por qué fueron marginados).
+
+- **Apartado 2.1**: Antecedentes coloniales de Curuguaty.  
+
+- **Apartado 2.2**: Participación en Paraguarí y Tacuarí.  
+
+- **Apartado 2.3**: De la defensa del territorio a la revolución (custodia del cuartel).  
+
+- **Apartado 2.4**: La entrega del cuartel el 15 de mayo de 1811.  
+
+- **Apartado 2.5**: Del olvido al martirio: prisión y fusilamiento bajo el doctor Francia.  
+
+- **Apartado 2.6**: Homenajes actuales (aclaración de plazas y calles).
 
 ---
 
@@ -106,7 +136,7 @@ La toma del cuartel fue **incruenta**. Gracias a la lealtad de Troche y sus homb
 
 Al día siguiente de la revolución, y más formalmente el **9 de junio de 1811**, Troche firmó el manifiesto de destitución de Velasco, figurando entre los principales caudillos revolucionarios.
 
-### 2.5 Del olvido: los curuguateños bajo el doctor Francia
+### 2.5 Del olvido al martirio: prisión y fusilamiento bajo el doctor Francia
 
 A pesar de su participación decisiva, tanto Troche como sus 34 hombres **no recibieron el reconocimiento histórico que merecían**. El propio historiador Moreno reflexionó:
 
@@ -116,14 +146,25 @@ Tras la independencia, el doctor **José Gaspar Rodríguez de Francia** se conso
 
 Troche tuvo **roces con las autoridades** durante el franquismo. Fue acusado ante el dictador por su "avasallador influjo en el Cabildo" de Curuguaty, por lo que Francia ordenó su traslado a Asunción. Los vecinos de su ciudad natal reclamaron su restitución "por ser el único hombre capaz de asesorar al Ayuntamiento", pero Francia no accedió al pedido.
 
-Troche sobrevivió al gobierno del doctor Francia **apartándose por completo de la vida política**, lo que le permitió llegar hasta 1840 sin correr la suerte de otros próceres que fueron ejecutados o murieron en prisión. Sin embargo, ese mismo silencio político **condenó su nombre al olvido**.
+Finalmente, fue vinculado a la **"conspiración de 1820"** contra el Dictador, acusado de ser **"porteñista"** (simpatizante de Buenos Aires). Fue arrestado y pasó largos años en prisión. El trágico desenlace está documentado en el **libro de inhumaciones de la Catedral de Asunción**, donde se registró su muerte el **24 de marzo de 1840** con la frase **"pasado por las armas"**. Es decir, fue fusilado por orden del doctor Francia.
 
-Hoy en día, Mauricio José Troche y los 34 curuguateños son recordados en algunos pocos lugares:  
-- Una **plaza en Asunción** lleva el nombre de "Plaza 34 curuguateños".  
-- La ciudad de **Curuguaty** honra su memoria cada 14 y 15 de mayo.  
-- Existe un **Colegio Nacional "34 Curuguateños"** en esa misma ciudad.
+De esta manera, el héroe que había asegurado el éxito de la revolución independentista murió ejecutado por el mismo Estado que contribuyó a fundar.
 
-Pero, salvo estos espacios, **la gesta de estos valientes milicianos sigue siendo poco conocida por la mayoría de los paraguayos**.
+### 2.6 Homenajes actuales (aclaración necesaria)
+
+- **En Asunción**:  
+
+  - Una **calle** en el barrio Ytay lleva el nombre **"Calle Alférez Mauricio José Troche"** (nótese que figura como "Alférez", no "Capitán").  
+
+  - Una **plaza** en el barrio Madame Lynch se llama **"Plaza 34 Curuguateños"**, en honor al grupo que comandaba.
+
+- **En Curuguaty** (ciudad natal del prócer):  
+
+  - Existe una **plaza** que sí lleva el nombre completo, recordando a Troche y sus 34 hombres.  
+
+  - También hay un **Colegio Nacional "34 Curuguateños"**.
+
+Estos homenajes, aunque valiosos, son escasos para la importancia histórica de estos milicianos.
 
 ---
 
@@ -131,31 +172,37 @@ Pero, salvo estos espacios, **la gesta de estos valientes milicianos sigue siend
 
 La investigación realizada permite afirmar que **los 34 curuguateños cumplieron un doble rol fundamental** en el nacimiento del Paraguay independiente. Primero, como defensores del territorio en Paraguarí y Tacuarí, donde contribuyeron a rechazar la invasión porteña. Segundo, y quizás más importante, como **guardianes del Cuartel de la Ribera**, cuya entrega a los patriotas la madrugada del 15 de mayo de 1811 hizo posible una revolución incruenta y exitosa.
 
+Sin embargo, el final de su comandante, Mauricio José Troche, es un recordatorio trágico de la dureza del gobierno del doctor Francia. Acusado de conspiración y fusilado el 24 de marzo de 1840, Troche murió a manos del Estado que ayudó a crear. Este desenlace explica en parte por qué su nombre no fue tan celebrado como el de otros próceres: el régimen franquista no tenía interés en glorificar a quienes luego consideraba enemigos.
+
 El análisis permitió responder a las preguntas planteadas:  
 
 - **¿Quiénes eran?** Milicianos humildes, oriundos de Curuguaty, comandados por Mauricio José Troche.  
+
 - **¿Qué rol cumplieron en Paraguarí y Tacuarí?** Fueron parte activa de la defensa, distinguiéndose en ambas batallas.  
+
 - **¿Por qué fueron retenidos en Asunción?** Velasco los mantuvo en servicio para custodiar el estratégico Cuartel de la Plaza.  
-- **¿Cómo influyó la lealtad de Troche?** Su fidelidad hacia sus hombres y hacia la causa independentista fue decisiva para asegurar el cuartel sin violencia.  
-- **¿Por qué fueron olvidados?** Durante el gobierno del doctor Francia, Troche fue apartado de la política y su nombre quedó relegado, siendo apenas mencionado por la historiografía posterior.
 
-Se cumplieron todos los objetivos planteados. Se reconstruyó la historia de este contingente, se contextualizó su actuación en las batallas contra Belgrano, se explicó su rol estratégico en la independencia y se analizaron las causas de su escaso reconocimiento.
+- **¿Cómo influyó la lealtad de Troche?** Su fidelidad fue decisiva para asegurar el cuartel sin violencia.  
 
-Queda una reflexión final: **la independencia del Paraguay no fue obra únicamente de los próceres de nombre conocido**. Detrás de ellos hubo soldados anónimos, milicianos de pueblos humildes como Curuguaty, que arriesgaron sus vidas para que la revolución triunfara. Recordarlos es también hacer justicia histórica.
+- **¿Cómo murió Troche?** Fue arrestado, acusado de "porteñista", y fusilado el 24 de marzo de 1840 por orden del doctor Francia.  
+
+- **¿Por qué fueron olvidados?** El propio régimen que ayudaron a instalar los persiguió y ejecutó, condenando su memoria al silencio.
+
+Queda una reflexión final: **la independencia del Paraguay no fue obra únicamente de los próceres de nombre conocido**, y la historia de Troche nos muestra que los héroes también pueden ser víctimas del poder que ayudaron a construir. Recordarlos es hacer justicia histórica.
 
 ---
 
 ## 4. Recomendaciones (autocríticas)
 
-- **Limitación de fuentes específicas**: No se encontró un libro monográfico dedicado exclusivamente a los 34 curuguateños; la mayoría de las referencias provienen de artículos periodísticos y fragmentos de obras más amplias. Se recomienda consultar archivos parroquiales de Curuguaty y el Archivo Nacional de Asunción para localizar documentación primaria.  
+- **Limitación de fuentes específicas**: No se encontró un libro monográfico dedicado exclusivamente a los 34 curuguateños. Se recomienda consultar archivos parroquiales de Curuguaty y el Archivo Nacional de Asunción para localizar documentación primaria, especialmente las actas del juicio a Troche.  
 
-- **Falta de precisiones numéricas y nominales**: Los registros históricos no identifican por nombre a cada uno de los 34 soldados, solo a su comandante. Sería valioso rastrear listas de milicias de la época.  
+- **Precisión sobre homenajes**: Circula información errónea sobre una plaza en Asunción. Es importante verificar en terreno o con fuentes municipales oficiales antes de afirmar nombres de calles o plazas.  
 
-- **Perspectiva comparativa**: El trabajo se centró en los curuguateños dentro del proceso independentista. Una futura investigación podría compararlos con otras milicias del interior (como las de Villarrica o Concepción).  
+- **Falta de precisiones nominales**: Los registros no identifican por nombre a cada uno de los 34 soldados. Sería valioso rastrear listas de milicias de la época.  
 
-- **Cobertura temporal**: La consigna abarcaba hasta la época del doctor Francia, pero no se profundizó en la vida de estos milicianos después de 1811. Un trabajo complementario podría investigar qué pasó con ellos durante el Consulado (1811-1814) y los primeros años del franquismo.  
+- **Contexto del fusilamiento**: No se profundizó en la "conspiración de 1820" ni en los detalles del proceso judicial contra Troche. Una futura investigación podría abordar esto con documentos del Archivo Nacional.  
 
-- **Recomendación final**: Sería altamente conveniente que el Ministerio de Educación y Cultura del Paraguay impulse una campaña de difusión sobre estos héroes locales en las escuelas de Curuguaty y Canindeyú, resignificando su legado para las nuevas generaciones.
+- **Recomendación final**: Sería altamente conveniente que el Ministerio de Educación del Paraguay impulse una campaña de difusión sobre estos héroes locales en las escuelas de Curuguaty y Canindeyú, incluyendo la verdad histórica completa (su heroísmo y su trágico final).
 
 ---
 
@@ -179,6 +226,10 @@ ABC Color. (2013, 15 de junio). *¿Qué cuartel entregó Mauricio José Troche e
 
 Diario Norte. (2025, 10 de mayo). *Paraguay: de la independencia silenciosa al protagonismo del siglo XXI*. Recuperado de https://www.diarionorte.com  
 
+### Fuente documental primaria (citada en Wikipedia)
+
+Libro de inhumaciones de la Catedral de Asunción, entrada correspondiente al 24 de marzo de 1840: *"Mauricio José Troche, pasado por las armas"*.
+
 ### Bibliografía complementaria sugerida
 
 Cardozo, E. (1949). *El Paraguay Independiente*. Barcelona: Salvat.  
@@ -189,5 +240,6 @@ González de Bosio, B. (2013). *La guerra de Independencia*. Asunción: El Lecto
 
 Telesca, I. (coord.). (2010). *Historia del Paraguay*. Asunción: Taurus.
 
----  
+---
+
 **Fin del trabajo práctico**
