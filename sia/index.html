@@ -783,8 +783,6 @@
         function handleCambiarFirmaMasivo() { abrirModalCambioMasivo('tipoFirma', 'Tipo de Firma', ["Firma electronica y/o verificable", "Olografa"], false); }
         function handleCambiarAyudaMasivo() { abrirModalCambioMasivo('textoAyuda', 'Texto de Ayuda', [], true); }
 
-        document.getElementById("btnReasignarSeleccionados").onclick = handleReasignarMasivo;
-
         let configCambioMasivo = null;
 
         function abrirModalCambioMasivo(campo, campoLabel, opciones, esAreaDeTexto = false) {
