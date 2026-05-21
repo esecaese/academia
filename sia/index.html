@@ -95,7 +95,7 @@
                     <div class="lg:col-span-1"><label class="block text-sm font-medium mb-1">Nombre *</label>
                         <div class="flex gap-2"><input type="text" id="tramiteNombre" required class="flex-1 border rounded-xl px-4 py-2"><button type="button" id="normalizeNombreBtn" class="bg-purple-100 hover:bg-purple-200 text-purple-700 px-3 rounded-xl text-sm"><i class="fas fa-magic mr-1"></i> Normalizar</button></div>
                     </div>
-                    <div><label class="block text-sm font-medium mb-1">Tipo</label><select id="tramiteTipo" class="w-full"></select></div>
+                    <div class="hidden"><label class="block text-sm font-medium mb-1">Tipo</label><select id="tramiteTipo" class="w-full"></select></div>
                     <div><label class="block text-sm font-medium mb-1">Origen</label><select id="tramiteOrigen" class="w-full"></select></div>
                     <div><label class="block text-sm font-medium mb-1">Emisión</label><select id="tramiteEmision" class="w-full"></select></div>
                     <div><label class="block text-sm font-medium mb-1">Firma</label><select id="tramiteFirma" class="w-full"></select></div>
@@ -433,7 +433,20 @@
             if (tsFirma) tsFirma.destroy();
             tsTipoTramite = new TomSelect("#tramiteTipo", { options: mkOpt(sortByAlpha(tipos, t => t)), create: false, sortField: "text", searchField: ["text"], placeholder: "Buscar...", items: ["Legalización"] });
             tsOrigen = new TomSelect("#tramiteOrigen", { options: mkOpt(sortByAlpha(origenes, o => o)), create: false, sortField: "text", searchField: ["text"], placeholder: "Buscar...", items: ["Nacional"] });
-            tsEmision = new TomSelect("#tramiteEmision", { options: mkOpt(sortByAlpha(emisiones, e => e)), create: false, sortField: "text", searchField: ["text"], placeholder: "Buscar...", items: ["Presencial"] });
+            tsEmision = new TomSelect("#tramiteEmision", { 
+                options: mkOpt(sortByAlpha(emisiones, e => e)), 
+                create: false, 
+                sortField: "text", 
+                searchField: ["text"], 
+                placeholder: "Buscar...", 
+                items: ["Presencial"],
+                onChange: function(value) {
+                    if (value === "Validacion Previa") {
+                        document.getElementById("tramiteValidarFirma").checked = false;
+                        document.getElementById("tramiteValidarElectronica").checked = false;
+                    }
+                }
+            });
             tsFirma = new TomSelect("#tramiteFirma", { options: mkOpt(sortByAlpha(firmas, f => f)), create: false, sortField: "text", searchField: ["text"], placeholder: "Buscar...", items: ["Olografa"] });
         }
 
@@ -571,13 +584,23 @@
             if (!nombre) return showToast("Nombre requerido", "error");
             const duplicate = allTramites.some(t => t.institucionId === instId && t.nombreTramite?.toLowerCase() === nombre.toLowerCase() && t.id !== currentEditTramiteId);
             if (duplicate) return showToast("Trámite duplicado para esta institución", "error");
+            
+            const emisionSeleccionada = tsEmision.getValue();
+            let validarFirma = document.getElementById("tramiteValidarFirma").checked;
+            let validarElectronica = document.getElementById("tramiteValidarElectronica").checked;
+
+            if (emisionSeleccionada === "Validacion Previa") {
+                validarFirma = false;
+                validarElectronica = false;
+            }
+
             const data = {
                 institucionId: instId, institucionNombre: institucionesMap.get(instId),
                 nombreTramite: nombre, tipoTramite: tsTipoTramite.getValue(),
-                origen: tsOrigen.getValue(), tipoEmision: tsEmision.getValue(),
+                origen: tsOrigen.getValue(), tipoEmision: emisionSeleccionada,
                 tipoFirma: tsFirma.getValue(),
-                validarContraFirma: document.getElementById("tramiteValidarFirma").checked,
-                validarFirmaElectronica: document.getElementById("tramiteValidarElectronica").checked,
+                validarContraFirma: validarFirma,
+                validarFirmaElectronica: validarElectronica,
                 textoAyuda: document.getElementById("tramiteAyuda").value,
                 updatedAt: new Date()
             };
@@ -717,7 +740,7 @@
                             <td class="p-2"><input type="checkbox" class="${chkClass}" data-id="${t.id}" ${isSel ? 'checked' : ''} ${chkDisabled}></td>
                             <td class="p-2">
                                 <div class="font-medium">${escapeHtml(t.nombreTramite)}${bloqBadge}</div>
-                                <div class="text-xs text-gray-500">${escapeHtml(t.tipoTramite)} - ${escapeHtml(t.origen)}</div>
+                                <div class="text-xs text-gray-500">Origen: ${escapeHtml(t.origen)}</div>
                             </td>
                             <td class="p-2 text-xs">${escapeHtml(emiFirma)}</td>
                             <td class="p-2 text-xs">${escapeHtml(valTexto)}</td>
@@ -876,6 +899,13 @@
                 for (let id of selectedTramiteIds) {
                     let updateData = { updatedAt: new Date() };
                     updateData[campo] = valorFinal;
+                    
+                    // REGLA: Si la emisión global se cambia a Validacion Previa, apagar checks
+                    if (campo === 'tipoEmision' && valorFinal === 'Validacion Previa') {
+                        updateData.validarContraFirma = false;
+                        updateData.validarFirmaElectronica = false;
+                    }
+
                     batch.update(doc(tramitesCol, id), updateData);
                     count++;
                     if (count % 450 === 0) {
@@ -1066,9 +1096,15 @@
                                 let tipoEmision = (row["TIPO DE EMISION"] || "Presencial").trim(); 
                                 let tipoFirma = (row["TIPO DE FIRMA"] || "O").trim(); 
                                 tipoFirma = tipoFirma === "E" ? "Firma electronica y/o verificable" : (tipoFirma === "O" ? "Olografa" : tipoFirma);
-                                const valFirma = (row["VALIDAR CONTRA FIRMA"] || "N").toUpperCase() === "S";
-                                const valElect = (row["VALIDAR FIRMA ELECTRONICA"] || "N").toUpperCase() === "S";
+                                let valFirma = (row["VALIDAR CONTRA FIRMA"] || "N").toUpperCase() === "S";
+                                let valElect = (row["VALIDAR FIRMA ELECTRONICA"] || "N").toUpperCase() === "S";
                                 
+                                // REGLA: Forzar apagar checks en importaciones CSV
+                                if (tipoEmision === "Validacion Previa") {
+                                    valFirma = false;
+                                    valElect = false;
+                                }
+
                                 const tramiteData = { 
                                     institucionId: instId, institucionNombre: instNombre, nombreTramite: nombreDoc, 
                                     tipoTramite: tipoTram, textoAyuda: (row["TEXTO DE AYUDA"] || "").trim(), 
