@@ -683,7 +683,7 @@
                             <table class="min-w-full border-collapse">
                                 <thead class="bg-gray-50 text-xs">
                                     <tr>
-                                        <th class="col-check p-2"><input type="checkbox" id="selectAllInst-${instId}" class="select-all-inst" data-inst="${instId}"></th>
+                                        <th class="col-check p-2"><input type="checkbox" id="selectAllInst-${instId}" class="select-all-inst cursor-pointer" data-inst="${instId}"></th>
                                         <th class="col-nombre p-2 text-left">Trámite</th>
                                         <th class="col-emision-firma p-2">Emisión / Firma</th>
                                         <th class="col-validaciones p-2">Validaciones</th>
@@ -692,6 +692,10 @@
                                 </thead>
                                 <tbody>`;
                 for (let t of tramitesOrd) {
+                    // Si está bloqueado, nos aseguramos de que no figure en los seleccionados de forma residual
+                    if (t.bloqueado && selectedTramiteIds.has(t.id)) {
+                        selectedTramiteIds.delete(t.id);
+                    }
                     const isSel = selectedTramiteIds.has(t.id);
                     const emiFirma = `${t.tipoEmision || '—'} / ${t.tipoFirma === 'Firma electronica y/o verificable' ? 'Firma electrónica' : (t.tipoFirma || '—')}`;
                     const valTexto = `Firma: ${t.validarContraFirma ? 'Sí' : 'No'} / E-firma: ${t.validarFirmaElectronica ? 'Sí' : 'No'}`;
@@ -704,8 +708,13 @@
                     const lockLabel = t.bloqueado ? 'Reactivar' : 'Bloquear';
                     const lockBtn = `<button class="toggle-bloqueo-btn ${lockClass} text-xs" data-id="${t.id}" data-bloqueado="${t.bloqueado ? '1' : '0'}" title="${lockTitle}"><i class="fas fa-${lockIcon} mr-1"></i>${lockLabel}</button>`;
                     const bloqBadge = t.bloqueado ? ` <span class="text-xs bg-green-100 text-green-700 px-1 rounded ml-1">Terminado</span>` : '';
+                    
+                    // Configuración dinámica del checkbox según su estado de bloqueo
+                    const chkDisabled = t.bloqueado ? 'disabled title="Trámite bloqueado"' : '';
+                    const chkClass = t.bloqueado ? 'tramite-checkbox cursor-not-allowed opacity-40' : 'tramite-checkbox cursor-pointer';
+
                     html += `<tr class="border-b hover:bg-gray-50 tramite-row${isSel ? ' selected' : ''}${t.bloqueado ? ' bloqueado' : ''}" data-id="${t.id}">
-                            <td class="p-2"><input type="checkbox" class="tramite-checkbox" data-id="${t.id}" ${isSel ? 'checked' : ''}></td>
+                            <td class="p-2"><input type="checkbox" class="${chkClass}" data-id="${t.id}" ${isSel ? 'checked' : ''} ${chkDisabled}></td>
                             <td class="p-2">
                                 <div class="font-medium">${escapeHtml(t.nombreTramite)}${bloqBadge}</div>
                                 <div class="text-xs text-gray-500">${escapeHtml(t.tipoTramite)} - ${escapeHtml(t.origen)}</div>
@@ -748,7 +757,8 @@
                 btn.onchange = () => {
                     const grupoDiv = btn.closest('.border');
                     if (grupoDiv) {
-                        const chks = grupoDiv.querySelectorAll('.tramite-checkbox');
+                        // Solo capturamos los checkboxes que NO estén deshabilitados
+                        const chks = grupoDiv.querySelectorAll('.tramite-checkbox:not(:disabled)');
                         chks.forEach(ch => {
                             ch.checked = btn.checked;
                             const tid = ch.dataset.id;
