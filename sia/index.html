@@ -395,9 +395,22 @@
                         document.getElementById("tramiteValidarFirma").checked = false;
                         document.getElementById("tramiteValidarElectronica").checked = false;
                     }
+                    if (value === "Automatica") {
+                        if (tsFirma) tsFirma.setValue("Firma electronica y/o verificable");
+                        document.getElementById("tramiteValidarElectronica").checked = true;
+                    }
                 }
             });
-            tsFirma = new TomSelect("#tramiteFirma", { options: mkOpt(sortByAlpha(firmas, f => f)), create: false, sortField: "text", searchField: ["text"], placeholder: "Buscar...", items: ["Olografa"] });
+            
+            // Lógica Firma Ológrafa en la Interfaz (Fuerza emisión a Presencial)
+            tsFirma = new TomSelect("#tramiteFirma", { 
+                options: mkOpt(sortByAlpha(firmas, f => f)), create: false, sortField: "text", searchField: ["text"], placeholder: "Buscar...", items: ["Olografa"],
+                onChange: function(value) {
+                    if (value === "Olografa" && tsEmision) {
+                        tsEmision.setValue("Presencial");
+                    }
+                }
+            });
         }
 
         function updateInstitucionSelect() {
@@ -488,14 +501,15 @@
             
             // Lógica Validación Previa Backend
             const esValPrevia = tsEmision.getValue() === "Validacion Previa";
+            const esAuto = tsEmision.getValue() === "Automatica";
             
             const data = {
                 institucionId: instId, institucionNombre: institucionesMap.get(instId),
                 nombreTramite: nombre, tipoTramite: tsTipoTramite.getValue(),
                 origen: tsOrigen.getValue(), tipoEmision: tsEmision.getValue(),
-                tipoFirma: tsFirma.getValue(),
+                tipoFirma: esAuto ? "Firma electronica y/o verificable" : tsFirma.getValue(),
                 validarContraFirma: esValPrevia ? false : document.getElementById("tramiteValidarFirma").checked,
-                validarFirmaElectronica: esValPrevia ? false : document.getElementById("tramiteValidarElectronica").checked,
+                validarFirmaElectronica: esValPrevia ? false : (esAuto ? true : document.getElementById("tramiteValidarElectronica").checked),
                 textoAyuda: document.getElementById("tramiteAyuda").value, updatedAt: new Date()
             };
             try {
@@ -671,6 +685,17 @@
                         updateData.validarFirmaElectronica = false;
                     }
 
+                    // REGLA GLOBAL AUTOMATICA -> FIRMA ELECTRONICA Y VALIDAR E-FIRMA
+                    if (configCambioMasivo.campo === 'tipoEmision' && valorFinal === 'Automatica') {
+                        updateData.tipoFirma = 'Firma electronica y/o verificable';
+                        updateData.validarFirmaElectronica = true;
+                    }
+
+                    // REGLA GLOBAL FIRMA OLOGRAFA -> PRESENCIAL
+                    if (configCambioMasivo.campo === 'tipoFirma' && valorFinal === 'Olografa') {
+                        updateData.tipoEmision = 'Presencial';
+                    }
+
                     batch.update(doc(tramitesCol, id), updateData);
                     count++; if (count % 450 === 0) { await batch.commit(); batch = writeBatch(db); }
                 }
@@ -754,6 +779,13 @@
                                 let valFirma = (row["VALIDAR CONTRA FIRMA"] || "N").toUpperCase() === "S";
                                 let valElect = (row["VALIDAR FIRMA ELECTRONICA"] || "N").toUpperCase() === "S";
                                 if (tipoEmision === "Validacion Previa") { valFirma = false; valElect = false; }
+                                if (tipoEmision === "Automatica") { 
+                                    tipoFirma = "Firma electronica y/o verificable"; 
+                                    valElect = true; 
+                                }
+                                
+                                // REGLA IMPORTACION: Firma Olografa fuerza emisión a Presencial
+                                if (tipoFirma === "Olografa") { tipoEmision = "Presencial"; }
                                 
                                 batch.set(doc(tramitesCol), { institucionId: instId, institucionNombre: instNombre, nombreTramite: nombreDoc, tipoTramite: tipoTram, textoAyuda: (row["TEXTO DE AYUDA"] || "").trim(), origen, tipoEmision, tipoFirma, validarContraFirma: valFirma, validarFirmaElectronica: valElect, createdAt: new Date(), updatedAt: new Date() });
                                 batchSize++; added++; if (batchSize >= 450) { await batch.commit(); batch = writeBatch(db); batchSize = 0; }
