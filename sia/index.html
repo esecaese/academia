@@ -685,6 +685,7 @@
                                 <button class="grp-btn-emision bg-indigo-500 hover:bg-indigo-600 text-white px-2.5 py-1.5 rounded-lg text-xs transition-colors shadow-sm" title="Cambiar Emisión"><i class="fas fa-rss mr-1"></i> Emisión</button>
                                 <button class="grp-btn-firma bg-teal-500 hover:bg-teal-600 text-white px-2.5 py-1.5 rounded-lg text-xs transition-colors shadow-sm" title="Cambiar Firma"><i class="fas fa-file-signature mr-1"></i> Firma</button>
                                 <button class="grp-btn-ayuda bg-violet-500 hover:bg-violet-600 text-white px-2.5 py-1.5 rounded-lg text-xs transition-colors shadow-sm" title="Cambiar Texto Ayuda"><i class="fas fa-comment-alt mr-1"></i> Ayuda</button>
+                                <button class="grp-btn-bloquear bg-red-500 hover:bg-red-600 text-white px-2.5 py-1.5 rounded-lg text-xs transition-colors shadow-sm" title="Bloquear seleccionados"><i class="fas fa-lock mr-1"></i> Bloquear</button>
                             </div>
                         </div>
                         <div class="overflow-x-auto">
@@ -733,6 +734,7 @@
             document.querySelectorAll('.grp-btn-emision').forEach(btn => btn.onclick = handleCambiarEmisionMasivo);
             document.querySelectorAll('.grp-btn-firma').forEach(btn => btn.onclick = handleCambiarFirmaMasivo);
             document.querySelectorAll('.grp-btn-ayuda').forEach(btn => btn.onclick = handleCambiarAyudaMasivo);
+            document.querySelectorAll('.grp-btn-bloquear').forEach(btn => btn.onclick = handleBloquearMasivo);
 
             document.querySelectorAll('.tramite-checkbox').forEach(cb => cb.onchange = () => {
                 if (cb.checked) selectedTramiteIds.add(cb.dataset.id); else selectedTramiteIds.delete(cb.dataset.id);
@@ -782,6 +784,20 @@
         function handleCambiarEmisionMasivo() { abrirModalCambioMasivo('tipoEmision', 'Tipo de Emisión', ["Automatica", "Externa", "Presencial", "Validacion Previa"], false); }
         function handleCambiarFirmaMasivo() { abrirModalCambioMasivo('tipoFirma', 'Tipo de Firma', ["Firma electronica y/o verificable", "Olografa"], false); }
         function handleCambiarAyudaMasivo() { abrirModalCambioMasivo('textoAyuda', 'Texto de Ayuda', [], true); }
+        async function handleBloquearMasivo() {
+            if (selectedTramiteIds.size === 0) return showToast("No hay trámites seleccionados", "error");
+            if (!confirm(`¿Bloquear ${selectedTramiteIds.size} trámite(s) seleccionado(s)?`)) return;
+            try {
+                let batch = writeBatch(db), count = 0;
+                for (let id of selectedTramiteIds) {
+                    batch.update(doc(tramitesCol, id), { bloqueado: true, updatedAt: new Date() });
+                    count++; if (count % 450 === 0) { await batch.commit(); batch = writeBatch(db); }
+                }
+                if (count % 450 !== 0) await batch.commit();
+                showToast(`${count} trámite(s) bloqueados`);
+                selectedTramiteIds.clear(); renderTramitesGrouped(allTramites);
+            } catch (err) { showToast("Error: " + err.message, "error"); }
+        }
 
         let configCambioMasivo = null;
 
