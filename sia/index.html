@@ -842,29 +842,6 @@
             } catch (err) { showToast("Error: " + err.message, "error"); } finally { btn.disabled = false; btn.innerText = 'Aplicar Cambio'; }
         };
 
-        document.getElementById("btnCambiarEmision").onclick = handleCambiarEmisionMasivo;
-        document.getElementById("btnCambiarFirma").onclick = handleCambiarFirmaMasivo;
-        document.getElementById("btnCambiarAyudaSeleccionados").onclick = handleCambiarAyudaMasivo;
-
-        document.getElementById("btnBloquearSeleccionados").onclick = async () => {
-            if (selectedTramiteIds.size === 0) return showToast("No hay trámites seleccionados", "error");
-            if (!confirm(`¿Bloquear ${selectedTramiteIds.size} trámite(s) seleccionado(s)?`)) return;
-            const btn = document.getElementById("btnBloquearSeleccionados");
-            btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Bloqueando...';
-            try {
-                let batch = writeBatch(db), count = 0;
-                for (let id of selectedTramiteIds) {
-                    batch.update(doc(tramitesCol, id), { bloqueado: true, updatedAt: new Date() });
-                    count++; if (count % 450 === 0) { await batch.commit(); batch = writeBatch(db); }
-                }
-                if (count % 450 !== 0) await batch.commit();
-                showToast(`${count} trámite(s) bloqueados`);
-                selectedTramiteIds.clear(); renderTramitesGrouped(allTramites);
-            } catch (err) { showToast("Error: " + err.message, "error"); }
-            finally { btn.disabled = false; btn.innerHTML = '<i class="fas fa-lock mr-1"></i> Bloquear'; }
-        };
-
-        document.getElementById("btnLimpiarSeleccion").onclick = () => { selectedTramiteIds.clear(); renderTramitesGrouped(allTramites); };
         document.getElementById("refreshAllBtn").onclick = async () => { await loadInstituciones(); showToast("BD Sincronizada"); };
 
         document.getElementById("institucionesSearchInput").addEventListener("input", (e) => { institucionesSearchTerm = e.target.value; renderInstitucionesList(); });
