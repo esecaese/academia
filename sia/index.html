@@ -623,7 +623,32 @@
             let html = "";
             for (let [instId, grupo] of gruposOrdenados) {
                 const tramitesOrd = sortByAlpha(grupo.tramites, t => t.nombreTramite);
-                html += `<div class="border rounded-xl mb-6 shadow-sm"><div class="bg-gray-100 px-4 py-3 font-bold flex justify-between"><span><i class="fas fa-building mr-2 text-blue-600"></i> ${escapeHtml(grupo.nombre)}</span><span class="text-xs bg-white px-2 py-1 rounded-full">${tramitesOrd.length} trámites</span></div><div class="overflow-x-auto"><table class="min-w-full border-collapse"><thead class="bg-gray-50 text-xs"><tr><th class="col-check p-2"><input type="checkbox" id="selectAllInst-${instId}" class="select-all-inst" data-inst="${instId}"></th><th class="col-nombre p-2 text-left">Trámite</th><th class="col-emision-firma p-2">Emisión / Firma</th><th class="col-validaciones p-2">Validaciones</th><th class="col-acciones p-2">Acciones</th></tr></thead><tbody>`;
+                
+                html += `<div class="border rounded-xl mb-6 shadow-sm">
+                        <div class="bg-gray-100 px-4 py-3 flex flex-wrap justify-between items-center gap-2 border-b">
+                            <div class="font-bold flex items-center text-gray-800">
+                                <i class="fas fa-building mr-2 text-blue-600"></i> ${escapeHtml(grupo.nombre)}
+                                <span class="text-xs bg-white border border-gray-200 px-2 py-1 rounded-full ml-3 text-gray-600 font-normal">${tramitesOrd.length} trámites</span>
+                            </div>
+                            <div class="flex flex-wrap gap-1.5 opacity-90 hover:opacity-100 transition-opacity">
+                                <button class="grp-btn-inst bg-amber-500 hover:bg-amber-600 text-white px-2.5 py-1.5 rounded-lg text-xs transition-colors shadow-sm" title="Cambiar Institución"><i class="fas fa-building mr-1"></i> Inst.</button>
+                                <button class="grp-btn-emision bg-indigo-500 hover:bg-indigo-600 text-white px-2.5 py-1.5 rounded-lg text-xs transition-colors shadow-sm" title="Cambiar Emisión"><i class="fas fa-rss mr-1"></i> Emisión</button>
+                                <button class="grp-btn-firma bg-teal-500 hover:bg-teal-600 text-white px-2.5 py-1.5 rounded-lg text-xs transition-colors shadow-sm" title="Cambiar Firma"><i class="fas fa-file-signature mr-1"></i> Firma</button>
+                                <button class="grp-btn-ayuda bg-violet-500 hover:bg-violet-600 text-white px-2.5 py-1.5 rounded-lg text-xs transition-colors shadow-sm" title="Cambiar Texto Ayuda"><i class="fas fa-comment-alt mr-1"></i> Ayuda</button>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full border-collapse">
+                                <thead class="bg-gray-50 text-xs">
+                                    <tr>
+                                        <th class="col-check p-2"><input type="checkbox" id="selectAllInst-${instId}" class="select-all-inst" data-inst="${instId}"></th>
+                                        <th class="col-nombre p-2 text-left">Trámite</th>
+                                        <th class="col-emision-firma p-2">Emisión / Firma</th>
+                                        <th class="col-validaciones p-2">Validaciones</th>
+                                        <th class="col-acciones p-2">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>`;
                 
                 for (let t of tramitesOrd) {
                     if (t.bloqueado && selectedTramiteIds.has(t.id)) { selectedTramiteIds.delete(t.id); }
@@ -654,6 +679,11 @@
             }
             container.innerHTML = html;
             
+            document.querySelectorAll('.grp-btn-inst').forEach(btn => btn.onclick = handleReasignarMasivo);
+            document.querySelectorAll('.grp-btn-emision').forEach(btn => btn.onclick = handleCambiarEmisionMasivo);
+            document.querySelectorAll('.grp-btn-firma').forEach(btn => btn.onclick = handleCambiarFirmaMasivo);
+            document.querySelectorAll('.grp-btn-ayuda').forEach(btn => btn.onclick = handleCambiarAyudaMasivo);
+
             document.querySelectorAll('.tramite-checkbox').forEach(cb => cb.onchange = () => {
                 if (cb.checked) selectedTramiteIds.add(cb.dataset.id); else selectedTramiteIds.delete(cb.dataset.id);
                 const row = cb.closest('.tramite-row'); if (row) row.classList.toggle('selected', cb.checked);
@@ -693,13 +723,21 @@
         
         document.getElementById("tramiteForm").addEventListener("submit", saveTramite);
         document.getElementById("cancelTramiteEdit").addEventListener("click", resetTramiteForm);
-        document.getElementById("btnReasignarSeleccionados").onclick = () => { 
+        
+        function handleReasignarMasivo() { 
+            if (selectedTramiteIds.size === 0) return showToast("No hay seleccionados", "error");
             const inst = prompt("Nombre o ID de la institución destino:"); if (!inst) return; 
             let destId = null; for (let [id, nombre] of institucionesMap.entries()) if (id === inst || nombre.toLowerCase() === inst.toLowerCase()) { destId = id; break; } 
             if (!destId) return showToast("Institución no encontrada", "error"); reasignarSeleccionados(destId); 
-        };
+        }
+        function handleCambiarEmisionMasivo() { abrirModalCambioMasivo('tipoEmision', 'Tipo de Emisión', ["Automatica", "Externa", "Presencial", "Validacion Previa"], false); }
+        function handleCambiarFirmaMasivo() { abrirModalCambioMasivo('tipoFirma', 'Tipo de Firma', ["Firma electronica y/o verificable", "Olografa"], false); }
+        function handleCambiarAyudaMasivo() { abrirModalCambioMasivo('textoAyuda', 'Texto de Ayuda', [], true); }
+
+        document.getElementById("btnReasignarSeleccionados").onclick = handleReasignarMasivo;
         
         let configCambioMasivo = null;
+
         function abrirModalCambioMasivo(campo, campoLabel, opciones, esAreaDeTexto = false) {
             if (selectedTramiteIds.size === 0) return showToast("No hay trámites seleccionados", "error");
             configCambioMasivo = { campo, campoLabel, esAreaDeTexto };
@@ -748,9 +786,10 @@
             } catch (err) { showToast("Error: " + err.message, "error"); } finally { btn.disabled = false; btn.innerText = 'Aplicar Cambio'; }
         };
 
-        document.getElementById("btnCambiarEmision").onclick = () => abrirModalCambioMasivo('tipoEmision', 'Tipo de Emisión', ["Automatica", "Externa", "Presencial", "Validacion Previa"], false);
-        document.getElementById("btnCambiarFirma").onclick = () => abrirModalCambioMasivo('tipoFirma', 'Tipo de Firma', ["Firma electronica y/o verificable", "Olografa"], false);
-        document.getElementById("btnCambiarAyudaSeleccionados").onclick = () => abrirModalCambioMasivo('textoAyuda', 'Texto de Ayuda', [], true);
+        document.getElementById("btnCambiarEmision").onclick = handleCambiarEmisionMasivo;
+        document.getElementById("btnCambiarFirma").onclick = handleCambiarFirmaMasivo;
+        document.getElementById("btnCambiarAyudaSeleccionados").onclick = handleCambiarAyudaMasivo;
+
         document.getElementById("btnLimpiarSeleccion").onclick = () => { selectedTramiteIds.clear(); renderTramitesGrouped(allTramites); };
         document.getElementById("refreshAllBtn").onclick = async () => { await loadInstituciones(); showToast("BD Sincronizada"); };
 
