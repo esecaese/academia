@@ -43,12 +43,7 @@
             100% { transform: rotate(360deg); }
         }
 
-        .tab-active {
-            border-bottom: 3px solid #2563eb;
-            color: #1e40af;
-            font-weight: 600;
-        }
-
+        .tab-active { border-bottom: 3px solid #2563eb; color: #1e40af; font-weight: 600; }
         .tramite-row.selected { background-color: #dbeafe; }
         .texto-ayuda-row { background-color: #f9fafb; border-top: 1px solid #e5e7eb; cursor: pointer; }
         .texto-ayuda-row:hover { background-color: #f3f4f6; }
@@ -94,19 +89,25 @@
                     <div class="lg:col-span-1"><label class="block text-sm font-medium mb-1">Nombre *</label>
                         <div class="flex gap-2"><input type="text" id="tramiteNombre" required class="flex-1 border rounded-xl px-4 py-2"><button type="button" id="normalizeNombreBtn" class="bg-purple-100 hover:bg-purple-200 text-purple-700 px-3 rounded-xl text-sm"><i class="fas fa-magic mr-1"></i> Normalizar</button></div>
                     </div>
-                    <!-- Tipo y Origen ocultos pero presentes para la BD -->
+                    
+                    <!-- Ocultos en interfaz pero presentes para el backend -->
                     <div class="hidden"><label class="block text-sm font-medium mb-1">Tipo</label><select id="tramiteTipo" class="w-full"></select></div>
                     <div class="hidden"><label class="block text-sm font-medium mb-1">Origen</label><select id="tramiteOrigen" class="w-full"></select></div>
                     
                     <div><label class="block text-sm font-medium mb-1">Emisión</label><select id="tramiteEmision" class="w-full"></select></div>
                     <div><label class="block text-sm font-medium mb-1">Firma</label><select id="tramiteFirma" class="w-full"></select></div>
-                    <div class="flex gap-6 items-center lg:col-span-2"><label class="flex items-center gap-2"><input type="checkbox" id="tramiteValidarFirma"> Validar firma</label><label class="flex items-center gap-2"><input type="checkbox" id="tramiteValidarElectronica"> Validar e-firma</label></div>
+                    
+                    <div class="flex gap-6 items-center lg:col-span-2">
+                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="tramiteValidarFirma" class="w-4 h-4 text-blue-600 rounded"> Validar firma</label>
+                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="tramiteValidarElectronica" class="w-4 h-4 text-blue-600 rounded"> Validar e-firma</label>
+                    </div>
                     <div class="lg:col-span-3"><label class="block text-sm font-medium mb-1">Texto de ayuda</label>
                         <div class="flex gap-2"><textarea id="tramiteAyuda" rows="3" class="flex-1 border rounded-xl px-4 py-2"></textarea><button type="button" id="normalizeAyudaBtn" class="bg-purple-100 hover:bg-purple-200 text-purple-700 px-3 rounded-xl text-sm"><i class="fas fa-magic mr-1"></i> Normalizar</button></div>
                     </div>
                     <div class="lg:col-span-3 flex justify-end gap-3"><button type="button" id="cancelTramiteEdit" class="px-5 py-2 bg-gray-200 rounded-xl hidden">Cancelar</button><button type="submit" class="px-6 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl shadow-md"><i class="fas fa-save mr-2"></i> Guardar</button></div>
                 </form>
             </div>
+            
             <div class="bg-white rounded-2xl shadow-lg p-6">
                 <div class="flex flex-wrap justify-between items-center mb-5 gap-3">
                     <h2 class="text-xl font-semibold">📋 Trámites registrados</h2>
@@ -142,7 +143,6 @@
             </div>
         </div>
 
-        <!-- Instituciones -->
         <div id="tab-instituciones" class="tab-content hidden">
             <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
                 <h2 class="text-xl font-semibold mb-4"><i class="fas fa-building text-green-600 mr-2"></i> Nueva / Editar Institución</h2>
@@ -192,7 +192,6 @@
                 <h2 class="text-xl font-semibold mb-4"><i class="fas fa-globe text-purple-600 mr-2"></i> Reemplazo global</h2>
                 <div class="border-b pb-4 mb-4">
                     <h3 class="font-medium text-lg mb-2">📝 Reemplazar en texto de ayuda</h3>
-                    <p class="text-sm text-gray-600 mb-3">Corrige términos u ortografía masivamente en el campo "Texto de ayuda".</p>
                     <div class="grid md:grid-cols-2 gap-4">
                         <div><label class="block text-sm font-medium">Texto a buscar</label><input type="text" id="buscarTexto" placeholder="Ej: olograma" class="w-full border rounded-xl px-4 py-2 mt-1 focus:outline-none focus:ring focus:ring-purple-100"></div>
                         <div><label class="block text-sm font-medium">Reemplazar con</label><input type="text" id="reemplazarTexto" placeholder="Ej: olografa" class="w-full border rounded-xl px-4 py-2 mt-1 focus:outline-none focus:ring focus:ring-purple-100"></div>
@@ -201,25 +200,19 @@
                         <button id="btnPrevisualizarReemplazo" class="bg-blue-100 hover:bg-blue-200 text-blue-800 px-4 py-2 rounded-xl text-sm transition-all"><i class="fas fa-eye mr-1"></i> Previsualizar</button>
                         <button id="btnEjecutarReemplazo" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl text-sm transition-all"><i class="fas fa-play mr-1"></i> Ejecutar reemplazo</button>
                     </div>
-                    <div id="previewReemplazo" class="mt-4 text-sm hidden bg-gray-50 border p-4 rounded-xl max-h-60 overflow-y-auto">
-                        <h4 class="font-bold mb-2">Trámites que se verán modificados:</h4>
-                        <div id="listaPreview"></div>
-                    </div>
+                    <div id="previewReemplazo" class="mt-4 text-sm hidden bg-gray-50 border p-4 rounded-xl max-h-60 overflow-y-auto"><div id="listaPreview"></div></div>
                 </div>
                 <div>
                     <h3 class="font-medium text-lg mb-2">✏️ Corregir tipo de firma</h3>
-                    <p class="text-sm text-gray-600 mb-3">Corrige automáticamente todos los trámites erróneos que digan <strong>"Olograma"</strong> por el término correcto <strong>"Olografa"</strong>.</p>
                     <button id="btnCorregirTipoFirma" class="bg-amber-600 hover:bg-amber-700 text-white px-5 py-2 rounded-xl text-sm transition-all"><i class="fas fa-magic mr-1"></i> Corregir tipo de firma (olograma → olografa)</button>
                     <div id="previewTipoFirma" class="mt-3 text-sm hidden bg-gray-50 p-3 rounded-xl border border-amber-200"></div>
                 </div>
             </div>
         </div>
 
-        <!-- Texto de ayuda masivo por tipo de emisión -->
         <div id="tab-ayuda-masiva" class="tab-content hidden">
             <div class="bg-white rounded-2xl shadow-lg p-6">
                 <h2 class="text-xl font-semibold mb-2"><i class="fas fa-layer-group text-indigo-500 mr-2"></i> Asignación masiva de texto de ayuda por emisión</h2>
-                <p class="text-sm text-gray-600 mb-6">Selecciona un tipo de emisión y asigna el mismo texto de ayuda a todos sus trámites. Puede dejarse en blanco para borrar el texto existente de forma masiva.</p>
                 <div class="grid md:grid-cols-2 gap-5 mb-5">
                     <div>
                         <label class="block text-sm font-medium mb-1">Tipo de emisión</label>
@@ -256,20 +249,17 @@
                 <div class="bg-white rounded-2xl shadow-lg p-6 flex flex-col justify-between">
                     <div>
                         <h3 class="text-xl font-bold text-gray-800 mb-3"><i class="fas fa-file-csv text-emerald-600 mr-2"></i>Exportar Base de Datos (CSV)</h3>
-                        <p class="text-sm text-gray-600 mb-6 leading-relaxed">Genera y descarga un archivo en formato CSV. Sigue la plantilla de importación para reimportar datos de manera limpia en el futuro.</p>
                     </div>
                     <button id="btnExportarCsv" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-md transition-all flex items-center justify-center gap-2"><i class="fas fa-download"></i> Exportar Trámites a CSV</button>
                 </div>
                 <div class="bg-white rounded-2xl shadow-lg p-6 flex flex-col justify-between">
                     <div>
                         <h3 class="text-xl font-bold text-gray-800 mb-3"><i class="fas fa-database text-blue-600 mr-2"></i>Copia de Seguridad (JSON)</h3>
-                        <p class="text-sm text-gray-600 mb-6 leading-relaxed">Crea una instantánea integral de Instituciones y Trámites, relaciones e históricos de actualización.</p>
                     </div>
                     <button id="btnExportarJson" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-md transition-all flex items-center justify-center gap-2"><i class="fas fa-file-archive"></i> Descargar Backup Completo</button>
                 </div>
                 <div class="bg-white rounded-2xl shadow-lg p-6 md:col-span-2">
                     <h3 class="text-xl font-bold text-gray-800 mb-3"><i class="fas fa-history text-amber-600 mr-2"></i>Restaurar Copia de Seguridad</h3>
-                    <p class="text-sm text-gray-600 mb-6">Permite recuperar la base de datos utilizando un backup JSON.</p>
                     <div class="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center hover:bg-gray-50 transition-colors mb-6 cursor-pointer relative" id="dropArea">
                         <input type="file" id="jsonBackupFile" accept=".json" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
                         <div class="pointer-events-none">
@@ -281,22 +271,16 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <label class="p-3 bg-white rounded-xl border border-gray-200 shadow-sm flex items-start gap-3 cursor-pointer hover:border-amber-400 transition-all">
                                 <input type="radio" name="restoreMethod" value="merge" checked class="mt-1 accent-amber-600">
-                                <div>
-                                    <span class="block text-sm font-bold text-gray-800">Combinar con datos actuales</span>
-                                    <span class="block text-xs text-gray-500 mt-1">Inserta registros nuevos respetando los existentes.</span>
-                                </div>
+                                <div><span class="block text-sm font-bold text-gray-800">Combinar con datos actuales</span></div>
                             </label>
                             <label class="p-3 bg-white rounded-xl border border-gray-200 shadow-sm flex items-start gap-3 cursor-pointer hover:border-red-400 transition-all">
                                 <input type="radio" name="restoreMethod" value="overwrite" class="mt-1 accent-red-600">
-                                <div>
-                                    <span class="block text-sm font-bold text-red-700">Reemplazar Base de Datos</span>
-                                    <span class="block text-xs text-gray-500 mt-1">Borra de forma definitiva y completa todo lo existente e introduce el backup.</span>
-                                </div>
+                                <div><span class="block text-sm font-bold text-red-700">Reemplazar Base de Datos</span></div>
                             </label>
                         </div>
                     </div>
                     <div class="flex justify-end gap-3">
-                        <button id="btnRestaurarJson" class="px-6 py-3 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl shadow-md transition-all flex items-center gap-2"><i class="fas fa-cloud-upload-alt"></i> Procesar y Restaurar Backup</button>
+                        <button id="btnRestaurarJson" class="px-6 py-3 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl shadow-md transition-all flex items-center gap-2"><i class="fas fa-cloud-upload-alt"></i> Procesar y Restaurar</button>
                     </div>
                     <div id="restoreProgress" class="hidden mt-6 p-4 bg-gray-100 rounded-xl border border-gray-200">
                         <div class="flex justify-between items-center mb-2">
@@ -324,6 +308,7 @@
             <div class="mt-5 text-right"><button id="closeModalFooterBtn" class="bg-gray-200 hover:bg-gray-300 px-5 py-2 rounded-xl text-sm transition-all">Cerrar</button></div>
         </div>
     </div>
+    
     <div id="modalCambioMasivo" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-[150]">
         <div class="bg-white rounded-2xl max-w-md w-full mx-4 p-6 shadow-2xl">
             <div class="flex justify-between items-center border-b pb-3 mb-4">
@@ -376,6 +361,59 @@
         document.getElementById("normalizeNombreBtn").onclick = () => document.getElementById("tramiteNombre").value = toTitleCase(document.getElementById("tramiteNombre").value);
         document.getElementById("normalizeAyudaBtn").onclick = () => document.getElementById("tramiteAyuda").value = toSentenceCase(document.getElementById("tramiteAyuda").value);
 
+        // =====================================================================
+        // =====================================================================
+        // MOTOR DE REGLAS GLOBALES
+        // Toda modificación pasa por aquí, garantizando coherencia de datos.
+        function applyBusinessRules(data) {
+            let emision = data.tipoEmision || "Presencial";
+            let firma = data.tipoFirma || "Olografa";
+            
+            // 1. Normalización legacy (Manejo de mayúsculas provenientes de CSV antiguos)
+            if (typeof emision === 'string') {
+                const eUp = emision.toUpperCase();
+                if (eUp.includes("AUTOMATICA") || eUp.includes("AUTOMÁTICA")) emision = "Automatica";
+                else if (eUp.includes("PREVIA") || eUp.includes("VALIDACION")) emision = "Validacion Previa";
+                else if (eUp.includes("EXTERNA")) emision = "Externa";
+                else if (eUp.includes("PRESENCIAL")) emision = "Presencial";
+            }
+            
+            if (typeof firma === 'string') {
+                const fUp = firma.toUpperCase();
+                if (fUp.includes("ELECTR") || fUp.includes("VERIFICABLE") || fUp.includes("E")) firma = "Firma electronica y/o verificable";
+                else if (fUp.includes("OLOGR") || fUp.includes("O")) firma = "Olografa";
+            }
+
+            // 2. Reglas duras de compatibilidad de negocio
+            if (emision === "Automatica") {
+                firma = "Firma electronica y/o verificable";
+                data.validarFirmaElectronica = true;
+                data.validarContraFirma = false;
+            } 
+            else if (emision === "Presencial") {
+                firma = "Olografa";
+                data.validarContraFirma = true;
+                data.validarFirmaElectronica = false;
+            } 
+            else if (emision === "Validacion Previa") {
+                firma = "Firma electronica y/o verificable";
+                data.validarContraFirma = false;
+                data.validarFirmaElectronica = false;
+            }
+
+            // Asignación final
+            data.tipoEmision = emision;
+            data.tipoFirma = firma;
+            
+            // Forzar boleanos seguros (en vez de "S"/"N" o null)
+            data.validarContraFirma = !!data.validarContraFirma;
+            data.validarFirmaElectronica = !!data.validarFirmaElectronica;
+            
+            return data;
+        }
+
+        // =====================================================================
+
         function setupFixedSelects() {
             const tipos = ["Apostilla", "Legalización"], origenes = ["Extranjero", "Nacional"], emisiones = ["Automatica", "Externa", "Presencial", "Validacion Previa"], firmas = ["Firma electronica y/o verificable", "Olografa"];
             const mkOpt = (a) => a.map(v => ({ value: v, text: v }));
@@ -387,29 +425,27 @@
             tsTipoTramite = new TomSelect("#tramiteTipo", { options: mkOpt(sortByAlpha(tipos, t => t)), create: false, sortField: "text", searchField: ["text"], placeholder: "Buscar...", items: ["Legalización"] });
             tsOrigen = new TomSelect("#tramiteOrigen", { options: mkOpt(sortByAlpha(origenes, o => o)), create: false, sortField: "text", searchField: ["text"], placeholder: "Buscar...", items: ["Nacional"] });
             
-            // Lógica Validación Previa en la Interfaz (Desmarca los check solos)
             tsEmision = new TomSelect("#tramiteEmision", { 
                 options: mkOpt(sortByAlpha(emisiones, e => e)), create: false, sortField: "text", searchField: ["text"], placeholder: "Buscar...", items: ["Presencial"],
                 onChange: function(value) {
-                    if (value === "Validacion Previa") {
-                        document.getElementById("tramiteValidarFirma").checked = false;
-                        document.getElementById("tramiteValidarElectronica").checked = false;
-                    }
                     if (value === "Automatica") {
                         if (tsFirma) tsFirma.setValue("Firma electronica y/o verificable");
                         document.getElementById("tramiteValidarElectronica").checked = true;
+                        document.getElementById("tramiteValidarFirma").checked = false;
+                    } else if (value === "Presencial") {
+                        if (tsFirma) tsFirma.setValue("Olografa");
+                        document.getElementById("tramiteValidarFirma").checked = true;
+                        document.getElementById("tramiteValidarElectronica").checked = false;
+                    } else if (value === "Validacion Previa") {
+                        if (tsFirma) tsFirma.setValue("Firma electronica y/o verificable");
+                        document.getElementById("tramiteValidarFirma").checked = false;
+                        document.getElementById("tramiteValidarElectronica").checked = false;
                     }
                 }
             });
             
-            // Lógica Firma Ológrafa en la Interfaz (Fuerza emisión a Presencial)
             tsFirma = new TomSelect("#tramiteFirma", { 
-                options: mkOpt(sortByAlpha(firmas, f => f)), create: false, sortField: "text", searchField: ["text"], placeholder: "Buscar...", items: ["Olografa"],
-                onChange: function(value) {
-                    if (value === "Olografa" && tsEmision) {
-                        tsEmision.setValue("Presencial");
-                    }
-                }
+                options: mkOpt(sortByAlpha(firmas, f => f)), create: false, sortField: "text", searchField: ["text"], placeholder: "Buscar...", items: ["Olografa"]
             });
         }
 
@@ -456,10 +492,12 @@
                         </td></tr>`;
             }
             cont.innerHTML = html + `</tbody></div>`;
+            
             document.querySelectorAll('.edit-inst-btn').forEach(btn => btn.onclick = () => { document.getElementById("institucionNombre").value = btn.dataset.name; currentEditInstitucionId = btn.dataset.id; document.getElementById("cancelInstitucionEdit").classList.remove("hidden"); window.scrollTo({ top: 0, behavior: "smooth" }); });
             document.querySelectorAll('.delete-inst-btn').forEach(btn => btn.onclick = async () => { if (confirm(`¿Eliminar "${btn.dataset.name}"?`)) { const q = query(tramitesCol, where("institucionId", "==", btn.dataset.id)); const snap = await getDocs(q); if (!snap.empty) return showToast(`No se puede eliminar: tiene ${snap.size} trámites`, "error"); await deleteDoc(doc(institucionesCol, btn.dataset.id)); showToast("Institución eliminada"); await loadInstituciones(); }});
         }
 
+        // BATCH FIX
         async function updateInstitucionNombreEnTramites(institucionId, nuevoNombre) {
             const snap = await getDocs(query(tramitesCol, where("institucionId", "==", institucionId)));
             if (snap.empty) return;
@@ -499,22 +537,23 @@
             if (!nombre) return showToast("Nombre requerido", "error");
             if (allTramites.some(t => t.institucionId === instId && t.nombreTramite?.toLowerCase() === nombre.toLowerCase() && t.id !== currentEditTramiteId)) return showToast("Trámite duplicado", "error");
             
-            // Lógica Validación Previa Backend
-            const esValPrevia = tsEmision.getValue() === "Validacion Previa";
-            const esAuto = tsEmision.getValue() === "Automatica";
-            
-            const data = {
+            // Estructura en crudo
+            let rawData = {
                 institucionId: instId, institucionNombre: institucionesMap.get(instId),
                 nombreTramite: nombre, tipoTramite: tsTipoTramite.getValue(),
                 origen: tsOrigen.getValue(), tipoEmision: tsEmision.getValue(),
-                tipoFirma: esAuto ? "Firma electronica y/o verificable" : tsFirma.getValue(),
-                validarContraFirma: esValPrevia ? false : document.getElementById("tramiteValidarFirma").checked,
-                validarFirmaElectronica: esValPrevia ? false : (esAuto ? true : document.getElementById("tramiteValidarElectronica").checked),
+                tipoFirma: tsFirma.getValue(),
+                validarContraFirma: document.getElementById("tramiteValidarFirma").checked,
+                validarFirmaElectronica: document.getElementById("tramiteValidarElectronica").checked,
                 textoAyuda: document.getElementById("tramiteAyuda").value, updatedAt: new Date()
             };
+            
+            // Pasar por motor de reglas maestras
+            const finalData = applyBusinessRules(rawData);
+            
             try {
-                if (currentEditTramiteId) await updateDoc(doc(tramitesCol, currentEditTramiteId), data);
-                else await addDoc(tramitesCol, { ...data, createdAt: new Date() });
+                if (currentEditTramiteId) await updateDoc(doc(tramitesCol, currentEditTramiteId), finalData);
+                else await addDoc(tramitesCol, { ...finalData, createdAt: new Date() });
                 showToast(currentEditTramiteId ? "Actualizado" : "Agregado"); resetTramiteForm();
             } catch (err) { showToast(err.message, "error"); }
         }
@@ -580,12 +619,13 @@
                 grupos.get(instId).tramites.push(t);
             });
             const gruposOrdenados = sortByAlpha(Array.from(grupos.entries()), ([, g]) => g.nombre);
+            
             let html = "";
             for (let [instId, grupo] of gruposOrdenados) {
                 const tramitesOrd = sortByAlpha(grupo.tramites, t => t.nombreTramite);
                 html += `<div class="border rounded-xl mb-6 shadow-sm"><div class="bg-gray-100 px-4 py-3 font-bold flex justify-between"><span><i class="fas fa-building mr-2 text-blue-600"></i> ${escapeHtml(grupo.nombre)}</span><span class="text-xs bg-white px-2 py-1 rounded-full">${tramitesOrd.length} trámites</span></div><div class="overflow-x-auto"><table class="min-w-full border-collapse"><thead class="bg-gray-50 text-xs"><tr><th class="col-check p-2"><input type="checkbox" id="selectAllInst-${instId}" class="select-all-inst" data-inst="${instId}"></th><th class="col-nombre p-2 text-left">Trámite</th><th class="col-emision-firma p-2">Emisión / Firma</th><th class="col-validaciones p-2">Validaciones</th><th class="col-acciones p-2">Acciones</th></tr></thead><tbody>`;
+                
                 for (let t of tramitesOrd) {
-                    // LIMPIEZA RESIDUAL: Si está bloqueado pero en memoria estaba seleccionado, lo borramos
                     if (t.bloqueado && selectedTramiteIds.has(t.id)) { selectedTramiteIds.delete(t.id); }
                     
                     const isSel = selectedTramiteIds.has(t.id);
@@ -595,7 +635,6 @@
                     const lockBtn = `<button class="toggle-bloqueo-btn ${t.bloqueado ? 'text-green-600' : 'text-orange-500'} text-xs" data-id="${t.id}" data-bloqueado="${t.bloqueado ? '1' : '0'}" title="${t.bloqueado ? 'Reactivar' : 'Bloquear'}"><i class="fas fa-${t.bloqueado ? 'lock-open' : 'lock'} mr-1"></i>${t.bloqueado ? 'Reactivar' : 'Bloquear'}</button>`;
                     const bloqBadge = t.bloqueado ? ` <span class="text-xs bg-green-100 text-green-700 px-1 rounded ml-1">Terminado</span>` : '';
                     
-                    // LÓGICA DE CHECKBOX BLOQUEADO
                     const chkDisabled = t.bloqueado ? 'disabled' : '';
                     const chkClass = t.bloqueado ? 'tramite-checkbox cursor-not-allowed opacity-40' : 'tramite-checkbox cursor-pointer';
 
@@ -615,7 +654,6 @@
             }
             container.innerHTML = html;
             
-            // Re-vincular eventos
             document.querySelectorAll('.tramite-checkbox').forEach(cb => cb.onchange = () => {
                 if (cb.checked) selectedTramiteIds.add(cb.dataset.id); else selectedTramiteIds.delete(cb.dataset.id);
                 const row = cb.closest('.tramite-row'); if (row) row.classList.toggle('selected', cb.checked);
@@ -623,7 +661,6 @@
             document.querySelectorAll('.select-all-inst').forEach(btn => btn.onchange = () => {
                 const grupoDiv = btn.closest('.border');
                 if (grupoDiv) {
-                    // SELECCIÓN SEGURA: Solo procesa los que no están disabled (bloqueados)
                     const chks = grupoDiv.querySelectorAll('.tramite-checkbox:not(:disabled)');
                     chks.forEach(ch => {
                         ch.checked = btn.checked;
@@ -638,7 +675,17 @@
         }
 
         let tramitesUnsub;
-        function subscribeTramites() { if (tramitesUnsub) tramitesUnsub(); tramitesUnsub = onSnapshot(tramitesCol, (snap) => { allTramites = snap.docs.map(d => ({ id: d.id, ...d.data() })); renderTramitesGrouped(allTramites); }); }
+        function subscribeTramites() { 
+            if (tramitesUnsub) tramitesUnsub(); 
+            tramitesUnsub = onSnapshot(tramitesCol, (snap) => { 
+                allTramites = snap.docs.map(d => {
+                    // Normaliza TODA la data que baja de firebase visualmente antes de imprimir
+                    let cleanData = applyBusinessRules(d.data());
+                    return { id: d.id, ...cleanData };
+                }); 
+                renderTramitesGrouped(allTramites); 
+            }); 
+        }
         
         document.getElementById("globalSearchInput").addEventListener("input", (e) => { currentSearchTerm = e.target.value; renderTramitesGrouped(allTramites); });
         document.getElementById("filterFirmaSelect").addEventListener("change", (e) => { filterFirma = e.target.value; renderTramitesGrouped(allTramites); });
@@ -676,31 +723,27 @@
             try {
                 let batch = writeBatch(db), count = 0;
                 for (let id of selectedTramiteIds) {
-                    let updateData = { updatedAt: new Date() };
-                    updateData[configCambioMasivo.campo] = valorFinal;
+                    // Tomamos el estado actual
+                    let currentTramite = allTramites.find(t => t.id === id);
+                    if (!currentTramite) continue;
                     
-                    // REGLA GLOBAL VALIDACION PREVIA
-                    if (configCambioMasivo.campo === 'tipoEmision' && valorFinal === 'Validacion Previa') {
-                        updateData.validarContraFirma = false;
-                        updateData.validarFirmaElectronica = false;
-                    }
+                    let updateObj = { ...currentTramite };
+                    updateObj[configCambioMasivo.campo] = valorFinal;
+                    updateObj.updatedAt = new Date();
+                    
+                    // PASAMOS EL TRAMITE ENTERO POR LAS REGLAS DE NEGOCIO
+                    updateObj = applyBusinessRules(updateObj);
+                    
+                    // Limpiamos el ID para no ensuciar la bd
+                    delete updateObj.id;
 
-                    // REGLA GLOBAL AUTOMATICA -> FIRMA ELECTRONICA Y VALIDAR E-FIRMA
-                    if (configCambioMasivo.campo === 'tipoEmision' && valorFinal === 'Automatica') {
-                        updateData.tipoFirma = 'Firma electronica y/o verificable';
-                        updateData.validarFirmaElectronica = true;
-                    }
-
-                    // REGLA GLOBAL FIRMA OLOGRAFA -> PRESENCIAL
-                    if (configCambioMasivo.campo === 'tipoFirma' && valorFinal === 'Olografa') {
-                        updateData.tipoEmision = 'Presencial';
-                    }
-
-                    batch.update(doc(tramitesCol, id), updateData);
-                    count++; if (count % 450 === 0) { await batch.commit(); batch = writeBatch(db); }
+                    batch.update(doc(tramitesCol, id), updateObj);
+                    count++; 
+                    if (count % 450 === 0) { await batch.commit(); batch = writeBatch(db); }
                 }
                 if (count % 450 !== 0) await batch.commit();
-                showToast(`${selectedTramiteIds.size} trámite(s) actualizados`);
+                
+                showToast(`${selectedTramiteIds.size} trámite(s) actualizados integralmente`);
                 selectedTramiteIds.clear(); renderTramitesGrouped(allTramites); cerrarModalCambio();
             } catch (err) { showToast("Error: " + err.message, "error"); } finally { btn.disabled = false; btn.innerText = 'Aplicar Cambio'; }
         };
@@ -770,24 +813,25 @@
                                 if (!instId) { const newRef = doc(institucionesCol); batch.set(newRef, { nombre: instNombre, createdAt: new Date() }); instId = newRef.id; batchSize++; institucionesMap.set(instId, instNombre); } 
                                 if (allTramites.some(t => t.institucionId === instId && t.nombreTramite?.toLowerCase() === nombreDoc.toLowerCase())) { skipped++; continue; } 
                                 
-                                const tipoTram = (row["TIPO DE TRAMITE"] || "Legalización").trim(); 
-                                let origen = (row["ORIGEN"] || "N").trim(); origen = origen === "N" ? "Nacional" : (origen === "E" ? "Extranjero" : origen); 
-                                let tipoEmision = (row["TIPO DE EMISION"] || "Presencial").trim(); 
-                                let tipoFirma = (row["TIPO DE FIRMA"] || "O").trim(); tipoFirma = tipoFirma === "E" ? "Firma electronica y/o verificable" : (tipoFirma === "O" ? "Olografa" : tipoFirma);
+                                let rawTramite = {
+                                    institucionId: instId, 
+                                    institucionNombre: instNombre, 
+                                    nombreTramite: nombreDoc, 
+                                    tipoTramite: (row["TIPO DE TRAMITE"] || "Legalización").trim(), 
+                                    textoAyuda: (row["TEXTO DE AYUDA"] || "").trim(), 
+                                    origen: (row["ORIGEN"] || "N").trim() === "N" ? "Nacional" : "Extranjero", 
+                                    tipoEmision: (row["TIPO DE EMISION"] || "Presencial").trim(), 
+                                    tipoFirma: (row["TIPO DE FIRMA"] || "O").trim(), 
+                                    validarContraFirma: (row["VALIDAR CONTRA FIRMA"] || "N").toUpperCase() === "S", 
+                                    validarFirmaElectronica: (row["VALIDAR FIRMA ELECTRONICA"] || "N").toUpperCase() === "S", 
+                                    createdAt: new Date(), 
+                                    updatedAt: new Date()
+                                };
                                 
-                                // REGLA VALIDACION PREVIA IMPORTACION
-                                let valFirma = (row["VALIDAR CONTRA FIRMA"] || "N").toUpperCase() === "S";
-                                let valElect = (row["VALIDAR FIRMA ELECTRONICA"] || "N").toUpperCase() === "S";
-                                if (tipoEmision === "Validacion Previa") { valFirma = false; valElect = false; }
-                                if (tipoEmision === "Automatica") { 
-                                    tipoFirma = "Firma electronica y/o verificable"; 
-                                    valElect = true; 
-                                }
+                                // NORMALIZAR ARCHIVO COMPLETO BAJO REGLAS DE NEGOCIO ANTES DE ENVIAR
+                                const finalTramite = applyBusinessRules(rawTramite);
                                 
-                                // REGLA IMPORTACION: Firma Olografa fuerza emisión a Presencial
-                                if (tipoFirma === "Olografa") { tipoEmision = "Presencial"; }
-                                
-                                batch.set(doc(tramitesCol), { institucionId: instId, institucionNombre: instNombre, nombreTramite: nombreDoc, tipoTramite: tipoTram, textoAyuda: (row["TEXTO DE AYUDA"] || "").trim(), origen, tipoEmision, tipoFirma, validarContraFirma: valFirma, validarFirmaElectronica: valElect, createdAt: new Date(), updatedAt: new Date() });
+                                batch.set(doc(tramitesCol), finalTramite);
                                 batchSize++; added++; if (batchSize >= 450) { await batch.commit(); batch = writeBatch(db); batchSize = 0; }
                             }
                             if (batchSize > 0) await batch.commit();
@@ -805,9 +849,103 @@
             const blob = new Blob(["\uFEFF" + Papa.unparse(rows, { delimiter: ";" })], { type: "text/csv;charset=utf-8" }), a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `mre_export_${new Date().toISOString().slice(0,10)}.csv`; a.click();
         };
 
+        // FUSIÓN CORREGIDA PARA BATCH LOOP
+        document.getElementById("btnFusionar").onclick = async () => { 
+            const origen = tsFusionOrigen.getValue(), destino = tsFusionDestino.getValue(); 
+            if (!origen || !destino) return showToast("Seleccione ambas", "error"); 
+            if (origen === destino) return showToast("Deben ser diferentes", "error"); 
+            const origenNombre = institucionesMap.get(origen), destinoNombre = institucionesMap.get(destino); 
+            
+            if (confirm(`¿Mover trámites de "${origenNombre}" a "${destinoNombre}" y eliminar "${origenNombre}"?`)) { 
+                const q = query(tramitesCol, where("institucionId", "==", origen)); 
+                const tramitesOrigen = await getDocs(q); 
+                
+                let batch = writeBatch(db); 
+                let count = 0;
+                
+                for (const docSnap of tramitesOrigen.docs) {
+                    batch.update(doc(tramitesCol, docSnap.id), { institucionId: destino, institucionNombre: destinoNombre, updatedAt: new Date() });
+                    count++;
+                    if (count >= 400) { await batch.commit(); batch = writeBatch(db); count = 0; }
+                }
+                
+                batch.delete(doc(institucionesCol, origen)); 
+                await batch.commit(); 
+                
+                showToast(`Fusionado: ${tramitesOrigen.size} trámites movidos a la nueva institución`); 
+                await loadInstituciones(); 
+            } 
+        };
+
+        // Export/Import JSON (Ya corregidos los Batches)
+        document.getElementById("btnExportarJson").onclick = async () => {
+            const btn = document.getElementById("btnExportarJson"); const originalText = btn.innerHTML; btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Preparando...';
+            try {
+                const instSnap = await getDocs(institucionesCol); const listInst = []; instSnap.forEach(d => listInst.push({ id: d.id, ...d.data() }));
+                const tramSnap = await getDocs(tramitesCol); const listTram = []; tramSnap.forEach(d => listTram.push({ id: d.id, ...d.data() }));
+                const backupData = { metadata: { fechaCreacion: new Date().toISOString(), totalInstituciones: listInst.length, totalTramites: listTram.length }, instituciones: listInst, tramites: listTram };
+                const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: "application/json;charset=utf-8" }); const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `mre_backup_${new Date().toISOString().slice(0, 10)}.json`; a.click(); showToast("Backup descargado");
+            } catch (err) { showToast(err.message, "error"); } finally { btn.disabled = false; btn.innerHTML = originalText; }
+        };
+
+        const backupFileInput = document.getElementById("jsonBackupFile");
+        backupFileInput.onchange = (e) => { const f = e.target.files[0]; document.getElementById("jsonFileNameLabel").innerHTML = f ? `<i class="fas fa-file-code text-blue-500 mr-1"></i> ${f.name}` : "Selecciona archivo .json"; };
+
+        document.getElementById("btnRestaurarJson").onclick = async () => {
+            const file = backupFileInput.files[0]; if (!file) return showToast("Seleccione archivo JSON", "error");
+            const method = document.querySelector('input[name="restoreMethod"]:checked').value;
+            if (method === "overwrite" && !confirm("⚠️ BORRARÁ TODO y restaurará el backup. ¿Continuar?")) return;
+            const progressDiv = document.getElementById("restoreProgress"), progressText = document.getElementById("restoreProgressText"), progressBar = document.getElementById("restoreProgressBar");
+            progressDiv.classList.remove("hidden"); const updateProgress = (txt, pc) => { progressText.innerText = txt; document.getElementById("restoreProgressPercent").innerText = `${pc}%`; progressBar.style.width = `${pc}%`; };
+            const reader = new FileReader();
+            reader.onload = async (event) => {
+                try {
+                    const data = JSON.parse(event.target.result); const backupInst = data.instituciones, backupTram = data.tramites;
+                    if (method === "overwrite") {
+                        updateProgress("Limpiando DB...", 10);
+                        const cInst = await getDocs(institucionesCol), cTram = await getDocs(tramitesCol); let dbatch = writeBatch(db), ops = 0;
+                        for (const d of cInst.docs) { dbatch.delete(doc(institucionesCol, d.id)); ops++; if (ops >= 400) { await dbatch.commit(); dbatch = writeBatch(db); ops = 0; } }
+                        for (const d of cTram.docs) { dbatch.delete(doc(tramitesCol, d.id)); ops++; if (ops >= 400) { await dbatch.commit(); dbatch = writeBatch(db); ops = 0; } }
+                        if (ops > 0) await dbatch.commit();
+                    }
+                    updateProgress("Restaurando Instituciones...", 40);
+                    let ibatch = writeBatch(db), iops = 0; for (const i of backupInst) { const { id, ...iData } = i; iData.createdAt = new Date(iData.createdAt.seconds ? iData.createdAt.seconds * 1000 : iData.createdAt); ibatch.set(doc(institucionesCol, id), iData); iops++; if (iops >= 400) { await ibatch.commit(); ibatch = writeBatch(db); iops = 0; } }
+                    if (iops > 0) await ibatch.commit();
+
+                    updateProgress("Restaurando Trámites...", 70);
+                    let tbatch = writeBatch(db), tops = 0; for (const t of backupTram) { const { id, ...tData } = t; tData.createdAt = new Date(tData.createdAt.seconds ? tData.createdAt.seconds * 1000 : tData.createdAt); tData.updatedAt = new Date(tData.updatedAt.seconds ? tData.updatedAt.seconds * 1000 : tData.updatedAt); tbatch.set(doc(tramitesCol, id), tData); tops++; if (tops >= 400) { await tbatch.commit(); tbatch = writeBatch(db); tops = 0; } }
+                    if (tops > 0) await tbatch.commit();
+
+                    updateProgress("Restauración Completa.", 100); showToast(`Cargado: ${backupInst.length} Inst, ${backupTram.length} Trámites`); await loadInstituciones();
+                    setTimeout(() => { progressDiv.classList.add("hidden"); backupFileInput.value = ""; document.querySelector('[data-tab="tramites"]').click(); }, 1500);
+                } catch (err) { showToast(err.message, "error"); progressBar.style.backgroundColor = "#ef4444"; }
+            }; reader.readAsText(file);
+        };
+
+        // Textos Ayuda Masivos
+        document.getElementById("btnPreviewAyudaMasiva").onclick = () => {
+            const emision = document.getElementById("ayudaMasivaEmision").value; if (!emision) return showToast("Seleccione", "error");
+            const afectados = allTramites.filter(t => normalizeString(t.tipoEmision || '') === normalizeString(emision));
+            document.getElementById("ayudaMasivaPreview").classList.remove("hidden"); document.getElementById("ayudaMasivaPreviewCount").textContent = `${afectados.length} trámites:`;
+            document.getElementById("ayudaMasivaPreviewLista").innerHTML = afectados.length ? sortByAlpha(afectados, t => t.nombreTramite).map(t => `<li class="py-1"><span class="font-medium">${escapeHtml(t.institucionNombre)}</span> — ${escapeHtml(t.nombreTramite)}</li>`).join('') : '<li class="text-gray-500">Ninguno</li>';
+        };
+        document.getElementById("btnEjecutarAyudaMasiva").onclick = async () => {
+            const emision = document.getElementById("ayudaMasivaEmision").value, txt = document.getElementById("ayudaMasivaTexto").value;
+            const afectados = allTramites.filter(t => normalizeString(t.tipoEmision || '') === normalizeString(emision));
+            if (!emision || !afectados.length || !confirm(`¿Asignar a ${afectados.length} trámites?`)) return;
+            let batch = writeBatch(db), count = 0;
+            for (const t of afectados) { batch.update(doc(tramitesCol, t.id), { textoAyuda: txt, updatedAt: new Date() }); count++; if (count % 450 === 0) { await batch.commit(); batch = writeBatch(db); } }
+            if (count % 450 !== 0) await batch.commit();
+            document.getElementById("ayudaMasivaResult").classList.remove("hidden"); document.getElementById("ayudaMasivaResult").innerHTML = `<i class="fas fa-check-circle"></i> ${count} actualizados.`; showToast(`${count} actualizados`);
+        };
+
+        document.getElementById("closeModalBtn").onclick = () => document.getElementById("modalAyuda").classList.add("hidden");
+        document.getElementById("closeModalFooterBtn").onclick = () => document.getElementById("modalAyuda").classList.add("hidden");
+        window.onclick = (e) => { if (e.target === document.getElementById("modalAyuda")) document.getElementById("modalAyuda").classList.add("hidden"); };
+
         setupFixedSelects();
         const tabs = document.querySelectorAll(".tab-btn"), contents = document.querySelectorAll(".tab-content");
-        tabs.forEach(btn => btn.onclick = () => { contents.forEach(c => c.classList.add("hidden")); document.getElementById(`tab-${btn.dataset.tab}`).classList.remove("hidden"); tabs.forEach(b => b.classList.remove("tab-active")); btn.classList.add("tab-active"); });
+        tabs.forEach(btn => btn.onclick = () => { contents.forEach(c => c.classList.add("hidden")); document.getElementById(`tab-${btn.dataset.tab}`).classList.remove("hidden"); tabs.forEach(b => b.classList.remove("tab-active")); btn.classList.add("tab-active"); if (btn.dataset.tab === "instituciones" || btn.dataset.tab === "fusion" || btn.dataset.tab === "respaldos") loadInstituciones(); if (btn.dataset.tab === "tramites") subscribeTramites(); });
         document.querySelector(".tab-btn").click(); loadInstituciones(); subscribeTramites();
     </script>
 </body>
