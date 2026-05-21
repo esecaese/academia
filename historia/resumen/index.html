@@ -6,11 +6,14 @@
     <title>Guía de Estudio: Historia del Paraguay</title>
     <style>
         :root {
-            --primary-color: #66b3ff; /* Azul claro, ideal para fondos oscuros */
-            --secondary-color: #ff6666; /* Rojo suave para acentos */
-            --text-color: #e8eaed; /* Gris muy claro para el texto general */
-            --bg-color: #121212; /* Fondo general oscuro */
-            --container-bg: #1e1e1e; /* Fondo del contenedor principal un poco más claro para dar relieve */
+            --primary-color: #66b3ff;
+            --secondary-color: #ff6666;
+            --text-color: #e8eaed;
+            --bg-color: #121212;
+            --container-bg: #1e1e1e;
+            --note-bg: #181b22;
+            --raw-bg: #161616;
+            --border-color: #3a3a3a;
         }
 
         body {
@@ -23,7 +26,7 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 950px;
             margin: 0 auto;
             background-color: var(--container-bg);
             padding: 40px;
@@ -51,6 +54,12 @@
             margin-top: 25px;
         }
 
+        h4 {
+            color: #ffd280;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
         p {
             margin-bottom: 15px;
         }
@@ -64,7 +73,6 @@
             margin-bottom: 8px;
         }
 
-        /* Listas anidadas */
         ul ul, ol ul {
             margin-top: 5px;
             margin-bottom: 5px;
@@ -93,6 +101,35 @@
             margin-bottom: 40px;
         }
 
+        .note-box {
+            background: var(--note-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin: 18px 0 24px;
+        }
+
+        .raw-box {
+            background: var(--raw-bg);
+            border-left: 4px solid var(--secondary-color);
+            padding: 18px;
+            border-radius: 8px;
+            margin-top: 16px;
+            white-space: pre-wrap;
+            color: #d6d6d6;
+        }
+
+        .label {
+            display: inline-block;
+            margin-bottom: 10px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(102, 179, 255, 0.15);
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 20px;
@@ -105,25 +142,42 @@
 <div class="container">
     <h1>Guía de Estudio: Historia del Paraguay</h1>
     <p class="subtitle">
-        Desde la fundación de Asunción (1537) hasta la muerte del Dr. Francia (1840).
+        Mezcla del resumen base con apuntes crudos organizados por segmentos temáticos.
     </p>
 
-    <!-- 1. PERIODIZACIÓN GENERAL -->
     <h2>1. Periodización General</h2>
     <p>
-        Para este tramo de la historia paraguaya se distinguen dos grandes bloques: 
+        Para este tramo de la historia paraguaya se distinguen dos grandes bloques:
         el <strong>Periodo Colonial</strong> (1537–1811) y el <strong>Primer Periodo Independiente</strong> (1811–1840),
         en el cual se consolidan la independencia y el Estado bajo la figura del Dr. Francia.
     </p>
     <p>
-        Cada bloque se divide en subperiodos marcados por procesos clave: conquista, aislamiento colonial, 
+        Cada bloque se divide en subperiodos marcados por procesos clave: conquista, aislamiento colonial,
         Revolución Comunera, Revolución de 1811, congresos nacionales y dictadura franscista.
     </p>
 
+    <div class="note-box">
+        <span class="label">Clase 1 – ampliación</span>
+        <p>
+            La periodización es una <strong>herramienta de estudio</strong> creada por los historiadores. No existe una sola
+            periodización válida, porque depende del criterio elegido y no sirve igual para todas las sociedades ni para todos
+            los momentos históricos.
+        </p>
+        <p>
+            Para la historia del Paraguay, especialmente la diplomática, se usan dos grandes periodos: el
+            <strong>periodo colonial (1537–1811)</strong> y el <strong>periodo independiente (1811–2026)</strong>.
+            Antes de 1537 se habla de <strong>Paraguay prehispánico</strong> o prehistoria paraguaya.
+        </p>
+    </div>
+
     <h3>A. Periodo Colonial (1537 – 1811)</h3>
     <p>
-        El periodo colonial abarca desde la fundación de Asunción hasta la ruptura definitiva con la autoridad española en 1811. 
+        El periodo colonial abarca desde la fundación de Asunción hasta la ruptura definitiva con la autoridad española en 1811.
         Es la etapa donde se forma la sociedad mestiza paraguaya y se definen estructuras económicas y políticas de largo plazo.
+    </p>
+    <p>
+        También es un periodo decisivo para la historia diplomática, porque hay una puja permanente entre el
+        <strong>imperio español</strong> y el <strong>imperio portugués</strong>, además de enfrentamientos con los pueblos chaqueños.
     </p>
     <ul>
         <li><strong>Paraguay prehispánico:</strong>
@@ -137,30 +191,40 @@
                     que controlaban el Chaco y los ríos; resistieron durante siglos la penetración española.
                 </li>
                 <li>
-                    La región ya era un mosaico étnico antes de la llegada de los españoles; la conquista no parte de “vacío demográfico” 
+                    La región ya era un mosaico étnico antes de la llegada de los españoles; la conquista no parte de “vacío demográfico”
                     sino que se superpone a estas sociedades.
+                </li>
+                <li>
+                    Los pueblos indígenas no ocupaban un único territorio fijo por etnia. Los <strong>guaraníes carios</strong>,
+                    que dieron nombre al país, vivían en “manchas”, compartiendo espacios con otros pueblos y moviéndose dentro
+                    de ciertos límites territoriales. La llegada europea coincidió con un momento de desplazamientos ligados a la búsqueda
+                    de las <em>tierras sin mal</em>.
                 </li>
             </ul>
         </li>
-
         <li><strong>La Conquista (1537 – 1617):</strong>
             <ul>
                 <li>
-                    <strong>Fundación de Asunción (1537):</strong> Juan de Salazar y Espinosa funda 
+                    <strong>Fundación de Asunción (1537):</strong> Juan de Salazar y Espinosa funda
                     Nuestra Señora de la Asunción a orillas del río Paraguay, como fuerte y puerto estratégico.
                 </li>
                 <li>
-                    <strong>Asunción, “madre de ciudades”:</strong> Desde aquí parten expediciones 
-                    que fundan Santa Cruz de la Sierra, Corrientes, Santa Fe, entre otras. 
+                    La historia del Paraguay comienza con esta fundación, porque fue la primera población española estable
+                    en donde se permitió el mestizaje que dio origen a la sociedad colonial paraguaya. Antes de eso,
+                    los españoles habían fundado otros fuertes, pero todos fracasaron.
+                </li>
+                <li>
+                    <strong>Asunción, “madre de ciudades”:</strong> Desde aquí parten expediciones
+                    que fundan Santa Cruz de la Sierra, Corrientes, Santa Fe, entre otras.
                     Por un tiempo, Asunción es el centro organizador de gran parte del Río de la Plata.
                 </li>
                 <li>
                     <strong>Encomiendas:</strong> Sistema por el cual grupos de indígenas son encomendados a un español,
-                    que debe “protegerlos y evangelizarlos” a cambio de trabajo y tributos. 
+                    que debe “protegerlos y evangelizarlos” a cambio de trabajo y tributos.
                     En la práctica, genera explotación pero también un mestizaje intenso entre españoles y mujeres guaraníes.
                 </li>
                 <li>
-                    <strong>Gobernadores y cabildo:</strong> La autoridad se reparte entre el gobernador, nombrado por la Corona, 
+                    <strong>Gobernadores y cabildo:</strong> La autoridad se reparte entre el gobernador, nombrado por la Corona,
                     y el <em>cabildo</em> de la ciudad (ayuntamiento), donde criollos y vecinos influyentes discuten y reclaman.
                 </li>
             </ul>
@@ -169,16 +233,20 @@
         <li><strong>Pérdida del Guairá y mediterraneidad:</strong>
             <ul>
                 <li>
-                    El área del <strong>Guairá</strong> (actual oeste de Paraná y zonas cercanas) albergaba importantes 
-                    reducciones jesuíticas y población guaraní.
+                    El área del <strong>Guairá</strong> albergaba importantes reducciones jesuíticas y población guaraní.
                 </li>
                 <li>
-                    Las <strong>bandeiras</strong> paulistas, expediciones esclavistas desde São Paulo, atacan y destruyen muchas reducciones, 
+                    Las <strong>bandeiras</strong> paulistas, expediciones esclavistas desde São Paulo, atacan y destruyen muchas reducciones,
                     capturando indígenas para venderlos como esclavos.
                 </li>
                 <li>
-                    Ese proceso obliga al traslado de miles de guaraníes hacia el sur y deja al Paraguay con menos proyección hacia el Atlántico, 
+                    Ese proceso obliga al traslado de miles de guaraníes hacia el sur y deja al Paraguay con menos proyección hacia el Atlántico,
                     consolidando su condición de país mediterráneo, dependiente de puertos ajenos para comerciar.
+                </li>
+                <li>
+                    Según los apuntes, Hernandarias entendió que el <strong>Guairá histórico</strong> se iba a perder y que allí,
+                    en la práctica, el Paraguay también perdía su acceso al mar, aunque jurídicamente siguieran existiendo derechos
+                    hasta los tratados del siglo XVIII.
                 </li>
             </ul>
         </li>
@@ -186,20 +254,30 @@
         <li><strong>Aislamiento y retroceso (1617 – 1721):</strong>
             <ul>
                 <li>
-                    En 1617 se divide la antigua Gobernación en dos: 
-                    <strong>Gobernación del Río de la Plata</strong> (con capital en Buenos Aires) 
+                    En 1617 se divide la antigua Gobernación en dos:
+                    <strong>Gobernación del Río de la Plata</strong> (con capital en Buenos Aires)
                     y <strong>Gobernación del Paraguay</strong> (con capital en Asunción).
                 </li>
                 <li>
-                    La creación del <strong>Puerto Preciso</strong> obliga a que las exportaciones paraguayas pasen por un puerto designado 
+                    Hernandarias pidió una división <strong>vertical</strong>, pero en 1621 la Corona resolvió una división
+                    <strong>horizontal</strong>, dejando al Paraguay con Asunción y dos gobernadores en vez de uno.
+                    Esta solución fue considerada fatal y dio lugar a la etapa más violenta del periodo colonial.
+                </li>
+                <li>
+                    La creación del <strong>Puerto Preciso</strong> obliga a que las exportaciones paraguayas pasen por un puerto designado
                     (como Santa Fe o Buenos Aires), aumentando costos y fomentando el contrabando.
                 </li>
                 <li>
                     La economía se basa en yerba mate, tabaco, cueros, productos agrícolas y ganadería incipiente, con poca moneda metálica y abundancia de trueque.
                 </li>
                 <li>
-                    Se profundizan conflictos con pueblos chaqueños (payaguás y otros) que atacan barcos y estancias, 
+                    Se profundizan conflictos con pueblos chaqueños (payaguás y otros) que atacan barcos y estancias,
                     contribuyendo al aislamiento económico y físico de la provincia.
+                </li>
+                <li>
+                    Fue la peor etapa colonial: casi no había migración, las autoridades no querían venir y durante casi cincuenta años
+                    el obispo no vino al Paraguay. Se retrocedió mucho territorialmente y la yerba mate siguió extrayéndose
+                    de forma natural hasta el siglo XX.
                 </li>
             </ul>
         </li>
@@ -210,28 +288,27 @@
                     <strong>Revolución Comunera (1721–1735):</strong>
                     <ul>
                         <li>
-                            El gobernador Diego de los Reyes Balmaceda es acusado de abusos, corrupción y arbitrariedades 
+                            El gobernador Diego de los Reyes Balmaceda es acusado de abusos, corrupción y arbitrariedades
                             contra vecinos de Asunción.
                         </li>
                         <li>
-                            El cabildo denuncia al gobernador ante la Audiencia de Charcas, que envía al 
+                            El cabildo denuncia al gobernador ante la Audiencia de Charcas, que envía al
                             <strong>Dr. José de Antequera y Castro</strong> como juez pesquisidor.
                         </li>
                         <li>
-                            Antequera destituye y apresar a Reyes Balmaceda y asume el gobierno apoyado por el cabildo y los vecinos. 
+                            Antequera destituye y apresa a Reyes Balmaceda y asume el gobierno apoyado por el cabildo y los vecinos.
                             Surgen los <strong>comuneros</strong>, partidarios de la autonomía política local.
                         </li>
                         <li>
-                            El virrey y las autoridades realistas (con apoyo jesuita) intentan reponer a Reyes, pero el pueblo y el cabildo resisten, 
+                            El virrey y las autoridades realistas intentan reponer a Reyes, pero el pueblo y el cabildo resisten,
                             desencadenando años de enfrentamientos armados.
                         </li>
                         <li>
-                            Finalmente, los comuneros son derrotados; Antequera y su aliado Juan de Mena son ejecutados en Lima. 
-                            Como castigo, se deroga la Real Cédula de 1537 que permitía a los asuncenos elegir gobernador en caso de acefalía.
+                            Finalmente, los comuneros son derrotados; Antequera y su aliado Juan de Mena son ejecutados en Lima.
                         </li>
                         <li>
-                            La Revolución Comunera deja como legado la doctrina de que la <strong>voluntad del común</strong> 
-                            puede oponerse a un mal gobierno, antecedente ideológico de la independencia.
+                            La Revolución Comunera deja como legado la doctrina de que la <strong>voluntad del común</strong>
+                            puede oponerse a un mal gobierno.
                         </li>
                     </ul>
                 </li>
@@ -243,21 +320,41 @@
                         <li>Se expulsa a los jesuitas (1767), reconfigurando la economía regional y el control sobre poblaciones indígenas.</li>
                     </ul>
                 </li>
+                <li>
+                    Según los apuntes de clase, desde 1721 a 1811 comienza el <strong>inicio de la identidad</strong> paraguaya:
+                    entra moneda de plata, se exportan cueros, maderas y cuerdas, y la población empieza a distinguirse cada vez más
+                    de la española. La expulsión de los jesuitas permitió que sus tierras pasaran a la provincia del Paraguay.
+                </li>
             </ul>
         </li>
     </ul>
 
-    <h3>B. Primer Periodo Independiente (1811 – 1840)</h3>
+    <h3>B. Periodo Independiente</h3>
     <p>
-        Comienza con la Revolución de Mayo paraguaya, continúa con la experiencia de la Junta y el Consulado, 
+        Comienza con la Revolución paraguaya de 1811, continúa con la experiencia de la Junta y el Consulado,
         y se consolida con la dictadura del Dr. Francia, que preserva la independencia pero a costa de un régimen cerrado y autoritario.
     </p>
     <ul>
-        <li><strong>Etapa revolucionaria y colegiada (1811 – 1814):</strong> Junta Superior de Gobierno y Consulado (Francia–Yegros).</li>
-        <li><strong>Etapa dictatorial (1814 – 1840):</strong> Dictadura temporal (1814–1816) y dictadura perpetua (1816–1840) del Dr. Francia.</li>
+        <li><strong>1811–1870:</strong> el Paraguay independiente.</li>
+        <li><strong>1870–1940:</strong> el Estado liberal; hegemonía colorada hasta 1904 y liberal de 1904 a 1940, con violencia política.</li>
+        <li><strong>1940–1989:</strong> el Estado autoritario.</li>
+        <li><strong>1989–2026:</strong> la apertura democrática.</li>
     </ul>
 
-    <!-- 2. CONTEXTO MONÁRQUICO, TRATADOS Y SOCIEDAD COLONIAL -->
+    <div class="note-box">
+        <span class="label">Clase 1 – precisión del periodo independiente</span>
+        <p>
+            La etapa 1940–1989 abarca la Constitución de 1940, la dictadura de Higinio Morínigo, la anarquía colorada y la dictadura de Stroessner.
+            Una característica señalada en clase es que los liderazgos políticos fueron <strong>eminentemente civiles</strong>,
+            aun cuando algunos tuvieran títulos militares.
+        </p>
+        <p>
+            La apertura democrática desde 1989 se entiende como una etapa ya cerrada en su transición, con varios hitos:
+            triunfo posible de la oposición, nueva constitución, predominio de liderazgo civil, obediencia militar al poder civil
+            y alternancia en el poder.
+        </p>
+    </div>
+
     <h2>2. Monarquía Española, Tratados y Sociedad Colonial</h2>
 
     <h3>Dinastías en España</h3>
@@ -265,23 +362,23 @@
         <li><strong>Casa de Austria (Habsburgo):</strong>
             <ul>
                 <li>
-                    Bajo Carlos I y sus sucesores, el imperio se organiza como una monarquía compuesta: 
+                    Bajo Carlos I y sus sucesores, el imperio se organiza como una monarquía compuesta:
                     cada reino mantiene sus leyes y cabildos, siempre que reconozcan al rey.
                 </li>
                 <li>
-                    Las ciudades como Asunción conservan cierto margen de acción a través del cabildo, 
-                    que llega a tener un papel protagónico en momentos de conflicto (como la Revolución Comunera).
+                    Las ciudades como Asunción conservan cierto margen de acción a través del cabildo,
+                    que llega a tener un papel protagónico en momentos de conflicto.
                 </li>
             </ul>
         </li>
         <li><strong>Casa de Borbón:</strong>
             <ul>
                 <li>
-                    A partir de 1700, con los Borbones, se impulsa el <strong>absolutismo ilustrado</strong>: 
+                    A partir de 1700, con los Borbones, se impulsa el <strong>absolutismo ilustrado</strong>:
                     centralización, creación de nuevos virreinatos, mayor control fiscal y militar.
                 </li>
                 <li>
-                    Se aplica una política de “orden desde arriba”, con reformas que buscan fortalecer a la Corona 
+                    Se aplica una política de “orden desde arriba”, con reformas que buscan fortalecer a la Corona
                     pero que generan malestar en muchas regiones americanas.
                 </li>
             </ul>
@@ -294,7 +391,7 @@
             <ul>
                 <li>España y Portugal comparten rey, aunque mantienen administraciones separadas.</li>
                 <li>
-                    Este contexto facilita el avance portugués (bandeirantes) sobre territorios nominalmente españoles,
+                    Este contexto facilita el avance portugués sobre territorios nominalmente españoles,
                     especialmente reducciones jesuíticas del Guairá.
                 </li>
             </ul>
@@ -302,20 +399,19 @@
         <li><strong>Tratado de Madrid (1750):</strong>
             <ul>
                 <li>
-                    Introduce el principio de <em>uti possidetis</em> (“como poseéis, poseeréis”), 
-                    legalizando gran parte de los avances portugueses donde ya estaban asentados de hecho.
+                    Introduce el principio de <em>uti possidetis</em> y legaliza gran parte de los avances portugueses donde ya estaban asentados de hecho.
                 </li>
                 <li>
-                    Obliga a trasladar varias reducciones guaraníes y reconfigura las fronteras en el sur de América.
+                    Según la clase 2, este tratado también supuso la pérdida de las <strong>misiones orientales del Paraguay</strong>
+                    y debilitó su presencia en las misiones.
                 </li>
             </ul>
         </li>
         <li><strong>Tratado de San Ildefonso (1777):</strong>
             <ul>
-                <li>Busca fijar límites definitivos entre dominios españoles y portugueses.</li>
+                <li>Busca fijar límites entre dominios españoles y portugueses.</li>
                 <li>
-                    Consolida el carácter mediterráneo del Paraguay, que ya no tiene acceso directo al mar 
-                    y depende de ríos y puertos de otras jurisdicciones.
+                    En clase se remarcó que establecía un <strong>marco general</strong> de cómo iban a ser las fronteras.
                 </li>
             </ul>
         </li>
@@ -325,42 +421,52 @@
     <ul>
         <li><strong>Estamentos y jerarquía:</strong>
             <ul>
-                <li>En la cúspide: rey, altos funcionarios, alto clero (obispos, superiores de órdenes) y grandes propietarios.</li>
+                <li>En la cúspide: rey, altos funcionarios, alto clero y grandes propietarios.</li>
                 <li>En el medio: bajo clero, pequeños propietarios, artesanos urbanos y comerciantes.</li>
                 <li>En la base: campesinos pobres, indígenas encomendados, esclavos africanos y castas mixtas discriminadas.</li>
+                <li>La clase remarcó que se trataba de una sociedad <strong>feudal y estamental</strong>.</li>
             </ul>
         </li>
         <li><strong>Blancos:</strong>
             <ul>
                 <li><em>Peninsulares:</em> españoles nacidos en Europa, en general ocupan los cargos más altos de gobierno y justicia.</li>
-                <li><em>Criollos:</em> hijos de españoles nacidos en América; en Paraguay, muchos mestizos tempranos 
-                    (“mancebos de la tierra”) son reconocidos como parte de este grupo dominante local.</li>
+                <li><em>Criollos:</em> hijos de españoles nacidos en América; en Paraguay, muchos mestizos tempranos son reconocidos como parte de este grupo dominante local.</li>
+                <li>Todos tenían derechos políticos, pero los peninsulares accedían a los cargos superiores con mucha más facilidad.</li>
+            </ul>
+        </li>
+        <li><strong>Mestizos:</strong>
+            <ul>
+                <li>En Paraguay jurídicamente casi no existían como categoría autónoma.</li>
+                <li>Según la clase, los mestizos terminaban siendo considerados <strong>criollos</strong>, es decir, “blanqueados” jurídicamente.</li>
             </ul>
         </li>
         <li><strong>Indígenas:</strong>
             <ul>
-                <li><em>Reducidos:</em> viven en pueblos de misión (jesuíticos y franciscanos), con trabajo comunal, evangelización y algunas protecciones legales.</li>
-                <li><em>De monte:</em> grupos no sometidos, especialmente chaqueños, que continúan su vida independiente y muchas veces conflictiva con el mundo colonial.</li>
-                <li><em>Sistemas de trabajo:</em> 
-                    <strong>mita</strong> (servicio rotativo obligatorio), 
-                    <strong>yanaconazgo</strong> (servicio permanente ligado a un patrón y a la tierra) y 
-                    <strong>naboría</strong> (servicio doméstico personal).
+                <li><em>Reducidos:</em> viven en pueblos de misión y son el indígena colonial mayoritario.</li>
+                <li><em>De monte:</em> grupos no sometidos, especialmente chaqueños.</li>
+                <li><em>Sistemas de trabajo:</em>
+                    <strong>mita</strong>,
+                    <strong>yanaconazgo</strong> y
+                    <strong>naboría</strong>.
+                </li>
+                <li>
+                    En la explicación de clase, la encomienda podía ser <strong>mixta</strong> (servidumbre temporal en pueblos de indios)
+                    o <strong>yanacona</strong> (servidumbre permanente con el patrón).
                 </li>
             </ul>
         </li>
         <li><strong>Negros y afrodescendientes:</strong>
             <ul>
                 <li>
-                    Llegan como <strong>esclavos</strong>, en menor número que en otras regiones, 
-                    y se dedican a tareas urbanas, domésticas y artesanales (plateros, carpinteros, sastres).
+                    Llegan como <strong>esclavos</strong>, en menor número que en otras regiones,
+                    y se dedican a tareas urbanas, domésticas y artesanales.
                 </li>
                 <li>
-                    <strong>Libertos:</strong> esclavos que obtienen la libertad por compra, manumisión o servicios prestados; 
-                    se integran como artesanos, soldados o trabajadores libres.
+                    <strong>Libertos:</strong> esclavos que obtienen la libertad por compra, manumisión o testamento.
                 </li>
                 <li>
-                    <strong>Emboscada:</strong> fortaleza y localidad asociada tradicionalmente a poblaciones negras y mulatas 
-                    con funciones militares, a cambio de ciertos privilegios y exenciones.
+                    <strong>Emboscada:</strong> localidad vinculada tradicionalmente a población afrodescendiente,
+                    especialmente liberta, que no podía siempre sostener los impuestos de la libertad.
                 </li>
             </ul>
         </li>
@@ -369,12 +475,19 @@
                 <li><strong>Mulato:</strong> mezcla blanco–negro.</li>
                 <li><strong>Cuarterón:</strong> descendiente de mulato y blanco.</li>
                 <li><strong>Zambo:</strong> mezcla indio–negro.</li>
-                <li>En la práctica, el mestizaje paraguayo hace que muchas fronteras étnicas sean más flexibles que en otros virreinatos.</li>
+                <li>Estas categorías no eran científicas, sino construcciones racistas del orden colonial.</li>
             </ul>
         </li>
     </ul>
 
-    <!-- 3. ANTECEDENTES DE LA INDEPENDENCIA -->
+    <div class="note-box">
+        <span class="label">Clase 3 – agregado puntual</span>
+        <p>
+            La <strong>encomienda naboría</strong> era la encomienda aplicada a niños y mujeres. Aunque era ilegal,
+            en Paraguay se practicó. Además, los pardos y negros podían clasificarse tanto por raza como por condición de libertad.
+        </p>
+    </div>
+
     <h2>3. Antecedentes de la Independencia</h2>
 
     <h3>Factores Internos</h3>
@@ -382,16 +495,19 @@
         <li><strong>Revolución Comunera (1721 – 1735):</strong>
             <ul>
                 <li>Crisis económica por impuestos, falta de moneda y trabas al comercio.</li>
-                <li>Mal gobierno de Reyes Balmaceda y abusos contra vecinos criollos.</li>
-                <li>Participación activa del cabildo de Asunción, que apela a la Real Cédula de 1537 para justificar su autonomía.</li>
-                <li>Derrota final de los comuneros y castigos: derogación de la Real Cédula, aumento de impuestos, consolidación del Puerto Preciso.</li>
+                <li>Mal gobierno y abusos contra vecinos criollos.</li>
+                <li>Participación activa del cabildo de Asunción, que apela a la autonomía local.</li>
                 <li>Legado: tradición de resistencia contra gobernadores abusivos y defensa de la “voluntad del común”.</li>
+                <li>
+                    Los apuntes matizan su importancia como antecedente directo: sí fue un antecedente,
+                    pero no tan decisivo porque ocurrió mucho antes de 1811 y casi no aparece en los documentos del momento independentista.
+                </li>
             </ul>
         </li>
         <li><strong>Tensiones criollos–peninsulares:</strong>
             <ul>
                 <li>Los criollos sienten que sus méritos y derechos son menospreciados frente a peninsulares recién llegados.</li>
-                <li>Esto alimenta resentimientos que más tarde se canalizarán en clave independentista.</li>
+                <li>Esto alimenta resentimientos que más tarde se canalizarán en clave autonomista e independentista.</li>
             </ul>
         </li>
         <li><strong>Situación económica y social:</strong>
@@ -404,63 +520,80 @@
 
     <h3>Factores Externos</h3>
     <ul>
-        <li><strong>Ilustración y Revolución Francesa (1789):</strong>
+        <li><strong>Ilustración:</strong>
             <ul>
-                <li>Difunden ideas de soberanía popular, derechos del hombre y fin del absolutismo.</li>
-                <li>Llegan a América a través de libros, sermones, universidades y contactos de élites criollas.</li>
+                <li>Difunde ideas de soberanía, libertad, contrato social, equilibrio de poderes y tolerancia.</li>
+                <li>Llega a América a través de libros, universidades y redes intelectuales.</li>
+                <li>Influye en casi todos los próceres paraguayos.</li>
             </ul>
         </li>
-        <li><strong>Independencia de Estados Unidos (1776):</strong>
+        <li><strong>Independencia de Estados Unidos:</strong>
             <ul>
-                <li>Demuestra que una colonia puede vencer a una potencia europea y organizar una república estable.</li>
+                <li>Demuestra que una colonia puede vencer a una potencia europea y organizar una república.</li>
+            </ul>
+        </li>
+        <li><strong>Revolución Francesa:</strong>
+            <ul>
+                <li>Difunde ideas de soberanía popular, ciudadanía y caída del absolutismo.</li>
+                <li>Su etapa napoleónica descabeza a la monarquía española y acelera las juntas americanas.</li>
+            </ul>
+        </li>
+        <li><strong>Rebelión de Túpac Amaru:</strong>
+            <ul>
+                <li>Fue más recordada en tiempos de la independencia que las revoluciones comuneras.</li>
+                <li>Había testigos vivos y dejó huellas políticas, religiosas y pedagógicas.</li>
             </ul>
         </li>
         <li><strong>Invasiones Inglesas (1806–1807):</strong>
             <ul>
                 <li>Las milicias criollas, incluyendo paraguayas, participan en la defensa de Buenos Aires.</li>
-                <li>La experiencia refuerza la idea de que los americanos pueden defenderse sin tropas peninsulares.</li>
+                <li>Refuerzan la idea de que los americanos pueden defenderse sin liderazgo peninsular.</li>
             </ul>
         </li>
         <li><strong>Abdicaciones de Bayona (1808):</strong>
             <ul>
-                <li>Carlos IV y Fernando VII son obligados a abdicar, y Napoleón coloca a su hermano José en el trono.</li>
-                <li>La ausencia de un rey legítimo abre la discusión sobre dónde reside la soberanía: 
-                    en el rey, en la nación, en el pueblo o en los cabildos.</li>
-                <li>Se multiplican las juntas en España y América, reclamando gobernar “en nombre de Fernando VII”.</li>
+                <li>Crisis de legitimidad monárquica y debate sobre dónde reside la soberanía.</li>
             </ul>
         </li>
     </ul>
 
-    <!-- 4. PROCESO REVOLUCIONARIO -->
-    <h2>4. El Proceso Revolucionario (1811 – 1813)</h2>
+    <div class="note-box">
+        <span class="label">Apunte crudo integrado</span>
+        <div class="raw-box">ANTECEDENTES Y CAUSAS DE LA INDEPENDENCIA NACIONAL
+Las revoluciones comuneras: los autores más básicos las mencionan como un antecedente, que ahora se pone en duda que sea un antecedente importante. Es un antecedente, pero no tan importante: primero porque ocurrieron mucho tiempo antes de la independencia y no habían testigos vivos de estas revoluciones al momento de la independencia; segundo porque tampoco se mencionan en los documentos al momento de la independencia.
+La Rebelión de Tupac Amaru: es más mencionada en documentos de momentos de la independencia. En primer lugar, había testigos vivos; en segundo lugar, hubo consecuencias que hasta ahora se ven.
+La Ilustración: es sumamente importante. Los próceres sacaron muchas de sus ideas de la ilustración porque tenían los libros y estudiaron en universidades en donde clandestinamente se enseñaban con libros de autores de la ilustración.</div>
+    </div>
 
-    <h3>Reacción contra la Junta de Buenos Aires</h3>
+    <h2>4. El Proceso Revolucionario (1810 – 1813)</h2>
+
+    <h3>Reacción contra Buenos Aires</h3>
     <p>
-        En 1810, la Junta de Buenos Aires invita a las demás ciudades del antiguo virreinato a reconocer su autoridad. 
+        En 1810, la Junta de Buenos Aires invita a las demás ciudades del antiguo virreinato a reconocer su autoridad.
         En el Paraguay se convoca un congreso para decidir la postura frente a Buenos Aires.
     </p>
     <ul>
-        <li><strong>Congreso de 1811 en Asunción:</strong>
+        <li><strong>Congreso de 1810 en Asunción:</strong>
             <ul>
-                <li>Los representantes optan por no someterse a Buenos Aires y mantener una posición autónoma.</li>
+                <li>Se decide no someterse a Buenos Aires y mantener una postura autónoma, aunque con vínculos comerciales.</li>
+                <li>Participa el Dr. Francia.</li>
             </ul>
         </li>
         <li><strong>Campaña de Manuel Belgrano:</strong>
             <ul>
-                <li>Buenos Aires envía a Belgrano con tropas para “convencer” al Paraguay por la fuerza.</li>
-                <li>Belgrano ocupa algunas posiciones, pero enfrenta una fuerte resistencia de milicias paraguayas.</li>
+                <li>Buenos Aires envía a Belgrano con tropas.</li>
+                <li>Belgrano llega a Paraguarí en enero de 1811 y establece su campamento en la loma luego llamada Cerro Porteño.</li>
             </ul>
         </li>
-        <li><strong>Batalla de Paraguarí (19 de enero de 1811):</strong>
+        <li><strong>Batalla de Paraguarí:</strong>
             <ul>
-                <li>Las fuerzas paraguayas, integradas en gran parte por milicianos locales, logran frenar a Belgrano.</li>
-                <li>El gobernador Velasco, indeciso, pierde confianza entre los criollos.</li>
+                <li>Las fuerzas paraguayas frenan a Belgrano.</li>
             </ul>
         </li>
-        <li><strong>Batalla de Tacuary (9 de marzo de 1811):</strong>
+        <li><strong>Batalla de Tacuarí (marzo de 1811):</strong>
             <ul>
-                <li>Victoria paraguaya decisiva; Belgrano se ve obligado a retroceder y negociar.</li>
-                <li>Se firma una capitulación respetuosa, que mantiene canales de comunicación pero reconoce el peso militar paraguayo.</li>
+                <li>Victoria paraguaya decisiva.</li>
+                <li>El éxito paraguayo fue también moral, y debilitó la legitimidad de Velasco.</li>
             </ul>
         </li>
     </ul>
@@ -469,343 +602,200 @@
     <ul>
         <li><strong>Causa inmediata:</strong>
             <ul>
-                <li>Se conoce la gestión del gobernador Velasco con emisarios portugueses (Misión Abreu), 
-                    lo que se interpreta como un intento de traer tropas luso-brasileñas al Paraguay.</li>
-                <li>Esto es visto como una traición a la seguridad de la provincia.</li>
+                <li>La <strong>misión secreta del teniente Abreu</strong> y los contactos de Velasco con portugueses son vistos como amenaza.</li>
+            </ul>
+        </li>
+        <li><strong>Conspiración revolucionaria:</strong>
+            <ul>
+                <li>Se desarrolla sobre todo en la casa de los Martínez Sáenz, hoy Casa de la Independencia.</li>
+                <li>En una Asunción pequeña, todo se sabía rápidamente.</li>
             </ul>
         </li>
         <li><strong>Noches del 14 y 15 de mayo:</strong>
             <ul>
-                <li>Oficiales criollos (como Cabañas, Iturbe, Caballero) rodean el cuartel y logran que Velasco acepte cambios sin derramamiento de sangre.</li>
-                <li>Se produce un “golpe” pacífico que desplaza al poder al sector criollo autonomista.</li>
-            </ul>
-        </li>
-        <li><strong>Triunvirato provisorio:</strong>
-            <ul>
-                <li>Se constituye un gobierno donde aún figura Velasco, pero cada vez con menos poder real.</li>
-                <li>En poco tiempo, Velasco será definitivamente apartado.</li>
+                <li>Se produce un golpe negociado, con escaso derramamiento de sangre.</li>
+                <li>Se crea un <strong>Triunvirato</strong> provisorio para impedir que Velasco reasuma plenamente el poder.</li>
             </ul>
         </li>
     </ul>
 
-    <h3>Primeras Formas de Estado: Junta y Bando Educativo</h3>
+    <h3>Primeras formas de gobierno</h3>
     <ul>
-        <li><strong>Junta Superior de Gobierno (1811):</strong>
+        <li><strong>Triunvirato:</strong>
             <ul>
-                <li>Órgano colegiado que asume el gobierno. Fulgencio Yegros es presidente; el Dr. Francia, uno de los vocales más influyentes.</li>
-                <li>La famosa <strong>Nota del 20 de julio</strong> enviada a Buenos Aires afirma la voluntad de mantener buenas relaciones, 
-                    pero en pie de igualdad, sin subordinación política.</li>
-                <li>Se empieza a construir una diplomacia propia del Paraguay, distinta a la de Buenos Aires.</li>
+                <li>Integrado por el Dr. Francia, Zeballos y Velasco.</li>
+                <li>Velasco luego es apartado por seguir conspirando.</li>
+            </ul>
+        </li>
+        <li><strong>Junta Superior Gubernativa (1811):</strong>
+            <ul>
+                <li>Formada por Fulgencio Yegros, Pedro Juan Caballero, Juan Francisco Bogarín, Dr. Francia y Fernando de la Mora.</li>
+                <li>La <strong>Nota del 20 de julio</strong> afirma la voluntad paraguaya de gobernarse a sí misma, sin subordinación a Buenos Aires.</li>
+                <li>Se sigue jurando lealtad a Fernando VII.</li>
             </ul>
         </li>
         <li><strong>Bando del 6 de enero de 1812:</strong>
             <ul>
-                <li>Establece la <strong>educación gratuita</strong> para los niños, al menos en lo básico (lectura, escritura y cuentas).</li>
-                <li>Muestra que desde el inicio la instrucción es vista como herramienta para formar ciudadanos del nuevo Estado.</li>
+                <li>Propone promover la ciencia, la tecnología y la educación.</li>
+                <li>Plantea educación libre y gratuita para todos los niños del Paraguay.</li>
+            </ul>
+        </li>
+        <li><strong>Segundo Congreso Nacional (12 de octubre de 1813):</strong>
+            <ul>
+                <li>Declara la <strong>República del Paraguay</strong>.</li>
+                <li>Aprueba un <strong>Reglamento de Gobierno</strong>.</li>
+                <li>Crea el <strong>Consulado</strong>, con Francia y Yegros como cónsules.</li>
             </ul>
         </li>
     </ul>
 
-    <!-- 5. CONGRESOS NACIONALES Y CONSOLIDACIÓN DEL ESTADO -->
-    <h2>5. Congresos Nacionales y Consolidación del Nuevo Estado</h2>
+    <div class="note-box">
+        <span class="label">Clase 4 – fechas de independencia</span>
+        <p>
+            A efectos históricos, el Paraguay es independiente desde <strong>1811</strong>; a efectos jurídicos internos, desde <strong>1813</strong>;
+            y a efectos jurídicos internacionales, desde <strong>1842</strong>, cuando se formaliza y jura el Acta de Independencia.
+        </p>
+    </div>
+
+    <h2>5. Congresos Nacionales y Consolidación del Estado</h2>
 
     <h3>Gran Congreso de 1813</h3>
-    <p>
-        El Congreso de octubre de 1813 es uno de los más importantes y numerosos de la historia paraguaya temprana, 
-        con cerca de mil diputados de ciudades y campañas, incluyendo representantes indígenas y rurales.
-    </p>
-    <p><strong>Decisiones principales:</strong></p>
     <ol>
         <li><strong>Reglamento de Gobierno:</strong>
             <ul>
-                <li>Documento que organiza el poder en forma de <strong>Consulado</strong>, con dos cónsules que se alternan al frente del Ejecutivo.</li>
-                <li>Fija atribuciones de las autoridades y sienta bases de un Estado republicano, aunque todavía sin una constitución formal.</li>
+                <li>Organiza el poder con forma consular.</li>
             </ul>
         </li>
         <li><strong>Proclamación de la República del Paraguay:</strong>
             <ul>
-                <li>El país se denomina oficialmente <strong>República del Paraguay</strong>, marcando la ruptura con el orden monárquico español.</li>
-                <li>Aunque se mantiene la fórmula de gobernar “en nombre de Fernando VII”, en los hechos se ejerce la soberanía de manera independiente.</li>
+                <li>Marca la ruptura con el orden monárquico español.</li>
             </ul>
         </li>
         <li><strong>Creación del Consulado:</strong>
             <ul>
-                <li>Se nombra como cónsules a Fulgencio Yegros (militar) y al Dr. José Gaspar Rodríguez de Francia (jurista).</li>
-                <li>Ambos comparten el poder, pero Francia muestra gran habilidad para ganar influencia sobre el aparato estatal.</li>
+                <li>Francia y Yegros comparten el poder, aunque Francia gana creciente influencia.</li>
             </ul>
         </li>
     </ol>
 
-    <h3>Contexto Regional y Razones del Poder Fuerte</h3>
-    <ul>
-        <li>
-            En el Río de la Plata hay guerras constantes entre el centralismo porteño y fuerzas federales (Artigas, Liga de los Pueblos Libres).
-        </li>
-        <li>
-            Brasil (entonces Reino Unido de Portugal, Brasil y Algarve) representa otra amenaza desde el este.
-        </li>
-        <li>
-            España, tras la derrota de Napoleón, intenta restaurar su dominio en América.
-        </li>
-        <li>
-            En este contexto, muchos paraguayos consideran necesario un <strong>gobierno fuerte y centralizado</strong> para sobrevivir como Estado independiente.
-        </li>
-    </ul>
-
     <h3>Congreso de 1814: Dictadura Temporal</h3>
     <p>
-        El Congreso de 1814, convocado ante las tensiones internas y externas, discute la conveniencia de un poder unipersonal 
-        al estilo del dictador republicano de la antigua Roma (como Cincinato).
+        En 1814, a propuesta de Molas, se nombra al Dr. Francia <strong>Dictador Supremo de la República</strong> por un periodo temporal de cinco años.
     </p>
-    <ul>
-        <li>
-            <strong>Nombramiento del Dr. Francia:</strong> 
-            El Congreso nombra a Francia <strong>Dictador Supremo de la República</strong> por un periodo limitado (dictadura temporal), 
-            dándole amplios poderes para reorganizar el Estado y garantizar la independencia.
-        </li>
-        <li>
-            El mismo congreso reduce el número de diputados para futuras reuniones, 
-            y refuerza la centralización del poder en Asunción.
-        </li>
-    </ul>
 
     <h3>Congreso de 1816: Dictadura Perpetua</h3>
     <p>
-        En 1816 se reúne un nuevo Congreso, con menor número de diputados y más controlado por el propio Francia. 
-        Allí se consolida definitivamente su poder personal.
+        En 1816 se lo declara <strong>Dictador Supremo y Perpetuo</strong>. No se fija fecha para un nuevo congreso,
+        salvo que el propio Francia quisiera convocarlo, lo que no ocurrió.
     </p>
-    <ul>
-        <li>
-            <strong>Dictador Supremo Perpetuo:</strong> 
-            El Congreso declara a Francia <strong>Dictador Supremo y Perpetuo</strong> de la República del Paraguay.
-        </li>
-        <li>
-            Se suspende la práctica de convocar congresos de forma periódica; 
-            cualquier futura reunión queda a discreción del dictador (que nunca volverá a convocarlos).
-        </li>
-        <li>
-            Algunos diputados, como Mariano Antonio Molas, critican la perpetuidad del cargo, 
-            pero sus advertencias no modifican la decisión de la mayoría.
-        </li>
-    </ul>
+    <p>
+        Molas se opuso a esta decisión.
+    </p>
 
-    <!-- 6. LA DICTADURA DEL DR. FRANCIA -->
     <h2>6. La Dictadura del Dr. Francia (1814 – 1840)</h2>
 
-    <h3>Perfil del Dr. Francia</h3>
+    <h3>Perfil y concentración del poder</h3>
     <ul>
         <li>
-            Nacido en 1766, José Gaspar Rodríguez de Francia estudió en Córdoba, donde se formó en filosofía, teología y derecho.
+            Francia asegura la independencia, pero concentra el poder y gobierna con rasgos semejantes a un gobierno colonial en su forma de mando.
         </li>
         <li>
-            Fue catedrático en el Colegio Seminario de San Carlos y abogado, conocido por su gran cultura y carácter fuerte.
+            Su gobierno puede dividirse en dos etapas: <strong>antes de 1820</strong> y <strong>después de 1820</strong>.
         </li>
         <li>
-            En política, se destacó primero como vocal de la Junta, luego como cónsul y finalmente como dictador, 
-            defendiendo un proyecto de independencia radical y control estatal.
+            Durante el Consulado ya comienza a imponerse sobre Yegros.
         </li>
     </ul>
 
-    <h3>Base Social y Enemigos del Régimen</h3>
+    <h3>Política interna y control</h3>
     <ul>
-        <li><strong>Apoyos:</strong>
+        <li><strong>Aislamiento económico:</strong>
             <ul>
-                <li>
-                    Campesinos, pequeños y medianos propietarios rurales, que valoran la estabilidad interna y se benefician de 
-                    la caída de la antigua élite colonial.
-                </li>
-                <li>
-                    Sectores populares urbanos que ven en el régimen una protección frente a abusos de grandes comerciantes y autoridades tradicionales.
-                </li>
-            </ul>
-        </li>
-        <li><strong>Enemigos principales:</strong>
-            <ul>
-                <li>La vieja élite colonial (familias tradicionales de Asunción), que pierde tierras, privilegios y capacidad de influencia.</li>
-                <li>Altos miembros del clero y ciertas órdenes religiosas, cuyos bienes son secularizados y que pierden poder económico.</li>
-                <li>Españoles peninsulares, vistos como potencial quinta columna de la restauración colonial.</li>
-            </ul>
-        </li>
-        <li><strong>Medidas simbólicas:</strong>
-            <ul>
-                <li>
-                    Prohibición de matrimonios exclusivamente entre españoles peninsulares, obligándolos a emparentarse con indios, negros o mestizos, 
-                    para disolver su carácter de “casta cerrada”.
-                </li>
-                <li>
-                    Confiscación de bienes a opositores políticos, que pasan a manos del Estado.
-                </li>
-            </ul>
-        </li>
-    </ul>
-
-    <h3>Política Interna: Justicia, Orden y Control</h3>
-    <ul>
-        <li><strong>Leyes y justicia:</strong>
-            <ul>
-                <li>
-                    Se siguen aplicando, en general, las leyes coloniales, salvo cuando Francia las modifica por medio de bandos, decretos y autos.
-                </li>
-                <li>
-                    El dictador concentra poderes ejecutivo, legislativo y judicial; 
-                    muchas causas importantes son resueltas directamente por él o por funcionarios de su confianza.
-                </li>
-            </ul>
-        </li>
-        <li><strong>Seguridad y vigilancia:</strong>
-            <ul>
-                <li>Estricto control de conspiraciones, reuniones políticas y portación de armas.</li>
-                <li>Existencia de una red de informantes y autoridades rurales que informan sobre movimientos sospechosos.</li>
+                <li>Suspensión del comercio exterior.</li>
+                <li>Solo quedan habilitados los puertos de <strong>Pilar</strong> y <strong>Itapúa</strong>.</li>
             </ul>
         </li>
         <li><strong>Conspiración de 1820:</strong>
             <ul>
-                <li>Antiguos próceres y notables intentan derrocar al dictador.</li>
-                <li>La conspiración es descubierta; se decreta una dura represión con encarcelamientos, torturas y ejecuciones.</li>
-                <li>Pedro Juan Caballero se suicida en prisión; Fulgencio Yegros es fusilado en 1821.</li>
-                <li>A partir de entonces, el régimen se vuelve aún más desconfiado y cerrado.</li>
+                <li>Fracasa una conspiración de antiguos próceres.</li>
+                <li>Se ordenan arrestos masivos, fusilamientos y prisiones prolongadas.</li>
+                <li>Tras esto, Francia se vuelve más desconfiado y paranoico.</li>
             </ul>
         </li>
-    </ul>
-
-    <h3>Política Exterior: Neutralidad, Asilo y Aislamiento</h3>
-    <ul>
-        <li><strong>No intervención:</strong>
+        <li><strong>Concentración patrimonial:</strong>
             <ul>
-                <li>El Paraguay evita involucrarse en guerras civiles del Río de la Plata y en proyectos de confederación.</li>
-                <li>No participa en congresos internacionales organizados por otros Estados de la región.</li>
+                <li>Confiscación de bienes de españoles, conspiradores, Iglesia y órdenes religiosas.</li>
+                <li>Entre 1823 y 1824 se expulsa a órdenes religiosas y el Estado se convierte en el mayor propietario de tierras.</li>
             </ul>
         </li>
-        <li><strong>No contestación:</strong>
-            <ul>
-                <li>Muchas notas diplomáticas extranjeras no reciben respuesta formal.</li>
-                <li>El gobierno es extremadamente prudente en firmar tratados, para no comprometer la soberanía.</li>
-            </ul>
-        </li>
-        <li><strong>Asilo a Artigas:</strong>
-            <ul>
-                <li>
-                    José Gervasio Artigas, líder oriental derrotado, es recibido como asilado en el Paraguay, 
-                    donde vive años en el interior bajo vigilancia pero sin humillaciones.
-                </li>
-                <li>Este gesto es considerado uno de los primeros casos de asilo político en Sudamérica.</li>
-            </ul>
-        </li>
-        <li><strong>Casos de extranjeros:</strong>
-            <ul>
-                <li>
-                    Científicos, comerciantes y viajeros que llegan al Paraguay son controlados estrictamente; 
-                    algunos, como Aimé Bonpland, pasan años retenidos en territorio paraguayo.
-                </li>
-                <li>
-                    La política busca evitar que potencias extranjeras influyan o espíen al joven Estado.
-                </li>
-            </ul>
-        </li>
-    </ul>
-
-    <h3>Economía: Estancias de la Patria y Autosuficiencia</h3>
-    <ul>
-        <li><strong>Confiscación y estatización de tierras:</strong>
-            <ul>
-                <li>El Estado hereda y amplía antiguas <strong>estancias reales</strong> y tierras de órdenes religiosas (especialmente jesuitas).</li>
-                <li>Muchas propiedades de opositores y de españoles son confiscadas y pasan a ser bienes públicos.</li>
-            </ul>
-        </li>
-        <li><strong>Estancias de la Patria:</strong>
-            <ul>
-                <li>
-                    Grandes explotaciones ganaderas y agrícolas administradas por el Estado, que producen ganado, cueros, yerba, tabaco y alimentos.
-                </li>
-                <li>
-                    Sostienen al ejército, a la burocracia y ayudan a abastecer a la población, reduciendo la dependencia de importaciones.
-                </li>
-                <li>
-                    Trabajan en ellas peones libres, indígenas y pobladores rurales bajo supervisión de administradores estatales.
-                </li>
-            </ul>
-        </li>
-        <li><strong>Aislamiento económico:</strong>
-            <ul>
-                <li>Restricción del comercio exterior; monopolio estatal en muchas operaciones importantes.</li>
-                <li>Se fomenta la agricultura y ganadería de subsistencia: muchos antiguos comerciantes se transforman en productores rurales.</li>
-                <li>El modelo logra cierta autosuficiencia alimentaria, pero limita el crecimiento del comercio internacional.</li>
-            </ul>
-        </li>
-    </ul>
-
-    <h3>Educación, Iglesia y Vida Cotidiana</h3>
-    <ul>
         <li><strong>Educación:</strong>
             <ul>
-                <li>
-                    Clausura del <strong>Real Colegio Seminario de San Carlos</strong>, principal institución de educación superior de la época colonial.
-                </li>
-                <li>
-                    Se prioriza la educación básica (leer, escribir, contar) en escuelas elementales, muchas veces rurales, 
-                    con maestros que reciben apoyo en especie (ganado, productos agrícolas).
-                </li>
-                <li>
-                    No se envían grandes contingentes de estudiantes al extranjero, lo que limita la formación de una élite ilustrada amplia.
-                </li>
-            </ul>
-        </li>
-        <li><strong>Iglesia:</strong>
-            <ul>
-                <li>Secularización y confiscación de bienes eclesiásticos, especialmente en 1824.</li>
-                <li>El clero pierde gran parte de su poder económico, pero la religión sigue teniendo importancia en la vida cotidiana.</li>
-            </ul>
-        </li>
-        <li><strong>Vida diaria bajo el régimen:</strong>
-            <ul>
-                <li>Fuerte presencia del Estado en la vida cotidiana a través de bandos, controles y autoridades locales.</li>
-                <li>La población vive mayormente en el campo, dedicada a la agricultura y la ganadería de subsistencia.</li>
-                <li>Pese al autoritarismo, el país permanece en paz interna y no sufre invasiones ni guerras en su territorio durante este periodo.</li>
+                <li>Se cierra el Colegio San Carlos.</li>
             </ul>
         </li>
     </ul>
 
-    <h3>Muerte y Legado del Dr. Francia (1840)</h3>
+    <h3>Política exterior: asilo y no intervención</h3>
     <ul>
-        <li><strong>Muerte:</strong>
+        <li><strong>Asilo a Artigas:</strong>
             <ul>
-                <li>José Gaspar Rodríguez de Francia muere en 1840, después de gobernar como dictador durante más de 25 años.</li>
+                <li>Se considera uno de los primeros asilos políticos oficiales de Sudamérica.</li>
+                <li>Artigas recibe refugio en Curuguaty hasta 1841.</li>
             </ul>
         </li>
-        <li><strong>Situación del país al final de su gobierno:</strong>
+        <li><strong>Misión de Correa Da Câmara:</strong>
             <ul>
-                <li>Estado independiente consolidado, con fronteras defendidas y sin deudas externas significativas.</li>
-                <li>Comercio exterior muy reducido, escasos vínculos diplomáticos y poco conocimiento del Paraguay en el exterior.</li>
-                <li>Falta de una clase dirigente amplia y formada: se carece de cuadros administrativos y técnicos suficientes para relevar al dictador sin conflictos.</li>
+                <li>Brasil intenta una alianza con Paraguay y promete reconocimiento e incluso armas.</li>
+                <li>Las promesas no se cumplen.</li>
             </ul>
         </li>
-        <li><strong>Valoraciones históricas:</strong>
+        <li><strong>Incidente Bonpland:</strong>
             <ul>
-                <li>Algunos lo ven como el gran defensor de la independencia paraguaya frente a un entorno hostil y caótico.</li>
-                <li>Otros subrayan el costo de su autoritarismo: atraso educativo, aislamiento y ausencia de una élite modernizadora.</li>
-                <li>En todos los casos, su figura es clave para entender la construcción del Estado paraguayo y el carácter particular de su independencia.</li>
+                <li>Otro episodio diplomático importante del periodo.</li>
+            </ul>
+        </li>
+        <li><strong>No intervención:</strong>
+            <ul>
+                <li>Francia casi no responde cartas diplomáticas y evita involucrarse en asuntos externos.</li>
             </ul>
         </li>
     </ul>
 
-    <!-- 7. LÍNEA DE TIEMPO RESUMIDA -->
+    <h3>Balance final del régimen</h3>
+    <ul>
+        <li>Asegura la independencia y el control territorial.</li>
+        <li>Impulsa autoabastecimiento, pero al morir deja un comercio prácticamente destruido.</li>
+        <li>No deja una clase dirigente suficientemente formada.</li>
+        <li>Carlos Antonio López hereda un Estado políticamente consolidado, pero económicamente muy debilitado.</li>
+    </ul>
+
+    <div class="note-box">
+        <span class="label">Apunte crudo final integrado</span>
+        <div class="raw-box">El Dr. Francia aseguró la independencia, pero no gobernó distinto a un gobierno español. Su gobierno se divide en dos grandes periodos: antes de 1820 y después de 1820.
+Empezó aislando al Paraguay con la suspensión del comercio y dejó dos puertos disponibles: el puerto de Pilar de Ñeembucú y el puerto de Itapúa de Encarnación.
+Durante la conspiración de Semana Santa de 1820, que finalmente fracasó, formada por antiguos próceres, el Dr. Francia mandó a arrestar a casi todos los próceres y a personas que no tenían nada que ver con la conspiración.
+En 1820 también ocurre otra cosa sumamente importante, un hecho diplomático, el primer asilo político oficial otorgado en América del Sur.
+Posterior a 1820 el Dr. Francia concentra más el poder, cierra el Colegio San Carlos, confisca bienes a los españoles, a los conspiradores, a la Iglesia Católica y a las órdenes religiosas.
+Cuando Carlos Antonio López asume el poder, hereda un Estado destruido.</div>
+    </div>
+
     <h2>7. Línea de Tiempo hasta 1840</h2>
     <ul>
         <li><strong>1537:</strong> Fundación de Asunción.</li>
-        <li><strong>1617:</strong> División de la antigua gobernación; Asunción queda como capital del Paraguay interior.</li>
+        <li><strong>1617:</strong> División de la antigua gobernación.</li>
+        <li><strong>1621:</strong> Resolución de la división horizontal impulsada por la Corona.</li>
         <li><strong>1721–1735:</strong> Revolución Comunera.</li>
-        <li><strong>1767:</strong> Expulsión de los jesuitas de América española.</li>
-        <li><strong>1776:</strong> Creación del Virreinato del Río de la Plata (Buenos Aires).</li>
-        <li><strong>1789:</strong> Revolución Francesa.</li>
-        <li><strong>1806–1807:</strong> Invasiones inglesas al Río de la Plata.</li>
-        <li><strong>1808:</strong> Abdicaciones de Bayona; comienzan juntas en España y América.</li>
-        <li><strong>1810:</strong> Revolución de Mayo en Buenos Aires.</li>
-        <li><strong>1811:</strong> Batallas de Paraguarí y Tacuary; Gesta de Mayo en Asunción; formación de la Junta Superior de Gobierno.</li>
-        <li><strong>1813:</strong> Gran Congreso; Reglamento de Gobierno; proclamación de la República; Consulado Francia–Yegros.</li>
-        <li><strong>1814:</strong> Congreso nombra a Francia Dictador Supremo (dictadura temporal).</li>
-        <li><strong>1816:</strong> Congreso lo declara Dictador Supremo Perpetuo.</li>
-        <li><strong>1820:</strong> Conspiración contra Francia; inicio de la fase más dura de la dictadura.</li>
-        <li><strong>1824:</strong> Secularización de bienes de la Iglesia; fortalecimiento de las Estancias de la Patria.</li>
+        <li><strong>1750:</strong> Tratado de Madrid.</li>
+        <li><strong>1767:</strong> Expulsión de los jesuitas.</li>
+        <li><strong>1776:</strong> Creación del Virreinato del Río de la Plata.</li>
+        <li><strong>1777:</strong> Tratado de San Ildefonso.</li>
+        <li><strong>1806–1807:</strong> Invasiones inglesas.</li>
+        <li><strong>1810:</strong> Congreso convocado por Velasco.</li>
+        <li><strong>1811:</strong> Revolución de mayo paraguaya; Paraguarí y Tacuarí.</li>
+        <li><strong>1813:</strong> Proclamación de la República del Paraguay y creación del Consulado.</li>
+        <li><strong>1814:</strong> Dictadura temporal del Dr. Francia.</li>
+        <li><strong>1816:</strong> Dictadura perpetua.</li>
+        <li><strong>1820:</strong> Conspiración de Semana Santa y asilo a Artigas.</li>
         <li><strong>1840:</strong> Muerte del Dr. Francia.</li>
     </ul>
 
