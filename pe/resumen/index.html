@@ -76,7 +76,7 @@
     .nav-container {
       background: var(--bg-inner);
       border-radius: 16px;
-      padding: 1.5rem 1rem 1rem 1rem;
+      padding: 1.5rem 1rem 1.5rem 1rem;
       margin-bottom: 2.5rem;
       border: 1px solid var(--border-color);
     }
@@ -236,7 +236,42 @@
       top: 0;
     }
 
-    /* ================= ESTILOS TTS (TEXT-TO-SPEECH) ================= */
+    /* ================= ESTILOS TTS (TEXT-TO-SPEECH) Y CONFIGURACIÓN ================= */
+    .tts-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .voice-select-container {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .voice-select {
+      background: rgba(255, 255, 255, 0.05);
+      color: #e2e8f0;
+      border: 1px solid var(--border-color);
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      outline: none;
+      cursor: pointer;
+      max-width: 250px;
+    }
+
+    .voice-select option {
+      background: var(--bg-card);
+      color: #e2e8f0;
+    }
+
     .tts-btn {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border-color);
@@ -310,6 +345,9 @@
       .article-title {
         font-size: 1.2rem;
       }
+      .voice-select-container {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
@@ -327,8 +365,13 @@
       <li><a href="#constitucion">⚖️ 2. Constitución Nacional</a></li>
       <li><a href="#ley-mre">🏛️ 3. Ley Orgánica MRE</a></li>
     </ul>
-    <div style="text-align: center;">
+    
+    <div class="tts-controls">
       <button class="tts-btn global-tts" onclick="toggleSpeech(this, 'global')" title="Escuchar todo el resumen">🔊 Leer todo el documento</button>
+      <div class="voice-select-container">
+        <label for="voiceSelect">Voz de lectura:</label>
+        <select id="voiceSelect" class="voice-select" title="Elegir voz"></select>
+      </div>
     </div>
   </div>
 
@@ -835,7 +878,7 @@
   </div>
 
   <footer>
-    <p>Documento de estudio estructurado con lectura en voz alta integrada.</p>
+    <p>Documento de estudio estructurado con lectura en voz alta integrada y selección de voz.</p>
   </footer>
 </div>
 
@@ -843,11 +886,47 @@
   let synth = window.speechSynthesis;
   let utteranceQueue = [];
   let speakingButton = null;
+  let voices = [];
+  const voiceSelect = document.getElementById('voiceSelect');
 
-  // Cargar las voces tan pronto como sea posible
-  if (speechSynthesis.onvoiceschanged !== undefined) {
-    speechSynthesis.onvoiceschanged = () => synth.getVoices();
+  // Función para poblar la lista de voces
+  function populateVoiceList() {
+    voices = synth.getVoices();
+    if (voices.length === 0) return;
+
+    // Preferir mostrar primero las voces en español para que sea más limpio
+    let esVoices = voices.filter(v => v.lang.startsWith('es'));
+    let displayVoices = esVoices.length > 0 ? esVoices : voices;
+
+    voiceSelect.innerHTML = '';
+    displayVoices.forEach((voice) => {
+      const option = document.createElement('option');
+      option.textContent = `${voice.name} (${voice.lang})`;
+      option.value = voice.name;
+      voiceSelect.appendChild(option);
+    });
+
+    // Cargar la voz guardada en localStorage
+    const savedVoiceName = localStorage.getItem('selectedVoice');
+    if (savedVoiceName) {
+      // Verificar si la voz guardada aún existe en la lista de opciones
+      const voiceExists = Array.from(voiceSelect.options).some(opt => opt.value === savedVoiceName);
+      if (voiceExists) {
+        voiceSelect.value = savedVoiceName;
+      }
+    }
   }
+
+  // Cargar las voces tan pronto como el navegador las tenga disponibles
+  populateVoiceList();
+  if (speechSynthesis.onvoiceschanged !== undefined) {
+    speechSynthesis.onvoiceschanged = populateVoiceList;
+  }
+
+  // Guardar la elección de la voz cuando el usuario la cambie
+  voiceSelect.addEventListener('change', () => {
+    localStorage.setItem('selectedVoice', voiceSelect.value);
+  });
 
   function resetButtons() {
     document.querySelectorAll('.tts-btn').forEach(btn => {
@@ -860,31 +939,29 @@
     });
   }
 
+  // Función clave: Clona el texto y elimina los botones para que NO lea los íconos
   function cleanText(element) {
-    let text = element.innerText || element.textContent;
-    // Removemos el texto de los botones del speech
-    text = text.replace(/🔊/g, '')
-               .replace(/⏹️/g, '')
-               .replace(/Leer todo el documento/g, '')
-               .replace(/Detener lectura/g, '');
-    return text.trim();
+    let clone = element.cloneNode(true);
+    let btns = clone.querySelectorAll('.tts-btn');
+    btns.forEach(btn => btn.remove());
+    return (clone.innerText || clone.textContent).trim();
   }
 
   function toggleSpeech(button, scope) {
-    // Si ya está leyendo o hay cola, lo cancelamos y limpiamos botones
+    // Si ya está leyendo, detenemos y limpiamos la cola
     if (synth.speaking || utteranceQueue.length > 0) {
       synth.cancel();
       utteranceQueue = [];
       resetButtons();
       
-      // Si hizo clic en el mismo botón que estaba sonando, termina aquí (actúa como pausa/stop)
+      // Si hizo clic en el botón activo, termina aquí (actúa como pausa/stop)
       if (speakingButton === button) {
         speakingButton = null;
         return;
       }
     }
 
-    // Preparar el texto a leer según el alcance
+    // Preparar el texto a leer
     if (scope === 'global') {
       const cards = document.querySelectorAll('.article-card');
       cards.forEach(card => {
@@ -899,7 +976,7 @@
 
     if (utteranceQueue.length === 0) return;
 
-    // Actualizar UI del botón activo
+    // Actualizar botones a estado "Reproduciendo"
     speakingButton = button;
     if (scope === 'global') {
       button.innerHTML = '⏹️ Detener lectura';
@@ -921,12 +998,20 @@
     let text = utteranceQueue.shift();
     let utterance = new SpeechSynthesisUtterance(text);
     
-    // Configuramos español
-    utterance.lang = 'es-ES'; 
+    // Aplicar la voz seleccionada
+    const selectedVoiceName = voiceSelect.value;
+    const selectedVoiceObj = voices.find(v => v.name === selectedVoiceName);
+    
+    if (selectedVoiceObj) {
+      utterance.voice = selectedVoiceObj;
+    } else {
+      utterance.lang = 'es-ES'; // Fallback por defecto si no encuentra la voz
+    }
+    
     utterance.rate = 1.0;
     
     utterance.onend = function() {
-      // Pequeña pausa entre tarjetas para que suene más natural
+      // Pequeña pausa entre tarjetas para mayor fluidez
       setTimeout(() => {
         if (speakingButton) speakNext(); 
       }, 400);
@@ -943,7 +1028,7 @@
     synth.speak(utterance);
   }
 
-  // Si el usuario cambia de página o cierra, detener la lectura
+  // Detener la lectura si el usuario recarga o cierra la página
   window.addEventListener('beforeunload', () => {
     synth.cancel();
   });
