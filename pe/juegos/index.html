@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academia Política Exterior - Simulador de Examen</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #0f172a; 
+            color: #f8fafc; 
+            padding: 20px; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            line-height: 1.6;
+        }
+        h1, h2, h3 { color: #38bdf8; }
+        .card { 
+            background-color: #1e293b; 
+            padding: 30px; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5); 
+            margin-bottom: 20px; 
+        }
+        button { 
+            background-color: #0284c7; 
+            color: white; 
+            border: none; 
+            padding: 12px 24px; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            font-weight: bold; 
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+        button:hover { background-color: #0369a1; }
+        input[type="number"] { 
+            padding: 10px; 
+            font-size: 16px; 
+            border-radius: 6px; 
+            border: 1px solid #475569; 
+            background-color: #0f172a; 
+            color: white; 
+            width: 80px; 
+            margin-right: 15px;
+        }
+        .option { 
+            display: block; 
+            background-color: #334155; 
+            padding: 15px 20px; 
+            margin: 12px 0; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            transition: 0.2s; 
+            border: 2px solid transparent; 
+        }
+        .option:hover { background-color: #475569; border-color: #38bdf8; }
+        .correct { background-color: #166534 !important; border-color: #22c55e; color: white; }
+        .incorrect { background-color: #991b1b !important; border-color: #ef4444; color: white; }
+        .rationale { 
+            margin-top: 20px; 
+            padding: 15px; 
+            background-color: #0f172a; 
+            border-left: 5px solid #38bdf8; 
+            border-radius: 0 8px 8px 0; 
+            display: none; 
+            font-size: 0.95em;
+        }
+        #quiz-container, #results-screen { display: none; }
+        .highlight { color: #38bdf8; font-weight: bold; }
+        
+        /* Ocultar flechas del input number para que se vea más limpio */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Pantalla de Bienvenida -->
+    <div id="welcome-screen" class="card">
+        <h1>Simulador: Política Exterior y Base Constitucional</h1>
+        <p>Bienvenido al módulo interactivo. Este simulador está <strong>basado estrictamente en las 6 Unidades de tu Resumen</strong>, evaluando:</p>
+        <ul>
+            <li>Conceptos fundamentales (Actores, Elementos del Estado, Fines vs Objetivos, Política Pública).</li>
+            <li>Constitución Nacional del Paraguay (Arts. 137, 141, 142, 143, 144, 145, 146, 224, 238, etc.).</li>
+            <li>Ley Orgánica del MRE (Ley 1635/2000 y estructura del servicio exterior).</li>
+        </ul>
+        <p>El banco de datos cuenta con <span class="highlight" id="total-q">X</span> preguntas complejas.</p>
+        <label for="num-questions"><strong>¿Cuántas preguntas deseas visualizar al azar en esta sesión?</strong></label><br><br>
+        <input type="number" id="num-questions" min="1" max="100" value="15">
+        <button onclick="startQuiz()">Generar Examen</button>
+    </div>
+
+    <!-- Contenedor de las Preguntas -->
+    <div id="quiz-container" class="card">
+        <h3 id="question-counter">Pregunta 1</h3>
+        <p id="question-text" style="font-size: 1.15em; font-weight: 500;"></p>
+        <div id="options-container"></div>
+        <div id="rationale-container" class="rationale"></div>
+        <button id="next-btn" onclick="nextQuestion()" style="display: none;">Siguiente Pregunta ➔</button>
+    </div>
+
+    <!-- Pantalla de Resultados -->
+    <div id="results-screen" class="card">
+        <h2>Examen Finalizado</h2>
+        <p id="final-score" style="font-size: 1.3em; margin: 20px 0;"></p>
+        <button onclick="location.reload()">↺ Volver al Inicio y Generar Sorteo Nuevo</button>
+    </div>
+
+    <script>
+        // Banco de Preguntas Actualizado (35 preguntas, SIN HEDUVAN)
+        const questionBank = [
+            // UNIDAD 1 y 2 - CONCEPTOS
+            {
+                question: "De acuerdo con los conceptos fundamentales de la Unidad 1, ¿cuáles de los siguientes son considerados actores de la sociedad internacional contemporánea, además de los Estados y los organismos internacionales?",
+                options: [
+                    "Únicamente los Ministerios de Relaciones Exteriores.",
+                    "Los poderes legislativos nacionales y los partidos políticos.",
+                    "Las ONGs, las empresas multinacionales y los grupos criminales transnacionales.",
+                    "Las oficinas consulares honorarias exclusivamente."
+                ],
+                answer: 2,
+                rationale: "El programa de estudio establece explícitamente que las ONGs, las empresas multinacionales y los grupos criminales son actores (algunos lícitos, otros ilícitos) que interactúan e influyen en la sociedad internacional."
+            },
+            {
+                question: "Según los enfoques teóricos (como Rafael Calduch), ¿cuál es la principal diferencia conceptual entre la 'Política Exterior' y la 'Diplomacia'?",
+                options: [
+                    "Son sinónimos; ambos refieren al trabajo de los consulados.",
+                    "La Política Exterior es el conjunto de decisiones y lineamientos estratégicos (el 'qué hacer'), mientras la Diplomacia es el instrumento técnico y pacífico (el 'cómo hacerlo').",
+                    "La Diplomacia es la macroestructura del Estado, de la cual depende la Política Exterior.",
+                    "La Política Exterior abarca solo acciones militares, y la Diplomacia solo relaciones políticas."
+                ],
+                answer: 1,
+                rationale: "La política exterior representa las decisiones soberanas y estratégicas del Estado. La diplomacia es la herramienta pacífica y comunicacional para implementar dichas políticas."
+            },
+            {
+                question: "Al concebir a la política exterior como una 'política pública', ¿cuál es su rasgo distintivo frente a otras políticas públicas (como salud o educación)?",
+                options: [
+                    "Se ejecuta exclusivamente a través de las Fuerzas Armadas.",
+                    "Persigue la proyección de los intereses del Estado en un entorno internacional anárquico o descentralizado.",
+                    "No requiere planificación y se basa en la espontaneidad.",
+                    "Está dictada íntegramente por los Organismos Internacionales."
+                ],
+                answer: 1,
+                rationale: "Mientras las políticas internas operan donde el Estado tiene el monopolio del poder, la política exterior se proyecta en una sociedad internacional sin un poder supremo único."
+            },
+            {
+                question: "En la teoría de Relaciones Internacionales, ¿cuál es la diferencia entre los 'Fines' y los 'Objetivos' del Estado?",
+                options: [
+                    "Los fines son metas esenciales, existenciales y permanentes (supervivencia), mientras que los objetivos son metas específicas, temporales y coyunturales.",
+                    "Los objetivos son a largo plazo e inalterables, y los fines son a corto plazo.",
+                    "Ambos son dictados por el Poder Legislativo como sinónimos.",
+                    "Los fines son económicos y los objetivos son militares."
+                ],
+                answer: 0,
+                rationale: "Los fines representan valores estructurales inalterables (como la integridad territorial). Los objetivos son instrumentales y se adaptan al momento geopolítico."
+            },
+            {
+                question: "¿Cómo se distingue el 'Interés Nacional' de los intereses particulares de un gobierno de turno?",
+                options: [
+                    "Son idénticos; el interés nacional cambia totalmente en cada elección.",
+                    "El Interés Nacional representa necesidades vitales y estratégicas permanentes del Estado-Nación, superando las coyunturas electorales.",
+                    "El interés nacional es definido por corporaciones extranjeras.",
+                    "Solo se ocupa de temas migratorios, ignorando la economía."
+                ],
+                answer: 1,
+                rationale: "El interés nacional busca trascender a la administración de turno, consolidando los objetivos existenciales e históricos del Estado a largo plazo."
+            },
+            {
+                question: "En la Unidad 2, al analizar el Estado en su relacionamiento internacional, ¿cuáles son los elementos clásicos fundamentales que conforman a un Estado sujeto de Derecho Internacional?",
+                options: [
+                    "Territorio, Población, Poder Político (Gobierno) y Soberanía.",
+                    "Fuerzas Armadas, Moneda, Cancillería y ONGs.",
+                    "Tratados, Constitución, Leyes y Decretos.",
+                    "Misiones Diplomáticas, Cónsules, Embajadores y Agregados."
+                ],
+                answer: 0,
+                rationale: "Para que el Derecho Internacional reconozca la existencia de un Estado pleno, este debe poseer una población permanente, un territorio determinado, un gobierno institucional y capacidad de ejercer soberanía."
+            },
+            
+            // CONSTITUCIÓN NACIONAL (UNIDAD 3 y 4)
+            {
+                question: "Según el Artículo 238 de la Constitución Nacional, ¿quién tiene la atribución constitucional para el manejo de las relaciones exteriores de la República?",
+                options: [
+                    "La Cámara de Senadores en sesión conjunta.",
+                    "El Ministro de Relaciones Exteriores de forma independiente.",
+                    "El Presidente de la República.",
+                    "El Congreso Nacional mediante leyes."
+                ],
+                answer: 2,
+                rationale: "Es atribución privativa del Presidente de la República el manejo de las relaciones internacionales, la negociación y firma de tratados (Art. 238)."
+            },
+            {
+                question: "El Artículo 224 establece atribuciones exclusivas de la Cámara de Senadores. En materia de política exterior, ¿cuál es su principal función de control?",
+                options: [
+                    "Firmar tratados internacionales de comercio.",
+                    "Prestar acuerdo para la designación de los jefes de misión diplomática (embajadores) propuestos por el Ejecutivo.",
+                    "Ejercer el derecho de asilo territorial.",
+                    "Dirigir el manejo diario de la Cancillería."
+                ],
+                answer: 1,
+                rationale: "El Senado actúa como contrapeso democrático al tener la atribución exclusiva de prestar acuerdo para los altos nombramientos diplomáticos del Presidente."
+            },
+            {
+                question: "En el marco de la supremacía constitucional (Art. 137), ¿cuál es el orden correcto del Derecho Positivo paraguayo respecto a los compromisos externos?",
+                options: [
+                    "Tratados Internacionales, Constitución, Leyes.",
+                    "Constitución Nacional, Tratados Internacionales aprobados y ratificados, Leyes dictadas por el Congreso.",
+                    "Constitución Nacional, Leyes del Congreso, Tratados Internacionales.",
+                    "Resoluciones de la ONU, Constitución, Tratados."
+                ],
+                answer: 1,
+                rationale: "El Art. 137 consagra a la Constitución como la norma suprema, seguida inmediatamente por los Tratados Internacionales válidamente aprobados, y luego las Leyes."
+            },
+            {
+                question: "Según el Artículo 141 de la Constitución Nacional, ¿cuándo los tratados internacionales pasan a formar parte del ordenamiento jurídico legal interno del Paraguay?",
+                options: [
+                    "Inmediatamente después de ser firmados por el Presidente.",
+                    "Una vez que son aprobados por ley del Congreso y sus instrumentos de ratificación son canjeados o depositados.",
+                    "Cuando son publicados en el diario oficial de las Naciones Unidas.",
+                    "Únicamente después de ser sometidos a referéndum popular."
+                ],
+                answer: 1,
+                rationale: "El Art. 141 exige un proceso dual: aprobación interna (ley del Congreso) y perfeccionamiento externo (canje o depósito internacional) para que el tratado integre el derecho nacional."
+            },
+            {
+                question: "El Artículo 143 consagra principios rectores. ¿Cuál de los siguientes NO es un principio aceptado por Paraguay?",
+                options: [
+                    "La proscripción de la amenaza y el uso de la fuerza.",
+                    "La no intervención en asuntos internos de otros Estados.",
+                    "La igualdad jurídica de los Estados.",
+                    "La intervención preventiva armada en defensa de la democracia regional."
+                ],
+                answer: 3,
+                rationale: "Paraguay mantiene una postura pacifista; prohíbe expresamente la intervención y el uso de la fuerza en sus relaciones internacionales (Art. 143)."
+            },
+            {
+                question: "Si el Estado paraguayo desea denunciar (retirarse de) un Tratado Internacional sobre Derechos Humanos, ¿qué exige estrictamente el Artículo 142 de la Constitución?",
+                options: [
+                    "Solo pueden ser denunciados por los procedimientos establecidos para la Enmienda de la Constitución.",
+                    "Pueden ser denunciados mediante un Referéndum popular.",
+                    "Requieren un Decreto Presidencial inmediato.",
+                    "Se denuncian mediante simple resolución del MRE."
+                ],
+                answer: 0,
+                rationale: "Los tratados de Derechos Humanos gozan de la más alta protección y su denuncia requiere el complejo procedimiento de la Enmienda Constitucional."
+            },
+            {
+                question: "Según el Artículo 144 (Renuncia a la guerra), el Paraguay renuncia a la guerra, PERO sustenta el principio de:",
+                options: [
+                    "Intervención humanitaria unilateral.",
+                    "Legítima defensa, de conformidad con los tratados internacionales correspondientes.",
+                    "Guerra preventiva contra el terrorismo.",
+                    "Conquista territorial de territorios ancestrales."
+                ],
+                answer: 1,
+                rationale: "La Constitución prohíbe la guerra de agresión, pero garantiza el derecho inalienable a la legítima defensa amparada en el derecho internacional (Art. 144)."
+            },
+            {
+                question: "El Artículo 145 aborda el Orden Jurídico Supranacional. ¿Qué condición impone la Constitución para que Paraguay admita un orden supranacional?",
+                options: [
+                    "Que dicho orden garantice la supremacía económica de Paraguay.",
+                    "Que se realice en condiciones de igualdad, garantice los derechos humanos, la paz y requiera aprobación de mayoría absoluta del Congreso.",
+                    "Que renuncie indefinidamente a su soberanía total.",
+                    "Que sea exclusivamente con los países miembros del Mercosur."
+                ],
+                answer: 1,
+                rationale: "El Art. 145 permite la integración supranacional siempre que garantice igualdad, paz, derechos humanos y sea aprobada por mayoría absoluta de ambas cámaras."
+            },
+            {
+                question: "Según el Artículo 239, ¿cuál es el rol principal del Vicepresidente de la República en materia institucional y exterior?",
+                options: [
+                    "Firmar acuerdos comerciales con el bloque del Mercosur.",
+                    "Sustituir al Canciller en todas las cumbres de la ONU.",
+                    "Reemplazar al Presidente en caso de impedimento y representarlo, cuando así se lo encomiende, dentro o fuera del país.",
+                    "Dirigir el manejo diario de la política de comercio exterior."
+                ],
+                answer: 2,
+                rationale: "El Vicepresidente es el nexo con el Congreso y puede representar al Estado en el exterior únicamente si el Presidente se lo encomienda de forma específica."
+            },
+            {
+                question: "En relación a las consultas populares (Referéndum), ¿qué prohibición expresa existe en la Constitución paraguaya sobre política exterior?",
+                options: [
+                    "Las relaciones internacionales y los tratados no pueden ser sometidos a la figura del referéndum.",
+                    "Todo acuerdo bilateral de libre comercio debe ser sometido a referéndum.",
+                    "Solo se permite referéndum para tratados del Mercosur.",
+                    "Las decisiones de asilo político deben ir a referéndum."
+                ],
+                answer: 0,
+                rationale: "Debido a la complejidad y sensibilidad de los compromisos externos, la Constitución prohíbe resolver temas de tratados y relaciones internacionales mediante referéndum."
+            },
+            {
+                question: "Sobre la protección de personas (Art. 43), ¿qué figura jurídica otorga el Paraguay a quienes se crean perseguidos por motivos políticos?",
+                options: [
+                    "La ciudadanía honoraria inmediata.",
+                    "El derecho de asilo territorial y diplomático.",
+                    "La amnistía penal internacional.",
+                    "El pasaporte diplomático vitalicio."
+                ],
+                answer: 1,
+                rationale: "Fiel a la tradición latinoamericana, la Constitución reconoce el derecho de asilo para proteger la vida y libertad de perseguidos por motivos políticos."
+            },
+            {
+                question: "El Artículo 155 define el territorio nacional. ¿Cuáles son sus características jurídicas constitucionales?",
+                options: [
+                    "Es enajenable bajo condiciones de pago al Estado.",
+                    "Es inalienable e intransferible, prohibiendo su arrendamiento o cesión de soberanía a otro Estado.",
+                    "Es transferible a empresas multinacionales temporalmente.",
+                    "Puede ser modificado por decreto presidencial."
+                ],
+                answer: 1,
+                rationale: "Para garantizar la integridad territorial, el Art. 155 establece que la tierra de la República jamás podrá ser cedida, transferida ni arrendada a potencias extranjeras."
+            },
+            {
+                question: "En la única Enmienda Constitucional mencionada en tu estudio (año 2011 sobre el Art. 120), ¿qué derecho se consagró para los paraguayos en el exterior?",
+                options: [
+                    "El derecho a no pagar impuestos aduaneros.",
+                    "El derecho de los paraguayos residentes en el extranjero a ser electores (votar).",
+                    "La obligación de prestar servicio militar fuera del país.",
+                    "La doble nacionalidad automática con el país de residencia."
+                ],
+                answer: 1,
+                rationale: "La enmienda del 2011 reconoció el vínculo político de la diáspora paraguaya, otorgándoles el derecho a ejercer el voto desde el exterior para elecciones nacionales."
+            },
+            {
+                question: "El principio de 'Igualdad Jurídica' de los Estados en Derecho Internacional Público significa:",
+                options: [
+                    "Voto ponderado según el Producto Interno Bruto.",
+                    "Unificación de constituciones entre países limítrofes.",
+                    "Todos los Estados poseen los mismos derechos fundamentales ('un Estado, un voto'), sin importar su tamaño o poderío.",
+                    "Igualdad en el tamaño de las misiones militares."
+                ],
+                answer: 2,
+                rationale: "Busca nivelar el campo jurídico para que ante organismos multilaterales, un país pequeño tenga el mismo peso soberano formal que una gran potencia."
+            },
+            {
+                question: "De acuerdo al Artículo 202, ¿a qué poder del Estado le corresponde aprobar o rechazar los tratados internacionales suscritos por el Ejecutivo?",
+                options: [
+                    "A la Corte Suprema de Justicia.",
+                    "Al Congreso Nacional (Poder Legislativo).",
+                    "Al Ministerio de Relaciones Exteriores.",
+                    "Al Ministerio Público."
+                ],
+                answer: 1,
+                rationale: "El Congreso debe dictar las leyes que aprueban o rechazan los compromisos internacionales (Art. 202, inc. 9), actuando como control democrático fundamental."
+            },
+            {
+                question: "El Artículo 41 sobre tránsito y residencia garantiza:",
+                options: [
+                    "Que ningún paraguayo puede ser privado de reingresar a su país ni exigirle pasaporte de otro Estado.",
+                    "Que los extranjeros no pueden ingresar sin visa americana.",
+                    "Que el Estado puede exiliar a sus ciudadanos por decreto.",
+                    "Que los extranjeros tienen prohibida la libre circulación."
+                ],
+                answer: 0,
+                rationale: "Todo paraguayo tiene el derecho constitucional irrestricto de habitar su país y regresar a él, y no se le puede obligar a salir ni al exilio."
+            },
+            {
+                question: "En materia de nacionalidad (Art. 146), ¿quiénes son considerados 'paraguayos de origen' (naturales)?",
+                options: [
+                    "Solo los nacidos dentro del territorio de la República, sin excepción.",
+                    "Los nacidos en el territorio nacional, así como los hijos de madre o padre paraguayo nacidos en el extranjero (bajo ciertas condiciones), entre otros casos.",
+                    "Cualquier extranjero que resida ininterrumpidamente más de 5 años en el país.",
+                    "Únicamente los diplomáticos y sus familiares directos nacidos en el exterior."
+                ],
+                answer: 1,
+                rationale: "La Constitución paraguaya reconoce y consagra tanto el principio de 'ius soli' (nacidos en el territorio) como el de 'ius sanguinis' (hijos de paraguayos), otorgándoles la nacionalidad de origen."
+            },
+            {
+                question: "Conforme al Artículo 173 de la Constitución, ¿cuál es la misión fundamental de las Fuerzas Armadas de la Nación en el contexto de la defensa del Estado?",
+                options: [
+                    "Ejecutar la política exterior comercial del país.",
+                    "Custodiar la integridad territorial y defender a las autoridades legítimamente constituidas.",
+                    "Intervenir preventivamente en las decisiones políticas de países vecinos.",
+                    "Dirigir el Ministerio de Relaciones Exteriores en tiempos de crisis."
+                ],
+                answer: 1,
+                rationale: "Las Fuerzas Armadas tienen el mandato constitucional estricto de proteger la integridad del territorio nacional y sostener el orden legítimo, operando siempre subordinadas al poder civil."
+            },
+            {
+                question: "Al estudiar el ordenamiento normativo y posibles conflictos con tratados, el Artículo 154 establece que la competencia exclusiva para declarar la inconstitucionalidad recae en:",
+                options: [
+                    "El Ministerio de Relaciones Exteriores.",
+                    "La Cámara de Senadores.",
+                    "La Corte Suprema de Justicia.",
+                    "El Tribunal de Cuentas Internacional."
+                ],
+                answer: 2,
+                rationale: "Solo la Corte Suprema de Justicia tiene la atribución constitucional y exclusiva de declarar inconstitucional una norma del derecho positivo, incluyendo aquellas referidas a compromisos externos."
+            },
+
+            // LEY MRE Y DERECHO INTERNACIONAL (UNIDAD 5 y 6)
+            {
+                question: "Conforme al Artículo 5° de la Ley N° 1.635/2000, ¿cómo está integrado estructuralmente el Ministerio de Relaciones Exteriores?",
+                options: [
+                    "Solo por la Cancillería y las Oficinas Consulares.",
+                    "La Cancillería, misiones diplomáticas, representaciones ante organismos internacionales, misiones especiales y oficinas consulares.",
+                    "Por la Presidencia, el Senado y las Embajadas.",
+                    "Exclusivamente por los agregados comerciales y militares."
+                ],
+                answer: 1,
+                rationale: "El MRE tiene una estructura de cinco brazos principales que abarca el órgano central en el país (Cancillería) y todas sus proyecciones operativas en el extranjero."
+            },
+            {
+                question: "¿Cuál es el rol jerárquico principal de la Cancillería en relación a la Política Exterior del Estado según la Ley 1635?",
+                options: [
+                    "Diseñar autónomamente los fines sin consultar al Presidente.",
+                    "Actuar como el órgano ejecutor, coordinador y articulador de la política exterior bajo la dirección del Presidente de la República.",
+                    "Ejercer funciones estrictamente administrativas y de archivo.",
+                    "Aprobar los tratados mediante resoluciones internas sin pasar por el Congreso."
+                ],
+                answer: 1,
+                rationale: "La Cancillería no manda de forma suprema sobre la política exterior; es el brazo institucional principal que planifica y ejecuta las directrices políticas dadas por el Jefe de Estado."
+            },
+            {
+                question: "¿Qué cuerpos normativos internacionales rigen, estructuran el accionar legal y fijan los privilegios de las Misiones Diplomáticas y Consulares?",
+                options: [
+                    "Los Acuerdos de Bretton Woods.",
+                    "La Carta de la Organización de los Estados Americanos.",
+                    "Las Convenciones de Viena sobre Relaciones Diplomáticas y Relaciones Consulares.",
+                    "El Estatuto de Roma de la Corte Penal Internacional."
+                ],
+                answer: 2,
+                rationale: "El derecho diplomático y consular moderno en todo el mundo opera universalmente bajo el marco jurídico establecido por las Convenciones de Viena (1961 y 1963)."
+            },
+            {
+                question: "¿Cuál es la principal diferencia funcional entre un Embajador (Jefe de Misión Diplomática) y un Cónsul (de carrera)?",
+                options: [
+                    "Ambos tienen exactamente las mismas funciones representativas, solo cambia el nombre.",
+                    "El Embajador representa políticamente al Estado ante el gobierno extranjero, mientras el Cónsul cumple funciones administrativas y de protección directa a connacionales.",
+                    "El Cónsul tiene mayor jerarquía política para firmar alianzas militares.",
+                    "El Embajador se encarga exclusivamente de emitir visas a extranjeros."
+                ],
+                answer: 1,
+                rationale: "Las embajadas gestionan las relaciones macro y políticas (Estado-Estado), mientras los consulados operan como oficinas de gestión documental y ayuda al ciudadano individual."
+            },
+            {
+                question: "Dentro de la estructura del servicio exterior (Unidad 6), ¿qué característica principal diferencia a los Cónsules Honorarios de los cónsules de carrera?",
+                options: [
+                    "Los honorarios tienen mayor jerarquía y dirigen las embajadas de Asunción.",
+                    "Los honorarios son diplomáticos de carrera enviados desde Asunción con rango ministerial.",
+                    "Los honorarios generalmente son ciudadanos (paraguayos o extranjeros) residentes en el país receptor, no perciben sueldo del Estado y tienen funciones limitadas de fomento.",
+                    "Los honorarios se encargan de declarar la guerra o firmar acuerdos de paz."
+                ],
+                answer: 2,
+                rationale: "La figura del Cónsul Honorario se apoya en personas respetables locales para fomentar vínculos comerciales o culturales y asistir en lo básico, sin representar una carga salarial para el Estado paraguayo."
+            },
+            {
+                question: "En la coordinación institucional para el Plan Nacional de Desarrollo (Art. 176 y 177 de la C.N.), ¿cuál es la función de la diplomacia paraguaya moderna?",
+                options: [
+                    "Ignorar el plan de desarrollo, ya que la diplomacia es solo política.",
+                    "Fijar unilateralmente las metas económicas del Banco Central del Paraguay.",
+                    "La diplomacia debe coordinarse con la política económica para buscar inversiones, abrir mercados y ejecutar el plan de desarrollo en el exterior.",
+                    "Delegar absolutamente todas sus funciones internacionales al Ministerio de Industria y Comercio."
+                ],
+                answer: 2,
+                rationale: "La política exterior no es un compartimento estanco; es la proyección de las necesidades internas, por lo que el servicio exterior debe servir activamente a los objetivos económicos y de desarrollo nacional trazados por el gobierno."
+            },
+            
+            // PREGUNTAS MIXTAS DEL RESUMEN
+            {
+                question: "Considerando el concepto de 'Sujeto de Derecho Internacional Público', ¿por qué las ONGs no tienen el mismo estatus jurídico que un Estado soberano?",
+                options: [
+                    "Porque no tienen presupuestos millonarios en dólares.",
+                    "Porque el Estado es el sujeto originario, pleno, dotado de soberanía y base territorial propia, mientras las ONGs son actores pero no sujetos creadores de normas.",
+                    "Porque las ONGs tienen prohibido cruzar fronteras nacionales.",
+                    "Porque las Naciones Unidas no reconocen la existencia de las ONGs."
+                ],
+                answer: 1,
+                rationale: "La soberanía y el control poblacional/territorial otorgan al Estado la capacidad plena de crear y someterse a normas internacionales (como tratados), algo que los actores civiles (ONGs) no pueden hacer a ese nivel."
+            },
+            {
+                question: "Si una Ley ordinaria dictada por el Congreso paraguayo en 2024 contradice abiertamente un Tratado Internacional ratificado por Paraguay en 2010, ¿qué normativa debe prevalecer según la pirámide de Kelsen paraguaya?",
+                options: [
+                    "La Ley del 2024, porque es posterior en el tiempo y deroga tácitamente al tratado.",
+                    "El Tratado Internacional, porque posee jerarquía superior a las leyes dictadas por el Congreso, independientemente de su fecha.",
+                    "Debe pedirse una resolución inmediata a la Asamblea de las Naciones Unidas.",
+                    "Debe someterse la decisión a referéndum popular vinculante."
+                ],
+                answer: 1,
+                rationale: "Según el Art. 137, el Derecho Positivo paraguayo ubica a los Tratados Internacionales válidamente aprobados en un escalón por encima de las leyes ordinarias del Congreso, protegiendo los compromisos externos."
+            },
+            {
+                question: "¿En qué figura recae la representación legal suprema, la inmunidad de jurisdicción y la inviolabilidad dentro de un país receptor, según el Derecho Diplomático?",
+                options: [
+                    "En los cónsules honorarios, al ser ciudadanos locales influyentes.",
+                    "En el Jefe de Misión Diplomática (Embajador) y en la sede de su misión.",
+                    "En los gerentes comerciales de las empresas multinacionales paraguayas.",
+                    "En los turistas paraguayos en tránsito con pasaporte vigente."
+                ],
+                answer: 1,
+                rationale: "Las convenciones internacionales otorgan la máxima inmunidad de jurisdicción civil y penal, así como representación política absoluta, a la figura del Jefe de Misión y a las instalaciones de la Embajada."
+            },
+            {
+                question: "Al mencionar en la Unidad 1 que los 'grupos criminales transnacionales' influyen en la política exterior, nos referimos al hecho de que:",
+                options: [
+                    "Participan en las asambleas de la ONU con estatus consultivo legal.",
+                    "Pueden firmar tratados de paz vinculantes con las superpotencias.",
+                    "Son actores ilícitos con una enorme influencia real (de facto) que obligan a los Estados a adecuar sus políticas de seguridad exterior y control fronterizo.",
+                    "Son considerados sujetos plenos y originarios del derecho internacional."
+                ],
+                answer: 2,
+                rationale: "Aunque carecen de legalidad o legitimidad, su poder material transfronterizo (narcotráfico, terrorismo) los convierte en 'actores' que logran modificar o condicionar la agenda y las estrategias internacionales de los Estados."
+            }
+        ];
+
+        let selectedQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        // Actualizar el UI con la cantidad total de preguntas
+        document.getElementById('total-q').innerText = questionBank.length;
+        document.getElementById('num-questions').max = questionBank.length;
+
+        // Función para ordenar al azar (Algoritmo Fisher-Yates)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function startQuiz() {
+            let num = parseInt(document.getElementById('num-questions').value);
+            
+            // Validación de seguridad
+            if (isNaN(num) || num < 1 || num > questionBank.length) {
+                alert(`Por favor, ingresa un número válido entre 1 y ${questionBank.length}.`);
+                return;
+            }
+
+            // Copiamos el banco, lo mezclamos y extraemos la cantidad solicitada
+            let bankCopy = [...questionBank];
+            shuffleArray(bankCopy);
+            selectedQuestions = bankCopy.slice(0, num);
+
+            // Transición de pantallas
+            document.getElementById('welcome-screen').style.display = 'none';
+            document.getElementById('quiz-container').style.display = 'block';
+            
+            // Reiniciamos variables por si es un reintento
+            currentQuestionIndex = 0;
+            score = 0;
+            
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            // Reiniciar estado visual
+            document.getElementById('rationale-container').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+            
+            const q = selectedQuestions[currentQuestionIndex];
+            document.getElementById('question-counter').innerText = `Pregunta ${currentQuestionIndex + 1} de ${selectedQuestions.length}`;
+            document.getElementById('question-text').innerText = q.question;
+
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = ''; // Limpiar opciones previas
+
+            q.options.forEach((opt, index) => {
+                const btn = document.createElement('div');
+                btn.className = 'option';
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(index, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIndex, btnElement) {
+            // Deshabilitar clics posteriores
+            const options = document.querySelectorAll('.option');
+            options.forEach(opt => opt.style.pointerEvents = 'none');
+
+            const q = selectedQuestions[currentQuestionIndex];
+            const rationaleDiv = document.getElementById('rationale-container');
+            
+            if (selectedIndex === q.answer) {
+                btnElement.classList.add('correct');
+                score++;
+                rationaleDiv.innerHTML = `<strong style="color: #22c55e;">✅ ¡Respuesta Correcta!</strong><br><br>${q.rationale}`;
+            } else {
+                btnElement.classList.add('incorrect');
+                options[q.answer].classList.add('correct'); // Resalta visualmente la opción correcta
+                rationaleDiv.innerHTML = `<strong style="color: #ef4444;">❌ Respuesta Incorrecta.</strong><br><br>${q.rationale}`;
+            }
+
+            rationaleDiv.style.display = 'block';
+            
+            // Cambiar el texto del botón si es la última pregunta
+            const nextBtn = document.getElementById('next-btn');
+            if (currentQuestionIndex === selectedQuestions.length - 1) {
+                nextBtn.innerText = "Ver Resultados Finales ★";
+            } else {
+                nextBtn.innerText = "Siguiente Pregunta ➔";
+            }
+            nextBtn.style.display = 'inline-block';
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < selectedQuestions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('results-screen').style.display = 'block';
+            
+            let percentage = (score / selectedQuestions.length) * 100;
+            let message = "";
+            if (percentage >= 90) {
+                message = "¡Sobresaliente! Tienes un dominio total de la Política Exterior y la Constitución.";
+            } else if (percentage >= 70) {
+                message = "¡Muy buen trabajo! Tienes bases sólidas, un pequeño repaso y estarás perfecto.";
+            } else if (percentage >= 50) {
+                message = "Lograste la mitad. Te sugiero repasar los artículos constitucionales y la Ley 1635.";
+            } else {
+                message = "Necesitas fortalecer bastante tu base de estudio. ¡No te rindas y vuelve a intentar el test!";
+            }
+
+            document.getElementById('final-score').innerHTML = `
+                Lograste <strong>${score}</strong> aciertos de <strong>${selectedQuestions.length}</strong> preguntas.<br><br>
+                Puntaje final: <strong style="color: #38bdf8; font-size: 1.5em;">${percentage.toFixed(0)}%</strong><br><br>
+                <span style="color:#cbd5e1; font-size: 0.9em;">${message}</span>
+            `;
+        }
+    </script>
+</body>
+</html>
