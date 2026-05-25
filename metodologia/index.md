@@ -91,11 +91,21 @@ El diseño es **documental y proyectivo** (Hurtado de Barrera, 2010). Se realiza
 - **Primarias**: Textos completos de la Ley N° 1.030/97, Ley N° 4.033/10, Ley N° 5.254/2014, Ley N° 7.196/2023 y Ley N° 1.635/2001, disponibles en la Biblioteca y Archivo Central del Congreso de la Nación. También se utiliza el portal oficial del Ministerio de Relaciones Exteriores y comunicaciones de la Dirección de Legalizaciones.
 - **Secundarias**: Artículos académicos indexados en Scopus y Google Scholar (2015-2024) sobre inteligencia artificial en gobierno, automatización de procesos, y modelo Cero Papel; informes del BID, OCDE, CEPAL y Naciones Unidas sobre gobierno digital.
 
-## Técnicas de análisis
+## Instrumentos de recolección de datos
 
-- **Análisis de contenido normativo**: Se extraen las variables relevantes de cada ley (códigos arancelarios, montos, jornales mínimos, exenciones) para convertirlas en reglas de negocio.
-- **Ingeniería de requisitos**: Se identifican las funcionalidades que debe tener el asistente virtual (reconocimiento de intenciones, cálculo, generación de comprobante, supervisión humana).
-- **Análisis de brechas** (_gap analysis_): Se compara la situación actual (presencial, manual) con la situación objetivo (digital, automatizada) para determinar los cambios necesarios en tecnología, normativa y capacitación.
+Para el análisis documental se emplea una **matriz de extracción de contenido** que registra, para cada ley: artículo, tipo de arancel (fijo o variable), monto o fórmula, moneda, exenciones y vigencia. Para la literatura secundaria, se utiliza una **ficha bibliográfica** (autor, año, título, fuente, palabras clave) y un **cuaderno de notas** donde se resumen los principales hallazgos y su relación con el problema de investigación.
+
+## Procedimiento de análisis
+
+El trabajo se desarrolló en cuatro fases:
+1. **Recopilación normativa**: descarga y lectura completa de las leyes identificadas (1.030, 4.033, 5.254, 7.196, 1.635).
+2. **Extracción de reglas**: conversión de cada artículo arancelario en una regla de negocio del tipo “si condición entonces monto”.
+3. **Análisis bibliográfico**: revisión sistemática de 20 fuentes académicas sobre IA, gobierno electrónico y automatización, seleccionando las más pertinentes para el marco teórico.
+4. **Síntesis propositiva**: elaboración del modelo conceptual que integra el asistente virtual, el motor de reglas y el flujo “Cero Papel”, contrastándolo con las experiencias regionales.
+
+## Validez y limitaciones metodológicas
+
+La validez interna se apoya en la triangulación de fuentes (leyes, informes institucionales y literatura académica). La validez externa se limita al contexto paraguayo y al dominio consular, aunque las reglas de negocio y el modelo podrían adaptarse a otros países. Una limitación es la ausencia de validación empírica mediante pruebas de usuario, que se propone como trabajo futuro (proyecto piloto). Otra limitación es la dependencia de fuentes secundarias en idioma español e inglés; no se incluyeron publicaciones en guaraní ni portugués.
 
 ---
 
@@ -216,7 +226,20 @@ Estrategias específicas:
 
 ---
 
-# CAPÍTULO VI. Alcance del modelo, descentralización y beneficio ciudadano
+# CAPÍTULO VI. Alcance del sistema propuesto, descentralización y beneficios
+
+## 6.0 Delimitación del alcance del asistente virtual
+
+El sistema propuesto automatiza **cuatro funciones principales**:
+
+| Función | ¿Incluida? | Descripción |
+|---------|------------|-------------|
+| Liquidación arancelaria | ✅ Sí | Cálculo automático del monto según la ley aplicable y actualización del jornal mínimo. |
+| Orientación ciudadana | ✅ Sí | Responde preguntas sobre requisitos, tiempos y estado del trámite mediante chatbot. |
+| Validación documental | ⚠️ Parcial | Verifica formato, legibilidad y presencia de datos mínimos; no hace validación criptográfica de firmas ni autenticación avanzada (eso queda para una fase posterior). |
+| Seguimiento del trámite | ✅ Sí | Permite consultar el estado del expediente electrónico y recibir notificaciones. |
+
+**No están incluidas** en este prototipo conceptual: la emisión de apostilla digital con firma electrónica avanzada (requiere infraestructura de clave pública), la integración con registros de otras instituciones (aunque se menciona como deseable) ni la atención en idioma guaraní más allá de frases simples (se sugiere como mejora futura). El alcance se limita a la liquidación de aranceles consulares (objetivo central) y a la provisión de un asistente conversacional para trámites de legalización y apostilla en el MRE.
 
 ## 6.1 Acceso equitativo para ciudadanos en zonas remotas y en el extranjero
 
@@ -263,7 +286,7 @@ Banco Mundial. (2021). *Digital Government Readiness Assessment Toolkit*. World 
 
 CEPAL. (2018). *Gobierno digital y simplificación administrativa en América Latina*. Naciones Unidas.
 
-Giarratano, J., & Riley, G. (2005). *Expert Systems: Principles and Programming* (4th ed.). Thomson.
+Giarratano, J., & Riley, G. (2005). *Expert Systems: Principles and Programming* (4th ed.). Thomson Course Technology.
 
 Gobierno de Chile. (2021). *Portal del Estado: Automatización de tasas notariales*. Ministerio de Hacienda, Chile. https://www.chileatiende.cl
 
@@ -313,4 +336,10 @@ Congreso de la Nación Paraguaya. (2020). [*Ley N° 6.534: De protección de dat
 
 Congreso de la Nación Paraguaya. (2023). [*Ley N° 7.196: Deroga varios artículos de la Ley N° 4.033/2010*](https://www.bacn.gov.py/leyes-paraguayas/12025/ley-n-7196-que-deroga-varios-art-culos-de-la-ley-n-4033-2010-del-arancel-consular). BACN.
 
-Ministerio de Relaciones Exteriores. (s.f.). [*Dirección General de Asuntos Consulares*](https://www.mre.gov.py/direccion-general-de-asuntos-consulares-dgac/). MRE.
+Ministerio de Relaciones Exteriores. (s.f.). [*Dirección General de Asuntos Consulares*](https://www.mre.gov.py/direccion-general-de-asuntos-consulares-dgac/). MRE-DGAC.
+
+
+
+
+
+
