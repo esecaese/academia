@@ -6,6 +6,8 @@
     <title>Presentación Magistral: Paraguay Centro Estratégico</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Librería Chart.js para los gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
         
@@ -30,22 +32,17 @@
 
         /* --- Estilos del Teleprompter --- */
         .prompter-text {
-            font-size: 2.25rem; /* 36px */
-            line-height: 1.6;
+            font-size: 3rem; /* 48px - Texto inmenso para leer por partes */
+            line-height: 1.5;
             color: #e2e8f0;
+            text-align: center;
+            transition: opacity 0.2s ease-in-out;
+        }
+        @media (max-width: 768px) {
+            .prompter-text { font-size: 2rem; }
         }
         .prompter-text strong {
             color: #38bdf8;
-        }
-        #text-container::-webkit-scrollbar {
-            width: 12px;
-        }
-        #text-container::-webkit-scrollbar-track {
-            background: #111;
-        }
-        #text-container::-webkit-scrollbar-thumb {
-            background: #444;
-            border-radius: 6px;
         }
     </style>
 </head>
@@ -98,24 +95,31 @@
                 </div>
             </div>
 
-            <!-- Slide 3: Itaipú -->
-            <div class="slide flex-col justify-center w-full max-w-5xl" data-slide="3">
-                <h2 class="text-4xl font-bold mb-10 text-emerald-400 border-b border-slate-700 pb-4">2A. Itaipú Binacional: De la Deuda Cero al Anexo C</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="col-span-1 bg-slate-800 p-6 rounded-2xl border-l-4 border-emerald-500 shadow-lg">
-                        <h3 class="text-xl font-bold text-white mb-2">Hito Cumplido</h3>
-                        <p class="text-slate-400 mb-4">Febrero 2023</p>
-                        <p class="text-lg text-slate-200">La histórica deuda de construcción saldada a <strong>cero</strong> tras casi 50 años (Último pago: USD 115M).</p>
+            <!-- Slide 3: Itaipú con Gráfico Comparativo -->
+            <div class="slide flex-col justify-center w-full max-w-6xl" data-slide="3">
+                <h2 class="text-4xl font-bold mb-8 text-emerald-400 border-b border-slate-700 pb-4">2A. Itaipú Binacional: De la Deuda Cero al Anexo C</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+                    <!-- Text Cards -->
+                    <div class="flex flex-col gap-4 justify-center">
+                        <div class="bg-slate-800 p-5 rounded-2xl border-l-4 border-emerald-500 shadow-lg">
+                            <h3 class="text-lg font-bold text-white mb-1"><i class="fas fa-check-double text-emerald-500 mr-2"></i>Deuda Cero (Feb 2023)</h3>
+                            <p class="text-base text-slate-300">Histórica deuda de construcción saldada tras casi 50 años (Último pago: USD 115M).</p>
+                        </div>
+                        <div class="bg-slate-800 p-5 rounded-2xl border-l-4 border-blue-500 shadow-lg">
+                            <h3 class="text-lg font-bold text-white mb-1"><i class="fas fa-chart-line text-blue-500 mr-2"></i>Victoria Tarifaria (Mayo 2024)</h3>
+                            <p class="text-base text-slate-300">Acuerdo histórico fija la tarifa en <strong>USD 19.28</strong> kW/mes (2024-2026). El salto de ingresos inyecta un capital sin precedentes.</p>
+                        </div>
+                        <div class="bg-slate-800 p-5 rounded-2xl border-l-4 border-amber-500 shadow-lg">
+                            <h3 class="text-lg font-bold text-white mb-1"><i class="fas fa-exclamation-triangle text-amber-500 mr-2"></i>El Gran Desafío (Actualidad)</h3>
+                            <p class="text-base text-slate-300">Revisión del <strong>Anexo C</strong>. Debates y presiones por el futuro tarifario a partir de 2027.</p>
+                        </div>
                     </div>
-                    <div class="col-span-1 bg-slate-800 p-6 rounded-2xl border-l-4 border-blue-500 shadow-lg">
-                        <h3 class="text-xl font-bold text-white mb-2">Victoria Tarifaria</h3>
-                        <p class="text-slate-400 mb-4">Mayo 2024</p>
-                        <p class="text-lg text-slate-200">Acuerdo histórico fija la tarifa en <strong>USD 19.28</strong> kW/mes (2024-2026). Inyección de ~USD 1.250 millones anuales.</p>
-                    </div>
-                    <div class="col-span-1 bg-slate-800 p-6 rounded-2xl border-l-4 border-amber-500 shadow-lg">
-                        <h3 class="text-xl font-bold text-white mb-2">El Gran Desafío</h3>
-                        <p class="text-slate-400 mb-4">Actualidad (2026)</p>
-                        <p class="text-lg text-slate-200">Revisión del <strong>Anexo C</strong>. Debates y presiones por el futuro tarifario a partir de 2027.</p>
+                    <!-- Chart Section -->
+                    <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl flex flex-col justify-center items-center h-full">
+                        <div class="w-full h-64 md:h-72 relative">
+                            <canvas id="itaipuChart"></canvas>
+                        </div>
+                        <p class="text-sm text-slate-400 mt-4 text-center px-4"><i class="fas fa-info-circle mr-1"></i> Comparativa de los ingresos anuales proyectados originalmente en el <em>Eje 8</em> vs. la inyección real lograda tras el Acuerdo 2024.</p>
                     </div>
                 </div>
             </div>
@@ -200,29 +204,31 @@
 
 
     <!-- ==========================================
-         MODO ORADOR (TELEPROMPTER DE NOTAS)
+         MODO ORADOR (TELEPROMPTER SIN SCROLL)
          ========================================== -->
     <div id="orador-view" class="hidden h-screen w-screen flex-col bg-black text-white">
-        <header class="bg-zinc-900 border-b border-zinc-700 p-4 flex justify-between items-center shadow-md">
+        <header class="bg-zinc-900 border-b border-zinc-700 p-4 flex justify-between items-center shadow-md z-10">
             <div class="flex items-center gap-3">
                 <div class="bg-red-600 animate-pulse w-3 h-3 rounded-full"></div>
                 <span class="font-bold text-zinc-300 tracking-widest uppercase text-sm">Teleprompter en Vivo</span>
             </div>
-            <div class="text-3xl font-black text-white px-6 py-2 bg-zinc-800 rounded-lg border border-zinc-600" id="slide-counter">
-                Slide 1 / 7
+            <div class="text-3xl font-black text-white px-6 py-2 bg-zinc-800 rounded-lg border border-zinc-600 flex items-center" id="slide-counter">
+                <!-- Se llena con JS -->
             </div>
             <div class="text-sm text-zinc-500 font-mono">
                 Usa las flechas del teclado ◄ ►
             </div>
         </header>
 
-        <main id="text-container" class="flex-1 overflow-y-auto p-8 md:p-16">
-            <div class="max-w-4xl mx-auto prompter-text font-medium" id="speaker-text">
-                <!-- Texto dinámico inyectado aquí -->
+        <!-- Contenedor flex-col ocultando el overflow para evitar scroll. 
+             Centrado vertical y horizontalmente -->
+        <main id="text-container" class="flex-1 overflow-hidden p-8 md:p-16 flex items-center justify-center relative">
+            <div class="max-w-6xl mx-auto prompter-text font-medium" id="speaker-text">
+                <!-- Texto dinámico inyectado aquí por partes -->
             </div>
         </main>
 
-        <footer class="bg-zinc-900 border-t border-zinc-700 p-6 flex justify-center gap-10">
+        <footer class="bg-zinc-900 border-t border-zinc-700 p-6 flex justify-center gap-10 z-10">
             <button id="prevBtn" class="flex-1 max-w-sm py-6 bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl text-3xl font-bold transition flex items-center justify-center gap-4 disabled:opacity-30 disabled:cursor-not-allowed border border-zinc-600 shadow-xl">
                 <i class="fas fa-chevron-left"></i> ANTERIOR
             </button>
@@ -234,66 +240,112 @@
 
 
     <!-- ==========================================
-         LÓGICA JAVASCRIPT UNIFICADA
+         LÓGICA JAVASCRIPT UNIFICADA Y PAGINADA
          ========================================== -->
     <script>
         const totalSlides = 7;
         let currentSlide = parseInt(localStorage.getItem('eje8_sync_slide')) || 1;
+        let currentPageIndex = 0; // Índice de la página dentro del slide actual
         
         // Detección del modo por URL (?rol=orador)
         const urlParams = new URLSearchParams(window.location.search);
         const isOrador = urlParams.get('rol') === 'orador';
 
-        // Textos del teleprompter
-        const speakerNotes = {
+        // Textos del teleprompter (Los separamos por párrafos \n\n automáticamente en JS)
+        const speakerNotesRaw = {
             1: "<strong>Bienvenida e introducción general a la clase.</strong>\n\nMencionar que la clase durará entre 10 a 15 minutos y que se evaluará retrospectivamente el Eje 8 del material de estudio hasta llegar a nuestra fecha actual en 2026.",
-            2: "«Bienvenidos. Hoy vamos a diseccionar el documento conocido como el <strong>'Eje 8'</strong>, un texto clave que proyectaba el destino de la República del Paraguay como el gran centro estratégico de producción y distribución eléctrica del Cono Sur.\n\nEl documento histórico que leímos nos sitúa a principios de la década del 2000 y nos revela un escenario de disputas institucionales y grandes promesas. Por un lado, relata cómo el Decreto N° 21.975 de 2003 otorgó al Ministerio de Obras Públicas y Comunicaciones (MOPC) el control casi absoluto de las cuestiones energéticas binacionales, limitando fuertemente la capacidad diplomática del Ministerio de Relaciones Exteriores.\n\nSin embargo, a lo largo de las décadas, la <strong>Cancillería demostró ser el conducto ineludible</strong>. Hoy, en 2026, vemos que la diplomacia presidencial y el Ministerio de Relaciones Exteriores operan en absoluto tándem técnico con las carteras energéticas.\n\nPero, ¿qué ocurrió con las grandes obras hidroeléctricas proyectadas en este texto? Vamos a contrastar la teoría con la realidad actual.»",
-            3: "«Iniciemos con <strong>Itaipú</strong>. El documento original celebraba un paso que en aquel entonces parecía lejano: la eliminación del factor de ajuste de la deuda a partir de 2008, proyectando grandes beneficios y previsibilidad para el año 2023.\n\n<strong>¿Qué pasó en la realidad?</strong> Esa proyección se cumplió y se superó. En febrero de 2023, la histórica deuda de construcción de Itaipú, tras casi 50 años, quedó saldada a cero con el último pago de USD 115 millones.\n\nMás aún, el texto mencionaba como un logro que los ingresos por cesión de energía alcanzaran los USD 100 millones anuales. Hoy, el salto cualitativo es inmenso. Tras complejas negociaciones, en mayo de 2024 se logró un <strong>acuerdo histórico que fijó la tarifa en USD 19.28 por kilovatio-mes</strong> para el trienio 2024-2026. Esto le está inyectando a Paraguay aproximadamente USD 1.250 millones anuales. Actualmente, el gran desafío de nuestra política exterior es la revisión del Anexo C, proceso que inició oficialmente tras ese acuerdo, definiendo el futuro desarrollo del país para las próximas décadas.»",
-            4: "«Pasemos a <strong>Yacyretá</strong>. El Eje 8 nos recordaba el Memorándum de Entendimiento de 2006, cuyo objetivo era alcanzar la viabilidad técnica y financiera del emprendimiento.\n\n<strong>¿Cuál es nuestro escenario actual en 2026?</strong> \n\nEn lo <strong>técnico</strong>, hay una victoria en marcha: El proyecto de maquinización del brazo <strong>Aña Cuá</strong> es una realidad. A pesar de paralizaciones pasadas, el MOPC constató en abril de este año (2026) el firme avance de las obras que dotarán al sistema de 270 megavatios adicionales, marcando un hito en la ingeniería local.\n\nEn lo <strong>financiero</strong>, seguimos en deuda: El texto hablaba de reestructurar el pasivo. Ese intento se materializó años después en el 'Acuerdo Cartes-Macri' de 2017. Lamentablemente, este acuerdo ha vivido un largo 'limbo jurídico' en el Congreso argentino, siendo recién en abril de 2024 cuando el gobierno de Javier Milei anunció su intención de enviarlo nuevamente para su urgente tratamiento. Sumado a esto, los atrasos cíclicos en los pagos por cesión de energía siguen afectando la operatividad de la entidad.»",
-            5: "«Finalmente, el documento proyectaba expandir el potencial de Paraguay mediante la maquinización de la <strong>presa Yguazú</strong> y la construcción de <strong>Corpus Christi</strong>. El texto detalla cómo los estudios internacionales señalaban al sitio Pindo'í como la ubicación ideal por su bajo impacto ambiental.\n\n<strong>¿Qué ocurrió aquí?</strong> Estas proyecciones fracasaron. La maquinización del Yguazú fue descartada posteriormente debido a sus altísimos costos frente al bajo rendimiento.\n\nPor su parte, Corpus Christi en Pindo'í está totalmente paralizado. Si bien la técnica lo avalaba, la obra carece de un factor fundamental en las Relaciones Internacionales modernas: <strong>el consenso social</strong>. El proyecto choca con el histórico rechazo de los plebiscitos impulsados por agrupaciones ciudadanas y ambientalistas en Misiones (Argentina). Esto nos enseña que un tratado internacional, por más perfecto que sea técnicamente, hoy no es viable sin la 'licencia social' de las comunidades afectadas.»",
-            6: "«Para concluir, ¿se cumplió la visión del Eje 8? <strong>En su núcleo vital, SÍ.</strong> Paraguay se posicionó como una potencia hidroeléctrica mundial al saldar la inmensa deuda de Itaipú y al continuar ampliando su matriz con Aña Cuá.\n\nSin embargo, la lección que nos deja nuestra historia reciente es que la era de las 'nuevas mega-represas', como Corpus Christi, parece haber llegado a su techo por cuestiones geopolíticas y ambientales. Hoy, el éxito de la Política Exterior Paraguaya ya no se mide por cuántas represas nuevas podemos firmar, sino por nuestra capacidad diplomática para negociar inteligentemente las tarifas, avanzar con el Anexo C y administrar la soberanía energética que ya poseemos. Muchas gracias.»",
+            2: "«Bienvenidos. Hoy vamos a diseccionar el documento conocido como el <strong>'Eje 8'</strong>, un texto clave que proyectaba el destino de la República del Paraguay como el gran centro estratégico de producción y distribución eléctrica del Cono Sur.»\n\n«El documento histórico que leímos nos sitúa a principios de la década del 2000 y nos revela un escenario de disputas institucionales y grandes promesas. Por un lado, relata cómo el Decreto N° 21.975 de 2003 otorgó al Ministerio de Obras Públicas y Comunicaciones (MOPC) el control casi absoluto de las cuestiones energéticas binacionales, limitando fuertemente la capacidad diplomática del Ministerio de Relaciones Exteriores.»\n\n«Sin embargo, a lo largo de las décadas, la <strong>Cancillería demostró ser el conducto ineludible</strong>. Hoy, en 2026, vemos que la diplomacia presidencial y el Ministerio de Relaciones Exteriores operan en absoluto tándem técnico con las carteras energéticas.»\n\n«Pero, ¿qué ocurrió con las grandes obras hidroeléctricas proyectadas en este texto? Vamos a contrastar la teoría con la realidad actual.»",
+            3: "«Iniciemos con <strong>Itaipú</strong>. El documento original celebraba un paso que en aquel entonces parecía lejano: la eliminación del factor de ajuste de la deuda a partir de 2008, proyectando grandes beneficios y previsibilidad para el año 2023.»\n\n<strong>¿Qué pasó en la realidad?</strong> Esa proyección se cumplió y se superó. En febrero de 2023, la histórica deuda de construcción de Itaipú, tras casi 50 años, quedó saldada a cero con el último pago de USD 115 millones.\n\n«Más aún, fíjense en el gráfico que proyectamos: el texto mencionaba como un logro que los ingresos por cesión de energía alcanzaran los USD 100 millones anuales. Hoy, el salto cualitativo es inmenso.»\n\n«Tras complejas negociaciones, en mayo de 2024 se logró un <strong>acuerdo histórico que fijó la tarifa en USD 19.28 por kilovatio-mes</strong> para el trienio 2024-2026. Esto le está inyectando a Paraguay aproximadamente <strong>USD 1.250 millones anuales</strong>.»\n\n«Actualmente, el gran desafío de nuestra política exterior es la revisión del Anexo C, proceso que inició oficialmente tras ese acuerdo, definiendo el futuro desarrollo del país para las próximas décadas.»",
+            4: "«Pasemos a <strong>Yacyretá</strong>. El Eje 8 nos recordaba el Memorándum de Entendimiento de 2006, cuyo objetivo era alcanzar la viabilidad técnica y financiera del emprendimiento.»\n\n<strong>¿Cuál es nuestro escenario actual en 2026?</strong> <br><br>En lo <strong>técnico</strong>, hay una victoria en marcha: El proyecto de maquinización del brazo <strong>Aña Cuá</strong> es una realidad. A pesar de paralizaciones pasadas, el MOPC constató en abril de este año (2026) el firme avance de las obras que dotarán al sistema de 270 megavatios adicionales, marcando un hito en la ingeniería local.\n\nEn lo <strong>financiero</strong>, seguimos en deuda: El texto hablaba de reestructurar el pasivo. Ese intento se materializó años después en el 'Acuerdo Cartes-Macri' de 2017. Lamentablemente, este acuerdo ha vivido un largo 'limbo jurídico' en el Congreso argentino, siendo recién en abril de 2024 cuando el gobierno de Javier Milei anunció su intención de enviarlo nuevamente para su urgente tratamiento. Sumado a esto, los atrasos cíclicos en los pagos por cesión de energía siguen afectando la operatividad de la entidad.",
+            5: "«Finalmente, el documento proyectaba expandir el potencial de Paraguay mediante la maquinización de la <strong>presa Yguazú</strong> y la construcción de <strong>Corpus Christi</strong>. El texto detalla cómo los estudios internacionales señalaban al sitio Pindo'í como la ubicación ideal por su bajo impacto ambiental.»\n\n<strong>¿Qué ocurrió aquí?</strong> Estas proyecciones fracasaron. La maquinización del Yguazú fue descartada posteriormente debido a sus altísimos costos frente al bajo rendimiento.\n\nPor su parte, Corpus Christi en Pindo'í está totalmente paralizado. Si bien la técnica lo avalaba, la obra carece de un factor fundamental en las Relaciones Internacionales modernas: <strong>el consenso social</strong>. El proyecto choca con el histórico rechazo de los plebiscitos impulsados por agrupaciones ciudadanas y ambientalistas en Misiones (Argentina). Esto nos enseña que un tratado internacional, por más perfecto que sea técnicamente, hoy no es viable sin la 'licencia social' de las comunidades afectadas.",
+            6: "«Para concluir, ¿se cumplió la visión del Eje 8? <strong>En su núcleo vital, SÍ.</strong> Paraguay se posicionó como una potencia hidroeléctrica mundial al saldar la inmensa deuda de Itaipú y al continuar ampliando su matriz con Aña Cuá.»\n\n«Sin embargo, la lección que nos deja nuestra historia reciente es que la era de las 'nuevas mega-represas', como Corpus Christi, parece haber llegado a su techo por cuestiones geopolíticas y ambientales.»\n\n«Hoy, el éxito de la Política Exterior Paraguaya ya no se mide por cuántas represas nuevas podemos firmar, sino por nuestra capacidad diplomática para negociar inteligentemente las tarifas, avanzar con el Anexo C y administrar la soberanía energética que ya poseemos. Muchas gracias.»",
             7: "<strong>Despedida.</strong> \n\nAquí puedes ofrecerte a responder preguntas de los alumnos o invitar a la lectura de los artículos referenciados en pantalla."
         };
 
+        // Procesar las notas: Dividir cada slide en un Array de "Páginas" según los saltos de línea (\n\n)
+        const notesPages = {};
+        for(let i = 1; i <= totalSlides; i++) {
+            notesPages[i] = speakerNotesRaw[i].split('\n\n').filter(p => p.trim() !== '');
+        }
+
         if (isOrador) {
-            // === CONFIGURACIÓN MODO ORADOR (TELEPROMPTER) ===
+            // === CONFIGURACIÓN MODO ORADOR (TELEPROMPTER SIN SCROLL) ===
             document.getElementById('orador-view').classList.remove('hidden');
             document.getElementById('orador-view').classList.add('flex');
-            document.body.style.backgroundColor = "#000000"; // Fondo negro
-
+            
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
             const counter = document.getElementById('slide-counter');
             const speakerText = document.getElementById('speaker-text');
-            const textContainer = document.getElementById('text-container');
 
             function updateTeleprompter() {
-                prevBtn.disabled = currentSlide === 1;
-                nextBtn.disabled = currentSlide === totalSlides;
-                counter.innerText = `Slide ${currentSlide} / ${totalSlides}`;
+                // Seguridad por si los índices están fuera de rango
+                if (!notesPages[currentSlide]) currentSlide = 1;
+                if (currentPageIndex >= notesPages[currentSlide].length) currentPageIndex = 0;
+
+                const isFirstPageOverall = (currentSlide === 1 && currentPageIndex === 0);
+                const isLastPageOverall = (currentSlide === totalSlides && currentPageIndex === notesPages[totalSlides].length - 1);
+
+                prevBtn.disabled = isFirstPageOverall;
+                nextBtn.disabled = isLastPageOverall;
                 
-                let text = speakerNotes[currentSlide].replace(/\n\n/g, '<br><br><br>');
-                speakerText.innerHTML = text;
-                textContainer.scrollTop = 0;
+                // Mostrar Slide actual y la sub-página actual de notas
+                const totalPagesInSlide = notesPages[currentSlide].length;
+                counter.innerHTML = `Slide ${currentSlide} / ${totalSlides} <span class="text-zinc-500 font-light text-xl ml-4 px-3 py-1 bg-zinc-900 rounded-lg">Pág ${currentPageIndex + 1} de ${totalPagesInSlide}</span>`;
+                
+                // Efecto suave al cambiar texto
+                speakerText.style.opacity = 0;
+                setTimeout(() => {
+                    speakerText.innerHTML = notesPages[currentSlide][currentPageIndex];
+                    speakerText.style.opacity = 1;
+                }, 150);
             }
 
-            function changeSlide(newSlide) {
-                if (newSlide >= 1 && newSlide <= totalSlides) {
-                    currentSlide = newSlide;
-                    localStorage.setItem('eje8_sync_slide', currentSlide);
+            function goNext() {
+                if (currentPageIndex < notesPages[currentSlide].length - 1) {
+                    currentPageIndex++;
+                    updateTeleprompter();
+                } else if (currentSlide < totalSlides) {
+                    currentSlide++;
+                    currentPageIndex = 0;
+                    localStorage.setItem('eje8_sync_slide', currentSlide); 
                     updateTeleprompter();
                 }
             }
 
-            nextBtn.addEventListener('click', () => changeSlide(currentSlide + 1));
-            prevBtn.addEventListener('click', () => changeSlide(currentSlide - 1));
+            function goPrev() {
+                if (currentPageIndex > 0) {
+                    currentPageIndex--;
+                    updateTeleprompter();
+                } else if (currentSlide > 1) {
+                    currentSlide--;
+                    currentPageIndex = notesPages[currentSlide].length - 1; 
+                    localStorage.setItem('eje8_sync_slide', currentSlide); 
+                    updateTeleprompter();
+                }
+            }
 
-            // Teclado para Orador
+            nextBtn.addEventListener('click', goNext);
+            prevBtn.addEventListener('click', goPrev);
+
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'ArrowRight' || e.key === 'Space') {
-                    changeSlide(currentSlide + 1);
+                    e.preventDefault();
+                    goNext();
                 } else if (e.key === 'ArrowLeft') {
-                    changeSlide(currentSlide - 1);
+                    e.preventDefault();
+                    goPrev();
+                }
+            });
+
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'eje8_sync_slide') {
+                    let newSlide = parseInt(e.newValue);
+                    if (newSlide !== currentSlide) {
+                        currentSlide = newSlide;
+                        currentPageIndex = 0; 
+                        updateTeleprompter();
+                    }
                 }
             });
 
@@ -304,8 +356,90 @@
             // === CONFIGURACIÓN MODO VISOR (ALUMNOS) ===
             document.getElementById('visor-view').classList.remove('hidden');
             document.getElementById('visor-view').classList.add('flex');
-            document.body.style.backgroundColor = "#0f172a"; // Fondo oscuro elegante
 
+            // --- INICIALIZACIÓN DEL GRÁFICO (CHART.JS) ---
+            const canvasElement = document.getElementById('itaipuChart');
+            if (canvasElement) {
+                const ctx = canvasElement.getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Histórico (Eje 8)', 'Actualidad (2024-2026)'],
+                        datasets: [{
+                            label: 'Ingresos Anuales (Millones USD)',
+                            data: [100, 1250],
+                            backgroundColor: [
+                                'rgba(56, 189, 248, 0.6)', // Light Blue (Tailwind text-blue-400)
+                                'rgba(52, 211, 153, 0.8)'  // Emerald (Tailwind text-emerald-400)
+                            ],
+                            borderColor: [
+                                'rgba(56, 189, 248, 1)',
+                                'rgba(52, 211, 153, 1)'
+                            ],
+                            borderWidth: 1,
+                            borderRadius: 8,
+                            barPercentage: 0.6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                text: 'Ingresos Anuales por Itaipú',
+                                color: '#e2e8f0',
+                                font: {
+                                    size: 20,
+                                    family: "'Inter', sans-serif",
+                                    weight: 'bold'
+                                },
+                                padding: { bottom: 20 }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return ' USD ' + context.parsed.y + ' Millones';
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#94a3b8',
+                                    font: { family: "'Inter', sans-serif" },
+                                    callback: function(value) {
+                                        return '$' + value + 'M';
+                                    }
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                },
+                                ticks: {
+                                    color: '#e2e8f0',
+                                    font: { 
+                                        size: 14,
+                                        family: "'Inter', sans-serif",
+                                        weight: '600'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Lógica de avance de diapositivas
             const slides = document.querySelectorAll('.slide');
             const indicator = document.getElementById('slide-indicator');
 
@@ -322,7 +456,6 @@
                 indicator.innerText = `${currentSlide}/${totalSlides}`;
             }
 
-            // Escuchar cambios hechos por la ventana del Orador
             window.addEventListener('storage', (e) => {
                 if (e.key === 'eje8_sync_slide') {
                     currentSlide = parseInt(e.newValue);
@@ -330,7 +463,6 @@
                 }
             });
 
-            // Teclado de respaldo por si acaso hace foco aquí
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'ArrowRight' || e.key === 'Space') {
                     if (currentSlide < totalSlides) {
