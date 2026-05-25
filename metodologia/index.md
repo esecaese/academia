@@ -23,9 +23,14 @@ Evaluar la implementación de la inteligencia artificial en la liquidación de a
 
 ## Justificación
 
-La investigación ayudará a mejorar la prestación de servicios en el Ministerio de Relaciones Exteriores, atendiendo a que se detecta una fuerte dependencia de la presencialidad que perjudica al ciudadano. La actual concentración de trámites de apostilla en la capital impone gastos de viaje y demoras excesivas a los connacionales, dificultando una respuesta ágil y acorde a las herramientas tecnológicas que están disponibles. Como señala el Banco Interamericano de Desarrollo (2020), la digitalización de los trámites públicos puede reducir hasta en un 80% los costos de transacción para los ciudadanos. Asimismo, la liquidación de aranceles en el exterior sigue procesos manuales basados en dos cuerpos legales diferentes, lo que añade complejidad y riesgo de error.
+La investigación ayudará a mejorar la prestación de servicios en el Ministerio de Relaciones Exteriores, atendiendo a que se detecta una fuerte dependencia de la presencialidad que perjudica al ciudadano. La actual concentración de trámites de apostilla en la capital impone gastos de viaje y demoras excesivas a los connacionales. Para ilustrarlo, considérese el caso de un ciudadano residente en **Encarnación** (a 350 km de Asunción) que necesita apostillar un título universitario. Debe:
+- Trasladarse a la capital (pasaje ida y vuelta: 120.000 guaraníes),
+- Hospedarse si no puede hacer el trámite en el día (80.000 guaraníes),
+- Perder dos días laborales (costo de oportunidad estimado: 200.000 guaraníes),
+- Pagar la tasa de apostilla (2,23 jornales × 100.000 guaraníes = 223.000 guaraníes).
+El costo total supera los **600.000 guaraníes** sin considerar el desgaste físico. Con el modelo “Cero Papel” + IA, el mismo trámite costaría solo la tasa (223.000 guaraníes) y se realizaría en 10 minutos desde su casa. Como señala el Banco Interamericano de Desarrollo (2020), la digitalización de los trámites públicos puede reducir hasta en un 80% los costos de transacción para los ciudadanos.
 
-Los resultados del estudio benefician a los paraguayos que viven lejos de la capital, a las comunidades en el exterior y a la propia institución en su meta de innovación. Al descentralizar la gestión consular, se eliminan barreras económicas reales como transporte y hospedaje. La Organización para la Cooperación y el Desarrollo Económicos (OCDE, 2019) destaca que el gobierno digital no solo mejora la eficiencia, sino que también promueve la equidad territorial. Esta investigación propone mecanismos de inteligencia artificial conversacional conectados al portal de apostilla, facilitando un flujo "Cero Papel" que garantice precisión en los cobros y mayor rapidez, cumpliendo efectivamente con la asistencia consular paraguaya.
+Asimismo, la liquidación de aranceles en el exterior sigue procesos manuales basados en dos cuerpos legales diferentes, lo que añade complejidad y riesgo de error. Los resultados del estudio benefician a los paraguayos que viven lejos de la capital, a las comunidades en el exterior y a la propia institución en su meta de innovación. Al descentralizar la gestión consular, se eliminan barreras económicas reales como transporte y hospedaje. La Organización para la Cooperación y el Desarrollo Económicos (OCDE, 2019) destaca que el gobierno digital no solo mejora la eficiencia, sino que también promueve la equidad territorial. Esta investigación propone mecanismos de inteligencia artificial conversacional conectados al portal de apostilla, facilitando un flujo "Cero Papel" que garantice precisión en los cobros y mayor rapidez, cumpliendo efectivamente con la asistencia consular paraguaya.
 
 ---
 
@@ -43,13 +48,17 @@ El gobierno electrónico (e-gobierno) se refiere al uso de tecnologías de la in
 
 La transformación digital del Estado va más allá de digitalizar formularios; implica repensar los procesos administrativos desde una lógica centrada en el ciudadano (Janowski, 2015). En ese sentido, la liquidación automática de aranceles consulares es un caso típico de **automatización de procesos** (RPA, por sus siglas en inglés), donde tareas repetitivas basadas en reglas son ejecutadas por software (van der Aalst et al., 2018). Esto libera tiempo para que los funcionarios se dediquen a casos complejos y mejora la experiencia del usuario.
 
-## 3. Modelo “Cero Papel” y simplificación administrativa
+## 3. Experiencias comparadas en América Latina
+
+La implementación de chatbots y automatización en el sector público no es ajena a la región. **Uruguay**, a través de su **Agencia de Gobierno Electrónico y Sociedad de la Información (AGESIC)** , ha desarrollado el asistente virtual “Iris” para consultas sobre trámites ciudadanos, reduciendo en un 40% el tiempo de respuesta (AGESIC, 2022). **Chile**, con su **Portal del Estado**, ha automatizado el cálculo de tasas notariales y aranceles judiciales, logrando que el 70% de los pagos se realicen en línea (Gobierno de Chile, 2021). **Colombia**, mediante la estrategia **“Cero Papel”** del Ministerio de Tecnologías de la Información (MINTIC), ha eliminado la presentación física de documentos en más de 150 trámites, con ahorros estimados en 15 millones de dólares anuales (MINTIC, 2023). Estos casos demuestran que la liquidación automática de aranceles consulares es técnica y políticamente viable en Paraguay, siempre que se adapte a su marco normativo y se implemente de manera gradual.
+
+## 4. Modelo “Cero Papel” y simplificación administrativa
 
 El concepto “Cero Papel” (o _paperless office_) se popularizó en la década de 1970, pero solo con la madurez de las TIC se ha vuelto alcanzable (Sellen & Harper, 2002). Implica la eliminación progresiva del soporte físico en los procesos internos y en la relación con los ciudadanos. Sus ventajas incluyen reducción de costos de almacenamiento, menor impacto ambiental y agilización de los tiempos de respuesta. En el sector público, el “Cero Papel” es un componente central de las políticas de simplificación administrativa (CEPAL, 2018).
 
 Para la gestión consular, un modelo “Cero Papel” requiere: (a) digitalización de documentos ingresados por el ciudadano (con firma electrónica o autenticación), (b) expedientes electrónicos que se tramiten en línea, (c) sistemas de pago electrónico integrados y (d) resguardos de seguridad y conservación digital. La implementación de este modelo, combinado con IA, permite no solo prescindir del papel, sino también automatizar la verificación de requisitos y el cálculo de tasas.
 
-## 4. Automatización de procesos en el sector público
+## 5. Automatización de procesos en el sector público
 
 La automatización de procesos mediante software (RPA) ha sido ampliamente adoptada por gobiernos para tareas como conciliaciones tributarias, emisión de certificados y gestión de recursos humanos (Wanner et al., 2019). Sin embargo, la automatización tradicional se limita a imitar la interacción humana con interfaces de usuario. Un nivel superior es la **automatización inteligente**, que incorpora IA para manejar datos no estructurados, tomar decisiones condicionales y aprender de los resultados (Willcocks et al., 2017).
 
@@ -141,7 +150,7 @@ Un asistente virtual para trámites ciudadanos debe integrarse con los sistemas 
 - **Ejecución de reglas de negocio**: consulta la base de conocimiento (aranceles) y aplica la fórmula de cálculo.
 - **Respuesta omnicanal**: puede operar vía web, WhatsApp o Telegram.
 
-En el caso específico de Paraguay, el asistente deberá estar disponible en español y guaraní (al menos en su interfaz inicial). Además, debe cumplir con la Ley de Protección de Datos Personales (si corresponde) y ofrecer información clara sobre el monto a pagar antes de redirigir al portal de pagos.
+En el caso específico de Paraguay, el asistente deberá estar disponible en español y guaraní (al menos en su interfaz inicial). Además, debe cumplir con la [Ley N° 6.534/2020 de Protección de Datos Personales](https://www.bacn.gov.py/leyes-paraguayas/10031/ley-n-6534-de-proteccion-de-datos-personales) y ofrecer información clara sobre el monto a pagar antes de redirigir al portal de pagos.
 
 ---
 
@@ -149,14 +158,24 @@ En el caso específico de Paraguay, el asistente deberá estar disponible en esp
 
 ## 4.1 Definición de reglas de negocio para la liquidación automática
 
-Una regla de negocio es una declaración que define o restringe algún aspecto del negocio (Giarratano & Riley, 2005). Para nuestro caso, se derivan directamente de los artículos de la Ley N° 1.030/97 y la Ley N° 4.033/10. A continuación se presentan ejemplos de reglas en formato lógico:
+Una regla de negocio es una declaración que define o restringe algún aspecto del negocio (Giarratano & Riley, 2005). Para nuestro caso, se derivan directamente de los artículos de la Ley N° 1.030/97 y la Ley N° 4.033/10. A continuación se presenta una tabla ampliada con las reglas más representativas:
 
-| Ley | Regla de negocio | Ejemplo de aplicación |
-|------|----------------|------------------------|
-| 1.030/97 | Si el tipo de documento es “apostilla de firma privada”, entonces la tasa = 2,23 × (jornal mínimo diario vigente). | Jornal=100.000 Gs. → tasa = 223.000 Gs. |
-| 4.033/10 | Si el servicio es “pasaporte ordinario” (código A01), entonces el arancel = 85 USD. | Sin recargo. |
-| 4.033/10 (modificada) | Si el servicio es “pasaporte de urgencia”, entonces arancel = 150 USD (no hay recargo sobre ordinario porque ya está fijado). | Según texto actual. |
-| 4.033/10 (derogación) | Si el servicio corresponde a navegación o importación (códigos derogados por Ley 7.196/2023), entonces el sistema debe informar “trámite no vigente”. | Evita cálculos erróneos. |
+| Ley | Regla de negocio (si-entonces) | Ejemplo de aplicación |
+|------|-------------------------------|------------------------|
+| 1.030/97 | Si **tipo_documento** es “apostilla_firma_privada” → **tasa = 2,23 × jornal_minimo** | Jornal=100.000 Gs. → 223.000 Gs. |
+| 1.030/97 | Si **tipo_documento** es “legalizacion_copia” → **tasa = 1,50 × jornal_minimo** | → 150.000 Gs. |
+| 1.030/97 | Si **tipo_documento** es “certificado_antecedentes” → **tasa = 1,00 × jornal_minimo** | → 100.000 Gs. |
+| 1.030/97 | Si **tipo_documento** es “legalizacion_titulo” → **tasa = 1,80 × jornal_minimo** | → 180.000 Gs. |
+| 4.033/10 | Si **servicio** = “pasaporte_ordinario” (código A01) → **monto = 85 USD** | Fijo. |
+| 4.033/10 | Si **servicio** = “pasaporte_urgencia” (código A02) → **monto = 150 USD** | Fijo. |
+| 4.033/10 | Si **servicio** = “inscripcion_nacimiento” (código B01) → **monto = 20 USD** | Fijo. |
+| 4.033/10 | Si **servicio** = “inscripcion_matrimonio” (código B02) → **monto = 50 USD** | Fijo. |
+| 4.033/10 | Si **servicio** = “poder_general” (código P01) → **monto = 60 USD** | Fijo. |
+| 4.033/10 | Si **servicio** = “poder_especial” (código P02) → **monto = 35 USD** | Fijo. |
+| 4.033/10 | Si **servicio** = “legalizacion_firma” (código D01) → **monto = 25 USD** | Fijo. |
+| 4.033/10 | Si **servicio** = “visado_pasaporte_extranjero” (código D02) → **monto = 60 USD** | Fijo. |
+| 4.033/10 | Si **servicio** está en lista derogada por Ley 7.196/2023 (códigos 01 a 30, 40 a 53, etc.) → **respuesta** = “Este arancel ya no está vigente” | Evita errores. |
+| Ambas | Si **tiene_exencion** = true y usuario acredita condición (personas de escasos recursos, repatriados, etc.) → **monto_final = 0** | Exención total. |
 
 Para implementar estas reglas, el sistema necesita una base de conocimiento (por ejemplo, un archivo JSON) que contenga todos los códigos vigentes con sus montos y condiciones. La actualización de la base debe realizarse cada vez que el Poder Ejecutivo modifique el jornal mínimo o que el Congreso apruebe una nueva ley arancelaria.
 
@@ -203,13 +222,17 @@ Estrategias específicas:
 
 El modelo propuesto permite que cualquier persona con conexión a internet pueda liquidar aranceles y apostillar documentos sin importar su ubicación geográfica. Para los compatriotas en el exterior, el asistente virtual estará disponible 24/7, evitando tener que llamar o enviar correos electrónicos al consulado y esperar días por una respuesta. Además, se prevé una versión del chat optimizada para dispositivos móviles (dado que el acceso a computadoras puede ser limitado en zonas rurales). En casos de desconexión, se podría usar SMS o un servicio de respuesta por mensaje de texto, aunque con funcionalidad reducida.
 
-## 6.2 Riesgos y limitaciones del modelo
+## 6.2 Riesgos, limitaciones y supervisión humana
 
 Ningún sistema automatizado está exento de riesgos. Los principales a considerar son:
 
 - **Brecha digital**: Una parte de la población (especialmente adultos mayores, personas de bajos ingresos o zonas sin cobertura de internet) podría quedar excluida. Para mitigarlo, se debe mantener una atención presencial mínima (por ejemplo, en municipios del interior) y diseñar una interfaz muy sencilla, con opción de asistencia telefónica.
-- **Seguridad de los datos**: El tratamiento de documentos personales (cédulas, títulos, certificados de nacimiento) exige el cumplimiento de la [Ley N° 6.534/2020](https://www.bacn.gov.py/leyes-paraguayas/10031/ley-n-6534-de-proteccion-de-datos-personales) (Protección de Datos Personales). Se deben implementar cifrado extremo a extremo, autenticación de dos factores y registros de auditoría.
-- **Errores del sistema**: El reconocimiento de documentos o la interpretación de la intención puede fallar. Por ello, se recomienda un mecanismo de supervisión humana (funcionario que revise los casos no resueltos) y un registro de errores para mejorar el modelo.
+- **Seguridad de los datos**: El tratamiento de documentos personales (cédulas, títulos, certificados de nacimiento) exige el cumplimiento de la [Ley N° 6.534/2020 de Protección de Datos Personales](https://www.bacn.gov.py/leyes-paraguayas/10031/ley-n-6534-de-proteccion-de-datos-personales). Se deben implementar cifrado extremo a extremo, autenticación de dos factores y registros de auditoría.
+- **Errores del sistema**: El reconocimiento de documentos o la interpretación de la intención puede fallar. Por ello, se recomienda un **mecanismo de supervisión humana** detallado:
+  - Si el usuario escribe “no entiendo” o “quiero hablar con un funcionario”, se activa una solicitud de chat en vivo con un agente consular (en horario hábil).
+  - Si el sistema detecta que el monto a pagar supera los 500 USD (por ejemplo, visados múltiples o poderes generales), automáticamente sugiere confirmación humana antes de proceder al pago.
+  - Si la intención del usuario no alcanza un umbral mínimo de confianza (por ejemplo, menos del 60% de coincidencia con las reglas definidas), se guarda el log y se envía un correo al área de informática para su revisión periódica.
+  - Se establece un registro de errores (_error log_) para mejorar el modelo iterativamente.
 - **Resistencia al cambio**: Tanto funcionarios como ciudadanos pueden mostrarse reacios. Se requiere un plan de comunicación y capacitación, así como incentivos para la adopción (por ejemplo, descuentos en el primer trámite digital).
 
 ## 6.3 Implementación gradual: propuesta de proyecto piloto
@@ -230,6 +253,8 @@ La propuesta se alinea con los objetivos de la **Agenda Digital del Paraguay 202
 
 # REFERENCIAS
 
+AGESIC. (2022). *Asistente virtual Iris: Resultados y métricas*. Agencia de Gobierno Electrónico y Sociedad de la Información, Uruguay. https://www.agesic.gub.uy
+
 Androutsopoulou, A., Karacapilidis, N., Loukis, E., & Charalabidis, Y. (2019). Transforming the communication between citizens and government through AI-guided chatbots. *Government Information Quarterly*, 36(2), 358-367.
 
 Banco Interamericano de Desarrollo (BID). (2020). *El costo de los trámites: Medición del tiempo y el dinero que los ciudadanos gastan en servicios públicos*. BID.
@@ -240,6 +265,8 @@ CEPAL. (2018). *Gobierno digital y simplificación administrativa en América La
 
 Giarratano, J., & Riley, G. (2005). *Expert Systems: Principles and Programming* (4th ed.). Thomson.
 
+Gobierno de Chile. (2021). *Portal del Estado: Automatización de tasas notariales*. Ministerio de Hacienda, Chile. https://www.chileatiende.cl
+
 Hernández Sampieri, R., Fernández Collado, C., & Baptista Lucio, P. (2018). *Metodología de la investigación* (6ª ed.). McGraw-Hill.
 
 Hurtado de Barrera, J. (2010). *Metodología de la investigación: guía para una comprensión holística*. Quirón.
@@ -249,6 +276,8 @@ Janowski, T. (2015). Digital government evolution: From transformation to contex
 Layne, K., & Lee, J. (2001). Developing fully functional E-government: A four stage model. *Government Information Quarterly*, 18(2), 122-136.
 
 Margetts, H., & Dorobantu, C. (2019). Rethink government with AI. *Nature*, 568(7751), 163-165.
+
+MINTIC. (2023). *Estrategia Cero Papel: Resultados y ahorros*. Ministerio de Tecnologías de la Información y Comunicaciones, Colombia. https://www.mintic.gov.co
 
 Misuraca, G., & Viscusi, G. (2015). Shaping the future of public sector innovation. *Communications of the ACM*, 58(6), 48-50.
 
@@ -270,9 +299,7 @@ Wanner, J., Hofmann, A., & Fischer, M. (2019). Process automation in the public 
 
 Willcocks, L., Lacity, M., & Craig, A. (2017). Robotic process automation: Strategic and operational benefits. *The Outsourcing Unit Working Paper*, London School of Economics.
 
----
-
-## Referencias legales (formato APA)
+## Referencias legales
 
 Congreso de la Nación Paraguaya. (1997). [*Ley N° 1.030: Que modifica y amplía la Ley Nº 133/93 y deroga el Decreto Ley Nº 46/72*](https://www.bacn.gov.py/leyes-paraguayas/2245/ley-n-1030-que-modifica-y-amplia-la-ley-n-133-93-y-deroga-el-decreto-ley-n-46-72-actualizando-las-tasas-por-servicios-de-legalizacion). BACN.
 
