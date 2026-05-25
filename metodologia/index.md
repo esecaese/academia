@@ -313,4 +313,4 @@ Congreso de la Nación Paraguaya. (2020). [*Ley N° 6.534: De protección de dat
 
 Congreso de la Nación Paraguaya. (2023). [*Ley N° 7.196: Deroga varios artículos de la Ley N° 4.033/2010*](https://www.bacn.gov.py/leyes-paraguayas/12025/ley-n-7196-que-deroga-varios-art-culos-de-la-ley-n-4033-2010-del-arancel-consular). BACN.
 
-Ministerio de Relaciones Exteriores. (s.f.). *Dirección General de Asuntos Consulares*. https://www.mre.gov.py/direccion-general-de-asuntos-consulares-dgac/
+Ministerio de Relaciones Exteriores. (s.f.). [*Dirección General de Asuntos Consulares*](https://www.mre.gov.py/direccion-general-de-asuntos-consulares-dgac/). MRE.
