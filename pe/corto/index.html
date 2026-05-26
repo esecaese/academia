@@ -1,647 +1,2007 @@
-
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+
+
+<html lang="es">
+
+
 <head>
+
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estudio RRII y Derecho Público</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+    <title>Estudio: RRII, Derecho Público y Constitución Paraguaya</title>
+
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif']
-                    },
-                    boxShadow: {
-                        glow: '0 0 25px rgba(99,102,241,0.25)'
-                    }
-                }
-            }
-        }
-    </script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300..700&display=swap" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 
     <style>
+
+
+        :root {
+
+
+            --bg: #0f1217;
+
+
+            --surface: rgba(22,27,34,0.95);
+
+
+            --surface-2: rgba(33,38,45,0.95);
+
+
+            --surface-3: rgba(44,51,61,0.95);
+
+
+            --border: rgba(255,255,255,0.08);
+
+
+            --text: #e6edf3;
+
+
+            --muted: #8b949e;
+
+
+            --primary: #5ba4cf;
+
+
+            --primary-2: #8b5cf6;
+
+
+            --green: #4cae5f;
+
+
+            --red: #e05c4e;
+
+
+            --shadow: 0 10px 30px rgba(0,0,0,0.28);
+
+
+            --radius-xl: 22px;
+
+
+            --radius-full: 999px;
+
+
+            --font-display: 'Instrument Serif', Georgia, serif;
+
+
+            --font-body: 'DM Sans', system-ui, sans-serif;
+
+
+        }
+
+
+        [data-theme="light"] {
+
+
+            --bg: #f5f4f0;
+
+
+            --surface: rgba(255,255,255,0.95);
+
+
+            --surface-2: rgba(250,249,247,0.98);
+
+
+            --surface-3: rgba(236,233,228,0.98);
+
+
+            --border: rgba(16,24,40,0.10);
+
+
+            --text: #1e1c17;
+
+
+            --muted: #6c6a64;
+
+
+            --shadow: 0 10px 28px rgba(16,24,40,0.08);
+
+
+        }
+
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+
         body {
-            font-family: 'Inter', sans-serif;
-            transition: background-color .25s ease, color .25s ease;
+
+
+            font-family: var(--font-body);
+
+
+            background:
+
+
+                radial-gradient(circle at top left, rgba(91,164,207,0.12), transparent 30%),
+
+
+                radial-gradient(circle at top right, rgba(139,92,246,0.12), transparent 30%),
+
+
+                var(--bg);
+
+
+            color: var(--text);
+
+
+            line-height: 1.65;
+
+
+            min-height: 100vh;
+
+
+            transition: background-color 180ms ease, color 180ms ease;
+
+
         }
 
-        .glass {
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+
+        button, select { font: inherit; cursor: pointer; }
+
+
+        button { border: none; background: none; color: inherit; }
+
+
+
+
+        /* ---- PROGRESS BAR ---- */
+
+
+        .progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; background: linear-gradient(90deg, var(--primary), var(--primary-2)); z-index: 200; transition: width 0.1s linear; }
+
+
+
+
+        /* ---- TOPBAR ---- */
+
+
+        .topbar {
+
+
+            position: sticky; top: 0; z-index: 100;
+
+
+            display: flex; align-items: center; justify-content: space-between; gap: 16px;
+
+
+            padding: 12px 20px;
+
+
+            background: var(--surface);
+
+
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+
+
+            border-bottom: 1px solid var(--border);
+
+
+            box-shadow: var(--shadow);
+
+
         }
 
-        .card-hover {
-            transition: all .25s ease;
+
+        .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+
+
+        .brand-mark {
+
+
+            width: 40px; height: 40px; border-radius: 14px; flex-shrink: 0;
+
+
+            background: linear-gradient(135deg, var(--primary), var(--primary-2));
+
+
+            color: white; display: grid; place-items: center;
+
+
+            box-shadow: 0 6px 18px rgba(91,164,207,0.25);
+
+
         }
 
-        .card-hover:hover {
-            transform: translateY(-4px);
+
+        .brand-title { font-family: var(--font-display); font-size: 1.35rem; line-height: 1.05; }
+
+
+        .brand-sub { font-size: 0.78rem; color: var(--muted); }
+
+
+        .top-actions { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; justify-content: flex-end; }
+
+
+        .voice-wrap {
+
+
+            display: flex; align-items: center; gap: 8px; padding: 8px 13px;
+
+
+            border-radius: var(--radius-full); background: var(--surface-2);
+
+
+            border: 1px solid var(--border);
+
+
         }
+
+
+        .voice-wrap i { color: var(--primary); font-size: 0.9rem; }
+
+
+        #voiceSelect {
+
+
+            background: transparent; border: none; outline: none;
+
+
+            color: var(--text); max-width: 220px; font-size: 0.85rem;
+
+
+        }
+
+
+        #voiceSelect option { background: #1f242d; color: #fff; }
+
+
+        .icon-btn {
+
+
+            width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+
+
+            background: var(--surface-2); border: 1px solid var(--border); color: var(--text);
+
+
+            transition: transform 150ms ease, filter 150ms ease;
+
+
+        }
+
+
+        .icon-btn:hover { transform: translateY(-1px) scale(1.04); filter: brightness(1.1); }
+
+
+        .play-btn { background: var(--green); border-color: var(--green); color: white; }
+
+
+        .stop-btn { background: var(--red); border-color: var(--red); color: white; }
+
+
+
+
+        /* ---- LAYOUT ---- */
+
+
+        .main { max-width: 1180px; margin: 0 auto; padding: 32px 18px 52px; }
+
+
+
+
+        /* ---- HERO ---- */
+
+
+        .hero { padding: 8px 0 24px; margin-bottom: 30px; border-bottom: 1px solid var(--border); }
+
+
+        .hero-tag {
+
+
+            display: inline-flex; align-items: center; gap: 7px;
+
+
+            padding: 5px 13px; border-radius: var(--radius-full);
+
+
+            background: var(--surface-2); border: 1px solid var(--border);
+
+
+            color: var(--muted); font-size: 0.78rem; margin-bottom: 14px;
+
+
+        }
+
+
+        .hero h1 {
+
+
+            font-family: var(--font-display);
+
+
+            font-size: clamp(2.1rem, 5vw, 3.8rem);
+
+
+            line-height: 1.02; margin-bottom: 10px;
+
+
+        }
+
+
+        .hero h1 em { color: var(--primary); font-style: italic; }
+
+
+        .hero p { color: var(--muted); max-width: 68ch; font-size: 0.97rem; }
+
+
+
+
+        /* ---- SECTION ---- */
+
+
+        .section { margin-bottom: 56px; }
+
+
+        .section-head {
+
+
+            display: flex; align-items: center; gap: 12px;
+
+
+            margin-bottom: 20px; padding-bottom: 10px;
+
+
+            border-bottom: 1px solid var(--border);
+
+
+        }
+
+
+        .section-icon {
+
+
+            width: 42px; height: 42px; border-radius: 14px;
+
+
+            display: grid; place-items: center; flex-shrink: 0; font-size: 1.05rem;
+
+
+        }
+
+
+        .indigo { background: rgba(91,164,207,0.16); color: var(--primary); }
+
+
+        .green  { background: rgba(76,174,95,0.16);  color: var(--green); }
+
+
+        .purple { background: rgba(139,92,246,0.16); color: #b59cff; }
+
+
+        .section h2 { font-family: var(--font-display); font-size: clamp(1.65rem, 3vw, 2.4rem); }
+
+
+        .section-badge {
+
+
+            margin-left: auto; font-size: 0.78rem; color: var(--muted);
+
+
+            background: var(--surface-3); border: 1px solid var(--border);
+
+
+            padding: 5px 12px; border-radius: var(--radius-full); white-space: nowrap;
+
+
+        }
+
+
+
+
+        /* ---- GRIDS ---- */
+
+
+        .cards-grid    { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(320px,100%),1fr)); gap: 18px; }
+
+
+        .articles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(290px,100%),1fr)); gap: 16px; }
+
+
+        .law-list      { display: flex; flex-direction: column; gap: 16px; }
+
+
+
+
+        /* ---- CARDS ---- */
+
+
+        .card, .article-card, .law-card {
+
+
+            background: var(--surface); border: 1px solid var(--border);
+
+
+            border-radius: var(--radius-xl); padding: 20px;
+
+
+            box-shadow: var(--shadow);
+
+
+            transition: transform 150ms ease, border-color 150ms ease;
+
+
+        }
+
+
+        .card:hover, .article-card:hover, .law-card:hover { transform: translateY(-2px); }
+
+
+        .card-head, .article-head, .law-head {
+
+
+            display: flex; align-items: flex-start; justify-content: space-between;
+
+
+            gap: 12px; margin-bottom: 10px;
+
+
+        }
+
+
+        .card-title {
+
+
+            font-size: 0.97rem; font-weight: 700; line-height: 1.35;
+
+
+            color: var(--text); display: flex; align-items: center; gap: 8px;
+
+
+        }
+
+
+        .card-title i { color: var(--primary); font-size: 0.9rem; }
+
+
+        .card-body, .article-body, .law-body {
+
+
+            font-size: 0.93rem; color: var(--muted); line-height: 1.75;
+
+
+        }
+
+
+        .article-num, .law-num {
+
+
+            font-size: 0.82rem; font-weight: 800;
+
+
+            color: var(--primary); letter-spacing: 0.02em;
+
+
+        }
+
+
+        .article-title-label {
+
+
+            font-size: 0.88rem; font-weight: 700;
+
+
+            color: var(--text); display: block; margin-bottom: 6px;
+
+
+        }
+
+
+
+
+        /* ---- AUDIO BTN ---- */
+
 
         .audio-btn {
-            transition: all .2s ease;
+
+
+            width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+
+
+            background: var(--surface-3); border: 1px solid var(--border);
+
+
+            color: var(--muted); display: grid; place-items: center;
+
+
+            transition: transform 140ms ease, background 140ms ease, color 140ms ease;
+
+
         }
 
-        .audio-btn:hover {
-            transform: scale(1.12);
+
+        .audio-btn:hover  { transform: scale(1.08); background: var(--primary); color: white; }
+
+
+        .audio-btn.playing { background: var(--green); color: white; border-color: var(--green); }
+
+
+
+
+        /* ---- FOOTER / BACK-TOP ---- */
+
+
+        .footer { text-align: center; padding: 24px 18px 36px; color: var(--muted); border-top: 1px solid var(--border); font-size: 0.82rem; }
+
+
+        .scroll-top {
+
+
+            position: fixed; bottom: 22px; right: 22px; z-index: 80;
+
+
+            width: 42px; height: 42px; border-radius: 50%;
+
+
+            background: var(--surface-2); border: 1px solid var(--border);
+
+
+            color: var(--text); display: grid; place-items: center;
+
+
+            box-shadow: var(--shadow); opacity: 0; pointer-events: none;
+
+
+            transition: opacity 160ms ease, transform 160ms ease;
+
+
         }
 
-        ::-webkit-scrollbar {
-            width: 10px;
+
+        .scroll-top.show { opacity: 1; pointer-events: auto; }
+
+
+        .scroll-top:hover { transform: translateY(-2px); }
+
+
+
+
+        @media (max-width: 720px) {
+
+
+            .topbar { flex-direction: column; align-items: stretch; padding: 12px 14px; }
+
+
+            .top-actions { justify-content: space-between; }
+
+
+            .brand-sub, .section-badge { display: none; }
+
+
+            #voiceSelect { max-width: 140px; }
+
+
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: #6366f1;
-            border-radius: 999px;
-        }
 
-        .reading {
-            border-color: #22c55e !important;
-            box-shadow: 0 0 0 2px rgba(34,197,94,.2);
-        }
     </style>
+
+
 </head>
 
-<body class="bg-gradient-to-br from-slate-100 via-indigo-50 to-slate-200 dark:from-gray-950 dark:via-slate-900 dark:to-black text-gray-900 dark:text-gray-100 min-h-screen">
 
-    <!-- HEADER FLOTANTE -->
-    <div class="fixed top-0 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-6xl pt-3">
-        <div class="glass bg-white/70 dark:bg-gray-900/70 border border-white/30 dark:border-gray-700 rounded-2xl shadow-2xl px-4 py-3 flex flex-col lg:flex-row gap-3 lg:items-center lg:justify-between">
+<body>
+
+
+    <div class="progress" id="progressBar"></div>
+
+
+
+
+    <header class="topbar">
+
+
+        <div class="brand">
+
+
+            <div class="brand-mark"><i class="fas fa-globe-americas"></i></div>
+
 
             <div>
-                <h1 class="text-xl md:text-2xl font-extrabold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
-                    📘 RRII + Derecho Público
-                </h1>
-                <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400">
-                    Modo estudio con lectura automática y voces en español
-                </p>
-            </div>
 
-            <div class="flex flex-wrap items-center gap-2">
 
-                <div class="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 rounded-full px-3 py-2">
-                    <i class="fas fa-microphone text-indigo-500"></i>
-                    <select id="voiceSelect" class="bg-transparent outline-none text-sm font-medium min-w-[220px]">
-                        <option>Cargando voces...</option>
-                    </select>
-                </div>
+                <div class="brand-title">RRII · Derecho PY</div>
 
-                <button id="readAllBtn"
-                    class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl shadow-lg flex items-center gap-2 font-semibold">
-                    <i class="fas fa-play"></i>
-                    Leer Todo
-                </button>
 
-                <button id="pauseBtn"
-                    class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-xl shadow-lg flex items-center gap-2 font-semibold">
-                    <i class="fas fa-pause"></i>
-                    Pausar
-                </button>
+                <div class="brand-sub">Audio individual, lectura secuencial y selector de voz (persistente)</div>
 
-                <button id="globalStopBtn"
-                    class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl shadow-lg flex items-center gap-2 font-semibold">
-                    <i class="fas fa-stop"></i>
-                    Detener
-                </button>
-
-                <button id="darkModeToggle"
-                    class="bg-indigo-600 hover:bg-indigo-700 dark:bg-yellow-500 dark:hover:bg-yellow-600 text-white w-11 h-11 rounded-xl shadow-lg">
-                    <i id="darkModeIcon" class="fas fa-moon"></i>
-                </button>
 
             </div>
+
+
         </div>
-    </div>
 
-    <main class="max-w-6xl mx-auto px-4 pt-40 pb-20">
 
-        <!-- INTRO -->
-        <section class="mb-10">
-            <div class="bg-white/80 dark:bg-gray-900/70 glass rounded-3xl p-6 md:p-8 shadow-xl border border-white/20 dark:border-gray-800">
-                <div class="flex flex-col md:flex-row gap-6 md:items-center md:justify-between">
-                    <div>
-                        <h2 class="text-3xl md:text-4xl font-extrabold leading-tight">
-                            Preparación Intensiva para Examen
-                        </h2>
-                        <p class="mt-3 text-gray-600 dark:text-gray-300 leading-relaxed max-w-3xl">
-                            Puedes escuchar cada bloque individualmente o leer todo el contenido automáticamente.
-                            Las voces disponibles se filtran únicamente en español.
-                        </p>
-                    </div>
+        <div class="top-actions">
 
-                    <div class="grid grid-cols-2 gap-3 min-w-[260px]">
-                        <div class="bg-indigo-100 dark:bg-indigo-950/60 rounded-2xl p-4 text-center">
-                            <div class="text-3xl font-black text-indigo-600 dark:text-indigo-400">12</div>
-                            <div class="text-sm">Conceptos</div>
-                        </div>
 
-                        <div class="bg-purple-100 dark:bg-purple-950/60 rounded-2xl p-4 text-center">
-                            <div class="text-3xl font-black text-purple-600 dark:text-purple-400">+30</div>
-                            <div class="text-sm">Artículos</div>
-                        </div>
-                    </div>
-                </div>
+            <div class="voice-wrap">
+
+
+                <i class="fas fa-microphone-alt"></i>
+
+
+                <select id="voiceSelect" title="Seleccionar voz en español">
+
+
+                    <option value="">Cargando voces...</option>
+
+
+                </select>
+
+
             </div>
+
+
+            <button id="readAllBtn" class="icon-btn play-btn" title="Leer todo el documento"><i class="fas fa-play"></i></button>
+
+
+            <button id="globalStopBtn" class="icon-btn stop-btn" title="Detener audio"><i class="fas fa-stop"></i></button>
+
+
+            <button id="themeToggle" class="icon-btn" title="Cambiar tema"><i id="themeIcon" class="fas fa-moon"></i></button>
+
+
+        </div>
+
+
+    </header>
+
+
+
+
+    <main class="main">
+
+
+
+
+        <section class="hero">
+
+
+            <div class="hero-tag"><i class="fas fa-book-open"></i> Texto corregido – Audio individual, lectura secuencial y selector de voz (persistente)</div>
+
+
+            <h1>📘 Relaciones Internacionales + <em>Derecho Público</em></h1>
+
+
+            <p>Selecciona una voz en español arriba. Pulsa el altavoz en cada ítem o el botón verde ▶ para lectura completa. ⏹ para detener.</p>
+
+
         </section>
 
-        <!-- DEFINICIONES -->
-        <section class="mb-12">
 
-            <div class="flex items-center gap-3 mb-6">
-                <div class="w-12 h-12 rounded-2xl bg-indigo-500 flex items-center justify-center shadow-lg">
-                    <i class="fas fa-brain text-white text-xl"></i>
-                </div>
 
-                <div>
-                    <h2 class="text-2xl md:text-3xl font-extrabold">Definiciones Fundamentales</h2>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">
-                        Relaciones Internacionales y Derecho Público
-                    </p>
-                </div>
-            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <!-- ========== DEFINICIONES ========== -->
 
-                <div class="study-card card-hover bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-3xl p-6 shadow-lg" id="card1">
-                    <div class="flex justify-between gap-4">
-                        <h3 class="font-bold text-xl flex items-center gap-3">
-                            <i class="fas fa-globe text-indigo-500"></i>
-                            Sociedad internacional
-                        </h3>
 
-                        <div class="flex items-center gap-2">
-                        <button class="audio-btn text-indigo-500 text-xl" data-audio-text="def1Text" data-card="card1">
-                            <i class="fas fa-volume-up"></i>
-                        </button>
+        <section class="section">
 
-                        <button class="stop-btn text-red-500 text-xl">
-                            <i class="fas fa-stop-circle"></i>
-                        </button>
-                    </div>
-                    </div>
 
-                    <p id="def1Text" class="mt-4 leading-relaxed text-gray-700 dark:text-gray-300">
-                        Es el escenario global donde interactúan los Estados, organizaciones internacionales,
-                        ONGs, empresas multinacionales y otros actores que influyen en la política mundial.
-                    </p>
-                </div>
+            <div class="section-head">
 
-                <div class="study-card card-hover bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-3xl p-6 shadow-lg" id="card2">
-                    <div class="flex justify-between gap-4">
-                        <h3 class="font-bold text-xl flex items-center gap-3">
-                            <i class="fas fa-handshake text-indigo-500"></i>
-                            Relaciones internacionales
-                        </h3>
 
-                        <div class="flex items-center gap-2">
-                        <button class="audio-btn text-indigo-500 text-xl" data-audio-text="def2Text" data-card="card2">
-                            <i class="fas fa-volume-up"></i>
-                        </button>
+                <div class="section-icon indigo"><i class="fas fa-brain"></i></div>
 
-                        <button class="stop-btn text-red-500 text-xl">
-                            <i class="fas fa-stop-circle"></i>
-                        </button>
-                    </div>
-                    </div>
 
-                    <p id="def2Text" class="mt-4 leading-relaxed text-gray-700 dark:text-gray-300">
-                        Conjunto de interacciones políticas, económicas, sociales, culturales y jurídicas entre los actores internacionales.
-                    </p>
-                </div>
+                <h2>Definiciones y conceptos fundamentales</h2>
 
-                <div class="study-card card-hover bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-3xl p-6 shadow-lg" id="card3">
-                    <div class="flex justify-between gap-4">
-                        <h3 class="font-bold text-xl flex items-center gap-3">
-                            <i class="fas fa-gavel text-indigo-500"></i>
-                            Derecho Internacional Público
-                        </h3>
 
-                        <div class="flex items-center gap-2">
-                        <button class="audio-btn text-indigo-500 text-xl" data-audio-text="def3Text" data-card="card3">
-                            <i class="fas fa-volume-up"></i>
-                        </button>
+                <span class="section-badge">12 conceptos</span>
 
-                        <button class="stop-btn text-red-500 text-xl">
-                            <i class="fas fa-stop-circle"></i>
-                        </button>
-                    </div>
-                    </div>
-
-                    <p id="def3Text" class="mt-4 leading-relaxed text-gray-700 dark:text-gray-300">
-                        Normas jurídicas que regulan las relaciones entre los Estados y demás sujetos internacionales.
-                    </p>
-                </div>
-
-                <div class="study-card card-hover bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-3xl p-6 shadow-lg" id="card4">
-                    <div class="flex justify-between gap-4">
-                        <h3 class="font-bold text-xl flex items-center gap-3">
-                            <i class="fas fa-landmark text-indigo-500"></i>
-                            Política exterior
-                        </h3>
-
-                        <div class="flex items-center gap-2">
-                        <button class="audio-btn text-indigo-500 text-xl" data-audio-text="def4Text" data-card="card4">
-                            <i class="fas fa-volume-up"></i>
-                        </button>
-
-                        <button class="stop-btn text-red-500 text-xl">
-                            <i class="fas fa-stop-circle"></i>
-                        </button>
-                    </div>
-                    </div>
-
-                    <p id="def4Text" class="mt-4 leading-relaxed text-gray-700 dark:text-gray-300">
-                        Política pública mediante la cual un Estado administra sus relaciones con otros actores internacionales.
-                    </p>
-                </div>
 
             </div>
+
+
+            <div class="cards-grid">
+
+
+
+
+                <div class="card">
+
+
+                    <div class="card-head">
+
+
+                        <h3 class="card-title"><i class="fas fa-globe"></i> Sociedad internacional y sus actores</h3>
+
+
+                        <button class="audio-btn" data-audio-text="def1Text"><i class="fas fa-volume-up"></i></button>
+
+
+                    </div>
+
+
+                    <div id="def1Text" class="card-body">Es el escenario global donde interactúan las entidades. Históricamente era dominada por los Estados, pero hoy incluye a múltiples actores que influyen en la política global. Estos pueden ser: Estados soberanos, Organizaciones internacionales, ONGs, Empresas multinacionales, Grupos criminales transnacionales.</div>
+
+
+                </div>
+
+
+
+
+                <div class="card">
+
+
+                    <div class="card-head">
+
+
+                        <h3 class="card-title"><i class="fas fa-handshake"></i> Relaciones internacionales</h3>
+
+
+                        <button class="audio-btn" data-audio-text="def2Text"><i class="fas fa-volume-up"></i></button>
+
+
+                    </div>
+
+
+                    <div id="def2Text" class="card-body">Es el conjunto de interacciones políticas, económicas, sociales, jurídicas y culturales entre los actores mencionados anteriormente. Abarcan tanto la cooperación como los conflictos.</div>
+
+
+                </div>
+
+
+
+
+                <div class="card">
+
+
+                    <div class="card-head">
+
+
+                        <h3 class="card-title"><i class="fas fa-gavel"></i> Derecho Internacional Público y Sujetos</h3>
+
+
+                        <button class="audio-btn" data-audio-text="def3Text"><i class="fas fa-volume-up"></i></button>
+
+
+                    </div>
+
+
+                    <div id="def3Text" class="card-body">Son las normas que regulan las relaciones entre los Estados y otros sujetos internacionales.</div>
+
+
+                </div>
+
+
+
+
+                <div class="card">
+
+
+                    <div class="card-head">
+
+
+                        <h3 class="card-title"><i class="fas fa-book"></i> Derecho Escrito</h3>
+
+
+                        <button class="audio-btn" data-audio-text="def4Text"><i class="fas fa-volume-up"></i></button>
+
+
+                    </div>
+
+
+                    <div id="def4Text" class="card-body">Es el conjunto de normas jurídicas escritas vigentes en un Estado en un momento determinado. Incluyen su Constitución, tratados, leyes, etc.</div>
+
+
+                </div>
+
+
+
+
+                <div class="card">
+
+
+                    <div class="card-head">
+
+
+                        <h3 class="card-title"><i class="fas fa-balance-scale"></i> Igualdad jurídica entre Estados</h3>
+
+
+                        <button class="audio-btn" data-audio-text="def5Text"><i class="fas fa-volume-up"></i></button>
+
+
+                    </div>
+
+
+                    <div id="def5Text" class="card-body">Es el principio que establece que todos los Estados son iguales en condiciones, sin importar su tamaño o poder económico o militar. Resumido en "un estado, un voto".</div>
+
+
+                </div>
+
+
+
+
+                <div class="card">
+
+
+                    <div class="card-head">
+
+
+                        <h3 class="card-title"><i class="fas fa-check-circle"></i> Referéndum</h3>
+
+
+                        <button class="audio-btn" data-audio-text="def6Text"><i class="fas fa-volume-up"></i></button>
+
+
+                    </div>
+
+
+                    <div id="def6Text" class="card-body">Son los mecanismos de participación ciudadana, pero no puede decidir sobre tratados o relaciones internacionales.</div>
+
+
+                </div>
+
+
+
+
+                <div class="card">
+
+
+                    <div class="card-head">
+
+
+                        <h3 class="card-title"><i class="fas fa-hand-peace"></i> Diplomacia</h3>
+
+
+                        <button class="audio-btn" data-audio-text="def7Text"><i class="fas fa-volume-up"></i></button>
+
+
+                    </div>
+
+
+                    <div id="def7Text" class="card-body">Es el mecanismo pacífico por excelencia para gestionar las relaciones. Se usa para negociaciones, representación en el exterior, protección de intereses, etc.</div>
+
+
+                </div>
+
+
+
+
+                <div class="card">
+
+
+                    <div class="card-head">
+
+
+                        <h3 class="card-title"><i class="fas fa-landmark"></i> Política exterior como política pública</h3>
+
+
+                        <button class="audio-btn" data-audio-text="def8Text"><i class="fas fa-volume-up"></i></button>
+
+
+                    </div>
+
+
+                    <div id="def8Text" class="card-body">Es aquella parte de la política general donde se definen objetivos y se utilizan medios para que un Estado pueda gestionar sus relaciones con otros actores.</div>
+
+
+                </div>
+
+
+
+
+                <div class="card">
+
+
+                    <div class="card-head">
+
+
+                        <h3 class="card-title"><i class="fas fa-charging-station"></i> El poder</h3>
+
+
+                        <button class="audio-btn" data-audio-text="def9Text"><i class="fas fa-volume-up"></i></button>
+
+
+                    </div>
+
+
+                    <div id="def9Text" class="card-body">Es utilizable en medios tangibles como el económico, la población y las fuerzas armadas; así como en intangibles como el liderazgo y la moral.</div>
+
+
+                </div>
+
+
+
+
+                <div class="card">
+
+
+                    <div class="card-head">
+
+
+                        <h3 class="card-title"><i class="fas fa-chart-line"></i> La toma de decisiones</h3>
+
+
+                        <button class="audio-btn" data-audio-text="def10Text"><i class="fas fa-volume-up"></i></button>
+
+
+                    </div>
+
+
+                    <div id="def10Text" class="card-body">Está dividida en 3 etapas: Elaboración (donde se evalúan las opciones), Ejecución (donde el poder ejecutivo toma acciones para poner en práctica las políticas seleccionadas), Control (donde se evalúan los resultados para determinar responsabilidades).</div>
+
+
+                </div>
+
+
+
+
+                <div class="card">
+
+
+                    <div class="card-head">
+
+
+                        <h3 class="card-title"><i class="fas fa-bullseye"></i> Fines y Objetivos</h3>
+
+
+                        <button class="audio-btn" data-audio-text="def11Text"><i class="fas fa-volume-up"></i></button>
+
+
+                    </div>
+
+
+                    <div id="def11Text" class="card-body">Los fines son resultados a largo plazo (seguridad, identidad cultural), mientras que los objetivos son resultados a corto plazo para alcanzar los fines.</div>
+
+
+                </div>
+
+
+
+
+                <div class="card">
+
+
+                    <div class="card-head">
+
+
+                        <h3 class="card-title"><i class="fas fa-flag-checkered"></i> Interés nacional</h3>
+
+
+                        <button class="audio-btn" data-audio-text="def12Text"><i class="fas fa-volume-up"></i></button>
+
+
+                    </div>
+
+
+                    <div id="def12Text" class="card-body">No existe un único interés; suele ser la visión del grupo que ejerce el gobierno.</div>
+
+
+                </div>
+
+
+
+
+            </div>
+
+
         </section>
 
-        <!-- CONSTITUCIÓN -->
-        <section class="mb-12">
 
-            <div class="flex items-center gap-3 mb-6">
-                <div class="w-12 h-12 rounded-2xl bg-green-500 flex items-center justify-center shadow-lg">
-                    <i class="fas fa-scale-balanced text-white text-xl"></i>
-                </div>
 
-                <div>
-                    <h2 class="text-2xl md:text-3xl font-extrabold">Constitución Nacional</h2>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">
-                        Artículos importantes para el examen
-                    </p>
-                </div>
-            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <!-- ========== CONSTITUCIÓN NACIONAL ========== -->
 
-                <div class="study-card bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 dark:border-gray-800 p-6 shadow-lg">
-                    <div class="flex justify-between items-start gap-4">
-                        <div>
-                            <span class="bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 px-3 py-1 rounded-full text-sm font-bold">
-                                Artículo 2
-                            </span>
-                        </div>
 
-                        <div class="flex items-center gap-2">
-                        <button class="audio-btn text-green-500 text-xl" data-audio-text="c2Text">
-                            <i class="fas fa-volume-up"></i>
-                        </button>
+        <section class="section">
 
-                        <button class="stop-btn text-red-500 text-xl">
-                            <i class="fas fa-stop-circle"></i>
-                        </button>
-                    </div>
-                    </div>
 
-                    <p id="c2Text" class="mt-4 leading-relaxed text-gray-700 dark:text-gray-300">
-                        La soberanía reside en el pueblo, quien la ejerce conforme a la Constitución.
-                    </p>
-                </div>
+            <div class="section-head">
 
-                <div class="study-card bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 dark:border-gray-800 p-6 shadow-lg">
-                    <div class="flex justify-between items-start gap-4">
-                        <div>
-                            <span class="bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 px-3 py-1 rounded-full text-sm font-bold">
-                                Artículo 41
-                            </span>
-                        </div>
 
-                        <div class="flex items-center gap-2">
-                        <button class="audio-btn text-green-500 text-xl" data-audio-text="c41Text">
-                            <i class="fas fa-volume-up"></i>
-                        </button>
+                <div class="section-icon green"><i class="fas fa-gavel"></i></div>
 
-                        <button class="stop-btn text-red-500 text-xl">
-                            <i class="fas fa-stop-circle"></i>
-                        </button>
-                    </div>
-                    </div>
 
-                    <p id="c41Text" class="mt-4 leading-relaxed text-gray-700 dark:text-gray-300">
-                        Todo paraguayo tiene derecho a residir en su patria y los extranjeros radicados no podrán ser obligados a abandonarla sin sentencia judicial.
-                    </p>
-                </div>
+                <h2>Constitución Nacional</h2>
+
+
+                <span class="section-badge">30 artículos</span>
+
 
             </div>
+
+
+            <div class="articles-grid">
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 2</span><button class="audio-btn" data-audio-text="c2Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c2Text" class="article-body"><span class="article-title-label">De la soberanía.</span> Ejercida por el pueblo.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 41</span><button class="audio-btn" data-audio-text="c41Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c41Text" class="article-body"><span class="article-title-label">Del tránsito y residencia.</span> Todo paraguayo tiene derecho a residir en su patria. Los ingresos de extranjeros sin radicación serán regulados por ley. Los extranjeros radicados no serán obligados a abandonar el país salvo sentencia judicial.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 43</span><button class="audio-btn" data-audio-text="c43Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c43Text" class="article-body"><span class="article-title-label">Del derecho de asilo.</span> El Paraguay reconoce el derecho de asilo territorial y diplomático. Las personas que lo obtengan no podrán ser extraditadas por delitos políticos.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 120</span><button class="audio-btn" data-audio-text="c120Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c120Text" class="article-body"><span class="article-title-label">De los electores.</span> Son electores los ciudadanos paraguayos radicados en el territorio nacional sin distinción. Los extranjeros con radicación permanente tienen derecho a votar en las elecciones municipales conforme a la ley.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 121</span><button class="audio-btn" data-audio-text="c121Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c121Text" class="article-body"><span class="article-title-label">Del referéndum.</span> El referéndum legislativo podrá ser convocado por ley, a iniciativa de la cuarta parte de los miembros de cualquiera de las Cámaras del Congreso, o por el Poder Ejecutivo. No podrá referirse a tratados internacionales, relaciones exteriores, etc.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 122</span><button class="audio-btn" data-audio-text="c122Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c122Text" class="article-body"><span class="article-title-label">Materias excluidas del referéndum.</span> No podrán ser objeto de referéndum: las relaciones internacionales, los tratados, convenios o acuerdos internacionales, las expropiaciones, la defensa nacional, la limitación de la propiedad por razones de interés social y las que establece esta Constitución.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 136</span><button class="audio-btn" data-audio-text="c136Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c136Text" class="article-body"><span class="article-title-label">De la acción de inconstitucionalidad.</span> La Corte Suprema de Justicia tiene facultad para declarar la inconstitucionalidad de las normas jurídicas y de las resoluciones judiciales.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 137</span><button class="audio-btn" data-audio-text="c137Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c137Text" class="article-body"><span class="article-title-label">De la supremacía constitucional.</span> La ley suprema de la República es la Constitución. Ésta, los tratados, convenios y acuerdos internacionales aprobados y ratificados, las leyes dictadas por el Congreso y otras disposiciones normativas de inferior jerarquía conforman el ordenamiento jurídico.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 141</span><button class="audio-btn" data-audio-text="c141Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c141Text" class="article-body"><span class="article-title-label">De los tratados internacionales.</span> Los tratados internacionales válidamente celebrados, aprobados por ley del Congreso, y cuyos instrumentos de ratificación fueran canjeados o depositados, forman parte del ordenamiento legal interno con la jerarquía que determina el artículo 137.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 142</span><button class="audio-btn" data-audio-text="c142Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c142Text" class="article-body"><span class="article-title-label">De la denuncia de los tratados.</span> Los tratados internacionales relativos a los derechos humanos no podrán ser denunciados sino por los procedimientos que rigen para la enmienda de esta Constitución.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 143</span><button class="audio-btn" data-audio-text="c143Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c143Text" class="article-body"><span class="article-title-label">De las relaciones internacionales.</span> La República del Paraguay, en sus relaciones internacionales, se orienta por los principios de: la independencia nacional, la autodeterminación de los pueblos, la igualdad jurídica entre los Estados, la solución pacífica de las controversias, el repudio a toda forma de dictadura, entre otros.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 144</span><button class="audio-btn" data-audio-text="c144Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c144Text" class="article-body"><span class="article-title-label">De la guerra y de la paz.</span> Sólo el Congreso tiene facultad de declarar la guerra o autorizar operaciones bélicas. Corresponde al Poder Ejecutivo negociar la paz, pero el tratado respectivo requiere aprobación del Congreso.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 145</span><button class="audio-btn" data-audio-text="c145Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c145Text" class="article-body"><span class="article-title-label">Del orden jurídico supranacional.</span> La República del Paraguay, en condiciones de igualdad con otros Estados, admite un orden jurídico supranacional que garantice la vigencia de los derechos humanos, de la paz, de la justicia internacional y del respeto a la soberanía de los pueblos.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 146</span><button class="audio-btn" data-audio-text="c146Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c146Text" class="article-body"><span class="article-title-label">De la nacionalidad.</span> Son de nacionalidad paraguaya natural los nacidos en el territorio de la República y los nacidos en el extranjero de padre o madre paraguayos, cuando éstos se hallaran en servicio de la República.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 147</span><button class="audio-btn" data-audio-text="c147Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c147Text" class="article-body"><span class="article-title-label">De la nacionalidad por naturalización.</span> Adquieren la nacionalidad paraguaya por naturalización: los extranjeros mayores de edad que tengan más de tres años de radicación en el país, hayan observado buena conducta y tengan profesión, arte u oficio.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 149</span><button class="audio-btn" data-audio-text="c149Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c149Text" class="article-body"><span class="article-title-label">De la pérdida de la nacionalidad.</span> La nacionalidad paraguaya no se pierde por adquirir otra nacionalidad. La ciudadanía paraguaya se pierde por sentencia judicial firme en los casos previstos por la ley.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 150</span><button class="audio-btn" data-audio-text="c150Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c150Text" class="article-body"><span class="article-title-label">De la extradición.</span> Los paraguayos naturales no serán extraditados a países extranjeros. Los naturalizados tampoco lo serán por delitos cometidos antes de obtener la nacionalidad. La extradición se regula por tratados internacionales.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 152</span><button class="audio-btn" data-audio-text="c152Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c152Text" class="article-body"><span class="article-title-label">De los derechos de los extranjeros.</span> Los extranjeros tienen los mismos derechos civiles que los paraguayos. El Estado puede establecer, mediante ley, limitaciones a los derechos civiles de los extranjeros por razones de reciprocidad.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 154</span><button class="audio-btn" data-audio-text="c154Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c154Text" class="article-body"><span class="article-title-label">De la ciudadanía.</span> Los paraguayos tienen la obligación de armarse en defensa de la patria y de esta Constitución, conforme a la ley. Nadie tiene el derecho de hacer armas contra la patria.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 155</span><button class="audio-btn" data-audio-text="c155Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c155Text" class="article-body"><span class="article-title-label">De los deberes políticos.</span> El voto es un derecho, un deber y una función pública del elector. Su ejercicio es personal e indelegable. El sufragio es universal, libre, directo, igual y secreto.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 173</span><button class="audio-btn" data-audio-text="c173Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c173Text" class="article-body"><span class="article-title-label">De los ministerios.</span> Los ministerios de la administración central son los órganos directos de colaboración del Poder Ejecutivo. La ley determinará el número de ministerios, así como la organización y las atribuciones de cada uno de ellos.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 176</span><button class="audio-btn" data-audio-text="c176Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c176Text" class="article-body"><span class="article-title-label">De la política económica y de la integración.</span> El Estado promoverá el desarrollo económico mediante la utilización racional de los recursos disponibles, con el objeto de impulsar un crecimiento ordenado y sostenido de la economía y de crear nuevas fuentes de trabajo.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 177</span><button class="audio-btn" data-audio-text="c177Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c177Text" class="article-body"><span class="article-title-label">Del presupuesto general de la nación.</span> El proyecto de presupuesto general de la nación será presentado anualmente por el Poder Ejecutivo al Congreso para su consideración y aprobación.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 202</span><button class="audio-btn" data-audio-text="c202Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c202Text" class="article-body"><span class="article-title-label">Deberes y atribuciones del Congreso.</span> Son deberes y atribuciones del Congreso: aprobar o rechazar los tratados y demás acuerdos internacionales; dictar leyes relativas a la organización del Estado; establecer la división política del país; y declarar la guerra.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 219</span><button class="audio-btn" data-audio-text="c219Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c219Text" class="article-body"><span class="article-title-label">Del Senado: atribuciones exclusivas.</span> Son atribuciones exclusivas del Senado: iniciar la consideración de los tratados y acuerdos internacionales, y juzgar en juicio político a los altos funcionarios del Estado.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 224</span><button class="audio-btn" data-audio-text="c224Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c224Text" class="article-body"><span class="article-title-label">De la Cámara de Diputados: atribuciones.</span> Son atribuciones exclusivas de la Cámara de Diputados: iniciar en esta Cámara el estudio de la legislación relativa a la planificación nacional, a los tributos y al presupuesto general de la nación.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 232</span><button class="audio-btn" data-audio-text="c232Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c232Text" class="article-body"><span class="article-title-label">Del Presidente y Vicepresidente.</span> El Presidente de la República y el Vicepresidente son elegidos conjunta y directamente por el pueblo por mayoría simple de votos, en comicios generales que se realizarán en el mes de abril del año anterior al que finaliza cada período constitucional.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 233</span><button class="audio-btn" data-audio-text="c233Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c233Text" class="article-body"><span class="article-title-label">De los requisitos.</span> Para ser Presidente o Vicepresidente de la República se requiere: ser paraguayo natural, haber cumplido 35 años, estar en pleno ejercicio de sus derechos civiles y políticos, y no pertenecer al clero de ninguna religión.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 238</span><button class="audio-btn" data-audio-text="c238Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c238Text" class="article-body"><span class="article-title-label">Deberes y atribuciones del Presidente.</span> Son deberes y atribuciones de quien ejerce la presidencia: representar al Estado; dirigir la política exterior; celebrar y firmar tratados internacionales; negociar y canjear ratificaciones; recibir a los jefes de misiones diplomáticas extranjeras.</div>
+
+
+                </div>
+
+
+
+
+                <div class="article-card">
+
+
+                    <div class="article-head"><span class="article-num">Artículo 239</span><button class="audio-btn" data-audio-text="c239Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="c239Text" class="article-body"><span class="article-title-label">Del Vicepresidente.</span> El Vicepresidente reemplazará al Presidente de la República en los casos previstos por esta Constitución. Participará en las deliberaciones del Poder Ejecutivo con derecho a voz y a voto.</div>
+
+
+                </div>
+
+
+
+
+            </div>
+
+
         </section>
 
-        <!-- LEY -->
-        <section class="mb-12">
 
-            <div class="flex items-center gap-3 mb-6">
-                <div class="w-12 h-12 rounded-2xl bg-purple-500 flex items-center justify-center shadow-lg">
-                    <i class="fas fa-building-columns text-white text-xl"></i>
-                </div>
 
-                <div>
-                    <h2 class="text-2xl md:text-3xl font-extrabold">Ley 1635/2000</h2>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">
-                        Ministerio de Relaciones Exteriores
-                    </p>
-                </div>
-            </div>
 
-            <div class="space-y-5">
+        <!-- ========== LEY 1635/2000 ========== -->
 
-                <div class="study-card bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 dark:border-gray-800 p-6 shadow-lg">
-                    <div class="flex justify-between items-start gap-4">
-                        <div>
-                            <h3 class="font-bold text-xl text-purple-600 dark:text-purple-400">
-                                Artículos 1 al 4
-                            </h3>
-                        </div>
 
-                        <div class="flex items-center gap-2">
-                        <button class="audio-btn text-purple-500 text-xl" data-audio-text="law1Text">
-                            <i class="fas fa-volume-up"></i>
-                        </button>
+        <section class="section">
 
-                        <button class="stop-btn text-red-500 text-xl">
-                            <i class="fas fa-stop-circle"></i>
-                        </button>
-                    </div>
-                    </div>
 
-                    <p id="law1Text" class="mt-4 leading-relaxed text-gray-700 dark:text-gray-300">
-                        El Ministerio de Relaciones Exteriores es el órgano encargado de planificar,
-                        coordinar y ejecutar la política exterior de la República del Paraguay.
-                    </p>
-                </div>
+            <div class="section-head">
+
+
+                <div class="section-icon purple"><i class="fas fa-building"></i></div>
+
+
+                <h2>Ley 1635/2000 - Ley Orgánica del Ministerio de Relaciones Exteriores</h2>
+
+
+                <span class="section-badge">6 bloques</span>
+
 
             </div>
+
+
+            <div class="law-list">
+
+
+
+
+                <div class="law-card">
+
+
+                    <div class="law-head"><span class="law-num">Artículos 1 al 4</span><button class="audio-btn" data-audio-text="law1Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="law1Text" class="law-body">Manejo de las relaciones exteriores. El MRE es el órgano encargado de planificar, coordinar y ejecutar la política exterior. Todo ente del Estado que gestione acciones en el exterior debe coordinar con el MRE. Proponer, ejecutar y conducir la política exterior. Representar al Estado en el extranjero. Negociar los tratados. Conducir las negociaciones. Proteger los intereses del país y de los ciudadanos.</div>
+
+
+                </div>
+
+
+
+
+                <div class="law-card">
+
+
+                    <div class="law-head"><span class="law-num">Artículo 5</span><button class="audio-btn" data-audio-text="law2Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="law2Text" class="law-body">Integración del Ministerio: La Cancillería, las misiones acreditadas y las representaciones permanentes, las misiones especiales y las oficinas consulares.</div>
+
+
+                </div>
+
+
+
+
+                <div class="law-card">
+
+
+                    <div class="law-head"><span class="law-num">Artículos 6 al 30</span><button class="audio-btn" data-audio-text="law3Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="law3Text" class="law-body">De la Cancillería: Es el órgano central del MRE. Dirige y coordina las actividades de las misiones diplomáticas. Solo la Cancillería puede pronunciarse sobre política exterior. Está conformada por el Ministro, los Viceministros, direcciones generales, demás unidades y asesores. Los viceministros son: VMRE como encargado de la política bilateral y multilateral. VMREI como encargada del comercio exterior y política económica. VMAAT como encargada de la administración y finanzas, asuntos consulares, etc.</div>
+
+
+                </div>
+
+
+
+
+                <div class="law-card">
+
+
+                    <div class="law-head"><span class="law-num">Artículos 31 al 36</span><button class="audio-btn" data-audio-text="law4Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="law4Text" class="law-body">Misiones y Representaciones: Las misiones, representaciones y consulados son los ejecutores en el exterior, dependiendo del ministro. Las misiones permanentes son las acreditadas ante los Estados. El jefe de misión es la máxima autoridad de la República en ese país. Todas las demás oficinas están subordinadas. Las misiones especiales son de carácter temporal para un cometido específico. Las representaciones permanentes son las acreditadas ante los organismos internacionales. Las delegaciones son las que asisten a reuniones de las organizaciones internacionales.</div>
+
+
+                </div>
+
+
+
+
+                <div class="law-card">
+
+
+                    <div class="law-head"><span class="law-num">Artículos 37 al 39</span><button class="audio-btn" data-audio-text="law5Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="law5Text" class="law-body">Oficinas Consulares: La función está asignada a funcionarios del escalafón Diplomático y Consular. Los cónsules honorarios son designados por las misiones, pero no pueden actuar como oficiales públicos, ni legalizar documentos, ni otorgar visados. Se rigen bajo el derecho internacional expresado en la Convención de Viena.</div>
+
+
+                </div>
+
+
+
+
+                <div class="law-card">
+
+
+                    <div class="law-head"><span class="law-num">Artículos 40 al 47</span><button class="audio-btn" data-audio-text="law6Text"><i class="fas fa-volume-up"></i></button></div>
+
+
+                    <div id="law6Text" class="law-body">Personal: Personal diplomático, Personal profesional y técnico, Personal administrativo, Personal transitorio.</div>
+
+
+                </div>
+
+
+
+
+            </div>
+
+
         </section>
 
-        <!-- FOOTER -->
-        <footer class="mt-20 text-center">
-            <div class="bg-white/70 dark:bg-gray-900/70 glass rounded-3xl p-6 border border-white/20 dark:border-gray-800 shadow-xl">
-                <p class="font-semibold text-lg">
-                    🎧 Consejo para estudiar
-                </p>
 
-                <p class="mt-2 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
-                    Usa la lectura completa antes de dormir o mientras repasas.
-                    Las voces filtradas en español ayudan a mejorar la comprensión y retención.
-                </p>
-            </div>
-        </footer>
+
 
     </main>
 
+
+
+
+    <footer class="footer">
+
+
+        📖 Material de estudio – Selecciona una voz arriba a la derecha. Pulsa el altavoz en cada ítem o el botón verde ▶️ para lectura completa. ⏹️ para detener.
+
+
+    </footer>
+
+
+
+
+    <button class="scroll-top" id="backTop" title="Volver arriba"><i class="fas fa-chevron-up"></i></button>
+
+
+
+
     <script>
 
-        // ===============================
-        // CONFIGURACIÓN DE AUDIO
-        // ===============================
+
+        // ===================== AUDIO =====================
+
 
         let availableVoices = [];
+
+
         let currentUtterance = null;
-        let isPaused = false;
+
+
         let isReadingAll = false;
+
+
+        let selectedVoiceURI = null;
+
+
+
 
         const voiceSelect = document.getElementById('voiceSelect');
 
-        function saveVoice(value) {
-            localStorage.setItem('voice_es', value);
+
+
+
+        function loadStoredVoice() {
+
+
+            try { selectedVoiceURI = sessionStorage.getItem('selectedVoiceURI') || null; } catch(e) {}
+
+
         }
 
-        function loadVoice() {
-            return localStorage.getItem('voice_es');
+
+        function saveVoice(uri) {
+
+
+            selectedVoiceURI = uri;
+
+
+            try { sessionStorage.setItem('selectedVoiceURI', uri); } catch(e) {}
+
+
         }
 
-        function populateVoices() {
 
-            const voices = speechSynthesis.getVoices();
+        function getSelectedVoiceObject() {
 
-            // FILTRAR SOLO ESPAÑOL
-            availableVoices = voices.filter(v =>
-                v.lang.toLowerCase().startsWith('es')
-            );
+
+            if (!selectedVoiceURI) return null;
+
+
+            return availableVoices.find(v => v.voiceURI === selectedVoiceURI) || null;
+
+
+        }
+
+
+        function populateVoiceList() {
+
+
+            const all = window.speechSynthesis.getVoices();
+
+
+            if (!all.length) return;
+
+
+            // Solo voces en español
+
+
+            const spanish = all.filter(v => v.lang && v.lang.toLowerCase().startsWith('es'));
+
+
+            availableVoices = spanish.length ? spanish : all;
+
 
             voiceSelect.innerHTML = '';
 
-            if (availableVoices.length === 0) {
-                voiceSelect.innerHTML = '<option>No hay voces en español</option>';
-                return;
+
+            availableVoices.forEach(v => {
+
+
+                const opt = document.createElement('option');
+
+
+                opt.value = v.voiceURI;
+
+
+                const country = (v.lang.split('-')[1] || '');
+
+
+                opt.textContent = v.name + (country ? ' · ' + country : '');
+
+
+                voiceSelect.appendChild(opt);
+
+
+            });
+
+
+            if (selectedVoiceURI && availableVoices.some(v => v.voiceURI === selectedVoiceURI)) {
+
+
+                voiceSelect.value = selectedVoiceURI;
+
+
+            } else {
+
+
+                const preferred = ['es-PY','es-ES','es-MX','es-AR','es-US'];
+
+
+                let best = null;
+
+
+                for (const code of preferred) {
+
+
+                    best = availableVoices.find(v => v.lang.toLowerCase() === code.toLowerCase());
+
+
+                    if (best) break;
+
+
+                }
+
+
+                best = best || availableVoices[0];
+
+
+                if (best) { saveVoice(best.voiceURI); voiceSelect.value = best.voiceURI; }
+
+
             }
 
-            const saved = loadVoice();
 
-            availableVoices.forEach((voice, index) => {
-                const option = document.createElement('option');
-                option.value = voice.voiceURI;
-
-                const isMobile = /android|iphone|ipad/i.test(navigator.userAgent);
-
-                option.textContent = isMobile
-                    ? `${voice.name}`
-                    : `${voice.name} - ${voice.lang}`;
-
-                if (saved && saved === voice.voiceURI) {
-                    option.selected = true;
-                }
-
-                if (!saved && index === 0) {
-                    option.selected = true;
-                }
-
-                voiceSelect.appendChild(option);
-            });
         }
+
 
         voiceSelect.addEventListener('change', e => {
-            saveVoice(e.target.value);
-            stopSpeaking();
+
+
+            if (e.target.value) { saveVoice(e.target.value); stopSpeaking(); }
+
+
         });
 
-        function getCurrentVoice() {
-            return availableVoices.find(v => v.voiceURI === voiceSelect.value);
+
+        function speakText(text, onEnd = null) {
+
+
+            if (!text || !text.trim()) { if (onEnd) onEnd(); return; }
+
+
+            window.speechSynthesis.cancel();
+
+
+            const utt = new SpeechSynthesisUtterance(text.trim());
+
+
+            utt.lang = 'es-PY'; utt.rate = 0.9;
+
+
+            const voice = getSelectedVoiceObject();
+
+
+            if (voice) utt.voice = voice;
+
+
+            utt.onend  = () => { currentUtterance = null; if (onEnd) onEnd(); };
+
+
+            utt.onerror = () => { currentUtterance = null; if (onEnd) onEnd(); };
+
+
+            currentUtterance = utt;
+
+
+            window.speechSynthesis.speak(utt);
+
+
         }
 
-        function highlightCard(button) {
-            document.querySelectorAll('.study-card').forEach(card => {
-                card.classList.remove('reading');
-            });
-
-            const parent = button.closest('.study-card');
-            if (parent) {
-                parent.classList.add('reading');
-            }
-        }
-
-        function speakText(text, button = null, callback = null) {
-
-            stopSpeaking();
-
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'es-ES';
-            utterance.rate = 0.92;
-            utterance.pitch = 1;
-            utterance.volume = 1;
-
-            const selectedVoice = getCurrentVoice();
-
-            if (selectedVoice) {
-                utterance.voice = selectedVoice;
-            }
-
-            currentUtterance = utterance;
-
-            if (button) {
-                highlightCard(button);
-            }
-
-            utterance.onend = () => {
-                currentUtterance = null;
-
-                document.querySelectorAll('.study-card').forEach(card => {
-                    card.classList.remove('reading');
-                });
-
-                if (callback) callback();
-            };
-
-            speechSynthesis.speak(utterance);
-        }
 
         function stopSpeaking() {
-            speechSynthesis.cancel();
-            currentUtterance = null;
-            isPaused = false;
-            isReadingAll = false;
+
+
+            window.speechSynthesis.cancel();
+
+
+            currentUtterance = null; isReadingAll = false;
+
+
+            document.querySelectorAll('.audio-btn.playing').forEach(b => {
+
+
+                b.classList.remove('playing');
+
+
+                b.innerHTML = '<i class="fas fa-volume-up"></i>';
+
+
+            });
+
+
         }
 
-        function pauseSpeaking() {
-            if (speechSynthesis.speaking && !speechSynthesis.paused) {
-                speechSynthesis.pause();
-                isPaused = true;
-                return;
-            }
 
-            if (speechSynthesis.paused) {
-                speechSynthesis.resume();
-                isPaused = false;
-            }
-        }
+        function readAllSequential(ids) {
 
-        function getAllTexts() {
-            return Array.from(document.querySelectorAll('[id$="Text"]'))
-                .map(el => el.innerText.trim())
-                .filter(Boolean);
-        }
 
-        function readSequentially(texts, index = 0) {
+            stopSpeaking(); isReadingAll = true; let i = 0;
 
-            if (index >= texts.length || !isReadingAll) {
-                isReadingAll = false;
-                return;
-            }
 
-            const utterance = new SpeechSynthesisUtterance(texts[index]);
-            utterance.lang = 'es-ES';
-            utterance.rate = 0.92;
+            const next = () => {
 
-            const selectedVoice = getCurrentVoice();
 
-            if (selectedVoice) {
-                utterance.voice = selectedVoice;
-            }
+                if (!isReadingAll || i >= ids.length) { isReadingAll = false; return; }
 
-            utterance.onend = () => {
-                readSequentially(texts, index + 1);
+
+                const el = document.getElementById(ids[i++]);
+
+
+                if (!el) return next();
+
+
+                speakText(el.innerText || el.textContent || '', next);
+
+
             };
 
-            currentUtterance = utterance;
-            speechSynthesis.speak(utterance);
+
+            next();
+
+
         }
 
-        document.querySelectorAll('.audio-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
 
-                const targetId = btn.dataset.audioText;
-                const element = document.getElementById(targetId);
+        function getAllIds() {
 
-                if (!element) return;
 
-                speakText(element.innerText, btn);
-            });
-        });
+            const defs = Array.from({length:12}, (_,i) => `def${i+1}Text`);
 
-        // BOTONES STOP POR BLOQUE
-        document.querySelectorAll('.stop-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
+
+            const constIds = ['c2Text','c41Text','c43Text','c120Text','c121Text','c122Text','c136Text','c137Text','c141Text','c142Text','c143Text','c144Text','c145Text','c146Text','c147Text','c149Text','c150Text','c152Text','c154Text','c155Text','c173Text','c176Text','c177Text','c202Text','c219Text','c224Text','c232Text','c233Text','c238Text','c239Text'];
+
+
+            const lawIds = ['law1Text','law2Text','law3Text','law4Text','law5Text','law6Text'];
+
+
+            return [...defs, ...constIds, ...lawIds];
+
+
+        }
+
+
+        // Botones individuales
+
+
+        document.querySelectorAll('.audio-btn[data-audio-text]').forEach(btn => {
+
+
+            btn.addEventListener('click', e => {
+
+
+                e.stopPropagation();
+
+
+                const el = document.getElementById(btn.dataset.audioText);
+
+
+                if (!el) return;
+
+
+                if (btn.classList.contains('playing')) { stopSpeaking(); return; }
+
+
                 stopSpeaking();
 
-                document.querySelectorAll('.study-card').forEach(card => {
-                    card.classList.remove('reading');
+
+                btn.classList.add('playing');
+
+
+                btn.innerHTML = '<i class="fas fa-stop"></i>';
+
+
+                speakText(el.innerText || el.textContent || '', () => {
+
+
+                    btn.classList.remove('playing');
+
+
+                    btn.innerHTML = '<i class="fas fa-volume-up"></i>';
+
+
                 });
+
+
             });
+
+
         });
-        });
 
-        document.getElementById('readAllBtn').addEventListener('click', () => {
 
-            stopSpeaking();
+        document.getElementById('readAllBtn').addEventListener('click', () => readAllSequential(getAllIds()));
 
-            isReadingAll = true;
-
-            const texts = getAllTexts();
-
-            readSequentially(texts);
-        });
 
         document.getElementById('globalStopBtn').addEventListener('click', stopSpeaking);
 
-        document.getElementById('pauseBtn').addEventListener('click', pauseSpeaking);
 
-        // ===============================
-        // DARK MODE
-        // ===============================
 
-        const toggle = document.getElementById('darkModeToggle');
-        const icon = document.getElementById('darkModeIcon');
 
-        const darkEnabled = localStorage.getItem('theme') === 'dark';
+        // ===================== TEMA =====================
 
-        if (darkEnabled) {
-            document.documentElement.classList.add('dark');
-            icon.classList.replace('fa-moon', 'fa-sun');
-        }
 
-        toggle.addEventListener('click', () => {
+        (function initTheme() {
 
-            document.documentElement.classList.toggle('dark');
 
-            const isDark = document.documentElement.classList.contains('dark');
+            let stored;
 
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
 
-            if (isDark) {
-                icon.classList.replace('fa-moon', 'fa-sun');
-            } else {
-                icon.classList.replace('fa-sun', 'fa-moon');
-            }
+            try { stored = sessionStorage.getItem('theme'); } catch(e) {}
+
+
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+
+            const theme = stored || (prefersDark ? 'dark' : 'light');
+
+
+            document.documentElement.setAttribute('data-theme', theme);
+
+
+            document.getElementById('themeIcon').className = theme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+
+
+        })();
+
+
+        document.getElementById('themeToggle').addEventListener('click', () => {
+
+
+            const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+
+
+            const next = isLight ? 'dark' : 'light';
+
+
+            document.documentElement.setAttribute('data-theme', next);
+
+
+            document.getElementById('themeIcon').className = next === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+
+
+            try { sessionStorage.setItem('theme', next); } catch(e) {}
+
+
         });
 
-        // ===============================
-        // INICIALIZAR VOCES
-        // ===============================
 
-        populateVoices();
 
-        speechSynthesis.onvoiceschanged = populateVoices;
+
+        // ===================== SCROLL =====================
+
+
+        const progressBar = document.getElementById('progressBar');
+
+
+        const backTop = document.getElementById('backTop');
+
+
+        window.addEventListener('scroll', () => {
+
+
+            const total = document.documentElement.scrollHeight - window.innerHeight;
+
+
+            progressBar.style.width = total > 0 ? (window.scrollY / total * 100) + '%' : '0';
+
+
+            backTop.classList.toggle('show', window.scrollY > 400);
+
+
+        }, { passive: true });
+
+
+        backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+
+
+
+        // ===================== INIT VOICES =====================
+
+
+        loadStoredVoice();
+
+
+        if (window.speechSynthesis.getVoices().length > 0) populateVoiceList();
+
+
+        if (window.speechSynthesis.onvoiceschanged !== undefined) window.speechSynthesis.onvoiceschanged = populateVoiceList;
+
+
+        window.speechSynthesis.addEventListener('voiceschanged', populateVoiceList);
+
 
     </script>
 
+
 </body>
+
+
 </html>
