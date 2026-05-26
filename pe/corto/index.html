@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Estudio: RRII, Derecho Público y Constitución Paraguaya | Con correcciones de redacción</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        body { transition: background-color 0.2s, color 0.2s; }
+        .tts-btn:hover { transform: scale(1.02); filter: brightness(0.95); }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-gray-100 font-sans antialiased">
+
+    <!-- Botón modo oscuro -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button id="darkModeToggle" class="bg-indigo-600 dark:bg-amber-500 hover:bg-indigo-700 dark:hover:bg-amber-600 text-white p-3 rounded-full shadow-lg transition-all duration-300 focus:outline-none">
+            <i id="darkModeIcon" class="fas fa-moon text-xl"></i>
+        </button>
+    </div>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 md:py-12">
+        <!-- Encabezado -->
+        <div class="mb-10 text-center md:text-left">
+            <h1 class="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">📘 Relaciones Internacionales + Derecho Público</h1>
+            <p class="text-gray-600 dark:text-gray-400 mt-2">Texto con correcciones de redacción (ej. “por excelencia”, “criminales”) – Audio incluido</p>
+        </div>
+
+        <!-- Herramienta global texto a audio -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-5 mb-10 border border-gray-200 dark:border-gray-700">
+            <div class="flex items-center gap-3 mb-3">
+                <i class="fas fa-globe-americas text-indigo-500 text-2xl"></i>
+                <h2 class="text-xl font-bold">🌍 Convertir cualquier texto a audio</h2>
+            </div>
+            <textarea id="globalTextInput" rows="2" class="w-full p-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="Ejemplo: La diplomacia es el mecanismo pacífico por excelencia..."></textarea>
+            <div class="flex flex-wrap gap-3 mt-4">
+                <button id="globalSpeakBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-5 rounded-xl shadow-md flex items-center gap-2"><i class="fas fa-play"></i> Escuchar texto</button>
+                <button id="globalStopBtn" class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-5 rounded-xl shadow-md flex items-center gap-2"><i class="fas fa-stop"></i> Detener audio</button>
+            </div>
+        </div>
+
+        <!-- ========== DEFINICIONES (CORREGIDAS) ========== -->
+        <section class="mb-12">
+            <div class="flex items-center gap-3 mb-5 border-b border-indigo-500/40 pb-2">
+                <i class="fas fa-brain text-indigo-400 text-2xl"></i>
+                <h2 class="text-2xl font-bold">Definiciones y conceptos fundamentales</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Cada definición con su botón de audio -->
+                <div class="bg-white dark:bg-gray-800/80 rounded-xl shadow-md p-5 border-l-4 border-indigo-500"><div class="flex justify-between items-start"><h3 class="text-xl font-semibold flex gap-2"><i class="fas fa-globe text-indigo-400"></i> Sociedad internacional y sus actores</h3><button class="listen-text-btn text-indigo-500 text-xl" data-textid="def1"><i class="fas fa-head-side-headphones"></i></button></div><div id="def1" class="mt-2 text-gray-700 dark:text-gray-300">Es el escenario global donde interactúan las entidades. Históricamente era dominada por los Estados, pero hoy incluye a múltiples actores que influyen en la política global. Estos pueden ser: Estados soberanos, Organizaciones internacionales, ONGs, Empresas multinacionales, <span class="font-medium">Grupos criminales transnacionales</span> (corrección: original decía "criminaciones").</div></div>
+                <div class="bg-white dark:bg-gray-800/80 rounded-xl shadow-md p-5 border-l-4 border-indigo-500"><div class="flex justify-between"><h3 class="text-xl font-semibold"><i class="fas fa-handshake"></i> Relaciones internacionales</h3><button class="listen-text-btn text-indigo-500 text-xl" data-textid="def2"><i class="fas fa-head-side-headphones"></i></button></div><div id="def2" class="mt-2">Es el conjunto de interacciones políticas, económicas, sociales, jurídicas y culturales entre los actores mencionados anteriormente. Abarcan tanto la cooperación como los conflictos.</div></div>
+                <div class="bg-white dark:bg-gray-800/80 rounded-xl shadow-md p-5 border-l-4 border-indigo-500"><div class="flex justify-between"><h3 class="text-xl font-semibold"><i class="fas fa-gavel"></i> Derecho Internacional Público y Sujetos</h3><button class="listen-text-btn text-indigo-500 text-xl" data-textid="def3"><i class="fas fa-head-side-headphones"></i></button></div><div id="def3" class="mt-2">Son las normas que regulan las relaciones entre los Estados y otros sujetos internacionales.</div></div>
+                <div class="bg-white dark:bg-gray-800/80 rounded-xl shadow-md p-5 border-l-4 border-indigo-500"><div class="flex justify-between"><h3 class="text-xl font-semibold"><i class="fas fa-book"></i> Derecho Escrito</h3><button class="listen-text-btn text-indigo-500 text-xl" data-textid="def4"><i class="fas fa-head-side-headphones"></i></button></div><div id="def4" class="mt-2">Es el conjunto de normas jurídicas escritas vigentes en un Estado en un momento determinado. Incluyen su Constitución, tratados, leyes, etc.</div></div>
+                <div class="bg-white dark:bg-gray-800/80 rounded-xl shadow-md p-5 border-l-4 border-indigo-500"><div class="flex justify-between"><h3 class="text-xl font-semibold"><i class="fas fa-balance-scale"></i> Igualdad jurídica entre Estados</h3><button class="listen-text-btn text-indigo-500 text-xl" data-textid="def5"><i class="fas fa-head-side-headphones"></i></button></div><div id="def5" class="mt-2">Es el principio que establece que todos los Estados son iguales en condiciones, sin importar su tamaño o poder económico o militar. Resumido en “un estado, un voto”.</div></div>
+                <div class="bg-white dark:bg-gray-800/80 rounded-xl shadow-md p-5 border-l-4 border-indigo-500"><div class="flex justify-between"><h3 class="text-xl font-semibold"><i class="fas fa-check-circle"></i> Referéndum</h3><button class="listen-text-btn text-indigo-500 text-xl" data-textid="def6"><i class="fas fa-head-side-headphones"></i></button></div><div id="def6" class="mt-2">Son los mecanismos de participación ciudadana, pero no puede decidir sobre tratados o relaciones internacionales.</div></div>
+                <div class="bg-white dark:bg-gray-800/80 rounded-xl shadow-md p-5 border-l-4 border-indigo-500"><div class="flex justify-between"><h3 class="text-xl font-semibold"><i class="fas fa-hand-peace"></i> Diplomacia</h3><button class="listen-text-btn text-indigo-500 text-xl" data-textid="def7"><i class="fas fa-head-side-headphones"></i></button></div><div id="def7" class="mt-2">Es el mecanismo pacífico <span class="font-medium">por excelencia</span> para gestionar las relaciones. Se usa para negociaciones, representación en el exterior, protección de intereses, etc. (Corrección: original decía "por excelente").</div></div>
+                <div class="bg-white dark:bg-gray-800/80 rounded-xl shadow-md p-5 border-l-4 border-indigo-500"><div class="flex justify-between"><h3 class="text-xl font-semibold"><i class="fas fa-landmark"></i> Política Exterior como política pública</h3><button class="listen-text-btn text-indigo-500 text-xl" data-textid="def8"><i class="fas fa-head-side-headphones"></i></button></div><div id="def8" class="mt-2">Es aquella parte de la general donde se definen objetivos y se utilizan medios para que un Estado pueda gestionar sus relaciones con otros actores.</div></div>
+                <div class="bg-white dark:bg-gray-800/80 rounded-xl shadow-md p-5 border-l-4 border-indigo-500"><div class="flex justify-between"><h3 class="text-xl font-semibold"><i class="fas fa-charging-station"></i> El poder</h3><button class="listen-text-btn text-indigo-500 text-xl" data-textid="def9"><i class="fas fa-head-side-headphones"></i></button></div><div id="def9" class="mt-2">Es utilizable en medios tangibles como el económico, la población, fuerzas armadas como intangibles en el liderazgo, moral.</div></div>
+                <div class="bg-white dark:bg-gray-800/80 rounded-xl shadow-md p-5 border-l-4 border-indigo-500"><div class="flex justify-between"><h3 class="text-xl font-semibold"><i class="fas fa-chart-line"></i> La toma de decisiones</h3><button class="listen-text-btn text-indigo-500 text-xl" data-textid="def10"><i class="fas fa-head-side-headphones"></i></button></div><div id="def10" class="mt-2">Está dividida en 3 etapas: Elaboración (donde se evalúan las opciones), Ejecución (donde el poder ejecutivo toma acciones para poner en práctica las políticas seleccionadas), Control (donde se evalúan los resultados para determinar responsabilidades).</div></div>
+                <div class="bg-white dark:bg-gray-800/80 rounded-xl shadow-md p-5 border-l-4 border-indigo-500"><div class="flex justify-between"><h3 class="text-xl font-semibold"><i class="fas fa-bullseye"></i> Fines y Objetivos</h3><button class="listen-text-btn text-indigo-500 text-xl" data-textid="def11"><i class="fas fa-head-side-headphones"></i></button></div><div id="def11" class="mt-2">Los fines son resultados a largo plazo (seguridad, identidad cultural) mientras que los objetivos son resultados a corto plazo para alcanzar los fines.</div></div>
+                <div class="bg-white dark:bg-gray-800/80 rounded-xl shadow-md p-5 border-l-4 border-indigo-500"><div class="flex justify-between"><h3 class="text-xl font-semibold"><i class="fas fa-flag-checkered"></i> Interés nacional</h3><button class="listen-text-btn text-indigo-500 text-xl" data-textid="def12"><i class="fas fa-head-side-headphones"></i></button></div><div id="def12" class="mt-2">No existe un único interés, suele ser la visión del grupo que ejerce el gobierno.</div></div>
+            </div>
+        </section>
+
+        <!-- ========== CONSTITUCIÓN NACIONAL (texto exacto, solo correcciones menores de puntuación) ========== -->
+        <section class="mb-12">
+            <div class="flex items-center gap-3 mb-5 border-b border-green-500/40 pb-2">
+                <i class="fas fa-gavel text-green-400 text-2xl"></i>
+                <h2 class="text-2xl font-bold">Constitución Nacional</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <!-- Se listan los artículos tal cual, pero con correcciones de tildes o puntuación que no cambian el sentido -->
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 2</span><button class="listen-const-btn text-indigo-500" data-constid="c2"><i class="fas fa-volume-up"></i></button></div><div id="c2" class="mt-2"><span class="font-semibold">De la soberanía.</span> Ejercida por el pueblo.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 41</span><button class="listen-const-btn text-indigo-500" data-constid="c41"><i class="fas fa-volume-up"></i></button></div><div id="c41" class="mt-2"><span class="font-semibold">Del tránsito y residencia.</span> Todo paraguayo tiene derecho a residir en su patria. Los ingresos de extranjeros sin radicación serán regulados por ley. Los extranjeros radicados no serán obligados a abandonar el país salvo sentencia judicial.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 43</span><button class="listen-const-btn text-indigo-500" data-constid="c43"><i class="fas fa-volume-up"></i></button></div><div id="c43" class="mt-2"><span class="font-semibold">Del asilo.</span> El país reconoce el asilo territorial a toda persona perseguida por motivos de crímenes políticos, comunes o creencias.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 120</span><button class="listen-const-btn text-indigo-500" data-constid="c120"><i class="fas fa-volume-up"></i></button></div><div id="c120" class="mt-2"><span class="font-semibold">De los electores.</span> Son aquellos radicados en el territorio nacional, sin distinción, que ya hayan cumplido los 18 años, también son electores y elegibles.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 121</span><button class="listen-const-btn text-indigo-500" data-constid="c121"><i class="fas fa-volume-up"></i></button></div><div id="c121" class="mt-2"><span class="font-semibold">Del referéndum.</span> Es decidido por ley, podrá ser o no vinculante. Debe ser reglamentada por ley para ser una herramienta de consulta popular.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 122</span><button class="listen-const-btn text-indigo-500" data-constid="c122"><i class="fas fa-volume-up"></i></button></div><div id="c122" class="mt-2"><span class="font-semibold">Limitaciones del referéndum.</span> No podrán ser sometidos a las relaciones internacionales, tratados, etc. Tampoco la defensa nacional ni la contratación de préstamos internacionales.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 136</span><button class="listen-const-btn text-indigo-500" data-constid="c136"><i class="fas fa-volume-up"></i></button></div><div id="c136" class="mt-2"><span class="font-semibold">Responsabilidad de magistrados.</span> Ningún magistrado puede desentenderse de los recursos institucionales.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 137</span><button class="listen-const-btn text-indigo-500" data-constid="c137"><i class="fas fa-volume-up"></i></button></div><div id="c137" class="mt-2"><span class="font-semibold">Supremacía de la Constitución.</span> Donde se fija la jerarquía jurídica: CN, Tratados/acuerdos internacionales, Leyes, Disposiciones de inferior jerarquía como decretos o resoluciones.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 141</span><button class="listen-const-btn text-indigo-500" data-constid="c141"><i class="fas fa-volume-up"></i></button></div><div id="c141" class="mt-2"><span class="font-semibold">Tratados internacionales.</span> Para que estos puedan integrarse deben ser celebrados, aprobados por el congreso y ratificados.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 142</span><button class="listen-const-btn text-indigo-500" data-constid="c142"><i class="fas fa-volume-up"></i></button></div><div id="c142" class="mt-2"><span class="font-semibold">Denuncia de tratados.</span> Ningún tratado basado en los DDHH no podrá ser abandonado.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 143</span><button class="listen-const-btn text-indigo-500" data-constid="c143"><i class="fas fa-volume-up"></i></button></div><div id="c143" class="mt-2"><span class="font-semibold">Principios de las Relaciones Internacionales.</span> El país acepta y se ajusta al derecho internacional, aceptando los principios: Independencia nacional, Autodeterminación de los pueblos, Igualdad jurídica, Cooperación internacional, Protección de los DDHH, Libre navegación de los ríos, No intervención, Condena a toda forma de dictadura o colonialismo.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 144</span><button class="listen-const-btn text-indigo-500" data-constid="c144"><i class="fas fa-volume-up"></i></button></div><div id="c144" class="mt-2"><span class="font-semibold">Renuncia a la guerra.</span> El país renuncia a la guerra pero sustenta el principio de la defensa.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 145</span><button class="listen-const-btn text-indigo-500" data-constid="c145"><i class="fas fa-volume-up"></i></button></div><div id="c145" class="mt-2"><span class="font-semibold">Orden supranacional.</span> El país admite la igualdad con otros estados, aceptando un orden jurídico supranacional que garantice la paz, los DDHH, la cooperación, etc.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 146</span><button class="listen-const-btn text-indigo-500" data-constid="c146"><i class="fas fa-volume-up"></i></button></div><div id="c146" class="mt-2"><span class="font-semibold">Nacionalidad natural.</span> Son todos aquellos nacidos en el territorio nacional, aquellos nacidos en el exterior de padres paraguayos tanto al servicio como radicados e infantes recogidos en el territorio ignorado por sus padres.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 147</span><button class="listen-const-btn text-indigo-500" data-constid="c147"><i class="fas fa-volume-up"></i></button></div><div id="c147" class="mt-2"><span class="font-semibold">De la no privación de la nacionalidad.</span> Ningún paraguayo natural podrá ser privado de su nacionalidad, pero sí podrá renunciar a ella.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 149</span><button class="listen-const-btn text-indigo-500" data-constid="c149"><i class="fas fa-volume-up"></i></button></div><div id="c149" class="mt-2"><span class="font-semibold">Nacionalidad múltiple.</span> Solo podrá ser admitida por tratados o por reciprocidad.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 150</span><button class="listen-const-btn text-indigo-500" data-constid="c150"><i class="fas fa-volume-up"></i></button></div><div id="c150" class="mt-2"><span class="font-semibold">Pérdida de la nacionalidad.</span> Podrán perder en estas condiciones, si está ausente de la república por más de 3 años declarando judicialmente o con la adquisición voluntaria de otra.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 152</span><button class="listen-const-btn text-indigo-500" data-constid="c152"><i class="fas fa-volume-up"></i></button></div><div id="c152" class="mt-2"><span class="font-semibold">De la ciudadanía.</span> Son todos aquellos naturales desde los 18 años y por naturalización luego de 2 años de haberla obtenida.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 154</span><button class="listen-const-btn text-indigo-500" data-constid="c154"><i class="fas fa-volume-up"></i></button></div><div id="c154" class="mt-2"><span class="font-semibold">Competencia del poder judicial.</span> El poder judicial tendrá la facultad para entender los procesos de adquisición, recuperación y suspensión de la nacionalidad.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 155</span><button class="listen-const-btn text-indigo-500" data-constid="c155"><i class="fas fa-volume-up"></i></button></div><div id="c155" class="mt-2"><span class="font-semibold">Territorio y soberanía.</span> El territorio jamás podrá ser cedido, transferido ni arrendado. Los estados con relaciones podrán adquirir inmuebles para sus sedes.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 173</span><button class="listen-const-btn text-indigo-500" data-constid="c173"><i class="fas fa-volume-up"></i></button></div><div id="c173" class="mt-2"><span class="font-semibold">Fuerzas armadas.</span> Institución de carácter permanente, obediente a los poderes del estado. Su misión es la de custodiar el territorio y a las autoridades. No podrán tener afiliación ni hacer actividades políticas.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 176</span><button class="listen-const-btn text-indigo-500" data-constid="c176"><i class="fas fa-volume-up"></i></button></div><div id="c176" class="mt-2"><span class="font-semibold">Política económica.</span> Es la que busca el crecimiento social, económico y cultural promoviendo el crecimiento ordenado para asegurar el bienestar.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 177</span><button class="listen-const-btn text-indigo-500" data-constid="c177"><i class="fas fa-volume-up"></i></button></div><div id="c177" class="mt-2"><span class="font-semibold">Carácter de los planes.</span> Los planes de desarrollo son de carácter obligatorio para el sector público y opcional para el privado.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 202</span><button class="listen-const-btn text-indigo-500" data-constid="c202"><i class="fas fa-volume-up"></i></button></div><div id="c202" class="mt-2"><span class="font-semibold">Atribuciones del congreso.</span> Es el encargado de velar por la Constitución, creando leyes, presupuestos y entes. En la política exterior se destacan la aprobación de tratados, contratación de préstamos y reglamentar la navegación.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 219</span><button class="listen-const-btn text-indigo-500" data-constid="c219"><i class="fas fa-volume-up"></i></button></div><div id="c219" class="mt-2"><span class="font-semibold">Comisión permanente del congreso.</span> Durante el receso parlamentario, puede autorizar la ausencia del presidente.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 224</span><button class="listen-const-btn text-indigo-500" data-constid="c224"><i class="fas fa-volume-up"></i></button></div><div id="c224" class="mt-2"><span class="font-semibold">Atribuciones de la Cámara de Senadores.</span> En materias de política exterior pueden iniciar la consideración de nuevos tratados, ascensos de militares o policías, designar embajadores, autorizar el envío de fuerzas militares al exterior, así como el ingreso de tropas extranjeras y la designación de directores paraguayos en las binacionales.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 232</span><button class="listen-const-btn text-indigo-500" data-constid="c232"><i class="fas fa-volume-up"></i></button></div><div id="c232" class="mt-2"><span class="font-semibold">Toma de posesión de cargos.</span> El presidente, así como el vicepresidente tomarán posesión de sus cargos prestando juramento al congreso, en caso de sin quórum lo harán ante la Corte Suprema.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 233</span><button class="listen-const-btn text-indigo-500" data-constid="c233"><i class="fas fa-volume-up"></i></button></div><div id="c233" class="mt-2"><span class="font-semibold">Ausencias presidenciales.</span> No podrá ausentarse sin previo aviso al Congreso y a la Corte Suprema, si la ausencia es mayor a cinco días requerirá autorización expresa del congreso y el Presidente como el Vicepresidente no podrán ausentarse al mismo tiempo.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 238</span><button class="listen-const-btn text-indigo-500" data-constid="c238"><i class="fas fa-volume-up"></i></button></div><div id="c238" class="mt-2"><span class="font-semibold">Atribuciones del Presidente.</span> En materias de política exterior, es quien dirige y representa al estado, maneja las relaciones exteriores, da cuentas al congreso anualmente y es comandante de las fuerzas armadas.</div></div>
+                <div class="bg-gray-50 dark:bg-gray-800/70 rounded-xl p-4 shadow-sm"><div class="flex justify-between"><span class="font-mono text-indigo-500">Artículo 239</span><button class="listen-const-btn text-indigo-500" data-constid="c239"><i class="fas fa-volume-up"></i></button></div><div id="c239" class="mt-2"><span class="font-semibold">Rol del Vicepresidente.</span> Sustituir al presidente, representar al presidente nacional e internacionalmente por designación del mismo y participar del consejo de ministros.</div></div>
+            </div>
+        </section>
+
+        <!-- ========== LEY 1635/2000 ========== -->
+        <section class="mb-12">
+            <div class="flex items-center gap-3 mb-5 border-b border-purple-500/40 pb-2">
+                <i class="fas fa-building text-purple-400 text-2xl"></i>
+                <h2 class="text-2xl font-bold">Ley 1635/2000 - Ley Orgánica del Ministerio de Relaciones Exteriores</h2>
+            </div>
+            <div class="space-y-4">
+                <div class="bg-white dark:bg-gray-800/70 rounded-xl p-5 shadow-md"><div class="flex justify-between"><span class="font-bold text-purple-600">Artículos 1 al 4</span><button class="listen-law-btn text-purple-500" data-lawid="law1"><i class="fas fa-volume-up"></i></button></div><div id="law1" class="mt-2">Manejo de las relaciones exteriores. El MRE es el órgano encargado de planificar, coordinar y ejecutar la política exterior. Todo ente del estado que gestione acciones en el exterior debe coordinar con el MRE. Proponer, ejecutar y conducir la política exterior. Representar al estado en el extranjero. Negociar los tratados. Conducir las negociaciones. Proteger los intereses del país y de los ciudadanos.</div></div>
+                <div class="bg-white dark:bg-gray-800/70 rounded-xl p-5 shadow-md"><div class="flex justify-between"><span class="font-bold">Artículo 5</span><button class="listen-law-btn text-purple-500" data-lawid="law2"><i class="fas fa-volume-up"></i></button></div><div id="law2" class="mt-2">Integración del Ministerio: La Cancillería, Las misiones acreditadas y las representaciones permanentes, Las misiones especiales, Las oficinas consulares.</div></div>
+                <div class="bg-white dark:bg-gray-800/70 rounded-xl p-5 shadow-md"><div class="flex justify-between"><span class="font-bold">Artículos 6 al 30</span><button class="listen-law-btn text-purple-500" data-lawid="law3"><i class="fas fa-volume-up"></i></button></div><div id="law3" class="mt-2">De la Cancillería: Es el órgano central del MRE. Dirige y coordina las actividades de las misiones diplomáticas. Solo la Cancillería puede pronunciarse sobre política exterior. Está conformada por el Ministro, los Viceministros, direcciones generales, demás unidades y asesores. Los viceministros son: VMRE como encargado de la política bilateral y multilateral. VMREI como encargada del comercio exterior y política económica. VMAAT como encargada de la administración y finanzas, asuntos consulares, etc.</div></div>
+                <div class="bg-white dark:bg-gray-800/70 rounded-xl p-5 shadow-md"><div class="flex justify-between"><span class="font-bold">Artículos 31 al 36</span><button class="listen-law-btn text-purple-500" data-lawid="law4"><i class="fas fa-volume-up"></i></button></div><div id="law4" class="mt-2">Misiones y Representaciones: Las misiones, representaciones y consulados son los ejecutores en el exterior, dependiendo del ministro. Las misiones permanentes son las acreditadas ante los estados. El jefe de misión es la máxima autoridad de la república en ese país. Todas las demás oficinas están subordinadas. Misiones especiales son de carácter temporal para un cometido específico. Las representaciones permanentes son las acreditadas ante los organismos internacionales. Delegaciones son las que asisten a reuniones de las organizaciones internacionales.</div></div>
+                <div class="bg-white dark:bg-gray-800/70 rounded-xl p-5 shadow-md"><div class="flex justify-between"><span class="font-bold">Artículos 37 al 39</span><button class="listen-law-btn text-purple-500" data-lawid="law5"><i class="fas fa-volume-up"></i></button></div><div id="law5" class="mt-2">Oficinas Consulares: La función está asignada a funcionarios del escalafón Diplomático y Consular. Los cónsules honorarios son designados por las misiones, pero no pueden actuar como oficiales públicos, ni legalizar documentos, ni otorgar visados. Se rigen bajo el derecho internacional expresado en la Convención de Viena.</div></div>
+                <div class="bg-white dark:bg-gray-800/70 rounded-xl p-5 shadow-md"><div class="flex justify-between"><span class="font-bold">Artículos 40 al 47</span><button class="listen-law-btn text-purple-500" data-lawid="law6"><i class="fas fa-volume-up"></i></button></div><div id="law6" class="mt-2">Personal: Personal diplomático, Personal profesional y técnico, Personal administrativo, Personal transitorio.</div></div>
+            </div>
+        </section>
+
+        <div class="text-center text-gray-500 dark:text-gray-500 text-sm pt-6 border-t border-gray-300 dark:border-gray-800">📖 Material de estudio – Versión con correcciones de redacción (por excelencia, criminales transnacionales, etc.) y funciones de audio.</div>
+    </main>
+
+    <script>
+        // Funciones de síntesis de voz
+        let currentUtterance = null;
+        function speakText(text) {
+            if (!text.trim()) return;
+            if (currentUtterance) window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'es-ES';
+            utterance.rate = 0.95;
+            currentUtterance = utterance;
+            utterance.onend = () => currentUtterance = null;
+            window.speechSynthesis.speak(utterance);
+        }
+        function stopSpeaking() { if (currentUtterance) { window.speechSynthesis.cancel(); currentUtterance = null; } }
+        document.getElementById('globalStopBtn')?.addEventListener('click', stopSpeaking);
+        document.getElementById('globalSpeakBtn')?.addEventListener('click', () => {
+            const txt = document.getElementById('globalTextInput')?.value.trim();
+            if (txt) speakText(txt);
+            else speakText("Por favor, escribe algún texto.");
+        });
+
+        // Listeners para definiciones
+        document.querySelectorAll('.listen-text-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.getAttribute('data-textid');
+                if (id) speakText(document.getElementById(id)?.innerText || '');
+            });
+        });
+        // Listeners para artículos de constitución
+        document.querySelectorAll('.listen-const-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.getAttribute('data-constid');
+                if (id) speakText(document.getElementById(id)?.innerText || '');
+            });
+        });
+        // Listeners para ley
+        document.querySelectorAll('.listen-law-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.getAttribute('data-lawid');
+                if (id) speakText(document.getElementById(id)?.innerText || '');
+            });
+        });
+
+        // Modo oscuro
+        const toggleBtn = document.getElementById('darkModeToggle');
+        const icon = document.getElementById('darkModeIcon');
+        const isDark = localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        if (isDark) { document.documentElement.classList.add('dark'); icon.classList.replace('fa-moon', 'fa-sun'); }
+        else { document.documentElement.classList.remove('dark'); icon.classList.replace('fa-sun', 'fa-moon'); }
+        toggleBtn.addEventListener('click', () => {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                icon.classList.replace('fa-sun', 'fa-moon');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                icon.classList.replace('fa-moon', 'fa-sun');
+            }
+        });
+    </script>
+</body>
+</html>
