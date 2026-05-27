@@ -65,6 +65,10 @@
             <h1 class="text-3xl sm:text-4xl font-semibold text-white tracking-tight mb-3">Práctica Financiera y Administrativa I</h1>
             <p class="text-neutral-400 text-lg font-light">Guía de estudio interactiva basada en la DGAF. Presiona el botón para escuchar cada punto.</p>
             <div class="mt-6 flex flex-wrap gap-4 justify-center sm:justify-start">
+                <button id="playAllBtn" onclick="playAll()" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-900/30 text-blue-400 border border-blue-900/50 rounded-lg hover:bg-blue-900/50 transition-colors text-sm font-medium">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                    Escuchar Todo
+                </button>
                 <button id="stopAllBtn" onclick="stopSpeech()" class="hidden items-center gap-2 px-4 py-2 bg-red-900/30 text-red-400 border border-red-900/50 rounded-lg hover:bg-red-900/50 transition-colors text-sm font-medium">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd"></path></svg>
                     Detener Lectura
@@ -244,6 +248,49 @@
             };
 
             synth.speak(currentUtterance);
+        }
+
+        function playAll() {
+            stopSpeech(); // Limpiar cualquier lectura previa
+            
+            const voices = synth.getVoices();
+            const spanishVoice = voices.find(voice => voice.lang.startsWith('es-'));
+
+            // Encola (queue) todas las preguntas para que se lean de corrido
+            studyData.forEach((item, index) => {
+                const textToSpeak = `${item.q}. ${item.a}`;
+                const utterance = new SpeechSynthesisUtterance(textToSpeak);
+                
+                if (spanishVoice) {
+                    utterance.voice = spanishVoice;
+                }
+                
+                utterance.lang = 'es-ES';
+                utterance.rate = 0.95; 
+                utterance.pitch = 1;
+
+                utterance.onstart = () => {
+                    activeIndex = index;
+                    updateUIPplaying(index);
+                    document.getElementById('stopAllBtn').classList.remove('hidden');
+                    document.getElementById('stopAllBtn').classList.add('inline-flex');
+                    
+                    // Auto-scroll para que el texto leído siempre quede en pantalla
+                    const activeCard = document.getElementById(`btn-${index}`).closest('.card');
+                    if (activeCard) {
+                        activeCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                };
+
+                utterance.onend = () => {
+                    // Si llegamos al final del arreglo, se resetea la UI
+                    if (index === studyData.length - 1) {
+                        resetUI();
+                    }
+                };
+
+                synth.speak(utterance);
+            });
         }
 
         function stopSpeech() {
