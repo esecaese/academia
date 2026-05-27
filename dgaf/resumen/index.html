@@ -36,7 +36,7 @@
         }
 
         .btn-playing {
-            background-color: #1e3a8a !important; /* Blue tint when playing */
+            background-color: #1e3a8a !important;
             border-color: #3b82f6 !important;
             color: #bfdbfe !important;
         }
@@ -55,6 +55,12 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #404040; 
         }
+        
+        /* Select styling */
+        select option {
+            background-color: #141414;
+            color: #e5e5e5;
+        }
     </style>
 </head>
 <body class="min-h-screen py-10 px-4 sm:px-6 lg:px-8">
@@ -64,12 +70,22 @@
         <header class="mb-12 text-center sm:text-left border-b border-neutral-800 pb-8">
             <h1 class="text-3xl sm:text-4xl font-semibold text-white tracking-tight mb-3">Práctica Financiera y Administrativa I</h1>
             <p class="text-neutral-400 text-lg font-light">Guía de estudio interactiva basada en la DGAF. Presiona el botón para escuchar cada punto.</p>
-            <div class="mt-6 flex flex-wrap gap-4 justify-center sm:justify-start">
-                <button id="playAllBtn" onclick="playAll()" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-900/30 text-blue-400 border border-blue-900/50 rounded-lg hover:bg-blue-900/50 transition-colors text-sm font-medium">
+            
+            <div class="mt-6 flex flex-wrap gap-4 justify-center sm:justify-start items-center">
+                <!-- Selector de Voces -->
+                <div class="flex items-center gap-2 bg-[#141414] border border-neutral-700 rounded-lg px-3 py-1.5 focus-within:border-blue-500 transition-colors w-full sm:w-auto">
+                    <svg class="w-4 h-4 text-neutral-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+                    <select id="voiceSelect" class="bg-transparent text-neutral-300 text-sm outline-none cursor-pointer w-full appearance-none pr-4">
+                        <option value="">Cargando voces...</option>
+                    </select>
+                </div>
+
+                <!-- Botones Globales -->
+                <button id="playAllBtn" onclick="playAll()" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-900/30 text-blue-400 border border-blue-900/50 rounded-lg hover:bg-blue-900/50 transition-colors text-sm font-medium w-full sm:w-auto justify-center">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
                     Escuchar Todo
                 </button>
-                <button id="stopAllBtn" onclick="stopSpeech()" class="hidden items-center gap-2 px-4 py-2 bg-red-900/30 text-red-400 border border-red-900/50 rounded-lg hover:bg-red-900/50 transition-colors text-sm font-medium">
+                <button id="stopAllBtn" onclick="stopSpeech()" class="hidden items-center gap-2 px-4 py-2 bg-red-900/30 text-red-400 border border-red-900/50 rounded-lg hover:bg-red-900/50 transition-colors text-sm font-medium w-full sm:w-auto justify-center">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd"></path></svg>
                     Detener Lectura
                 </button>
@@ -181,6 +197,49 @@
         let synth = window.speechSynthesis;
         let currentUtterance = null;
         let activeIndex = -1;
+        let availableVoices = [];
+
+        // Poblar la lista de voces en español
+        function populateVoiceList() {
+            // Obtener todas las voces y filtrar las que son en español
+            availableVoices = synth.getVoices().filter(voice => voice.lang.startsWith('es'));
+            const voiceSelect = document.getElementById('voiceSelect');
+            
+            if (availableVoices.length === 0) {
+                voiceSelect.innerHTML = '<option value="">Voces en español no disponibles</option>';
+                return;
+            }
+
+            voiceSelect.innerHTML = ''; // Limpiar
+            
+            const savedVoiceURI = localStorage.getItem('dgaf_selectedVoiceURI');
+            let foundSavedVoice = false;
+
+            availableVoices.forEach((voice) => {
+                const option = document.createElement('option');
+                option.textContent = `${voice.name} (${voice.lang})`;
+                option.value = voice.voiceURI;
+                
+                // Si coincide con la guardada, la marcamos como seleccionada
+                if (voice.voiceURI === savedVoiceURI) {
+                    option.selected = true;
+                    foundSavedVoice = true;
+                }
+                
+                voiceSelect.appendChild(option);
+            });
+
+            // Si no había voz guardada, guardar por defecto la primera
+            if (!foundSavedVoice && availableVoices.length > 0) {
+                localStorage.setItem('dgaf_selectedVoiceURI', availableVoices[0].voiceURI);
+            }
+        }
+
+        // Obtener la voz seleccionada actualmente
+        function getSelectedVoice() {
+            const savedVoiceURI = localStorage.getItem('dgaf_selectedVoiceURI');
+            return availableVoices.find(v => v.voiceURI === savedVoiceURI) || availableVoices[0];
+        }
 
         function renderQuestions() {
             const container = document.getElementById('qa-container');
@@ -210,26 +269,21 @@
             const textToSpeak = `${item.q}. ${item.a}`;
 
             if (activeIndex === index && synth.speaking) {
-                // If clicking the currently playing item, stop it
                 stopSpeech();
                 return;
             }
 
-            // Stop any current speech before starting new one
             stopSpeech();
 
-            // Prepare new speech
             currentUtterance = new SpeechSynthesisUtterance(textToSpeak);
             
-            // Try to set Spanish voice
-            const voices = synth.getVoices();
-            const spanishVoice = voices.find(voice => voice.lang.startsWith('es-'));
-            if (spanishVoice) {
-                currentUtterance.voice = spanishVoice;
+            const selectedVoice = getSelectedVoice();
+            if (selectedVoice) {
+                currentUtterance.voice = selectedVoice;
             }
             
-            currentUtterance.lang = 'es-ES'; // Default fallback
-            currentUtterance.rate = 0.95; // Slightly slower for better comprehension
+            currentUtterance.lang = 'es-ES'; 
+            currentUtterance.rate = 0.95; 
             currentUtterance.pitch = 1;
 
             currentUtterance.onstart = () => {
@@ -239,30 +293,23 @@
                 document.getElementById('stopAllBtn').classList.add('inline-flex');
             };
 
-            currentUtterance.onend = () => {
-                resetUI();
-            };
-            
-            currentUtterance.onerror = () => {
-                resetUI();
-            };
+            currentUtterance.onend = () => { resetUI(); };
+            currentUtterance.onerror = () => { resetUI(); };
 
             synth.speak(currentUtterance);
         }
 
         function playAll() {
-            stopSpeech(); // Limpiar cualquier lectura previa
+            stopSpeech(); 
             
-            const voices = synth.getVoices();
-            const spanishVoice = voices.find(voice => voice.lang.startsWith('es-'));
+            const selectedVoice = getSelectedVoice();
 
-            // Encola (queue) todas las preguntas para que se lean de corrido
             studyData.forEach((item, index) => {
                 const textToSpeak = `${item.q}. ${item.a}`;
                 const utterance = new SpeechSynthesisUtterance(textToSpeak);
                 
-                if (spanishVoice) {
-                    utterance.voice = spanishVoice;
+                if (selectedVoice) {
+                    utterance.voice = selectedVoice;
                 }
                 
                 utterance.lang = 'es-ES';
@@ -275,7 +322,6 @@
                     document.getElementById('stopAllBtn').classList.remove('hidden');
                     document.getElementById('stopAllBtn').classList.add('inline-flex');
                     
-                    // Auto-scroll para que el texto leído siempre quede en pantalla
                     const activeCard = document.getElementById(`btn-${index}`).closest('.card');
                     if (activeCard) {
                         activeCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -283,7 +329,6 @@
                 };
 
                 utterance.onend = () => {
-                    // Si llegamos al final del arreglo, se resetea la UI
                     if (index === studyData.length - 1) {
                         resetUI();
                     }
@@ -299,19 +344,16 @@
         }
 
         function updateUIPplaying(index) {
-            // Reset all buttons first
             document.querySelectorAll('.btn-play').forEach(btn => {
                 btn.classList.remove('btn-playing');
                 btn.querySelector('.btn-text').textContent = 'Escuchar';
                 btn.querySelector('svg').innerHTML = '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>';
             });
 
-            // Set active button
             const activeBtn = document.getElementById(`btn-${index}`);
             if (activeBtn) {
                 activeBtn.classList.add('btn-playing');
                 activeBtn.querySelector('.btn-text').textContent = 'Pausar';
-                // Pause icon
                 activeBtn.querySelector('svg').innerHTML = '<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>';
             }
         }
@@ -324,7 +366,6 @@
             document.querySelectorAll('.btn-play').forEach(btn => {
                 btn.classList.remove('btn-playing');
                 btn.querySelector('.btn-text').textContent = 'Escuchar';
-                // Play icon
                 btn.querySelector('svg').innerHTML = '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>';
             });
         }
@@ -333,12 +374,23 @@
         document.addEventListener('DOMContentLoaded', () => {
             renderQuestions();
             
-            // Load voices ahead of time (fix for some browsers)
-            if (speechSynthesis.onvoiceschanged !== undefined) {
-                speechSynthesis.onvoiceschanged = () => synth.getVoices();
-            }
+            // Cargar voces en caso de que ya estén listas
+            populateVoiceList();
             
-            // Stop speech if user closes window or navigates away
+            // Cargar voces de forma asincrónica (necesario en muchos navegadores)
+            if (speechSynthesis.onvoiceschanged !== undefined) {
+                speechSynthesis.onvoiceschanged = populateVoiceList;
+            }
+
+            // Event listener para el cambio de voz
+            document.getElementById('voiceSelect').addEventListener('change', (e) => {
+                localStorage.setItem('dgaf_selectedVoiceURI', e.target.value);
+                // Si está reproduciendo algo, lo frenamos al cambiar de voz
+                if (synth.speaking) {
+                    stopSpeech();
+                }
+            });
+            
             window.addEventListener('beforeunload', () => {
                 synth.cancel();
             });
