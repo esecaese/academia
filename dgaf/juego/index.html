@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulador de Examen - Práctica Financiera (24 Preguntas)</title>
+    <title>Simulador DGAF Avanzado (30 Preguntas)</title>
     <style>
         :root {
-            --bg-color: #0a0a0a;
-            --container-bg: #1a1a1a;
-            --text-main: #e0e0e0;
-            --text-muted: #888888;
-            --accent: #4a90e2;
-            --accent-hover: #357abd;
-            --correct: #27ae60;
-            --incorrect: #c0392b;
-            --border: #333333;
+            --bg-color: #0d1117;
+            --container-bg: #161b22;
+            --text-main: #c9d1d9;
+            --text-muted: #8b949e;
+            --accent: #58a6ff;
+            --accent-hover: #1f6feb;
+            --correct: #3fb950;
+            --incorrect: #f85149;
+            --border: #30363d;
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 20px;
             display: flex;
@@ -32,62 +32,77 @@
         .container {
             background-color: var(--container-bg);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 30px;
-            max-width: 700px;
+            border-radius: 12px;
+            padding: 35px;
+            max-width: 750px;
             width: 100%;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
             box-sizing: border-box;
         }
 
         h1 {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             margin-top: 0;
             border-bottom: 1px solid var(--border);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+            padding-bottom: 12px;
+            margin-bottom: 25px;
             color: var(--accent);
+            letter-spacing: -0.5px;
         }
 
         p {
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         .input-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .input-group label {
             display: block;
-            margin-bottom: 8px;
-            color: var(--text-muted);
+            margin-bottom: 10px;
+            color: var(--text-main);
+            font-weight: 500;
         }
 
         input[type="number"] {
             background-color: var(--bg-color);
             color: var(--text-main);
             border: 1px solid var(--border);
-            padding: 10px;
-            border-radius: 5px;
+            padding: 12px;
+            border-radius: 6px;
             width: 100%;
             box-sizing: border-box;
-            font-size: 1rem;
+            font-size: 1.05rem;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.3);
         }
 
         button {
-            background-color: var(--accent);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 5px;
+            background-color: var(--container-bg);
+            color: var(--accent);
+            border: 1px solid var(--border);
+            padding: 14px 20px;
+            border-radius: 6px;
             font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
             width: 100%;
-            transition: background-color 0.3s;
-            margin-top: 10px;
+            transition: all 0.2s ease;
+            margin-top: 15px;
         }
 
-        button:hover {
+        #setup-screen button, #next-btn, #result-screen button {
+            background-color: var(--accent);
+            color: #ffffff;
+            border: none;
+        }
+
+        #setup-screen button:hover, #next-btn:hover, #result-screen button:hover {
             background-color: var(--accent-hover);
         }
 
@@ -96,46 +111,49 @@
             border: 1px solid var(--border);
             color: var(--text-main);
             text-align: left;
-            margin-bottom: 10px;
-            padding: 15px;
-            transition: all 0.2s ease;
-            font-size: 0.95rem;
+            margin-bottom: 12px;
+            padding: 16px;
+            font-size: 0.98rem;
             line-height: 1.4;
+            font-weight: 400;
         }
 
         .option-btn:hover:not(:disabled) {
-            background-color: #2a2a2a;
+            background-color: #1f242c;
             border-color: var(--accent);
-            transform: translateX(5px);
+            transform: translateX(4px);
         }
 
         .option-btn:disabled {
             cursor: not-allowed;
-            opacity: 0.8;
+            opacity: 0.85;
         }
 
         .correct {
-            background-color: rgba(39, 174, 96, 0.2) !important;
+            background-color: rgba(63, 185, 80, 0.15) !important;
             border-color: var(--correct) !important;
+            color: #ffffff !important;
         }
 
         .incorrect {
-            background-color: rgba(192, 57, 43, 0.2) !important;
+            background-color: rgba(248, 81, 73, 0.15) !important;
             border-color: var(--incorrect) !important;
+            color: #ffffff !important;
+            text-decoration: line-through;
         }
 
         #feedback-box {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 5px;
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 8px;
             display: none;
             border-left: 4px solid var(--accent);
             background-color: var(--bg-color);
-            animation: fadeIn 0.3s ease;
+            animation: fadeIn 0.4s ease;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
+            from { opacity: 0; transform: translateY(-8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -147,10 +165,11 @@
             display: flex;
             justify-content: space-between;
             color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 20px;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
             border-bottom: 1px solid var(--border);
-            padding-bottom: 10px;
+            padding-bottom: 12px;
+            font-weight: 500;
         }
         
         #final-score-container {
@@ -158,10 +177,10 @@
         }
         
         #final-score {
-            font-size: 3rem;
+            font-size: 3.5rem;
             color: var(--accent);
             margin: 20px 0;
-            font-weight: bold;
+            font-weight: 700;
         }
     </style>
 </head>
@@ -169,192 +188,228 @@
 
     <!-- Pantalla de Configuración -->
     <div id="setup-screen" class="container">
-        <h1>Simulador Total: Práctica Financiera</h1>
-        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 25px;">
-            Este simulador contiene los <strong>24 puntos clave</strong> definidos por el profesor. Las preguntas y el orden de las respuestas se mezclarán de forma aleatoria para evitar la memorización mecánica.
+        <h1>Simulador DGAF: Nivel Avanzado</h1>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 30px;">
+            Este simulador se basa en el <strong>marco normativo actualizado</strong> (Topes GOM, documentaciones de alquileres en el exterior, plazos físicos, leasing y rendiciones). El orden de las preguntas y sus opciones es completamente aleatorio.
         </p>
         <div class="input-group">
-            <label for="num-questions">¿Cuántas preguntas deseás responder en esta ronda? (Máximo 24)</label>
-            <input type="number" id="num-questions" min="1" max="24" value="24">
+            <label for="num-questions">¿Cuántas preguntas deseás responder? (Máximo 30)</label>
+            <input type="number" id="num-questions" min="1" max="30" value="30">
         </div>
-        <button onclick="startGame()">Comenzar Examen</button>
+        <button onclick="startGame()">Iniciar Simulacro</button>
     </div>
 
     <!-- Pantalla del Juego -->
     <div id="game-screen" class="container hidden">
         <div class="stats">
-            <span id="progress-text">Pregunta 1 de 24</span>
+            <span id="progress-text">Pregunta 1 de 30</span>
             <span id="score-text">Aciertos: 0</span>
         </div>
         
-        <h2 id="question-text" style="font-size: 1.15rem; margin-bottom: 20px; font-weight: 500; line-height: 1.5; color: var(--accent);"></h2>
+        <h2 id="question-text" style="font-size: 1.15rem; margin-bottom: 25px; font-weight: 500; line-height: 1.6; color: #ffffff;"></h2>
         
         <div id="options-container"></div>
         
         <div id="feedback-box">
-            <strong id="feedback-title" style="display: block; margin-bottom: 8px; font-size: 1.1rem;"></strong>
-            <p id="feedback-desc" style="font-size: 0.95rem; color: var(--text-main); margin: 0; line-height: 1.5;"></p>
-            <button id="next-btn" onclick="nextQuestion()" style="margin-top: 15px;">Siguiente Pregunta</button>
+            <strong id="feedback-title" style="display: block; margin-bottom: 10px; font-size: 1.1rem;"></strong>
+            <p id="feedback-desc" style="font-size: 0.95rem; color: var(--text-main); margin: 0; line-height: 1.6;"></p>
+            <button id="next-btn" onclick="nextQuestion()">Siguiente Pregunta</button>
         </div>
     </div>
 
     <!-- Pantalla de Resultados -->
     <div id="result-screen" class="container hidden">
-        <h1>Examen Finalizado</h1>
+        <h1 style="text-align: center;">Simulacro Finalizado</h1>
         <div id="final-score-container">
             <p style="font-size: 1.2rem; color: var(--text-main);">Tu puntaje final es:</p>
             <div id="final-score"></div>
-            <p id="final-message" style="color: var(--text-muted); margin-bottom: 30px; line-height: 1.5;"></p>
+            <p id="final-message" style="color: var(--text-muted); margin-bottom: 35px; line-height: 1.6; font-size: 1.05rem;"></p>
         </div>
-        <button onclick="location.reload()">Volver al Inicio</button>
+        <button onclick="location.reload()">Reintentar con nuevas preguntas</button>
     </div>
 
     <script>
-        // Base de datos COMPLETA con los 24 puntos del profesor
+        // Base de datos de 30 preguntas detalladas basadas en la nueva normativa proporcionada
         const questionDatabase = [
             {
-                q: "1. ¿Qué porcentaje del viático exige presentación de comprobantes de respaldo (facturas, tickets) para su rendición de cuentas?",
-                correct: "El 80% (el 20% restante puede ser por Declaración Jurada).",
-                distractors: ["El 100% de los gastos.", "El 50% con facturas y el otro 50% con vales internos.", "El 20% con facturas (el 80% restante por Declaración Jurada)."],
-                justification: "Según el Art. 7, se exige comprobantes de respaldo como mínimo del 80%. El saldo restante podrá ser justificado bajo Declaración Jurada."
+                q: "¿Qué cargo debe ocupar un funcionario para tener derecho al cobro del Rubro 113 (Gastos de Representación)?",
+                correct: "Cargos que conlleven la representación legal de la Institución (según el Anexo del Personal y Organigrama).",
+                distractors: ["Cualquier cargo en el Servicio Exterior independientemente de su rango.", "Solamente los Jefes de Misión y Embajadores.", "Cargos administrativos de confianza superior a 5 años de antigüedad."],
+                justification: "Rubro 113: Remuneración adicional al cargo y accesoria al sueldo de funcionarios que ocupan efectivamente cargos que conlleven la representación legal de la Institución."
             },
             {
-                q: "2. ¿Qué significan las siglas S.T.R. manejadas por el Departamento de Contabilidad?",
-                correct: "Solicitud de Transferencias de Recursos.",
-                distractors: ["Sistema de Trámites de Rendición.", "Solicitud de Tesorería Regional.", "Servicio de Transferencias Rápidas."],
-                justification: "S.T.R. significa Solicitud de Transferencias de Recursos, gestionado por el Departamento de Contabilidad de la DGAF."
+                q: "Sobre el Gasto de Residencia / Costo de Vida (Rubro 122) en el Servicio Exterior, ¿cuál de estas afirmaciones es correcta?",
+                correct: "No forma parte de la asignación salarial y no se incluye en el cálculo del aguinaldo.",
+                distractors: ["Se abona como un porcentaje del sueldo básico e impacta directamente en el aguinaldo.", "Se aplica exclusivamente para pagar los alquileres de la sede diplomática.", "Solo incluye gastos de pasajes y fletes, pero no mantenimiento de la vivienda."],
+                justification: "Rubro 122: La presente remuneración adicional no formará parte de la asignación salarial... por lo tanto no se incluye en el cálculo de la asignación en concepto de aguinaldo."
             },
             {
-                q: "3. ¿A qué Fuente de Financiamiento (FF) corresponden los 'Recursos Institucionales'?",
-                correct: "FF 30",
-                distractors: ["FF 10", "FF 20", "FF 40"],
-                justification: "Las Fuentes de Financiamiento son: FF 10 (Recursos de Tesoro), FF 20 (Recursos del Crédito Público) y FF 30 (Recursos Institucionales)."
+                q: "Si dos funcionarios cónyuges son designados para prestar servicio en el exterior en una misma ciudad, ¿cómo se liquida el Gasto de Residencia?",
+                correct: "Se aplica sólo al funcionario que ostente el mayor rango.",
+                distractors: ["Se le otorga el 100% al funcionario de mayor rango y el 50% al cónyuge.", "Cada uno recibe el beneficio por separado sin restricciones.", "Se distribuye el monto al 50% para cada uno."],
+                justification: "Disponer en el caso que los funcionarios que sean cónyuges estén designados para prestar servicio en el exterior en una misma ciudad, el pago en concepto de gasto de residencia se aplicará sólo al funcionario que ostente el mayor rango."
             },
             {
-                q: "4. ¿Qué se debe hacer si se requiere utilizar un porcentaje mayor al 20% establecido para el Objeto del Gasto 280 (Otros Servicios en General) del G.O.M.?",
-                correct: "Solicitar autorización previa al gasto a la Dirección General de Administración y Finanzas (DGAF).",
-                distractors: ["Autorizarlo internamente bajo la exclusiva responsabilidad del Jefe de Misión.", "Imputarlo directamente al rubro de Reservas Técnicas (950).", "Solicitar permiso a la Contraloría General de la República a fin de mes."],
-                justification: "Si se requiera utilizar un porcentaje mayor en el O.G. 280, se deberá solicitar autorización previa al gasto a la DGAF fundamentando las razones."
+                q: "¿Qué conceptos abarca el Rubro 131 de Subsidio Familiar?",
+                correct: "Por hijos menores de 18 años, nacimiento, defunción, escolaridad o ayuda alimenticia.",
+                distractors: ["Exclusivamente por hijos menores de 12 años y ayuda alimenticia.", "Solamente pagos anuales por escolaridad y útiles.", "Pagos por nacimiento y bonificación por labores insalubres."],
+                justification: "131 Subsidio Familiar: Comprende los siguientes pagos: subsidio familiar por hijos menores de 18 años (mensual), pago de subsidio o subvenciones por nacimiento, defunción, escolar o alimenticia."
             },
             {
-                q: "5. ¿En qué casos la DGAF podrá RETENER el desembolso de fondos para Gastos de Operación y Mantenimiento (G.O.M.)?",
-                correct: "Por estar pendiente el envío de la rendición física del bimestre vencido o la documentación de devolución de excedentes.",
-                distractors: ["Por exceder el tope del 10% en el rubro de productos alimenticios.", "Por falta de presentación de los contratos de alquiler traducidos.", "Por no depositar los excedentes en los primeros 5 días del mes."],
-                justification: "Se retienen envíos GOM si está pendiente la rendición física del bimestre vencido en el plazo o la devolución del excedente del bimestre."
+                q: "¿Qué rubro cubre el aporte al régimen de seguridad social del personal contratado en el servicio diplomático y consular (IPS)?",
+                correct: "Rubro 134 - Aporte jubilatorio del empleador.",
+                distractors: ["Rubro 950 - Reservas Técnicas.", "Rubro 199 - Otros Gastos del Personal.", "Rubro 280 - Otros Servicios en General."],
+                justification: "Rubro 134 Aporte jubilatorio del empleador: Incluye el aporte jubilatorio correspondiente al pago del personal contratado y el aporte al régimen de seguridad social del personal contratado del servicio diplomático y consular."
             },
             {
-                q: "6. En el Servicio Exterior, ¿para qué se utiliza específicamente el rubro 950 de Reservas Técnicas y Cambiarias?",
-                correct: "Para prever y compensar diferencias de cambio en concepto de alquiler de sedes y aporte jubilatorio.",
-                distractors: ["Para cubrir gastos de pasajes y fletes por desarraigo.", "Para pagar indemnizaciones por accidentes ocurridos en actos de servicios.", "Para comprar bienes, muebles e inmuebles de emergencia para uso oficial."],
-                justification: "El rubro 950 compensa diferencias por adquisición de divisas para aportes por diferencia cambiaria en alquiler de sedes y jubilatorio del empleador (IPS)."
+                q: "Al presentar el Contrato de Alquiler de Residencia (Rubro 251) en un país extranjero, ¿qué se exige si el documento original NO está en español ni en portugués?",
+                correct: "Se deberá acompañar la correspondiente traducción al español.",
+                distractors: ["Debe enviarse directamente al Ministerio de Relaciones Exteriores para que lo traduzcan.", "Se puede presentar en inglés sin necesidad de traducción.", "Debe estar apostillado obligatoriamente por el Ministerio de Justicia local."],
+                justification: "En caso de que el contrato esté en un idioma distinto del español o del portugues, se deberá acompañar la correspondiente traducción al español."
             },
             {
-                q: "7. ¿El rubro 950 de Reservas Técnicas también se usa para pagar qué tipo de gastos jubilatorios?",
-                correct: "El IPS de los contratados (Aporte jubilatorio del empleador y/o seguridad social).",
-                distractors: ["El aporte a la caja fiscal de los diplomáticos de carrera.", "El seguro médico privado del Jefe de Misión.", "Los fondos de pensión del personal diplomático extranjero."],
-                justification: "Se utiliza para aportes por diferencia cambiaria en concepto de gastos de alquiler de sedes y jubilatorio del empleador y/o seguridad social (IPS de contratados)."
+                q: "En el alquiler de residencia en el exterior (Rubro 251), si el locador (propietario) es una Persona Física, ¿qué documento adicional debe adjuntarse al comprobante de pago?",
+                correct: "Copia del documento de identidad de esta persona.",
+                distractors: ["Certificado de antecedentes policiales del locador.", "Declaración de ingresos del propietario.", "Registro tributario exclusivo de bienes raíces."],
+                justification: "En caso que el propietario o locador fuera persona física deberá adjuntar copia del documento de identidad de esta."
             },
             {
-                q: "8. ¿Cuál es el tope porcentual establecido para el rubro 360 (Combustibles) dentro de los Gastos de Operación y Mantenimiento?",
-                correct: "10%",
-                distractors: ["15%", "20%", "25%"],
-                justification: "Los topes del GOM son: 232 Viáticos (15%), 280 Otros Servicios (20%), 310 Productos alimenticios (10%) y 360 Combustibles (10%)."
+                q: "¿Qué ocurre con los pagos subsiguientes de alquiler si el funcionario se retrasa injustificadamente en el envío mensual de comprobantes?",
+                correct: "Se retendrán los pagos correspondientes a los meses subsiguientes.",
+                distractors: ["Se multará al funcionario deduciendo un 10% del próximo envío.", "La DGAF pagará el alquiler directamente al propietario para evitar desalojos.", "El funcionario pierde definitivamente el derecho al Gasto de Residencia."],
+                justification: "Se retendrán los pagos correspondientes a los meses subsiguientes toda vez que el funcionario sin causa justificada, incurra en el retraso de envío de comprobantes de pago."
             },
             {
-                q: "9. ¿Qué requisito previo se necesita para los Alquileres en el exterior (Rubro 250 - Alquileres y Derechos)?",
-                correct: "Requiere autorización previa de la DGAF.",
-                distractors: ["Visto bueno exclusivo del Jefe de Misión.", "Aprobación de la Contraloría General de la República.", "Resolución directa de la Presidencia de la República."],
-                justification: "Rubro 250 Alquileres y Derechos: Exige 'Previa autorización de la Dirección General de Administración y Finanzas (DGAF)'."
+                q: "¿Cuál es el criterio de la DGAF ante la presentación de comprobantes de pago de alquiler que presenten enmiendas y/o tachaduras?",
+                correct: "No se aceptarán comprobantes de pagos con enmiendas y/o tachaduras.",
+                distractors: ["Se aceptan siempre que estén salvadas y firmadas por el Jefe de Misión.", "Se aceptan previa retención preventiva del 5%.", "Son válidas únicamente si se anexa una Declaración Jurada aclaratoria."],
+                justification: "La norma es estricta: 'No se aceptarán comprobantes de pagos con enmiendas y/o tachaduras'."
             },
             {
-                q: "10. Respecto al GOM, ¿quién administra los fondos transferidos a cada sede en el exterior?",
-                correct: "Cada sede tiene su monto y se le envía, ellos administran localmente bajo responsabilidad del Jefe de Misión.",
-                distractors: ["Son administrados directamente desde Asunción por la DGAF mes a mes.", "La Contraloría de la República envía un delegado para administrarlos.", "El banco central del país receptor se encarga de la administración."],
-                justification: "Se transfiere el GOM (mensualmente) a las Representaciones Diplomáticas. Cada sede tiene su monto y ellos administran localmente."
+                q: "Para casos de alojamiento temporal (hoteles, aparts), ¿qué documentación exige la DGAF para realizar el reembolso de alquiler (Rubro 251)?",
+                correct: "Los comprobantes de pago en original o copia, acompañados obligatoriamente por una Declaración Jurada.",
+                distractors: ["Un contrato de alquiler temporal visado por la Cancillería.", "Solamente los comprobantes de tarjeta de crédito corporativa.", "Una solicitud de desembolso firmada por el Jefe de Misión exclusivamente."],
+                justification: "En tales casos (alojamientos temporales), los comprobantes deberán estar acompañados por la declaración jurada anexa a la presente Resolución."
             },
             {
-                q: "11. ¿Quién es el principal y último responsable por la administración y control del uso de los fondos transferidos (G.O.M.) en una Representación?",
-                correct: "El Jefe de Misión.",
-                distractors: ["El Funcionario Administrativo del Servicio Local.", "El Ministro Director de Finanzas en Asunción.", "El Oficial Contable de la Embajada."],
-                justification: "Los Jefes de Misión serán responsables por la administración y control del uso de los fondos transferidos, y cumplimiento de las formalidades."
+                q: "¿A partir de qué momento corresponde iniciar el pago en concepto de asignación de alquiler de residencia en el exterior?",
+                correct: "A partir de la fecha en la que el funcionario asuma de manera oficial sus funciones en el exterior.",
+                distractors: ["A partir de la fecha de su vuelo de partida desde Asunción.", "Desde la firma del decreto de designación presidencial.", "En el momento que abona el anticipo o mes de garantía del inmueble."],
+                justification: "Corresponderá a partir de la fecha en la que el funcionario asuma de manera oficial sus funciones en el exterior... según notificación de RRHH."
             },
             {
-                q: "12. ¿Cuáles son los órganos encargados de los controles INTERNOS y EXTERNOS respectivamente?",
-                correct: "Internos: Auditoría Interna, DGAF y Rendición de Cuentas. Externos: CGR y AGPE.",
-                distractors: ["Internos: CGR y AGPE. Externos: Ministerio de Hacienda e IPS.", "Internos: DGAF y Hacienda. Externos: Banco Mundial.", "Internos: Jefe de Misión y Contadores. Externos: DGAF y Auditoría Interna."],
-                justification: "Controles Internos: Auditoría Interna, DGAF y Rendición de Cuentas. Controles Externos: CGR (Contraloría General) y AGPE (Auditoría General del PE)."
+                q: "¿Qué requerimiento sine qua non existe para utilizar el Rubro 258 (Alquileres y Derechos) para alquilar bienes o inmuebles para uso oficial?",
+                correct: "Debe contar con previa autorización de la Dirección General de Administración y Finanzas (DGAF).",
+                distractors: ["Debe realizarse mediante una licitación pública internacional.", "Sólo requiere la firma del contador de la Misión Diplomática.", "Basta con enviar el contrato original al Departamento de Rendición de Cuentas a fin de año."],
+                justification: "Rubro 258 - ALQUILERES Y DERECHOS: Previa autorización de la DGAF."
             },
             {
-                q: "13. ¿Cuál es la periodicidad de los envíos de fondos del GOM y de la presentación de las rendiciones de cuentas?",
-                correct: "Monto de envío es Mensual. La rendición de cuentas es Bimestral.",
-                distractors: ["Monto de envío Semestral. Rendición Mensual.", "Monto de envío Anual. Rendición Semestral.", "Monto de envío Bimestral. Rendición Mensual."],
-                justification: "El profesor indicó: 'Periocidad es Bimestral (para las rendiciones). Monto de envió es mensual'."
+                q: "En el caso específico de contratos de leasing de vehículos bajo el Rubro 258, ¿cuál es el límite establecido por la normativa?",
+                correct: "El límite es de 1 (un) vehículo por Representación, a menos que exista justificación fundada para una excepción.",
+                distractors: ["El límite es de 2 (dos) vehículos: uno para el Jefe de Misión y otro utilitario.", "No hay límite, depende de la asignación presupuestaria total de la sede.", "Está totalmente prohibido el leasing, los vehículos deben ser comprados."],
+                justification: "En el caso específico del leasing de vehículos, se analizará cada solicitud, estableciendo el límite de 1 (un) vehículo, a menos que exista justificación fundada."
             },
             {
-                q: "14. ¿Cómo deben presentarse los documentos adjuntos a las facturas y contratos en la rendición de cuentas?",
-                correct: "Documentos originales, traducidos al español (por lo menos versión no oficial), detallando lo respectivo a cada factura.",
-                distractors: ["Solo copias simples en su idioma original para ahorrar papel.", "Traducidos exclusivamente por traductores juramentados de Asunción.", "En formato digital sin necesidad de enviar físicos ni traducciones."],
-                justification: "Se requieren documentos originales y, si están en otro idioma, acompañados de su traducción al español, detallando lo respectivo a cada factura."
+                q: "¿Quiénes son los directos responsables por la administración, control del uso de fondos transferidos y plazos de rendición del G.O.M. (Rubro 854)?",
+                correct: "Los Jefes de Misión.",
+                distractors: ["El Departamento de Rendición de Cuentas de la DGAF.", "Los agregados comerciales de cada Embajada.", "Exclusivamente el personal administrativo contratado localmente."],
+                justification: "RESPONSABILIDADES: Jefes de misiones son los responsables por la administración de los fondos transferidos y el cumplimiento de los plazos establecidos."
             },
             {
-                q: "15. De acuerdo a los topes del GOM, ¿qué porcentaje le corresponde al Rubro 232 (Viáticos y movilidad) y al Rubro 280 (Otros Servicios)?",
-                correct: "Viáticos 15% y Otros Servicios en General 20%.",
-                distractors: ["Viáticos 10% y Otros Servicios 10%.", "Viáticos 20% y Otros Servicios 15%.", "Viáticos 50% y Otros Servicios 50%."],
-                justification: "Topes del GOM: 232-Viáticos (15%), 280-Otros Servicios (20%), 310-Productos (10%), 360-Combustibles (10%)."
+                q: "¿Cuál es el tope porcentual establecido para el rubro 280 (Otros Servicios en General) dentro de las transferencias G.O.M.?",
+                correct: "20%",
+                distractors: ["15%", "10%", "25%"],
+                justification: "Topes de gastos GOM: 280- OTROS SERVICIOS EN GENERAL 20%."
             },
             {
-                q: "16. Dentro del rubro 320 (Textiles), ¿qué adquisición está tajantemente prohibida?",
-                correct: "La compra de uniformes para funcionarios.",
-                distractors: ["La compra de cortinas para la residencia del embajador.", "La adquisición de banderas de los países.", "La compra de manteles para eventos protocolares."],
-                justification: "El material estipula claramente: '320 - TEXTILES: Queda prohibida la adquisición de uniformes para funcionarios'."
+                q: "Si por motivos de servicio es imprescindible utilizar un porcentaje mayor al tope del Rubro 280 (Otros Servicios), ¿cómo debe proceder la Representación?",
+                correct: "Debe solicitar autorización previa al gasto a la DGAF fundamentando las razones. Si no media autorización, debe devolver el monto excedido.",
+                distractors: ["Puede ejecutar el gasto y justificarlo a posteriori en la rendición bimestral.", "Debe imputar la diferencia obligatoriamente al rubro de Reservas Técnicas.", "El Jefe de Misión puede autorizarlo vía resolución interna de emergencia."],
+                justification: "Si se requiera utilizar un porcentaje mayor... se deberá solicitar autorización previa al gasto, a la DGAF. Si no mediare autorización, se deberá proceder a la devolución."
             },
             {
-                q: "17. ¿Quiénes deben firmar la Planilla de Registro de Carga de Combustible (o similares) en las Misiones?",
-                correct: "Los Jefes de Misión deben firmar junto con el funcionario que elaboró las planillas respectivas.",
-                distractors: ["Exclusivamente el Jefe de Misión.", "Solo el chofer o encargado de transportar el vehículo.", "El contador local y el encargado de la estación de servicio."],
-                justification: "El profesor destacó que los Jefes de Misión deben firmar en conjunto con el funcionario que elaboró las planillas, compartiendo la responsabilidad."
+                q: "¿Cuál es el tope de gastos aplicable tanto al Rubro 310 (Productos Alimenticios) como al Rubro 360 (Combustibles) del G.O.M.?",
+                correct: "10% para cada uno.",
+                distractors: ["15% alimentos y 20% combustibles.", "20% para ambos rubros en conjunto.", "5% alimentos y 15% combustibles."],
+                justification: "Topes: 310- PRODUCTOS ALIMENTICIOS 10% y 360- COMBUSTIBLES 10%."
             },
             {
-                q: "18. En el Servicio Exterior (SSE), ¿sobre qué concepto de la remuneración NO se paga aguinaldo?",
-                correct: "Sobre el Costo de Vida / Gasto de Residencia.",
-                distractors: ["Sobre los Sueldos Básicos (Rubro 161).", "Sobre los Gastos de Representación (Rubro 162).", "Sobre el Escalafón Diplomático (Rubro 139)."],
-                justification: "El SSE cobra sueldo, aguinaldo y costo de vida, pero del costo de vida (Gasto de Residencia) NO se paga aguinaldo."
+                q: "A nombre de quién deben estar emitidos obligatoriamente los comprobantes (facturas, tickets) para la presentación de rendiciones de G.O.M.?",
+                correct: "A nombre de la Representación.",
+                distractors: ["A nombre del Jefe de Misión.", "A nombre de la Dirección General de Administración y Finanzas.", "A nombre del beneficiario final del servicio."],
+                justification: "COMPROBANTES: A nombre de la Representación, según su tipología."
             },
             {
-                q: "19. Si dos funcionarios que son cónyuges están destinados a prestar servicio en el exterior en una misma ciudad, ¿cómo se paga el alquiler de residencia?",
-                correct: "Se le paga únicamente al funcionario que ostente el mayor rango.",
-                distractors: ["Se abona el 100% del alquiler a ambos funcionarios por separado.", "Se divide el pago exactamente al 50% para cada uno de los cónyuges.", "Se aplica al funcionario que haya llegado primero al destino."],
-                justification: "Si son cónyuges destinados en la misma ciudad, el pago en concepto de gasto de residencia se aplica SÓLO al funcionario que ostente el mayor rango."
+                q: "¿Cuál es el plazo exacto para que las Representaciones depositen los EXCEDENTES del G.O.M.?",
+                correct: "Dentro de los 15 días siguientes al bimestre vencido.",
+                distractors: ["Durante la primera semana de cada mes calendario.", "A los 30 días posteriores al cierre del ejercicio fiscal.", "Inmediatamente al día hábil siguiente de finalizar el mes."],
+                justification: "EXCEDENTES: Depositados dentro de los 15 días siguientes al bimestre vencido."
             },
             {
-                q: "20. ¿A partir de qué fecha corresponde el pago de los Gastos de Alquiler en el exterior?",
-                correct: "Desde la fecha en que el funcionario asume oficialmente sus funciones en su destino (se debe notificar por nota al servicio local).",
-                distractors: ["Desde el momento en que se emite su decreto de nombramiento en Asunción.", "Desde el día que alquila la casa, sin importar si ya asumió funciones.", "Desde el primer día del año fiscal en curso."],
-                justification: "Gastos de Alquiler: Corresponde a partir de la fecha en la que el funcionario asume de manera oficial sus funciones en el exterior, notificando a RRHH/Servicio Local."
+                q: "Las rendiciones físicas originales del G.O.M. deben enviarse debidamente foliadas y con traducciones. ¿Cuál es el plazo de REMISIÓN DEL FÍSICO?",
+                correct: "15 días corridos siguientes al bimestre vencido.",
+                distractors: ["30 días hábiles desde la fecha de cada factura.", "Hasta el último día del mes siguiente a la recepción de los fondos.", "10 días corridos previos al siguiente desembolso."],
+                justification: "PLAZO DE REMISIÓN DEL FÍSICO: 15 días corridos sgt al bimestre vencido. Rendiciones originales debidamente foliadas con traducción no oficial."
             },
             {
-                q: "21. ¿Cuáles son los requisitos de presentación del comprobante (recibo) de pago de alquiler para la rendición mensual?",
-                correct: "Debe remitirse el comprobante de pago en original y copia, reuniendo los requisitos legales del país sede y sin tachaduras.",
-                distractors: ["Solo se requiere una nota firmada por el Jefe de Misión.", "Basta con un correo electrónico del propietario confirmando la recepción.", "Se exige únicamente un recibo común de librería comprado en Asunción."],
-                justification: "Comprobante de recibo de alquiler: Debe enviarse en original y copia, reuniendo requisitos legales del país sede. Sin enmiendas ni tachaduras."
+                q: "Dentro de los Controles de la Gestión Administrativa Financiera, ¿quiénes ejercen los CONTROLES EXTERNOS?",
+                correct: "La Contraloría General de la República y la Auditoría General del Poder Ejecutivo.",
+                distractors: ["La Auditoría Interna y el Departamento de Rendición de Cuentas de la DGAF.", "El Ministerio de Hacienda (MEF) exclusivamente.", "Las oficinas impositivas del Estado Receptor de la Misión."],
+                justification: "Controles externos: Contraloría General de la República y Auditoría General del Poder Ejecutivo."
             },
             {
-                q: "22. Respecto al Contrato de Alquiler en el exterior, ¿qué formalidad debe cumplirse si está en un idioma distinto al español o portugués?",
-                correct: "Debe estar acompañado de su debida traducción al español.",
-                distractors: ["Debe traducirse exclusivamente al inglés.", "No hace falta traducción si el contador de la DGAF entiende el idioma.", "Debe ser redactado nuevamente desde cero en español por un abogado paraguayo."],
-                justification: "Los contratos de alquiler en idiomas distintos al español o portugués deben estar acompañados de su correspondiente traducción al español."
+                q: "¿En qué casos específicos la DGAF (Art. 7) está facultada para RETENER el desembolso de nuevos fondos para G.O.M. a una Representación?",
+                correct: "Por tener pendiente de envío la rendición física en plazo, o pendiente de documentación de devolución del excedente del bimestre.",
+                distractors: ["Por solicitar un aumento en el rubro de alquileres de sede.", "Por presentar facturas en idiomas que no sean español, inglés o francés.", "Por no informar las vacaciones del personal local con 30 días de anticipación."],
+                justification: "Retenciones GOM: Pendiente de envío de la rendición física del bimestre vencido en plazo / Pendiente de documentación de la devolución del excedente del bimestre."
             },
             {
-                q: "23. En el Servicio Local (SSL), ¿quiénes tienen derecho a percibir el Subsidio Familiar (hijos menores de 18 años)?",
-                correct: "Solo los funcionarios que ganan hasta el salario mínimo.",
-                distractors: ["Absolutamente todos los funcionarios con hijos menores de 18 años.", "Únicamente los funcionarios con rango diplomático en la Cancillería.", "Los funcionarios que tengan antigüedad superior a 10 años en el Ministerio."],
-                justification: "SSL: Subsidio familiar es por hijos menores de 18 años, exclusivo SÓLO para los que ganan hasta el salario mínimo."
+                q: "¿Qué mandato tienen las Misiones Diplomáticas respecto al Impuesto al Valor Agregado (IVA) pagado en sus gastos de G.O.M.?",
+                correct: "Deben gestionar su devolución conforme a la Legislación del Estado receptor y depositarlo a la cuenta indicada por el MRE.",
+                distractors: ["Deben considerarlo como un gasto consumido sin posibilidad de recuperación.", "Pueden retenerlo y utilizarlo como 'caja chica' para emergencias menores.", "Deben donarlo a fundaciones caritativas locales."],
+                justification: "Las Misiones... deben gestionar la devolución del Impuesto al Valor Agregado o su equivalente... Estos deberán ser devueltos a la cuenta indicada por el MRE."
             },
             {
-                q: "24. ¿A quiénes corresponde cobrar el rubro 113 de Gastos de Representación?",
-                correct: "A los funcionarios que ocupan cargos que conllevan la representación legal de la Institución (cargos de Dirección, con firma).",
-                distractors: ["A todos los contratados que viajan al exterior por motivos oficiales.", "Exclusivamente a los choferes y personal de seguridad del Ministro.", "A funcionarios de rango menor encargados de trámites bancarios."],
-                justification: "Gasto de Representación: Remuneración adicional inherente al cargo para los que llevan la representación de Dirección, por ser representantes con firma legal."
+                q: "Para justificar los gastos por adquisiciones en el Rubro 360 (Combustibles y Lubricantes), ¿qué documento interno es obligatorio completar?",
+                correct: "La Planilla de Registro de Carga de Combustible bimestral.",
+                distractors: ["El Libro Mayor de Vehículos de la Cancillería.", "Una Declaración Jurada de Kilometraje firmada por el chofer.", "El ticket original sellado por la policía de tránsito local."],
+                justification: "Para la utilización de vehículos... se deberá llenar la Planilla de Registro de Carga de Combustible bimestral, documento habilitado."
+            },
+            {
+                q: "El Rubro 310 - Productos Alimenticios tiene un requisito específico para su ejecución y rendición. ¿Cuál es?",
+                correct: "La presentación de Orden de Trabajo.",
+                distractors: ["La aprobación previa de la Auditoría General de la República.", "Que los alimentos se adquieran exclusivamente en supermercados mayoristas.", "Un menú impreso visado por el embajador."],
+                justification: "310- PRODUCTOS ALIMENTICIOS - Presentación de Orden de Trabajo."
+            },
+            {
+                q: "Según la normativa de los rubros del G.O.M., ¿qué adquisición está expresamente PROHIBIDA en el Rubro 320 (Textiles)?",
+                correct: "Queda prohibida la adquisición de uniformes para funcionarios.",
+                distractors: ["Queda prohibida la compra de mantelería de hilo.", "Queda prohibida la compra de alfombras para la oficina del embajador.", "Queda prohibida la adquisición de banderas nacionales."],
+                justification: "320 - TEXTILES - Queda prohibida la adquisición de uniformes para funcionarios."
+            },
+            {
+                q: "Dentro del Rubro 330 (Papel, Cartón e Impresos), ¿cuál es la restricción sobre la compra de prensa escrita?",
+                correct: "La adquisición de periódico se limitará a 1 (un) ejemplar.",
+                distractors: ["Están prohibidos totalmente, debiendo suscribirse a plataformas digitales.", "Se limita a 3 ejemplares (uno local, uno internacional, uno financiero).", "Solo se permite en embajadas con rango de clase A."],
+                justification: "330 - PAPEL CARTÓN E IMPRESOS - La adquisición de periódico se limitará a 1 (un) ejemplar."
+            },
+            {
+                q: "¿Cómo se rinde la cuenta del Rubro 232 (Viáticos) otorgado a un funcionario?",
+                correct: "Se exige comprobantes de respaldo como mínimo del 80%; el saldo restante (20%) podrá ser justificado bajo Declaración Jurada.",
+                distractors: ["Se rinde el 100% exclusivamente con facturas a nombre de la Cancillería.", "El 50% con comprobantes y el 50% como compensación no rendible.", "No requiere rendición documental, es una asignación fija por día."],
+                justification: "Art 7 Viáticos: Se exigirá la presentación de comprobantes de respaldo como mínimo del 80%... el saldo restante podrá ser justificado bajo Declaración Jurada."
+            },
+            {
+                q: "¿A qué fuente de financiamiento corresponden las siglas FF 30?",
+                correct: "Recursos Institucionales.",
+                distractors: ["Recursos de Tesoro.", "Recursos del Crédito Público.", "Recuperación de Préstamos."],
+                justification: "FUENTES DE FINANCIAMIENTO: FF 10 Recursos de Tesoro, FF 20 Recursos del Crédito Público, FF 30 Recursos Institucionales."
+            },
+            {
+                q: "El Rubro 950 (Reservas Técnicas y Cambiarias) sirve para compensar fluctuaciones en la adquisición de divisas. ¿Qué conceptos específicos se imputan aquí?",
+                correct: "Diferencia de cambio en concepto de Alquiler de Sedes y Aporte Jubilatorio (Seguridad Social).",
+                distractors: ["Pérdidas cambiarias por remesas de viáticos y pasajes.", "Ajustes inflacionarios de los salarios básicos en el extranjero.", "Diferencias cambiarias por la compra de vehículos y mantenimiento (GOM)."],
+                justification: "950 Reservas técnicas y cambiarias: Asignaciones para prever y compensar diferencias de precios... en concepto de gastos de alquiler de sedes y jubilatorio del empleador y/o seguridad social."
             }
         ];
 
@@ -362,7 +417,7 @@
         let currentQuestionIndex = 0;
         let score = 0;
 
-        // Función para mezclar arrays
+        // Función Fisher-Yates para mezclar preguntas y opciones de forma robusta
         function shuffle(array) {
             let currentIndex = array.length, randomIndex;
             while (currentIndex != 0) {
@@ -375,9 +430,8 @@
 
         function startGame() {
             const numInput = document.getElementById('num-questions').value;
-            const num = Math.min(Math.max(parseInt(numInput) || 24, 1), questionDatabase.length);
+            const num = Math.min(Math.max(parseInt(numInput) || 30, 1), questionDatabase.length);
             
-            // Mezclamos base de datos y cortamos
             const shuffledDB = shuffle([...questionDatabase]);
             selectedQuestions = shuffledDB.slice(0, num);
             currentQuestionIndex = 0;
@@ -423,18 +477,18 @@
             
             if (selectedAnswer === currentQ.correct) {
                 clickedBtn.classList.add('correct');
-                feedbackTitle.innerText = "¡Correcto!";
+                feedbackTitle.innerText = "¡RESPUESTA CORRECTA!";
                 feedbackTitle.style.color = "var(--correct)";
                 feedbackBox.style.borderLeftColor = "var(--correct)";
                 score++;
                 document.getElementById('score-text').innerText = `Aciertos: ${score}`;
             } else {
                 clickedBtn.classList.add('incorrect');
-                feedbackTitle.innerText = "Incorrecto";
+                feedbackTitle.innerText = "ERROR - RESPUESTA INCORRECTA";
                 feedbackTitle.style.color = "var(--incorrect)";
                 feedbackBox.style.borderLeftColor = "var(--incorrect)";
                 
-                // Resaltar la correcta
+                // Iluminar opción correcta
                 buttons.forEach(btn => {
                     if (btn.innerText === currentQ.correct) {
                         btn.classList.add('correct');
@@ -442,11 +496,11 @@
                 });
             }
             
-            feedbackDesc.innerText = currentQ.justification;
+            feedbackDesc.innerHTML = `<strong>Base Normativa DGAF:</strong><br>${currentQ.justification}`;
             feedbackBox.style.display = 'block';
             
             if (currentQuestionIndex === selectedQuestions.length - 1) {
-                document.getElementById('next-btn').innerText = "Ver Resultados Finales";
+                document.getElementById('next-btn').innerText = "Ver Puntaje Final";
             } else {
                 document.getElementById('next-btn').innerText = "Siguiente Pregunta";
             }
@@ -473,16 +527,16 @@
             
             if (percentage === 100) {
                 finalScoreElement.style.color = "var(--correct)";
-                finalMessageElement.innerHTML = "¡EXCELENTE!<br>Dominás todos los puntos clave. ¡Estás 100% listo para el examen!";
-            } else if (percentage >= 70) {
+                finalMessageElement.innerHTML = "¡EXCELENTE!<br>Dominio total del reglamento interno de la DGAF. Plazos, rubros y normativas perfectamente asimilados.";
+            } else if (percentage >= 75) {
                 finalScoreElement.style.color = "var(--accent)";
-                finalMessageElement.innerHTML = "¡MUY BIEN!<br>Tenés un dominio sólido del temario. Solo te falta repasar algunos detalles puntuales.";
-            } else if (percentage >= 50) {
-                finalScoreElement.style.color = "#f39c12"; // Naranja
-                finalMessageElement.innerHTML = "¡APROBADO, PERO CON CUIDADO!<br>Conocés la base, pero hay reglas administrativas (como topes o retenciones) que debés fijar mejor.";
+                finalMessageElement.innerHTML = "¡MUY BUEN TRABAJO!<br>Tenés la estructura general muy clara. Un pequeño repaso a los topes o plazos específicos (como los 15 días del GOM) y asegurás el máximo puntaje.";
+            } else if (percentage >= 60) {
+                finalScoreElement.style.color = "#d29922";
+                finalMessageElement.innerHTML = "¡APROBADO CON LO JUSTO!<br>Cuidado con las 'trampas' legales. Volvé a revisar los rubros 251 y 258 y las exigencias de traducción y facturación.";
             } else {
                 finalScoreElement.style.color = "var(--incorrect)";
-                finalMessageElement.innerHTML = "¡HAY QUE SEGUIR ESTUDIANDO!<br>Utilizá las justificaciones de este simulador para aprender de los errores y volvé a intentarlo.";
+                finalMessageElement.innerHTML = "¡ATENCIÓN! FALTA REPASO TÉCNICO.<br>La normativa de la DGAF es estricta con los documentos y plazos. Leé detenidamente las justificaciones y volvé a intentarlo.";
             }
         }
     </script>
