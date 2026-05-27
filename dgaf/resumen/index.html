@@ -3,397 +3,504 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Repaso DGAF - Práctica Financiera y Administrativa I</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Resumen de Estudio - Práctica Financiera DGAF</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
-        
+        :root {
+            --bg-color: #0d1117;
+            --container-bg: #161b22;
+            --text-main: #c9d1d9;
+            --text-muted: #8b949e;
+            --accent: #58a6ff;
+            --accent-hover: #1f6feb;
+            --playing-bg: #1f2a3a;
+            --border: #30363d;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0a0a0a;
-            color: #e5e5e5;
-            -webkit-font-smoothing: antialiased;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
         }
 
-        .card {
-            background-color: #141414;
-            border: 1px solid #262626;
+        .header {
+            background-color: var(--container-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        button {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        button:hover {
+            background-color: var(--accent-hover);
+        }
+
+        button.stop-btn {
+            background-color: #f85149;
+        }
+
+        button.stop-btn:hover {
+            background-color: #da3633;
+        }
+
+        select {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 9px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            outline: none;
+            flex-grow: 1;
+            max-width: 300px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .point-card {
+            background-color: var(--container-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
             transition: all 0.3s ease;
+            position: relative;
         }
 
-        .card:hover {
-            border-color: #404040;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+        .point-card.playing {
+            background-color: var(--playing-bg);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 1px var(--accent);
+            transform: scale(1.01);
         }
 
-        .btn-play {
-            transition: all 0.2s ease;
-        }
-        
-        .btn-play:hover {
-            background-color: #262626;
+        .point-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
         }
 
-        .btn-playing {
-            background-color: #1e3a8a !important;
-            border-color: #3b82f6 !important;
-            color: #bfdbfe !important;
+        .point-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin: 0;
+            padding-right: 15px;
         }
-        
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
+
+        .play-single {
+            background-color: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            padding: 6px 12px;
+            font-size: 0.85rem;
         }
-        ::-webkit-scrollbar-track {
-            background: #0a0a0a; 
+
+        .play-single:hover {
+            background-color: var(--border);
+            color: white;
         }
-        ::-webkit-scrollbar-thumb {
-            background: #262626; 
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #404040; 
-        }
-        
-        /* Select styling */
-        select option {
-            background-color: #141414;
-            color: #e5e5e5;
+
+        .point-content {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            margin: 0;
+            white-space: pre-line; /* Permite saltos de línea físicos en el HTML */
         }
     </style>
 </head>
-<body class="min-h-screen py-10 px-4 sm:px-6 lg:px-8">
+<body>
 
-    <div class="max-w-4xl mx-auto">
-        <!-- Header -->
-        <header class="mb-12 text-center sm:text-left border-b border-neutral-800 pb-8">
-            <h1 class="text-3xl sm:text-4xl font-semibold text-white tracking-tight mb-3">Práctica Financiera y Administrativa I</h1>
-            <p class="text-neutral-400 text-lg font-light">Guía de estudio interactiva basada en la Dirección General de Administración y Finanzas. Presiona el botón para escuchar cada punto.</p>
-            
-            <div class="mt-6 flex flex-wrap gap-4 justify-center sm:justify-start items-center">
-                <!-- Selector de Voces -->
-                <div class="flex items-center gap-2 bg-[#141414] border border-neutral-700 rounded-lg px-3 py-1.5 focus-within:border-blue-500 transition-colors w-full sm:w-auto">
-                    <svg class="w-4 h-4 text-neutral-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
-                    <select id="voiceSelect" class="bg-transparent text-neutral-300 text-sm outline-none cursor-pointer w-full appearance-none pr-4">
-                        <option value="">Cargando voces...</option>
-                    </select>
-                </div>
-
-                <!-- Botones Globales -->
-                <button id="playAllBtn" onclick="playAll()" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-900/30 text-blue-400 border border-blue-900/50 rounded-lg hover:bg-blue-900/50 transition-colors text-sm font-medium w-full sm:w-auto justify-center">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
-                    Escuchar Todo
-                </button>
-                <button id="stopAllBtn" onclick="stopSpeech()" class="hidden items-center gap-2 px-4 py-2 bg-red-900/30 text-red-400 border border-red-900/50 rounded-lg hover:bg-red-900/50 transition-colors text-sm font-medium w-full sm:w-auto justify-center">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd"></path></svg>
-                    Detener Lectura
-                </button>
+    <div class="header">
+        <div class="header-content">
+            <h1>📖 Apuntes DGAF: Política y Práctica Financiera</h1>
+            <div class="controls">
+                <button id="btn-play-all" onclick="playAll()">▶ Escuchar Todo</button>
+                <button id="btn-stop" class="stop-btn" onclick="stopAudio()">■ Detener</button>
+                <select id="voice-select">
+                    <option value="">Cargando voces...</option>
+                </select>
             </div>
-        </header>
+        </div>
+    </div>
 
-        <!-- Container for Q&A -->
-        <div id="qa-container" class="space-y-6">
-            <!-- Items will be injected here by JS -->
+    <!-- EL TEXTO AHORA ESTÁ FÍSICAMENTE EN EL HTML -->
+    <div class="container" id="content-container">
+        
+        <div class="point-card" id="card-0">
+            <div class="point-header">
+                <h2 class="point-title">1. Rubro 113: Gastos de Representación</h2>
+                <button class="play-single" onclick="playSingle(0)">▶ Leer</button>
+            </div>
+            <p class="point-content">Es una remuneración adicional y accesoria al sueldo. Está destinada exclusivamente a funcionarios que ocupan efectivamente cargos que conllevan la representación legal de la Institución, de acuerdo a los cargos previstos en el Anexo del Personal y el Organigrama aprobado.</p>
         </div>
 
-        <footer class="mt-16 pt-8 border-t border-neutral-800 text-center text-neutral-500 text-sm">
-            Academia DGAF - Material de Estudio
-        </footer>
+        <div class="point-card" id="card-1">
+            <div class="point-header">
+                <h2 class="point-title">2. Rubro 122: Gasto de Residencia / Costo de Vida</h2>
+                <button class="play-single" onclick="playSingle(1)">▶ Leer</button>
+            </div>
+            <p class="point-content">Remuneración especial por desarraigo al funcionario trasladado o comisionado a más de 50 kilómetros. 
+            NO forma parte de la asignación salarial, por lo tanto NO se incluye en el cálculo del aguinaldo.
+            Cónyuges en el Servicio Exterior en una misma ciudad: El pago del gasto de residencia se aplicará sólo al funcionario que ostente el mayor rango.</p>
+        </div>
+
+        <div class="point-card" id="card-2">
+            <div class="point-header">
+                <h2 class="point-title">3. Rubro 131: Subsidio Familiar</h2>
+                <button class="play-single" onclick="playSingle(2)">▶ Leer</button>
+            </div>
+            <p class="point-content">Es un beneficio adicional otorgado al funcionario presupuestado en el Anexo del Personal. 
+            Comprende los siguientes pagos: subsidio familiar por hijos menores de 18 años (mensual, solo para los que ganan hasta el salario mínimo en SSL), pago de subsidio por nacimiento, defunción, escolar o alimenticia.</p>
+        </div>
+
+        <div class="point-card" id="card-3">
+            <div class="point-header">
+                <h2 class="point-title">4. Rubro 134: Aporte Jubilatorio del Empleador</h2>
+                <button class="play-single" onclick="playSingle(3)">▶ Leer</button>
+            </div>
+            <p class="point-content">Contribuciones de los Organismos del Estado en su condición de empleador. Incluye el aporte jubilatorio correspondiente al pago del personal contratado y el aporte al régimen de seguridad social (IPS) del personal contratado del servicio diplomático y consular.</p>
+        </div>
+
+        <div class="point-card" id="card-4">
+            <div class="point-header">
+                <h2 class="point-title">5. Rubro 251: Alquiler de Residencias en el Exterior</h2>
+                <button class="play-single" onclick="playSingle(4)">▶ Leer</button>
+            </div>
+            <p class="point-content">Documentación: Contratos de alquiler en original o copias autenticadas. Si está en un idioma distinto del español o portugués, debe acompañar su traducción al español. 
+            Comprobantes: El recibo debe reunir requisitos legales del país sede. Si el propietario es persona física, adjuntar copia de su identidad. No se aceptarán comprobantes con enmiendas y/o tachaduras.
+            Retención: Se retendrán los pagos subsiguientes si hay retraso injustificado en el envío del comprobante mensual.
+            Inicio: Corresponde a partir de la fecha en que el funcionario asuma oficialmente sus funciones en el exterior.</p>
+        </div>
+
+        <div class="point-card" id="card-5">
+            <div class="point-header">
+                <h2 class="point-title">6. Alojamiento Temporal (Hoteles, Apart, etc.)</h2>
+                <button class="play-single" onclick="playSingle(5)">▶ Leer</button>
+            </div>
+            <p class="point-content">En caso de hospedaje temporal, se deben remitir a la DGAF los comprobantes de pago en original o copia para su reembolso, los cuales deberán estar obligatoriamente acompañados por la Declaración Jurada anexa.</p>
+        </div>
+
+        <div class="point-card" id="card-6">
+            <div class="point-header">
+                <h2 class="point-title">7. Rubro 258: Alquileres, Derechos y Leasing</h2>
+                <button class="play-single" onclick="playSingle(6)">▶ Leer</button>
+            </div>
+            <p class="point-content">Requiere previa autorización de la DGAF. Se utiliza para alquilar bienes, muebles e inmuebles para uso oficial.
+            Incluye leasing de máquinas, equipos y vehículos. 
+            Limitación Leasing Vehículos: Se establece el límite estricto de 1 (un) vehículo por Representación, a menos que exista una justificación fundada para una excepción.</p>
+        </div>
+
+        <div class="point-card" id="card-7">
+            <div class="point-header">
+                <h2 class="point-title">8. Rubro 854: G.O.M. y Responsabilidades</h2>
+                <button class="play-single" onclick="playSingle(7)">▶ Leer</button>
+            </div>
+            <p class="point-content">Transferencias a Representaciones (Gastos de Operación y Mantenimiento). 
+            Los Jefes de Misión son los responsables directos por la administración y control del uso de los fondos transferidos, así como el cumplimiento de los plazos. El monto de envío es mensual, pero la periodicidad de rendición es Bimestral.</p>
+        </div>
+
+        <div class="point-card" id="card-8">
+            <div class="point-header">
+                <h2 class="point-title">9. Topes de Gastos del G.O.M.</h2>
+                <button class="play-single" onclick="playSingle(8)">▶ Leer</button>
+            </div>
+            <p class="point-content">232 - Viáticos y Movilidad: 15%
+            280 - Otros Servicios en General: 20%
+            310 - Productos Alimenticios: 10%
+            360 - Combustibles: 10%
+            Nota sobre el Rubro 280: Si se requiere utilizar un porcentaje mayor al 20%, se debe solicitar autorización previa a la DGAF fundamentando razones. Si no media autorización, se procederá a la devolución del excedente.</p>
+        </div>
+
+        <div class="point-card" id="card-9">
+            <div class="point-header">
+                <h2 class="point-title">10. Excedentes, Plazos y Rendición Física del G.O.M.</h2>
+                <button class="play-single" onclick="playSingle(9)">▶ Leer</button>
+            </div>
+            <p class="point-content">Excedentes: Deben ser depositados dentro de los 15 días siguientes al bimestre vencido.
+            Remisión del Físico: Las rendiciones originales debidamente foliadas y con traducción no oficial al español, deben remitirse en un plazo de 15 días corridos siguientes al bimestre vencido.</p>
+        </div>
+
+        <div class="point-card" id="card-10">
+            <div class="point-header">
+                <h2 class="point-title">11. Comprobantes y Devolución del IVA</h2>
+                <button class="play-single" onclick="playSingle(10)">▶ Leer</button>
+            </div>
+            <p class="point-content">Los comprobantes (facturas, tickets) deben estar a nombre de la Representación.
+            Devolución IVA: Las Misiones deben gestionar la devolución del Impuesto al Valor Agregado conforme a la legislación del Estado receptor. Estos montos deberán ser devueltos a la cuenta indicada por el MRE.</p>
+        </div>
+
+        <div class="point-card" id="card-11">
+            <div class="point-header">
+                <h2 class="point-title">12. Órganos de Control de la Gestión</h2>
+                <button class="play-single" onclick="playSingle(11)">▶ Leer</button>
+            </div>
+            <p class="point-content">Controles Externos: Contraloría General de la República (CGR) y Auditoría General del Poder Ejecutivo (AGPE).
+            Controles Internos: Auditoría Interna, DGAF (por resolución 90) y Rendición de Cuentas.</p>
+        </div>
+
+        <div class="point-card" id="card-12">
+            <div class="point-header">
+                <h2 class="point-title">13. Rubro 232: Viáticos (Rendición de Cuentas)</h2>
+                <button class="play-single" onclick="playSingle(12)">▶ Leer</button>
+            </div>
+            <p class="point-content">A los efectos de la rendición, se exigirá la presentación de los comprobantes de respaldo como mínimo del 80% del monto otorgado. El saldo restante (20%) podrá ser justificado bajo Declaración Jurada de los gastos.</p>
+        </div>
+
+        <div class="point-card" id="card-13">
+            <div class="point-header">
+                <h2 class="point-title">14. Retención de Desembolsos G.O.M. (Mora)</h2>
+                <button class="play-single" onclick="playSingle(13)">▶ Leer</button>
+            </div>
+            <p class="point-content">La DGAF podrá retener el desembolso de fondos en los siguientes casos:
+            1. Pendiente de envío de la rendición física del bimestre vencido en el plazo.
+            2. Pendiente de documentación de la devolución del excedente del bimestre.</p>
+        </div>
+
+        <div class="point-card" id="card-14">
+            <div class="point-header">
+                <h2 class="point-title">15. Restricciones Especiales en Bienes y Servicios</h2>
+                <button class="play-single" onclick="playSingle(14)">▶ Leer</button>
+            </div>
+            <p class="point-content">Rubro 310 (Alimentos): Presentación de Orden de Trabajo.
+            Rubro 320 (Textiles): Queda prohibida la adquisición de uniformes para funcionarios.
+            Rubro 330 (Impresos): La adquisición de periódico se limitará a 1 (un) ejemplar.
+            Rubro 360 (Combustibles): Es obligatorio llenar y firmar la Planilla de Registro de Carga de Combustible bimestral.</p>
+        </div>
+
+        <div class="point-card" id="card-15">
+            <div class="point-header">
+                <h2 class="point-title">16. Rubro 950: Reservas Técnicas y Cambiarias</h2>
+                <button class="play-single" onclick="playSingle(15)">▶ Leer</button>
+            </div>
+            <p class="point-content">Son asignaciones para prever y compensar las diferencias de precios por adquisición de divisas de acuerdo con fluctuaciones del mercado local.
+            Aplica estrictamente para casos de aportes por diferencia cambiaria en concepto de:
+            - Gastos de alquiler de sedes.
+            - Aporte jubilatorio del empleador y/o seguridad social (IPS de contratados).</p>
+        </div>
+
+        <div class="point-card" id="card-16">
+            <div class="point-header">
+                <h2 class="point-title">17. Fuentes de Financiamiento (FF) y S.T.R.</h2>
+                <button class="play-single" onclick="playSingle(16)">▶ Leer</button>
+            </div>
+            <p class="point-content">S.T.R. significa Solicitud de Transferencias de Recursos (gestionado por Contabilidad).
+            FF 10: Recursos de Tesoro.
+            FF 20: Recursos del Crédito Público.
+            FF 30: Recursos Institucionales.</p>
+        </div>
+
     </div>
 
     <script>
-        const studyData = [
-            {
-                q: "1. Rendición de cuentas viajes al exterior (Viáticos)",
-                a: "Para el rubro 232 - Viáticos y Movilidad, se exige la presentación de comprobantes de respaldo por al menos el 80% del monto otorgado. El saldo restante (hasta el 20%) podrá ser justificado bajo una Declaración Jurada de gastos."
-            },
-            {
-                q: "2. ¿Qué es la Solicitud de Transferencias de Recursos?",
-                a: "Son las siglas de Solicitud de Transferencias de Recursos. Es gestionada por el Departamento de Contabilidad."
-            },
-            {
-                q: "3. Fuentes de Financiamiento (10, 20, 30)",
-                a: "Se clasifican en tres tipos principales: 10: Recursos del Tesoro. 20: Recursos del Crédito Público. 30: Recursos Institucionales."
-            },
-            {
-                q: "4. Gastos de Operación y Mantenimiento: Autorización para exceder el rubro 280",
-                a: "El rubro 280 (Otros Servicios en General) tiene un tope del 20%. Si por motivos de servicio se requiere utilizar un porcentaje mayor, se debe solicitar autorización previa a la Dirección General de Administración y Finanzas fundamentando las razones. Esta autorización debe anexarse a la Rendición de Cuentas. Si no se autoriza, se debe devolver el excedente."
-            },
-            {
-                q: "5. ¿En qué casos la Dirección General de Administración y Finanzas podrá retener los envíos de Gastos de Operación y Mantenimiento?",
-                a: "La Dirección General de Administración y Finanzas podrá retener los desembolsos por rendiciones en mora en dos casos específicos: Uno, si está pendiente el envío de la rendición física del bimestre vencido en el plazo establecido. Y dos, si está pendiente la documentación de la devolución del excedente del bimestre."
-            },
-            {
-                q: "6 y 7. Rubro 950: Reservas Técnicas Cambiarias y pagos en el exterior",
-                a: "El Rubro 950 son asignaciones para compensar diferencias de precios por adquisición de divisas. Específicamente, en el Servicio Exterior cubre la diferencia cambiaria para: Gastos de alquiler de sedes, y Aporte jubilatorio del empleador (Instituto de Previsión Social de contratados) o seguridad social."
-            },
-            {
-                q: "8. Combustible (10%)",
-                a: "En los Gastos de Operación y Mantenimiento, el tope para el rubro 360 (Combustibles y Lubricantes) es del 10%. Para justificar este gasto se debe completar de manera bimestral la Planilla de Registro de Carga de Combustible."
-            },
-            {
-                q: "9. Autorización de alquileres en el exterior",
-                a: "Para el rubro 250 (Alquileres y Derechos), todo alquiler de bienes, muebles, inmuebles para uso oficial o sistema de leasing de vehículos requiere autorización previa de la Dirección General de Administración y Finanzas."
-            },
-            {
-                q: "10 y 11. Administración y Responsabilidad en Sedes",
-                a: "Los fondos de los Gastos de Operación y Mantenimiento se transfieren a las representaciones diplomáticas. Los Jefes de Misión son los responsables directos por la administración, el control del uso de esos fondos transferidos y el cumplimiento de los plazos y formalidades de la rendición de cuentas."
-            },
-            {
-                q: "12. Órganos de Control Interno y Externo",
-                a: "Controles Internos: Auditoría Interna y la Dirección General de Administración y Finanzas. Controles Externos: Contraloría General de la República y la Auditoría General del Poder Ejecutivo."
-            },
-            {
-                q: "13. Periodicidad",
-                a: "Las rendiciones de cuentas de los Gastos de Operación y Mantenimiento tienen una periodicidad bimestral. Por ejemplo, los excedentes de caja deben depositarse dentro de los 15 días siguientes al bimestre vencido."
-            },
-            {
-                q: "14. Documentos Originales y Traducciones",
-                a: "Los funcionarios del servicio exterior son responsables de remitir sus comprobantes y contratos de alquiler en original o copia autenticada. Si los contratos de alquiler están en un idioma distinto del español o del portugués, es obligatorio acompañar la correspondiente traducción al español. Los comprobantes no deben tener tachaduras ni enmiendas."
-            },
-            {
-                q: "15. Topes de los Gastos de Operación y Mantenimiento",
-                a: "Los límites porcentuales establecidos son: 232 Viáticos y Movilidad: 15%. 280 Otros Servicios en General: 20%. 310 Productos Alimenticios: 10%. 360 Combustibles: 10%."
-            },
-            {
-                q: "16. Prohibición de compra de uniformes",
-                a: "Según las directrices de los Gastos de Operación y Mantenimiento, en el rubro 320 (Textiles) queda estrictamente prohibida la adquisición de uniformes para los funcionarios."
-            },
-            {
-                q: "17. Firmas en las planillas (Jefes de Misión)",
-                a: "Al ser los responsables principales por la administración y el control del uso de los fondos, los Jefes de Misión deben avalar la información con su firma en las rendiciones de cuenta, junto al responsable de la elaboración."
-            },
-            {
-                q: "18. Costo de vida y el Aguinaldo en el Servicio Exterior",
-                a: "Los funcionarios perciben Sueldo, Gastos de Representación y Costo de Vida o Residencia. Sin embargo, el Costo de Vida no forma parte de la asignación salarial, por lo tanto, NO se paga aguinaldo sobre él. El aguinaldo se calcula únicamente sobre el sueldo base y los gastos de representación."
-            },
-            {
-                q: "19. Alquiler de residencia para Cónyuges",
-                a: "Si dos funcionarios que son cónyuges son designados para prestar servicio en la misma ciudad en el exterior, el pago en concepto de Gasto de Residencia se aplicará sólo al funcionario que ostente el mayor rango."
-            },
-            {
-                q: "20. Fechas para el Gasto de Alquiler",
-                a: "El pago correspondiente por el concepto de alquiler de residencia inicia a partir de la fecha exacta en la que el funcionario asuma de manera oficial sus funciones en el exterior, y se extiende hasta la fecha de término de su misión, notificada por Recursos Humanos."
-            },
-            {
-                q: "21. Requisitos del Comprobante de alquiler",
-                a: "Se debe remitir a la Dirección General de Administración y Finanzas el comprobante del mes anterior en original o copia. Debe reunir los requisitos legales del país receptor y está estrictamente prohibido presentar comprobantes con enmiendas o tachaduras."
-            },
-            {
-                q: "22. Contrato de Alquiler y Traducción",
-                a: "Se deben remitir en versión original o copias autenticadas. Junto con ellos, una declaración jurada validando los datos, y si están en idiomas distintos al español o portugués, deben estar traducidos."
-            },
-            {
-                q: "23. Subsidio Familiar (Servicio Local)",
-                a: "El rubro 131 (Subsidio Familiar) es un beneficio adicional presupuestado. Incluye el subsidio mensual por hijos menores de 18 años. Aplica principalmente a quienes ganan hasta el salario mínimo, además de cubrir otras asignaciones puntuales por nacimiento, defunción o escolaridad."
-            },
-            {
-                q: "24. Gastos de Representación",
-                a: "El rubro 113 (Gastos de Representación) es una remuneración adicional y accesoria al sueldo. Se otorga a los funcionarios que ocupan efectivamente cargos que conllevan la representación legal de la Institución y tienen firma oficial, como las Direcciones."
-            }
-        ];
+        // Diccionario de expansión de siglas para que el lector lo pronuncie completo
+        const abbreviationMap = {
+            "DGAF": "Dirección General de Administración y Finanzas",
+            "G.O.M.": "Gastos de Operación y Mantenimiento",
+            "GOM": "Gastos de Operación y Mantenimiento",
+            "S.T.R.": "Solicitud de Transferencias de Recursos",
+            "STR": "Solicitud de Transferencias de Recursos",
+            "IPS": "Instituto de Previsión Social",
+            "CGR": "Contraloría General de la República",
+            "AGPE": "Auditoría General del Poder Ejecutivo",
+            "SSE": "Servicio Exterior",
+            "SSL": "Servicio Local",
+            "IVA": "Impuesto al Valor Agregado",
+            "MRE": "Ministerio de Relaciones Exteriores",
+            "FF": "Fuente de Financiamiento"
+        };
 
+        const cards = document.querySelectorAll('.point-card');
+        const voiceSelect = document.getElementById('voice-select');
         let synth = window.speechSynthesis;
-        let currentUtterance = null;
-        let activeIndex = -1;
-        let availableVoices = [];
+        let voices = [];
+        let isGlobalPlaying = false;
+        let currentIndex = 0;
 
-        // Poblar la lista de voces en español
+        // Cargar voces en el selector
         function populateVoiceList() {
-            // Obtener todas las voces y filtrar las que son en español
-            availableVoices = synth.getVoices().filter(voice => voice.lang.startsWith('es'));
-            const voiceSelect = document.getElementById('voiceSelect');
-            
-            if (availableVoices.length === 0) {
-                voiceSelect.innerHTML = '<option value="">Voces en español no disponibles</option>';
-                return;
-            }
+            voices = synth.getVoices();
+            if (voices.length === 0) return;
 
-            voiceSelect.innerHTML = ''; // Limpiar
+            voiceSelect.innerHTML = '';
             
-            const savedVoiceURI = localStorage.getItem('dgaf_selectedVoiceURI');
-            let foundSavedVoice = false;
+            // Filtrar preferentemente voces en español
+            const esVoices = voices.filter(voice => voice.lang.startsWith('es'));
+            const otherVoices = voices.filter(voice => !voice.lang.startsWith('es'));
+            const sortedVoices = [...esVoices, ...otherVoices];
 
-            availableVoices.forEach((voice) => {
+            sortedVoices.forEach((voice) => {
                 const option = document.createElement('option');
                 option.textContent = `${voice.name} (${voice.lang})`;
                 option.value = voice.voiceURI;
-                
-                // Si coincide con la guardada, la marcamos como seleccionada
-                if (voice.voiceURI === savedVoiceURI) {
-                    option.selected = true;
-                    foundSavedVoice = true;
-                }
-                
                 voiceSelect.appendChild(option);
             });
 
-            // Si no había voz guardada, guardar por defecto la primera
-            if (!foundSavedVoice && availableVoices.length > 0) {
-                localStorage.setItem('dgaf_selectedVoiceURI', availableVoices[0].voiceURI);
+            // Recuperar preferencia de localStorage
+            const savedVoice = localStorage.getItem('dgaf_preferred_voice');
+            if (savedVoice) {
+                voiceSelect.value = savedVoice;
+            } else if (esVoices.length > 0) {
+                voiceSelect.value = esVoices[0].voiceURI;
             }
         }
 
-        // Obtener la voz seleccionada actualmente
-        function getSelectedVoice() {
-            const savedVoiceURI = localStorage.getItem('dgaf_selectedVoiceURI');
-            return availableVoices.find(v => v.voiceURI === savedVoiceURI) || availableVoices[0];
+        // Evento para guardar voz al cambiar
+        voiceSelect.addEventListener('change', () => {
+            localStorage.setItem('dgaf_preferred_voice', voiceSelect.value);
+        });
+
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = populateVoiceList;
         }
+        populateVoiceList();
 
-        function renderQuestions() {
-            const container = document.getElementById('qa-container');
-            
-            studyData.forEach((item, index) => {
-                const article = document.createElement('article');
-                article.className = 'card rounded-xl p-5 sm:p-7 relative';
-                
-                article.innerHTML = `
-                    <div class="flex flex-col sm:flex-row gap-4 justify-between items-start">
-                        <div class="flex-1">
-                            <h2 class="text-xl font-medium text-white mb-3 leading-snug">${item.q}</h2>
-                            <p class="text-neutral-400 font-light leading-relaxed">${item.a}</p>
-                        </div>
-                        <button id="btn-${index}" onclick="toggleSpeech(${index})" class="btn-play shrink-0 inline-flex items-center gap-2 px-4 py-2 mt-2 sm:mt-0 rounded-lg border border-neutral-700 text-sm font-medium text-neutral-300 w-full sm:w-auto justify-center">
-                            <svg class="w-4 h-4 icon-play" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
-                            <span class="btn-text">Escuchar</span>
-                        </button>
-                    </div>
-                `;
-                container.appendChild(article);
-            });
-        }
-
-        function toggleSpeech(index) {
-            const item = studyData[index];
-            const textToSpeak = `${item.q}. ${item.a}`;
-
-            if (activeIndex === index && synth.speaking) {
-                stopSpeech();
-                return;
+        // Expansión de siglas antes de leer
+        function expandAbbreviations(text) {
+            let expandedText = text;
+            for (const [abbr, full] of Object.entries(abbreviationMap)) {
+                const regex = new RegExp(`\\b${abbr.replace(/\./g, '\\.')}\\b`, 'g');
+                expandedText = expandedText.replace(regex, full);
             }
+            return expandedText;
+        }
 
-            stopSpeech();
+        // Resaltar tarjeta actual
+        function highlightCard(index) {
+            cards.forEach(c => c.classList.remove('playing'));
+            if (index >= 0 && index < cards.length) {
+                const card = document.getElementById(`card-${index}`);
+                card.classList.add('playing');
+                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
 
-            currentUtterance = new SpeechSynthesisUtterance(textToSpeak);
-            
-            const selectedVoice = getSelectedVoice();
+        // Función central para leer texto
+        function speak(text, onEndCallback) {
+            synth.cancel(); 
+            if (text === '') return;
+
+            const cleanText = expandAbbreviations(text);
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+
+            const selectedVoiceURI = voiceSelect.value;
+            const selectedVoice = voices.find(v => v.voiceURI === selectedVoiceURI);
             if (selectedVoice) {
-                currentUtterance.voice = selectedVoice;
+                utterance.voice = selectedVoice;
             }
             
-            currentUtterance.lang = 'es-ES'; 
-            currentUtterance.rate = 0.95; 
-            currentUtterance.pitch = 1;
+            utterance.rate = 1.0;
 
-            currentUtterance.onstart = () => {
-                activeIndex = index;
-                updateUIPplaying(index);
-                document.getElementById('stopAllBtn').classList.remove('hidden');
-                document.getElementById('stopAllBtn').classList.add('inline-flex');
+            utterance.onend = () => {
+                if (onEndCallback) onEndCallback();
             };
 
-            currentUtterance.onend = () => { resetUI(); };
-            currentUtterance.onerror = () => { resetUI(); };
+            utterance.onerror = (e) => {
+                console.error("Error TTS: ", e);
+                stopAudio();
+            };
 
-            synth.speak(currentUtterance);
+            synth.speak(utterance);
         }
 
+        // Leer una sola tarjeta extrayendo el texto directamente del HTML
+        function playSingle(index) {
+            isGlobalPlaying = false;
+            highlightCard(index);
+            
+            const card = document.getElementById(`card-${index}`);
+            const title = card.querySelector('.point-title').innerText;
+            const content = card.querySelector('.point-content').innerText;
+            
+            const textToRead = `${title}. \n\n ${content}`;
+            speak(textToRead, () => {
+                card.classList.remove('playing');
+            });
+        }
+
+        // Leer todo de corrido
         function playAll() {
-            stopSpeech(); 
-            
-            const selectedVoice = getSelectedVoice();
-
-            studyData.forEach((item, index) => {
-                const textToSpeak = `${item.q}. ${item.a}`;
-                const utterance = new SpeechSynthesisUtterance(textToSpeak);
-                
-                if (selectedVoice) {
-                    utterance.voice = selectedVoice;
-                }
-                
-                utterance.lang = 'es-ES';
-                utterance.rate = 0.95; 
-                utterance.pitch = 1;
-
-                utterance.onstart = () => {
-                    activeIndex = index;
-                    updateUIPplaying(index);
-                    document.getElementById('stopAllBtn').classList.remove('hidden');
-                    document.getElementById('stopAllBtn').classList.add('inline-flex');
-                    
-                    const activeCard = document.getElementById(`btn-${index}`).closest('.card');
-                    if (activeCard) {
-                        activeCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-                };
-
-                utterance.onend = () => {
-                    if (index === studyData.length - 1) {
-                        resetUI();
-                    }
-                };
-
-                synth.speak(utterance);
-            });
+            if (synth.speaking && isGlobalPlaying) return;
+            isGlobalPlaying = true;
+            currentIndex = 0;
+            readNextGlobal();
         }
 
-        function stopSpeech() {
+        function readNextGlobal() {
+            if (!isGlobalPlaying) return;
+
+            if (currentIndex < cards.length) {
+                highlightCard(currentIndex);
+                
+                const card = document.getElementById(`card-${currentIndex}`);
+                const title = card.querySelector('.point-title').innerText;
+                const content = card.querySelector('.point-content').innerText;
+                const textToRead = `${title}. \n\n ${content}`;
+                
+                speak(textToRead, () => {
+                    currentIndex++;
+                    setTimeout(() => readNextGlobal(), 800); // Pausa de 0.8 seg
+                });
+            } else {
+                stopAudio();
+            }
+        }
+
+        // Detener lectura
+        function stopAudio() {
+            isGlobalPlaying = false;
             synth.cancel();
-            resetUI();
+            cards.forEach(c => c.classList.remove('playing'));
         }
 
-        function updateUIPplaying(index) {
-            document.querySelectorAll('.btn-play').forEach(btn => {
-                btn.classList.remove('btn-playing');
-                btn.querySelector('.btn-text').textContent = 'Escuchar';
-                btn.querySelector('svg').innerHTML = '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>';
-            });
-
-            const activeBtn = document.getElementById(`btn-${index}`);
-            if (activeBtn) {
-                activeBtn.classList.add('btn-playing');
-                activeBtn.querySelector('.btn-text').textContent = 'Pausar';
-                activeBtn.querySelector('svg').innerHTML = '<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>';
-            }
-        }
-
-        function resetUI() {
-            activeIndex = -1;
-            document.getElementById('stopAllBtn').classList.add('hidden');
-            document.getElementById('stopAllBtn').classList.remove('inline-flex');
-            
-            document.querySelectorAll('.btn-play').forEach(btn => {
-                btn.classList.remove('btn-playing');
-                btn.querySelector('.btn-text').textContent = 'Escuchar';
-                btn.querySelector('svg').innerHTML = '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>';
-            });
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            renderQuestions();
-            
-            // Cargar voces en caso de que ya estén listas
-            populateVoiceList();
-            
-            // Cargar voces de forma asincrónica (necesario en muchos navegadores)
-            if (speechSynthesis.onvoiceschanged !== undefined) {
-                speechSynthesis.onvoiceschanged = populateVoiceList;
-            }
-
-            // Event listener para el cambio de voz
-            document.getElementById('voiceSelect').addEventListener('change', (e) => {
-                localStorage.setItem('dgaf_selectedVoiceURI', e.target.value);
-                // Si está reproduciendo algo, lo frenamos al cambiar de voz
-                if (synth.speaking) {
-                    stopSpeech();
-                }
-            });
-            
-            window.addEventListener('beforeunload', () => {
-                synth.cancel();
-            });
+        window.addEventListener('beforeunload', () => {
+            synth.cancel();
         });
     </script>
 </body>
