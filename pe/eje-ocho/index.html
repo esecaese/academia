@@ -227,15 +227,6 @@
                 <!-- Texto dinámico inyectado aquí por partes -->
             </div>
         </main>
-
-        <footer class="bg-zinc-900 border-t border-zinc-700 p-6 flex justify-center gap-10 z-10">
-            <button id="prevBtn" class="flex-1 max-w-sm py-6 bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl text-3xl font-bold transition flex items-center justify-center gap-4 disabled:opacity-30 disabled:cursor-not-allowed border border-zinc-600 shadow-xl">
-                <i class="fas fa-chevron-left"></i> ANTERIOR
-            </button>
-            <button id="nextBtn" class="flex-1 max-w-sm py-6 bg-blue-700 hover:bg-blue-600 text-white rounded-2xl text-3xl font-bold transition flex items-center justify-center gap-4 disabled:opacity-30 disabled:cursor-not-allowed shadow-xl shadow-blue-900/50">
-                SIGUIENTE <i class="fas fa-chevron-right"></i>
-            </button>
-        </footer>
     </div>
 
 
@@ -273,8 +264,6 @@
             document.getElementById('orador-view').classList.remove('hidden');
             document.getElementById('orador-view').classList.add('flex');
             
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
             const counter = document.getElementById('slide-counter');
             const speakerText = document.getElementById('speaker-text');
 
@@ -282,12 +271,6 @@
                 // Seguridad por si los índices están fuera de rango
                 if (!notesPages[currentSlide]) currentSlide = 1;
                 if (currentPageIndex >= notesPages[currentSlide].length) currentPageIndex = 0;
-
-                const isFirstPageOverall = (currentSlide === 1 && currentPageIndex === 0);
-                const isLastPageOverall = (currentSlide === totalSlides && currentPageIndex === notesPages[totalSlides].length - 1);
-
-                prevBtn.disabled = isFirstPageOverall;
-                nextBtn.disabled = isLastPageOverall;
                 
                 // Mostrar Slide actual y la sub-página actual de notas
                 const totalPagesInSlide = notesPages[currentSlide].length;
@@ -324,9 +307,6 @@
                     updateTeleprompter();
                 }
             }
-
-            nextBtn.addEventListener('click', goNext);
-            prevBtn.addEventListener('click', goPrev);
 
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'ArrowRight' || e.key === 'Space') {
