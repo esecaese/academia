@@ -32,14 +32,12 @@
 
         /* --- Estilos del Teleprompter --- */
         .prompter-text {
-            font-size: 3rem; /* 48px - Texto inmenso para leer por partes */
-            line-height: 1.5;
+            /* El font-size ahora lo maneja JS automáticamente para ocupar el máximo */
+            line-height: 1.4;
             color: #e2e8f0;
             text-align: center;
             transition: opacity 0.2s ease-in-out;
-        }
-        @media (max-width: 768px) {
-            .prompter-text { font-size: 2rem; }
+            width: 100%;
         }
         .prompter-text strong {
             color: #38bdf8;
@@ -204,26 +202,26 @@
 
 
     <!-- ==========================================
-         MODO ORADOR (TELEPROMPTER SIN SCROLL)
+         MODO ORADOR (TELEPROMPTER AUTOAJUSTABLE)
          ========================================== -->
     <div id="orador-view" class="hidden h-screen w-screen flex-col bg-black text-white">
-        <header class="bg-zinc-900 border-b border-zinc-700 p-4 flex justify-between items-center shadow-md z-10">
-            <div class="flex items-center gap-3">
-                <div class="bg-red-600 animate-pulse w-3 h-3 rounded-full"></div>
-                <span class="font-bold text-zinc-300 tracking-widest uppercase text-sm">Teleprompter en Vivo</span>
+        <!-- FRANJA SUPERIOR MINIMALISTA -->
+        <header class="bg-zinc-900 border-b border-zinc-800 py-1 px-4 flex justify-between items-center z-10 text-xs">
+            <div class="flex items-center gap-2">
+                <div class="bg-red-600 animate-pulse w-2 h-2 rounded-full"></div>
+                <span class="font-bold text-zinc-500 tracking-widest uppercase">En Vivo</span>
             </div>
-            <div class="text-3xl font-black text-white px-6 py-2 bg-zinc-800 rounded-lg border border-zinc-600 flex items-center" id="slide-counter">
+            <div class="font-black text-zinc-300 px-3 py-1 bg-zinc-800 rounded border border-zinc-700" id="slide-counter">
                 <!-- Se llena con JS -->
             </div>
-            <div class="text-sm text-zinc-500 font-mono">
-                Usa las flechas del teclado ◄ ►
+            <div class="text-zinc-600 font-mono tracking-widest">
+                ◄ TECLADO ►
             </div>
         </header>
 
-        <!-- Contenedor flex-col ocultando el overflow para evitar scroll. 
-             Centrado vertical y horizontalmente -->
-        <main id="text-container" class="flex-1 overflow-hidden p-8 md:p-16 flex items-center justify-center relative">
-            <div class="max-w-6xl mx-auto prompter-text font-medium" id="speaker-text">
+        <!-- CONTENEDOR FLEX-1 (Ocupa todo el resto de la pantalla) -->
+        <main id="text-container" class="flex-1 overflow-hidden p-6 flex items-center justify-center w-full h-full relative">
+            <div class="prompter-text font-medium w-full max-w-7xl" id="speaker-text">
                 <!-- Texto dinámico inyectado aquí por partes -->
             </div>
         </main>
@@ -253,35 +251,50 @@
             7: "<strong>Despedida.</strong> \n\nAquí puedes ofrecerte a responder preguntas de los alumnos o invitar a la lectura de los artículos referenciados en pantalla."
         };
 
-        // Procesar las notas: Dividir cada slide en un Array de "Páginas" según los saltos de línea (\n\n)
         const notesPages = {};
         for(let i = 1; i <= totalSlides; i++) {
             notesPages[i] = speakerNotesRaw[i].split('\n\n').filter(p => p.trim() !== '');
         }
 
         if (isOrador) {
-            // === CONFIGURACIÓN MODO ORADOR (TELEPROMPTER SIN SCROLL) ===
+            // === CONFIGURACIÓN MODO ORADOR ===
             document.getElementById('orador-view').classList.remove('hidden');
             document.getElementById('orador-view').classList.add('flex');
             
             const counter = document.getElementById('slide-counter');
             const speakerText = document.getElementById('speaker-text');
+            const container = document.getElementById('text-container');
+
+            // --- ALGORITMO AUTO-FIT TEXT ---
+            // Calcula y estira la fuente al máximo tamaño posible sin generar scroll
+            function autoFitText() {
+                // Empezamos con un tamaño de fuente inmenso (ej. 120px)
+                let fontSize = 120;
+                speakerText.style.fontSize = fontSize + 'px';
+                
+                // Reducimos el tamaño de a 2px hasta que quepa perfectamente en la pantalla de tu notebook
+                // Se resta 40px al contenedor para dejar un margen de "respiro" y que no toque los bordes
+                while ((speakerText.scrollHeight > container.clientHeight - 40 || speakerText.scrollWidth > container.clientWidth - 40) && fontSize > 20) {
+                    fontSize -= 2;
+                    speakerText.style.fontSize = fontSize + 'px';
+                }
+            }
 
             function updateTeleprompter() {
-                // Seguridad por si los índices están fuera de rango
                 if (!notesPages[currentSlide]) currentSlide = 1;
                 if (currentPageIndex >= notesPages[currentSlide].length) currentPageIndex = 0;
-                
-                // Mostrar Slide actual y la sub-página actual de notas
+
                 const totalPagesInSlide = notesPages[currentSlide].length;
-                counter.innerHTML = `Slide ${currentSlide} / ${totalSlides} <span class="text-zinc-500 font-light text-xl ml-4 px-3 py-1 bg-zinc-900 rounded-lg">Pág ${currentPageIndex + 1} de ${totalPagesInSlide}</span>`;
+                counter.innerHTML = `Slide ${currentSlide}/${totalSlides} <span class="text-zinc-500 font-light ml-2">Pág ${currentPageIndex + 1}/${totalPagesInSlide}</span>`;
                 
-                // Efecto suave al cambiar texto
                 speakerText.style.opacity = 0;
                 setTimeout(() => {
                     speakerText.innerHTML = notesPages[currentSlide][currentPageIndex];
                     speakerText.style.opacity = 1;
-                }, 150);
+                    
+                    // LLamamos al autoajuste en cuanto el texto nuevo se carga
+                    autoFitText();
+                }, 100);
             }
 
             function goNext() {
@@ -308,6 +321,7 @@
                 }
             }
 
+            // Pura navegación con teclado (botón gigante eliminado)
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'ArrowRight' || e.key === 'Space') {
                     e.preventDefault();
@@ -317,6 +331,9 @@
                     goPrev();
                 }
             });
+
+            // Si giras o cambias el tamaño de tu navegador, reajustar fuente
+            window.addEventListener('resize', autoFitText);
 
             window.addEventListener('storage', (e) => {
                 if (e.key === 'eje8_sync_slide') {
@@ -337,7 +354,7 @@
             document.getElementById('visor-view').classList.remove('hidden');
             document.getElementById('visor-view').classList.add('flex');
 
-            // --- INICIALIZACIÓN DEL GRÁFICO (CHART.JS) ---
+            // Inicialización de Chart.js
             const canvasElement = document.getElementById('itaipuChart');
             if (canvasElement) {
                 const ctx = canvasElement.getContext('2d');
@@ -349,8 +366,8 @@
                             label: 'Ingresos Anuales (Millones USD)',
                             data: [100, 1250],
                             backgroundColor: [
-                                'rgba(56, 189, 248, 0.6)', // Light Blue (Tailwind text-blue-400)
-                                'rgba(52, 211, 153, 0.8)'  // Emerald (Tailwind text-emerald-400)
+                                'rgba(56, 189, 248, 0.6)', 
+                                'rgba(52, 211, 153, 0.8)'  
                             ],
                             borderColor: [
                                 'rgba(56, 189, 248, 1)',
@@ -365,61 +382,35 @@
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
-                            legend: {
-                                display: false
-                            },
+                            legend: { display: false },
                             title: {
                                 display: true,
                                 text: 'Ingresos Anuales por Itaipú',
                                 color: '#e2e8f0',
-                                font: {
-                                    size: 20,
-                                    family: "'Inter', sans-serif",
-                                    weight: 'bold'
-                                },
+                                font: { size: 20, family: "'Inter', sans-serif", weight: 'bold' },
                                 padding: { bottom: 20 }
                             },
                             tooltip: {
                                 callbacks: {
-                                    label: function(context) {
-                                        return ' USD ' + context.parsed.y + ' Millones';
-                                    }
+                                    label: function(context) { return ' USD ' + context.parsed.y + ' Millones'; }
                                 }
                             }
                         },
                         scales: {
                             y: {
                                 beginAtZero: true,
-                                grid: {
-                                    color: 'rgba(255, 255, 255, 0.1)'
-                                },
-                                ticks: {
-                                    color: '#94a3b8',
-                                    font: { family: "'Inter', sans-serif" },
-                                    callback: function(value) {
-                                        return '$' + value + 'M';
-                                    }
-                                }
+                                grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                                ticks: { color: '#94a3b8', font: { family: "'Inter', sans-serif" }, callback: function(value) { return '$' + value + 'M'; } }
                             },
                             x: {
-                                grid: {
-                                    display: false
-                                },
-                                ticks: {
-                                    color: '#e2e8f0',
-                                    font: { 
-                                        size: 14,
-                                        family: "'Inter', sans-serif",
-                                        weight: '600'
-                                    }
-                                }
+                                grid: { display: false },
+                                ticks: { color: '#e2e8f0', font: { size: 14, family: "'Inter', sans-serif", weight: '600' } }
                             }
                         }
                     }
                 });
             }
 
-            // Lógica de avance de diapositivas
             const slides = document.querySelectorAll('.slide');
             const indicator = document.getElementById('slide-indicator');
 
