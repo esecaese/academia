@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Keynesian Slide | Escuela Keynesiana</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Keynesian | Escuela Keynesiana · Presentación 16:9</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -20,9 +20,10 @@
       height: 100vh;
       width: 100vw;
       position: fixed;
+      font-size: 20px; /* base para rem */
     }
 
-    /* PRESENTATION CONTAINER */
+    /* PRESENTATION CONTAINER – 16:9 FULLSCREEN */
     .presentation {
       position: relative;
       width: 100%;
@@ -31,7 +32,7 @@
       background: linear-gradient(145deg, #f6faff 0%, #eef2fa 100%);
     }
 
-    /* SLIDES HORIZONTAL CARROUSEL */
+    /* HORIZONTAL SLIDES */
     .slides-wrapper {
       display: flex;
       width: 100%;
@@ -47,23 +48,23 @@
       overflow-x: hidden;
       position: relative;
       scrollbar-width: thin;
-      padding: 2rem 2rem;
+      padding: 3rem 3.5rem;
     }
 
-    /* custom scrollbar minimal */
+    /* scrollbar más grande y visible en pantallas grandes */
     .slide::-webkit-scrollbar {
-      width: 5px;
+      width: 12px;
     }
     .slide::-webkit-scrollbar-track {
-      background: rgba(30,89,167,0.08);
-      border-radius: 10px;
+      background: rgba(30,89,167,0.1);
+      border-radius: 20px;
     }
     .slide::-webkit-scrollbar-thumb {
-      background: rgba(30,89,167,0.3);
-      border-radius: 10px;
+      background: rgba(30,89,167,0.5);
+      border-radius: 20px;
     }
 
-    /* background decorations */
+    /* fondos decorativos sutiles */
     .slide-bg {
       position: absolute;
       inset: 0;
@@ -73,74 +74,82 @@
     .blob-1, .blob-2 {
       position: absolute;
       border-radius: 100%;
-      filter: blur(70px);
-      opacity: 0.45;
+      filter: blur(90px);
+      opacity: 0.4;
     }
     .blob-1 {
-      width: 45vmax;
-      height: 45vmax;
+      width: 50vmax;
+      height: 50vmax;
       background: #1e59a7;
       top: -20vh;
       right: -15vw;
     }
     .blob-2 {
-      width: 38vmax;
-      height: 38vmax;
+      width: 45vmax;
+      height: 45vmax;
       background: #60a5fa;
       bottom: -25vh;
       left: -20vw;
-      opacity: 0.35;
+      opacity: 0.3;
     }
 
-    /* content container */
+    /* contenido principal con márgenes cómodos para 80 pulgadas */
     .slide-content {
       position: relative;
       z-index: 2;
-      max-width: 1300px;
+      max-width: 1500px;
       margin: 0 auto;
       width: 100%;
       min-height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 1.5rem;
+      gap: 2rem;
     }
 
-    /* tipografía minimalista */
+    /* TIPOGRAFÍA GIGANTE (para lectura a distancia) */
     h1 {
-      font-size: clamp(2.4rem, 8vw, 5rem);
+      font-size: clamp(4.2rem, 10vw, 7rem);
       font-weight: 800;
       letter-spacing: -0.02em;
       background: linear-gradient(135deg, #0f2b4d, #1e59a7);
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
-      line-height: 1.2;
-      margin-bottom: 0.25rem;
+      line-height: 1.15;
+      margin-bottom: 0.5rem;
     }
 
     h2 {
-      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-size: clamp(2.8rem, 7vw, 4.6rem);
       font-weight: 700;
       color: #0a2a44;
       letter-spacing: -0.01em;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+
+    h3 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 600;
+      color: #1e59a7;
+      margin-bottom: 0.75rem;
     }
 
     .accent-line {
-      width: 70px;
-      height: 4px;
+      width: 110px;
+      height: 6px;
       background: #1e59a7;
-      border-radius: 8px;
-      margin: 0.5rem 0 1.5rem 0;
+      border-radius: 12px;
+      margin: 0.75rem 0 1.8rem 0;
     }
 
     .subheading {
-      font-size: clamp(1rem, 4vw, 1.35rem);
-      color: #2c3e66;
-      font-weight: 400;
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      color: #1f3a5f;
+      font-weight: 500;
       line-height: 1.5;
-      max-width: 85%;
+      max-width: 90%;
     }
 
     ul {
@@ -148,14 +157,14 @@
       padding: 0;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.6rem;
     }
 
     li {
-      font-size: clamp(1rem, 4vw, 1.35rem);
-      line-height: 1.45;
+      font-size: clamp(1.6rem, 4.2vw, 2.3rem);
+      line-height: 1.4;
       font-weight: 500;
-      padding-left: 1.6rem;
+      padding-left: 2rem;
       position: relative;
       color: #1f2a44;
     }
@@ -165,56 +174,58 @@
       position: absolute;
       left: 0;
       color: #1e59a7;
-      font-weight: 600;
-      font-size: 1.2rem;
+      font-weight: 700;
+      font-size: 1.7rem;
+      top: 0;
     }
 
     .card-mini {
-      background: rgba(255,255,255,0.75);
-      backdrop-filter: blur(2px);
-      border-radius: 32px;
-      padding: 0.9rem 1.6rem;
-      border: 1px solid rgba(30,89,167,0.2);
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(4px);
+      border-radius: 48px;
+      padding: 1.2rem 2rem;
+      border: 1px solid rgba(30,89,167,0.3);
       font-weight: 600;
-      font-size: clamp(0.9rem, 3.5vw, 1.2rem);
+      font-size: clamp(1.3rem, 3.5vw, 1.8rem);
       color: #0f3b6f;
       display: inline-block;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.02);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
     }
 
     .grid-2cols {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 2rem;
+      gap: 3rem;
       align-items: center;
     }
 
     .quote {
-      font-size: clamp(1.2rem, 5vw, 2rem);
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
       font-weight: 600;
-      line-height: 1.35;
+      line-height: 1.4;
       color: #0a2a44;
-      border-left: 5px solid #1e59a7;
-      padding-left: 1.5rem;
-      background: rgba(30,89,167,0.04);
-      border-radius: 0 24px 24px 0;
+      border-left: 8px solid #1e59a7;
+      padding-left: 2rem;
+      background: rgba(30,89,167,0.05);
+      border-radius: 0 32px 32px 0;
     }
 
     .mini {
-      font-size: 0.85rem;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
       color: #4a5b7a;
-      margin-top: 0.5rem;
+      margin-top: 0.75rem;
       font-weight: 400;
     }
 
     .imagebox {
-      border-radius: 28px;
+      border-radius: 32px;
       overflow: hidden;
-      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
+      box-shadow: 0 28px 40px -15px rgba(0, 0, 0, 0.2);
       background: #eef2ff;
-      aspect-ratio: 4 / 3;
+      aspect-ratio: 16 / 9;
       width: 100%;
-      border: 1px solid rgba(30,89,167,0.15);
+      border: 1px solid rgba(30,89,167,0.2);
+      transition: transform 0.2s ease;
     }
 
     .imagebox img {
@@ -222,145 +233,149 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.3s ease;
     }
 
-    /* formula style */
+    /* fórmula con tamaño muy legible */
     .formula {
       font-family: 'Inter', monospace;
-      background: #ffffffcc;
-      backdrop-filter: blur(4px);
-      padding: 1rem 2rem;
-      border-radius: 48px;
-      font-weight: 700;
-      font-size: clamp(1rem, 5vw, 1.8rem);
+      background: #ffffffdd;
+      backdrop-filter: blur(8px);
+      padding: 1.2rem 2.5rem;
+      border-radius: 70px;
+      font-weight: 800;
+      font-size: clamp(1.8rem, 6vw, 2.8rem);
       color: #1e59a7;
       display: inline-block;
-      letter-spacing: 1px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+      letter-spacing: 2px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.02);
       border: 1px solid #cde1f5;
     }
 
-    /* Navegación flotante minimalista */
+    /* navegación más grande para pantalla gigante */
     .nav-controls {
       position: fixed;
-      bottom: 1.5rem;
-      right: 1.5rem;
+      bottom: 2.5rem;
+      right: 2.5rem;
       display: flex;
-      gap: 0.8rem;
+      gap: 1rem;
       z-index: 40;
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(12px);
-      padding: 0.5rem 1rem;
-      border-radius: 60px;
-      border: 1px solid rgba(30,89,167,0.25);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      padding: 0.8rem 1.5rem;
+      border-radius: 80px;
+      border: 1px solid rgba(30,89,167,0.35);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.1);
     }
 
     .nav-btn {
-      background: none;
+      background: white;
       border: none;
-      font-size: 1.8rem;
+      font-size: 2.6rem;
+      font-weight: 500;
       cursor: pointer;
-      width: 44px;
-      height: 44px;
+      width: 70px;
+      height: 70px;
       border-radius: 60px;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: all 0.2s ease;
       color: #1e59a7;
-      background: white;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
     .nav-btn:hover {
       background: #1e59a7;
       color: white;
-      transform: scale(1.02);
+      transform: scale(1.03);
     }
 
+    /* indicador de página + hint teclado grandes */
     .page-indicator {
       position: fixed;
-      bottom: 1.8rem;
+      bottom: 2.2rem;
       left: 0;
       right: 0;
       text-align: center;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: #4f6f9f;
-      background: rgba(255,255,255,0.6);
-      backdrop-filter: blur(4px);
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #1f4580;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(8px);
       width: fit-content;
       margin: 0 auto;
-      padding: 0.3rem 1rem;
-      border-radius: 40px;
+      padding: 0.5rem 1.8rem;
+      border-radius: 60px;
       z-index: 40;
       pointer-events: none;
-      font-feature-settings: 'tnum';
-      letter-spacing: 0.3px;
+      letter-spacing: 0.5px;
     }
 
-    /* keyboard hint */
     .key-hint {
       position: fixed;
-      bottom: 1rem;
-      left: 1rem;
-      font-size: 0.7rem;
-      background: rgba(0,0,0,0.4);
-      backdrop-filter: blur(5px);
-      padding: 0.2rem 0.7rem;
-      border-radius: 20px;
+      bottom: 2rem;
+      left: 2rem;
+      font-size: 1rem;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(10px);
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
       color: white;
-      font-weight: 400;
+      font-weight: 500;
       z-index: 40;
       pointer-events: none;
+      font-family: monospace;
     }
 
-    @media (max-width: 700px) {
+    /* Responsive 16:9 y ajuste en pantallas muy grandes */
+    @media (min-width: 1600px) {
       .slide {
-        padding: 1.2rem;
+        padding: 4rem 5rem;
+      }
+      .slide-content {
+        max-width: 1700px;
+        gap: 2.5rem;
+      }
+      .nav-btn {
+        width: 85px;
+        height: 85px;
+        font-size: 3rem;
+      }
+      .page-indicator {
+        font-size: 1.5rem;
+        bottom: 2.5rem;
+      }
+      .key-hint {
+        font-size: 1.2rem;
+      }
+    }
+
+    @media (max-width: 900px) {
+      /* tablets / móviles mantiene legibilidad pero escalado más modesto */
+      body {
+        font-size: 16px;
+      }
+      .slide {
+        padding: 1.5rem;
       }
       .grid-2cols {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-      .nav-controls {
-        bottom: 1rem;
-        right: 1rem;
-        padding: 0.3rem 0.8rem;
+        gap: 2rem;
       }
       .nav-btn {
-        width: 38px;
-        height: 38px;
-        font-size: 1.5rem;
-      }
-      .page-indicator {
-        bottom: 1.2rem;
+        width: 55px;
+        height: 55px;
+        font-size: 2rem;
       }
       .subheading {
         max-width: 100%;
       }
       .quote {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
       }
     }
 
-    @media (min-width: 1400px) {
-      .slide-content {
-        max-width: 1400px;
-      }
-    }
-
-    .footer-slide {
-      margin-top: 2rem;
-      font-size: 0.75rem;
-      color: #7e8aa8;
-      text-align: center;
-      border-top: 1px solid rgba(30,89,167,0.1);
-      padding-top: 1.5rem;
-    }
-
+    /* pequeña ayuda para mantener scroll suave */
     .flex-between {
       display: flex;
       justify-content: space-between;
@@ -369,11 +384,21 @@
     }
 
     .badge {
-      background: rgba(30,89,167,0.08);
-      border-radius: 40px;
-      padding: 0.2rem 1rem;
-      font-size: 0.75rem;
+      background: rgba(30,89,167,0.1);
+      border-radius: 60px;
+      padding: 0.5rem 1.6rem;
+      font-size: 1.2rem;
       font-weight: 500;
+      color: #1e59a7;
+    }
+
+    .footer-slide {
+      margin-top: 2rem;
+      font-size: 1rem;
+      color: #7e8aa8;
+      text-align: center;
+      border-top: 1px solid rgba(30,89,167,0.2);
+      padding-top: 2rem;
     }
   </style>
 </head>
@@ -381,39 +406,39 @@
 
 <div class="presentation">
   <div class="slides-wrapper" id="slidesWrapper">
-    <!-- SLIDE 1 - INTRO -->
+    <!-- SLIDE 1 – Portada monumental -->
     <div class="slide">
       <div class="slide-bg"><div class="blob-1"></div><div class="blob-2"></div></div>
       <div class="slide-content">
-        <div class="flex-between"><span class="badge">Adriano Acuña · Pensamiento Económico</span></div>
+        <div class="flex-between"><span class="badge">Adriano Acuña · Economía para el siglo XXI</span></div>
         <h1>Escuela Keynesiana</h1>
         <div class="accent-line"></div>
-        <div class="subheading">Revolución económica, demanda agregada y el rol del Estado en el siglo XX.</div>
-        <div style="margin: 1rem 0 0.5rem;">
-          <div class="card-mini">Contexto • Keynes • Multiplicador • Legado</div>
+        <div class="subheading">Revolución en la teoría económica: demanda agregada, empleo y el Estado como motor de estabilidad.</div>
+        <div style="margin: 1.5rem 0 0.5rem;">
+          <div class="card-mini">Contexto histórico · Keynes · Demanda agregada · Multiplicador · Legado</div>
         </div>
-        <div class="imagebox" style="margin-top: 1rem; max-width: 500px; aspect-ratio: 16/9;">
+        <div class="imagebox" style="margin-top: 2rem; max-width: 650px; aspect-ratio: 16/9;">
           <img src="https://pplx-res.cloudinary.com/image/upload/pplx_search_images/c937f1325e65d19949c6e015d08cfbe9f14a0b6d.jpg" alt="John Maynard Keynes" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/John_Maynard_Keynes.jpg/440px-John_Maynard_Keynes.jpg'">
         </div>
       </div>
     </div>
 
-    <!-- SLIDE 2 - Contexto histórico -->
+    <!-- SLIDE 2 – Contexto histórico (letras grandes) -->
     <div class="slide">
       <div class="slide-bg"><div class="blob-1"></div><div class="blob-2"></div></div>
       <div class="slide-content">
         <h2>Contexto Histórico</h2>
         <div class="accent-line"></div>
         <ul>
-          <li>Década de 1930: Gran Depresión mundial.</li>
-          <li>Fracaso del laissez‑faire clásico y desempleo masivo.</li>
-          <li>Nace una nueva visión: el estado como estabilizador.</li>
+          <li>Década de 1930: la Gran Depresión sacude al mundo.</li>
+          <li>Fracaso del libre mercado autorregulado, desempleo masivo (+25%).</li>
+          <li>Nace una nueva visión: el Estado como estabilizador económico.</li>
         </ul>
-        <div class="quote" style="margin-top: 0.8rem; font-size: 1rem; border-left-color: #60a5fa;">“Los economistas clásicos no podían explicar el estancamiento prolongado.”</div>
+        <div class="quote" style="margin-top: 1.2rem; font-size: 1.6rem; border-left-color: #60a5fa;">“Los clásicos no podían explicar por qué el equilibrio con paro era persistente.”</div>
       </div>
     </div>
 
-    <!-- SLIDE 3 - John Maynard Keynes -->
+    <!-- SLIDE 3 – John Maynard Keynes -->
     <div class="slide">
       <div class="slide-bg"><div class="blob-1"></div><div class="blob-2"></div></div>
       <div class="slide-content grid-2cols">
@@ -423,118 +448,121 @@
           <ul>
             <li>1883 – 1946, economista británico visionario.</li>
             <li>Obra cumbre: <em>Teoría General del Empleo, el Interés y el Dinero</em> (1936).</li>
-            <li>Rompió el paradigma de la economía clásica.</li>
+            <li>Rompió el paradigma clásico, sentó las bases de la macroeconomía moderna.</li>
           </ul>
         </div>
-        <div class="quote">“A largo plazo todos estaremos muertos — pero el corto plazo moldea vidas.”<div class="mini">Keynes, 1923</div></div>
+        <div class="quote">“A largo plazo todos estaremos muertos. Pero el corto plazo es la vida real.”<div class="mini">Keynes, 1923 (respuesta a la economía clásica)</div></div>
       </div>
     </div>
 
-    <!-- SLIDE 4 - Principios Fundamentales -->
+    <!-- SLIDE 4 – Principios Fundamentales -->
     <div class="slide">
       <div class="slide-bg"><div class="blob-1"></div><div class="blob-2"></div></div>
       <div class="slide-content">
         <h2>Principios Fundamentales</h2>
         <div class="accent-line"></div>
         <ul>
-          <li>La <strong>demanda agregada</strong> es el motor de la producción y el empleo.</li>
-          <li>Los mercados no se ajustan automáticamente al pleno empleo.</li>
-          <li>Salarios y precios son rígidos a corto plazo.</li>
+          <li>La <strong>demanda agregada</strong> determina la producción y el empleo a corto plazo.</li>
+          <li>Los mercados no alcanzan automáticamente el pleno empleo.</li>
+          <li>Salarios y precios son rígidos a la baja en recesiones.</li>
           <li>El gasto público puede compensar caídas de la inversión privada.</li>
         </ul>
       </div>
     </div>
 
-    <!-- SLIDE 5 - Demanda Agregada -->
+    <!-- SLIDE 5 – Demanda Agregada (fórmula enorme) -->
     <div class="slide">
       <div class="slide-bg"><div class="blob-1"></div><div class="blob-2"></div></div>
       <div class="slide-content">
         <h2>Demanda Agregada</h2>
         <div class="accent-line"></div>
         <div class="formula">DA = C + I + G + (X – M)</div>
-        <div class="subheading" style="margin-top: 1.5rem;">Consumo (C) + Inversión (I) + Gasto público (G) + Exportaciones netas (X-M)</div>
-        <p style="margin-top: 1rem; font-size: 1rem; color: #2f456e;">Keynes demostró que una caída de la inversión produce desempleo involuntario, que puede evitarse con políticas fiscales activas.</p>
+        <div class="subheading" style="margin-top: 2rem;">Consumo (C) + Inversión (I) + Gasto público (G) + Exportaciones netas (X-M)</div>
+        <p style="margin-top: 1.5rem; font-size: clamp(1.3rem, 3vw, 1.8rem); color: #2f456e; max-width: 90%; font-weight: 500;">Keynes demostró que una caída en la inversión genera desempleo involuntario. Solo la intervención fiscal puede romper el ciclo recesivo.</p>
       </div>
     </div>
 
-    <!-- SLIDE 6 - El Papel del Estado -->
+    <!-- SLIDE 6 – El Papel del Estado -->
     <div class="slide">
       <div class="slide-bg"><div class="blob-1"></div><div class="blob-2"></div></div>
       <div class="slide-content">
         <h2>El Papel del Estado</h2>
         <div class="accent-line"></div>
         <ul>
-          <li>Incrementar el gasto público en infraestructura y servicios.</li>
-          <li>Reducir impuestos para estimular el consumo.</li>
-          <li>Políticas monetarias expansivas en recesión.</li>
-          <li>Generar empleo directo mediante obras públicas.</li>
+          <li>Aumentar el gasto público en infraestructura y servicios sociales.</li>
+          <li>Reducir impuestos para estimular el consumo de los hogares.</li>
+          <li>Políticas monetarias expansivas en contextos recesivos.</li>
+          <li>Generar empleo directo mediante programas de obras públicas.</li>
         </ul>
-        <div class="card-mini" style="margin-top: 1rem;">“El gobierno debe actuar como inversor de última instancia”</div>
+        <div class="card-mini" style="margin-top: 1.8rem;">“El gobierno debe actuar como inversor de última instancia cuando el sector privado se contrae”</div>
       </div>
     </div>
 
-    <!-- SLIDE 7 - Multiplicador Keynesiano -->
+    <!-- SLIDE 7 – Multiplicador Keynesiano (imagen + texto) -->
     <div class="slide">
       <div class="slide-bg"><div class="blob-1"></div><div class="blob-2"></div></div>
       <div class="slide-content grid-2cols">
         <div>
           <h2>Efecto Multiplicador</h2>
           <div class="accent-line"></div>
-          <div class="subheading">El gasto inicial genera ingresos adicionales que reactivan la economía en cadena.</div>
-          <div class="formula" style="margin-top: 1rem; font-size: 1.3rem;">k = 1 / (1 – PMC)</div>
-          <div class="mini" style="margin-top: 0.5rem;">PMC = Propensión marginal a consumir</div>
+          <div class="subheading">El gasto inicial genera nuevos ingresos, consumo y actividad económica en cadena.</div>
+          <div class="formula" style="margin-top: 2rem; font-size: clamp(1.8rem,5vw,2.6rem);">k = 1 / (1 – PMC)</div>
+          <div class="mini" style="margin-top: 1rem;">PMC = Propensión marginal a consumir (entre 0 y 1)</div>
         </div>
         <div class="imagebox">
-          <img src="https://pplx-res.cloudinary.com/image/upload/pplx_search_images/1860a34eaaa428fc32972efc37b836d822bc2582.jpg" alt="Gráfico crecimiento económico" onerror="this.src='https://placehold.co/600x400/e2efff/1e59a7?text=Multiplicador+Keynesiano'">
+          <img src="https://pplx-res.cloudinary.com/image/upload/pplx_search_images/1860a34eaaa428fc32972efc37b836d822bc2582.jpg" alt="Crecimiento y multiplicador" onerror="this.src='https://placehold.co/800x500/e2efff/1e59a7?text=EFECTO+MULTIPLICADOR'">
         </div>
       </div>
     </div>
 
-    <!-- SLIDE 8 - Ventajas y Críticas -->
+    <!-- SLIDE 8 – Ventajas y Críticas (dos columnas destacadas) -->
     <div class="slide">
       <div class="slide-bg"><div class="blob-1"></div><div class="blob-2"></div></div>
       <div class="slide-content">
         <h2>Ventajas & Críticas</h2>
         <div class="accent-line"></div>
-        <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: space-between;">
-          <div style="flex: 1; min-width: 200px;">
-            <h3 style="color: #1e59a7; font-size: 1.3rem;">✓ Ventajas</h3>
-            <ul>
-              <li>Reduce desempleo en recesiones.</li>
-              <li>Estabiliza ciclos económicos.</li>
-              <li>Fomenta inversión pública estratégica.</li>
+        <div style="display: flex; flex-wrap: wrap; gap: 3rem; justify-content: space-between; margin-top: 1rem;">
+          <div style="flex: 1; min-width: 280px;">
+            <h3 style="color: #1e59a7;">✓ Ventajas clave</h3>
+            <ul style="margin-top: 0.5rem;">
+              <li>Reduce el desempleo en recesiones profundas.</li>
+              <li>Estabiliza ciclos económicos y evita colapsos.</li>
+              <li>Fomenta inversión pública en bienestar e infraestructura.</li>
             </ul>
           </div>
-          <div style="flex: 1; min-width: 200px;">
-            <h3 style="color: #a7541e; font-size: 1.3rem;">⚠ Críticas</h3>
-            <ul>
+          <div style="flex: 1; min-width: 280px;">
+            <h3 style="color: #a7541e;">⚠ Críticas fundamentales</h3>
+            <ul style="margin-top: 0.5rem;">
               <li>Riesgo de inflación por exceso de gasto.</li>
-              <li>Puede aumentar la deuda pública.</li>
-              <li>Intervencionismo excesivo según liberales.</li>
+              <li>Puede generar elevada deuda pública a largo plazo.</li>
+              <li>Intervencionismo estatal excesivo según liberales.</li>
             </ul>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SLIDE 9 - Legado e Importancia -->
+    <!-- SLIDE 9 – Legado e Importancia -->
     <div class="slide">
       <div class="slide-bg"><div class="blob-1"></div><div class="blob-2"></div></div>
       <div class="slide-content">
         <h2>Legado e Importancia</h2>
         <div class="accent-line"></div>
-        <div class="subheading">Influyó en el New Deal, el estado de bienestar europeo y las políticas anticíclicas actuales. Bancos centrales y paquetes de estímulo keynesianos tras 2008 y COVID‑19.</div>
+        <div class="subheading">Influencia directa en el New Deal, el estado de bienestar europeo, y las políticas anticíclicas modernas. Bancos centrales y paquetes de estímulo keynesianos tras la crisis de 2008 y la pandemia COVID-19.</div>
+        <div class="footer-slide">
+          <span>© Escuela Keynesiana · Presentación diseñada para pantallas 16:9 (80″) · Letras de alta legibilidad</span>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- CONTROLES FLOTANTES -->
+  <!-- CONTROLES FLOTANTES GRANDES -->
   <div class="nav-controls">
-    <button class="nav-btn" id="prevSlide" aria-label="Diapositiva anterior">←</button>
-    <button class="nav-btn" id="nextSlide" aria-label="Diapositiva siguiente">→</button>
+    <button class="nav-btn" id="prevSlide" aria-label="Anterior">←</button>
+    <button class="nav-btn" id="nextSlide" aria-label="Siguiente">→</button>
   </div>
   <div class="page-indicator" id="pageIndicator">1 / 9</div>
-  <div class="key-hint">←  →  teclado</div>
+  <div class="key-hint">←  →  teclado · swipe táctil</div>
 </div>
 
 <script>
@@ -545,7 +573,7 @@
     let currentIndex = 0;
     let isTransitioning = false;
     let touchStartX = 0;
-    let touchEndX = 0;
+    let touchStartY = 0;
 
     function updateSlidePosition() {
       if (!wrapper) return;
@@ -562,18 +590,17 @@
       isTransitioning = true;
       currentIndex = index;
       updateSlidePosition();
-      // pequeño timeout para evitar spam de transición múltiple
       setTimeout(() => { isTransitioning = false; }, 550);
     }
 
     function nextSlide() { goToSlide(currentIndex + 1); }
     function prevSlide() { goToSlide(currentIndex - 1); }
 
-    // BOTONES
+    // Botones grandes
     document.getElementById('nextSlide')?.addEventListener('click', nextSlide);
     document.getElementById('prevSlide')?.addEventListener('click', prevSlide);
 
-    // EVENTOS TECLADO
+    // Teclado ←  →
     window.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowRight') {
         e.preventDefault();
@@ -584,16 +611,17 @@
       }
     });
 
-    // Soporte táctil (swipe horizontal) para móviles
+    // Swipe táctil (horizontal) mejorado
     wrapper.addEventListener('touchstart', (e) => {
       touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
     }, { passive: true });
-    
+
     wrapper.addEventListener('touchend', (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-      const delta = touchEndX - touchStartX;
-      if (Math.abs(delta) > 50) {
-        if (delta > 0) {
+      const deltaX = e.changedTouches[0].screenX - touchStartX;
+      const deltaY = e.changedTouches[0].screenY - touchStartY;
+      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+        if (deltaX > 0) {
           prevSlide();
         } else {
           nextSlide();
@@ -601,48 +629,20 @@
       }
     }, { passive: true });
 
-    // Prevenir conflictos de scroll vertical dentro del slide (solo si quieres mantener scroll interno en cada diapositiva)
-    // pero se mantiene scroll natural dentro de cada slide (overflow-y auto). swipe horizontal funciona igual.
-    // Ajuste: no interferir con desplazamiento vertical: si el usuario se desplaza verticalmente, no debe activar swipe horizontal.
-    let touchStartY = 0;
-    wrapper.addEventListener('touchstart', (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-      touchStartY = e.changedTouches[0].screenY;
-    });
+    // Prevenir conflictos de scroll vertical con swipe horizontal
+    let preventHorizontal = false;
     wrapper.addEventListener('touchmove', (e) => {
-      // evitar que el swipe horizontal interfiera mientras se hace scroll vertical fuerte
-      const deltaX = Math.abs(e.changedTouches[0].screenX - touchStartX);
-      const deltaY = Math.abs(e.changedTouches[0].screenY - touchStartY);
-      if (deltaX > deltaY && deltaX > 15) {
-        e.preventDefault(); // permite el gesto horizontal
+      const deltaXmove = Math.abs(e.touches[0].clientX - touchStartX);
+      const deltaYmove = Math.abs(e.touches[0].clientY - touchStartY);
+      if (deltaXmove > deltaYmove && deltaXmove > 15) {
+        e.preventDefault();
       }
     }, { passive: false });
-    
-    // pequeña corrección para prevenir comportamiento extra en móviles
-    let startXPos = 0;
-    wrapper.addEventListener('touchstart', (e) => {
-      startXPos = e.touches[0].clientX;
-    });
-    wrapper.addEventListener('touchmove', (e) => {
-      const moveX = e.touches[0].clientX - startXPos;
-      if (Math.abs(moveX) > 15 && !isTransitioning) {
-        // opcional: efecto visual ligero, pero no necesario
-      }
-    });
 
-    // asegurar altura correcta en orientación cambios
-    function resizeSlides() {
-      // not needed for transform, pero forzamos reflow
-      updateSlidePosition();
-    }
-    window.addEventListener('resize', resizeSlides);
-    
-    // iniciamos en slide 0
+    // reajuste visual
+    window.addEventListener('resize', () => updateSlidePosition());
     updateSlidePosition();
-    // mejorar la primera carga adaptativa
-    setTimeout(() => {
-      updateSlidePosition();
-    }, 100);
+    setTimeout(() => updateSlidePosition(), 80);
   })();
 </script>
 </body>
