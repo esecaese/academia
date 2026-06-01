@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase Magistral: Energía y PND 2050</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Librería Chart.js para los gráficos interactivos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s;
+        }
+
+        /* --- Estilos del Visor --- */
+        .slide {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .slide.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* --- Estilos del Teleprompter --- */
+        .prompter-text {
+            font-size: 3rem; 
+            line-height: 1.5;
+            color: #e2e8f0;
+            text-align: center;
+            transition: opacity 0.2s ease-in-out;
+            width: 100%;
+        }
+        @media (max-width: 768px) {
+            .prompter-text { font-size: 2rem; }
+        }
+        .prompter-text strong {
+            color: #38bdf8;
+        }
+        .citation {
+            font-size: 0.6em;
+            vertical-align: super;
+            color: #fbbf24;
+            opacity: 0.9;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+         MODO VISOR (PROYECTOR PARA ALUMNOS)
+         ========================================== -->
+    <div id="visor-view" class="hidden h-screen w-screen flex-col bg-slate-900 text-slate-50">
+        <header class="flex justify-between items-center p-4 md:px-8 bg-slate-900 border-b border-slate-800 z-10 absolute top-0 w-full">
+            <div class="text-sm font-semibold text-slate-500 tracking-wider">ACADEMIA - POLÍTICA EXTERIOR</div>
+            <div class="text-sm font-semibold text-slate-600" id="slide-indicator">1/7</div>
+        </header>
+
+        <main class="flex-1 relative overflow-hidden flex items-center justify-center p-4 md:p-12 mt-10">
+            
+            <!-- Slide 1: Portada -->
+            <div class="slide active flex-col justify-center items-center text-center max-w-5xl" data-slide="1">
+                <div class="inline-block px-4 py-1 rounded-full bg-emerald-900/50 text-emerald-400 border border-emerald-800 mb-6 text-sm font-semibold tracking-widest uppercase">
+                    Evolución Histórica vs. Visión 2050
+                </div>
+                <h1 class="text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400 mb-6 leading-tight">
+                    Paraguay como Centro Estratégico de Energía
+                </h1>
+                <h2 class="text-2xl md:text-3xl text-slate-300 font-light mb-8">
+                    Análisis del "Eje 8" a la luz del Plan Nacional de Desarrollo (PND) 2050
+                </h2>
+            </div>
+
+            <!-- Slide 2: Contexto Histórico vs PND -->
+            <div class="slide flex-col justify-center w-full max-w-6xl" data-slide="2">
+                <h2 class="text-3xl font-bold mb-6 text-blue-400 border-b border-slate-700 pb-3">1. De la burocracia del 2000 al PND 2050</h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl">
+                        <div class="text-slate-400 text-3xl mb-3"><i class="fas fa-file-alt"></i></div>
+                        <h3 class="text-xl font-semibold mb-3 text-white">Eje 8 (Años 2000s)</h3>
+                        <ul class="space-y-3 text-slate-300 text-base">
+                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-slate-500 mt-1"></i> <span>MOPC con control casi absoluto (Dec. 21.975).</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-slate-500 mt-1"></i> <span>Limitación histórica de la Cancillería.</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl">
+                        <div class="text-blue-400 text-3xl mb-3"><i class="fas fa-handshake"></i></div>
+                        <h3 class="text-xl font-semibold mb-3 text-white">Realidad (2026)</h3>
+                        <ul class="space-y-3 text-slate-300 text-base">
+                            <li class="flex items-start gap-3"><i class="fas fa-arrow-right text-blue-500 mt-1"></i> <span>RR.EE. es el conducto ineludible.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-arrow-right text-blue-500 mt-1"></i> <span>Diplomacia y sector técnico operan en tándem.</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-gradient-to-b from-slate-800 to-emerald-900/40 p-6 rounded-2xl border border-emerald-700 shadow-xl">
+                        <div class="text-amber-400 text-3xl mb-3"><i class="fas fa-compass"></i></div>
+                        <h3 class="text-xl font-semibold mb-3 text-white">El Norte: PND 2050</h3>
+                        <ul class="space-y-3 text-slate-200 text-base">
+                            <li class="flex items-start gap-3"><i class="fas fa-star text-amber-500 mt-1"></i> <span><strong>Pilar 3:</strong> Promover seguridad energética orientada a fuentes limpias y sostenibles.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-star text-amber-500 mt-1"></i> <span>Equilibrar crecimiento económico con sostenibilidad ambiental.</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Itaipú (Gráfico de Barras) -->
+            <div class="slide flex-col justify-center w-full max-w-6xl" data-slide="3">
+                <h2 class="text-3xl font-bold mb-6 text-emerald-400 border-b border-slate-700 pb-3">2A. Itaipú: El salto financiero y el "Powershoring"</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+                    <div class="flex flex-col gap-4 justify-center">
+                        <div class="bg-slate-800 p-4 rounded-2xl border-l-4 border-emerald-500">
+                            <h3 class="text-lg font-bold text-white mb-1"><i class="fas fa-check-double text-emerald-500 mr-2"></i>Deuda Cero (2023)</h3>
+                            <p class="text-sm text-slate-300">Histórica deuda de construcción saldada tras 50 años.</p>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-2xl border-l-4 border-amber-500">
+                            <h3 class="text-lg font-bold text-amber-400 mb-1"><i class="fas fa-industry text-amber-500 mr-2"></i>PND 2050: Powershoring</h3>
+                            <p class="text-sm text-slate-300">Atracción de industrias mediante energía limpia y competitiva para integrarnos en cadenas globales de valor.</p>
+                        </div>
+                    </div>
+                    <!-- Chart 1 -->
+                    <div class="bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-xl h-72 relative">
+                        <canvas id="itaipuChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Yacyretá y la Matriz Regional (Gráfico de Anillo) -->
+            <div class="slide flex-col justify-center w-full max-w-6xl" data-slide="4">
+                <h2 class="text-3xl font-bold mb-6 text-blue-400 border-b border-slate-700 pb-3">2B. Yacyretá, Descarbonización y Transporte</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+                    <div class="flex flex-col gap-4 justify-center">
+                        <div class="bg-slate-800 p-4 rounded-2xl border-l-4 border-blue-500">
+                            <h3 class="text-lg font-bold text-white mb-1"><i class="fas fa-cogs text-blue-400 mr-2"></i>Aña Cuá</h3>
+                            <p class="text-sm text-slate-300">Avanza la maquinización (+270MW), pero persiste el limbo financiero (Acuerdo Cartes-Macri frenado en Argentina).</p>
+                        </div>
+                        <div class="bg-gradient-to-r from-slate-800 to-slate-700 p-4 rounded-2xl border-l-4 border-amber-500">
+                            <h3 class="text-lg font-bold text-amber-400 mb-1"><i class="fas fa-car-battery text-amber-500 mr-2"></i>PND 2050: Electrificación</h3>
+                            <p class="text-sm text-slate-300">El transporte es un frente crítico para la descarbonización. Se requiere electrificar el transporte e impulsar biocombustibles.</p>
+                        </div>
+                    </div>
+                    <!-- Chart 2 -->
+                    <div class="bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-xl h-72 relative flex flex-col items-center">
+                        <canvas id="matrizChart"></canvas>
+                        <p class="text-xs text-slate-400 mt-2 text-center">Dependencia regional de combustibles fósiles, el gran desafío a revertir según el PND 2050.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5: Corpus Christi vs Diversificación (Gráfico de Barras Horizontales) -->
+            <div class="slide flex-col justify-center w-full max-w-6xl" data-slide="5">
+                <h2 class="text-3xl font-bold mb-6 text-emerald-400 border-b border-slate-700 pb-3">2C. De Mega-represas a la Diversificación (PND 2050)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+                    <div class="flex flex-col gap-4 justify-center">
+                        <div class="bg-slate-800 p-4 rounded-2xl border-l-4 border-rose-500">
+                            <h3 class="text-lg font-bold text-white mb-1"><i class="fas fa-times-circle text-rose-500 mr-2"></i>Proyectos Estancados</h3>
+                            <p class="text-sm text-slate-300"><strong>Yguazú:</strong> Descartada por altos costos. <br><strong>Corpus Christi:</strong> Paralizada por falta de "licencia social" comunitaria.</p>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-2xl border-l-4 border-amber-500">
+                            <h3 class="text-lg font-bold text-amber-400 mb-1"><i class="fas fa-solar-panel text-amber-500 mr-2"></i>La Visión PND 2050</h3>
+                            <p class="text-sm text-slate-300">Es prioridad diversificar la matriz y reducir la dependencia de la hidroelectricidad, potenciando otras fuentes renovables.</p>
+                        </div>
+                    </div>
+                    <!-- Chart 3 -->
+                    <div class="bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-xl h-72 relative">
+                        <canvas id="fuentesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 6: Conclusión -->
+            <div class="slide flex-col justify-center w-full max-w-5xl" data-slide="6">
+                <h2 class="text-4xl font-bold mb-8 text-white border-b border-slate-700 pb-4">3. Conclusión: El Paradigma 2050</h2>
+                <div class="text-center mb-8">
+                    <p class="text-2xl text-slate-300 font-light italic">"¿Se cumplió la visión del Eje 8? <span class="text-emerald-400 font-bold">SÍ, pero el mundo cambió.</span>"</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-slate-800 p-6 rounded-2xl border-t-4 border-emerald-500">
+                        <div class="text-emerald-400 text-3xl mb-3"><i class="fas fa-check"></i></div>
+                        <h3 class="text-xl font-bold text-white mb-2">Soberanía Administrada</h3>
+                        <p class="text-slate-300 text-base">Paraguay saldó sus históricas deudas y renegoció tarifas récord, consolidándose como potencia hidroeléctrica.</p>
+                    </div>
+                    <div class="bg-slate-800 p-6 rounded-2xl border-t-4 border-amber-500">
+                        <div class="text-amber-400 text-3xl mb-3"><i class="fas fa-leaf"></i></div>
+                        <h3 class="text-xl font-bold text-white mb-2">El mandato del PND 2050</h3>
+                        <p class="text-slate-300 text-base">Transición hacia una <strong>Industrialización Verde</strong> y una arquitectura financiera innovadora (Bonos Verdes) para atraer capital privado.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 7: Referencias -->
+            <div class="slide flex-col justify-center w-full max-w-5xl" data-slide="7">
+                <h2 class="text-3xl font-bold mb-8 text-slate-300 border-b border-slate-700 pb-4">Fuentes y Referencias</h2>
+                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 w-full overflow-y-auto max-h-[60vh]">
+                    <ul class="space-y-4 text-slate-300 text-sm">
+                        <li><strong class="text-amber-400">[1] MEF (2025).</strong> <em>Plan Nacional de Desarrollo Paraguay 2050.</em> Asunción, Py. Documento Oficial.</li>
+                        <li><strong class="text-white">2. Trece (Feb 2023).</strong> <a href="https://trece.com.py/actualidad/itaipu-salda-deuda-que-hizo-posible-construccion/" target="_blank" class="text-blue-400 hover:underline">Hoy se salda la deuda que hizo posible la construcción de Itaipú.</a></li>
+                        <li><strong class="text-white">3. El Nacional (Mayo 2024).</strong> <a href="https://elnacional.com.py/politica/acuerdo-brasil-pena-confirma-nueva-tarifa-itaipu-usd-1928-kwmes-n66308" target="_blank" class="text-blue-400 hover:underline">Acuerdo con Brasil: Peña confirma nueva tarifa de Itaipú.</a></li>
+                        <li><strong class="text-white">4. Forbes Paraguay (Mayo 2024).</strong> <a href="https://www.forbes.com.py/macroeconomia/tarifa-itaipu-queda-us-1928-kwh-mes-anuncia-santiago-pena-n52543" target="_blank" class="text-blue-400 hover:underline">Tarifa para Itaipú queda en US$ 19,28 e inicio revisión Anexo C.</a></li>
+                        <li><strong class="text-white">5. MOPC (Abril 2026).</strong> <a href="https://mopc.gov.py/autoridades-verifican-avance-de-la-maquinizacion-de-ana-cua-y-destacan-su-impacto-energetico/" target="_blank" class="text-blue-400 hover:underline">Autoridades verifican avance de maquinización de Aña Cuá.</a></li>
+                        <li><strong class="text-white">6. ABC Color (Abril 2024).</strong> <a href="https://www.abc.com.py/economia/2024/04/09/yacyreta-milei-enviara-al-congreso-el-acuerdo-cartes-macri-anuncian/" target="_blank" class="text-blue-400 hover:underline">Yacyretá: Javier Milei enviará al Congreso el acuerdo Cartes-Macri.</a></li>
+                        <li><strong class="text-white">7. EJAtlas.</strong> <a href="https://ejatlas.org/conflict/represa-corpus-christi-argentina-paraguay" target="_blank" class="text-blue-400 hover:underline">Represa Corpus Christi, Argentina-Paraguay (Registro de conflicto).</a></li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+
+
+    <!-- ==========================================
+         MODO ORADOR (TELEPROMPTER SIN SCROLL Y AUTOFIT)
+         ========================================== -->
+    <div id="orador-view" class="hidden h-screen w-screen flex-col bg-black text-white">
+        <header class="bg-zinc-900 border-b border-zinc-700 px-4 py-2 flex justify-between items-center z-10 text-xs">
+            <div class="flex items-center gap-2">
+                <div class="bg-red-600 animate-pulse w-2 h-2 rounded-full"></div>
+                <span class="font-bold text-zinc-400 tracking-widest uppercase">Teleprompter en Vivo</span>
+            </div>
+            <div class="font-black text-amber-400 bg-zinc-800 px-3 py-1 rounded" id="slide-counter"></div>
+            <div class="text-zinc-500 font-mono">Teclas: ◄ ► o ESPACIO</div>
+        </header>
+
+        <main id="text-container" class="flex-1 overflow-hidden p-6 md:p-10 flex items-center justify-center relative w-full h-full">
+            <div class="prompter-text font-medium" id="speaker-text"></div>
+        </main>
+    </div>
+
+
+    <!-- ==========================================
+         LÓGICA JAVASCRIPT UNIFICADA Y GRÁFICOS
+         ========================================== -->
+    <script>
+        const totalSlides = 7;
+        let currentSlide = parseInt(localStorage.getItem('eje8_sync_slide')) || 1;
+        let currentPageIndex = 0; 
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const isOrador = urlParams.get('rol') === 'orador';
+
+        // Guion con citas estrictas al PND 2050
+        const speakerNotesRaw = {
+            1: "<strong>Bienvenida e introducción a la clase.</strong>\n\nEvaluaremos retrospectivamente el Eje 8 del material de estudio hasta llegar a nuestra fecha actual en 2026, y lo contrastaremos con la visión estratégica del reciente Plan Nacional de Desarrollo (PND) Paraguay 2050 <span class='citation'></span>.",
+            2: "«El documento histórico nos revela cómo en los años 2000 el MOPC tenía el control casi absoluto de las cuestiones binacionales. Sin embargo, hoy en 2026, la Cancillería demostró ser el conducto ineludible operando en tándem técnico.»\n\n«Pero además, hoy sumamos una nueva brújula: el PND 2050. Su Pilar 3 promueve la seguridad energética orientada a fuentes renovables y limpias <span class='citation'></span>.»\n\n«Este pilar busca equilibrar el crecimiento económico con la sostenibilidad ambiental <span class='citation'></span>. Vamos a contrastar la teoría antigua con este nuevo norte.»",
+            3: "«Iniciemos con Itaipú. El documento original celebraba ingresos por USD 100 millones anuales. Observen el primer gráfico: hoy el salto es inmenso. El acuerdo de 2024 nos inyecta unos USD 1.250 millones anuales.»\n\n«Actualmente, el desafío es el Anexo C. Y aquí entra la nueva visión: el PND 2050 nos plantea el concepto de 'powershoring', que consiste en la atracción de industrias mediante nuestra energía limpia y competitiva <span class='citation'></span>.»\n\n«El powershoring abre nuevas perspectivas para integrar al país en cadenas globales de valor <span class='citation'></span>.»",
+            4: "«Pasemos a Yacyretá. En lo técnico, la maquinización del brazo Aña Cuá es una realidad, aunque en lo financiero el 'Acuerdo Cartes-Macri' sigue en un limbo jurídico en Argentina.»\n\n«Fíjense en el gráfico de anillo en pantalla. Aunque la región cuenta con una combinación energética más ecológica que la media mundial, aún depende en un 66% de combustibles fósiles <span class='citation'></span>.»\n\n«Por este motivo, el PND 2050 señala que el transporte constituye un frente crítico para la descarbonización <span class='citation'></span>. La electrificación del transporte y el impulso de biocombustibles representan oportunidades inmediatas <span class='citation'></span>.»",
+            5: "«El documento Eje 8 proyectaba expandirse con la presa Yguazú y Corpus Christi. Ambas fracasaron. Corpus Christi chocó con el rechazo social en Argentina. Una transición justa implica que las comunidades participen <span class='citation'></span>.»\n\n«Pero miremos el tercer gráfico de la pantalla. El PND 2050 indica que la diversificación de la matriz energética se presenta como un eje prioritario <span class='citation'></span>.»\n\n«Reducir la dependencia de la hidroelectricidad implica potenciar fuentes como la solar, la biomasa y la eólica <span class='citation'></span>. Ya no se trata de hacer mega-represas inviables, sino de diversificar responsablemente.»",
+            6: "«Para concluir, ¿se cumplió la visión del Eje 8? En su núcleo vital, SÍ. Paraguay se posicionó como una potencia mundial al saldar Itaipú y ampliar Aña Cuá.»\n\n«Sin embargo, la era de las 'nuevas mega-represas' tocó su techo. Para movilizar los recursos necesarios, Paraguay debe apostar por una arquitectura financiera innovadora <span class='citation'></span>.»\n\n«El PND 2050 traza la ruta definitiva: transición hacia una industrialización verde y uso de bonos verdes para atraer capital privado <span class='citation'></span>. Muchas gracias.»",
+            7: "<strong>Despedida.</strong> \n\nAquí puedes ofrecerte a responder preguntas de los alumnos o invitar a la lectura de los artículos y el documento oficial del PND 2050 referenciados en pantalla."
+        };
+
+        const notesPages = {};
+        for(let i = 1; i <= totalSlides; i++) {
+            notesPages[i] = speakerNotesRaw[i].split('\n\n').filter(p => p.trim() !== '');
+        }
+
+        if (isOrador) {
+            // === MODO ORADOR ===
+            document.getElementById('orador-view').classList.remove('hidden');
+            document.getElementById('orador-view').classList.add('flex');
+            
+            const counter = document.getElementById('slide-counter');
+            const speakerText = document.getElementById('speaker-text');
+            const container = document.getElementById('text-container');
+
+            function autoFitText() {
+                let minFontSize = 16;
+                let maxFontSize = 80; 
+                let currentFontSize = maxFontSize;
+                speakerText.style.fontSize = currentFontSize + 'px';
+                
+                while ((speakerText.scrollHeight > container.clientHeight || speakerText.scrollWidth > container.clientWidth) && currentFontSize > minFontSize) {
+                    currentFontSize -= 2;
+                    speakerText.style.fontSize = currentFontSize + 'px';
+                }
+            }
+
+            function updateTeleprompter() {
+                if (!notesPages[currentSlide]) currentSlide = 1;
+                if (currentPageIndex >= notesPages[currentSlide].length) currentPageIndex = 0;
+
+                const totalPagesInSlide = notesPages[currentSlide].length;
+                counter.innerHTML = `S${currentSlide}/${totalSlides} <span class="text-zinc-500 font-light ml-2">P${currentPageIndex + 1}/${totalPagesInSlide}</span>`;
+                
+                speakerText.style.opacity = 0;
+                setTimeout(() => {
+                    speakerText.innerHTML = notesPages[currentSlide][currentPageIndex];
+                    autoFitText(); 
+                    speakerText.style.opacity = 1;
+                }, 150);
+            }
+
+            window.addEventListener('resize', autoFitText);
+
+            function goNext() {
+                if (currentPageIndex < notesPages[currentSlide].length - 1) {
+                    currentPageIndex++;
+                    updateTeleprompter();
+                } else if (currentSlide < totalSlides) {
+                    currentSlide++;
+                    currentPageIndex = 0;
+                    localStorage.setItem('eje8_sync_slide', currentSlide); 
+                    updateTeleprompter();
+                }
+            }
+
+            function goPrev() {
+                if (currentPageIndex > 0) {
+                    currentPageIndex--;
+                    updateTeleprompter();
+                } else if (currentSlide > 1) {
+                    currentSlide--;
+                    currentPageIndex = notesPages[currentSlide].length - 1; 
+                    localStorage.setItem('eje8_sync_slide', currentSlide); 
+                    updateTeleprompter();
+                }
+            }
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight' || e.key === 'Space') {
+                    e.preventDefault();
+                    goNext();
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    goPrev();
+                }
+            });
+
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'eje8_sync_slide') {
+                    let newSlide = parseInt(e.newValue);
+                    if (newSlide !== currentSlide) {
+                        currentSlide = newSlide;
+                        currentPageIndex = 0; 
+                        updateTeleprompter();
+                    }
+                }
+            });
+
+            localStorage.setItem('eje8_sync_slide', currentSlide);
+            updateTeleprompter();
+
+        } else {
+            // === MODO VISOR CON GRÁFICOS ===
+            document.getElementById('visor-view').classList.remove('hidden');
+            document.getElementById('visor-view').classList.add('flex');
+
+            // GRAFICO 1: Itaipu (Barras)
+            const ctxItaipu = document.getElementById('itaipuChart').getContext('2d');
+            new Chart(ctxItaipu, {
+                type: 'bar',
+                data: {
+                    labels: ['Proyección Eje 8', 'Realidad (2024)'],
+                    datasets: [{
+                        label: 'Ingresos (Millones USD)',
+                        data: [100, 1250],
+                        backgroundColor: ['rgba(148, 163, 184, 0.6)', 'rgba(52, 211, 153, 0.8)'],
+                        borderColor: ['rgba(148, 163, 184, 1)', 'rgba(52, 211, 153, 1)'],
+                        borderWidth: 1,
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false }, title: { display: true, text: 'Ingresos Anuales - Itaipú', color: '#e2e8f0', font: {size: 16} } },
+                    scales: { y: { ticks: { color: '#94a3b8', callback: val => '$' + val + 'M' } }, x: { ticks: { color: '#e2e8f0' } } }
+                }
+            });
+
+            // GRAFICO 2: Matriz Energética Regional (Anillo)
+            const ctxMatriz = document.getElementById('matrizChart').getContext('2d');
+            new Chart(ctxMatriz, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Combustibles Fósiles', 'Energías Renovables'],
+                    datasets: [{
+                        data: [66, 34],
+                        backgroundColor: ['rgba(244, 63, 94, 0.8)', 'rgba(56, 189, 248, 0.8)'],
+                        borderColor: ['#1e293b', '#1e293b'],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { 
+                        legend: { position: 'bottom', labels: { color: '#e2e8f0' } },
+                        title: { display: true, text: 'Matriz Energética Regional', color: '#e2e8f0', font: {size: 16} }
+                    }
+                }
+            });
+
+            // GRAFICO 3: Fuentes a Potenciar PND 2050 (Barras Horizontales)
+            const ctxFuentes = document.getElementById('fuentesChart').getContext('2d');
+            new Chart(ctxFuentes, {
+                type: 'bar',
+                data: {
+                    labels: ['Solar', 'Eólica', 'Biomasa'],
+                    datasets: [{
+                        label: 'Nivel de Prioridad Estratégica (Conceptual)',
+                        data: [90, 80, 85], // Datos conceptuales para ilustrar "potenciar"
+                        backgroundColor: ['#fbbf24', '#38bdf8', '#10b981'],
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false }, title: { display: true, text: 'Nuevas Fuentes a Potenciar (PND 2050)', color: '#e2e8f0', font: {size: 16} } },
+                    scales: { x: { display: false }, y: { ticks: { color: '#e2e8f0', font: {size: 14} } } }
+                }
+            });
+
+            // Lógica de avance Visor
+            const slides = document.querySelectorAll('.slide');
+            const indicator = document.getElementById('slide-indicator');
+
+            function updateVisor() {
+                if(currentSlide < 1) currentSlide = 1;
+                if(currentSlide > totalSlides) currentSlide = totalSlides;
+
+                slides.forEach(slide => {
+                    slide.classList.remove('active');
+                    if (parseInt(slide.dataset.slide) === currentSlide) {
+                        slide.classList.add('active');
+                    }
+                });
+                indicator.innerText = `${currentSlide}/${totalSlides}`;
+            }
+
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'eje8_sync_slide') {
+                    currentSlide = parseInt(e.newValue);
+                    updateVisor();
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight' || e.key === 'Space') {
+                    if (currentSlide < totalSlides) {
+                        currentSlide++;
+                        localStorage.setItem('eje8_sync_slide', currentSlide);
+                        updateVisor();
+                    }
+                } else if (e.key === 'ArrowLeft') {
+                    if (currentSlide > 1) {
+                        currentSlide--;
+                        localStorage.setItem('eje8_sync_slide', currentSlide);
+                        updateVisor();
+                    }
+                }
+            });
+
+            updateVisor();
+        }
+    </script>
+</body>
+</html>
