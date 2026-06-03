@@ -528,6 +528,42 @@
                 }
             });
 
+            // --- Lógica de Gestos Táctiles (Swipe) para el Visor ---
+            let visorTouchstartX = 0;
+            let visorTouchendX = 0;
+
+            function handleVisorGesture() {
+                const threshold = 50; // Distancia mínima para considerar un swipe
+                
+                // Deslizar a la izquierda (Avanzar)
+                if (visorTouchendX < visorTouchstartX - threshold) {
+                    if (currentSlide < totalSlides) {
+                        currentSlide++;
+                        localStorage.setItem('eje8_sync_slide', currentSlide);
+                        updateVisor();
+                    }
+                }
+                // Deslizar a la derecha (Retroceder)
+                if (visorTouchendX > visorTouchstartX + threshold) {
+                    if (currentSlide > 1) {
+                        currentSlide--;
+                        localStorage.setItem('eje8_sync_slide', currentSlide);
+                        updateVisor();
+                    }
+                }
+            }
+
+            // Escuchar toques en la pantalla completa del visor
+            document.addEventListener('touchstart', e => {
+                visorTouchstartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            document.addEventListener('touchend', e => {
+                visorTouchendX = e.changedTouches[0].screenX;
+                handleVisorGesture();
+            }, { passive: true });
+            // -------------------------------------------------------
+
             updateVisor();
         }
     </script>
