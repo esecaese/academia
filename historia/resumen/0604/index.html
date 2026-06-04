@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase de Historia del Paraguay - Texto Unificado</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --panel: #111a2e;
+      --panel-2: #17223b;
+      --text: #e8eefc;
+      --muted: #9fb0d1;
+      --accent: #7cc4ff;
+      --accent-2: #4ea1ff;
+      --border: #253455;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --max: 1100px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, #08101d 0%, #0b1220 100%);
+      color: var(--text);
+      line-height: 1.75;
+    }
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 32px 20px 64px;
+    }
+    .hero {
+      background: linear-gradient(180deg, rgba(124,196,255,.12), rgba(78,161,255,.05));
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+    }
+    h1, h2, h3 { line-height: 1.2; margin: 0 0 14px; }
+    h1 { font-size: clamp(1.8rem, 3vw, 2.7rem); }
+    h2 { font-size: clamp(1.2rem, 2vw, 1.6rem); color: var(--accent); }
+    p { margin: 0 0 18px; }
+    .muted { color: var(--muted); }
+    .toc {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+      margin: 24px 0 30px;
+    }
+    .toc a {
+      display: block;
+      text-decoration: none;
+      color: var(--text);
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      border: 1px solid var(--border);
+      padding: 14px 16px;
+      border-radius: 16px;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+      box-shadow: var(--shadow);
+    }
+    .toc a:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent-2);
+      background: linear-gradient(180deg, #15213a, #1a2948);
+    }
+    .content {
+      background: rgba(17, 26, 46, .8);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(6px);
+    }
+    section {
+      scroll-margin-top: 24px;
+      padding-top: 6px;
+      margin-top: 6px;
+    }
+    .tag {
+      display: inline-block;
+      font-size: .84rem;
+      color: var(--accent);
+      border: 1px solid rgba(124,196,255,.25);
+      background: rgba(124,196,255,.08);
+      padding: 6px 10px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+    .footer {
+      color: var(--muted);
+      margin-top: 26px;
+      font-size: .95rem;
+    }
+    @media (max-width: 640px) {
+      .wrap { padding: 18px 14px 44px; }
+      .hero, .content { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="tag">Formato HTML oscuro</div>
+      <h1>Clase de Historia del Paraguay - Texto unificado</h1>
+      <p class="muted">Versión en HTML del texto unificado, manteniendo el contenido tal como fue redactado y agregando accesos directos para navegar más rápido entre bloques temáticos.</p>
+    </header>
+
+    <nav class="toc" aria-label="Accesos directos">
+      <a href="#inicio">Inicio de la clase</a>
+      <a href="#modelo">Modelo paraguayo</a>
+      <a href="#limites">Límites y ríos</a>
+      <a href="#europa">Solano López y Europa</a>
+      <a href="#causas">Causas de la guerra</a>
+      <a href="#actores">Modelo explicativo</a>
+      <a href="#uruguay">Uruguay y Brasil</a>
+      <a href="#corrientes">Corrientes y federales</a>
+      <a href="#internacional">Dimensión internacional</a>
+      <a href="#cierre">Cierre</a>
+    </nav>
+
+    <main class="content">
+      <h2>Texto unificado</h2>
+
+      <section id="inicio">
+        <p>Al comienzo de la clase, el profesor pidió que no se le fijaran exámenes en la semana del 13 al 17 de julio porque no iba a poder asistir, y comentó que intentaría coordinar una o dos clases de recuperación para compensar el tiempo perdido por feriados, actividades institucionales y otras interrupciones del calendario.</p>
+        <p>Después de esa aclaración administrativa, retomó el programa y señaló que la clase continuaba desde 1852, es decir, desde la caída de Juan Manuel de Rosas en la batalla de Caseros y la llegada de Justo José de Urquiza a la presidencia de la Confederación Argentina.</p>
+        <p>A partir de ese momento, explicó, la independencia del Paraguay fue finalmente reconocida por la Confederación Argentina, y eso abrió una etapa de crecimiento económico más acelerado bajo el gobierno de Carlos Antonio López.</p>
+      </section>
+
+      <section id="modelo">
+        <p>El profesor insistió en que Paraguay no era una potencia mundial ni el país más avanzado del planeta, y criticó las exageraciones nacionalistas que presentan ese período como una edad de oro casi mítica.</p>
+        <p>Según su explicación, lo verdaderamente novedoso del Paraguay no era haber tenido “el primero” de todo, sino haber impulsado un modelo en el que el Estado organizaba la vida económica y política, a diferencia de otros países latinoamericanos donde predominaban pequeñas élites comerciales asociadas al mercado internacional.</p>
+        <p>También señaló que, con la caída de Rosas y el reconocimiento de la independencia paraguaya, empezaron a perder fuerza los argumentos de Carlos Antonio López para mantener un control tan rígido sobre las libertades políticas y económicas.</p>
+        <p>López sostenía que primero había que educar a la población y después conceder libertades, porque, según él, sin educación cívica la libertad podía llevar al caos, tal como ocurría en los países vecinos inmersos en guerras civiles.</p>
+        <p>En ese contexto comenzó a crecer una oposición, primero moderada y luego más abierta, que más tarde conspiraría contra el gobierno y que en parte terminaría vinculada al exilio paraguayo en Buenos Aires y, posteriormente, a la llamada Legión Paraguaya.</p>
+        <p>El profesor explicó además que durante la década de 1850 hubo un crecimiento importante que permitió traer técnicos, especialistas y profesionales europeos, en especial ingleses, pero también de otros países como Italia, España, Austria y Polonia.</p>
+        <p>Ese proceso se reflejó en obras públicas, construcciones, palacios y un florecimiento urbano en Asunción, aunque advirtió que ese desarrollo no significaba que el país estuviera libre de tensiones o problemas estructurales.</p>
+      </section>
+
+      <section id="limites">
+        <p>Uno de esos problemas centrales era la cuestión de los límites, que Paraguay no consiguió resolver ni con la Argentina ni con el Brasil.</p>
+        <p>Con la Argentina, dijo, estuvo cerca de alcanzarse un acuerdo por el cual Paraguay cedería derechos sobre las Misiones Orientales a cambio de garantizar una frontera favorable en el Chaco y, sobre todo, de impedir que la Argentina tuviera control territorial suficiente sobre el río Paraguay como para convertirlo plenamente en río internacional.</p>
+        <p>Sin embargo, ese entendimiento no prosperó, y con el Brasil ocurrió algo parecido: hubo negociaciones, presiones e incidentes diplomáticos, pero los problemas de límites y de navegación quedaron sin solución definitiva.</p>
+        <p>En este punto, el profesor subrayó que el problema no era solo fronterizo, sino también estratégico.</p>
+        <p>Paraguay sostenía que el río Paraguay debía ser controlado y no considerado completamente internacional, mientras que Brasil necesitaba usar esa vía para comunicarse con Mato Grosso, una región muy aislada y de acceso terrestre difícil, lento y peligroso por las distancias, el clima y las enfermedades.</p>
+        <p>Por eso, la libre navegación del río Paraguay se convirtió en una cuestión decisiva para la política regional y en una de las causas fundamentales del conflicto posterior.</p>
+      </section>
+
+      <section id="europa">
+        <p>Otro tema importante de la clase fue el viaje de Francisco Solano López a Europa.</p>
+        <p>Según el profesor, ese viaje le permitió contratar técnicos, establecer contactos con empresas y especialistas europeos, gestionar cuestiones diplomáticas y, al mismo tiempo, absorber ideas políticas y estratégicas que luego influirían en su visión internacional.</p>
+        <p>Entre esas influencias destacó la llamada doctrina del equilibrio, según la cual la paz dependía de mantener un balance político entre fuerzas y alianzas, ya que cuando ese equilibrio se rompía aumentaban las probabilidades de guerra.</p>
+        <p>Desde esa perspectiva, explicó, Solano López pensaba que Paraguay no podía permitir que en la región se consolidara una coalición hostil que lo dejara aislado frente a sus vecinos.</p>
+        <p>El profesor mencionó además varios incidentes diplomáticos previos a la guerra, entre ellos conflictos con los Estados Unidos y con Gran Bretaña.</p>
+        <p>En el caso estadounidense, relató que hubo un incidente naval, reclamos diplomáticos y luego una gran expedición aprobada por el Congreso de los Estados Unidos para exigir reparaciones al Paraguay, aunque finalmente el conflicto se resolvió por la vía diplomática y Paraguay logró salir relativamente bien parado en la negociación.</p>
+        <p>También habló de una conspiración contra Carlos Antonio López vinculada con opositores y con un personaje conectado al ámbito británico, lo que derivó en tensiones con Gran Bretaña y en negociaciones complejas alrededor del buque Tacuarí y de la liberación de un detenido importante para esa trama.</p>
+      </section>
+
+      <section id="causas">
+        <p>Tras la muerte de Carlos Antonio López en 1862, dijo el profesor, quedaron sin resolverse justamente los asuntos más peligrosos: la navegación de los ríos, los límites con Brasil y Argentina, y las disputas políticas regionales que ya se estaban agudizando.</p>
+        <p>A partir de ahí identificó varias causas principales de la guerra: la libre navegación del río Paraguay, la falta de delimitación heredada desde la época colonial, los conflictos entre élites y partidos dentro de cada país, y las diferentes visiones sobre el orden político regional.</p>
+        <p>En ese punto fue muy enfático al rechazar la idea simplista de que Gran Bretaña hubiera sido “el cuarto aliado” y el motor único de la guerra.</p>
+        <p>Sostuvo que la conducta británica fue contradictoria, porque hubo sectores y diplomáticos británicos que favorecieron a los aliados, pero también acciones británicas que terminaron beneficiando al Paraguay, como la publicación del contenido del tratado secreto de la Triple Alianza.</p>
+        <p>Esa publicación, explicó, dejó muy mal posicionados a los aliados en el plano diplomático y facilitó una reacción favorable al Paraguay en varios países latinoamericanos.</p>
+      </section>
+
+      <section id="actores">
+        <p>A partir de allí el profesor pasó a un modelo explicativo más complejo y sostuvo que la historiografía más reciente ya no acepta las explicaciones lineales según las cuales toda la culpa habría sido de un solo actor, ya fuera López, Mitre, Flores o los ingleses.</p>
+        <p>Según esta mirada, la guerra fue el resultado de responsabilidades compartidas entre élites regionales enfrentadas tanto entre sí como dentro de cada país.</p>
+        <p>En Paraguay había disputa entre el oficialismo lopista y los opositores exiliados; en Argentina, entre federales y unitarios; en Uruguay, entre blancos y colorados; y en Brasil, entre sectores monárquicos y corrientes republicanas y abolicionistas que, aunque todavía no dominaban el escenario, ya existían como tensión de fondo.</p>
+        <p>Luego ubicó el escenario hacia 1860 y lo leyó a partir de la doctrina del equilibrio.</p>
+        <p>En ese momento, dijo, Paraguay, los federales argentinos y los blancos uruguayos formaban un conjunto relativamente favorable a López, mientras que en Brasil gobernaban los monárquicos, pero sin una red de alianzas tan clara.</p>
+        <p>Ese equilibrio comenzó a quebrarse con la derrota de Urquiza frente a Mitre, porque los unitarios volvieron a imponerse desde Buenos Aires y eso alteró la correlación regional de fuerzas.</p>
+      </section>
+
+      <section id="uruguay">
+        <p>La situación se agravó todavía más con la nueva guerra civil uruguaya.</p>
+        <p>Los blancos estaban identificados con Paraguay y con los antiguos federales argentinos, mientras que los colorados buscaron apoyo brasileño para imponerse en Uruguay.</p>
+        <p>Cuando Brasil empezó a intervenir de manera cada vez más abierta, primero con presión diplomática y después con acción militar, López interpretó que se estaba rompiendo el equilibrio regional y envió un ultimátum advirtiendo que una invasión al Uruguay sería considerada causa de guerra.</p>
+        <p>El profesor sostuvo que aquí se produjo un gran error de cálculo mutuo.</p>
+        <p>Los brasileños pensaron que López estaba bluffeando y que no cumpliría su amenaza, mientras que López creyó que Brasil no se atrevería a intervenir de lleno en el Uruguay.</p>
+        <p>Cuando Brasil avanzó sobre territorio uruguayo y apoyó decisivamente al bando colorado, Paraguay respondió con la captura de un buque brasileño y con la ocupación de Mato Grosso.</p>
+        <p>Sobre la campaña de Mato Grosso, el profesor fue crítico.</p>
+        <p>Reconoció que fue una operación exitosa y rápida, pero sostuvo que probablemente representó una pérdida de tiempo, porque en vez de concentrarse en impedir la caída del gobierno blanco uruguayo, Paraguay abrió un frente que era ventajoso al inicio pero no decisivo para alterar el resultado político principal.</p>
+        <p>Según esta interpretación, López no solo quiso defender el equilibrio, sino también aprovechar la guerra para ocupar territorios en disputa con el Brasil.</p>
+      </section>
+
+      <section id="corrientes">
+        <p>Después vino la cuestión argentina.</p>
+        <p>Paraguay pidió permiso para atravesar Corrientes y auxiliar a los blancos en Uruguay, pero Mitre no lo concedió.</p>
+        <p>Entonces López decidió invadir Corrientes convencido de que los federales del interior, sobre todo los vinculados a Urquiza, se alzarían contra Buenos Aires y abrirían un segundo frente contra Mitre.</p>
+        <p>El profesor aclaró que eso no significa que López fuera un “tarado”, sino que cometió un error serio de cálculo político.</p>
+        <p>Ese levantamiento federal, explicó, no se produjo en el momento ni en la forma esperada.</p>
+        <p>Urquiza no se alzó contra Mitre, aunque tampoco logró movilizar con entusiasmo a sus fuerzas para pelear contra el Paraguay, y más tarde aparecerían movimientos federales, como el de Felipe Varela, que sí asumieron una postura favorable al Paraguay y contraria a la guerra.</p>
+        <p>Desde esa óptica, el profesor sostuvo que la invasión paraguaya a Corrientes fue una apuesta fundada en conflictos internos argentinos reales, pero mal calculada en sus tiempos y en sus posibilidades concretas.</p>
+        <p>También señaló que la noción de “traición” depende mucho de la perspectiva histórica.</p>
+        <p>Algunos argentinos llamaron traidores a quienes colaboraron con Paraguay en Corrientes, pero el mismo profesor recordó que, dentro de la tradición federal argentina, personajes que se levantaron contra Mitre para oponerse a la guerra no suelen ser vistos como traidores, sino como actores de otra legitimidad política.</p>
+        <p>Por eso insistió en que la guerra no puede entenderse como un enfrentamiento simple entre naciones homogéneas, porque en todos los países había divisiones internas muy fuertes.</p>
+      </section>
+
+      <section id="internacional">
+        <p>En relación con el Brasil, explicó que la guerra terminó fortaleciendo la crisis del Imperio más que su estabilidad.</p>
+        <p>Aunque monárquicos y republicanos pelearon del mismo lado durante el conflicto, la experiencia bélica, el endeudamiento y la radicalización de sectores militares aceleraron el desgaste del régimen imperial y contribuyeron al clima que más tarde desembocaría en la abolición de la esclavitud y en la caída de la monarquía.</p>
+        <p>El profesor volvió luego sobre la cuestión británica y española.</p>
+        <p>Reiteró que no puede decirse que Inglaterra haya sido un aliado uniforme de una sola parte, porque hubo acciones británicas favorables tanto a los aliados como al Paraguay.</p>
+        <p>Sobre España, comentó que Paraguay ni siquiera tenía relaciones diplomáticas normales durante una parte importante del período y recordó que uno de los fracasos del viaje europeo de Solano López había sido no conseguir el reconocimiento español de la independencia paraguaya en los términos que el gobierno paraguayo deseaba.</p>
+        <p>También destacó la reacción diplomática de otros países sudamericanos.</p>
+        <p>Según la exposición, Colombia, Perú, Bolivia y Chile, además de algún eco en Venezuela, protestaron con fuerza tras conocerse el contenido del tratado secreto y ejercieron presión para impedir que Paraguay desapareciera como Estado independiente o fuera repartido entre Argentina y Brasil.</p>
+        <p>Añadió que Brasil terminó comprendiendo bastante pronto que le convenía la existencia de un Paraguay independiente, mientras que en la Argentina hubo sectores que llegaron a imaginar una solución mucho más absorbente respecto del territorio paraguayo.</p>
+      </section>
+
+      <section id="cierre">
+        <p>Hacia el final, el profesor insistió en su idea principal: las causas de la guerra no fueron sencillas, únicas ni lineales.</p>
+        <p>No se trató solo de límites, ni solo de navegación fluvial, ni solo de la doctrina del equilibrio, ni solo de rivalidades externas; también intervinieron disputas internas, cálculos políticos erróneos, intereses económicos y conflictos ideológicos dentro de cada sociedad.</p>
+        <p>Por eso, afirmó que cuando alguien intenta explicar la guerra de forma demasiado simple, hay que responder que se trata de un proceso multicausal y profundamente complejo.</p>
+        <p>Finalmente, ante la pregunta de si la guerra era inevitable, respondió que no sabía si podía afirmarse eso de manera absoluta, pero sí consideraba que algún tipo de conflicto probablemente iba a ocurrir.</p>
+        <p>Lo que sí sostuvo con claridad fue que ese conflicto estuvo muy mal manejado y que quizás podría haber adoptado una escala menor o una forma distinta si los actores hubieran calculado mejor sus movimientos.</p>
+        <p>Cerró señalando que en la próxima clase se vería ya la guerra en sí misma, es decir, la campaña ofensiva, la campaña defensiva y el desarrollo militar básico, mientras que los detalles más minuciosos de las batallas debían estudiarse en bibliografía específica.</p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
