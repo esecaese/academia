@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Política Exterior de Seguridad del Paraguay</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap');
+
+    :root{
+      --bg:#f3f1ec;
+      --paper:#fffdf9;
+      --ink:#16202b;
+      --muted:#5b6777;
+      --line:#ded8cd;
+      --wine:#7c2d3b;
+      --wine-soft:#f7e9ec;
+      --petrol:#164e63;
+      --petrol-soft:#e7f4f8;
+      --gold:#b98928;
+      --gold-soft:#fcf5e7;
+      --green:#2f6f57;
+      --green-soft:#e8f3ee;
+      --danger:#b42318;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{
+      margin:0;
+      padding:0;
+      width:100%;
+      height:100%;
+      overflow:hidden;
+      font-family:'Manrope', sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+    }
+
+    .slide{
+      display:none;
+      opacity:0;
+      transition:opacity .35s ease-in-out;
+      width:100%;
+      height:100%;
+    }
+    .slide.active{
+      display:flex;
+      opacity:1;
+    }
+
+    #visor-view{
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.65), rgba(255,255,255,.65)),
+        repeating-linear-gradient(
+          90deg,
+          transparent 0,
+          transparent 79px,
+          rgba(0,0,0,.018) 80px
+        ),
+        var(--bg);
+      font-size:1.18rem;
+    }
+
+    .sheet{
+      background:rgba(255,253,249,.92);
+      border:1px solid var(--line);
+      box-shadow:0 18px 50px rgba(40,35,30,.08);
+      border-radius:30px;
+    }
+
+    .section-tag{
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font-weight:800;
+      font-size:1rem;
+    }
+
+    .orador-text{
+      font-size:3rem;
+      line-height:1.46;
+      color:#f8fafc;
+      text-align:left;
+      transition:opacity .2s ease-in-out;
+      width:100%;
+      max-width:90%;
+      margin:auto;
+    }
+    .orador-text strong{ color:#fbbf24; }
+    .citation{
+      font-size:.62em;
+      vertical-align:super;
+      color:#67e8f9;
+      font-weight:800;
+    }
+
+    .stat-box{
+      border-radius:24px;
+      padding:1.2rem 1.25rem;
+      border:1px solid var(--line);
+      background:#fff;
+    }
+
+    @media (max-width: 768px){
+      .orador-text{ font-size:2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- VISOR -->
+  <div id="visor-view" class="hidden h-screen w-screen flex-col">
+    <header class="absolute top-0 left-0 right-0 z-20 px-8 md:px-12 py-5 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 rounded-full bg-[var(--wine-soft)] border border-[var(--line)] flex items-center justify-center text-[var(--wine)]">
+          <i class="fas fa-landmark"></i>
+        </div>
+        <div>
+          <div class="text-sm md:text-base text-slate-500 font-bold tracking-[0.22em] uppercase">Academia Diplomática</div>
+          <div class="text-lg md:text-xl font-extrabold text-slate-700">Política Exterior y Seguridad</div>
+        </div>
+      </div>
+      <div id="slide-indicator" class="text-lg md:text-xl font-black text-slate-500">1/7</div>
+    </header>
+
+    <main class="flex-1 pt-24 pb-8 px-6 md:px-10">
+      <div class="h-full w-full flex items-center justify-center">
+
+        <!-- Slide 1 -->
+        <section class="slide active w-full h-full" data-slide="1">
+          <div class="sheet h-full w-full p-10 md:p-14 grid md:grid-cols-[1.2fr_.8fr] gap-8">
+            <div class="flex flex-col justify-center">
+              <div class="section-tag text-[var(--wine)] mb-5">Eje temático 11 · 2003–2026</div>
+              <h1 class="text-6xl md:text-8xl font-extrabold leading-[0.96] tracking-[-0.05em] max-w-[12ch] mb-8">
+                Seguridad internacional paraguaya en transformación
+              </h1>
+              <p class="text-3xl md:text-4xl text-slate-600 leading-snug max-w-[18ch]">
+                Del énfasis antiterrorista a una respuesta integral frente al crimen organizado transnacional.
+              </p>
+            </div>
+
+            <div class="flex flex-col justify-between">
+              <div class="rounded-[28px] bg-[var(--petrol-soft)] border border-[var(--line)] p-8">
+                <div class="text-[var(--petrol)] text-lg font-extrabold uppercase tracking-[0.18em] mb-4">Tesis</div>
+                <p class="text-2xl md:text-3xl leading-snug text-slate-700 font-semibold">
+                  En 2026, Paraguay no solo enfrenta amenazas más complejas: también posee más coordinación,
+                  más cooperación externa y una estrategia nacional formalizada.
+                </p>
+              </div>
+
+              <div class="grid grid-cols-2 gap-5 mt-6">
+                <div class="stat-box">
+                  <div class="text-sm uppercase tracking-[0.16em] font-extrabold text-slate-500 mb-2">Antes</div>
+                  <div class="text-2xl md:text-3xl font-bold">Respuestas sectoriales</div>
+                </div>
+                <div class="stat-box">
+                  <div class="text-sm uppercase tracking-[0.16em] font-extrabold text-slate-500 mb-2">Ahora</div>
+                  <div class="text-2xl md:text-3xl font-bold">Estrategia integral</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 2 -->
+        <section class="slide w-full h-full" data-slide="2">
+          <div class="sheet h-full w-full p-10 md:p-12 flex flex-col">
+            <div class="flex items-end justify-between gap-6 mb-8">
+              <div>
+                <div class="section-tag text-[var(--petrol)] mb-3">Parte 1</div>
+                <h2 class="text-5xl md:text-6xl font-extrabold tracking-[-0.04em]">2003–2008: base del enfoque exterior</h2>
+              </div>
+              <div class="hidden md:block text-right text-slate-500 text-xl font-semibold">Multilateralismo · Triple Frontera · Antiterrorismo</div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-7 flex-1">
+              <article class="bg-white rounded-[28px] border border-[var(--line)] p-8">
+                <div class="text-[var(--wine)] text-5xl mb-6"><i class="fas fa-globe-americas"></i></div>
+                <h3 class="text-3xl font-extrabold mb-4">Marco externo</h3>
+                <p class="text-2xl text-slate-600 leading-snug">El contexto pos-11S volvió prioritaria la demostración de compromisos concretos contra el terrorismo.</p>
+              </article>
+
+              <article class="bg-white rounded-[28px] border border-[var(--line)] p-8">
+                <div class="text-[var(--petrol)] text-5xl mb-6"><i class="fas fa-scale-balanced"></i></div>
+                <h3 class="text-3xl font-extrabold mb-4">Herramientas</h3>
+                <p class="text-2xl text-slate-600 leading-snug">Paraguay reforzó adhesión a instrumentos ONU y OEA, controles financieros y cooperación regional.</p>
+              </article>
+
+              <article class="bg-white rounded-[28px] border border-[var(--line)] p-8 bg-gradient-to-b from-white to-[var(--wine-soft)]">
+                <div class="text-[var(--gold)] text-5xl mb-6"><i class="fas fa-layer-group"></i></div>
+                <h3 class="text-3xl font-extrabold mb-4">Límite principal</h3>
+                <p class="text-2xl text-slate-600 leading-snug">La coordinación seguía siendo limitada y la respuesta estatal todavía no tenía una arquitectura integral.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 3 -->
+        <section class="slide w-full h-full" data-slide="3">
+          <div class="sheet h-full w-full p-10 md:p-12 grid md:grid-cols-[.95fr_1.05fr] gap-8">
+            <div class="flex flex-col">
+              <div class="section-tag text-[var(--wine)] mb-3">Parte 2</div>
+              <h2 class="text-5xl md:text-6xl font-extrabold tracking-[-0.04em] mb-8">2026: amenazas más densas y territoriales</h2>
+
+              <div class="space-y-5">
+                <div class="rounded-[24px] bg-white border border-[var(--line)] p-6">
+                  <div class="text-xl font-extrabold text-[var(--wine)] mb-2">Actores</div>
+                  <div class="text-2xl text-slate-600">PCC y Comando Vermelho en zonas fronterizas como Amambay y Alto Paraná.</div>
+                </div>
+
+                <div class="rounded-[24px] bg-white border border-[var(--line)] p-6">
+                  <div class="text-xl font-extrabold text-[var(--petrol)] mb-2">Modalidades</div>
+                  <div class="text-2xl text-slate-600">Sicariato, extorsión digital desde prisiones y criptominería ilegal para lavado.</div>
+                </div>
+
+                <div class="rounded-[24px] bg-[var(--gold-soft)] border border-[var(--line)] p-6">
+                  <div class="text-xl font-extrabold text-[var(--gold)] mb-2">Lectura clave</div>
+                  <div class="text-2xl text-slate-700">El crimen organizado deja de ser un fenómeno periférico y pasa a tener arraigo territorial visible.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-[30px] border border-[var(--line)] p-8 flex flex-col">
+              <div class="text-xl uppercase tracking-[0.16em] font-extrabold text-slate-500 mb-4">Brecha de homicidios</div>
+              <div class="flex-1 min-h-[420px]">
+                <canvas id="violenciaChart"></canvas>
+              </div>
+              <div class="pt-4 text-xl text-slate-500">
+                Alto Paraná registra 62 casos por 100.000 habitantes frente a 6,2 del promedio nacional.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 4 -->
+        <section class="slide w-full h-full" data-slide="4">
+          <div class="sheet h-full w-full p-10 md:p-12 flex flex-col">
+            <div class="section-tag text-[var(--green)] mb-3">Parte 3</div>
+            <h2 class="text-5xl md:text-6xl font-extrabold tracking-[-0.04em] mb-8">Cooperación con la Unión Europea</h2>
+
+            <div class="grid md:grid-cols-[1.05fr_.95fr] gap-8 flex-1">
+              <div class="grid gap-5">
+                <div class="rounded-[24px] bg-white border border-[var(--line)] p-7 flex items-start gap-5">
+                  <div class="w-16 h-16 rounded-2xl bg-[var(--petrol-soft)] flex items-center justify-center text-[var(--petrol)] text-2xl"><i class="fas fa-lock"></i></div>
+                  <div>
+                    <div class="text-3xl font-extrabold mb-2">PAcCTO 2.0</div>
+                    <div class="text-2xl text-slate-600">Inteligencia penitenciaria, acuerdos interinstitucionales y fortalecimiento operativo.</div>
+                  </div>
+                </div>
+
+                <div class="rounded-[24px] bg-white border border-[var(--line)] p-7 flex items-start gap-5">
+                  <div class="w-16 h-16 rounded-2xl bg-[var(--green-soft)] flex items-center justify-center text-[var(--green)] text-2xl"><i class="fas fa-border-all"></i></div>
+                  <div>
+                    <div class="text-3xl font-extrabold mb-2">EUROFRONT</div>
+                    <div class="text-2xl text-slate-600">Seguridad fronteriza regional y ampliación del programa hasta 2029.</div>
+                  </div>
+                </div>
+
+                <div class="rounded-[24px] bg-white border border-[var(--line)] p-7 flex items-start gap-5">
+                  <div class="w-16 h-16 rounded-2xl bg-[var(--wine-soft)] flex items-center justify-center text-[var(--wine)] text-2xl"><i class="fas fa-handshake"></i></div>
+                  <div>
+                    <div class="text-3xl font-extrabold mb-2">COPOLAD III</div>
+                    <div class="text-2xl text-slate-600">Cooperación CELAC-UE en drogas, inteligencia y enfoque de derechos humanos.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-white rounded-[30px] border border-[var(--line)] p-8 flex flex-col">
+                <div class="text-xl uppercase tracking-[0.16em] font-extrabold text-slate-500 mb-4">Evolución de la relación</div>
+                <div class="flex-1 min-h-[420px]">
+                  <canvas id="cooperacionChart"></canvas>
+                </div>
+                <div class="pt-4 text-xl text-slate-500">
+                  La UE pasa de asistencia técnica básica a una asociación estratégica más estructurada.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 5 -->
+        <section class="slide w-full h-full" data-slide="5">
+          <div class="sheet h-full w-full p-10 md:p-12 grid md:grid-cols-[1fr_1fr] gap-8">
+            <div class="bg-white rounded-[30px] border border-[var(--line)] p-8 flex flex-col">
+              <div class="section-tag text-[var(--gold)] mb-3">Parte 4</div>
+              <h2 class="text-5xl font-extrabold tracking-[-0.04em] mb-7">Estrategia Nacional 2026–2030</h2>
+              <div class="flex-1 min-h-[420px]">
+                <canvas id="pilaresChart"></canvas>
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-5 justify-center">
+              <div class="rounded-[24px] bg-[var(--gold-soft)] border border-[var(--line)] p-7">
+                <div class="text-3xl font-extrabold mb-3">Primer marco integral</div>
+                <div class="text-2xl text-slate-700">Es la primera estrategia nacional contra la delincuencia organizada desarrollada para el país.</div>
+              </div>
+
+              <div class="rounded-[24px] bg-white border border-[var(--line)] p-7">
+                <div class="text-3xl font-extrabold mb-3">Gobernanza ampliada</div>
+                <div class="text-2xl text-slate-600">Crea un Comité Técnico Interinstitucional con más de 20 instituciones.</div>
+              </div>
+
+              <div class="rounded-[24px] bg-white border border-[var(--line)] p-7">
+                <div class="text-3xl font-extrabold mb-3">Cuatro pilares</div>
+                <div class="text-2xl text-slate-600">Prevenir, perseguir, proteger y promover.</div>
+              </div>
+
+              <div class="rounded-[24px] bg-white border border-[var(--line)] p-7">
+                <div class="text-3xl font-extrabold mb-3">14 objetivos</div>
+                <div class="text-2xl text-slate-600">Dato, fronteras, inteligencia penitenciaria, lavado y cooperación internacional.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 6 -->
+        <section class="slide w-full h-full" data-slide="6">
+          <div class="sheet h-full w-full p-10 md:p-12 flex flex-col">
+            <div class="section-tag text-[var(--petrol)] mb-3">Parte 5</div>
+            <h2 class="text-5xl md:text-6xl font-extrabold tracking-[-0.04em] mb-8">Comparación general y desafío persistente</h2>
+
+            <div class="grid md:grid-cols-[1.05fr_.95fr] gap-8 flex-1">
+              <div class="grid gap-5">
+                <div class="rounded-[24px] bg-white border border-[var(--line)] p-7">
+                  <div class="text-2xl font-extrabold mb-2 text-[var(--wine)]">Continuidades</div>
+                  <div class="text-2xl text-slate-600">Triple Frontera, multilateralismo, centralidad de la SENAD y preocupación por la frontera oriental.</div>
+                </div>
+
+                <div class="rounded-[24px] bg-white border border-[var(--line)] p-7">
+                  <div class="text-2xl font-extrabold mb-2 text-[var(--petrol)]">Rupturas</div>
+                  <div class="text-2xl text-slate-600">Se pasa de respuestas sectoriales a una estrategia integral, con más cooperación, inteligencia y enfoque de derechos.</div>
+                </div>
+
+                <div class="rounded-[24px] bg-[var(--wine-soft)] border border-[var(--line)] p-7">
+                  <div class="text-2xl font-extrabold mb-2 text-[var(--wine)]">Advertencia</div>
+                  <div class="text-2xl text-slate-700">La política exterior de seguridad solo será sólida si el Estado mejora resultados internos contra impunidad y violencia.</div>
+                </div>
+              </div>
+
+              <div class="bg-white rounded-[30px] border border-[var(--line)] p-8 flex flex-col">
+                <div class="text-xl uppercase tracking-[0.16em] font-extrabold text-slate-500 mb-4">Presión penitenciaria</div>
+                <div class="flex-1 min-h-[420px]">
+                  <canvas id="carcelChart"></canvas>
+                </div>
+                <div class="pt-4 text-xl text-slate-500">
+                  El documento reporta una sobrepoblación carcelaria del 161% de capacidad.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 7 -->
+        <section class="slide w-full h-full" data-slide="7">
+          <div class="sheet h-full w-full p-10 md:p-12 grid md:grid-cols-[.9fr_1.1fr] gap-8">
+            <div class="rounded-[30px] bg-[var(--petrol)] text-white p-10 flex flex-col justify-center">
+              <div class="section-tag text-cyan-200 mb-4">Cierre</div>
+              <h2 class="text-5xl md:text-6xl font-extrabold tracking-[-0.04em] mb-6">Síntesis final</h2>
+              <p class="text-3xl leading-snug text-slate-100">
+                Paraguay evolucionó institucional y estratégicamente, pero la eficacia de su proyección internacional dependerá de su capacidad para fortalecer el Estado de derecho hacia adentro.
+              </p>
+            </div>
+
+            <div class="rounded-[30px] bg-white border border-[var(--line)] p-8 overflow-y-auto">
+              <div class="text-3xl font-extrabold mb-6">Referencias principales</div>
+              <ul class="space-y-4 text-2xl text-slate-600 leading-snug">
+                <li><strong>[1]</strong> Memoria de Gestión 2003–2008, Ministerio de Relaciones Exteriores.</li>
+                <li><strong>[2]</strong> Ayuda Memoria: Seguridad Paraguay – Unión Europea, 3 de junio de 2026.</li>
+                <li><strong>[3]</strong> Estrategia Nacional contra la Delincuencia Organizada 2026–2030, borrador final.</li>
+                <li><strong>[4]</strong> Convención de Palermo (UNTOC), 2000.</li>
+                <li><strong>[5]</strong> Resolución 1373 del Consejo de Seguridad de la ONU.</li>
+                <li><strong>[6]</strong> UNODC Global Study on Homicide 2023.</li>
+                <li><strong>[7]</strong> UNODC World Drug Report 2024.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ORADOR -->
+  <div id="orador-view" class="hidden h-screen w-screen flex-col bg-[#111827] text-white">
+    <header class="bg-[#0b1220] border-b border-slate-700 px-4 py-2 flex justify-between items-center z-10 text-xs">
+      <div class="flex items-center gap-2">
+        <div class="bg-amber-400 w-2 h-2 rounded-full animate-pulse"></div>
+        <span class="font-bold text-slate-400 tracking-widest uppercase">Modo orador</span>
+      </div>
+      <div class="font-black text-cyan-300 bg-slate-800 px-3 py-1 rounded" id="slide-counter"></div>
+      <div class="text-slate-500 font-mono text-right ml-2 leading-tight">Teclas: ◄ ►, Espacio<br/>o Deslizar</div>
+    </header>
+
+    <main id="text-container" class="flex-1 overflow-hidden p-8 md:p-12 flex items-center justify-center">
+      <div class="orador-text" id="speaker-text"></div>
+    </main>
+  </div>
+
+  <script>
+    const totalSlides = 7;
+    let currentSlide = parseInt(localStorage.getItem('eje11_editorial_slide')) || 1;
+    let currentPageIndex = 0;
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const isOrador = (urlParams.get('modo') || '').toLowerCase() === 'orador';
+
+    const speakerNotesRaw = {
+      1: "<strong>Introducción.</strong><br><br>Esta presentación examina cómo evolucionó la política exterior paraguaya en seguridad internacional entre 2003–2008 y 2026. <span class='citation'>[1][2][3]</span><br><br>La tesis es simple: cambiaron las amenazas, pero también cambió la capacidad de respuesta del Estado. <span class='citation'>[1][3]</span>",
+      2: "«En 2003–2008 el eje estaba fuertemente atravesado por el contexto antiterrorista posterior al 11 de septiembre.» <span class='citation'>[1]</span><br><br>«Paraguay reforzó compromisos internacionales, controles y cooperación regional, especialmente alrededor de la Triple Frontera.» <span class='citation'>[1]</span><br><br>«Sin embargo, el modelo todavía era más sectorial que integral.» <span class='citation'>[1]</span>",
+      3: "«En 2026 el problema es más complejo y más territorial.» <span class='citation'>[3]</span><br><br>«Aparecen con fuerza el PCC, el Comando Vermelho, el sicariato, la extorsión digital y nuevas formas de lavado.» <span class='citation'>[3]</span><br><br>«El dato más visible es la tasa de homicidios de Alto Paraná: 62 por 100.000, frente a 6,2 a nivel nacional.» <span class='citation'>[3]</span>",
+      4: "«La cooperación con la Unión Europea es uno de los mayores cambios cualitativos.» <span class='citation'>[2]</span><br><br>«PAcCTO 2.0, EUROFRONT y COPOLAD III muestran que ya no se trata de apoyo técnico aislado, sino de una asociación más estructurada.» <span class='citation'>[1][2]</span>",
+      5: "«El hito central de 2026 es la Estrategia Nacional contra la Delincuencia Organizada 2026–2030.» <span class='citation'>[3]</span><br><br>«Es la primera estrategia integral del país, con cuatro pilares: prevenir, perseguir, proteger y promover.» <span class='citation'>[3]</span><br><br>«Además crea un Comité Técnico Interinstitucional de más de 20 instituciones.» <span class='citation'>[3]</span>",
+      6: "«Comparando ambos períodos, se mantienen la Triple Frontera, el multilateralismo y la preocupación por la frontera oriental.» <span class='citation'>[1][3]</span><br><br>«Pero el salto es claro: más enfoque integral, más cooperación, más tecnología y más articulación estatal.» <span class='citation'>[2][3]</span><br><br>«Al mismo tiempo, persiste la presión penitenciaria, con una sobrepoblación del 161%.» <span class='citation'>[3]</span>",
+      7: "<strong>Cierre.</strong><br><br>La política exterior de seguridad proyecta hacia afuera la calidad del Estado hacia adentro. <span class='citation'>[3]</span><br><br>Por eso, el desafío no es solo sostener acuerdos y estrategias, sino traducirlos en menos violencia, menos impunidad y más institucionalidad. <span class='citation'>[2][3]</span>"
+    };
+
+    const notesPages = {};
+    for(let i=1;i<=totalSlides;i++){
+      notesPages[i] = speakerNotesRaw[i].split('<br><br>').filter(p => p.trim() !== '');
+    }
+
+    if(isOrador){
+      document.getElementById('orador-view').classList.remove('hidden');
+      document.getElementById('orador-view').classList.add('flex');
+
+      const counter = document.getElementById('slide-counter');
+      const speakerText = document.getElementById('speaker-text');
+      const container = document.getElementById('text-container');
+
+      function autoFitText(){
+        let minFontSize = 16;
+        let maxFontSize = 80;
+        let currentFontSize = maxFontSize;
+        speakerText.style.fontSize = currentFontSize + 'px';
+
+        while((speakerText.scrollHeight > container.clientHeight || speakerText.scrollWidth > container.clientWidth) && currentFontSize > minFontSize){
+          currentFontSize -= 2;
+          speakerText.style.fontSize = currentFontSize + 'px';
+        }
+      }
+
+      function updateTeleprompter(){
+        if(!notesPages[currentSlide]) currentSlide = 1;
+        if(currentPageIndex >= notesPages[currentSlide].length) currentPageIndex = 0;
+
+        const totalPagesInSlide = notesPages[currentSlide].length;
+        counter.innerHTML = `S${currentSlide}/${totalSlides} <span class="text-slate-500 font-light ml-2">P${currentPageIndex + 1}/${totalPagesInSlide}</span>`;
+
+        speakerText.style.opacity = 0;
+        setTimeout(() => {
+          speakerText.innerHTML = notesPages[currentSlide][currentPageIndex];
+          autoFitText();
+          speakerText.style.opacity = 1;
+        }, 100);
+      }
+
+      function goNext(){
+        if(currentPageIndex < notesPages[currentSlide].length - 1){
+          currentPageIndex++;
+          updateTeleprompter();
+        } else if(currentSlide < totalSlides){
+          currentSlide++;
+          currentPageIndex = 0;
+          localStorage.setItem('eje11_editorial_slide', currentSlide);
+          updateTeleprompter();
+        }
+      }
+
+      function goPrev(){
+        if(currentPageIndex > 0){
+          currentPageIndex--;
+          updateTeleprompter();
+        } else if(currentSlide > 1){
+          currentSlide--;
+          currentPageIndex = notesPages[currentSlide].length - 1;
+          localStorage.setItem('eje11_editorial_slide', currentSlide);
+          updateTeleprompter();
+        }
+      }
+
+      document.addEventListener('keydown', (e) => {
+        if(e.key === 'ArrowRight' || e.key === ' ' || e.code === 'Space'){
+          e.preventDefault();
+          goNext();
+        } else if(e.key === 'ArrowLeft'){
+          e.preventDefault();
+          goPrev();
+        }
+      });
+
+      let touchstartX = 0;
+      let touchendX = 0;
+
+      function handleGesture(){
+        const threshold = 50;
+        if(touchendX < touchstartX - threshold) goNext();
+        if(touchendX > touchstartX + threshold) goPrev();
+      }
+
+      document.addEventListener('touchstart', e => {
+        touchstartX = e.changedTouches[0].screenX;
+      }, { passive:true });
+
+      document.addEventListener('touchend', e => {
+        touchendX = e.changedTouches[0].screenX;
+        handleGesture();
+      }, { passive:true });
+
+      window.addEventListener('resize', autoFitText);
+
+      window.addEventListener('storage', (e) => {
+        if(e.key === 'eje11_editorial_slide'){
+          let newSlide = parseInt(e.newValue);
+          if(newSlide !== currentSlide){
+            currentSlide = newSlide;
+            currentPageIndex = 0;
+            updateTeleprompter();
+          }
+        }
+      });
+
+      localStorage.setItem('eje11_editorial_slide', currentSlide);
+      updateTeleprompter();
+
+    } else {
+      document.getElementById('visor-view').classList.remove('hidden');
+      document.getElementById('visor-view').classList.add('flex');
+
+      Chart.defaults.font.family = "'Manrope', sans-serif";
+      Chart.defaults.font.size = 20;
+      Chart.defaults.color = '#445164';
+
+      const ctx1 = document.getElementById('violenciaChart').getContext('2d');
+      new Chart(ctx1, {
+        type:'bar',
+        data:{
+          labels:['Promedio nacional','Alto Paraná'],
+          datasets:[{
+            data:[6.2,62],
+            backgroundColor:['rgba(22,78,99,.82)','rgba(124,45,59,.78)'],
+            borderRadius:14
+          }]
+        },
+        options:{
+          responsive:true,
+          maintainAspectRatio:false,
+          plugins:{
+            legend:{display:false},
+            title:{display:true,text:'Tasa de homicidios por 100.000 habitantes',font:{size:28,weight:'bold'},padding:{bottom:18}}
+          },
+          scales:{
+            y:{beginAtZero:true,ticks:{font:{size:18}}},
+            x:{ticks:{font:{size:22,weight:'bold'}}}
+          }
+        }
+      });
+
+      const ctx2 = document.getElementById('cooperacionChart').getContext('2d');
+      new Chart(ctx2, {
+        type:'bar',
+        data:{
+          labels:['2003–2008','2026'],
+          datasets:[{
+            label:'Nivel de institucionalización',
+            data:[25,90],
+            backgroundColor:['rgba(191,161,98,.65)','rgba(47,111,87,.78)'],
+            borderRadius:14
+          }]
+        },
+        options:{
+          responsive:true,
+          maintainAspectRatio:false,
+          plugins:{
+            legend:{display:false},
+            title:{display:true,text:'Profundidad de la cooperación con la UE',font:{size:28,weight:'bold'},padding:{bottom:18}}
+          },
+          scales:{
+            y:{beginAtZero:true,max:100,ticks:{display:false}},
+            x:{ticks:{font:{size:22,weight:'bold'}}}
+          }
+        }
+      });
+
+      const ctx3 = document.getElementById('pilaresChart').getContext('2d');
+      new Chart(ctx3, {
+        type:'doughnut',
+        data:{
+          labels:['Prevenir','Perseguir','Proteger','Promover'],
+          datasets:[{
+            data:[25,25,25,25],
+            backgroundColor:[
+              'rgba(22,78,99,.82)',
+              'rgba(124,45,59,.82)',
+              'rgba(47,111,87,.82)',
+              'rgba(185,137,40,.82)'
+            ],
+            borderColor:'#fffdf9',
+            borderWidth:6
+          }]
+        },
+        options:{
+          responsive:true,
+          maintainAspectRatio:false,
+          plugins:{
+            legend:{position:'bottom',labels:{font:{size:20},padding:18}},
+            title:{display:true,text:'Arquitectura de la Estrategia 2026–2030',font:{size:28,weight:'bold'},padding:{bottom:18}}
+          }
+        }
+      });
+
+      const ctx4 = document.getElementById('carcelChart').getContext('2d');
+      new Chart(ctx4, {
+        type:'bar',
+        data:{
+          labels:['Capacidad teórica','Ocupación reportada'],
+          datasets:[{
+            data:[100,161],
+            backgroundColor:['rgba(47,111,87,.72)','rgba(180,35,24,.76)'],
+            borderRadius:14
+          }]
+        },
+        options:{
+          responsive:true,
+          maintainAspectRatio:false,
+          plugins:{
+            legend:{display:false},
+            title:{display:true,text:'Sobrepoblación penitenciaria',font:{size:28,weight:'bold'},padding:{bottom:18}}
+          },
+          scales:{
+            y:{beginAtZero:true,ticks:{callback:(v)=>v+'%',font:{size:18}}},
+            x:{ticks:{font:{size:22,weight:'bold'}}}
+          }
+        }
+      });
+
+      const slides = document.querySelectorAll('.slide');
+      const indicator = document.getElementById('slide-indicator');
+
+      function updateVisor(){
+        if(currentSlide < 1) currentSlide = 1;
+        if(currentSlide > totalSlides) currentSlide = totalSlides;
+
+        slides.forEach(slide => {
+          slide.classList.remove('active');
+          if(parseInt(slide.dataset.slide) === currentSlide){
+            slide.classList.add('active');
+          }
+        });
+
+        indicator.innerText = `${currentSlide}/${totalSlides}`;
+      }
+
+      window.addEventListener('storage', (e) => {
+        if(e.key === 'eje11_editorial_slide'){
+          currentSlide = parseInt(e.newValue);
+          updateVisor();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if(e.key === 'ArrowRight' || e.key === ' ' || e.code === 'Space'){
+          if(currentSlide < totalSlides){
+            currentSlide++;
+            localStorage.setItem('eje11_editorial_slide', currentSlide);
+            updateVisor();
+          }
+        } else if(e.key === 'ArrowLeft'){
+          if(currentSlide > 1){
+            currentSlide--;
+            localStorage.setItem('eje11_editorial_slide', currentSlide);
+            updateVisor();
+          }
+        }
+      });
+
+      let visorTouchstartX = 0;
+      let visorTouchendX = 0;
+
+      function handleVisorGesture(){
+        const threshold = 50;
+        if(visorTouchendX < visorTouchstartX - threshold){
+          if(currentSlide < totalSlides){
+            currentSlide++;
+            localStorage.setItem('eje11_editorial_slide', currentSlide);
+            updateVisor();
+          }
+        }
+        if(visorTouchendX > visorTouchstartX + threshold){
+          if(currentSlide > 1){
+            currentSlide--;
+            localStorage.setItem('eje11_editorial_slide', currentSlide);
+            updateVisor();
+          }
+        }
+      }
+
+      document.addEventListener('touchstart', e => {
+        visorTouchstartX = e.changedTouches[0].screenX;
+      }, { passive:true });
+
+      document.addEventListener('touchend', e => {
+        visorTouchendX = e.changedTouches[0].screenX;
+        handleVisorGesture();
+      }, { passive:true });
+
+      updateVisor();
+    }
+  </script>
+</body>
+</html>
