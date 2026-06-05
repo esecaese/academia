@@ -1,245 +1,198 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Resumen de clase: Gobierno de Carlos Antonio López (Paraguay)</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: #f3efe7;
-            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            line-height: 1.55;
-            color: #1e2a2f;
-            padding: 2rem 1rem;
-        }
-
-        .contenido {
-            max-width: 1100px;
-            margin: 0 auto;
-            background: #fffef9;
-            border-radius: 28px;
-            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
-            padding: 2rem 2rem 2.5rem;
-            transition: all 0.2s;
-        }
-
-        h1 {
-            font-size: 2.1rem;
-            font-weight: 600;
-            color: #2c553d;
-            border-left: 6px solid #b68b40;
-            padding-left: 1.2rem;
-            margin-bottom: 0.5rem;
-            margin-top: 0;
-        }
-
-        .subtitulo {
-            color: #5f6c6b;
-            font-size: 1rem;
-            margin-top: 0.25rem;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid #e2dcd0;
-            padding-bottom: 0.75rem;
-        }
-
-        h2 {
-            font-size: 1.6rem;
-            font-weight: 500;
-            color: #2c553d;
-            margin: 1.5rem 0 0.8rem 0;
-            padding-bottom: 0.25rem;
-            border-bottom: 2px solid #e0d6c6;
-        }
-
-        h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #7a5a3a;
-            margin: 1.2rem 0 0.5rem 0;
-        }
-
-        p {
-            margin-bottom: 1rem;
-            text-align: justify;
-        }
-
-        ul, ol {
-            margin: 0.8rem 0 1rem 1.8rem;
-        }
-
-        li {
-            margin-bottom: 0.45rem;
-        }
-
-        .fechas-clave {
-            background: #eef4ea;
-            border-radius: 24px;
-            padding: 1.2rem 1.8rem;
-            margin: 1.8rem 0 1rem;
-            border-left: 4px solid #b68b40;
-        }
-
-        .fechas-clave h3 {
-            margin-top: 0;
-            color: #2c553d;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #ffffff;
-            border-radius: 18px;
-            overflow: hidden;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-        }
-
-        th {
-            background-color: #d9cdb0;
-            color: #2a3e2f;
-            font-weight: 600;
-            padding: 10px 12px;
-            text-align: left;
-        }
-
-        td {
-            border-bottom: 1px solid #e3dbc9;
-            padding: 10px 12px;
-            background-color: #fffcf7;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        .destacado {
-            background-color: #fef5e6;
-            padding: 0.2rem 0.3rem;
-            border-radius: 8px;
-            font-weight: 500;
-            color: #9b5e2c;
-        }
-
-        footer {
-            margin-top: 2.5rem;
-            font-size: 0.8rem;
-            text-align: center;
-            color: #8f9b96;
-            border-top: 1px solid #e2d8ca;
-            padding-top: 1.2rem;
-        }
-
-        @media (max-width: 680px) {
-            .contenido {
-                padding: 1.5rem;
-            }
-            h1 {
-                font-size: 1.7rem;
-            }
-            h2 {
-                font-size: 1.4rem;
-            }
-            .fechas-clave {
-                padding: 1rem;
-            }
-            th, td {
-                font-size: 0.85rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase de Historia del Paraguay - Carlos Antonio López</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --panel: #111a2e;
+      --panel-2: #17223b;
+      --text: #e8eefc;
+      --muted: #9fb0d1;
+      --accent: #7cc4ff;
+      --accent-2: #4ea1ff;
+      --border: #253455;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --max: 1100px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, #08101d 0%, #0b1220 100%);
+      color: var(--text);
+      line-height: 1.75;
+    }
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 32px 20px 64px;
+    }
+    .hero {
+      background: linear-gradient(180deg, rgba(124,196,255,.12), rgba(78,161,255,.05));
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+    }
+    h1, h2 {
+      line-height: 1.2;
+      margin: 0 0 14px;
+    }
+    h1 { font-size: clamp(1.9rem, 3vw, 2.8rem); }
+    h2 { font-size: clamp(1.2rem, 2vw, 1.65rem); color: var(--accent); }
+    p { margin: 0 0 18px; }
+    .muted { color: var(--muted); }
+    .toc {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 24px 0 30px;
+    }
+    .toc a {
+      display: block;
+      text-decoration: none;
+      color: var(--text);
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      border: 1px solid var(--border);
+      padding: 14px 16px;
+      border-radius: 16px;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+      box-shadow: var(--shadow);
+    }
+    .toc a:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent-2);
+      background: linear-gradient(180deg, #15213a, #1a2948);
+    }
+    .content {
+      background: rgba(17, 26, 46, .85);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(6px);
+    }
+    section {
+      scroll-margin-top: 24px;
+      padding-top: 6px;
+      margin-top: 8px;
+    }
+    .tag {
+      display: inline-block;
+      font-size: .84rem;
+      color: var(--accent);
+      border: 1px solid rgba(124,196,255,.25);
+      background: rgba(124,196,255,.08);
+      padding: 6px 10px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+    .footer {
+      color: var(--muted);
+      margin-top: 26px;
+      font-size: .95rem;
+    }
+    @media (max-width: 640px) {
+      .wrap { padding: 18px 14px 44px; }
+      .hero, .content { padding: 20px; }
+    }
+  </style>
 </head>
 <body>
-<div class="contenido">
-    <h1>El gobierno de Carlos Antonio López (Paraguay, 1841–1862)</h1>
-    <div class="subtitulo">Periodo fundacional del Estado paraguayo moderno · Independencia, símbolos y organización política</div>
+  <div class="wrap">
+    <header class="hero">
+      <div class="tag">Formato HTML oscuro</div>
+      <h1>Clase de Historia del Paraguay - Carlos Antonio López</h1>
+      <p class="muted">Versión unificada, corregida y ordenada a partir de los tres archivos de la clase del 29/05, con accesos directos para navegar rápido por cada bloque temático.</p>
+    </header>
 
-    <!-- Periodización y cargos -->
-    <h2>1. Periodización y forma de gobierno</h2>
-    <p><strong>1841–1844:</strong> Consulado Restaurado (también llamado segundo consulado). Gobernaron juntos <span class="destacado">Carlos Antonio López</span> y <span class="destacado">Mariano Roque Alonso</span>. Aunque formalmente compartían el poder, Roque Alonso tenía un papel secundario; la figura rectora era Carlos Antonio López.</p>
-    <p><strong>1844–1862:</strong> Presidencia de Carlos Antonio López, que se extiende hasta su muerte. A partir de 1844 se consolida un nuevo modelo institucional basado en la <strong>Ley de Organización Política</strong> (similar a una constitución, pero con características particulares).</p>
+    <nav class="toc" aria-label="Accesos directos">
+      <a href="#inicio">Inicio del período</a>
+      <a href="#transicion">Después de Francia</a>
+      <a href="#independencia">Independencia y símbolos</a>
+      <a href="#rosas">Rosas y el Brasil</a>
+      <a href="#estado">Ley de 1844</a>
+      <a href="#movilidad">Control social</a>
+      <a href="#familia">Familia López</a>
+      <a href="#corrupcion">Corrupción y poder</a>
+      <a href="#cierre">Cierre de la clase</a>
+    </nav>
 
-    <!-- Llegada al poder -->
-    <h2>2. ¿Cómo llega Carlos Antonio López al poder?</h2>
-    <p>Tras la muerte del Dr. Francia (20 de septiembre de 1840), el país vivió una breve anarquía con sucesivos gobiernos militares y minigolpes. Mariano Roque Alonso, uno de los comandantes, tomó el mando pero reconoció no saber cómo gobernar. Por consejo de allegados, recurrió a Carlos Antonio López, un hombre culto que había sido profesor en el <strong>Real Colegio Seminario de San Carlos</strong>. Si bien no era abogado titulado, en esa época bastaba con acreditar conocimientos de leyes para ejercer como tal. López propuso convocar un congreso que eligiera un gobierno consular: él se ocuparía de los asuntos civiles y Roque Alonso de los militares. Así nació el segundo consulado en 1841.</p>
+    <main class="content">
+      <h2>Texto unificado</h2>
 
-    <!-- Situación internacional y reconocimiento -->
-    <h2>3. Relaciones exteriores y lucha por el reconocimiento</h2>
-    <p>Paraguay era considerado por el mundo como una «provincia rebelde» de la Confederación Argentina. Ningún país reconocía su independencia. Frente a ello, López estableció un acuerdo tácito con el dictador argentino <strong>Juan Manuel de Rosas</strong>: comercio y trato amistoso, pero sin que Buenos Aires reconociera la soberanía paraguaya ni Paraguay aceptara subordinación.</p>
-    <p>Para obtener reconocimiento efectivo, López impulsó medidas diplomáticas y dio un paso clave hacia Brasil, la primera potencia importante que aceptaría la independencia paraguaya. Este giro provocó la ruptura definitiva con Rosas.</p>
+      <section id="inicio">
+        <p>En esta clase, el profesor se propuso explicar de la manera más clara posible el período de Carlos Antonio López, ubicándolo entre 1841 y 1862. Señaló como fechas claves 1841, 1842, 1844, 1848, 1852 y 1862, y distinguió dos etapas dentro de ese proceso: entre 1841 y 1844 el llamado consulado restaurado o segundo consulado, ejercido por Carlos Antonio López y Mariano Roque Alonso, y desde 1844 hasta 1862 la presidencia de Carlos Antonio López.</p>
+        <p>Desde el comienzo remarcó que, aunque formalmente el poder fue compartido con Mariano Roque Alonso, la figura dominante del nuevo gobierno fue Carlos Antonio López. Mariano Roque Alonso aparecía más bien como un actor secundario, mientras que López fue quien fue asumiendo la conducción política real del país.</p>
+      </section>
 
-    <!-- Congreso de 1842 -->
-    <h2>4. Congreso Nacional Extraordinario de 1842 (25 de noviembre)</h2>
-    <p>Este congreso fue uno de los hitos más importantes del periodo. Tomó tres decisiones fundamentales:</p>
-    <ul>
-        <li><strong>Acta de Declaración formal de Independencia:</strong> Paraguay redactó y publicó un documento solemne de independencia, algo que no se había hecho en 1813.</li>
-        <li><strong>Símbolos nacionales:</strong> Se reglamentaron la bandera y los dos escudos del Paraguay (escudo de la estrella y escudo de Hacienda).</li>
-        <li><strong>Abolición de la esclavitud de vientres:</strong> Se declaró libres a los hijos de esclavos nacidos a partir del 1 de enero de 1843, pero obtendrían la libertad plena al cumplir 25 años. Era una medida gradual para mostrar al mundo una imagen «civilizada» (imitando a potencias europeas que habían abolido la esclavitud). Sin embargo, la ley nunca se cumplió cabalmente debido a la Guerra de la Triple Alianza.</li>
-    </ul>
-    <p><strong>Primeros reconocimientos:</strong> Venezuela, Bolivia y Chile reconocieron la independencia antes que Brasil, pero la adhesión del Imperio del Brasil fue la más relevante geopolíticamente.</p>
+      <section id="transicion">
+        <p>Para explicar cómo se produjo ese ascenso, el profesor retrocedió a la muerte de José Gaspar Rodríguez de Francia, ocurrida el 20 de septiembre de 1840. A partir de ese momento se abrió una etapa de anarquía política, con sucesión de gobiernos provisorios, pequeños golpes y disputas entre mandos militares.</p>
+        <p>Recordó que una de las primeras figuras que intentó ocupar el poder fue Policarpo Patiño, antiguo secretario personal de Francia, muy impopular entre los sectores de mando. Según la exposición, los militares lo arrestaron y poco después apareció muerto en su celda, en circunstancias que quedaron envueltas en sospechas.</p>
+        <p>El profesor usó este episodio para subrayar un problema más amplio: el Paraguay que dejaba Francia era un país sin cuadros políticos ni administrativos sólidos. Señaló que Francia había concentrado tanto el poder y había reducido tanto los espacios de formación y participación, que tras su muerte casi no existía una dirigencia preparada para gobernar.</p>
+        <p>En ese contexto, Mariano Roque Alonso llegó al poder, pero pronto quedó claro que no tenía ni la preparación ni el proyecto necesarios para conducir el Estado. Entonces recurrió a Carlos Antonio López, que tenía formación en el Real Colegio Seminario de San Carlos, había enseñado allí y poseía mayor preparación intelectual y jurídica que la mayoría de sus contemporáneos.</p>
+        <p>El profesor comentó además que, tras el cierre del Seminario por Francia, López se dedicó durante años a actividades privadas, entre ellas la administración de sus tierras y tareas ligadas al ejercicio práctico del derecho. Aclaró que no era abogado en el sentido moderno del término, pero sí contaba con la instrucción suficiente como para litigar y manejar asuntos legales en una época en la que no existían todavía exigencias profesionales semejantes a las actuales.</p>
+        <p>Así, Carlos Antonio López pasó primero a desempeñarse como secretario de Mariano Roque Alonso y luego impulsó la convocatoria de un congreso que diera base institucional a un nuevo gobierno. El Congreso Nacional de 1841 terminó estableciendo el segundo consulado, con López y Mariano Roque Alonso como cónsules, aunque desde el inicio López fue desplazando políticamente a su colega y concentrando mayor influencia.</p>
+      </section>
 
-    <!-- Constitución / Ley de Organización Política (1844) -->
-    <h2>5. La Ley de Organización Política de 1844 (¿primera constitución?)</h2>
-    <p>Carlos Antonio López no quiso llamar «Constitución» a esta norma. La denominó <strong>Ley de Organización Política de la República de Paraguay</strong>. Sabía que una verdadera constitución liberal debía incluir derechos ciudadanos, garantías y una división real de poderes, aspectos que él rechazaba. No obstante, para aparentar civilización ante el exterior, diseñó una <strong>división aparente de poderes</strong>.</p>
-    <ul>
-        <li><strong>Poder Ejecutivo:</strong> Presidente y vicepresidente. El presidente concentraba el poder real.</li>
-        <li><strong>Congreso Nacional:</strong> Se reunía cada 5 años para elegir al presidente cada 10 años. No era un órgano permanente; solo sesionaba cuando el presidente lo convocaba (forma extraordinaria) o en periodos ordinarios muy limitados. En la práctica, el presidente legislaba la mayor parte del tiempo.</li>
-        <li><strong>Poder Judicial:</strong> No existía una Corte Suprema. La máxima autoridad judicial era el presidente de la República, quien decidía en última instancia.</li>
-    </ul>
-    <p><strong>Debate historiográfico:</strong> Algunos especialistas consideran que, por ser la norma máxima que organizaba el Estado, cumple una función constitucional; otros sostienen que al carecer de derechos y separación real de poderes, no es una constitución en sentido liberal moderno.</p>
+      <section id="independencia">
+        <p>El profesor insistió en que la situación del Paraguay en 1841 era muy delicada. Ningún país del mundo reconocía todavía su independencia, y para el resto de la región el Paraguay seguía siendo, en los hechos, una provincia rebelde de la Confederación Argentina.</p>
+        <p>Frente a ese panorama, Carlos Antonio López tuvo que moverse con mucha prudencia en política exterior. Con Juan Manuel de Rosas se estableció una especie de acuerdo tácito: podían mantener relaciones comerciales y un trato práctico, pero Buenos Aires no reconocía formalmente al Paraguay como república independiente, y a su vez el gobierno paraguayo no aceptaba la supremacía política de la Confederación sobre su territorio.</p>
+        <p>Sin embargo, esa situación no podía durar indefinidamente. Cuando López inició negociaciones más firmes con el Imperio del Brasil para obtener el reconocimiento de la independencia, quedó claro que Paraguay necesitaba definirse como Estado de manera más sólida y visible ante el exterior.</p>
+        <p>Por eso el profesor dio tanta importancia al Congreso Nacional Extraordinario de 1842. Según explicó, ese congreso fue fundamental porque redactó y juró un acta formal de independencia, algo que en 1813 no se había hecho con la solemnidad documental y diplomática necesaria para ser reconocido internacionalmente.</p>
+        <p>Además de la declaración formal de independencia, ese congreso fijó los símbolos nacionales. Allí se reguló la bandera y también los dos escudos del Paraguay, hecho que el profesor destacó como una rareza institucional, explicando que uno de ellos mantenía continuidad con el símbolo de la estrella, mientras el otro incorporaba el emblema del león.</p>
+        <p>El tercer punto importante de ese congreso fue la llamada libertad de vientres. El profesor aclaró que no se trató de una abolición inmediata de la esclavitud, sino de una medida gradual pensada para mostrar al Paraguay como una nación civilizada sin incorporar de golpe a toda la población esclavizada a la ciudadanía plena.</p>
+        <p>En ese esquema, los hijos nacidos desde el 1 de enero de 1843 debían quedar libres al cumplir determinada edad, dentro de un proceso paulatino de extinción del sistema. Sin embargo, el profesor señaló que esa medida nunca llegó a cumplirse plenamente y que la abolición efectiva de la esclavitud recién se consolidaría mucho más tarde, con la Constitución de 1870.</p>
+      </section>
 
-    <!-- Control social: pasaportes internos y servicio militar -->
-    <h2>6. Control social y pasaportes internos</h2>
-    <p>Para circular dentro del país se requería un <strong>permiso o pasaporte</strong> firmado por autoridades locales (jueces de paz, comandantes militares). La finalidad principal era <strong>evitar la evasión del servicio militar obligatorio</strong>, que podía durar hasta siete años. Los soldados eran utilizados como mano de obra forzada en obras públicas, estancias del Estado, yerbatales, etc. Muchos hombres intentaban huir del reclutamiento, por lo que el control migratorio interno era riguroso.</p>
-    <p>Además, la migración temporal por cosechas (algodón, caña de azúcar) también estaba regulada. Este sistema contribuyó a que las familias paraguayas tuvieran una estructura fuertemente patriarcal, ya que las mujeres permanecían en los hogares mientras los hombres se movilizaban constantemente.</p>
+      <section id="rosas">
+        <p>El reconocimiento de la independencia paraguaya por parte del Brasil, sumado a las decisiones del Congreso de 1842, produjo el quiebre definitivo de las relaciones entre Carlos Antonio López y Juan Manuel de Rosas. Desde ese momento, Rosas pasó a ser presentado como el principal obstáculo externo para la consolidación de la soberanía paraguaya.</p>
+        <p>En este tramo el profesor explicó también que Rosas era militar en el sentido propio de su época, no como un oficial de academia moderna. Su autoridad militar provenía tanto de su participación en guerras anteriores como de su capacidad de movilizar milicias y hombres armados, en una cultura política todavía muy marcada por formas tradicionales y caudillescas de poder.</p>
+        <p>Paralelamente, el Paraguay comenzó a construir herramientas básicas de un Estado soberano. Entre ellas mencionó la aparición del <em>Repertorio Nacional</em> en 1842, que definió no como un periódico de noticias, sino como una gaceta oficial dedicada a publicar decretos, leyes, reglamentos y avisos de gobierno.</p>
+        <p>En cuanto al reconocimiento internacional, el profesor explicó que los primeros apoyos llegaron de algunos países americanos, pero que el reconocimiento decisivo fue el del Imperio del Brasil. Ese reconocimiento, más que cualquier otro, resultó clave para que el Paraguay pudiera empezar a salir del aislamiento diplomático heredado del período de Francia.</p>
+      </section>
 
-    <!-- Familia López, escándalos y corrupción (sultanismo) -->
-    <h2>7. La familia López: rumores, herencia y corrupción</h2>
-    <p><strong>Paternidad de Francisco Solano López:</strong> Se especuló que su verdadero padre pudo ser <strong>Lázaro Rojas de Aranda</strong>, el hombre más rico del Paraguay en tiempos de Francia, quien dejó su fortuna a Francisco Solano. Carlos Antonio López se casó con Juana Paula Carrillo (hijastra de Rojas) estando ella embarazada. Nunca se comprobó la supuesta paternidad.</p>
-    <p><strong>Liberalismo sexual vs. moral oficial:</strong> En la sociedad paraguaya de la época era común que mujeres solteras demandaran a hombres por «faltar a la palabra de matrimonio» tras mantener relaciones. Carlos Antonio López intentó imponer una moral tradicional (hijos solo dentro del matrimonio), pero ni sus propios hijos varones le hicieron caso. Ninguno de ellos se casó legalmente; todos tuvieron hijos extramatrimoniales, incluido Francisco Solano López, quien tuvo descendencia con varias parejas, entre ellas su sobrina.</p>
-    <p><strong>Corrupción y patrimonialismo:</strong> Los López gobernaron mezclando lo público con lo privado, un fenómeno que Max Weber llamó «sultanismo». El profesor aclara que esto debe entenderse en su contexto: Paraguay venía de una larga tradición monárquica (reyes borbones, luego el propio Francia) donde el patrimonio del monarca se confundía con el Estado. Si bien no justifica la corrupción, explica la continuidad de prácticas premodernas durante la construcción de la nueva república.</p>
+      <section id="estado">
+        <p>Luego la clase pasó al Congreso de 1844 y a la llamada Constitución de 1844. Aquí el profesor abrió una discusión teórica importante: sostuvo que, en sentido estricto, no debería llamársela constitución nacional, porque el texto promulgado por Carlos Antonio López no llevó ese nombre y no cumplía plenamente con las condiciones de una constitución moderna de tipo liberal.</p>
+        <p>Según su explicación, lo que en realidad se promulgó fue la Ley de Administración Política de la República del Paraguay. La diferencia no era solo terminológica: para él, una verdadera constitución debía surgir de una asamblea constituyente y debía incluir no solo la organización del Estado, sino también derechos, obligaciones y garantías para la ciudadanía.</p>
+        <p>Como Carlos Antonio López no quería abrir el juego a libertades políticas amplias, prensa libre, pluralismo partidario ni una real separación de poderes, evitó conscientemente llamar constitución a ese texto. De ese modo, podía organizar institucionalmente el Estado y a la vez conservar un control político muy fuerte sobre la sociedad.</p>
+        <p>El profesor reconoció, sin embargo, que existe debate académico sobre este punto. Algunos autores sostienen que sí puede hablarse de constitución, en la medida en que se trataba de la norma máxima que organizaba el funcionamiento de los órganos del Estado; pero él insistió en que esa interpretación no elimina el carácter restringido y profundamente centralizado del sistema creado por López.</p>
+        <p>En esa ley de 1844 existía una división de poderes solo aparente. Había un Poder Ejecutivo con presidente y vicepresidente, un Congreso que se reunía en períodos muy espaciados o cuando el presidente lo convocaba, y un Poder Judicial sin tribunal superior independiente.</p>
+        <p>En la práctica, explicó, casi todos los poderes terminaban volviendo al presidente. El Congreso no funcionaba como órgano permanente, y la justicia tampoco estaba estructurada de modo que pudiera actuar como verdadero contrapeso del Ejecutivo, por lo que la presidencia seguía siendo el centro efectivo de la vida política.</p>
+      </section>
 
-    <!-- Legado y quejas de López -->
-    <h2>8. Legado y críticas de Carlos Antonio López a su propia herencia</h2>
-    <p>Carlos Antonio López se quejaba amargamente de la herencia recibida del Dr. Francia: economía destruida, aislamiento, falta de educación y una élite sin formación cultural. Llamaba «brutos e ignorantes» a muchos de sus contemporáneos, aunque también le gustaba concentrar el poder. A pesar de sus promesas iniciales de apertura política, los exiliados que regresaron confiando en él terminaron nuevamente en el exilio cuando López no cumplió sus promesas de libertades.</p>
+      <section id="movilidad">
+        <p>Otro aspecto desarrollado en clase fue el control estatal sobre la movilidad de la población. El profesor remarcó que, todavía en tiempos de Carlos Antonio López, para circular por el interior e incluso para ingresar a Asunción era frecuente necesitar permisos o “pasaportes” expedidos por autoridades locales.</p>
+        <p>Estos documentos no eran pasaportes modernos, sino autorizaciones firmadas por jueces de paz, delegados políticos, jefes militares u otras autoridades de la zona. Servían para controlar quién se desplazaba, desde dónde y con qué propósito, incluso en actividades cotidianas como llevar productos al mercado.</p>
+        <p>Según explicó, uno de los principales objetivos de este sistema era controlar a la población masculina y evitar fugas relacionadas con el servicio militar obligatorio. Recordó que ese servicio existía desde tiempos coloniales y que podía extenderse durante años, no solo en tareas estrictamente militares, sino también como forma de trabajo forzado al servicio del Estado.</p>
+        <p>Los conscriptos abrían caminos, trabajaban en estancias estatales, hacían labores agrícolas y desempeñaban múltiples tareas no militares. Por eso muchos hombres buscaban evitar la leva, falsificaban permisos o se desplazaban sin autorización, lo que a su vez reforzaba el aparato de vigilancia interna.</p>
+        <p>El profesor vinculó este fenómeno con la migración estacional por trabajo y con la estructura patriarcal de las familias paraguayas. Sostuvo que la constante movilidad de los varones, ya fuera para escapar del servicio o para buscar empleo temporal, incidía directamente en la forma en que se organizaban los hogares y las relaciones sociales.</p>
+      </section>
 
-    <!-- Prensa oficial -->
-    <h2>9. Primer periódico oficial: El Repertorio Nacional (1842–1844)</h2>
-    <p>No era un diario de noticias, sino una <strong>gaceta oficial</strong> donde se publicaban decretos, leyes, disposiciones gubernamentales, bandos y circulares. Marcó el inicio de la prensa estatal en el Paraguay independiente.</p>
+      <section id="familia">
+        <p>Hacia el final de la clase se abrió un bloque sobre la familia de los López, especialmente en torno a Francisco Solano López. El profesor dijo que no le interesaba demasiado la polémica banal sobre si tal o cual miembro era hijo biológico o no, pero sí consideraba importante entender el funcionamiento familiar porque estaba ligado al modo en que se ejercía el poder.</p>
+        <p>En esa línea, mencionó la figura de Lázaro Rojas de Aranda como uno de los hombres más ricos del Paraguay de la época y como personaje estrechamente ligado a la familia. Señaló que la enorme fortuna que dejó, y que más tarde benefició a Francisco Solano López, fue importante para entender tanto el patrimonio familiar como el financiamiento posterior de proyectos y viajes.</p>
+        <p>También comentó que existían rumores y versiones sobre el origen biológico de Francisco Solano López, asociados al hecho de que Carlos Antonio López se habría casado con Juana Pabla Carrillo estando ella ya embarazada. Sin embargo, aclaró que esos datos no están definitivamente probados y que, además, prácticas de ese tipo no eran extrañas en la sociedad paraguaya del siglo XIX.</p>
+        <p>De hecho, aprovechó esa discusión para describir una cultura social en la que eran frecuentes los conflictos judiciales por promesas de matrimonio incumplidas tras relaciones sexuales. Mencionó que en el archivo judicial existen numerosos casos de mujeres que demandaban a hombres por faltar a la palabra dada, lo que muestra una vida social más compleja y menos rígida de lo que a veces se supone.</p>
+      </section>
 
-    <!-- Cuadro resumen de fechas clave -->
-    <div class="fechas-clave">
-        <h3>📅 Cronología esencial del gobierno de Carlos Antonio López</h3>
-        <table>
-            <thead>
-                <tr><th>Año</th><th>Acontecimiento histórico</th></tr>
-            </thead>
-            <tbody>
-                <tr><td>1840</td><td>Muerte del Dr. José Gaspar Rodríguez de Francia (20 de septiembre). Período de inestabilidad.</td></tr>
-                <tr><td>1841</td><td>Inicio del Consulado Restaurado: Carlos Antonio López y Mariano Roque Alonso asumen el gobierno.</td></tr>
-                <tr><td>1842<br>(25 nov)</td><td>Congreso Nacional Extraordinario: Acta formal de Independencia, símbolos nacionales y abolición de vientres.</td></tr>
-                <tr><td>1844</td><td>Promulgación de la Ley de Organización Política de la República (régimen presidencial). Inicio de la presidencia de López.</td></tr>
-                <tr><td>1848</td><td>Consolidación diplomática; se profundizan tensiones con la Confederación Argentina.</td></tr>
-                <tr><td>1852</td><td>Caída de Juan Manuel de Rosas; nuevas oportunidades para el relacionamiento exterior.</td></tr>
-                <tr><td>1862</td><td>Muerte de Carlos Antonio López. Asume la presidencia su hijo, Francisco Solano López.</td></tr>
-            </tbody>
-        </table>
-        <p style="font-size: 0.9rem; margin-top: 12px; color: #4f5a55;">* El período presidencial de López se extendió desde 1844 hasta su fallecimiento en 1862.</p>
-    </div>
+      <section id="corrupcion">
+        <p>La última parte de la clase estuvo marcada por una crítica fuerte a la familia López en términos de corrupción y apropiación del poder. El profesor sostuvo que los López confundieron de manera sistemática lo público con lo privado, algo que relacionó con la idea de “sultanismo”, es decir, una forma de gobierno en la que el Estado termina administrado como patrimonio de una familia.</p>
+        <p>Sin justificar esa práctica, intentó explicarla históricamente. Dijo que el Paraguay estaba dejando atrás un orden político heredado de la monarquía española, donde la distinción entre la persona del gobernante y el Estado no era todavía clara, y que tanto Francia como Carlos Antonio López arrastraron parte de esa lógica al proceso de construcción estatal.</p>
+        <p>Según su interpretación, Carlos Antonio López estaba creando una república, pero una república todavía marcada por continuidades monárquicas. Eso ayudaba a entender por qué el poder se concentraba tanto en la figura presidencial y por qué la familia gobernante ocupaba un lugar tan dominante dentro de la estructura del Estado.</p>
+        <p>De todos modos, remarcó que esa explicación histórica no equivalía a una absolución. Incluso recordó que en los propios textos legales del período existían principios contrarios al predominio de una sola familia sobre el Estado, principios que, según él, los López no respetaron en la práctica.</p>
+        <p>Como ejemplo final, subrayó la contradicción entre la defensa oficial de la familia tradicional y la conducta efectiva de los propios hijos de Carlos Antonio López. Señaló que ninguno de sus hijos varones se ajustó plenamente a ese ideal y que varios tuvieron hijos fuera del matrimonio, lo que mostraba la distancia entre el discurso moral del régimen y la vida real de la familia gobernante.</p>
+      </section>
 
-    <!-- Observación breve contextual (sin notas de error) -->
-    <p style="font-size: 0.9rem; background: #faf7f0; padding: 12px 16px; border-radius: 20px; margin-top: 1.5rem;">
-    <strong>📌 En síntesis:</strong> Carlos Antonio López construyó las bases institucionales del Paraguay independiente, logró el reconocimiento externo, definió los símbolos patrios, y estableció un Estado presidencialista fuerte, con rasgos patrimoniales y una marcada tensión entre discurso modernizador y prácticas autoritarias. Su legado es fundamental para entender el posterior gobierno de Francisco Solano López y la Guerra de la Triple Alianza.
-    </p>
-
-    <footer>
-        Resumen basado en la transcripción aclarada de la clase de Historia del Paraguay.<br>
-        Gobierno de Carlos Antonio López (1841–1862) · Época fundacional del Estado paraguayo.
-    </footer>
-</div>
+      <section id="cierre">
+        <p>Para cerrar, el profesor explicó que en la próxima clase terminarían de ver el período de Carlos Antonio López y pasarían ya al estudio directo de la Guerra de la Triple Alianza. Presentó esta clase, por lo tanto, como una base necesaria para entender cómo se formó el Estado paraguayo posterior a Francia, cómo buscó reconocimiento internacional y qué rasgos autoritarios, institucionales y familiares marcaron el gobierno de Carlos Antonio López.</p>
+      </section>
+    </main>
+  </div>
 </body>
 </html>
