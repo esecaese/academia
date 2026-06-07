@@ -3,1416 +3,889 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Guía de Estudio Extrema - Administración Financiera del Estado</title>
+  <title>Guía de Estudio - Administración Financiera del Estado</title>
   <style>
     :root{
-      --bg:#0f1115;
-      --bg-soft:#171a21;
-      --card:#1d212b;
-      --card-2:#252a36;
-      --text:#e8ecf3;
-      --muted:#a8b0c0;
-      --primary:#9b87f5;
-      --secondary:#35d0ba;
-      --accent:#ffb86b;
-      --danger:#ff6b81;
-      --success:#6fe3a7;
-      --border:#323847;
-      --shadow:0 10px 30px rgba(0,0,0,.28);
+      --bg:#0b1220;
+      --panel:#111a2b;
+      --panel-2:#162235;
+      --text:#e8eefc;
+      --muted:#a9b7d3;
+      --accent:#66b3ff;
+      --accent-2:#7ef0c7;
+      --border:#263552;
+      --warn:#ffd166;
+      --danger:#ff7b7b;
+      --shadow:0 10px 30px rgba(0,0,0,.25);
       --radius:18px;
     }
 
-    body.light{
-      --bg:#f3f6fb;
-      --bg-soft:#ffffff;
-      --card:#ffffff;
-      --card-2:#f7f9fd;
-      --text:#1f2735;
-      --muted:#5e6a7d;
-      --primary:#6f52ed;
-      --secondary:#0d9f8c;
-      --accent:#d87a1e;
-      --danger:#cf335f;
-      --success:#2c9d63;
-      --border:#d9e1ef;
-      --shadow:0 10px 25px rgba(31,39,53,.08);
-    }
-
-    *{box-sizing:border-box;scroll-behavior:smooth}
-    html,body{margin:0;padding:0}
+    *{box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
     body{
-      background:linear-gradient(180deg,var(--bg),#11151e);
+      margin:0;
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;
+      background:linear-gradient(180deg,#08101c 0%, #0b1220 100%);
       color:var(--text);
-      font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;
-      line-height:1.7;
+      line-height:1.6;
     }
 
-    body.light{
-      background:linear-gradient(180deg,#f3f6fb,#eef3fb);
-    }
-
-    .progress-bar{
-      position:fixed;
-      top:0;left:0;
-      width:0%;
-      height:4px;
-      background:linear-gradient(90deg,var(--primary),var(--secondary));
-      z-index:1000;
-    }
-
-    .container{
-      max-width:1280px;
-      margin:0 auto;
-      padding:22px;
+    .wrap{
+      width:min(1100px, 92%);
+      margin:auto;
+      padding:24px 0 48px;
     }
 
     .hero{
-      background:linear-gradient(135deg,var(--card),var(--bg-soft));
+      background:linear-gradient(135deg, rgba(102,179,255,.18), rgba(126,240,199,.08));
       border:1px solid var(--border);
       border-radius:24px;
-      padding:28px;
+      padding:24px;
       box-shadow:var(--shadow);
-      margin:18px 0 20px;
+      margin-bottom:24px;
     }
 
-    h1{
+    .hero h1{
       margin:0 0 10px;
-      color:var(--primary);
-      font-size:2.15rem;
-      text-align:center;
+      font-size:clamp(1.8rem, 4vw, 3rem);
+      line-height:1.15;
     }
 
-    .subtitle{
-      margin:0;
+    .hero p{
+      margin:8px 0;
       color:var(--muted);
-      text-align:center;
-      font-size:1.02rem;
     }
 
-    .top-grid{
-      display:grid;
-      grid-template-columns:1.25fr .95fr;
-      gap:18px;
-      margin-top:20px;
-    }
-
-    .panel{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      padding:20px;
-      box-shadow:var(--shadow);
-    }
-
-    .panel h2,.panel h3{
-      margin-top:0;
-    }
-
-    .toolbar{
+    .tags{
       display:flex;
       flex-wrap:wrap;
       gap:10px;
       margin-top:16px;
     }
 
-    .btn{
-      border:none;
-      border-radius:12px;
-      padding:10px 14px;
-      cursor:pointer;
-      background:var(--card-2);
-      color:var(--text);
-      border:1px solid var(--border);
-      font-weight:600;
-      transition:.2s ease;
-    }
-
-    .btn:hover{
-      transform:translateY(-1px);
-      border-color:var(--primary);
-    }
-
-    .btn.primary{background:rgba(155,135,245,.16)}
-    .btn.secondary{background:rgba(53,208,186,.12)}
-    .btn.accent{background:rgba(255,184,107,.12)}
-
-    .search-box{
-      width:100%;
-      margin-top:14px;
-      padding:14px 16px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      background:var(--bg-soft);
-      color:var(--text);
-      font-size:1rem;
-      outline:none;
-    }
-
-    .note,.tip,.warning,.exam,.definition{
-      border-left:4px solid var(--primary);
-      background:rgba(155,135,245,.08);
-      padding:14px 16px;
-      border-radius:12px;
-      margin:16px 0;
-    }
-
-    .tip{
-      border-left-color:var(--secondary);
-      background:rgba(53,208,186,.08);
-    }
-
-    .warning{
-      border-left-color:var(--accent);
-      background:rgba(255,184,107,.08);
-    }
-
-    .exam{
-      border-left-color:var(--danger);
-      background:rgba(255,107,129,.08);
-    }
-
-    .definition{
-      border-left-color:var(--success);
-      background:rgba(111,227,167,.09);
-    }
-
-    .layout{
-      display:grid;
-      grid-template-columns:300px 1fr;
-      gap:18px;
-      margin-top:18px;
-    }
-
-    aside{
-      position:sticky;
-      top:18px;
-      align-self:start;
-      max-height:calc(100vh - 36px);
-      overflow:auto;
-    }
-
-    .toc{
-      list-style:none;
-      padding:0;
-      margin:0;
-    }
-
-    .toc li{margin:8px 0}
-    .toc a{
-      display:block;
-      text-decoration:none;
-      color:var(--text);
-      background:var(--bg-soft);
-      border:1px solid var(--border);
-      border-radius:12px;
-      padding:10px 12px;
-      transition:.2s ease;
-    }
-
-    .toc a:hover{
-      border-color:var(--secondary);
-      transform:translateX(2px);
-    }
-
-    section{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:22px;
-      padding:24px;
-      margin-bottom:18px;
-      box-shadow:var(--shadow);
-    }
-
-    h2{
-      color:var(--secondary);
-      margin-top:0;
-      border-bottom:1px solid var(--border);
-      padding-bottom:10px;
-    }
-
-    h3{
-      color:var(--accent);
-      margin-top:24px;
-      margin-bottom:8px;
-    }
-
-    h4{
-      color:var(--primary);
-      margin-top:18px;
-      margin-bottom:8px;
-    }
-
-    p{margin:10px 0 14px;text-align:justify}
-    ul,ol{padding-left:22px}
-    li{margin:7px 0}
-    strong{color:#fff}
-    body.light strong{color:#16202e}
-
-    .badges{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:14px;
-    }
-
-    .badge{
-      border:1px solid var(--border);
-      background:var(--bg-soft);
-      padding:7px 11px;
+    .tag{
+      background:rgba(102,179,255,.12);
+      color:#cfe6ff;
+      border:1px solid rgba(102,179,255,.25);
+      padding:8px 12px;
       border-radius:999px;
-      color:var(--muted);
       font-size:.92rem;
     }
 
-    .table-wrap{
-      overflow:auto;
+    .toc{
+      background:var(--panel);
       border:1px solid var(--border);
-      border-radius:14px;
-      margin:16px 0 22px;
+      border-radius:var(--radius);
+      padding:18px;
+      margin-bottom:24px;
+      box-shadow:var(--shadow);
     }
 
-    table{
-      width:100%;
-      min-width:740px;
-      border-collapse:collapse;
-      background:var(--card-2);
+    .toc h2{
+      margin-top:0;
+      font-size:1.2rem;
     }
 
-    th,td{
-      padding:12px 14px;
+    .toc ul{
+      margin:0;
+      padding-left:18px;
+      columns:2;
+      gap:24px;
+    }
+
+    .toc a{
+      color:#d9e7ff;
+      text-decoration:none;
+    }
+
+    .toc a:hover{color:var(--accent);}
+
+    .block{
+      background:var(--panel);
       border:1px solid var(--border);
-      vertical-align:top;
-      text-align:left;
+      border-radius:var(--radius);
+      padding:22px;
+      margin-bottom:22px;
+      box-shadow:var(--shadow);
     }
 
-    th{
-      background:#2a3040;
-      color:#f2f4f8;
+    .block h2{
+      margin-top:0;
+      font-size:clamp(1.35rem, 2.5vw, 2rem);
     }
 
-    body.light th{
-      background:#e9eef9;
-      color:#22304a;
+    .block h3{
+      margin-top:26px;
+      margin-bottom:10px;
+      color:#dce8ff;
+      font-size:1.1rem;
     }
 
-    tr:nth-child(even){background:rgba(255,255,255,.02)}
-    body.light tr:nth-child(even){background:#fbfcff}
-
-    details{
-      background:var(--bg-soft);
-      border:1px solid var(--border);
-      border-radius:14px;
-      padding:12px 14px;
-      margin:10px 0;
-    }
-
-    summary{
-      cursor:pointer;
-      font-weight:700;
-      color:var(--text);
-    }
-
-    .cards{
+    .grid{
       display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-      gap:12px;
-      margin-top:10px;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:16px;
     }
 
     .card{
-      background:var(--bg-soft);
+      background:var(--panel-2);
       border:1px solid var(--border);
       border-radius:16px;
       padding:16px;
     }
 
-    .flashcards{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-      gap:12px;
+    .fundamental{
+      border-left:4px solid var(--warn);
+      background:rgba(255,209,102,.08);
+      padding:14px 16px;
+      border-radius:14px;
+      margin:16px 0 10px;
     }
 
-    .flash{
-      perspective:1000px;
-      min-height:165px;
+    .fundamental h3{
+      margin:0 0 8px;
+      color:#ffe29a;
     }
 
-    .flash-inner{
-      position:relative;
-      width:100%;
-      min-height:165px;
-      transition:transform .6s;
-      transform-style:preserve-3d;
-      cursor:pointer;
-    }
+    p{margin:10px 0;}
+    ul{margin:8px 0 0; padding-left:20px;}
+    li{margin:6px 0; color:var(--text);}
+    .muted{color:var(--muted);}
+    .mini{font-size:.95rem; color:var(--muted);}
 
-    .flash:hover .flash-inner{
-      transform:rotateY(180deg);
-    }
-
-    .flash-face{
-      position:absolute;
-      inset:0;
-      backface-visibility:hidden;
-      background:var(--bg-soft);
-      border:1px solid var(--border);
-      border-radius:16px;
-      padding:18px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      box-shadow:var(--shadow);
-    }
-
-    .flash-back{
-      transform:rotateY(180deg);
-      background:var(--card-2);
-    }
-
-    .checklist{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-      gap:12px;
-    }
-
-    .check-item{
-      background:var(--bg-soft);
+    .table-wrap{
+      overflow-x:auto;
+      margin-top:12px;
       border:1px solid var(--border);
       border-radius:14px;
-      padding:14px;
     }
 
-    .check-item label{
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-      cursor:pointer;
-      font-weight:600;
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:680px;
+      background:#0e1727;
+    }
+
+    th, td{
+      padding:12px 14px;
+      border-bottom:1px solid var(--border);
+      text-align:left;
+      vertical-align:top;
+    }
+
+    th{
+      background:#13203a;
+      color:#dce8ff;
+    }
+
+    tr:hover td{
+      background:rgba(102,179,255,.04);
     }
 
     .pill{
       display:inline-block;
-      padding:5px 10px;
+      padding:4px 10px;
       border-radius:999px;
-      background:rgba(53,208,186,.10);
-      color:var(--secondary);
-      font-size:.87rem;
+      background:rgba(126,240,199,.12);
+      color:#b9ffe8;
+      border:1px solid rgba(126,240,199,.22);
+      font-size:.86rem;
       margin-right:8px;
       margin-bottom:8px;
     }
 
-    .footer{
-      text-align:center;
-      color:var(--muted);
-      padding:18px 0 28px;
-    }
-
-    .back-top{
-      position:fixed;
-      right:18px;
-      bottom:18px;
-      display:none;
+    .danger{
+      color:#ffd1d1;
+      background:rgba(255,123,123,.08);
+      border-left:4px solid var(--danger);
       padding:12px 14px;
-      border-radius:999px;
-      background:var(--primary);
-      color:white;
-      border:none;
-      cursor:pointer;
-      box-shadow:var(--shadow);
-      font-weight:700;
+      border-radius:12px;
+      margin-top:12px;
     }
 
-    .hidden{
-      display:none !important;
+    .footer{
+      margin-top:24px;
+      padding:18px;
+      border-radius:16px;
+      background:var(--panel);
+      border:1px solid var(--border);
+      color:var(--muted);
+      text-align:center;
     }
 
-    mark{
-      background:#ffe58f;
-      color:#111;
-      padding:1px 3px;
-      border-radius:4px;
+    @media (max-width: 860px){
+      .grid{grid-template-columns:1fr;}
+      .toc ul{columns:1;}
     }
 
-    @media (max-width: 980px){
-      .layout,.top-grid{
-        grid-template-columns:1fr;
-      }
-      aside{
-        position:static;
-        max-height:none;
-      }
-    }
-
-    @media (max-width: 640px){
-      .container{padding:12px}
-      section,.panel,.hero{padding:18px}
-      h1{font-size:1.65rem}
-    }
-
-    @media print{
-      .toolbar,.search-box,.back-top,.progress-bar,aside{display:none !important}
-      body,body.light{
-        background:white !important;
-        color:black !important;
-      }
-      .hero,.panel,section{
-        box-shadow:none;
-        background:white !important;
-        border:1px solid #bbb;
-      }
+    @media (max-width: 520px){
+      .hero, .block, .toc{padding:16px;}
+      th, td{padding:10px;}
+      body{font-size:15px;}
     }
   </style>
 </head>
 <body>
-  <div class="progress-bar" id="progressBar"></div>
+  <div class="wrap">
 
-  <div class="container" id="top">
-    <header class="hero">
-      <h1>Guía de Estudio Extrema<br>Administración Financiera del Estado</h1>
-      <p class="subtitle">Resumen integral, interactivo, autocontenido y orientado a repaso, comprensión y examen</p>
+    <section class="hero">
+      <h1>Guía Integral de Estudio</h1>
+      <p>Administración Financiera del Estado: síntesis completa de los cinco materiales de estudio, organizada por bloques temáticos para repasar conceptos, procesos, normas, clasificaciones y relaciones entre política fiscal, presupuesto y gasto público.</p>
+      <!-- [file:5][file:3][file:2][file:1][file:4] -->
+      <div class="tags">
+        <span class="tag">Modo oscuro</span>
+        <span class="tag">Diseño responsive</span>
+        <span class="tag">Repaso integral</span>
+        <span class="tag">Puntos fundamentales destacados</span>
+      </div>
+    </section>
 
-      <div class="badges">
-        <span class="badge">5 materiales integrados</span>
-        <span class="badge">Buscador interno</span>
-        <span class="badge">Acordeones</span>
-        <span class="badge">Autoevaluación</span>
-        <span class="badge">Glosario</span>
-        <span class="badge">Checklist guardable</span>
-        <span class="badge">Impresión PDF</span>
+    <nav class="toc">
+      <h2>Contenido</h2>
+      <ul>
+        <li><a href="#bloque1">Bloque 1. Introducción a la Administración Financiera del Estado</a></li>
+        <li><a href="#bloque2">Bloque 2. Política Fiscal y su impacto económico</a></li>
+        <li><a href="#bloque3">Bloque 3. Presupuesto General de la Nación</a></li>
+        <li><a href="#bloque4">Bloque 4. Análisis del gasto público</a></li>
+        <li><a href="#bloque5">Bloque 5. Sistema de Presupuesto</a></li>
+      </ul>
+    </nav>
+
+    <section id="bloque1" class="block">
+      <h2>Bloque 1. Introducción a la Administración Financiera del Estado</h2>
+
+      <div class="fundamental">
+        <h3>Lo fundamental del bloque</h3>
+        <p>El Estado es una organización jurídica y política soberana asentada sobre población, territorio, gobierno y soberanía; además, en la economía cumple funciones de asignación, distribución y estabilización, y sus fines centrales son eficiencia, eficacia y estabilidad.</p>
+        <!-- [file:5] -->
       </div>
 
-      <div class="toolbar">
-        <button class="btn primary" onclick="toggleTheme()">Cambiar tema</button>
-        <button class="btn secondary" onclick="expandAll()">Expandir todo</button>
-        <button class="btn secondary" onclick="collapseAll()">Colapsar todo</button>
-        <button class="btn accent" onclick="window.print()">Imprimir / PDF</button>
-        <button class="btn" onclick="clearChecks()">Reiniciar checklist</button>
-      </div>
-
-      <input
-        id="searchInput"
-        class="search-box"
-        type="text"
-        placeholder="Buscar concepto: déficit, PGN, universalidad, FF 10, plan financiero, Pareto..."
-        oninput="filterContent()"
-      />
-
-      <div class="tip">
-        <strong>Cómo usar esta guía:</strong> primero lee el resumen mínimo de cada unidad, luego abre los acordeones, repasa las tablas, responde las preguntas de autoevaluación y marca tu avance en el checklist final.
-      </div>
-    </header>
-
-    <div class="top-grid">
-      <div class="panel searchable">
-        <h2>Qué mejora esta versión</h2>
-        <ul>
-          <li>Convierte el resumen en una guía de estudio funcional, no solo expositiva.</li>
-          <li>Integra teoría, norma, cronología, comparaciones y aplicación práctica.</li>
-          <li>Incluye un enfoque de examen: conceptos clave, errores frecuentes y preguntas de repaso.</li>
-          <li>Permite estudiar por bloques, imprimir y buscar cualquier término en segundos.</li>
-        </ul>
-      </div>
-
-      <div class="panel searchable">
-        <h2>Ruta rápida de estudio</h2>
-        <ol>
-          <li>Unidad I: bases del Estado y finanzas públicas.</li>
-          <li>Unidad II: política fiscal, déficit y Ley de Responsabilidad Fiscal.</li>
-          <li>Unidad III: PGN, principios, estructura y clasificación.</li>
-          <li>Unidad IV: gasto público, distribución, incidencia y bienes públicos.</li>
-          <li>Unidad VIII: ejecución, modificaciones, control y evaluación.</li>
-        </ol>
-      </div>
-    </div>
-
-    <div class="layout">
-      <aside class="panel">
-        <h3>Índice</h3>
-        <ul class="toc">
-          <li><a href="#unidad1">Unidad I</a></li>
-          <li><a href="#unidad2">Unidad II</a></li>
-          <li><a href="#unidad3">Unidad III</a></li>
-          <li><a href="#unidad4">Unidad IV</a></li>
-          <li><a href="#unidad8">Unidad VIII</a></li>
-          <li><a href="#cronologia">Cronología del PGN</a></li>
-          <li><a href="#preguntas">Preguntas de autoevaluación</a></li>
-          <li><a href="#glosario">Glosario</a></li>
-          <li><a href="#checklist">Checklist final</a></li>
-        </ul>
-      </aside>
-
-      <main>
-        <section id="unidad1" class="searchable">
-          <h2>Unidad I: Introducción a la Administración Financiera del Estado</h2>
-
-          <div class="definition">
-            <strong>Idea mínima que debes recordar:</strong> esta unidad construye la base conceptual: qué es el Estado, cómo se lo entiende, cuál es su rol económico y por qué las finanzas públicas son un instrumento de política pública.
-          </div>
-
-          <details open>
-            <summary>1. Concepto de Estado</summary>
-            <p><strong>Estado:</strong> organización jurídica y política soberana permanente, asentada sobre una población, un territorio y un poder institucionalizado.</p>
-            <ul>
-              <li><strong>Población:</strong> conjunto de personas que habitan el territorio estatal.</li>
-              <li><strong>Territorio:</strong> espacio geográfico donde el Estado ejerce autoridad.</li>
-              <li><strong>Gobierno:</strong> conjunto de autoridades que ejercen poder político.</li>
-              <li><strong>Soberanía:</strong> poder supremo para decidir sin subordinación a otro poder.</li>
-            </ul>
-          </details>
-
-          <details>
-            <summary>2. Concepciones del Estado</summary>
-            <div class="table-wrap">
-              <table>
-                <tr>
-                  <th>Criterio</th>
-                  <th>Mecanicista</th>
-                  <th>Orgánica</th>
-                </tr>
-                <tr>
-                  <td>Definición</td>
-                  <td>Estructura artificial creada por individuos para orden, seguridad y convivencia.</td>
-                  <td>Organismo social vivo en el que personas e instituciones integran un todo superior.</td>
-                </tr>
-                <tr>
-                  <td>Origen</td>
-                  <td>Voluntario, mediante Contrato Social.</td>
-                  <td>Natural, por evolución histórica.</td>
-                </tr>
-                <tr>
-                  <td>Metáfora</td>
-                  <td>Reloj o máquina.</td>
-                  <td>Cuerpo humano.</td>
-                </tr>
-                <tr>
-                  <td>Relación individuo-Estado</td>
-                  <td>El individuo es anterior y superior al Estado.</td>
-                  <td>El Estado es superior al individuo.</td>
-                </tr>
-              </table>
-            </div>
-          </details>
-
-          <details>
-            <summary>3. Rol del Estado en la economía</summary>
-            <ul>
-              <li><strong>Función de asignación:</strong> corrige fallas de mercado y promueve uso eficiente de recursos.</li>
-              <li><strong>Función de distribución:</strong> modifica la distribución del ingreso para buscar mayor equidad.</li>
-              <li><strong>Función de estabilización:</strong> reduce fluctuaciones del ciclo económico y sostiene el equilibrio macroeconómico.</li>
-            </ul>
-            <div class="tip">
-              <strong>Memorización simple:</strong> asignar, distribuir y estabilizar.
-            </div>
-          </details>
-
-          <details>
-            <summary>4. Fines del Estado</summary>
-            <ul>
-              <li><strong>Eficiencia:</strong> asignar recursos al menor costo y con mayor valor público.</li>
-              <li><strong>Eficacia:</strong> cumplir metas y objetivos previstos.</li>
-              <li><strong>Estabilidad:</strong> mantener equilibrio fiscal, crecimiento sostenido y control macroeconómico.</li>
-            </ul>
-          </details>
-
-          <details>
-            <summary>5. Administración financiera como instrumento de política pública</summary>
-            <p>La administración financiera del Estado no es solo registro contable. Sirve para programar, gestionar, controlar y evaluar recursos públicos, y con ello traducir prioridades políticas en acción estatal concreta.</p>
-          </details>
-
-          <details>
-            <summary>6. Finanzas públicas y escuelas doctrinales</summary>
-            <h4>Finanzas públicas</h4>
-            <p>Estudian cómo el Estado obtiene recursos y cómo los usa para satisfacer necesidades colectivas.</p>
-            <ul>
-              <li>Asignación eficiente de recursos.</li>
-              <li>Distribución de ingresos.</li>
-              <li>Estabilidad macroeconómica.</li>
-            </ul>
-
-            <h4>Escuela clásica</h4>
-            <ul>
-              <li>Estado mínimo.</li>
-              <li>Mercado autorregulado.</li>
-              <li>Déficit fiscal rechazado.</li>
-            </ul>
-
-            <h4>Escuela keynesiana</h4>
-            <ul>
-              <li>Estado activo e interventor.</li>
-              <li>Mercado puede fallar.</li>
-              <li>La política fiscal es un instrumento central.</li>
-            </ul>
-          </details>
-
-          <div class="exam">
-            <strong>Lo que suele preguntarse:</strong> definición de Estado, elementos del Estado, diferencias entre concepción mecanicista y orgánica, funciones del Estado en la economía y diferencia entre escuela clásica y keynesiana.
-          </div>
-        </section>
-
-        <section id="unidad2" class="searchable">
-          <h2>Unidad II: Política Fiscal y su impacto económico</h2>
-
-          <div class="definition">
-            <strong>Idea mínima:</strong> esta unidad explica cómo el Estado usa gasto, impuestos y deuda para influir en crecimiento, estabilidad y distribución del ingreso.
-          </div>
-
-          <details open>
-            <summary>1. Política fiscal y política monetaria</summary>
-            <ul>
-              <li><strong>Política fiscal:</strong> decisiones sobre gasto público, tributación y endeudamiento para influir en la economía.</li>
-              <li><strong>Política monetaria:</strong> control de dinero, liquidez y tasas de interés para sostener estabilidad de precios.</li>
-            </ul>
-          </details>
-
-          <details>
-            <summary>2. Objetivos de la política fiscal</summary>
-            <ol>
-              <li>Promover crecimiento económico.</li>
-              <li>Reducir fluctuaciones de los ciclos económicos.</li>
-              <li>Disminuir desigualdad mediante redistribución.</li>
-            </ol>
-          </details>
-
-          <details>
-            <summary>3. Déficit y superávit fiscal</summary>
-            <ul>
-              <li><strong>Déficit fiscal:</strong> cuando los gastos superan los ingresos.</li>
-              <li><strong>Superávit fiscal:</strong> cuando los ingresos superan los gastos.</li>
-            </ul>
-          </details>
-
-          <details>
-            <summary>4. Variables del déficit</summary>
-            <h4>Ingresos del gobierno</h4>
-            <ul>
-              <li>Tributarios: IVA, aranceles, impuestos, contribuciones.</li>
-              <li>No tributarios: multas, licencias, ganancias de empresas públicas, venta de activos.</li>
-            </ul>
-
-            <h4>Gastos del gobierno</h4>
-            <ul>
-              <li>Funcionamiento.</li>
-              <li>Inversión.</li>
-              <li>Transferencias y subsidios.</li>
-              <li>Pago de deuda.</li>
-            </ul>
-          </details>
-
-          <details>
-            <summary>5. Formas de financiar el déficit</summary>
-            <div class="table-wrap">
-              <table>
-                <tr>
-                  <th>Método</th>
-                  <th>Descripción</th>
-                  <th>Consecuencia principal</th>
-                </tr>
-                <tr>
-                  <td>Emisión</td>
-                  <td>Creación inorgánica de billetes.</td>
-                  <td>Presión inflacionaria.</td>
-                </tr>
-                <tr>
-                  <td>Préstamos</td>
-                  <td>Financiamiento interno o externo.</td>
-                  <td>Aumento de deuda pública.</td>
-                </tr>
-                <tr>
-                  <td>Bonos del Tesoro</td>
-                  <td>Colocación de títulos públicos.</td>
-                  <td>Mayor stock de deuda y menor espacio fiscal.</td>
-                </tr>
-              </table>
-            </div>
-          </details>
-
-          <details>
-            <summary>6. Efectos económicos del déficit fiscal</summary>
-            <ul>
-              <li><strong>Roubini:</strong> eleva deuda y costo del servicio de deuda.</li>
-              <li><strong>Friedman:</strong> si se monetiza, aumenta inflación y distorsiona precios.</li>
-              <li><strong>Stiglitz:</strong> puede afectar confianza e inversión extranjera.</li>
-            </ul>
-          </details>
-
-          <details>
-            <summary>7. Ciclos económicos y política contracíclica</summary>
-            <div class="table-wrap">
-              <table>
-                <tr>
-                  <th>Fase</th>
-                  <th>Objetivo</th>
-                  <th>Política</th>
-                  <th>Medidas</th>
-                </tr>
-                <tr>
-                  <td>Recesión</td>
-                  <td>Reactivar demanda y empleo</td>
-                  <td>Expansiva</td>
-                  <td>Aumentar gasto, bajar impuestos, aceptar déficit controlado</td>
-                </tr>
-                <tr>
-                  <td>Auge</td>
-                  <td>Evitar sobrecalentamiento e inflación</td>
-                  <td>Contractiva</td>
-                  <td>Controlar gasto, generar superávit, reducir deuda</td>
-                </tr>
-              </table>
-            </div>
-          </details>
-
-          <details>
-            <summary>8. Evolución del déficit fiscal en Paraguay</summary>
-            <div class="table-wrap">
-              <table>
-                <tr>
-                  <th>Año</th>
-                  <th>Resultado fiscal (millones Gs.)</th>
-                  <th>% del PIB</th>
-                </tr>
-                <tr><td>2018</td><td>-3.017</td><td>-1,31%</td></tr>
-                <tr><td>2019</td><td>-6.651</td><td>-2,81%</td></tr>
-                <tr><td>2020</td><td>-14.729</td><td>-6,14%</td></tr>
-                <tr><td>2021</td><td>-9.827</td><td>-3,63%</td></tr>
-                <tr><td>2022</td><td>-8.622</td><td>-2,96%</td></tr>
-                <tr><td>2023</td><td>-12.828</td><td>-4,08%</td></tr>
-                <tr><td>2024</td><td>-8.580</td><td>-2,55%</td></tr>
-                <tr><td>2025 (*)</td><td>-2.830</td><td>-3,06%</td></tr>
-              </table>
-            </div>
-          </details>
-
-          <details>
-            <summary>9. Ley de Responsabilidad Fiscal - Ley N.º 5098/2013</summary>
-            <ul>
-              <li><strong>Objeto:</strong> establecer reglas generales orientadas a la estabilidad y sostenibilidad fiscal.</li>
-              <li><strong>Principio general:</strong> preservar equilibrio entre ingresos y gastos y evitar impactos negativos sobre estabilidad macroeconómica.</li>
-              <li><strong>Regla 1:</strong> déficit anual de la Administración Central no mayor al 1,5% del PIB estimado.</li>
-              <li><strong>Regla 2:</strong> el gasto corriente primario no puede crecer más que inflación + 4%.</li>
-              <li><strong>Regla 3:</strong> no se incorporan incrementos salariales salvo en condiciones normativas específicas vinculadas al salario mínimo.</li>
-            </ul>
-          </details>
-
-          <div class="exam">
-            <strong>Preguntas típicas:</strong> diferencia entre política fiscal y monetaria, causas del déficit, formas de financiamiento, efectos del déficit y contenido de la LRF.
-          </div>
-        </section>
-
-        <section id="unidad3" class="searchable">
-          <h2>Unidad III: Presupuesto General de la Nación (PGN)</h2>
-
-          <div class="definition">
-            <strong>Idea mínima:</strong> el PGN es la traducción financiera anual del plan estatal y se rige por principios, normas, plazos, clasificación y control.
-          </div>
-
-          <details open>
-            <summary>1. Ley N.º 1535/99 y principios generales</summary>
-            <p>Regula la administración financiera del Estado y busca economicidad, eficiencia, eficacia, transparencia, información confiable y profesionalización técnica.</p>
-          </details>
-
-          <details>
-            <summary>2. Definición de PGN</summary>
-            <p>Es el instrumento de asignación de recursos financieros para cumplir políticas y objetivos estatales. Expresa el plan de trabajo anual, prevé ingresos, gastos autorizados y mecanismos de financiamiento.</p>
-          </details>
-
-          <details>
-            <summary>3. Principios presupuestarios</summary>
-            <ul>
-              <li><strong>Universalidad:</strong> todos los ingresos y gastos deben estar presupuestados.</li>
-              <li><strong>Legalidad:</strong> el gasto autorizado es límite máximo legal.</li>
-              <li><strong>Unidad:</strong> todo debe incluirse en un solo documento.</li>
-              <li><strong>Anualidad:</strong> corresponde al ejercicio fiscal de cada año.</li>
-              <li><strong>Equilibrio:</strong> el gasto no puede exceder ingresos más financiamiento.</li>
-            </ul>
-          </details>
-
-          <details>
-            <summary>4. Normas presupuestarias y criterios</summary>
-            <h4>Normas fundamentales</h4>
-            <ul>
-              <li>No presupuestar planes ajenos a fines institucionales.</li>
-              <li>La descentralización financiera debe seguir planes y programas generales.</li>
-              <li>La ley del PGN no debe contener cláusulas permanentes ajenas al ejercicio fiscal.</li>
-            </ul>
-
-            <h4>Criterios de administración financiera</h4>
-            <ul>
-              <li>Los ingresos se estiman según disponibilidad.</li>
-              <li>Las estimaciones son metas y pueden ser superadas.</li>
-              <li>Los créditos son límites máximos para contraer obligaciones.</li>
-              <li>Los saldos disponibles al cierre pasan a financiar el siguiente ejercicio bajo el marco legal correspondiente.</li>
-            </ul>
-          </details>
-
-          <details>
-            <summary>5. Estructura institucional del sector público</summary>
-            <ul>
-              <li><strong>Administración Central:</strong> los tres poderes, Contraloría y Defensoría del Pueblo.</li>
-              <li><strong>Entidades Descentralizadas:</strong> entes autónomos, autárquicos, empresas públicas, universidades nacionales, gobiernos departamentales y municipalidades.</li>
-            </ul>
-          </details>
-
-          <details>
-            <summary>6. Fuentes de financiamiento</summary>
-            <ul>
-              <li><strong>FF 10:</strong> Recursos del Tesoro.</li>
-              <li><strong>FF 20:</strong> Recursos del Crédito Público.</li>
-              <li><strong>FF 30:</strong> Recursos Institucionales.</li>
-            </ul>
-          </details>
-
-          <details>
-            <summary>7. Clasificador presupuestario</summary>
-            <p>Es el instrumento metodológico que ordena y uniforma la información de ingresos, gastos y financiamiento.</p>
-
-            <h4>Grupos principales del gasto</h4>
-            <ul>
-              <li>100 Servicios Personales.</li>
-              <li>200 Servicios No Personales.</li>
-              <li>300 Bienes de Consumo e Insumos.</li>
-              <li>500 Inversiones.</li>
-              <li>800 Transferencias.</li>
-              <li>900 Otros Gastos.</li>
-            </ul>
-
-            <h4>Clasificación económica del gasto</h4>
-            <ul>
-              <li>100 Gastos Corrientes.</li>
-              <li>200 Gastos de Capital.</li>
-              <li>300 Gastos de Financiamiento.</li>
-            </ul>
-          </details>
-
-          <details>
-            <summary>8. Resultado global y resultado primario</summary>
-            <ul>
-              <li><strong>Resultado global:</strong> diferencia entre ingresos y gastos totales.</li>
-              <li><strong>Resultado primario:</strong> diferencia entre ingresos y gastos antes del pago de intereses de la deuda.</li>
-            </ul>
-          </details>
-
-          <div class="exam">
-            <strong>Lo que más debes dominar:</strong> definición de PGN, principios presupuestarios, FF 10/20/30, grupos del gasto, diferencia entre resultado global y primario.
-          </div>
-        </section>
-
-        <section id="unidad4" class="searchable">
-          <h2>Unidad IV: Análisis del Gasto Público</h2>
-
-          <div class="definition">
-            <strong>Idea mínima:</strong> esta unidad estudia no solo cuánto gasta el Estado, sino para qué, con qué efecto distributivo y con qué impacto económico y social.
-          </div>
-
-          <details open>
-            <summary>1. Funciones del gasto público</summary>
-            <ul>
-              <li><strong>Redistributiva:</strong> mejorar condiciones de vida de sectores de menores ingresos.</li>
-              <li><strong>Estabilización:</strong> regular o incentivar actividad económica.</li>
-              <li><strong>Administrativa:</strong> sostener funcionamiento del aparato estatal.</li>
-            </ul>
-          </details>
-
-          <details>
-            <summary>2. Distribución de la renta</summary>
-            <ul>
-              <li><strong>Distribución primaria:</strong> surge del mercado.</li>
-              <li><strong>Distribución secundaria:</strong> resulta de impuestos, subsidios, transferencias y gasto social.</li>
-            </ul>
-          </details>
-
-          <details>
-            <summary>3. Distribución óptima, utilitarismo y criterio de maximización</summary>
-            <p>La distribución óptima busca maximizar bienestar social con criterios normativos. La concepción utilitarista valora las políticas según su contribución al bienestar agregado. El criterio de maximización exige obtener el mayor impacto social con recursos limitados.</p>
-            <ul>
-              <li>Gastar más no siempre es gastar mejor.</li>
-              <li>Importan focalización, evaluación, priorización y reducción de duplicidades.</li>
-            </ul>
-          </details>
-
-          <details>
-            <summary>4. Redistribuciones Pareto eficientes</summary>
-            <p>Se habla de mejora paretiana cuando un grupo mejora sin empeorar otro. En la práctica es difícil, pero algunas políticas de educación, salud preventiva o infraestructura pueden aproximarse a ese efecto al elevar productividad general.</p>
-          </details>
-
-          <details>
-            <summary>5. Procesos justos y movilidad social</summary>
-            <ul>
-              <li><strong>Procesos justos:</strong> asignación legítima, transparente, trazable y evaluable del gasto público.</li>
-              <li><strong>Movilidad social:</strong> capacidad de mejorar posición socioeconómica mediante oportunidades reales.</li>
-            </ul>
-          </details>
-
-          <details>
-            <summary>6. Incidencia del gasto</summary>
-            <ul>
-              <li><strong>Gasto progresivo:</strong> beneficia relativamente más a los hogares de menores ingresos.</li>
-              <li><strong>Gasto regresivo:</strong> beneficia relativamente más a los de mayores ingresos.</li>
-            </ul>
-          </details>
-
-          <details>
-            <summary>7. Problemas de medición y unidad de observación</summary>
-            <ul>
-              <li>Subdeclaración de ingresos.</li>
-              <li>Informalidad.</li>
-              <li>Autoconsumo rural.</li>
-              <li>Diferencias regionales de precios.</li>
-              <li>Errores de focalización.</li>
-            </ul>
-            <p>La unidad de observación puede ser persona, hogar, familia, territorio, grupo poblacional o unidad productiva, y su mala elección puede distorsionar análisis.</p>
-          </details>
-
-          <details>
-            <summary>8. Efectos en precios relativos y bienes públicos</summary>
-            <p>El gasto público puede alterar precios relativos al modificar demanda, oferta o costos, como ocurre con subsidios, transferencias o inversión en infraestructura.</p>
-            <ul>
-              <li><strong>Bien público:</strong> no rival y no excluible.</li>
-              <li>Ejemplos: defensa, seguridad, justicia, alumbrado, información estadística, control epidemiológico.</li>
-            </ul>
-          </details>
-
-          <div class="exam">
-            <strong>Ojo con estas nociones:</strong> gasto progresivo/regresivo, distribución primaria/secundaria, criterio de maximización, bienes públicos y procesos justos.
-          </div>
-        </section>
-
-        <section id="unidad8" class="searchable">
-          <h2>Unidad VIII: Sistema de Presupuesto y Ejecución</h2>
-
-          <div class="warning">
-            <strong>Nota importante:</strong> en el material aparece una discrepancia entre “Unidad VIII” en el encabezado y “Unidad VII” en el contenido interno. Aquí se conserva la denominación del encabezado del archivo para mantener consistencia visual.
-          </div>
-
-          <details open>
-            <summary>1. Marco legal</summary>
-            <ul>
-              <li>Ley N.º 1535/99.</li>
-              <li>Ley N.º 7609/2025.</li>
-              <li>Decreto N.º 5311/2026.</li>
-              <li>Decreto N.º 5443/2026.</li>
-            </ul>
-          </details>
-
-          <details>
-            <summary>2. Ejecución del presupuesto</summary>
-            <p>La ejecución se vincula con equilibrio presupuestario, plan anual de cuotas y requerimientos de fondos para cumplir objetivos y metas institucionales.</p>
-          </details>
-
-          <details>
-            <summary>3. Plan financiero</summary>
-            <p>La ejecución se realiza sobre planes financieros generales e institucionales considerando flujo estacional de ingresos y capacidad real de ejecución.</p>
-            <ul>
-              <li>Sirve para programación de caja.</li>
-              <li>Sirve para asignación de cuotas.</li>
-              <li>Solo se contraen obligaciones con saldo disponible.</li>
-            </ul>
-          </details>
-
-          <details>
-            <summary>4. Etapas de ejecución</summary>
-            <div class="table-wrap">
-              <table>
-                <tr>
-                  <th>Tipo</th>
-                  <th>Etapa</th>
-                  <th>Descripción</th>
-                </tr>
-                <tr>
-                  <td rowspan="2">Ingresos</td>
-                  <td>Liquidación</td>
-                  <td>Identificación y cuantificación del recurso.</td>
-                </tr>
-                <tr>
-                  <td>Recaudación</td>
-                  <td>Percepción efectiva del ingreso.</td>
-                </tr>
-                <tr>
-                  <td rowspan="3">Gastos</td>
-                  <td>Previsión</td>
-                  <td>Asignación del crédito presupuestario.</td>
-                </tr>
-                <tr>
-                  <td>Obligación</td>
-                  <td>Compromiso de pago con base jurídica y financiera.</td>
-                </tr>
-                <tr>
-                  <td>Pago</td>
-                  <td>Cumplimiento parcial o total de la obligación.</td>
-                </tr>
-              </table>
-            </div>
-          </details>
-
-          <details>
-            <summary>5. Modificaciones presupuestarias</summary>
-            <h4>Ampliación presupuestaria</h4>
-            <ul>
-              <li>Aumenta gastos previstos.</li>
-              <li>Debe indicar recursos de financiamiento.</li>
-              <li>Debe aprobarse por ley.</li>
-            </ul>
-
-            <h4>Transferencias de créditos</h4>
-            <ul>
-              <li>No aumentan el presupuesto total institucional.</li>
-              <li>Redistribuyen créditos entre objetos, programas, actividades o proyectos.</li>
-            </ul>
-
-            <h4>Cambio de fuente de financiamiento</h4>
-            <ul>
-              <li>Sustituye una fuente por otra.</li>
-              <li>Ejemplo típico: de FF 30 a FF 10 por descalce financiero.</li>
-            </ul>
-
-            <h4>Modificación de cuotas del plan financiero</h4>
-            <p>Consiste en mover recursos entre meses dentro del mismo rubro y fuente.</p>
-          </details>
-
-          <details>
-            <summary>6. Modificación del anexo del personal</summary>
-            <ul>
-              <li>Afecta cargos, categorías, remuneraciones y estructura organizacional.</li>
-              <li>La creación de cargos y la modificación de remuneraciones, como regla general, requieren ley.</li>
-              <li>Existen adecuaciones permitidas por la ley presupuestaria bajo límites específicos.</li>
-            </ul>
-          </details>
-
-          <details>
-            <summary>7. Metas productivas e indicadores de gestión</summary>
-            <p>El presupuesto no solo mide dinero asignado, sino resultados. Por eso se vincula con metas productivas e indicadores de gestión que permiten evaluar desempeño y cumplimiento institucional.</p>
-          </details>
-
-          <details>
-            <summary>8. Sistema de control y evaluación</summary>
-            <ul>
-              <li><strong>Informe Primer Semestre:</strong> hasta 15 días corridos después del cierre del semestre.</li>
-              <li><strong>BAGP:</strong> informe anual único de gestión pública.</li>
-              <li><strong>Publicación:</strong> luego de presentado al MEF, debe publicarse en la web institucional.</li>
-              <li><strong>Incumplimiento:</strong> el MEF comunica a órganos de control.</li>
-              <li><strong>Informe al Congreso:</strong> mediante el Informe de Control Financiero y Evaluación Presupuestaria.</li>
-            </ul>
-          </details>
-
-          <div class="exam">
-            <strong>Muy preguntable:</strong> plan financiero, etapas de ingresos y gastos, ampliación presupuestaria, transferencias de crédito, cambio de fuente, anexo del personal y BAGP.
-          </div>
-        </section>
-
-        <section id="cronologia" class="searchable">
-          <h2>Cronología del PGN</h2>
-
-          <div class="table-wrap">
-            <table>
-              <tr>
-                <th>Momento</th>
-                <th>Hecho</th>
-              </tr>
-              <tr>
-                <td>Abril</td>
-                <td>El MEF entrega lineamientos presupuestarios.</td>
-              </tr>
-              <tr>
-                <td>Hasta 30 de junio</td>
-                <td>Las instituciones presentan sus anteproyectos al MEF.</td>
-              </tr>
-              <tr>
-                <td>Hasta 1 de septiembre</td>
-                <td>El Poder Ejecutivo remite el proyecto de PGN al Congreso.</td>
-              </tr>
-              <tr>
-                <td>Hasta 30 de octubre</td>
-                <td>La Comisión Bicameral remite su versión.</td>
-              </tr>
-              <tr>
-                <td>Hasta 20 de diciembre</td>
-                <td>Debe culminar el proceso parlamentario.</td>
-              </tr>
-              <tr>
-                <td>Hasta 31 de diciembre</td>
-                <td>Promulgación o veto del Poder Ejecutivo.</td>
-              </tr>
-            </table>
-          </div>
-
-          <div class="tip">
-            <strong>Truco de memorización:</strong> abril, junio, septiembre, octubre, diciembre, diciembre.
-          </div>
-        </section>
-
-        <section id="preguntas" class="searchable">
-          <h2>Preguntas de autoevaluación</h2>
-
-          <div class="cards">
-            <div class="card">
-              <h3>Unidad I</h3>
-              <ol>
-                <li>¿Qué elementos integran el Estado?</li>
-                <li>¿Cómo se diferencia la concepción mecanicista de la orgánica?</li>
-                <li>¿Cuáles son las tres funciones económicas del Estado?</li>
-                <li>¿Qué distingue a la escuela clásica de la keynesiana?</li>
-              </ol>
-            </div>
-
-            <div class="card">
-              <h3>Unidad II</h3>
-              <ol>
-                <li>¿Qué es política fiscal?</li>
-                <li>¿Qué genera un déficit fiscal?</li>
-                <li>¿Cómo puede financiarse el déficit?</li>
-                <li>¿Qué límites impone la Ley de Responsabilidad Fiscal?</li>
-              </ol>
-            </div>
-
-            <div class="card">
-              <h3>Unidad III</h3>
-              <ol>
-                <li>¿Qué es el PGN?</li>
-                <li>¿Cuáles son sus principios?</li>
-                <li>¿Qué son FF 10, FF 20 y FF 30?</li>
-                <li>¿Qué diferencia hay entre resultado global y resultado primario?</li>
-              </ol>
-            </div>
-
-            <div class="card">
-              <h3>Unidad IV</h3>
-              <ol>
-                <li>¿Qué es gasto progresivo y gasto regresivo?</li>
-                <li>¿Qué es distribución primaria y secundaria?</li>
-                <li>¿Qué es un bien público?</li>
-                <li>¿Qué significa criterio de maximización?</li>
-              </ol>
-            </div>
-
-            <div class="card">
-              <h3>Unidad VIII</h3>
-              <ol>
-                <li>¿Qué es plan financiero?</li>
-                <li>¿Cuáles son las etapas de ejecución de ingresos y gastos?</li>
-                <li>¿Qué es una ampliación presupuestaria?</li>
-                <li>¿Qué es el BAGP?</li>
-              </ol>
-            </div>
-
-            <div class="card">
-              <h3>Preguntas integradoras</h3>
-              <ol>
-                <li>¿Cómo se relacionan política fiscal, presupuesto y gasto público?</li>
-                <li>¿Por qué el clasificador presupuestario es importante?</li>
-                <li>¿Qué relación existe entre equidad y eficiencia en el gasto público?</li>
-                <li>¿Cómo ayuda el control presupuestario a la transparencia?</li>
-              </ol>
-            </div>
-          </div>
-        </section>
-
-        <section class="searchable">
-          <h2>Flashcards rápidas</h2>
-
-          <div class="flashcards">
-            <div class="flash">
-              <div class="flash-inner">
-                <div class="flash-face"><strong>PGN</strong><br>¿Qué es?</div>
-                <div class="flash-face flash-back">Instrumento de asignación de recursos financieros para cumplir políticas y objetivos estatales.</div>
-              </div>
-            </div>
-
-            <div class="flash">
-              <div class="flash-inner">
-                <div class="flash-face"><strong>Déficit fiscal</strong><br>¿Cuándo existe?</div>
-                <div class="flash-face flash-back">Cuando los gastos del gobierno superan sus ingresos en un período determinado.</div>
-              </div>
-            </div>
-
-            <div class="flash">
-              <div class="flash-inner">
-                <div class="flash-face"><strong>FF 10</strong><br>¿Qué significa?</div>
-                <div class="flash-face flash-back">Recursos del Tesoro.</div>
-              </div>
-            </div>
-
-            <div class="flash">
-              <div class="flash-inner">
-                <div class="flash-face"><strong>Bien público</strong><br>¿Cómo se reconoce?</div>
-                <div class="flash-face flash-back">Por no rivalidad y no exclusión.</div>
-              </div>
-            </div>
-
-            <div class="flash">
-              <div class="flash-inner">
-                <div class="flash-face"><strong>Plan financiero</strong><br>¿Para qué sirve?</div>
-                <div class="flash-face flash-back">Para programar caja, asignar cuotas y ejecutar el presupuesto según ingresos y capacidad real.</div>
-              </div>
-            </div>
-
-            <div class="flash">
-              <div class="flash-inner">
-                <div class="flash-face"><strong>BAGP</strong><br>¿Qué es?</div>
-                <div class="flash-face flash-back">Balance Anual de Gestión Pública: informe anual único sobre resultados institucionales.</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="glosario" class="searchable">
-          <h2>Glosario esencial</h2>
-
-          <p>
-            <span class="pill">Estado</span>
-            <span class="pill">Soberanía</span>
-            <span class="pill">Política fiscal</span>
-            <span class="pill">Política monetaria</span>
-            <span class="pill">Déficit</span>
-            <span class="pill">Superávit</span>
-            <span class="pill">PGN</span>
-            <span class="pill">Universalidad</span>
-            <span class="pill">Legalidad</span>
-            <span class="pill">FF 10</span>
-            <span class="pill">FF 20</span>
-            <span class="pill">FF 30</span>
-            <span class="pill">Plan financiero</span>
-            <span class="pill">BAGP</span>
-            <span class="pill">Gasto progresivo</span>
-            <span class="pill">Gasto regresivo</span>
-            <span class="pill">Bien público</span>
-            <span class="pill">Resultado global</span>
-            <span class="pill">Resultado primario</span>
-          </p>
-
-          <div class="cards">
-            <div class="card"><strong>Universalidad:</strong> todos los ingresos y gastos deben incluirse en el presupuesto.</div>
-            <div class="card"><strong>Legalidad:</strong> el gasto autorizado es límite máximo legal.</div>
-            <div class="card"><strong>FF 20:</strong> recursos provenientes del crédito público.</div>
-            <div class="card"><strong>Resultado primario:</strong> ingresos menos gastos antes de intereses de deuda.</div>
-          </div>
-        </section>
-
-        <section id="checklist" class="searchable">
-          <h2>Checklist final de estudio</h2>
-
-          <div class="checklist">
-            <div class="check-item">
-              <label><input type="checkbox" data-check="c1"> Entiendo la definición de Estado y sus elementos.</label>
-            </div>
-            <div class="check-item">
-              <label><input type="checkbox" data-check="c2"> Distingo concepción mecanicista y orgánica.</label>
-            </div>
-            <div class="check-item">
-              <label><input type="checkbox" data-check="c3"> Puedo explicar política fiscal y política monetaria.</label>
-            </div>
-            <div class="check-item">
-              <label><input type="checkbox" data-check="c4"> Sé definir déficit y superávit fiscal.</label>
-            </div>
-            <div class="check-item">
-              <label><input type="checkbox" data-check="c5"> Recuerdo las reglas principales de la LRF.</label>
-            </div>
-            <div class="check-item">
-              <label><input type="checkbox" data-check="c6"> Sé qué es el PGN y sus principios.</label>
-            </div>
-            <div class="check-item">
-              <label><input type="checkbox" data-check="c7"> Identifico FF 10, FF 20 y FF 30.</label>
-            </div>
-            <div class="check-item">
-              <label><input type="checkbox" data-check="c8"> Distingo resultado global y resultado primario.</label>
-            </div>
-            <div class="check-item">
-              <label><input type="checkbox" data-check="c9"> Puedo explicar gasto progresivo y regresivo.</label>
-            </div>
-            <div class="check-item">
-              <label><input type="checkbox" data-check="c10"> Comprendo qué es un bien público.</label>
-            </div>
-            <div class="check-item">
-              <label><input type="checkbox" data-check="c11"> Recuerdo las etapas de ejecución presupuestaria.</label>
-            </div>
-            <div class="check-item">
-              <label><input type="checkbox" data-check="c12"> Sé qué es el BAGP y el plan financiero.</label>
-            </div>
-          </div>
-
-          <div class="tip">
-            <strong>Meta realista:</strong> si puedes marcar todo este checklist sin mirar apuntes, ya tienes una base muy fuerte para examen oral o escrito.
-          </div>
-        </section>
-
-        <section class="searchable">
-          <h2>Errores frecuentes al estudiar esta materia</h2>
+      <h3>Concepto de Estado y sus elementos</h3>
+      <ul>
+        <li>El Estado es la organización jurídica y política soberana permanente asentada sobre una población, un territorio y un poder institucionalizado. <!-- [file:5] --></li>
+        <li>Población: conjunto de personas que habitan el territorio estatal. <!-- [file:5] --></li>
+        <li>Territorio: espacio geográfico donde el Estado ejerce autoridad. <!-- [file:5] --></li>
+        <li>Gobierno: conjunto de autoridades que ejercen el poder político. <!-- [file:5] --></li>
+        <li>Soberanía: poder supremo del Estado para decidir sin subordinación a otro poder. <!-- [file:5] --></li>
+      </ul>
+
+      <h3>Concepciones del Estado</h3>
+      <div class="grid">
+        <div class="card">
+          <h3>Concepción orgánica</h3>
           <ul>
-            <li>Confundir política fiscal con política monetaria.</li>
-            <li>Estudiar el presupuesto solo como tabla de números y no como sistema jurídico-financiero.</li>
-            <li>Memorizar FF 10, 20 y 30 sin entender su lógica.</li>
-            <li>Pensar que todo déficit fiscal es automáticamente negativo sin considerar el ciclo económico.</li>
-            <li>No distinguir gasto progresivo de redistribución en sentido general.</li>
-            <li>Olvidar los plazos del proceso presupuestario.</li>
+            <li>Entiende al Estado como un organismo social vivo en el que individuos e instituciones son partes interdependientes de un todo superior. <!-- [file:5] --></li>
+            <li>El Estado no es un invento humano, sino una realidad que evoluciona históricamente. <!-- [file:5] --></li>
+            <li>La relación individuo-Estado se plantea como Estado superior al individuo. <!-- [file:5] --></li>
           </ul>
-        </section>
-      </main>
-    </div>
+        </div>
+        <div class="card">
+          <h3>Concepción mecanicista</h3>
+          <ul>
+            <li>Interpreta al Estado como una estructura artificial creada por las personas para organizar la convivencia y garantizar el orden político. <!-- [file:5] --></li>
+            <li>Se fundamenta en la idea del contrato social. <!-- [file:5] --></li>
+            <li>La relación individuo-Estado se plantea como individuo anterior y superior al Estado, que existe para proteger derechos. <!-- [file:5] --></li>
+          </ul>
+        </div>
+      </div>
 
-    <div class="footer">
-      Guía de estudio interactiva - Administración Financiera del Estado
-    </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Criterio</th>
+              <th>Concepción mecanicista</th>
+              <th>Concepción orgánica</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Origen <!-- [file:5] --></td>
+              <td>Voluntario, basado en contrato social. <!-- [file:5] --></td>
+              <td>Natural, producto de la evolución histórica. <!-- [file:5] --></td>
+            </tr>
+            <tr>
+              <td>Metáfora <!-- [file:5] --></td>
+              <td>El reloj. <!-- [file:5] --></td>
+              <td>El cuerpo humano. <!-- [file:5] --></td>
+            </tr>
+            <tr>
+              <td>Jerarquía <!-- [file:5] --></td>
+              <td>Individuo por encima del Estado. <!-- [file:5] --></td>
+              <td>Estado por encima del individuo. <!-- [file:5] --></td>
+            </tr>
+            <tr>
+              <td>Autores <!-- [file:5] --></td>
+              <td>Hobbes, Locke y Montesquieu. <!-- [file:5] --></td>
+              <td>Hegel, Gierke y Savigny. <!-- [file:5] --></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Rol del Estado en la economía</h3>
+      <ul>
+        <li>Richard Musgrave clasifica las funciones económicas del Estado en asignación, distribución y estabilización. <!-- [file:5] --></li>
+        <li>La función de asignación busca asegurar uso eficiente de recursos cuando el mercado falla. <!-- [file:5] --></li>
+        <li>La función de distribución procura corregir desigualdades del ingreso y la riqueza. <!-- [file:5] --></li>
+        <li>La función de estabilización apunta al equilibrio macroeconómico y a suavizar el ciclo económico. <!-- [file:5] --></li>
+      </ul>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Asignación</h3>
+          <ul>
+            <li>Se justifica por fallas de mercado. <!-- [file:5] --></li>
+            <li>Incluye bienes públicos, externalidades y asimetrías de información. <!-- [file:5] --></li>
+            <li>Ejemplos: defensa, seguridad, alumbrado, infraestructura y regulación sanitaria o financiera. <!-- [file:5] --></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Distribución</h3>
+          <ul>
+            <li>Usa impuestos progresivos, transferencias sociales y políticas públicas para promover equidad. <!-- [file:5] --></li>
+            <li>Incluye políticas sociales como educación, salud y vivienda. <!-- [file:5] --></li>
+            <li>También puede operar mediante regulación laboral y salario mínimo. <!-- [file:5] --></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <h3>Estabilización</h3>
+        <ul>
+          <li>Busca mantener producción, empleo e inflación en niveles compatibles con el equilibrio macroeconómico. <!-- [file:5] --></li>
+          <li>Se apoya en política fiscal, política monetaria y medidas anticíclicas. <!-- [file:5] --></li>
+          <li>En recesión puede aumentar el gasto; en fases de presión inflacionaria puede contenerlo. <!-- [file:5] --></li>
+        </ul>
+      </div>
+
+      <h3>Fines del Estado</h3>
+      <ul>
+        <li>Eficiencia: asignación óptima de recursos públicos para maximizar bienestar al menor costo posible. <!-- [file:5] --></li>
+        <li>Eficacia: grado en que el Estado cumple objetivos y metas de política pública. <!-- [file:5] --></li>
+        <li>Estabilidad: capacidad para mantener equilibrio macroeconómico, controlar inflación, reducir desempleo y sostener crecimiento. <!-- [file:5] --></li>
+      </ul>
+
+      <h3>Escuelas del pensamiento económico y finanzas públicas</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Aspecto</th>
+              <th>Escuela clásica</th>
+              <th>Escuela keynesiana</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Rol del Estado <!-- [file:5] --></td>
+              <td>Mínimo, observador. <!-- [file:5] --></td>
+              <td>Activo, interventor. <!-- [file:5] --></td>
+            </tr>
+            <tr>
+              <td>Intervención <!-- [file:5] --></td>
+              <td>No intervención o mínima interferencia. <!-- [file:5] --></td>
+              <td>Intervención necesaria para estabilizar. <!-- [file:5] --></td>
+            </tr>
+            <tr>
+              <td>Política fiscal <!-- [file:5] --></td>
+              <td>Neutral. <!-- [file:5] --></td>
+              <td>Instrumento económico central. <!-- [file:5] --></td>
+            </tr>
+            <tr>
+              <td>Déficit fiscal <!-- [file:5] --></td>
+              <td>Rechazado. <!-- [file:5] --></td>
+              <td>Aceptado en crisis. <!-- [file:5] --></td>
+            </tr>
+            <tr>
+              <td>Mercado <!-- [file:5] --></td>
+              <td>Autorregulado. <!-- [file:5] --></td>
+              <td>Puede fallar. <!-- [file:5] --></td>
+            </tr>
+            <tr>
+              <td>Autores clave <!-- [file:5] --></td>
+              <td>Adam Smith y David Ricardo. <!-- [file:5] --></td>
+              <td>John Maynard Keynes. <!-- [file:5] --></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="mini">En la base doctrinal clásica, el Estado cumple funciones limitadas como defensa, justicia y ciertas obras públicas; en la visión keynesiana, asume un papel central como agente estabilizador mediante política fiscal, política monetaria e inversión pública.</p>
+      <!-- [file:5] -->
+    </section>
+
+    <section id="bloque2" class="block">
+      <h2>Bloque 2. Política Fiscal y su impacto económico</h2>
+
+      <div class="fundamental">
+        <h3>Lo fundamental del bloque</h3>
+        <p>La política fiscal gestiona gasto, tributación y endeudamiento para influir en crecimiento, distribución y estabilidad; el déficit aparece cuando el gasto supera a los ingresos y su manejo está condicionado por reglas de sostenibilidad fiscal.</p>
+        <!-- [file:3] -->
+      </div>
+
+      <h3>Política fiscal y política monetaria</h3>
+      <ul>
+        <li>La política fiscal es el conjunto de decisiones del Estado sobre gasto público, tributación y endeudamiento para influir en la actividad económica, la distribución del ingreso y la estabilidad macroeconómica. <!-- [file:3] --></li>
+        <li>La política monetaria es el conjunto de acciones de la autoridad monetaria para controlar oferta de dinero, tasas de interés y liquidez con el propósito de preservar estabilidad de precios y equilibrio macroeconómico. <!-- [file:3] --></li>
+      </ul>
+
+      <h3>Objetivos de la política fiscal</h3>
+      <ul>
+        <li>Promover mayores tasas de crecimiento. <!-- [file:3] --></li>
+        <li>Reducir fluctuaciones asociadas a los ciclos económicos. <!-- [file:3] --></li>
+        <li>Disminuir desigualdad mediante redistribución de la riqueza. <!-- [file:3] --></li>
+        <li>Una limitación central es la estabilidad presupuestaria, resumida en que los gastos no deben superar a los ingresos. <!-- [file:3] --></li>
+      </ul>
+
+      <h3>Déficit fiscal y superávit fiscal</h3>
+      <ul>
+        <li>El déficit fiscal es la diferencia entre los gastos del gobierno y sus ingresos en un período determinado, cuando los gastos superan a los ingresos. <!-- [file:3] --></li>
+        <li>El superávit fiscal se presenta cuando los ingresos exceden a los gastos, reflejando capacidad de ahorro público y una herramienta de estabilidad macroeconómica. <!-- [file:3] --></li>
+      </ul>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Ejemplo de déficit</h3>
+          <p>Ingresos tributarios: G 7.000; gasto público: G -8.500; resultado: déficit fiscal de G -1.500.</p>
+          <!-- [file:3] -->
+        </div>
+        <div class="card">
+          <h3>Ejemplo de superávit</h3>
+          <p>Ingresos tributarios: G 8.500; gasto público: G -7.500; resultado: superávit fiscal de G 1.500.</p>
+          <!-- [file:3] -->
+        </div>
+      </div>
+
+      <h3>Variables que determinan el déficit fiscal</h3>
+      <ul>
+        <li>El déficit se compone principalmente de dos variables: ingresos del gobierno y gastos del gobierno. <!-- [file:3] --></li>
+        <li>Los ingresos del gobierno provienen de impuestos, aranceles, contribuciones, IVA, impuestos a empresas, propiedad y renta. <!-- [file:3] --></li>
+        <li>También existen ingresos no tributarios como utilidades de empresas públicas, venta de activos, multas y licencias. <!-- [file:3] --></li>
+        <li>Los gastos del gobierno incluyen funcionamiento, inversión, transferencias, subsidios y servicio de deuda. <!-- [file:3] --></li>
+        <li>El gasto público busca incrementar el bienestar mediante bienes preferentes y programas de prestaciones económicas. <!-- [file:3] --></li>
+      </ul>
+
+      <h3>Formas de financiar el déficit</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Método</th>
+              <th>Características y consecuencias</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Emisión de billetes por el BCP <!-- [file:3] --></td>
+              <td>Puede generar exceso de dinero e inflación moderada, galopante o hiperinflación. <!-- [file:3] --></td>
+            </tr>
+            <tr>
+              <td>Préstamos internos y externos <!-- [file:3] --></td>
+              <td>Aumentan el stock de deuda pública y reducen espacio fiscal. <!-- [file:3] --></td>
+            </tr>
+            <tr>
+              <td>Colocación de Bonos del Tesoro <!-- [file:3] --></td>
+              <td>También incrementa deuda pública y disminuye espacio fiscal. <!-- [file:3] --></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Efectos económicos del déficit en un país en desarrollo</h3>
+      <ul>
+        <li>Un déficit persistente puede elevar la deuda pública y el costo de su servicio. <!-- [file:3] --></li>
+        <li>La monetización del déficit puede generar inflación y distorsión sostenida de precios. <!-- [file:3] --></li>
+        <li>Un déficit elevado puede disminuir confianza de inversores extranjeros y limitar crecimiento y desarrollo. <!-- [file:3] --></li>
+      </ul>
+
+      <h3>Ciclos económicos y política fiscal contracíclica</h3>
+      <ul>
+        <li>Los ciclos económicos son fluctuaciones recurrentes de producción, empleo, inversión, consumo y crédito en fases de expansión, auge, desaceleración, recesión y recuperación. <!-- [file:3] --></li>
+        <li>La función de estabilización del Estado justifica el uso del presupuesto para amortiguar estas oscilaciones. <!-- [file:3] --></li>
+        <li>La política fiscal debe ser contracíclica: expansiva en recesión y contractiva en auge. <!-- [file:3] --></li>
+      </ul>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Fase</th>
+              <th>Tipo de política</th>
+              <th>Instrumentos</th>
+              <th>Resultado esperado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Recesión <!-- [file:3] --></td>
+              <td>Expansiva. <!-- [file:3] --></td>
+              <td>Aumentar gasto, reducir impuestos y admitir déficit fiscal controlado. <!-- [file:3] --></td>
+              <td>Más producción, más empleo y menor profundidad de la crisis. <!-- [file:3] --></td>
+            </tr>
+            <tr>
+              <td>Auge <!-- [file:3] --></td>
+              <td>Contractiva. <!-- [file:3] --></td>
+              <td>Contención del gasto, normalización impositiva, superávit y reducción de deuda. <!-- [file:3] --></td>
+              <td>Menor presión inflacionaria, más estabilidad y mayor espacio fiscal futuro. <!-- [file:3] --></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Evolución del déficit fiscal en Paraguay</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Año</th>
+              <th>Resultado fiscal</th>
+              <th>% del PIB</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>2018 <!-- [file:3] --></td><td>(3.017) millones de guaraníes. <!-- [file:3] --></td><td>-1,31%. <!-- [file:3] --></td></tr>
+            <tr><td>2019 <!-- [file:3] --></td><td>(6.651) millones de guaraníes. <!-- [file:3] --></td><td>-2,81%. <!-- [file:3] --></td></tr>
+            <tr><td>2020 <!-- [file:3] --></td><td>(14.729) millones de guaraníes. <!-- [file:3] --></td><td>-6,14%. <!-- [file:3] --></td></tr>
+            <tr><td>2021 <!-- [file:3] --></td><td>(9.827) millones de guaraníes. <!-- [file:3] --></td><td>-3,63%. <!-- [file:3] --></td></tr>
+            <tr><td>2022 <!-- [file:3] --></td><td>(8.622) millones de guaraníes. <!-- [file:3] --></td><td>-2,96%. <!-- [file:3] --></td></tr>
+            <tr><td>2023 <!-- [file:3] --></td><td>(12.828) millones de guaraníes. <!-- [file:3] --></td><td>-4,08%. <!-- [file:3] --></td></tr>
+            <tr><td>2024 <!-- [file:3] --></td><td>(8.580) millones de guaraníes. <!-- [file:3] --></td><td>-2,55%. <!-- [file:3] --></td></tr>
+            <tr><td>2025 (*) <!-- [file:3] --></td><td>(2.830) millones de guaraníes. <!-- [file:3] --></td><td>-3,06%. <!-- [file:3] --></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mini">La fuente de estos datos es la Situación Financiera del Paraguay (Situfin) del Ministerio de Economía y Finanzas.</p>
+      <!-- [file:3] -->
+
+      <h3>Ley de Responsabilidad Fiscal N.º 5098/2013</h3>
+      <ul>
+        <li>Su objeto es establecer reglas generales de comportamiento fiscal orientadas a la estabilidad y sostenibilidad de las finanzas públicas. <!-- [file:3] --></li>
+        <li>Su principio general es asegurar sostenibilidad de mediano plazo evitando efectos negativos sobre la estabilidad macroeconómica. <!-- [file:3] --></li>
+        <li>La regla central establece que el déficit fiscal anual de la Administración Central no debe superar el 1,5% del PIB estimado. <!-- [file:3] --></li>
+        <li>El incremento anual del gasto corriente primario no puede exceder la inflación interanual más 4%. <!-- [file:3] --></li>
+        <li>No se pueden incorporar incrementos salariales salvo aumento del salario mínimo, y aun así deben respetar el marco legal presupuestario. <!-- [file:3] --></li>
+      </ul>
+    </section>
+
+    <section id="bloque3" class="block">
+      <h2>Bloque 3. Presupuesto General de la Nación</h2>
+
+      <div class="fundamental">
+        <h3>Lo fundamental del bloque</h3>
+        <p>El Presupuesto General de la Nación es el instrumento de asignación de recursos financieros para cumplir políticas y objetivos estatales; se formula, aprueba, ejecuta, modifica, controla y evalúa bajo principios de universalidad, legalidad, unidad, anualidad y equilibrio.</p>
+        <!-- [file:2] -->
+      </div>
+
+      <h3>Marco normativo y definición del PGN</h3>
+      <ul>
+        <li>La Ley N.º 1535/99 regula la administración financiera del Estado y busca economicidad, eficiencia, eficacia, transparencia, información confiable, técnicas modernas y personal idóneo. <!-- [file:2] --></li>
+        <li>El PGN es la expresión financiera del plan anual de trabajo de los organismos y entidades del Estado. <!-- [file:2] --></li>
+        <li>En el PGN se prevén ingresos, se autorizan gastos y se determinan mecanismos de financiamiento. <!-- [file:2] --></li>
+        <li>Como sistema, incluye normas, técnicas, métodos, procedimientos y organismos que intervienen en programación, formulación, aprobación, ejecución, modificación, control y evaluación. <!-- [file:2] --></li>
+      </ul>
+
+      <h3>Principios presupuestarios</h3>
+      <ul>
+        <li>Universalidad: todos los ingresos y todos los gastos deben estar expresamente presupuestados. <!-- [file:2] --></li>
+        <li>Legalidad: los gastos autorizados son el máximo desembolsable salvo disposición legal en contrario. <!-- [file:2] --></li>
+        <li>Unidad: todos los ingresos, gastos y financiamientos deben integrarse en un solo documento. <!-- [file:2] --></li>
+        <li>Anualidad: el presupuesto corresponde al ejercicio fiscal anual, sin perjuicio de planes plurianuales. <!-- [file:2] --></li>
+        <li>Equilibrio: el presupuesto de gastos no puede exceder el total de ingresos y financiamiento. <!-- [file:2] --></li>
+      </ul>
+
+      <h3>Normas y criterios de administración financiera</h3>
+      <ul>
+        <li>No se deben incluir recursos para planes o programas ajenos a los fines y objetivos legales de cada organismo. <!-- [file:2] --></li>
+        <li>La descentralización de recursos hacia gobiernos departamentales debe ajustarse a planes de desarrollo y programas generales del Gobierno Central. <!-- [file:2] --></li>
+        <li>La Ley del PGN no debe contener disposiciones permanentes ni cláusulas que modifiquen otras leyes de carácter permanente. <!-- [file:2] --></li>
+        <li>Los ingresos se estiman bajo principio de disponibilidad. <!-- [file:2] --></li>
+        <li>Las estimaciones de ingresos son metas a alcanzar y los créditos presupuestarios son límites máximos para contraer obligaciones. <!-- [file:2] --></li>
+        <li>El saldo disponible al 31 de diciembre, descontada deuda flotante y fondos con afectación específica, solo puede financiar el presupuesto del ejercicio siguiente. <!-- [file:2] --></li>
+      </ul>
+
+      <h3>Clasificador presupuestario</h3>
+      <p>El clasificador presupuestario de ingresos, gastos y financiamiento es un instrumento metodológico que uniforma, ordena e interrelaciona la información financiera para facilitar análisis fiscal, ejecución, modificación, control y evaluación del presupuesto.</p>
+      <!-- [file:2] -->
+
+      <h3>Cómo se elabora el PGN</h3>
+      <ul>
+        <li>El ciclo del PGN es anual y pasa por lineamientos, presupuestos institucionales, anteproyecto, proyecto de ley, aprobación legislativa, ejecución, control y evaluación. <!-- [file:2] --></li>
+        <li>Los lineamientos consideran crecimiento económico, inflación, tipo de cambio, ingresos públicos, prioridades del Plan Nacional de Desarrollo 2030 y topes de gasto por OEE. <!-- [file:2] --></li>
+        <li>Los lineamientos son entregados en abril por el Ministerio de Economía y Finanzas. <!-- [file:2] --></li>
+        <li>Antes del anteproyecto, cada OEE elabora el Pre-PAC mediante su Comité de Suministro Público como insumo para el PGN y el presupuesto plurianual 2026-2028. <!-- [file:2] --></li>
+        <li>El Pre-PAC debe identificar necesidades, bienes, servicios, consultorías, obras, inventarios, contrataciones frecuentes, costos de ciclo de vida, proveedores, competencia, aprendizajes previos y nuevas necesidades. <!-- [file:2] --></li>
+        <li>Los anteproyectos deben presentarse al MEF hasta el 30 de junio de cada año. <!-- [file:2] --></li>
+        <li>Si una institución no presenta su anteproyecto en plazo, su programación queda a cargo del MEF. <!-- [file:2] --></li>
+        <li>El Proyecto de Ley del PGN debe ser remitido al Congreso a más tardar el 1 de septiembre. <!-- [file:2] --></li>
+      </ul>
+
+      <h3>Documentación que acompaña al proyecto</h3>
+      <ul>
+        <li>Exposición sobre política fiscal, objetivos, metas, metodología y fundamentos técnicos de ingresos y créditos presupuestarios. <!-- [file:2] --></li>
+        <li>Informe de ejecución presupuestaria del ejercicio anterior y del primer semestre del ejercicio vigente. <!-- [file:2] --></li>
+        <li>Presupuestos de gastos detallados por organismos y entidades con resumen del personal y anexos. <!-- [file:2] --></li>
+      </ul>
+
+      <h3>Fases de estudio y aprobación</h3>
+      <ul>
+        <li>La Comisión Bicameral de Presupuesto estudia el proyecto, puede proponer aumentos o disminuciones y remite su versión a Diputados hasta el 30 de octubre. <!-- [file:2] --></li>
+        <li>La Cámara de Diputados analiza la versión bicameral y genera la versión Diputados I. <!-- [file:2] --></li>
+        <li>La Cámara de Senadores estudia la versión recibida y puede sancionar el presupuesto si coincide o devolverlo para nuevas ratificaciones entre ambas cámaras. <!-- [file:2] --></li>
+        <li>El proceso parlamentario debe concluir el 20 de diciembre y la promulgación o veto del Poder Ejecutivo debe darse antes del 31 de diciembre. <!-- [file:2] --></li>
+        <li>Si el Ejecutivo veta totalmente y el Congreso no rechaza ese veto con los votos necesarios, se ejecuta el presupuesto del año anterior. <!-- [file:2] --></li>
+      </ul>
+
+      <h3>Sector público, organismos y entidades</h3>
+      <ul>
+        <li>Las instituciones del sector público responden ante el parlamento democráticamente elegido y su gestión debe evaluarse por economía, eficiencia, eficacia, ejecutividad y efectividad. <!-- [file:2] --></li>
+        <li>Los organismos operan con recursos provenientes del Tesoro Público y otros ingresos legales. <!-- [file:2] --></li>
+        <li>Las entidades cuentan con recursos originados en sus leyes orgánicas y aportes o transferencias, con patrimonio institucional y personería jurídica. <!-- [file:2] --></li>
+        <li>La clasificación incluye Administración Central, Administración Descentralizada, Gobiernos Departamentales y Municipalidades. <!-- [file:2] --></li>
+        <li>Entre las entidades descentralizadas figuran Banco Central del Paraguay, gobiernos departamentales, entes autónomos y autárquicos, seguridad social, empresas públicas, entidades financieras oficiales, universidades nacionales y municipalidades. <!-- [file:2] --></li>
+      </ul>
+
+      <h3>Estructura de ingresos públicos</h3>
+      <ul>
+        <li>La FF 10 corresponde a Recursos del Tesoro y comprende ingresos tributarios, no tributarios, venta de bienes, transferencias, rentas, regalías y compensaciones. <!-- [file:2] --></li>
+        <li>La FF 20 corresponde a Recursos del Crédito Público provenientes de endeudamiento interno o externo. <!-- [file:2] --></li>
+        <li>La FF 30 corresponde a Recursos Institucionales derivados de recursos propios, afectaciones específicas, transferencias, donaciones y otros ingresos. <!-- [file:2] --></li>
+        <li>Los ingresos del Tesoro se clasifican en ingresos corrientes, ingresos de capital y recursos de financiamiento. <!-- [file:2] --></li>
+        <li>La clasificación por origen agrupa los ingresos según ocurrencia, naturaleza y fuente gravada. <!-- [file:2] --></li>
+      </ul>
+
+      <h3>Estructura de gastos públicos</h3>
+      <ul>
+        <li>El clasificador por objeto del gasto tiene tres niveles: grupo, subgrupo y objeto del gasto. <!-- [file:2] --></li>
+        <li>Los grupos principales son 100 Servicios Personales, 200 Servicios No Personales, 300 Bienes de Consumo e Insumos, 500 Inversiones, 800 Transferencias y 900 Otros Gastos. <!-- [file:2] --></li>
+        <li>La clasificación económica distingue gastos corrientes, gastos de capital y gastos de financiamiento. <!-- [file:2] --></li>
+        <li>La clasificación por origen de financiamiento vincula cada fuente con un origen específico, como genuino, Tesorería General, FONACIDE, Bonos Soberanos, IVA o Juegos de Azar. <!-- [file:2] --></li>
+        <li>La clasificación geográfica identifica el gasto por departamento, desde Asunción hasta Alto Paraguay, y el código 99 corresponde a alcance nacional. <!-- [file:2] --></li>
+      </ul>
+
+      <h3>Ejemplo: Ministerio de Relaciones Exteriores</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Grupo de gasto</th>
+              <th>Presupuesto inicial</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>100 Servicios Personales <!-- [file:2] --></td><td>603.072.212.160. <!-- [file:2] --></td></tr>
+            <tr><td>200 Servicios No Personales <!-- [file:2] --></td><td>181.857.977.396. <!-- [file:2] --></td></tr>
+            <tr><td>300 Bienes de Consumo e Insumos <!-- [file:2] --></td><td>2.976.482.146. <!-- [file:2] --></td></tr>
+            <tr><td>500 Inversión Física <!-- [file:2] --></td><td>4.745.282.064. <!-- [file:2] --></td></tr>
+            <tr><td>800 Transferencias <!-- [file:2] --></td><td>96.438.925.995. <!-- [file:2] --></td></tr>
+            <tr><td>900 Otros Gastos <!-- [file:2] --></td><td>728.000.000. <!-- [file:2] --></td></tr>
+            <tr><td>Total general <!-- [file:2] --></td><td>889.818.879.761. <!-- [file:2] --></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrap" style="margin-top:16px;">
+        <table>
+          <thead>
+            <tr>
+              <th>Fuente de financiamiento</th>
+              <th>Presupuesto aprobado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>10 Recursos del Tesoro <!-- [file:2] --></td><td>722.348.470.484. <!-- [file:2] --></td></tr>
+            <tr><td>30 Recursos Institucionales <!-- [file:2] --></td><td>167.470.409.277. <!-- [file:2] --></td></tr>
+            <tr><td>Total general <!-- [file:2] --></td><td>889.818.879.761. <!-- [file:2] --></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Conceptos clave del bloque</h3>
+      <ul>
+        <li>Resultado global: diferencia entre ingresos y gastos totales, con superávit o déficit. <!-- [file:2] --></li>
+        <li>Resultado primario: diferencia entre ingresos y gastos antes del pago de intereses de deuda. <!-- [file:2] --></li>
+        <li>Plan financiero: cronograma mensual de gastos públicos según flujo de ingresos y capacidad de ejecución. <!-- [file:2] --></li>
+        <li>Presupuesto aprobado y ejecutado: previsión frente a realización efectiva. <!-- [file:2] --></li>
+        <li>Deuda pública interna y externa: préstamos nacionales o extranjeros al Estado. <!-- [file:2] --></li>
+        <li>Inversión física e inversión financiera: adquisición de bienes de capital o colocación de recursos en acciones, préstamos, títulos y depósitos. <!-- [file:2] --></li>
+      </ul>
+    </section>
+
+    <section id="bloque4" class="block">
+      <h2>Bloque 4. Análisis del gasto público</h2>
+
+      <div class="fundamental">
+        <h3>Lo fundamental del bloque</h3>
+        <p>El gasto público debe analizarse por su magnitud, composición, eficiencia, incidencia distributiva y efectos macroeconómicos; además de financiar funciones redistributivas, económicas y administrativas, también puede corregir desigualdades, impulsar movilidad social y proveer bienes públicos.</p>
+        <!-- [file:1] -->
+      </div>
+
+      <h3>Introducción y funciones del gasto público</h3>
+      <ul>
+        <li>El gasto público es un instrumento central de la política fiscal y un componente esencial de la administración financiera del Estado. <!-- [file:1] --></li>
+        <li>Su análisis permite evaluar asignación de recursos, eficiencia económica, equidad distributiva y estabilidad macroeconómica. <!-- [file:1] --></li>
+        <li>Musgrave vincula su análisis con las funciones de asignación, distribución y estabilización del Estado. <!-- [file:1] --></li>
+        <li>Las finalidades del gasto pueden agruparse en función redistributiva, función económica o de estabilización y función administrativa. <!-- [file:1] --></li>
+      </ul>
+
+      <h3>Distribución de la renta y distribución óptima</h3>
+      <ul>
+        <li>La distribución de la renta muestra cómo se reparte el ingreso total entre hogares, individuos o factores productivos. <!-- [file:1] --></li>
+        <li>La distribución primaria surge del mercado mediante salarios, beneficios, rentas e intereses. <!-- [file:1] --></li>
+        <li>La distribución secundaria o redistribución resulta de impuestos, subsidios, transferencias y gasto social. <!-- [file:1] --></li>
+        <li>La distribución óptima de la renta busca maximizar bienestar social según criterios normativos. <!-- [file:1] --></li>
+        <li>Una redistribución excesiva puede desincentivar trabajo, inversión y ahorro, mientras una desigualdad extrema afecta cohesión social y crecimiento sostenible. <!-- [file:1] --></li>
+        <li>Amartya Sen sostiene que el bienestar no debe medirse solo por ingreso monetario, sino también por capacidades reales para vivir dignamente. <!-- [file:1] --></li>
+      </ul>
+
+      <h3>Concepción utilitarista y criterio de maximización</h3>
+      <ul>
+        <li>La unidad incluye la concepción utilitarista como parte del análisis de cómo la distribución y el gasto buscan elevar el bienestar social agregado. <!-- [file:1] --></li>
+        <li>El criterio de maximización consiste en procurar el mayor impacto económico y social posible con recursos fiscales limitados. <!-- [file:1] --></li>
+        <li>En este enfoque, maximizar no significa gastar más, sino gastar mejor: focalizar, reducir filtraciones, evitar duplicidades, evaluar resultados y priorizar programas con alto rendimiento social. <!-- [file:1] --></li>
+        <li>En Paraguay, este criterio es especialmente relevante por la coexistencia de demandas sociales crecientes, restricciones presupuestarias y reglas fiscales. <!-- [file:1] --></li>
+      </ul>
+
+      <h3>Redistribución Pareto eficiente, procesos justos y movilidad social</h3>
+      <ul>
+        <li>Una redistribución Pareto eficiente mejora la situación de al menos un grupo sin empeorar la de otro. <!-- [file:1] --></li>
+        <li>En la práctica fiscal, este criterio estricto es difícil de cumplir porque la redistribución suele implicar costos mediante impuestos o reasignaciones. <!-- [file:1] --></li>
+        <li>Puede haber mejoras cercanas a Pareto cuando el gasto corrige fallas de mercado y eleva productividad, como educación, salud preventiva, saneamiento e infraestructura vial. <!-- [file:1] --></li>
+        <li>Los procesos justos exigen legitimidad, transparencia, equidad procedimental, reglas claras, control institucional, rendición de cuentas y participación democrática. <!-- [file:1] --></li>
+        <li>La movilidad social mide la capacidad de personas y hogares para mejorar su posición socioeconómica a lo largo del tiempo. <!-- [file:1] --></li>
+        <li>El gasto público favorece movilidad social cuando amplía oportunidades mediante educación, salud, nutrición, vivienda, transporte, conectividad e inserción laboral. <!-- [file:1] --></li>
+      </ul>
+
+      <h3>Incidencia del gasto</h3>
+      <ul>
+        <li>La incidencia del gasto público analiza quiénes se benefician efectivamente de bienes, servicios y transferencias financiados por el Estado. <!-- [file:1] --></li>
+        <li>El gasto progresivo beneficia proporcionalmente más a hogares de menores ingresos. <!-- [file:1] --></li>
+        <li>El gasto regresivo beneficia más a hogares de mayores ingresos. <!-- [file:1] --></li>
+        <li>Programas de alimentación escolar, atención primaria y transferencias focalizadas tienden a ser más progresivos. <!-- [file:1] --></li>
+        <li>Subsidios generalizados pueden resultar regresivos si son capturados por sectores de mayor consumo. <!-- [file:1] --></li>
+        <li>En Paraguay, el análisis de incidencia debe considerar área urbana o rural, departamento, género, edad, condición laboral, nivel educativo e ingreso. <!-- [file:1] --></li>
+      </ul>
+
+      <h3>Problemas de medición de la renta y unidad de observación</h3>
+      <ul>
+        <li>La medición de la renta enfrenta subdeclaración de ingresos, informalidad laboral, ingresos no monetarios, autoconsumo rural, transferencias familiares, estacionalidad, diferencias regionales de precios y limitaciones muestrales. <!-- [file:1] --></li>
+        <li>En Paraguay, estas dificultades son importantes por la informalidad, la heterogeneidad territorial y la diferencia entre ingresos urbanos y rurales. <!-- [file:1] --></li>
+        <li>El INE utiliza la Encuesta Permanente de Hogares Continua para estimar pobreza, ingresos y desigualdad. <!-- [file:1] --></li>
+        <li>Una mala medición puede provocar exclusión de hogares pobres, inclusión de hogares no pobres y asignación ineficiente de subsidios. <!-- [file:1] --></li>
+        <li>La unidad de observación puede ser persona, hogar, familia, unidad productiva, territorio o grupo poblacional. <!-- [file:1] --></li>
+        <li>En distribución de ingresos suele usarse el hogar ajustado por ingreso per cápita o escalas de equivalencia. <!-- [file:1] --></li>
+        <li>Para políticas sectoriales pueden usarse estudiantes, pacientes, productores, adultos mayores o distritos. <!-- [file:1] --></li>
+      </ul>
+
+      <h3>Efectos en precios relativos y bienes públicos</h3>
+      <ul>
+        <li>El gasto público puede alterar precios relativos al modificar demanda, oferta o costos de determinados bienes y servicios. <!-- [file:1] --></li>
+        <li>Esto puede ocurrir mediante subsidios al transporte, inversión en infraestructura, compras públicas, salarios del sector público y transferencias monetarias. <!-- [file:1] --></li>
+        <li>Los efectos pueden estimarse con análisis de incidencia, modelos de equilibrio parcial, equilibrio general computable, evaluación de impacto, elasticidades y análisis territorial de precios. <!-- [file:1] --></li>
+        <li>Los bienes públicos se caracterizan por no rivalidad y no exclusión. <!-- [file:1] --></li>
+        <li>Ejemplos clásicos son defensa nacional, seguridad, justicia, alumbrado público, información estadística, control epidemiológico, estabilidad macroeconómica y protección ambiental. <!-- [file:1] --></li>
+        <li>Como el mercado tiende a proveerlos de forma insuficiente, el Estado debe financiarlos o producirlos. <!-- [file:1] --></li>
+      </ul>
+    </section>
+
+    <section id="bloque5" class="block">
+      <h2>Bloque 5. Sistema de Presupuesto</h2>
+
+      <div class="fundamental">
+        <h3>Lo fundamental del bloque</h3>
+        <p>El sistema de presupuesto regula la ejecución, modificación, control y evaluación del PGN; su lógica operativa descansa en planes financieros, cuotas, etapas de ingresos y gastos, modificaciones presupuestarias legalmente reguladas y mecanismos formales de seguimiento institucional.</p>
+        <!-- [file:4] -->
+      </div>
+
+      <h3>Marco legal</h3>
+      <ul>
+        <li>El bloque se apoya en la Ley N.º 1535/99, la Ley N.º 7609/2025, el Decreto N.º 5311/2026 y el Decreto N.º 5443/2026. <!-- [file:4] --></li>
+        <li>La Ley N.º 1535/99 estructura el sistema de presupuesto en disposiciones generales, programación y formulación, ejecución y modificaciones, y control, evaluación y liquidación. <!-- [file:4] --></li>
+      </ul>
+
+      <h3>Ejecución del presupuesto y plan financiero</h3>
+      <ul>
+        <li>El Ministerio de Hacienda debe mantener equilibrio presupuestario y resguardar el cumplimiento del Plan de Ejecución del Presupuesto. <!-- [file:4] --></li>
+        <li>Los OEE presentan un plan anual de cuotas de ingresos y gastos sobre la base del calendario de realizaciones. <!-- [file:4] --></li>
+        <li>La ejecución presupuestaria se realiza con base en planes financieros generales e institucionales. <!-- [file:4] --></li>
+        <li>Estos planes consideran el flujo estacional de los ingresos y la capacidad real de ejecución del presupuesto. <!-- [file:4] --></li>
+        <li>Los planes financieros sirven de marco para programación de caja y asignación de cuotas. <!-- [file:4] --></li>
+        <li>Solo pueden contraerse obligaciones con cargo a saldos disponibles de asignación específica y no se puede desviar la finalidad fijada por el presupuesto. <!-- [file:4] --></li>
+      </ul>
+
+      <h3>Etapas de ejecución presupuestaria</h3>
+      <div class="grid">
+        <div class="card">
+          <h3>Ingresos</h3>
+          <ul>
+            <li>Liquidación: identificación de la fuente y cuantificación económico-financiera del recurso a percibir. <!-- [file:4] --></li>
+            <li>Recaudación: percepción efectiva del recurso originado en un ingreso devengado y liquidado. <!-- [file:4] --></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Gastos</h3>
+          <ul>
+            <li>Previsión: asignación específica del crédito presupuestario. <!-- [file:4] --></li>
+            <li>Obligación: compromiso de pago derivado de un vínculo jurídico-financiero. <!-- [file:4] --></li>
+            <li>Pago: cumplimiento parcial o total de la obligación, simultáneo a la incorporación de bienes y servicios. <!-- [file:4] --></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Modificaciones presupuestarias</h3>
+      <ul>
+        <li>La ampliación presupuestaria implica aumentar gastos previstos y debe asignar explícitamente los recursos que la financiarán. <!-- [file:4] --></li>
+        <li>Las ampliaciones presupuestarias deben ser aprobadas por ley. <!-- [file:4] --></li>
+        <li>Entre los ejemplos de ampliación aparecen saldo inicial de caja, mejora en recaudaciones, préstamos y convenios de donación. <!-- [file:4] --></li>
+        <li>Las transferencias de créditos presupuestarios redistribuyen créditos entre objetos de gasto, programas, actividades o proyectos sin aumentar el presupuesto total institucional. <!-- [file:4] --></li>
+        <li>El cambio de fuente de financiamiento sustituye la fuente inicial de un gasto por otra, por ejemplo pasar de FF 30 a FF 10 por descalce financiero en la recaudación institucional. <!-- [file:4] --></li>
+        <li>La modificación de cuotas del Plan Financiero mueve recursos programados entre meses dentro del mismo rubro y fuente. <!-- [file:4] --></li>
+      </ul>
+
+      <div class="danger">
+        Existen restricciones para disminuir ciertos créditos, entre ellos gastos de residencia, subsidio familiar, aporte jubilatorio del empleador, bonificación por exposición al peligro, gratificaciones especiales de la FTC, servicios básicos, productos químicos y medicinales, y combustibles y lubricantes, salvo las excepciones normativas previstas. <!-- [file:4] -->
+      </div>
+
+      <h3>Modificación del Anexo del Personal</h3>
+      <ul>
+        <li>La modificación del Anexo del Personal es un procedimiento sensible porque afecta cargos, categorías, remuneraciones y dotación de recursos humanos. <!-- [file:4] --></li>
+        <li>La creación de nuevos cargos y la modificación de remuneraciones previstas en el PGN solo pueden disponerse por ley. <!-- [file:4] --></li>
+        <li>El Anexo del Personal contiene cargos permanentes, categorías salariales, denominación de puestos, cantidad de cargos, créditos para remuneraciones y estructura organizacional vinculada a recursos humanos. <!-- [file:4] --></li>
+        <li>La Ley N.º 7609/2025 autoriza en determinados casos al Poder Ejecutivo, a través del MEF, a realizar cambios de líneas, denominaciones, traslados, recategorizaciones, creaciones y transferencias de cargos. <!-- [file:4] --></li>
+        <li>En el Ministerio de Relaciones Exteriores esas adecuaciones pueden vincularse a ascensos de la carrera diplomática, consular, administrativa y técnica, con financiamiento dentro de los cargos o vacancias disponibles. <!-- [file:4] --></li>
+      </ul>
+
+      <h3>Tipos de modificaciones del Anexo del Personal</h3>
+      <ul>
+        <li>Recategorizaciones: cambian la categoría salarial de un cargo existente para adecuaciones salariales, carrera administrativa, regularización estructural o nuevas políticas de recursos humanos. <!-- [file:4] --></li>
+        <li>Transferencia de cargos: traslada líneas de cargos y créditos entre instituciones, dependencias o programas. <!-- [file:4] --></li>
+        <li>Adecuación de categorías y cargos: puede realizarse si no implica incremento salarial fuera del rango permitido, respeta límites presupuestarios y no crea niveles jerárquicos no autorizados. <!-- [file:4] --></li>
+      </ul>
+
+      <h3>Metas productivas e indicadores de gestión</h3>
+      <ul>
+        <li>La programación presupuestaria se vincula con objetivos y metas institucionales, y los requerimientos de fondos deben responder al cumplimiento de actividades y programas. <!-- [file:4] --></li>
+        <li>La evaluación presupuestaria se apoya en resultados cuantitativos y cualitativos de programas y proyectos en ejecución. <!-- [file:4] --></li>
+        <li>Esto conecta el presupuesto con lógica de gestión por resultados, seguimiento de desempeño y cumplimiento institucional. <!-- [file:4] --></li>
+      </ul>
+
+      <h3>Sistema de control y evaluación presupuestaria</h3>
+      <ul>
+        <li>El proceso de control y evaluación está reglamentado por el Decreto N.º 5311/2026, en concordancia con la Ley N.º 7609/2025 y la Ley N.º 1535/99. <!-- [file:4] --></li>
+        <li>Los OEE deben remitir informes digitales firmados a la Dirección General de Presupuesto del MEF en formatos como PDF, Word o Excel. <!-- [file:4] --></li>
+        <li>El Informe del Primer Semestre debe presentarse dentro de los 15 días corridos posteriores al cierre del semestre. <!-- [file:4] --></li>
+        <li>El Informe de Cierre se presenta como Balance Anual de Gestión Pública (BAGP). <!-- [file:4] --></li>
+        <li>El BAGP debe presentarse dentro de los 15 días posteriores a la fecha establecida en la resolución de cierre contable y luego publicarse en la página web institucional. <!-- [file:4] --></li>
+        <li>Si los OEE incumplen la presentación del informe semestral o del BAGP, el MEF comunica la situación a la Auditoría General del Poder Ejecutivo, al Congreso Nacional y a la Contraloría General de la República. <!-- [file:4] --></li>
+        <li>El MEF informa al Congreso y a órganos contralores sobre resultados cualitativos y cuantitativos al cierre del ejercicio mediante el Informe de Control Financiero y Evaluación Presupuestaria, utilizando los BAGP y la información del SIAF/SIARE. <!-- [file:4] --></li>
+      </ul>
+    </section>
+
+    <section class="footer">
+      <p>Guía de estudio estructurada para lectura rápida, repaso temático y consulta desde móvil.</p>
+    </section>
+
   </div>
-
-  <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-
-  <script>
-    const body = document.body;
-    const progressBar = document.getElementById('progressBar');
-    const backTop = document.getElementById('backTop');
-    const searchInput = document.getElementById('searchInput');
-
-    function toggleTheme(){
-      body.classList.toggle('light');
-      localStorage.setItem('study-theme', body.classList.contains('light') ? 'light' : 'dark');
-    }
-
-    (function initTheme(){
-      const savedTheme = localStorage.getItem('study-theme');
-      if(savedTheme === 'light'){
-        body.classList.add('light');
-      }
-    })();
-
-    function expandAll(){
-      document.querySelectorAll('details').forEach(d => d.open = true);
-    }
-
-    function collapseAll(){
-      document.querySelectorAll('details').forEach(d => d.open = false);
-    }
-
-    function filterContent(){
-      const term = searchInput.value.trim().toLowerCase();
-      const blocks = document.querySelectorAll('.searchable');
-
-      blocks.forEach(block => {
-        const text = block.innerText.toLowerCase();
-        block.classList.toggle('hidden', term && !text.includes(term));
-      });
-    }
-
-    window.addEventListener('scroll', () => {
-      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
-      progressBar.style.width = progress + '%';
-      backTop.style.display = scrollTop > 500 ? 'block' : 'none';
-    });
-
-    document.querySelectorAll('input[type="checkbox"][data-check]').forEach(cb => {
-      const key = cb.dataset.check;
-      cb.checked = localStorage.getItem(key) === 'true';
-      cb.addEventListener('change', () => {
-        localStorage.setItem(key, cb.checked);
-      });
-    });
-
-    function clearChecks(){
-      document.querySelectorAll('input[type="checkbox"][data-check]').forEach(cb => {
-        cb.checked = false;
-        localStorage.removeItem(cb.dataset.check);
-      });
-    }
-  </script>
 </body>
 </html>
