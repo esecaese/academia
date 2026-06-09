@@ -68,7 +68,7 @@
     <div id="visor-view" class="hidden h-screen w-screen flex-col bg-slate-900 text-slate-50">
         <header class="flex justify-between items-center p-6 md:px-10 bg-slate-900 border-b border-slate-800 z-10 absolute top-0 w-full">
             <div class="text-xl font-bold text-slate-500 tracking-widest">ACADEMIA - POLÍTICA EXTERIOR</div>
-            <div class="text-xl font-bold text-slate-600" id="slide-indicator">1/7</div>
+            <div class="text-xl font-bold text-slate-600" id="slide-indicator">1/8</div>
         </header>
 
         <!-- Contenedor principal con padding reducido para ganar espacio -->
@@ -275,6 +275,28 @@
                 </div>
             </div>
         </main>
+    </div>
+
+    <!-- ==========================================
+         MODO ORADOR (TELEPROMPTER PARA EL PONENTE)
+         ========================================== -->
+    <div id="orador-view" class="hidden h-screen w-screen flex-col bg-black text-slate-50 p-6 md:p-12">
+        <header class="flex justify-between items-center border-b border-slate-700 pb-6 mb-8">
+            <div class="text-2xl font-bold text-slate-400 uppercase tracking-widest">
+                <i class="fas fa-eye text-emerald-500 mr-3"></i>Modo Orador (Privado)
+            </div>
+            <div class="text-4xl font-bold text-amber-400" id="slide-counter">S1/8 P1/1</div>
+        </header>
+        
+        <main id="text-container" class="flex-1 overflow-hidden flex items-center justify-center relative">
+            <div id="speaker-text" class="prompter-text font-bold text-center w-full"></div>
+        </main>
+        
+        <footer class="mt-8 text-center text-slate-600 text-xl flex justify-between items-center px-10 border-t border-slate-800 pt-6">
+            <span><i class="fas fa-arrow-left mr-2"></i> Anterior</span>
+            <span class="font-light">Use las flechas del teclado o deslice en la pantalla</span>
+            <span>Siguiente <i class="fas fa-arrow-right ml-2"></i></span>
+        </footer>
     </div>
 
 
