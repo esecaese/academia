@@ -9,7 +9,7 @@
     <style>
         body {
             font-family: 'Open Sans', sans-serif;
-            background-color: #f5f3ef; /* Color tipo papel antiguo/cuaderno */
+            background-color: #f5f3ef;
         }
         h1, h2, h3, .serif-font {
             font-family: 'Merriweather', serif;
@@ -18,6 +18,9 @@
             background-color: #dcfce7;
             border-left: 4px solid #16a34a;
             color: #166534;
+        }
+        .correct-answer p.main-text {
+            font-weight: 600;
         }
     </style>
 </head>
@@ -44,13 +47,13 @@
                 </div>
                 <div class="mt-4 sm:mt-0">
                     <p><span class="font-bold">Fecha:</span> 26/05/2026</p>
-                    <p><span class="font-bold">Modalidad:</span> Resolución / Clave de Respuestas</p>
+                    <p><span class="font-bold">Modalidad:</span> Clave de Respuestas Correctas</p>
                 </div>
             </div>
             
-            <div class="mt-8">
-                <h2 class="text-2xl font-bold serif-font text-gray-800 tracking-wider">EXAMEN PARCIAL</h2>
-                <p class="text-sm text-gray-500 mt-2">Las respuestas correctas se encuentran resaltadas en verde.</p>
+            <div class="mt-8 text-left bg-blue-50 border-l-4 border-blue-500 p-4">
+                <p class="text-sm text-blue-800 font-semibold">Nota de Revisión:</p>
+                <p class="text-sm text-blue-700">Este documento contiene exclusivamente las respuestas <strong>correctas</strong> resaltadas en verde, descartando los errores cometidos por el estudiante en la prueba física (ej. Preguntas 2, 11 y 17).</p>
             </div>
         </header>
 
@@ -65,7 +68,10 @@
                     <p class="p-3 rounded-md">B) La solidaridad internacional y la protección de los derechos humanos.</p>
                     <div class="p-3 rounded-md correct-answer flex items-start gap-3">
                         <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <p><span class="font-bold">C) La subordinación jurídica a organismos supranacionales de seguridad.</span> <br><span class="text-xs text-green-700 italic">(Art. 143 CN habla de igualdad jurídica, no de subordinación).</span></p>
+                        <div>
+                            <p class="main-text">C) La subordinación jurídica a organismos supranacionales de seguridad.</p>
+                            <p class="text-xs text-green-700 italic mt-1">(Justificación: El Art. 143 de la CN establece la "igualdad jurídica", no la subordinación).</p>
+                        </div>
                     </div>
                     <p class="p-3 rounded-md">D) La libre navegación de los ríos internacionales.</p>
                 </div>
@@ -79,7 +85,10 @@
                     <p class="p-3 rounded-md">B) Se reconoce el asilo político a los perseguidos por delitos comunes.</p>
                     <div class="p-3 rounded-md correct-answer flex items-start gap-3">
                         <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <p><span class="font-bold">C) Se reconoce el asilo político a favor de los perseguidos por motivos o delitos políticos.</span> <br><span class="text-xs text-green-700 italic">(Art. 43 CN. Corrección: El alumno marcó A, pero la correcta es C).</span></p>
+                        <div>
+                            <p class="main-text">C) Se reconoce el asilo político a favor de los perseguidos por motivos o delitos políticos.</p>
+                            <p class="text-xs text-green-700 italic mt-1">(Justificación: Consagrado expresamente en el Art. 43 de la CN).</p>
+                        </div>
                     </div>
                     <p class="p-3 rounded-md">D) El Paraguay no reconoce el asilo si el solicitante proviene de un país limítrofe.</p>
                 </div>
@@ -92,7 +101,10 @@
                     <p class="p-3 rounded-md">A) No requiere control legislativo si es por agresión externa inminente.</p>
                     <div class="p-3 rounded-md correct-answer flex items-start gap-3">
                         <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <p><span class="font-bold">B) Requiere la aprobación del Congreso Nacional.</span> <br><span class="text-xs text-green-700 italic">(Art. 288 CN. El Ejecutivo decreta, pero remite al Congreso para su confirmación/revocación).</span></p>
+                        <div>
+                            <p class="main-text">B) Requiere la aprobación del Congreso Nacional.</p>
+                            <p class="text-xs text-green-700 italic mt-1">(Justificación: Art. 288 CN. El Ejecutivo decreta pero debe comunicar al Congreso para su confirmación o revocación).</p>
+                        </div>
                     </div>
                     <p class="p-3 rounded-md">C) Requiere dictamen favorable vinculante de la ONU y la OEA.</p>
                     <p class="p-3 rounded-md">D) Suspende automáticamente la vigencia de todos los tratados internacionales vigentes.</p>
@@ -107,7 +119,10 @@
                     <p class="p-3 rounded-md">B) El Presidente de la Cámara de Senadores.</p>
                     <div class="p-3 rounded-md correct-answer flex items-start gap-3">
                         <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <p><span class="font-bold">C) El Vicepresidente de la República.</span> <br><span class="text-xs text-green-700 italic">(Art. 227 CN).</span></p>
+                        <div>
+                            <p class="main-text">C) El Vicepresidente de la República.</p>
+                            <p class="text-xs text-green-700 italic mt-1">(Justificación: Art. 227 CN sobre las atribuciones del Vicepresidente).</p>
+                        </div>
                     </div>
                     <p class="p-3 rounded-md">D) El Presidente de la Corte Suprema de Justicia.</p>
                 </div>
@@ -122,7 +137,10 @@
                     <p class="p-3 rounded-md">C) Inmediatamente al ser aprobados por ley del Congreso Nacional.</p>
                     <div class="p-3 rounded-md correct-answer flex items-start gap-3">
                         <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <p><span class="font-bold">D) Luego de ser ratificados por el Poder Ejecutivo.</span> <br><span class="text-xs text-green-700 italic">(Art. 137 CN. Posterior a la aprobación del Congreso, requiere la ratificación y canje/depósito).</span></p>
+                        <div>
+                            <p class="main-text">D) Luego de ser ratificados por el Poder Ejecutivo.</p>
+                            <p class="text-xs text-green-700 italic mt-1">(Justificación: El Congreso aprueba mediante Ley, pero el Estado se obliga internacionalmente tras la ratificación del Ejecutivo y su canje/depósito).</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -134,7 +152,10 @@
                     <p class="p-3 rounded-md">A) Conducir de forma directa las negociaciones comerciales de las binacionales.</p>
                     <div class="p-3 rounded-md correct-answer flex items-start gap-3">
                         <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <p><span class="font-bold">B) Aprobar o rechazar los tratados, concordatos y demás acuerdos internacionales suscritos por Poder Ejecutivo.</span> <br><span class="text-xs text-green-700 italic">(Art. 202 Numeral 9 CN).</span></p>
+                        <div>
+                            <p class="main-text">B) Aprobar o rechazar los tratados, concordatos y demás acuerdos internacionales suscritos por Poder Ejecutivo.</p>
+                            <p class="text-xs text-green-700 italic mt-1">(Justificación: Art. 202 Numeral 9 de la CN).</p>
+                        </div>
                     </div>
                     <p class="p-3 rounded-md">C) Nombrar cónsules generales sin intervención del Ministerio de Relaciones Exteriores.</p>
                     <p class="p-3 rounded-md">D) Declarar la guerra de forma unilateral y marchar al frente de las tropas.</p>
@@ -148,7 +169,10 @@
                     <p class="p-3 rounded-md">A) Que cumplan 18 años y presten juramento ante el Congreso Nacional.</p>
                     <div class="p-3 rounded-md correct-answer flex items-start gap-3">
                         <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <p><span class="font-bold">B) Que se radiquen en la República en forma permanente.</span> <br><span class="text-xs text-green-700 italic">(Art. 146 CN, salvo que los padres estén al servicio de la República).</span></p>
+                        <div>
+                            <p class="main-text">B) Que se radiquen en la República en forma permanente.</p>
+                            <p class="text-xs text-green-700 italic mt-1">(Justificación: Art. 146 inciso 3 de la CN).</p>
+                        </div>
                     </div>
                     <p class="p-3 rounded-md">C) Que renuncien explícitamente a la nacionalidad del país de nacimiento.</p>
                     <p class="p-3 rounded-md">D) Que su nacimiento sea registrado exclusivamente en el Ministerio de Relaciones Exteriores.</p>
@@ -162,7 +186,10 @@
                     <p class="p-3 rounded-md">A) Elaborar leyes internacionales de comercio.</p>
                     <div class="p-3 rounded-md correct-answer flex items-start gap-3">
                         <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <p><span class="font-bold">B) Manejar las relaciones exteriores de la República, admitir a los funcionarios diplomáticos extranjeros y autorizar a los cónsules.</span> <br><span class="text-xs text-green-700 italic">(Art. 238 Numeral 7 CN).</span></p>
+                        <div>
+                            <p class="main-text">B) Manejar las relaciones exteriores de la República, admitir a los funcionarios diplomáticos extranjeros y autorizar a los cónsules.</p>
+                            <p class="text-xs text-green-700 italic mt-1">(Justificación: Art. 238 Numeral 7 de la CN).</p>
+                        </div>
                     </div>
                     <p class="p-3 rounded-md">C) Ratificar de forma unilateral los tratados bilaterales sin control legislativo.</p>
                     <p class="p-3 rounded-md">D) Presidir las delegaciones parlamentarias ante el Parlamento del Mercosur.</p>
@@ -176,7 +203,10 @@
                     <p class="p-3 rounded-md">A) Es un asesor independiente cuyas firmas no validan los actos del Presidente.</p>
                     <div class="p-3 rounded-md correct-answer flex items-start gap-3">
                         <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <p><span class="font-bold">B) Refrenda los actos del Presidente de la República mediante su firma.</span> <br><span class="text-xs text-green-700 italic">(Art. 242 CN).</span></p>
+                        <div>
+                            <p class="main-text">B) Refrenda los actos del Presidente de la República mediante su firma.</p>
+                            <p class="text-xs text-green-700 italic mt-1">(Justificación: Art. 242 CN, los Ministros refrendan los actos del Presidente para que tengan validez).</p>
+                        </div>
                     </div>
                     <p class="p-3 rounded-md">C) Es un funcionario subalterno que no posee responsabilidad jurídica sobre los decretos presidenciales.</p>
                     <p class="p-3 rounded-md">D) Puede vetar las decisiones presidenciales en materia de comercio internacional.</p>
@@ -190,7 +220,10 @@
                     <p class="p-3 rounded-md">A) Sí, por cometer delitos de traición a la patria en tiempos de guerra internacional.</p>
                     <div class="p-3 rounded-md correct-answer flex items-start gap-3">
                         <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <p><span class="font-bold">B) No, ningún paraguayo natural podrá ser privado de su nacionalidad.</span> <br><span class="text-xs text-green-700 italic">(Art. 147 CN. Solo puede renunciar voluntariamente).</span></p>
+                        <div>
+                            <p class="main-text">B) No, ningún paraguayo natural podrá ser privado de su nacionalidad.</p>
+                            <p class="text-xs text-green-700 italic mt-1">(Justificación: Art. 147 CN. Sólo puede renunciar a ella voluntariamente).</p>
+                        </div>
                     </div>
                     <p class="p-3 rounded-md">C) Sí, si adquiere voluntariamente una nacionalidad extranjera con la cual no exista tratado de doble nacionalidad.</p>
                     <p class="p-3 rounded-md">D) Sí, por resolución judicial dictada por la Corte Suprema de Justicia tras un debido proceso.</p>
@@ -204,10 +237,13 @@
                     <p class="p-3 rounded-md">A) Mayoría simple de los presentes en cada Cámara.</p>
                     <div class="p-3 rounded-md correct-answer flex items-start gap-3">
                         <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <p><span class="font-bold">B) Mayoría absoluta de dos tercios de la totalidad de los miembros de cada Cámara.</span> <br><span class="text-xs text-green-700 italic">(Art. 145 CN. Nota: El texto constitucional dice "mayoría absoluta de cada Cámara", esta opción es la más próxima a la exigencia para ambas cámaras).</span></p>
+                        <div>
+                            <p class="main-text">B) Mayoría absoluta de dos tercios de la totalidad de los miembros de cada Cámara.</p>
+                            <p class="text-xs text-green-700 italic mt-1">(Justificación: El Art. 145 de la CN exige expresamente que se vote en "cada Cámara", invalidando opciones que excluyen a Diputados como la D).</p>
+                        </div>
                     </div>
                     <p class="p-3 rounded-md">C) Unanimidad de los miembros presentes en sesión conjunta.</p>
-                    <p class="p-3 rounded-md">D) Mayoría absoluta de la Cámara de Senadores.</p>
+                    <p class="p-3 rounded-md text-red-700">D) Mayoría absoluta de la Cámara de Senadores. <span class="italic text-xs">(Opción errónea marcada por el estudiante)</span></p>
                 </div>
             </div>
 
@@ -219,7 +255,10 @@
                     <p class="p-3 rounded-md">B) Tienen la misma jerarquía que las ordenanzas municipales.</p>
                     <div class="p-3 rounded-md correct-answer flex items-start gap-3">
                         <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <p><span class="font-bold">C) Están inmediatamente por debajo de la Constitución Nacional y por encima de las leyes dictadas por el Congreso y otras disposiciones jurídicas de menor jerarquía.</span> <br><span class="text-xs text-green-700 italic">(Art. 137 CN).</span></p>
+                        <div>
+                            <p class="main-text">C) Están inmediatamente por debajo de la Constitución Nacional y por encima de las leyes dictadas por el Congreso y otras disposiciones jurídicas de menor jerarquía.</p>
+                            <p class="text-xs text-green-700 italic mt-1">(Justificación: Art. 137 CN, pirámide de Kelsen paraguaya).</p>
+                        </div>
                     </div>
                     <p class="p-3 rounded-md">D) Se ubican por debajo de los decretos reglamentarios del Poder Ejecutivo.</p>
                 </div>
@@ -232,7 +271,10 @@
                     <p class="p-3 rounded-md">A) Sí, de la misma manera que se requirió para su nombramiento.</p>
                     <div class="p-3 rounded-md correct-answer flex items-start gap-3">
                         <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <p><span class="font-bold">B) No, el Presidente puede remover libremente a los embajadores y agentes diplomáticos que dependan del Ejecutivo.</span> <br><span class="text-xs text-green-700 italic">(Art. 238 Numeral 7 CN: "su remoción será de su exclusiva competencia").</span></p>
+                        <div>
+                            <p class="main-text">B) No, el Presidente puede remover libremente a los embajadores y agentes diplomáticos que dependan del Ejecutivo.</p>
+                            <p class="text-xs text-green-700 italic mt-1">(Justificación: Art. 238 Numeral 7 CN "su remoción será de su exclusiva competencia").</p>
+                        </div>
                     </div>
                     <p class="p-3 rounded-md">C) Requiere la aprobación en sesión plenaria de ambas Cámaras del Congreso.</p>
                     <p class="p-3 rounded-md">D) La remoción debe ser visada por la Corte Suprema de Justicia.</p>
@@ -248,7 +290,10 @@
                     <p class="p-3 rounded-md">C) Agregados comerciales y culturales civiles adscritos de forma transitoria.</p>
                     <div class="p-3 rounded-md correct-answer flex items-start gap-3">
                         <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <p><span class="font-bold">D) No es atribución de dicho colegiado legislativo.</span> <br><span class="text-xs text-green-700 italic">(El acuerdo para Embajadores lo presta el Senado, no Diputados).</span></p>
+                        <div>
+                            <p class="main-text">D) No es atribución de dicho colegiado legislativo.</p>
+                            <p class="text-xs text-green-700 italic mt-1">(Justificación: El acuerdo para Embajadores lo presta la Cámara de Senadores, no Diputados).</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -260,7 +305,10 @@
                     <p class="p-3 rounded-md">A) Deben autofinanciarse mediante tasas especiales.</p>
                     <div class="p-3 rounded-md correct-answer flex items-start gap-3">
                         <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <p><span class="font-bold">B) Deben coordinar previamente sus acciones con el Ministerio de Relaciones Exteriores.</span> <br><span class="text-xs text-green-700 italic">(Ley 1635/00, rol coordinador del MRE).</span></p>
+                        <div>
+                            <p class="main-text">B) Deben coordinar previamente sus acciones con el Ministerio de Relaciones Exteriores.</p>
+                            <p class="text-xs text-green-700 italic mt-1">(Justificación: Responde al rol natural de coordinación institucional del MRE según la Ley 1635/00).</p>
+                        </div>
                     </div>
                     <p class="p-3 rounded-md">C) Deben solicitar autorización por escrito al Congreso.</p>
                     <p class="p-3 rounded-md">D) No requieren venia de viaje si la gestión es a países limítrofes.</p>
@@ -274,23 +322,29 @@
                     <p class="p-3 rounded-md">A) Es una institución pública que coordina sus acciones con el sector de comercio exterior.</p>
                     <div class="p-3 rounded-md correct-answer flex items-start gap-3">
                         <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <p><span class="font-bold">B) Es el órgano que planifica, coordina y ejecuta la política exterior.</span> <br><span class="text-xs text-green-700 italic">(Art. 1, Ley 1635/00).</span></p>
+                        <div>
+                            <p class="main-text">B) Es el órgano que planifica, coordina y ejecuta la política exterior.</p>
+                            <p class="text-xs text-green-700 italic mt-1">(Justificación: Art. 1, Ley 1635/00).</p>
+                        </div>
                     </div>
                     <p class="p-3 rounded-md">C) Es una asesoría permanente del Presidente en materia de desarrollo económico.</p>
                     <p class="p-3 rounded-md">D) Es una institución que ejecuta los mandatos del Congreso Nacional en materia internacional.</p>
                 </div>
             </div>
 
-            <!-- Pregunta 17 -->
+            <!-- Pregunta 17 (CORREGIDA) -->
             <div class="question-block">
                 <p class="font-bold text-lg mb-3">17- Según el texto de Rafael Calduch, ¿cuál es uno de los errores o confusiones más frecuentes que cometen los internacionalistas al definir la “política exterior”?</p>
                 <div class="space-y-2 pl-4">
                     <p class="p-3 rounded-md">A) Identificarla exclusivamente con las acciones de las organizaciones no gubernamentales.</p>
-                    <p class="p-3 rounded-md">B) Identificar la política exterior de un Estado únicamente con la política exterior desarrollada por su Gobierno.</p>
                     <div class="p-3 rounded-md correct-answer flex items-start gap-3">
                         <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <p><span class="font-bold">C) Considerar que la política exterior y la política interior están totalmente disociadas de la base social.</span></p>
+                        <div>
+                            <p class="main-text">B) Identificar la política exterior de un Estado únicamente con la política exterior desarrollada por su Gobierno.</p>
+                            <p class="text-xs text-green-700 italic mt-1">(Justificación: Calduch recalca que el Estado es permanente y el Gobierno temporal, por ende son conceptos que no deben fundirse como si fuesen sinónimos absolutos).</p>
+                        </div>
                     </div>
+                    <p class="p-3 rounded-md text-red-700">C) Considerar que la política exterior y la política interior están totalmente disociadas de la base social. <span class="italic text-xs">(Opción errónea marcada por el estudiante)</span></p>
                     <p class="p-3 rounded-md">D) Afirmar que la política exterior solo existe en los Estados con regímenes democráticos y pluralistas.</p>
                 </div>
             </div>
@@ -302,7 +356,10 @@
                     <p class="p-3 rounded-md">A) Son únicamente los Estados soberanos que poseen un ejército regular y fronteras reconocidas.</p>
                     <div class="p-3 rounded-md correct-answer flex items-start gap-3">
                         <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <p><span class="font-bold">B) Son aquellos grupos u organizaciones que gozan de la capacidad efectiva de generar un impacto y desempeñar un papel significativo en la sociedad internacional.</span> <br><span class="text-xs text-green-700 italic">(Definición clásica de R. Calduch / Esther Barbé).</span></p>
+                        <div>
+                            <p class="main-text">B) Son aquellos grupos u organizaciones que gozan de la capacidad efectiva de generar un impacto y desempeñar un papel significativo en la sociedad internacional.</p>
+                            <p class="text-xs text-green-700 italic mt-1">(Justificación: Definición sociológica clásica adoptada por autores como Esther Barbé o Rafael Calduch).</p>
+                        </div>
                     </div>
                     <p class="p-3 rounded-md">C) Son las celebridades y diplomáticos que representan a sus países en foros mundiales.</p>
                     <p class="p-3 rounded-md">D) Son entidades corporativas privadas que operan exclusivamente fuera del control impositivo del Estado.</p>
@@ -316,7 +373,9 @@
                     <p class="p-3 rounded-md">A) Organizar empresas comerciales paraguayas reguladas por leyes extranjeras.</p>
                     <div class="p-3 rounded-md correct-answer flex items-start gap-3">
                         <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <p><span class="font-bold">B) Representar al Estado, proteger los intereses del país y de sus nacionales, negociar con el gobierno receptor, enterarse de las condiciones del Estado acreditante e informar al MRE.</span></p>
+                        <div>
+                            <p class="main-text">B) Representar al Estado, proteger los intereses del país y de sus nacionales, negociar con el gobierno receptor, enterarse de las condiciones del Estado acreditante e informar al MRE.</p>
+                        </div>
                     </div>
                     <p class="p-3 rounded-md">C) Ejercer funciones judiciales criminales directas sobre los paraguayos residentes en ese país.</p>
                     <p class="p-3 rounded-md">D) Otorgar créditos bancarios con fondos del Tesoro Público paraguayo.</p>
@@ -329,7 +388,10 @@
                 <div class="space-y-2 pl-4">
                     <div class="p-3 rounded-md correct-answer flex items-start gap-3">
                         <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <p><span class="font-bold">A) No tiene facultades para firmar visas ni documentos comerciales.</span> <br><span class="text-xs text-green-700 italic">(Diferencia fundamental de funciones estipuladas para la categoría honoraria).</span></p>
+                        <div>
+                            <p class="main-text">A) No tiene facultades para firmar visas ni documentos comerciales.</p>
+                            <p class="text-xs text-green-700 italic mt-1">(Justificación: Restricción operativa fundamental estipulada para la categoría consular honoraria frente a los diplomáticos rentados).</p>
+                        </div>
                     </div>
                     <p class="p-3 rounded-md">B) Es generalmente un ciudadano (paraguayo o extranjero) residente en el exterior que ejerce funciones consulares sin percibir sueldo regular del Estado paraguayo.</p>
                     <p class="p-3 rounded-md">C) Posee un rango superior al de un Embajador extraordinario.</p>
@@ -340,11 +402,10 @@
         </div>
         
         <footer class="mt-16 text-center text-sm text-gray-500 border-t border-gray-200 pt-6">
-            <p>Generado como material de estudio y repaso.</p>
+            <p>Generado como material de estudio y repaso definitivo.</p>
         </footer>
 
     </div>
 
 </body>
 </html>
-
