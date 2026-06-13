@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang='es'>
+<html lang="es">
 <head>
-  <meta charset='UTF-8' />
-  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-  <title>Clase del 11 de junio del 2026 - Texto unificado</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase de Historia del Paraguay - Guerra y primera década liberal</title>
   <style>
     :root {
       --bg: #0b1220;
@@ -17,8 +17,10 @@
       --shadow: 0 10px 30px rgba(0,0,0,.35);
       --max: 1100px;
     }
+
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -26,11 +28,13 @@
       color: var(--text);
       line-height: 1.75;
     }
+
     .wrap {
       max-width: var(--max);
       margin: 0 auto;
       padding: 32px 20px 64px;
     }
+
     .hero {
       background: linear-gradient(180deg, rgba(124,196,255,.12), rgba(78,161,255,.05));
       border: 1px solid var(--border);
@@ -39,17 +43,36 @@
       box-shadow: var(--shadow);
       margin-bottom: 22px;
     }
-    h1, h2, h3 { line-height: 1.2; margin: 0 0 14px; }
-    h1 { font-size: clamp(1.8rem, 3vw, 2.7rem); }
-    h2 { font-size: clamp(1.2rem, 2vw, 1.6rem); color: var(--accent); }
-    p { margin: 0 0 18px; }
-    .muted { color: var(--muted); }
+
+    h1, h2 {
+      line-height: 1.2;
+      margin: 0 0 14px;
+    }
+
+    h1 {
+      font-size: clamp(1.9rem, 3vw, 2.8rem);
+    }
+
+    h2 {
+      font-size: clamp(1.2rem, 2vw, 1.65rem);
+      color: var(--accent);
+    }
+
+    p {
+      margin: 0 0 18px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
     .toc {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 12px;
       margin: 24px 0 30px;
     }
+
     .toc a {
       display: block;
       text-decoration: none;
@@ -61,24 +84,28 @@
       transition: transform .18s ease, border-color .18s ease, background .18s ease;
       box-shadow: var(--shadow);
     }
+
     .toc a:hover {
       transform: translateY(-2px);
       border-color: var(--accent-2);
       background: linear-gradient(180deg, #15213a, #1a2948);
     }
+
     .content {
-      background: rgba(17, 26, 46, .8);
+      background: rgba(17, 26, 46, .85);
       border: 1px solid var(--border);
       border-radius: 22px;
       padding: 28px;
       box-shadow: var(--shadow);
       backdrop-filter: blur(6px);
     }
+
     section {
       scroll-margin-top: 24px;
       padding-top: 6px;
-      margin-top: 6px;
+      margin-top: 8px;
     }
+
     .tag {
       display: inline-block;
       font-size: .84rem;
@@ -89,11 +116,13 @@
       border-radius: 999px;
       margin-bottom: 12px;
     }
+
     .footer {
       color: var(--muted);
       margin-top: 26px;
       font-size: .95rem;
     }
+
     @media (max-width: 640px) {
       .wrap { padding: 18px 14px 44px; }
       .hero, .content { padding: 20px; }
@@ -101,69 +130,104 @@
   </style>
 </head>
 <body>
-  <div class='wrap'>
-    <header class='hero'>
-      <div class='tag'>Junio, 11 del 2026</div>
-      <h1>Clase del 11 de junio del 2026</h1>
-      <p class='muted'>Texto unificado, corregido y reorganizado a partir de la transcripción de una clase magistral sobre la Guerra de la Triple Alianza, la posguerra y los inicios del Estado liberal en el Paraguay.</p>
+  <div class="wrap">
+    <header class="hero">
+      <div class="tag">Formato HTML oscuro</div>
+      <h1>Clase de Historia del Paraguay - Guerra y primera década liberal</h1>
+      <p class="muted">Versión unificada, corregida y ordenada a partir de los tres archivos de la nueva clase, con accesos directos para navegar rápido por cada bloque temático.</p>
     </header>
-    <nav class='toc' aria-label='Accesos directos'>
-      <a href='#inicio'>Inicio de la clase</a>
-      <a href='#desarrollo'>Desarrollo de la guerra</a>
-      <a href='#ofensiva'>Etapa ofensiva paraguaya</a>
-      <a href='#neembucu'>Campaña de Ñeembucú y Tuyutí</a>
-      <a href='#curupayty'>Curupayty, Humaitá y Pikysyry</a>
-      <a href='#cordilleras'>Campaña de las Cordilleras</a>
-      <a href='#estado'>Inicio del Estado liberal</a>
-      <a href='#posguerra'>Posguerra, violencia y crisis</a>
-      <a href='#ocupacion'>Ocupación aliada y tratados</a>
-      <a href='#educacion'>Educación y reorganización institucional</a>
-      <a href='#politica'>Inestabilidad política de la década</a>
+
+    <nav class="toc" aria-label="Accesos directos">
+      <a href="#introduccion">Introducción</a>
+      <a href="#ofensiva">Etapa ofensiva</a>
+      <a href="#defensiva">Etapa defensiva</a>
+      <a href="#cordilleras">Final de la guerra</a>
+      <a href="#constitucion">Constitución de 1870</a>
+      <a href="#posguerra">Posguerra y violencia</a>
+      <a href="#territorio">Tratados y territorio</a>
+      <a href="#politica">Inestabilidad política</a>
+      <a href="#educacion">Educación y modernización</a>
+      <a href="#cierre">Cierre</a>
     </nav>
-    <main class='content'>
+
+    <main class="content">
       <h2>Texto unificado</h2>
-      <section id='inicio'>
-        <p>La clase se planteó como una continuación directa de la sesión anterior, en la que ya se habían discutido las causas de la Guerra de la Triple Alianza y la necesidad de evitar explicaciones simplistas sobre el conflicto. El profesor retomó ese enfoque para proponer un panorama general del desarrollo militar de la guerra y, en una segunda parte, explicar la primera década del Estado liberal paraguayo. Aclaró además que, al hablar de Estado liberal, no se refería a un partido político específico, sino al orden institucional inaugurado por la Constitución de 1870 y prolongado hasta 1940.</p>
+
+      <section id="introduccion">
+        <p>En esta clase, el profesor dividió la exposición en dos grandes partes. Primero hizo un repaso breve del desarrollo militar de la Guerra de la Triple Alianza, y luego pasó a explicar la primera década del Estado liberal paraguayo surgido tras la Constitución de 1870.</p>
+        <p>Recordó que la clase anterior había estado centrada sobre todo en las causas de la guerra y en la idea de que no se trataba de un proceso sencillo ni explicable por una sola variable. Por eso, aquí el objetivo fue concentrarse en el desarrollo bélico y en las consecuencias políticas e institucionales de la posguerra.</p>
       </section>
-      <section id='desarrollo'>
-        <p>El profesor organizó el desarrollo de la Guerra de la Triple Alianza en dos grandes etapas desde la perspectiva paraguaya: una fase ofensiva, entre 1864 y 1865, y una fase defensiva, entre 1866 y 1870. Según su explicación, esta división permite entender mejor el cambio de iniciativa militar y el progresivo desgaste del Paraguay a lo largo del conflicto. También insistió en que, una vez perdido el impulso inicial, el resto de la guerra debe leerse como una combinación de resistencia prolongada, oportunidades desaprovechadas y creciente deterioro material y humano.</p>
+
+      <section id="ofensiva">
+        <p>Desde la perspectiva paraguaya, el profesor explicó que la guerra puede dividirse en dos etapas. La primera fue una etapa ofensiva, que se extendió entre 1864 y 1865, cuando Paraguay todavía conservaba capacidad de iniciativa militar.</p>
+        <p>En esa fase inicial, Paraguay tuvo una campaña muy exitosa en Mato Grosso. Señaló que los paraguayos no fueron desplazados rápidamente de esa zona y que los intentos brasileños de recuperación fracasaron al comienzo, aunque también recordó que ya habían discutido en clases anteriores que esa campaña probablemente fue un error estratégico si el objetivo principal era otro.</p>
+        <p>Después de Mato Grosso, la siguiente fase ofensiva llevó a las tropas paraguayas hacia Corrientes y hacia el actual Río Grande del Sur. La idea era avanzar por Corrientes, ocupar también San Borja y hacer converger ambas columnas sobre Uruguayana, puerta de acceso hacia el Uruguay.</p>
+        <p>Sin embargo, el profesor remarcó que allí las líneas paraguayas se extendieron demasiado. Uruguayana representó el máximo punto de alcance paraguayo durante la guerra, pero al mismo tiempo marcó el límite de esa capacidad ofensiva.</p>
+        <p>En esta campaña se produjeron tres derrotas fundamentales. La primera fue Riachuelo, presentada como una de las más desastrosas, porque significó la pérdida de aproximadamente la mitad de la flota paraguaya y consolidó el dominio naval brasileño sobre los ríos.</p>
+        <p>La segunda fue Yatay, donde Paraguay sufrió una derrota severísima y perdió miles de hombres. El profesor comentó incluso la referencia poética popular al palmar de Yatay, usando ese ejemplo para mostrar cómo muchas veces la memoria cultural mezcla imagen literaria y hecho histórico.</p>
+        <p>La tercera fue la rendición de Uruguayana. Esa rendición hizo imposible que Paraguay pudiera auxiliar efectivamente al Uruguay, que ya había caído en manos del bando contrario desde antes de que Paraguay pudiera alterar el desenlace político.</p>
       </section>
-      <section id='ofensiva'>
-        <p>En la fase ofensiva, Paraguay obtuvo resultados iniciales importantes en Mato Grosso, donde las fuerzas brasileñas no lograron recuperar de inmediato los territorios ocupados. Sin embargo, el profesor consideró discutible la utilidad estratégica de esa campaña, porque pudo haber desviado recursos hacia un frente exitoso pero no decisivo para alterar la situación regional. A continuación, explicó la ofensiva sobre Corrientes y el actual territorio de Rio Grande do Sul, pensada para alcanzar Uruguay, aunque las líneas paraguayas terminaron demasiado extendidas en dirección a Uruguayana.</p>
-        <p>Ese avance estuvo seguido por derrotas decisivas. La batalla de Riachuelo significó la pérdida de gran parte de la flota paraguaya y consolidó la superioridad naval brasileña en los ríos, mientras que Yatay y la rendición de Uruguayana clausuraron la posibilidad de sostener la campaña exterior y de auxiliar efectivamente al gobierno uruguayo afín a López. A partir de entonces, Paraguay inició la retirada y se preparó para una defensa más concentrada en el sur del país.</p>
+
+      <section id="defensiva">
+        <p>A partir de finales de 1865 y comienzos de 1866, Paraguay organizó la retirada de Corrientes y preparó posiciones defensivas en la región de Ñeembucú. Desde entonces comenzó la segunda gran etapa de la guerra, la fase defensiva, que se prolongaría hasta 1870.</p>
+        <p>El objetivo aliado pasó a ser la toma de Humaitá y la apertura del camino hacia Asunción. Esa campaña, explicó el profesor, fue larguísima y se extendió durante casi dos años y medio, convirtiéndose en la etapa militar más prolongada de todo el conflicto.</p>
+        <p>Dentro de esa fase, ubicó como momento decisivo la batalla de Tuyutí. Según su interpretación, fue allí donde Paraguay perdió realmente la guerra, porque la magnitud de la derrota y la pérdida de fuerzas resultaron irreparables.</p>
+        <p>Relató que López decidió atacar el campamento aliado en Tuyutí en contra del criterio de varios de sus consejeros extranjeros. El resultado fue desastroso: Paraguay perdió prácticamente un ejército entero en un solo día, lo que convirtió a Tuyutí en la peor derrota paraguaya de la guerra.</p>
+        <p>Incluso así, el profesor recordó que después de Tuyutí hubo todavía momentos importantes. Entre ellos destacó Curupayty, que frenó por un tiempo a los aliados y generó un retraso considerable en la continuación de la guerra, aunque consideró que ese respiro fue mal aprovechado por López.</p>
+        <p>También explicó por qué la participación argentina comenzó a debilitarse a partir de 1867. Mencionó la alta impopularidad de la guerra en la Argentina, el rechazo a la alianza con Brasil, la idea de que una vez liberada Corrientes la guerra ya no tenía sentido para muchos argentinos, la derrota de Curupayty, la muerte del vicepresidente Marcos Paz y el levantamiento federal de Felipe Varela en el interior argentino.</p>
       </section>
-      <section id='neembucu'>
-        <p>Con el inicio de 1866 comenzó la campaña de Ñeembucú, cuyo objetivo aliado era tomar Humaitá y abrir el camino hacia Asunción. El profesor la presentó como la campaña más extensa del conflicto, tanto por su duración como por la magnitud de las fuerzas comprometidas. En ese marco, destacó la batalla de Tuyutí, librada el 24 de mayo de 1866, como el punto de quiebre decisivo para Paraguay.</p>
-        <p>Según su interpretación, la decisión de López de atacar el campamento aliado en Tuyutí, contra el criterio de varios asesores, terminó en una catástrofe militar. Paraguay perdió allí una porción enorme de su capacidad ofensiva y, desde ese momento, la guerra pasó a ser sobre todo una lucha por prolongar la resistencia. El profesor sostuvo incluso que, aunque hubo combates posteriores muy importantes, en Tuyutí quedó sellado el destino militar del Paraguay.</p>
+
+      <section id="cordilleras">
+        <p>La caída de Humaitá tardó mucho más de lo esperado y solo se concretó hacia mediados de 1868. Desde allí, el escenario cambió y las tropas paraguayas retrocedieron hacia las nuevas líneas defensivas organizadas por López en torno al sistema de Pikysyry.</p>
+        <p>Pero los brasileños evitaron el enfrentamiento frontal y ejecutaron una maniobra envolvente por el Chaco. Cruzaron el río Paraguay, marcharon por la otra margen y atacaron las posiciones paraguayas desde la retaguardia, provocando la caída sucesiva de varios puntos defensivos durante la campaña de diciembre de 1868.</p>
+        <p>El profesor señaló que esa serie de combates es conocida por los paraguayos como campaña de Pikysyry y por los brasileños como la Dezembrada, porque se concentró en el mes de diciembre. Todo desembocó en Lomas Valentinas, la batalla más larga de la guerra, que se extendió durante siete días y en la que López estuvo muy cerca de ser capturado.</p>
+        <p>El 1 de enero de 1869, las tropas brasileñas ocuparon y saquearon Asunción. A partir de allí comenzó la campaña final, llamada por el profesor campaña de las Cordilleras, que no se limitó solo a la Cordillera de los Altos, sino que incluyó otras zonas serranas del país.</p>
+        <p>En esa última etapa, López reorganizó lo que quedaba del Estado y del ejército en el interior, concentrando además gran cantidad de población civil en condiciones catastróficas. El profesor describió esta situación como un desastre humanitario marcado por hambre, enfermedades, desnutrición y violencia.</p>
+        <p>Dentro de esta campaña mencionó especialmente Piribebuy y Acosta Ñu. Presentó a Acosta Ñu como una verdadera batalla por su duración y magnitud, mientras que sobre Cerro Corá sugirió que muchas veces llamarla batalla es generoso, porque para entonces lo que quedaban eran ya choques menores y la persecución final de López.</p>
       </section>
-      <section id='curupayty'>
-        <p>Después de Tuyutí, el conflicto entró en una etapa de desgaste. El profesor mencionó la victoria paraguaya de Curupayty como un gran éxito defensivo que demoró la ofensiva aliada durante varios meses, pero consideró que esa ventaja no pudo convertirse en una salida política o militar favorable. También explicó que la participación argentina fue debilitándose con el tiempo, tanto por la impopularidad de la guerra como por la crisis interna de la propia Argentina.</p>
-        <p>Humaitá, principal objetivo estratégico de los aliados, tardó mucho en caer y su resistencia prolongó notablemente la campaña. Una vez perdida esa fortaleza, López reforzó la línea defensiva de Pikysyry, en el entorno del sistema fluvial del departamento central. Sin embargo, las fuerzas brasileñas maniobraron por el Chaco para atacar por la retaguardia, lo que precipitó la caída de las posiciones paraguayas y condujo a la campaña de diciembre de 1868, culminada en Lomas Valentinas y en la ocupación y saqueo de Asunción a comienzos de 1869.</p>
+
+      <section id="constitucion">
+        <p>Luego de cerrar la parte militar, el profesor pasó al llamado Estado liberal. Explicó que se lo denomina así por la Constitución Nacional de 1870, no necesariamente por la existencia inmediata de gobiernos liberales en el sentido partidario posterior.</p>
+        <p>Esa constitución fue debatida en un contexto de ocupación y enorme debilidad nacional. Sin embargo, el profesor insistió en que, aunque existía presión aliada y especialmente brasileña, sí hubo discusión real dentro de la Asamblea Nacional Constituyente y el texto no fue simplemente dictado palabra por palabra por una autoridad ocupante.</p>
+        <p>La Constitución de 1870 fue presentada como la primera constitución paraguaya plenamente moderna en el sentido de que incorporó dos partes fundamentales: una declaración de derechos, obligaciones y garantías, y una parte orgánica destinada a organizar los poderes del Estado. Por eso la contrastó con la ley política de 1844, que había discutido en clases anteriores.</p>
+        <p>En este contexto también se produjo un episodio político insólito: mientras aún se debatía la constitución, la propia Asamblea quiso arrogarse la facultad de nombrar un nuevo gobierno. Así fue designado Facundo Machaín, quien, según el relato del profesor, llegó a dormirse siendo presidente y amaneció desplazado por un golpe apoyado por la intervención militar brasileña.</p>
       </section>
-      <section id='cordilleras'>
-        <p>La última gran fase del conflicto fue la Campaña de las Cordilleras, llamada así porque involucró no solo la Cordillera de Altos, sino también otras áreas serranas del país. Allí López intentó reorganizar el Estado y el ejército con los recursos que aún quedaban, concentrando al mismo tiempo a gran parte de la población civil en condiciones extremadamente precarias. El resultado, según el profesor, fue una catástrofe humanitaria marcada por hambre, enfermedades, violencia y desintegración social.</p>
-        <p>En este tramo final se produjeron algunos de los episodios más dramáticos de la guerra, entre ellos Piribebuy y Acosta Ñu. El profesor subrayó la diferencia entre grandes batallas y simples choques o escaramuzas, y presentó a Acosta Ñu como una verdadera batalla por su duración y por la desproporción de fuerzas involucradas. Con la muerte de Francisco Solano López quedó cerrado el conflicto en términos militares, aunque sus consecuencias continuarían pesando por décadas.</p>
+
+      <section id="posguerra">
+        <p>La primera década de la posguerra, entre 1870 y 1880, fue presentada como un período dominado por la violencia extrema. El profesor aclaró que la muerte de López no significó el fin inmediato de la muerte ni del sufrimiento, sino el paso a otra clase de violencia: revoluciones, golpes, masacres políticas, bandidismo rural y bandas armadas transnacionales integradas por desertores y aventureros de varios países.</p>
+        <p>También describió un panorama social devastador. En Asunción y en el interior la población padecía hambre, los campos estaban destruidos o abandonados, el ganado casi había desaparecido y hubo que repoblar la ganadería con nuevas cabezas traídas del exterior.</p>
+        <p>En ese marco ubicó también la fuerte corrupción de la posguerra. Destacó especialmente los empréstitos ingleses de 1871 y 1872, presentados como un intento desesperado del Estado paraguayo de conseguir recursos usando como garantía las tierras públicas.</p>
+        <p>El problema, explicó, fue que gran parte del dinero se perdió entre comisionistas, agentes y prácticas corruptas antes de llegar efectivamente al Paraguay. Y una vez dentro del país, una parte importante de esos fondos siguió siendo objeto de corrupción bajo los gobiernos posteriores.</p>
       </section>
-      <section id='estado'>
-        <p>La segunda parte de la clase estuvo dedicada al comienzo del Estado liberal paraguayo. El profesor explicó que este período se inicia con la Constitución de 1870, elaborada en un contexto de ocupación aliada, pero debatida por una Asamblea Nacional Constituyente que efectivamente discutió su contenido. Destacó que esa constitución introdujo con claridad una parte dogmática, referida a derechos y garantías, y una parte orgánica, vinculada a la organización institucional del Estado.</p>
-        <p>También repasó la incertidumbre política de 1869, cuando todavía se discutía qué hacer con el Paraguay tras la ocupación de Asunción. Según la exposición, hubo sectores argentinos que imaginaron incluso la anexión completa del país, mientras que Brasil prefirió sostener la independencia paraguaya para evitar un excesivo fortalecimiento territorial argentino en la región. En ese contexto se formó el gobierno provisorio del 15 de agosto de 1869, dominado por civiles cercanos a los intereses aliados, aunque con mayor inclinación hacia la influencia brasileña.</p>
+
+      <section id="territorio">
+        <p>Otro eje central de la explicación fue la cuestión territorial y diplomática. El profesor subrayó que, terminada la guerra, Brasil y Argentina, que habían sido aliados circunstanciales, empezaron rápidamente a enfrentarse por el futuro del Paraguay y por la distribución del territorio.</p>
+        <p>Brasil fue el primero en romper el criterio de negociar solo en conjunto, al firmar en 1872 el tratado Loizaga-Cotegipe con Paraguay. Ese tratado fue presentado como muy perjudicial para el país, porque implicó la pérdida definitiva de todas las reclamaciones paraguayas sobre una amplia zona al norte, en la región vinculada a Mato Grosso.</p>
+        <p>Brasil mantuvo sus tropas en Paraguay hasta 1876 porque no quería retirarse y dejar el espacio libre para que Argentina impusiera plenamente sus pretensiones. Según la explicación del profesor, Brasil necesitaba un Paraguay independiente y con suficiente territorio como Estado tapón frente al punto más débil de su propio imperio: Mato Grosso.</p>
+        <p>Por su parte, Argentina ocupó el Chaco y fundó Villa Argentina como modo de respaldar sus reclamos. Se intentó primero el tratado Sosa-Tejedor, que el propio negociador paraguayo habría hecho fracasar por lo perjudicial que resultaba.</p>
+        <p>Finalmente, en 1876 se firmó el tratado Machaín-Irigoyen. El profesor dijo que no fue un buen tratado para Paraguay, pero sí menos malo que otros proyectos anteriores, porque aunque consolidó pérdidas territoriales importantes, dejó abierta al arbitraje internacional la región comprendida entre el Pilcomayo y el Verde.</p>
+        <p>Ese arbitraje fue resuelto en 1878 por el presidente estadounidense Rutherford B. Hayes, quien falló a favor de Paraguay en la zona disputada. Gracias a eso, Paraguay conservó el territorio que más tarde daría nombre al departamento Presidente Hayes, mientras que Argentina consolidó sobre todo la posesión de Formosa.</p>
       </section>
-      <section id='posguerra'>
-        <p>La primera década de posguerra fue presentada como un tiempo de violencia extrema e inestabilidad general. El profesor describió un país devastado por la guerra, con hambre, destrucción productiva, despoblamiento, bandas armadas, bandidismo rural y frecuentes enfrentamientos políticos. A su juicio, la guerra no terminó realmente en el plano social con la muerte de López, porque la descomposición interna continuó durante años bajo nuevas formas de conflicto.</p>
-        <p>A ese panorama se sumó una fuerte corrupción en los gobiernos de posguerra, visible de manera especial en el manejo de los empréstitos ingleses. El Estado paraguayo, arruinado financieramente, recurrió a préstamos externos con garantía sobre las tierras públicas; sin embargo, buena parte de esos recursos se perdió entre comisionistas, intermediarios y redes de corrupción. El profesor remarcó que esa deuda pesó durante décadas y se convirtió en uno de los grandes problemas estructurales del nuevo orden liberal.</p>
+
+      <section id="politica">
+        <p>La década de 1870 fue expuesta como una sucesión de gobiernos débiles, crisis y asesinatos. Tras el episodio de Facundo Machaín, el profesor mencionó la continuidad de Cirilo Antonio Rivarola, luego la salida de Rivarola en medio de acusaciones de corrupción, el gobierno de Salvador Jovellanos y sus sucesivos levantamientos.</p>
+        <p>Jovellanos fue presentado como un gobernante sostenido a duras penas por la ocupación brasileña. Incluso cuando triunfaban movimientos opositores, las tropas brasileñas intervenían para impedir su caída total y forzar arreglos políticos.</p>
+        <p>Después llegó Juan Bautista Gill, a quien el profesor vinculó con el grupo político que se venía formando en torno a Cándido Bareiro y Bernardino Caballero. Gill fue asesinado en 1877 en lo que describió como el primer magnicidio de la historia republicana paraguaya.</p>
+        <p>Ese asesinato desató nuevas muertes y venganzas, entre ellas la masacre en la cárcel de 1877, donde fue asesinado incluso Facundo Machaín, pese a que solo actuaba como abogado defensor de los acusados. Más tarde, en 1878, fue elegido presidente Cándido Bareiro, cuya figura fue presentada con matices: por un lado como diplomático importante del Paraguay en Europa, y por otro bajo sospechas relacionadas con negocios y armamentos durante la guerra.</p>
+        <p>Tras la muerte de Bareiro en 1880, se produjo una crisis sucesoria en la que el vicepresidente fue forzado a renunciar. Esto permitió que el Congreso designara a Bernardino Caballero, y el profesor ubicó allí el inicio de la primera hegemonía colorada, aunque aclaró que todavía no existía formalmente el Partido Colorado como organización plenamente estructurada.</p>
       </section>
-      <section id='ocupacion'>
-        <p>Otro eje central de la explicación fue la ocupación aliada y la disputa diplomática posterior entre Brasil y Argentina. Aunque ambos países habían sido aliados contra Paraguay, sus intereses no eran idénticos, y pronto comenzaron las tensiones sobre el futuro del territorio paraguayo. Brasil firmó por separado el Tratado Loizaga-Cotegipe en 1872, por el cual Paraguay perdió extensas reclamaciones territoriales al norte, mientras que la cuestión del Chaco siguió siendo el principal foco de controversia con la Argentina.</p>
-        <p>El profesor explicó luego el fracaso del Tratado Sosa-Tejedor y la firma del Tratado Machaín-Irigoyen en 1876. Ese acuerdo reconoció la cesión paraguaya sobre una parte del territorio en disputa, dejó otra zona sometida al arbitraje del presidente de los Estados Unidos y abrió el camino al laudo de Rutherford B. Hayes, favorable a Paraguay en el espacio correspondiente al actual departamento de Presidente Hayes. Aunque Argentina retuvo la zona de Formosa, Paraguay conservó una parte importante del Chaco Boreal, lo que el profesor consideró un resultado menos desfavorable de lo que pudo haber sido.</p>
+
+      <section id="educacion">
+        <p>Hacia el final de la clase, el profesor cambió de tono y destacó un aspecto más constructivo del período posterior. Mencionó la creación del Colegio Nacional en 1877 y de la Universidad Nacional en 1889 como dos hitos fundamentales para la formación del Estado paraguayo moderno.</p>
+        <p>Según su interpretación, estas instituciones permitieron cumplir finalmente un viejo ideal que Carlos Antonio López había perseguido: formar una generación de paraguayos instruidos, capaces de ocupar cargos altos en el Estado y de representar al país nacional e internacionalmente. A esa camada la vinculó con la llamada generación del 900.</p>
+        <p>También se detuvo en una queja personal sobre los nombres de las instituciones. Sostuvo que el Colegio Nacional debería haberse llamado simplemente Colegio Nacional, sin agregados posteriores, y que lo mismo debería ocurrir con la Universidad Nacional, como forma de preservar la lógica original de esas fundaciones.</p>
       </section>
-      <section id='educacion'>
-        <p>Hacia el final, el profesor destacó la importancia de la fundación del Colegio Nacional en 1876 y de la Universidad Nacional en 1889. Consideró que ambas instituciones permitieron concretar, aunque tardíamente, un objetivo largamente vinculado al proyecto modernizador paraguayo: formar una generación de cuadros capaces de ocupar funciones burocráticas, intelectuales y diplomáticas en el nuevo Estado. En ese sentido, conectó esas fundaciones con la aparición posterior de una élite letrada de gran influencia en la vida pública paraguaya.</p>
+
+      <section id="cierre">
+        <p>Para cerrar, el profesor explicó que la próxima clase abarcaría de forma muy rápida los siguientes sesenta años de historia política paraguaya. Presentó esta lección como una base para comprender la transición entre la destrucción de la guerra, la conflictiva organización del Estado liberal y el inicio de los procesos políticos que marcarían el Paraguay de fines del siglo XIX.</p>
       </section>
-      <section id='politica'>
-        <p>El cierre de la clase estuvo dedicado a un rápido repaso de la inestabilidad política entre 1869 y 1880. El profesor mencionó la fugacidad de la presidencia de Facundo Machaín, la continuidad de Cirilo Antonio Rivarola, el gobierno conflictivo de Salvador Jovellanos, la gravitación de los levantamientos armados y el asesinato de Juan Bautista Gill como uno de los episodios más graves de la década. También recordó la posterior muerte de Rivarola, la presidencia de Cándido Bareiro y la persistencia de conspiraciones y revoluciones fallidas.</p>
-        <p>Finalmente, explicó que la muerte de Bareiro en 1880 abrió una crisis sucesoria que terminó favoreciendo el ascenso de Bernardino Caballero. Con ello, según su periodización, concluyó la primera década de posguerra y comenzó la primera hegemonía colorada, entendida no tanto como predominio de un partido ya formalizado, sino como consolidación temprana del caballerismo como fuerza política dominante. La clase cerró con el anuncio de que en la siguiente sesión se verían de manera más sintética las décadas posteriores del Estado liberal.</p>
-      </section>
-      <div class='footer'>Versión revisada con corrección ortográfica, ajuste de nombres propios y reorganización temática para estudio.</div>
+
+      <p class="footer">HTML preparado en modo oscuro con bloques de acceso directo para navegación rápida.</p>
     </main>
   </div>
 </body>
