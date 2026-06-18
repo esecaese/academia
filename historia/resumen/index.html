@@ -1,93 +1,204 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resúmenes de Historia</title>
+    
+    <!-- Cargando la fuente Inter de Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Cargando Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        gray: {
+                            900: '#111827',
+                            800: '#1f2937',
+                            700: '#374151',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
         body {
-            font-family: system-ui, -apple-system, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-            background-color: #f6f8fa;
-            color: #24292f;
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* Fondo principal oscuro (Slate 900) */
+            color: #f8fafc;
         }
-        h1 { border-bottom: 2px solid #d0d7de; padding-bottom: 10px; }
-        ul { list-style: none; padding: 0; }
-        li {
-            background: white;
-            margin: 10px 0;
-            padding: 15px;
-            border: 1px solid #d0d7de;
-            border-radius: 6px;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        li:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        a {
-            text-decoration: none;
-            color: #0969da;
-            font-weight: 600;
-            display: block;
-            font-size: 1.1em;
+        
+        /* Efecto de fondo sutil con gradiente */
+        .bg-pattern {
+            background-image: radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.04), transparent 25%),
+                              radial-gradient(circle at 85% 30%, rgba(99, 102, 241, 0.04), transparent 25%);
         }
     </style>
 </head>
-<body>
+<body class="bg-pattern min-h-screen text-slate-200 antialiased selection:bg-cyan-500/30">
 
-    <h1>📚 Mis Resúmenes de Historia</h1>
-    <p>Selecciona una clase para leer los apuntes:</p>
-    
-    <ul id="lista-carpetas">
-        <li>Cargando resúmenes...</li>
-    </ul>
+    <div class="max-w-3xl mx-auto px-6 py-12 md:py-20">
+        
+        <!-- Cabecera -->
+        <header class="mb-12 text-center md:text-left">
+            <div class="inline-flex items-center justify-center p-3 bg-slate-800/50 rounded-2xl mb-4 border border-slate-700/50 shadow-sm">
+                <svg class="w-8 h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                </svg>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
+                Historia en la Academia
+            </h1>
+            <p class="text-lg text-slate-400 max-w-2xl">
+                Repositorio de mis apuntes y resúmenes de clase. Selecciona una fecha para explorar el contenido.
+            </p>
+        </header>
+
+        <!-- Contenedor principal de la lista -->
+        <main>
+            <ul id="lista-carpetas" class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <!-- Estado de carga -->
+                <li id="loading-state" class="col-span-1 sm:col-span-2 flex justify-center py-12">
+                    <div class="flex items-center space-x-3 text-slate-400">
+                        <svg class="animate-spin h-5 w-5 text-cyan-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span class="font-medium text-lg">Cargando resúmenes...</span>
+                    </div>
+                </li>
+            </ul>
+        </main>
+        
+        <!-- Footer simple -->
+        <footer class="mt-16 text-center text-slate-500 text-sm">
+            <p>Generado dinámicamente desde GitHub Repositories</p>
+        </footer>
+
+    </div>
 
     <script>
+        // Función para darle formato bonito a los nombres de tus carpetas
+        function formatearNombre(nombre) {
+            if (nombre.toLowerCase() === 'previo') return 'Clase Previa';
+            
+            // Si tiene 4 dígitos (ej: "0528" o "0611"), lo convertimos a fecha
+            if (/^\d{4}$/.test(nombre)) {
+                const mes = parseInt(nombre.substring(0, 2), 10);
+                const dia = parseInt(nombre.substring(2, 4), 10);
+                const nombresMeses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+                
+                if (mes >= 1 && mes <= 12) {
+                    return `${dia} de ${nombresMeses[mes - 1]}`;
+                }
+            }
+            // Si no coincide con el patrón, devolvemos el nombre original capitalizado
+            return nombre.charAt(0).toUpperCase() + nombre.slice(1);
+        }
+
         // Datos de tu repositorio
         const owner = 'esecaese';
         const repo = 'academia';
         const path = 'historia/resumen';
-        
-        // Endpoint de la API de GitHub para obtener el contenido de una ruta
         const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
 
+        // Realizamos la petición a GitHub
         fetch(apiUrl)
             .then(response => {
-                if (!response.ok) throw new Error('Error en la red');
+                if (!response.ok) throw new Error('Error al conectar con GitHub');
                 return response.json();
             })
             .then(data => {
                 const lista = document.getElementById('lista-carpetas');
-                lista.innerHTML = ''; // Limpiamos el mensaje de "Cargando..."
+                lista.innerHTML = ''; // Limpiamos el loading spinner
 
-                // Filtramos solo los elementos que son directorios/carpetas
-                const carpetas = data.filter(item => item.type === 'dir');
+                // Filtramos solo las carpetas ('dir') y ordenamos alfabéticamente/numéricamente
+                const carpetas = data
+                    .filter(item => item.type === 'dir')
+                    // Ordenamos para que las clases más recientes o las carpetas tengan un orden lógico
+                    .sort((a, b) => a.name.localeCompare(b.name));
 
                 carpetas.forEach(carpeta => {
+                    const tituloFormateado = formatearNombre(carpeta.name);
+                    
+                    // Creamos el elemento 'li' con las clases de Tailwind
                     const li = document.createElement('li');
-                    const a = document.createElement('a');
-                    
-                    // El href es simplemente el nombre de la carpeta con un slash al final
-                    // Como estamos en la misma ruta base, el enlace relativo funcionará perfecto
-                    a.href = carpeta.name + '/';
-                    
-                    // Formatear un poco el texto a mostrar
-                    if (carpeta.name === 'previo') {
-                        a.textContent = 'Resumen Previo';
-                    } else {
-                        a.textContent = 'Clase: ' + carpeta.name;
-                    }
+                    li.className = `
+                        group relative bg-slate-800/40 backdrop-blur-sm border border-slate-700/50 
+                        rounded-2xl p-5 transition-all duration-300 ease-out
+                        hover:bg-slate-800/80 hover:border-cyan-500/40 hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-900/20
+                    `;
 
+                    // Enlace que cubre todo el elemento
+                    const a = document.createElement('a');
+                    a.href = carpeta.name + '/';
+                    a.className = "flex items-start space-x-4 w-full h-full outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded-xl";
+
+                    // Ícono decorativo
+                    const iconDiv = document.createElement('div');
+                    iconDiv.className = `
+                        flex-shrink-0 w-12 h-12 bg-slate-900/50 border border-slate-700 text-slate-400 
+                        rounded-xl flex items-center justify-center transition-colors duration-300
+                        group-hover:text-cyan-400 group-hover:bg-cyan-950/30 group-hover:border-cyan-800/50
+                    `;
+                    iconDiv.innerHTML = `
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                    `;
+
+                    // Contenedor de texto
+                    const textDiv = document.createElement('div');
+                    textDiv.className = "flex flex-col justify-center pt-1";
+                    
+                    const titleP = document.createElement('h2');
+                    titleP.className = "text-lg font-semibold text-slate-200 group-hover:text-white transition-colors duration-300";
+                    titleP.textContent = tituloFormateado;
+
+                    const subP = document.createElement('p');
+                    subP.className = "text-sm text-slate-400 mt-1.5 line-clamp-2";
+                    subP.textContent = `Carpeta: /${carpeta.name}`;
+
+                    // Ensamblamos el DOM
+                    textDiv.appendChild(titleP);
+                    textDiv.appendChild(subP);
+                    a.appendChild(iconDiv);
+                    a.appendChild(textDiv);
                     li.appendChild(a);
                     lista.appendChild(li);
                 });
+                
+                // Si no hay carpetas
+                if (carpetas.length === 0) {
+                    lista.innerHTML = `
+                        <li class="col-span-1 sm:col-span-2 text-center py-8 border border-dashed border-slate-700 rounded-2xl bg-slate-800/20 text-slate-400">
+                            No se encontraron resúmenes aún.
+                        </li>
+                    `;
+                }
+
             })
             .catch(error => {
                 console.error('Error:', error);
-                document.getElementById('lista-carpetas').innerHTML = '<li>Error al cargar la lista. Verifica la conexión o los nombres de las rutas.</li>';
+                const lista = document.getElementById('lista-carpetas');
+                lista.innerHTML = `
+                    <li class="col-span-1 sm:col-span-2 p-6 bg-red-950/30 border border-red-900/50 rounded-2xl flex items-center space-x-3 text-red-400">
+                        <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span>Error al cargar la lista. Por favor, verifica tu conexión o intenta recargar la página.</span>
+                    </li>
+                `;
             });
     </script>
 
