@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resúmenes de Historia</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #f6f8fa;
+            color: #24292f;
+        }
+        h1 { border-bottom: 2px solid #d0d7de; padding-bottom: 10px; }
+        ul { list-style: none; padding: 0; }
+        li {
+            background: white;
+            margin: 10px 0;
+            padding: 15px;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        li:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        a {
+            text-decoration: none;
+            color: #0969da;
+            font-weight: 600;
+            display: block;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📚 Mis Resúmenes de Historia</h1>
+    <p>Selecciona una clase para leer los apuntes:</p>
+    
+    <ul id="lista-carpetas">
+        <li>Cargando resúmenes...</li>
+    </ul>
+
+    <script>
+        // Datos de tu repositorio
+        const owner = 'esecaese';
+        const repo = 'academia';
+        const path = 'historia/resumen';
+        
+        // Endpoint de la API de GitHub para obtener el contenido de una ruta
+        const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) throw new Error('Error en la red');
+                return response.json();
+            })
+            .then(data => {
+                const lista = document.getElementById('lista-carpetas');
+                lista.innerHTML = ''; // Limpiamos el mensaje de "Cargando..."
+
+                // Filtramos solo los elementos que son directorios/carpetas
+                const carpetas = data.filter(item => item.type === 'dir');
+
+                carpetas.forEach(carpeta => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    
+                    // El href es simplemente el nombre de la carpeta con un slash al final
+                    // Como estamos en la misma ruta base, el enlace relativo funcionará perfecto
+                    a.href = carpeta.name + '/';
+                    
+                    // Formatear un poco el texto a mostrar
+                    if (carpeta.name === 'previo') {
+                        a.textContent = 'Resumen Previo';
+                    } else {
+                        a.textContent = 'Clase: ' + carpeta.name;
+                    }
+
+                    li.appendChild(a);
+                    lista.appendChild(li);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('lista-carpetas').innerHTML = '<li>Error al cargar la lista. Verifica la conexión o los nombres de las rutas.</li>';
+            });
+    </script>
+
+</body>
+</html>
