@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estudio Consular</title>
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --panel:#121821;
+      --panel-2:#18212c;
+      --border:#253244;
+      --text:#edf2f7;
+      --muted:#9fb0c3;
+      --accent:#6dd3ff;
+      --accent-2:#2eaadc;
+      --success:#86efac;
+      --danger:#fca5a5;
+      --warning:#fde68a;
+      --radius:18px;
+      --radius-sm:12px;
+      --shadow:0 12px 35px rgba(0,0,0,.28);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(109,211,255,.08), transparent 28%),
+        var(--bg);
+      color:var(--text);
+      line-height:1.6;
+    }
+
+    button,select{
+      font:inherit;
+      color:inherit;
+    }
+
+    .app{
+      width:min(1100px, calc(100% - 32px));
+      margin:0 auto;
+      padding:24px 0 48px;
+    }
+
+    .hidden{display:none !important}
+
+    .hero,
+    .panel,
+    .question-card,
+    .qa-card,
+    .result-card{
+      background:linear-gradient(180deg,var(--panel),var(--panel-2));
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+
+    .hero{
+      padding:28px;
+      margin-top:8px;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      color:var(--muted);
+      background:rgba(255,255,255,.02);
+      font-size:.92rem;
+    }
+
+    h1,h2,h3,h4,p{margin:0}
+    .hero h1{
+      margin-top:16px;
+      font-size:clamp(1.8rem, 1.1rem + 2vw, 3rem);
+      line-height:1.08;
+      max-width:14ch;
+    }
+
+    .hero p{
+      margin-top:12px;
+      max-width:70ch;
+      color:var(--muted);
+    }
+
+    .mode-grid{
+      margin-top:22px;
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .mode-btn{
+      min-height:160px;
+      padding:22px;
+      border-radius:var(--radius);
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.02);
+      color:var(--text);
+      text-align:left;
+      cursor:pointer;
+      transition:.18s ease;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .mode-btn:hover,
+    .btn:hover,
+    .option:hover,
+    .tts-btn:hover{
+      transform:translateY(-1px);
+      border-color:color-mix(in srgb, var(--accent) 36%, var(--border));
+    }
+
+    .mode-btn strong{
+      font-size:1.08rem;
+    }
+
+    .mode-btn span{
+      color:var(--muted);
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+      margin:20px 0 16px;
+      flex-wrap:wrap;
+    }
+
+    .title-block p{
+      color:var(--muted);
+      margin-top:4px;
+    }
+
+    .toolbar,
+    .game-controls{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+    }
+
+    .btn{
+      min-height:44px;
+      padding:12px 16px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:var(--panel);
+      color:var(--text);
+      cursor:pointer;
+      transition:.18s ease;
+    }
+
+    .btn-primary{
+      background:linear-gradient(180deg,var(--accent),var(--accent-2));
+      color:#06121a;
+      border-color:transparent;
+      font-weight:700;
+    }
+
+    .btn-soft{
+      background:rgba(255,255,255,.03);
+    }
+
+    .panel{
+      padding:18px;
+      margin-bottom:16px;
+    }
+
+    .select{
+      min-width:180px;
+      min-height:44px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:#0f141b;
+      padding:0 14px;
+    }
+
+    .section{
+      margin-top:18px;
+    }
+
+    .section-title{
+      margin:0 0 12px;
+      color:var(--accent);
+      text-transform:uppercase;
+      letter-spacing:.05em;
+      font-size:.92rem;
+    }
+
+    .qa-list{
+      display:grid;
+      gap:12px;
+    }
+
+    .qa-card{
+      padding:16px;
+    }
+
+    .qa-head{
+      display:flex;
+      gap:12px;
+      justify-content:space-between;
+      align-items:flex-start;
+      margin-bottom:10px;
+    }
+
+    .qa-q{
+      font-weight:700;
+      font-size:1rem;
+    }
+
+    .qa-a{
+      color:var(--muted);
+      white-space:pre-line;
+    }
+
+    .tts-btn{
+      min-width:44px;
+      min-height:44px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:#0f141b;
+      cursor:pointer;
+      transition:.18s ease;
+      flex:0 0 auto;
+    }
+
+    .game-list{
+      display:grid;
+      gap:14px;
+    }
+
+    .question-card{
+      padding:18px;
+    }
+
+    .question-meta{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      padding:7px 11px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      color:var(--muted);
+      background:rgba(255,255,255,.02);
+      font-size:.9rem;
+    }
+
+    .question-text{
+      font-size:1.05rem;
+      font-weight:700;
+      margin-bottom:14px;
+    }
+
+    .options{
+      display:grid;
+      gap:10px;
+    }
+
+    .option{
+      width:100%;
+      text-align:left;
+      padding:14px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:#0f141b;
+      color:var(--text);
+      cursor:pointer;
+      transition:.18s ease;
+    }
+
+    .option.selected{
+      border-color:var(--accent);
+      background:rgba(109,211,255,.1);
+    }
+
+    .option.correct{
+      border-color:#2f855a;
+      background:rgba(134,239,172,.12);
+    }
+
+    .option.wrong{
+      border-color:#b45353;
+      background:rgba(252,165,165,.12);
+    }
+
+    .result-card{
+      padding:18px;
+      margin-top:16px;
+    }
+
+    .score{
+      font-size:clamp(1.5rem,1.1rem + 1.6vw,2.3rem);
+      font-weight:800;
+    }
+
+    .result-card p:last-child{
+      color:var(--muted);
+      margin-top:6px;
+    }
+
+    .footer-note{
+      color:var(--muted);
+      font-size:.92rem;
+      margin-top:18px;
+    }
+
+    @media (max-width: 760px){
+      .mode-grid{
+        grid-template-columns:1fr;
+      }
+      .app{
+        width:min(100% - 20px, 1100px);
+      }
+      .hero{
+        padding:22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section id="homeView" class="hero">
+      <div class="eyebrow">Estudio consular · Modo oscuro</div>
+      <h1>Elegí cómo querés iniciar el estudio.</h1>
+      <p>Podés entrar al modo cuestionarios para repasar todas las preguntas y respuestas con lectura por voz, o al juego de selección múltiple para practicar con una modalidad extremadamente difícil, aleatoria y dinámica.</p>
+
+      <div class="mode-grid">
+        <button class="mode-btn" id="goStudy">
+          <strong>Modo cuestionarios</strong>
+          <span>Lista completa de preguntas y respuestas, con texto a voz para leer todo o por cada ítem.</span>
+        </button>
+
+        <button class="mode-btn" id="goGame">
+          <strong>Juego</strong>
+          <span>Selección múltiple avanzada, con cantidad configurable de preguntas y orden aleatorio en cada visualización.</span>
+        </button>
+      </div>
+    </section>
+
+    <section id="studyView" class="hidden">
+      <div class="topbar">
+        <div class="title-block">
+          <h2>Modo cuestionarios</h2>
+          <p>Lectura por secciones, con voz completa o individual por cada pregunta.</p>
+        </div>
+
+        <div class="toolbar">
+          <button class="btn btn-soft" id="backFromStudy">Inicio</button>
+          <button class="btn btn-primary" id="speakAll">Leer todo</button>
+          <button class="btn" id="stopSpeech">Detener voz</button>
+          <select id="sectionFilter" class="select" aria-label="Filtrar por sección">
+            <option value="all">Todas las secciones</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="studyContent"></div>
+    </section>
+
+    <section id="gameView" class="hidden">
+      <div class="topbar">
+        <div class="title-block">
+          <h2>Juego de selección múltiple</h2>
+          <p>Preguntas aleatorias, respuestas mezcladas y dificultad alta.</p>
+        </div>
+
+        <div class="toolbar">
+          <button class="btn btn-soft" id="backFromGame">Inicio</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="game-controls">
+          <select id="questionCount" class="select" aria-label="Cantidad de preguntas">
+            <option value="5">5 preguntas</option>
+            <option value="10" selected>10 preguntas</option>
+            <option value="15">15 preguntas</option>
+            <option value="20">20 preguntas</option>
+            <option value="all">Todas</option>
+          </select>
+
+          <button class="btn btn-primary" id="generateGame">Generar juego</button>
+          <button class="btn" id="submitGame">Corregir</button>
+          <button class="btn btn-soft" id="newRandomSet">Nueva selección</button>
+        </div>
+      </div>
+
+      <div id="gameContent" class="game-list"></div>
+
+      <div id="resultCard" class="result-card hidden">
+        <div class="score" id="scoreValue">0/0</div>
+        <p id="scoreText">Resultado</p>
+      </div>
+
+      <p class="footer-note">La voz utiliza SpeechSynthesis del navegador. Si tu navegador lo permite, leerá en español.</p>
+    </section>
+  </main>
+
+  <script>
+    const data = [
+      { section: "SIL", q: "¿Mediante qué resolución se implementó el SIL?", a: "Resolución N° 1.354 del 12 de diciembre de 2018." },
+      { section: "SIL", q: "¿Cuáles son los procesos que maneja el SIL?", a: "Carga de recibos al stock; distribución de hojas a los operadores; comprobantes o pre liquidación; carga de datos y generación de recibos; cierre de caja; informes y reportes." },
+      { section: "SIL", q: "¿En qué comando se cargan las hojas que son recepcionadas en la sede consular?", a: "Operaciones – Stock Central de Recibos." },
+      { section: "SIL", q: "¿En qué comando se cargan las hojas que son asignadas las hojas de seguridad a los operadores?", a: "Operaciones – Movimiento de hojas de Seguridad." },
+      { section: "SIL", q: "¿Cuáles son las tres personas a ser identificadas con respecto al SIL?", a: "Solicitante; Cliente; Titular del Documento." },
+      { section: "SIL", q: "¿Liquidación o carga de Recibo?", a: "Comprobante de Liquidación." },
+      { section: "SIL", q: "¿Cuáles son los datos del documento a ser considerados en la carga de datos?", a: "Tipo de Documento (Párrafo); Numero de documento; Origen del documento; Titular del Documento; Firma o certifica." },
+      { section: "SIL", q: "¿Qué montos totales deben estar consolidados para finalizar la jornada?", a: "Monto total de comprobantes y monto total de recibos." },
+      { section: "SIL", q: "¿En qué comando se puede visualizar que los montos de comprobantes y recibos coinciden?", a: "Reportes – Consolidado Diario." },
+
+      { section: "CONARE", q: "¿Qué es la CONARE?", a: "Organismo oficial, de carácter colegiado e intersectorial, que garantiza la protección integral de refugiados y apátridas en el territorio nacional." },
+      { section: "CONARE", q: "¿Qué ley establece los criterios para otorgar el estatus de refugiado en Paraguay?", a: "Ley N° 1938/02." },
+      { section: "CONARE", q: "¿Cuáles son los derechos garantizados para los solicitantes y refugiados?", a: "No devolución; Libre tránsito; Acceso a servicios; No discriminación." },
+      { section: "CONARE", q: "¿En qué consiste el derecho a la no devolución de solicitantes y refugiados?", a: "En la garantía absoluta de no ser retornado a situaciones de peligro o persecución." },
+      { section: "CONARE", q: "¿Cómo se aplica el derecho a la No Discriminación?", a: "Con un trato igualitario en la aplicación de las leyes paraguayas, sin distinción de origen o condición." },
+      { section: "CONARE", q: "¿Cómo se establece el Acceso a los servicios?", a: "Garantizando el acceso al trabajo, a la salud pública y a la educación en igualdad de condiciones." },
+      { section: "CONARE", q: "¿Qué organismo cuentan con representación en la Comisión Nacional para Apátridas y Refugiados?", a: "Cuenta con representantes del Poder Ejecutivo, Legislativo y organismos internacionales, además de organizaciones sin fines de lucro (ONG)." },
+      { section: "CONARE", q: "¿En qué consiste el Libre tránsito?", a: "Consiste en el derecho a circular libremente por todo el territorio paraguayo." },
+      { section: "CONARE", q: "¿Qué instituciones participan en la Comisión Nacional para Apátridas y Refugiados?", a: "Ministerio de Relaciones Exteriores; Dirección Nacional de Migraciones; Ministerio del Interior; Ministerio de Justicia; Ministerio de Trabajo; Poder Legislativo (Comisiones de DD.HH. de ambas Cámaras), con voz, pero sin voto; Ministerio de la Defensa Pública; ACNUR - Alto Comisionado de las Naciones Unidas para los Refugiados; Semillas para la Democracia - ONG." },
+
+      { section: "DACPE", q: "¿Cuáles son las áreas de atención y asistencia de la DACPE?", a: "Atención al Migrante; Detenidos y Condenados en el Exterior; Asistencia Social." },
+      { section: "DACPE", q: "¿Cuáles son las funciones generales de la DACPE?", a: "Coordinación entre las representaciones nacionales en el extranjero y las instituciones nacionales; Asistencia a connacionales que se encuentren en tránsito o residiendo en el exterior." },
+      { section: "DACPE", q: "¿Cuáles son las funciones específicas de la DACPE?", a: "Asistir integralmente a connacionales que se encuentren en situación de vulnerabilidad en el extranjero." },
+
+      { section: "Pasaportes", q: "¿Qué datos biométricos se incluyen en el chip de los pasaportes consulares electrónicos?", a: "Huellas digitales e iris ocular." },
+      { section: "Pasaportes", q: "¿Qué sucede si una solicitud de pasaporte consular tiene problemas judiciales?", a: "Se rechaza la solicitud." },
+      { section: "Pasaportes", q: "¿Qué documento contiene las especificaciones para los documentos de viaje según la OACI?", a: "Documento N° 9303." },
+      { section: "Pasaportes", q: "¿Qué documento regula la expedición de Documentos de Viaje a cargo del Ministerio de Relaciones Exteriores?", a: "Decreto N° 10512/24." },
+      { section: "Pasaportes", q: "¿Qué sucede si una solicitud de pasaporte consular contiene errores?", a: "Retorna a la Representación con el estado “Solicitud Verificada con errores” para su corrección." },
+      { section: "Pasaportes", q: "¿A qué edad se extiende el derecho al Pasaporte Diplomático para hijos a cargo que cursan estudios superiores?", a: "Hasta los 25 años." },
+      { section: "Pasaportes", q: "¿Qué se debe hacer con los pasaportes que no son devueltos después de 30 días del término de misión?", a: "Anularlos en el Sistema Informático Consular." },
+
+      { section: "Visas", q: "¿Qué documento se necesita para verificar la visa al llegar al aeropuerto?", a: "Pasaporte original." },
+      { section: "Visas", q: "¿Qué países están exentos de la verificación de visa según la Resolución DNM N° 704/2023?", a: "Países del MERCOSUR y Unión Europea, gran parte de América y ciertos países de Asia y Oriente Medio." },
+      { section: "Visas", q: "¿Cuál es el primer paso en el proceso de verificación de visa?", a: "Acudir a la oficina de Verificación Consular." },
+      { section: "Visas", q: "¿Qué garantiza la verificación de visa en términos de seguridad jurídica?", a: "Que el extranjero ha ingresado legalmente." },
+      { section: "Visas", q: "¿Qué debe presentar un ciudadano extranjero para solicitar la constancia de verificación consular?", a: "Pasaporte original con visa; Formulario de solicitud; Poder o autorización." },
+      { section: "Visas", q: "¿Qué resolución exonera de la verificación de visa a ciertos ciudadanos?", a: "Resolución DNM N° 704/2023." },
+      { section: "Visas", q: "¿Cuál es el costo de una visa no residente de entrada única?", a: "USD 65." },
+      { section: "Visas", q: "¿Qué tipo de visa se otorga por hasta 90 días según el Art. 6° del Decreto 10033/2012?", a: "Visa Diplomática." },
+      { section: "Visas", q: "¿Cómo se inicia el trámite de visa a partir de enero de 2025?", a: "En línea a través de un link." },
+      { section: "Visas", q: "Los ciudadanos de países con acuerdos de supresión de visas no necesitan presentar una constancia extra.", a: "Verdadero." },
+      { section: "Visas", q: "El proceso de verificación de visa se realiza en cualquier oficina de migraciones del país.", a: "Falso." }
+    ];
+
+    const homeView = document.getElementById("homeView");
+    const studyView = document.getElementById("studyView");
+    const gameView = document.getElementById("gameView");
+    const studyContent = document.getElementById("studyContent");
+    const sectionFilter = document.getElementById("sectionFilter");
+    const gameContent = document.getElementById("gameContent");
+    const resultCard = document.getElementById("resultCard");
+    const scoreValue = document.getElementById("scoreValue");
+    const scoreText = document.getElementById("scoreText");
+
+    let currentGame = [];
+
+    function showView(view){
+      stopReading();
+      homeView.classList.add("hidden");
+      studyView.classList.add("hidden");
+      gameView.classList.add("hidden");
+      view.classList.remove("hidden");
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+
+    function goHome(){
+      stopReading();
+      homeView.classList.remove("hidden");
+      studyView.classList.add("hidden");
+      gameView.classList.add("hidden");
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+
+    function escapeHtml(str){
+      return str
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;");
+    }
+
+    function shuffle(arr){
+      const copy = [...arr];
+      for(let i = copy.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function normalize(str){
+      return str
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[̀-ͯ]/g,"")
+        .replace(/s+/g," ")
+        .trim();
+    }
+
+    function fillSections(){
+      const sections = [...new Set(data.map(item => item.section))];
+      sections.forEach(section => {
+        const option = document.createElement("option");
+        option.value = section;
+        option.textContent = section;
+        sectionFilter.appendChild(option);
+      });
+    }
+
+    function renderStudy(){
+      const selected = sectionFilter.value;
+      const filtered = selected === "all"
+        ? data
+        : data.filter(item => item.section === selected);
+
+      const grouped = filtered.reduce((acc, item) => {
+        if(!acc[item.section]) acc[item.section] = [];
+        acc[item.section].push(item);
+        return acc;
+      }, {});
+
+      studyContent.innerHTML = Object.entries(grouped).map(([section, items]) => `
+        <section class="section">
+          <h3 class="section-title">${escapeHtml(section)}</h3>
+          <div class="qa-list">
+            ${items.map((item, index) => `
+              <article class="qa-card">
+                <div class="qa-head">
+                  <div class="qa-q">${index + 1}. ${escapeHtml(item.q)}</div>
+                  <button class="tts-btn" type="button" onclick="readItem(${data.indexOf(item)})" aria-label="Leer este ítem">🔊</button>
+                </div>
+                <div class="qa-a"><strong>Respuesta:</strong> ${escapeHtml(item.a)}</div>
+              </article>
+            `).join("")}
+          </div>
+        </section>
+      `).join("");
+    }
+
+    function buildStudySpeechText(){
+      const selected = sectionFilter.value;
+      const filtered = selected === "all"
+        ? data
+        : data.filter(item => item.section === selected);
+
+      const grouped = filtered.reduce((acc, item) => {
+        if(!acc[item.section]) acc[item.section] = [];
+        acc[item.section].push(item);
+        return acc;
+      }, {});
+
+      return Object.entries(grouped)
+        .map(([section, items]) => {
+          const text = items.map((item, i) => `Pregunta ${i + 1}. ${item.q}. Respuesta. ${item.a}`).join(" ");
+          return `Sección ${section}. ${text}`;
+        })
+        .join(" ");
+    }
+
+    function speak(text){
+      stopReading();
+      if(!("speechSynthesis" in window)){
+        alert("Tu navegador no soporta texto a voz.");
+        return;
+      }
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "es-ES";
+      utterance.rate = 1;
+      utterance.pitch = 1;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function stopReading(){
+      if("speechSynthesis" in window){
+        window.speechSynthesis.cancel();
+      }
+    }
+
+    function readItem(index){
+      const item = data[index];
+      speak(`Pregunta. ${item.q}. Respuesta. ${item.a}`);
+    }
+
+    window.readItem = readItem;
+
+    function getDistractors(correctItem){
+      const sameSection = data
+        .filter(item => item.section === correctItem.section && item.a !== correctItem.a)
+        .map(item => item.a);
+
+      const otherSections = data
+        .filter(item => item.section !== correctItem.section && item.a !== correctItem.a)
+        .map(item => item.a);
+
+      const uniquePool = shuffle([...sameSection, ...otherSections])
+        .filter((value, index, arr) => arr.findIndex(v => normalize(v) === normalize(value)) === index);
+
+      return uniquePool.slice(0, 3);
+    }
+
+    function generateGame(){
+      const requested = document.getElementById("questionCount").value;
+      const total = requested === "all" ? data.length : Math.min(Number(requested), data.length);
+
+      currentGame = shuffle(data).slice(0, total).map((item, index) => {
+        const distractors = getDistractors(item);
+        const options = shuffle([item.a, ...distractors]).slice(0, 4);
+        return {
+          id: `q-${index}-${Math.random().toString(36).slice(2,8)}`,
+          section: item.section,
+          q: item.q,
+          a: item.a,
+          options
+        };
+      });
+
+      resultCard.classList.add("hidden");
+
+      gameContent.innerHTML = currentGame.map((item, index) => `
+        <article class="question-card" data-id="${escapeHtml(item.id)}" data-answer="${escapeHtml(item.a)}">
+          <div class="question-meta">
+            <span class="pill">Pregunta ${index + 1}</span>
+            <span class="pill">${escapeHtml(item.section)}</span>
+          </div>
+          <div class="question-text">${escapeHtml(item.q)}</div>
+          <div class="options">
+            ${item.options.map(option => `
+              <button class="option" type="button" data-value="${escapeHtml(option)}">${escapeHtml(option)}</button>
+            `).join("")}
+          </div>
+        </article>
+      `).join("");
+
+      document.querySelectorAll(".option").forEach(button => {
+        button.addEventListener("click", () => {
+          const card = button.closest(".question-card");
+          card.querySelectorAll(".option").forEach(opt => opt.classList.remove("selected"));
+          button.classList.add("selected");
+          card.dataset.selected = button.dataset.value;
+        });
+      });
+    }
+
+    function submitGame(){
+      if(!currentGame.length){
+        generateGame();
+        return;
+      }
+
+      const cards = [...document.querySelectorAll(".question-card")];
+      let correct = 0;
+
+      cards.forEach(card => {
+        const selected = card.dataset.selected || "";
+        const answer = card.dataset.answer;
+
+        card.querySelectorAll(".option").forEach(option => {
+          option.disabled = true;
+          const value = option.dataset.value;
+          option.classList.remove("correct","wrong");
+
+          if(value === answer) option.classList.add("correct");
+          if(selected && value === selected && selected !== answer) option.classList.add("wrong");
+        });
+
+        if(selected === answer) correct++;
+      });
+
+      const total = cards.length;
+      const percent = Math.round((correct / total) * 100);
+
+      let message = "Dificultad alta: necesitás afinar más los detalles finos.";
+      if(percent >= 50) message = "Buen progreso: ya estás reteniendo varios datos específicos.";
+      if(percent >= 75) message = "Muy buen nivel: dominás bastante bien el contenido.";
+      if(percent === 100) message = "Perfecto: memorización total en esta ronda.";
+
+      scoreValue.textContent = `${correct}/${total}`;
+      scoreText.textContent = `${percent}% de aciertos · ${message}`;
+      resultCard.classList.remove("hidden");
+      resultCard.scrollIntoView({behavior:"smooth", block:"nearest"});
+    }
+
+    document.getElementById("goStudy").addEventListener("click", () => showView(studyView));
+    document.getElementById("goGame").addEventListener("click", () => showView(gameView));
+    document.getElementById("backFromStudy").addEventListener("click", goHome);
+    document.getElementById("backFromGame").addEventListener("click", goHome);
+
+    document.getElementById("speakAll").addEventListener("click", () => {
+      speak(buildStudySpeechText());
+    });
+
+    document.getElementById("stopSpeech").addEventListener("click", stopReading);
+    sectionFilter.addEventListener("change", renderStudy);
+
+    document.getElementById("generateGame").addEventListener("click", generateGame);
+    document.getElementById("newRandomSet").addEventListener("click", generateGame);
+    document.getElementById("submitGame").addEventListener("click", submitGame);
+
+    document.addEventListener("visibilitychange", () => {
+      if(document.hidden) stopReading();
+    });
+
+    fillSections();
+    renderStudy();
+    generateGame();
+  </script>
+</body>
+</html>
