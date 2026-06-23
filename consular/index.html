@@ -2,435 +2,272 @@
 <html lang="es" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Cuestionario Consular</title>
   <style>
+    /* Paleta de colores mejorada - Dark Mode Premium */
     :root {
-      --bg: #0b0d10;
-      --bg-soft: #12161b;
-      --card: #171c22;
-      --card-2: #1c232b;
-      --line: #2a3440;
-      --text: #ecf1f7;
-      --muted: #a3afbd;
-      --faint: #738090;
-      --accent: #7dd3fc;
-      --accent-2: #38bdf8;
-      --ok: #86efac;
-      --bad: #fca5a5;
-      --shadow: 0 12px 30px rgba(0,0,0,.28);
-      --radius: 18px;
-      --max: 1100px;
+      --bg: #09090b;
+      --bg-soft: #18181b;
+      --card: #27272a;
+      --card-2: #27272a;
+      --line: #3f3f46;
+      --text: #f4f4f5;
+      --muted: #a1a1aa;
+      --faint: #71717a;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --accent-text: #eff6ff;
+      --ok: #22c55e;
+      --ok-bg: rgba(34, 197, 94, 0.15);
+      --bad: #ef4444;
+      --bad-bg: rgba(239, 68, 68, 0.15);
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+      --radius: 16px;
+      --max: 1000px;
+      --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
+    /* Light Mode Refinado */
     [data-theme="light"] {
-      --bg: #f6f8fb;
-      --bg-soft: #eef2f7;
+      --bg: #f8fafc;
+      --bg-soft: #f1f5f9;
       --card: #ffffff;
-      --card-2: #f8fafc;
-      --line: #d7e0ea;
-      --text: #111827;
-      --muted: #4b5563;
-      --faint: #6b7280;
-      --accent: #0284c7;
-      --accent-2: #0369a1;
-      --ok: #15803d;
-      --bad: #b91c1c;
-      --shadow: 0 12px 30px rgba(2, 8, 23, .08);
+      --card-2: #ffffff;
+      --line: #e2e8f0;
+      --text: #0f172a;
+      --muted: #64748b;
+      --faint: #94a3b8;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-text: #ffffff;
+      --ok: #16a34a;
+      --ok-bg: rgba(22, 163, 74, 0.1);
+      --bad: #dc2626;
+      --bad-bg: rgba(220, 38, 38, 0.1);
+      --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
     }
 
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:
-        radial-gradient(circle at top, rgba(56,189,248,.08), transparent 28%),
-        var(--bg);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
       color: var(--text);
       line-height: 1.6;
       min-height: 100vh;
+      transition: background-color var(--transition), color var(--transition);
     }
 
-    button, select {
-      font: inherit;
-      color: inherit;
-    }
+    button, select { font: inherit; color: inherit; outline: none; }
 
     .wrap {
-      width: min(calc(100% - 32px), var(--max));
+      width: 100%;
+      max-width: var(--max);
       margin: 0 auto;
+      padding: 0 20px;
     }
 
+    /* Topbar */
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 20;
-      backdrop-filter: blur(10px);
-      background: color-mix(in srgb, var(--bg) 78%, transparent);
+      z-index: 50;
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--line);
+      padding: 12px 0;
     }
 
     .topbar-inner {
-      min-height: 72px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-      padding: 10px 0;
+      gap: 16px;
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
+    .brand { display: flex; align-items: center; gap: 12px; }
+    
     .logo {
-      width: 40px;
-      height: 40px;
+      width: 44px; height: 44px;
       border-radius: 12px;
-      display: grid;
-      place-items: center;
-      color: var(--accent);
-      background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 18%, transparent), transparent);
-      border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--line));
-      box-shadow: var(--shadow);
-      flex: 0 0 auto;
+      display: grid; place-items: center;
+      color: var(--accent-text);
+      background: var(--accent);
+      box-shadow: 0 4px 12px color-mix(in srgb, var(--accent) 40%, transparent);
+      flex-shrink: 0;
     }
 
-    .brand h1 {
-      margin: 0;
-      font-size: clamp(1.1rem, 1rem + .8vw, 1.5rem);
-      line-height: 1.1;
-    }
+    .brand h1 { margin: 0; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em; }
+    .brand p { margin: 0; color: var(--muted); font-size: 0.85rem; display: none; }
 
-    .brand p {
-      margin: 2px 0 0;
-      color: var(--muted);
-      font-size: .92rem;
-    }
+    .actions { display: flex; gap: 8px; }
 
-    .actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
+    /* Botones */
     .btn {
       border: 1px solid var(--line);
       background: var(--card);
       color: var(--text);
-      padding: 12px 16px;
-      border-radius: 14px;
+      padding: 12px 18px;
+      border-radius: 12px;
       cursor: pointer;
-      transition: .18s ease;
-      min-height: 44px;
+      font-weight: 500;
+      transition: all var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 48px; /* Touch friendly */
     }
 
-    .btn:hover {
-      transform: translateY(-1px);
-      border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
+    .btn:hover, .btn:active {
+      border-color: var(--accent);
+      background: var(--bg-soft);
     }
 
     .btn-primary {
-      background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 18%, var(--card)), var(--card));
-      border-color: color-mix(in srgb, var(--accent) 38%, var(--line));
+      background: var(--accent);
+      color: var(--accent-text);
+      border-color: var(--accent);
+    }
+    .btn-primary:hover, .btn-primary:active {
+      background: var(--accent-hover);
+      border-color: var(--accent-hover);
     }
 
-    .btn-accent {
-      background: linear-gradient(180deg, var(--accent), var(--accent-2));
-      color: #071018;
-      border-color: transparent;
-      font-weight: 700;
-    }
-
-    .btn-ghost {
-      background: transparent;
-    }
-
-    .hero {
-      padding: 44px 0 28px;
-    }
-
-    .hero-card, .panel, .qa-item, .question-card, .result-card {
-      background: linear-gradient(180deg, var(--card), var(--card-2));
+    /* Layout general */
+    .hero { padding: 40px 0; }
+    .card {
+      background: var(--card);
       border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
+      padding: 24px;
+      transition: border-color var(--transition);
     }
 
-    .hero-card {
-      padding: 28px;
-      display: grid;
-      gap: 18px;
-    }
-
-    .hero-card h2 {
-      margin: 0;
-      font-size: clamp(1.4rem, 1rem + 2vw, 2.5rem);
-      line-height: 1.08;
-      max-width: 18ch;
-    }
-
-    .hero-card p {
-      margin: 0;
-      color: var(--muted);
-      max-width: 70ch;
-    }
+    .hero-card h2 { margin: 0 0 12px 0; font-size: clamp(1.5rem, 4vw, 2.25rem); font-weight: 800; line-height: 1.1; }
+    .hero-card p { margin: 0 0 24px 0; color: var(--muted); font-size: 1.05rem; max-width: 600px; }
 
     .mode-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 8px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
     }
 
     .mode-btn {
       text-align: left;
-      padding: 22px;
-      border-radius: var(--radius);
-      min-height: 140px;
-      display: flex;
+      padding: 24px;
+      height: auto;
       flex-direction: column;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .mode-btn strong {
-      font-size: 1.08rem;
-    }
-
-    .mode-btn span {
-      color: var(--muted);
-      display: block;
-    }
-
-    .section {
-      padding: 10px 0 34px;
-      display: none;
-    }
-
-    .section.active {
-      display: block;
-    }
-
-    .section-head {
-      display: flex;
-      justify-content: space-between;
+      align-items: flex-start;
       gap: 12px;
-      align-items: end;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
     }
+    .mode-btn strong { font-size: 1.15rem; }
+    .mode-btn span { font-size: 0.9rem; color: var(--muted); font-weight: 400; line-height: 1.4; }
 
-    .section-head h3 {
-      margin: 0;
-      font-size: clamp(1.2rem, 1rem + 1vw, 1.8rem);
-    }
+    .section { display: none; padding: 24px 0 60px; animation: fadeIn 0.4s ease; }
+    .section.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    .section-head p {
-      margin: 6px 0 0;
-      color: var(--muted);
-    }
+    .section-head { margin-bottom: 24px; }
+    .section-head h3 { margin: 0; font-size: 1.75rem; font-weight: 800; }
+    .section-head p { margin: 8px 0 0; color: var(--muted); }
 
-    .panel {
-      padding: 18px;
-      margin-bottom: 16px;
-    }
-
+    /* Controles (Filtros y botones) */
     .toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
+      display: flex; gap: 12px; flex-wrap: wrap;
+      background: var(--card); padding: 16px;
+      border-radius: var(--radius); border: 1px solid var(--line);
+      margin-bottom: 24px; box-shadow: var(--shadow);
     }
-
-    .toolbar .grow {
-      flex: 1 1 220px;
-    }
+    
+    .toolbar > * { flex: 1 1 auto; }
+    .toolbar .grow { flex: 100% 1 1; min-width: 200px; }
 
     .select {
       width: 100%;
-      min-height: 44px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: var(--bg-soft);
-      padding: 0 14px;
-      color: var(--text);
-    }
-
-    .meta {
-      color: var(--muted);
-      font-size: .95rem;
-    }
-
-    .section-block {
-      margin-top: 18px;
-    }
-
-    .section-title {
-      margin: 0 0 12px;
-      color: var(--accent);
-      font-size: 1rem;
-      letter-spacing: .02em;
-      text-transform: uppercase;
-    }
-
-    .qa-list {
-      display: grid;
-      gap: 12px;
-    }
-
-    .qa-item {
-      padding: 16px;
-    }
-
-    .qa-item-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      align-items: start;
-      margin-bottom: 10px;
-    }
-
-    .qa-q {
-      margin: 0;
-      font-weight: 700;
-      font-size: 1rem;
-    }
-
-    .qa-a {
-      margin: 0;
-      color: var(--muted);
-      white-space: pre-line;
-    }
-
-    .tts-mini {
-      flex: 0 0 auto;
-      min-width: 44px;
-      min-height: 44px;
+      min-height: 48px;
       border-radius: 12px;
       border: 1px solid var(--line);
-      background: var(--bg-soft);
+      background: var(--bg);
+      padding: 0 16px;
       cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23a1a1aa'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      background-size: 16px;
     }
 
-    .game-grid {
-      display: grid;
-      gap: 14px;
+    /* Modo Estudio */
+    .section-title { margin: 32px 0 16px; color: var(--accent); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+    .qa-list { display: grid; gap: 16px; }
+    
+    .qa-item {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 12px; padding: 20px;
     }
-
-    .question-card {
-      padding: 18px;
+    .qa-item-head { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; margin-bottom: 12px; }
+    .qa-q { margin: 0; font-weight: 600; font-size: 1.05rem; }
+    .qa-a { margin: 0; color: var(--muted); background: var(--bg-soft); padding: 12px; border-radius: 8px; border-left: 3px solid var(--accent); }
+    
+    .tts-mini {
+      flex-shrink: 0; width: 40px; height: 40px; border-radius: 10px;
+      border: 1px solid var(--line); background: var(--bg); cursor: pointer;
+      display: grid; place-items: center; transition: var(--transition);
     }
+    .tts-mini:hover { border-color: var(--accent); color: var(--accent); }
 
-    .question-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 12px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border: 1px solid var(--line);
-      background: var(--bg-soft);
-      color: var(--muted);
-      border-radius: 999px;
-      padding: 8px 12px;
-      font-size: .9rem;
-    }
-
-    .question-text {
-      margin: 0 0 14px;
-      font-size: 1.05rem;
-      font-weight: 700;
-    }
-
-    .options {
-      display: grid;
-      gap: 10px;
-    }
-
+    /* Modo Juego */
+    .game-grid { display: grid; gap: 20px; }
+    .question-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .pill { background: var(--bg-soft); border: 1px solid var(--line); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: var(--muted); }
+    
+    .question-text { font-size: 1.15rem; font-weight: 700; margin: 0 0 20px 0; }
+    
+    .options { display: grid; gap: 12px; }
     .option {
-      width: 100%;
-      text-align: left;
-      padding: 14px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: var(--bg-soft);
-      cursor: pointer;
-      transition: .18s ease;
+      width: 100%; text-align: left; padding: 16px;
+      border-radius: 12px; border: 2px solid var(--line);
+      background: var(--bg-soft); cursor: pointer;
+      transition: all var(--transition);
+      font-size: 1rem; line-height: 1.4;
+    }
+    .option:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .option.selected { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 15%, transparent); }
+    
+    .option.correct { border-color: var(--ok); background: var(--ok-bg); color: var(--ok); pointer-events: none; }
+    .option.wrong { border-color: var(--bad); background: var(--bad-bg); color: var(--bad); pointer-events: none; opacity: 0.8; }
+    
+    .result-card { display: none; text-align: center; margin-top: 32px; padding: 32px; border: 2px solid var(--accent); }
+    .result-card.show { display: block; animation: fadeIn 0.5s; }
+    .score { font-size: 3rem; font-weight: 900; margin: 0; color: var(--accent); line-height: 1; }
+    .score-sub { margin: 8px 0 0; color: var(--text); font-weight: 500; font-size: 1.1rem; }
+
+    /* Utilidades */
+    .hidden { display: none !important; }
+    .footer-note { text-align: center; color: var(--faint); padding: 40px 0; font-size: 0.85rem; }
+
+    /* Responsivo Móvil */
+    @media (min-width: 768px) {
+      .brand p { display: block; }
+      .toolbar { flex-wrap: nowrap; align-items: flex-end; }
+      .toolbar .grow { max-width: 300px; }
+      .btn { width: auto; }
     }
 
-    .option:hover {
-      border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
-      transform: translateY(-1px);
-    }
-
-    .option.selected {
-      border-color: var(--accent);
-      background: color-mix(in srgb, var(--accent) 12%, var(--bg-soft));
-    }
-
-    .option.correct {
-      border-color: color-mix(in srgb, var(--ok) 80%, var(--line));
-      background: color-mix(in srgb, var(--ok) 14%, var(--bg-soft));
-    }
-
-    .option.wrong {
-      border-color: color-mix(in srgb, var(--bad) 80%, var(--line));
-      background: color-mix(in srgb, var(--bad) 12%, var(--bg-soft));
-    }
-
-    .result-card {
-      padding: 18px;
-      margin-top: 18px;
-      display: none;
-    }
-
-    .result-card.show {
-      display: block;
-    }
-
-    .score {
-      font-size: clamp(1.4rem, 1rem + 2vw, 2rem);
-      font-weight: 800;
-      margin: 0 0 6px;
-    }
-
-    .score-sub {
-      margin: 0;
-      color: var(--muted);
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .footer-note {
-      color: var(--faint);
-      padding: 0 0 34px;
-      font-size: .92rem;
-    }
-
-    @media (max-width: 820px) {
-      .mode-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .actions {
-        width: 100%;
-        justify-content: flex-start;
-      }
+    @media (max-width: 767px) {
+      .topbar-inner { flex-direction: row; }
+      .actions .btn span { display: none; } /* Ocultar texto de botones topbar en móvil si hay poco espacio, opcional */
+      .hero-card { padding: 20px; }
+      .qa-item, .card { padding: 16px; }
+      .toolbar { flex-direction: column; align-items: stretch; }
+      .btn { width: 100%; justify-content: center; }
+      .score { font-size: 2.5rem; }
     }
   </style>
 </head>
@@ -438,610 +275,570 @@
   <header class="topbar">
     <div class="wrap topbar-inner">
       <div class="brand">
-        <div class="logo" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5v-9Z"/>
-            <path d="M8 10.5 12 8l4 2.5v3L12 16l-4-2.5v-3Z"/>
-          </svg>
+        <div class="logo">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
         </div>
         <div>
           <h1>Cuestionario Consular</h1>
-          <p>Modo estudio y modo juego en una sola interfaz.</p>
+          <p>Estudio y simulación de examen</p>
         </div>
       </div>
-
       <div class="actions">
-        <button class="btn btn-ghost" id="homeBtn" type="button">Inicio</button>
-        <button class="btn" id="themeBtn" type="button">Tema</button>
+        <button class="btn" id="homeBtn" aria-label="Inicio">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        </button>
+        <button class="btn" id="themeBtn" aria-label="Cambiar tema">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+        </button>
       </div>
     </div>
   </header>
 
-  <main id="main" class="wrap">
+  <main class="wrap">
+    <!-- Pantalla de Inicio -->
     <section class="hero" id="homeSection">
-      <div class="hero-card">
-        <div>
-          <h2>Elegí cómo querés estudiar hoy.</h2>
-          <p>Podés entrar al modo cuestionario para leer y escuchar todas las preguntas con sus respuestas, o al juego de selección múltiple para practicar con preguntas aleatorias y opciones mezcladas.</p>
-        </div>
-
+      <div class="card hero-card">
+        <h2>Elige cómo prepararte hoy.</h2>
+        <p>Selecciona el <strong>Modo Estudio</strong> para memorizar con lectura guiada, o enfréntate al <strong>Modo Examen</strong> con preguntas y distractores creados específicamente para confundirte.</p>
+        
         <div class="mode-grid">
-          <button class="btn mode-btn btn-primary" id="openStudy" type="button">
-            <strong>Modo cuestionarios</strong>
-            <span>Lista completa por secciones, con texto a voz para todo el contenido o por cada ítem.</span>
+          <button class="btn mode-btn" id="openStudy">
+            <svg width="28" height="28" fill="none" stroke="var(--accent)" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            <strong>Modo Estudio</strong>
+            <span>Lista completa por secciones con Text-to-Speech integrado.</span>
           </button>
-
-          <button class="btn mode-btn btn-accent" id="openGame" type="button">
-            <strong>Juego</strong>
-            <span>Selección múltiple extremadamente difícil, con preguntas aleatorias y respuestas en orden aleatorio.</span>
+          
+          <button class="btn btn-primary mode-btn" id="openGame">
+            <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <strong>Modo Examen (Difícil)</strong>
+            <span>Opciones múltiples complejas. Las respuestas falsas son tramposas.</span>
           </button>
         </div>
       </div>
     </section>
 
+    <!-- Sección Estudio -->
     <section class="section" id="studySection">
       <div class="section-head">
-        <div>
-          <h3>Modo cuestionarios</h3>
-          <p>Lectura organizada por tema, con controles de voz completos y por ítem.</p>
-        </div>
+        <h3>Modo Estudio</h3>
+        <p>Repasa los conceptos correctos. Usa el audio para memorizar mejor.</p>
       </div>
 
-      <div class="panel">
-        <div class="toolbar">
-          <button class="btn btn-primary" id="readAllBtn" type="button">Leer todo</button>
-          <button class="btn" id="stopReadingBtn" type="button">Detener voz</button>
-          <div class="grow">
-            <select id="sectionFilter" class="select" aria-label="Filtrar por sección">
-              <option value="all">Todas las secciones</option>
-            </select>
-          </div>
+      <div class="toolbar">
+        <div class="grow">
+          <label class="hidden" for="sectionFilter">Filtrar</label>
+          <select id="sectionFilter" class="select">
+            <option value="all">Ver todas las secciones</option>
+          </select>
         </div>
+        <button class="btn btn-primary" id="readAllBtn">▶ Leer en voz alta</button>
+        <button class="btn" id="stopReadingBtn">■ Detener</button>
       </div>
 
       <div id="studyContent"></div>
     </section>
 
+    <!-- Sección Juego / Examen -->
     <section class="section" id="gameSection">
       <div class="section-head">
-        <div>
-          <h3>Juego de selección múltiple</h3>
-          <p>Elegí cuántas preguntas querés ver. Cada nueva carga mezcla preguntas y alternativas.</p>
-        </div>
+        <h3>Simulador de Examen</h3>
+        <p>Lee con cuidado. Las opciones falsas están diseñadas para hacerte dudar.</p>
       </div>
 
-      <div class="panel">
-        <div class="toolbar">
-          <div class="grow" style="max-width: 260px;">
-            <label for="questionCount" class="meta">Cantidad de preguntas</label>
-            <select id="questionCount" class="select">
-              <option value="5">5 preguntas</option>
-              <option value="10" selected>10 preguntas</option>
-              <option value="15">15 preguntas</option>
-              <option value="20">20 preguntas</option>
-              <option value="all">Todas</option>
-            </select>
-          </div>
-          <button class="btn btn-accent" id="startGameBtn" type="button">Generar juego aleatorio</button>
-          <button class="btn" id="submitGameBtn" type="button">Corregir</button>
-          <button class="btn btn-ghost" id="regenGameBtn" type="button">Nueva selección</button>
+      <div class="toolbar">
+        <div class="grow">
+          <label class="hidden" for="questionCount">Cantidad</label>
+          <select id="questionCount" class="select">
+            <option value="5">Examen corto (5 preg.)</option>
+            <option value="10" selected>Examen normal (10 preg.)</option>
+            <option value="15">Examen largo (15 preg.)</option>
+            <option value="all">Simulador completo (Todas)</option>
+          </select>
         </div>
+        <button class="btn btn-primary" id="startGameBtn">Generar Examen</button>
+        <button class="btn" id="submitGameBtn">Entregar y Corregir</button>
       </div>
 
       <div id="gameContent" class="game-grid"></div>
 
-      <div id="resultCard" class="result-card" aria-live="polite">
+      <div id="resultCard" class="card result-card">
         <p class="score" id="scoreText">0/0</p>
-        <p class="score-sub" id="scoreSub">Resultado</p>
+        <p class="score-sub" id="scoreSub">Evaluando...</p>
       </div>
     </section>
 
-    <p class="footer-note">Todo el contenido funciona sin dependencias externas y utiliza la voz del navegador mediante SpeechSynthesis.</p>
+    <p class="footer-note">Aplicación PWA-ready · Funciona offline · Datos en memoria</p>
   </main>
 
   <script>
+    // Banco de datos con DISTRACTORES MANUALES ALTAMENTE CONFUSOS
     const bank = [
       {
         section: "SIL",
         q: "¿Mediante qué resolución se implementó el SIL?",
-        a: "Resolución número 1.354 del 12 de diciembre de 2018."
+        a: "Resolución número 1.354 del 12 de diciembre de 2018.",
+        distractors: [
+          "Resolución número 1.453 del 10 de noviembre de 2018.",
+          "Resolución número 1.354 del 12 de diciembre de 2019.",
+          "Decreto número 1.354 del 12 de diciembre de 2018."
+        ]
       },
       {
         section: "SIL",
         q: "¿Cuáles son los procesos que maneja el SIL?",
-        a: "Carga de recibos al stock; distribución de hojas a los operadores; comprobantes o pre liquidación; carga de datos y generación de recibos; cierre de caja; informes y reportes."
+        a: "Carga de recibos al stock; distribución de hojas a los operadores; comprobantes o pre liquidación; carga de datos y generación de recibos; cierre de caja; informes y reportes.",
+        distractors: [
+          "Carga de recibos; emisión de visas; control de pasaportes; liquidación y cierre de caja; informes consulares.",
+          "Recepción de valijas; distribución de hojas; pre liquidación; firma digital; cierre mensual; informes y reportes.",
+          "Carga de recibos al stock; asignación de turnos; comprobantes; generación de pasaportes; cierre de caja; reportes diarios."
+        ]
       },
       {
         section: "SIL",
         q: "¿En qué comando se cargan las hojas que son recepcionadas en la sede consular?",
-        a: "Operaciones – Stock Central de Recibos."
+        a: "Operaciones – Stock Central de Recibos.",
+        distractors: [
+          "Operaciones – Movimiento de hojas de Seguridad.",
+          "Administración – Ingreso de Hojas Consulares.",
+          "Reportes – Stock Central de Recibos."
+        ]
       },
       {
         section: "SIL",
         q: "¿En qué comando se cargan las hojas que son asignadas como hojas de seguridad a los operadores?",
-        a: "Operaciones – Movimiento de hojas de Seguridad."
+        a: "Operaciones – Movimiento de hojas de Seguridad.",
+        distractors: [
+          "Operaciones – Stock Central de Recibos.",
+          "Seguridad – Asignación a Operadores.",
+          "Administración – Control de Hojas de Seguridad."
+        ]
       },
       {
         section: "SIL",
         q: "¿Cuáles son las tres personas a ser identificadas con respecto al SIL?",
-        a: "Solicitante; Cliente; Titular del Documento."
+        a: "Solicitante; Cliente; Titular del Documento.",
+        distractors: [
+          "Solicitante; Funcionario Consular; Titular del Documento.",
+          "Gestor; Cliente; Beneficiario Final.",
+          "Solicitante; Apoderado; Titular del Documento."
+        ]
       },
       {
         section: "SIL",
         q: "¿Liquidación o carga de recibo?",
-        a: "Comprobante de Liquidación."
+        a: "Comprobante de Liquidación.",
+        distractors: [
+          "Comprobante de Ingreso Consular.",
+          "Recibo de Pago Definitivo.",
+          "Liquidación de Aranceles."
+        ]
       },
       {
         section: "SIL",
         q: "¿Cuáles son los datos del documento a ser considerados en la carga de datos?",
-        a: "Tipo de Documento, párrafo; número de documento; origen del documento; titular del documento; firma o certifica."
+        a: "Tipo de Documento, párrafo; número de documento; origen del documento; titular del documento; firma o certifica.",
+        distractors: [
+          "Tipo de Documento; número de folio; país de origen; titular del documento; firma del Cónsul.",
+          "Clase de Documento; fecha de emisión; origen del documento; solicitante; firma o certifica.",
+          "Tipo de Documento, párrafo; costo del arancel; origen del documento; titular del documento; sello consular."
+        ]
       },
       {
         section: "SIL",
         q: "¿Qué montos totales deben estar consolidados para finalizar la jornada?",
-        a: "Monto total de comprobantes y monto total de recibos."
+        a: "Monto total de comprobantes y monto total de recibos.",
+        distractors: [
+          "Monto total de caja chica y monto total de recibos.",
+          "Monto total de comprobantes y monto transferido al Banco Central.",
+          "Monto total de visas y monto total de pasaportes."
+        ]
       },
       {
         section: "SIL",
         q: "¿En qué comando se puede visualizar que los montos de comprobantes y recibos coinciden?",
-        a: "Reportes – Consolidado Diario."
+        a: "Reportes – Consolidado Diario.",
+        distractors: [
+          "Operaciones – Cierre de Caja Diario.",
+          "Reportes – Resumen de Recibos.",
+          "Administración – Balance Consolidado."
+        ]
       },
-
       {
         section: "CONARE",
         q: "¿Qué es la CONARE?",
-        a: "Organismo oficial, de carácter colegiado e intersectorial, que garantiza la protección integral de refugiados y apátridas en el territorio nacional."
+        a: "Organismo oficial, de carácter colegiado e intersectorial, que garantiza la protección integral de refugiados y apátridas en el territorio nacional.",
+        distractors: [
+          "Organismo dependiente de Migraciones, que regula el ingreso de refugiados y residentes extranjeros en el país.",
+          "Comisión internacional de las Naciones Unidas encargada de la reubicación de refugiados en el Mercosur.",
+          "Organismo de carácter judicial encargado de emitir pasaportes a refugiados y asilados políticos."
+        ]
       },
       {
         section: "CONARE",
         q: "¿Qué ley establece los criterios para otorgar el estatus de refugiado en Paraguay?",
-        a: "Ley número 1938/02."
+        a: "Ley número 1938/02.",
+        distractors: [
+          "Ley número 1839/02.",
+          "Ley número 1938/12.",
+          "Decreto número 1938/02."
+        ]
       },
       {
         section: "CONARE",
         q: "¿Cuáles son los derechos garantizados para los solicitantes y refugiados?",
-        a: "No devolución; Libre tránsito; Acceso a servicios; No discriminación."
+        a: "No devolución; Libre tránsito; Acceso a servicios; No discriminación.",
+        distractors: [
+          "Asilo político; Subsidio estatal; Acceso a vivienda; No discriminación.",
+          "No devolución; Nacionalidad inmediata; Acceso a servicios; Inmunidad civil.",
+          "Libre tránsito; Voto en elecciones; Acceso a servicios; No deportación."
+        ]
       },
       {
         section: "CONARE",
         q: "¿En qué consiste el derecho a la no devolución de solicitantes y refugiados?",
-        a: "En la garantía absoluta de no ser retornado a situaciones de peligro o persecución."
+        a: "En la garantía absoluta de no ser retornado a situaciones de peligro o persecución.",
+        distractors: [
+          "En la prohibición de ser extraditado a cualquier país sin orden de un juez paraguayo.",
+          "En la garantía de no ser retornado a su país de origen hasta obtener la nacionalidad paraguaya.",
+          "En el derecho a permanecer en el territorio nacional por un máximo de 5 años sin ser deportado."
+        ]
       },
       {
         section: "CONARE",
         q: "¿Cómo se aplica el derecho a la no discriminación?",
-        a: "Con un trato igualitario en la aplicación de las leyes paraguayas, sin distinción de origen o condición."
+        a: "Con un trato igualitario en la aplicación de las leyes paraguayas, sin distinción de origen o condición.",
+        distractors: [
+          "Otorgando beneficios impositivos exclusivos a los refugiados frente a los ciudadanos paraguayos.",
+          "Garantizando que los refugiados sean juzgados por leyes internacionales y no nacionales.",
+          "Permitiendo el ingreso al país sin necesidad de presentar ningún tipo de documento de identidad."
+        ]
       },
       {
         section: "CONARE",
         q: "¿Cómo se establece el acceso a los servicios?",
-        a: "Garantizando el acceso al trabajo, a la salud pública y a la educación en igualdad de condiciones."
-      },
-      {
-        section: "CONARE",
-        q: "¿Qué organismo cuentan con representación en la Comisión Nacional para Apátridas y Refugiados?",
-        a: "Cuenta con representantes del Poder Ejecutivo, Legislativo y organismos internacionales, además de organizaciones sin fines de lucro."
-      },
-      {
-        section: "CONARE",
-        q: "¿En qué consiste el libre tránsito?",
-        a: "Consiste en el derecho a circular libremente por todo el territorio paraguayo."
+        a: "Garantizando el acceso al trabajo, a la salud pública y a la educación en igualdad de condiciones.",
+        distractors: [
+          "Garantizando acceso exclusivo a programas de vivienda gratuita y seguro médico privado.",
+          "Proveyendo un salario mínimo garantizado por el Estado durante el primer año de residencia.",
+          "Garantizando el acceso al trabajo únicamente en el sector público y educación básica."
+        ]
       },
       {
         section: "CONARE",
         q: "¿Qué instituciones participan en la Comisión Nacional para Apátridas y Refugiados?",
-        a: "Ministerio de Relaciones Exteriores; Dirección Nacional de Migraciones; Ministerio del Interior; Ministerio de Justicia; Ministerio de Trabajo; Poder Legislativo, Comisiones de Derechos Humanos de ambas Cámaras, con voz, pero sin voto; Ministerio de la Defensa Pública; Alto Comisionado de las Naciones Unidas para los Refugiados; Semillas para la Democracia, organización no gubernamental."
+        a: "MRE; Dir. Nac. Migraciones; Min. Interior; Min. Justicia; Min. Trabajo; Poder Legislativo (voz sin voto); Min. Defensa Pública; ACNUR; Semillas para la Democracia.",
+        distractors: [
+          "MRE; Policía Nacional; Min. Interior; Corte Suprema de Justicia; ACNUR; Cruz Roja Internacional.",
+          "MRE; Dir. Nac. Migraciones; Min. Hacienda; Min. Justicia; Poder Legislativo (con voto); ACNUR.",
+          "MRE; Min. Interior; Min. Público; Fuerzas Armadas; ACNUR; Amnistía Internacional."
+        ]
       },
-
       {
         section: "DACPE",
         q: "¿Cuáles son las áreas de atención y asistencia de la DACPE?",
-        a: "Atención al Migrante; Detenidos y Condenados en el Exterior; Asistencia Social."
-      },
-      {
-        section: "DACPE",
-        q: "¿Cuáles son las funciones generales de la DACPE?",
-        a: "Coordinación entre las representaciones nacionales en el extranjero y las instituciones nacionales; Asistencia a connacionales que se encuentren en tránsito o residiendo en el exterior."
+        a: "Atención al Migrante; Detenidos y Condenados en el Exterior; Asistencia Social.",
+        distractors: [
+          "Repatriación de Connacionales; Trámites de Pasaportes; Asistencia Jurídica.",
+          "Atención al Migrante; Emisión de Visas de Cortesía; Asistencia Económica.",
+          "Detenidos y Condenados; Registro Civil Consular; Asistencia de Salud."
+        ]
       },
       {
         section: "DACPE",
         q: "¿Cuáles son las funciones específicas de la DACPE?",
-        a: "Asistir integralmente a connacionales que se encuentren en situación de vulnerabilidad en el extranjero."
+        a: "Asistir integralmente a connacionales que se encuentren en situación de vulnerabilidad en el extranjero.",
+        distractors: [
+          "Pagar los pasajes de retorno de todos los paraguayos residentes en el exterior.",
+          "Otorgar asilo político en las embajadas paraguayas a ciudadanos extranjeros.",
+          "Representar legalmente a los connacionales ante tribunales civiles extranjeros."
+        ]
       },
-
       {
         section: "Pasaportes",
         q: "¿Qué datos biométricos se incluyen en el chip de los pasaportes consulares electrónicos?",
-        a: "Huellas digitales e iris ocular."
+        a: "Huellas digitales e iris ocular.",
+        distractors: [
+          "Huellas digitales y reconocimiento facial.",
+          "Reconocimiento facial e iris ocular.",
+          "Huellas digitales, iris ocular y firma digital."
+        ]
       },
       {
         section: "Pasaportes",
         q: "¿Qué sucede si una solicitud de pasaporte consular tiene problemas judiciales?",
-        a: "Se rechaza la solicitud."
+        a: "Se rechaza la solicitud.",
+        distractors: [
+          "Se aprueba pero con validez reducida a 1 año.",
+          "Queda en estado de 'Observación' hasta que el solicitante presente un amparo.",
+          "Se deriva automáticamente a Interpol para su investigación."
+        ]
       },
       {
         section: "Pasaportes",
-        q: "¿Qué documento contiene las especificaciones para los documentos de viaje según la Organización de Aviación Civil Internacional?",
-        a: "Documento número 9303."
-      },
-      {
-        section: "Pasaportes",
-        q: "¿Qué documento regula la expedición de Documentos de Viaje a cargo del Ministerio de Relaciones Exteriores?",
-        a: "Decreto número 10512/24."
-      },
-      {
-        section: "Pasaportes",
-        q: "¿Qué sucede si una solicitud de pasaporte consular contiene errores?",
-        a: "Retorna a la Representación con el estado Solicitud Verificada con errores para su corrección."
+        q: "¿Qué documento regula la expedición de Documentos de Viaje a cargo del MRE?",
+        a: "Decreto número 10512/24.",
+        distractors: [
+          "Ley número 10512/23.",
+          "Decreto número 10215/24.",
+          "Resolución número 10512/24."
+        ]
       },
       {
         section: "Pasaportes",
         q: "¿A qué edad se extiende el derecho al Pasaporte Diplomático para hijos a cargo que cursan estudios superiores?",
-        a: "Hasta los 25 años."
+        a: "Hasta los 25 años.",
+        distractors: [
+          "Hasta los 21 años.",
+          "Hasta los 23 años.",
+          "No hay límite de edad si demuestran estar estudiando."
+        ]
       },
       {
         section: "Pasaportes",
         q: "¿Qué se debe hacer con los pasaportes que no son devueltos después de 30 días del término de misión?",
-        a: "Anularlos en el Sistema Informático Consular."
-      },
-
-      {
-        section: "Visas",
-        q: "¿Qué documento se necesita para verificar la visa al llegar al aeropuerto?",
-        a: "Pasaporte original."
+        a: "Anularlos en el Sistema Informático Consular.",
+        distractors: [
+          "Reportarlos como robados a la Policía Nacional.",
+          "Suspenderlos temporalmente hasta que el funcionario los entregue.",
+          "Cobrar una multa automática descontada de la liquidación del funcionario."
+        ]
       },
       {
         section: "Visas",
         q: "¿Qué países están exentos de la verificación de visa según la Resolución DNM número 704/2023?",
-        a: "Países del Mercosur y Unión Europea, gran parte de América y ciertos países de Asia y Oriente Medio."
-      },
-      {
-        section: "Visas",
-        q: "¿Cuál es el primer paso en el proceso de verificación de visa?",
-        a: "Acudir a la oficina de Verificación Consular."
+        a: "Países del Mercosur y Unión Europea, gran parte de América y ciertos países de Asia y Oriente Medio.",
+        distractors: [
+          "Únicamente los países limítrofes (Argentina, Brasil, Bolivia) y Estados Unidos.",
+          "Todos los países que posean embajada paraguaya en su territorio.",
+          "Países del Mercosur, Estados Unidos, Canadá y la totalidad del continente africano."
+        ]
       },
       {
         section: "Visas",
         q: "¿Qué garantiza la verificación de visa en términos de seguridad jurídica?",
-        a: "Que el extranjero ha ingresado legalmente."
-      },
-      {
-        section: "Visas",
-        q: "¿Qué debe presentar un ciudadano extranjero para solicitar la constancia de verificación consular?",
-        a: "Pasaporte original con visa; Formulario de solicitud; Poder o autorización."
-      },
-      {
-        section: "Visas",
-        q: "¿Qué resolución exonera de la verificación de visa a ciertos ciudadanos?",
-        a: "Resolución DNM número 704/2023."
+        a: "Que el extranjero ha ingresado legalmente.",
+        distractors: [
+          "Que el extranjero no posee antecedentes penales internacionales.",
+          "Que la visa otorgada es de carácter permanente y no temporal.",
+          "Que el extranjero ha abonado todos los aranceles migratorios de radicación."
+        ]
       },
       {
         section: "Visas",
         q: "¿Cuál es el costo de una visa no residente de entrada única?",
-        a: "65 dólares estadounidenses."
+        a: "65 dólares estadounidenses.",
+        distractors: [
+          "100 dólares estadounidenses.",
+          "35 dólares estadounidenses.",
+          "65 euros."
+        ]
       },
       {
         section: "Visas",
         q: "¿Qué tipo de visa se otorga por hasta 90 días según el artículo 6 del Decreto 10033/2012?",
-        a: "Visa Diplomática."
+        a: "Visa Diplomática.",
+        distractors: [
+          "Visa de Turista.",
+          "Visa de Tránsito.",
+          "Visa Oficial."
+        ]
       },
       {
         section: "Visas",
         q: "¿Cómo se inicia el trámite de visa a partir de enero de 2025?",
-        a: "En línea a través de un enlace."
-      },
-      {
-        section: "Visas",
-        q: "Los ciudadanos de países con acuerdos de supresión de visas no necesitan presentar una constancia extra.",
-        a: "Verdadero."
-      },
-      {
-        section: "Visas",
-        q: "El proceso de verificación de visa se realiza en cualquier oficina de migraciones del país.",
-        a: "Falso."
+        a: "En línea a través de un enlace.",
+        distractors: [
+          "De manera presencial exclusiva en la embajada más cercana.",
+          "Enviando los documentos físicos por correo postal internacional.",
+          "A través del sistema SIL directamente en ventanilla consular."
+        ]
       }
     ];
 
+    // Variables de UI
     const sections = [...new Set(bank.map(item => item.section))];
+    const ui = {
+      home: document.getElementById("homeSection"),
+      study: document.getElementById("studySection"),
+      game: document.getElementById("gameSection"),
+      studyContent: document.getElementById("studyContent"),
+      gameContent: document.getElementById("gameContent"),
+      filter: document.getElementById("sectionFilter"),
+      result: document.getElementById("resultCard"),
+      scoreText: document.getElementById("scoreText"),
+      scoreSub: document.getElementById("scoreSub")
+    };
 
-    const homeSection = document.getElementById("homeSection");
-    const studySection = document.getElementById("studySection");
-    const gameSection = document.getElementById("gameSection");
-    const studyContent = document.getElementById("studyContent");
-    const gameContent = document.getElementById("gameContent");
-    const sectionFilter = document.getElementById("sectionFilter");
-    const resultCard = document.getElementById("resultCard");
-    const scoreText = document.getElementById("scoreText");
-    const scoreSub = document.getElementById("scoreSub");
-
-    const openStudy = document.getElementById("openStudy");
-    const openGame = document.getElementById("openGame");
-    const homeBtn = document.getElementById("homeBtn");
-    const themeBtn = document.getElementById("themeBtn");
-
-    const readAllBtn = document.getElementById("readAllBtn");
-    const stopReadingBtn = document.getElementById("stopReadingBtn");
-
-    const questionCount = document.getElementById("questionCount");
-    const startGameBtn = document.getElementById("startGameBtn");
-    const submitGameBtn = document.getElementById("submitGameBtn");
-    const regenGameBtn = document.getElementById("regenGameBtn");
-
-    let currentTheme = "dark";
     let currentGame = [];
 
-    function showMode(mode) {
-      homeSection.classList.add("hidden");
-      studySection.classList.remove("active");
-      gameSection.classList.remove("active");
-
-      if (mode === "study") studySection.classList.add("active");
-      if (mode === "game") gameSection.classList.add("active");
-
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    function goHome() {
-      stopSpeech();
-      homeSection.classList.remove("hidden");
-      studySection.classList.remove("active");
-      gameSection.classList.remove("active");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+    // Funciones Auxiliares
+    const escapeHtml = str => str.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m]);
+    const shuffle = array => [...array].sort(() => Math.random() - 0.5);
 
     function toggleTheme() {
-      currentTheme = currentTheme === "dark" ? "light" : "dark";
-      document.documentElement.setAttribute("data-theme", currentTheme);
+      const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+      document.documentElement.setAttribute("data-theme", isDark ? "light" : "dark");
     }
 
-    function escapeHtml(str) {
-      return str
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;");
+    function showMode(mode) {
+      ui.home.classList.add("hidden");
+      ui.study.classList.remove("active");
+      ui.game.classList.remove("active");
+      if (mode === "study") ui.study.classList.add("active");
+      if (mode === "game") ui.game.classList.add("active");
+      window.scrollTo(0, 0);
     }
 
-    function shuffle(array) {
-      const copy = [...array];
-      for (let i = copy.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [copy[i], copy[j]] = [copy[j], copy[i]];
-      }
-      return copy;
-    }
-
-    function normalize(str) {
-      return str
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[̀-ͯ]/g, "")
-        .replace(/s+/g, " ")
-        .trim();
-    }
-
-    function populateFilter() {
-      const options = sections
-        .map(section => `<option value="${escapeHtml(section)}">${escapeHtml(section)}</option>`)
-        .join("");
-      sectionFilter.insertAdjacentHTML("beforeend", options);
+    // --- MODO ESTUDIO ---
+    function initStudy() {
+      ui.filter.innerHTML = `<option value="all">Ver todas las secciones</option>` + 
+        sections.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join("");
+      
+      ui.filter.addEventListener("change", renderStudy);
+      renderStudy();
     }
 
     function renderStudy() {
-      const selected = sectionFilter.value;
-      const data = selected === "all" ? bank : bank.filter(item => item.section === selected);
-
-      const grouped = data.reduce((acc, item) => {
-        acc[item.section] ??= [];
-        acc[item.section].push(item);
-        return acc;
-      }, {});
-
-      studyContent.innerHTML = Object.entries(grouped).map(([section, items]) => `
-        <section class="section-block">
-          <h4 class="section-title">${escapeHtml(section)}</h4>
-          <div class="qa-list">
-            ${items.map((item, index) => `
-              <article class="qa-item">
-                <div class="qa-item-head">
-                  <p class="qa-q">${index + 1}. ${escapeHtml(item.q)}</p>
-                  <button
-                    class="tts-mini"
-                    type="button"
-                    aria-label="Leer este ítem"
-                    onclick="speakOne(${bank.indexOf(item)})"
-                    title="Leer este ítem"
-                  >🔊</button>
+      const selected = ui.filter.value;
+      const data = selected === "all" ? bank : bank.filter(i => i.section === selected);
+      
+      const html = sections.map(sec => {
+        const items = data.filter(i => i.section === sec);
+        if(!items.length) return "";
+        return `
+          <div class="card" style="margin-bottom: 20px;">
+            <h4 class="section-title" style="margin-top:0">${escapeHtml(sec)}</h4>
+            <div class="qa-list">
+              ${items.map((item, idx) => `
+                <div class="qa-item">
+                  <div class="qa-item-head">
+                    <p class="qa-q">${idx + 1}. ${escapeHtml(item.q)}</p>
+                    <button class="tts-mini" onclick="speakText('${escapeHtml(item.q)}. Respuesta: ${escapeHtml(item.a)}')">🔊</button>
+                  </div>
+                  <p class="qa-a">${escapeHtml(item.a)}</p>
                 </div>
-                <p class="qa-a"><strong>Respuesta:</strong> ${escapeHtml(item.a)}</p>
-              </article>
-            `).join("")}
+              `).join("")}
+            </div>
           </div>
-        </section>
-      `).join("");
-    }
-
-    function buildStudyText(filteredSection = "all") {
-      const data = filteredSection === "all"
-        ? bank
-        : bank.filter(item => item.section === filteredSection);
-
-      const grouped = data.reduce((acc, item) => {
-        acc[item.section] ??= [];
-        acc[item.section].push(item);
-        return acc;
-      }, {});
-
-      return Object.entries(grouped).map(([section, items]) => {
-        const block = items.map((item, idx) =>
-          `Pregunta ${idx + 1}. ${item.q} Respuesta: ${item.a}`
-        ).join(". ");
-        return `Sección ${section}. ${block}.`;
-      }).join(" ");
-    }
-
-    function stopSpeech() {
-      if ("speechSynthesis" in window) {
-        window.speechSynthesis.cancel();
-      }
+        `;
+      }).join("");
+      
+      ui.studyContent.innerHTML = html;
     }
 
     function speakText(text) {
-      stopSpeech();
-      if (!("speechSynthesis" in window)) {
-        alert("Tu navegador no soporta texto a voz.");
-        return;
-      }
-
+      if (!window.speechSynthesis) return alert("Tu navegador no soporta lectura por voz.");
+      window.speechSynthesis.cancel();
       const utter = new SpeechSynthesisUtterance(text);
       utter.lang = "es-ES";
-      utter.rate = 1;
-      utter.pitch = 1;
       window.speechSynthesis.speak(utter);
     }
 
-    function speakOne(index) {
-      const item = bank[index];
-      const text = `Pregunta. ${item.q}. Respuesta. ${item.a}`;
-      speakText(text);
-    }
+    // --- MODO JUEGO (EXAMEN DIFÍCIL) ---
+    function generateGame() {
+      ui.result.classList.remove("show");
+      ui.submitGameBtn.disabled = false;
+      
+      const countVal = document.getElementById("questionCount").value;
+      const limit = countVal === "all" ? bank.length : parseInt(countVal);
+      
+      // Seleccionar preguntas aleatorias
+      const selectedQuestions = shuffle(bank).slice(0, limit);
+      
+      currentGame = selectedQuestions.map((item, index) => {
+        // Usar los distractores duros diseñados en el array
+        const options = shuffle([item.a, ...item.distractors]);
+        return { ...item, options, id: `q${index}` };
+      });
 
-    window.speakOne = speakOne;
-
-    function getDistractors(currentItem) {
-      const sameSection = bank
-        .filter(item => item.section === currentItem.section && item.a !== currentItem.a)
-        .map(item => item.a);
-
-      const crossSection = bank
-        .filter(item => item.section !== currentItem.section && item.a !== currentItem.a)
-        .map(item => item.a);
-
-      const pool = shuffle([...sameSection, ...crossSection]).filter((value, index, arr) => arr.indexOf(value) === index);
-
-      const picked = [];
-      for (const ans of pool) {
-        if (normalize(ans) !== normalize(currentItem.a)) picked.push(ans);
-        if (picked.length === 3) break;
-      }
-
-      return picked;
-    }
-
-    function buildGameQuestion(item, idx) {
-      const distractors = getDistractors(item);
-      const options = shuffle([item.a, ...distractors]).slice(0, 4);
-
-      return {
-        id: `${item.section}-${idx}-${Math.random().toString(36).slice(2, 8)}`,
-        section: item.section,
-        q: item.q,
-        a: item.a,
-        options
-      };
-    }
-
-    function renderGame() {
-      resultCard.classList.remove("show");
-
-      let count = questionCount.value === "all" ? bank.length : Number(questionCount.value);
-      count = Math.min(count, bank.length);
-
-      const selected = shuffle(bank).slice(0, count);
-      currentGame = selected.map(buildGameQuestion);
-
-      gameContent.innerHTML = currentGame.map((item, index) => `
-        <article class="question-card" data-question-id="${escapeHtml(item.id)}" data-answer="${escapeHtml(item.a)}">
+      ui.gameContent.innerHTML = currentGame.map((item, idx) => `
+        <div class="card question-card" data-answer="${escapeHtml(item.a)}">
           <div class="question-top">
-            <span class="pill">Pregunta ${index + 1}</span>
+            <span class="pill">Pregunta ${idx + 1} de ${limit}</span>
             <span class="pill">${escapeHtml(item.section)}</span>
           </div>
           <p class="question-text">${escapeHtml(item.q)}</p>
           <div class="options">
-            ${item.options.map(option => `
-              <button class="option" type="button" data-value="${escapeHtml(option)}">
-                ${escapeHtml(option)}
-              </button>
+            ${item.options.map(opt => `
+              <button class="option" data-value="${escapeHtml(opt)}">${escapeHtml(opt)}</button>
             `).join("")}
           </div>
-        </article>
+        </div>
       `).join("");
 
-      gameContent.querySelectorAll(".option").forEach(button => {
-        button.addEventListener("click", () => {
-          const parent = button.closest(".question-card");
-          parent.querySelectorAll(".option").forEach(opt => opt.classList.remove("selected"));
-          button.classList.add("selected");
-          parent.dataset.selected = button.dataset.value;
+      // Lógica de selección visual
+      document.querySelectorAll(".option").forEach(btn => {
+        btn.addEventListener("click", function() {
+          const parent = this.closest(".question-card");
+          if(parent.classList.contains("locked")) return; // Ya corregido
+          parent.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
+          this.classList.add("selected");
+          parent.dataset.selected = this.dataset.value;
         });
       });
     }
 
     function submitGame() {
-      if (!currentGame.length) {
-        renderGame();
-        return;
-      }
-
+      if(!currentGame.length) return generateGame();
+      
       let correct = 0;
-      const cards = [...gameContent.querySelectorAll(".question-card")];
+      const cards = document.querySelectorAll(".question-card");
+      let allAnswered = true;
 
       cards.forEach(card => {
-        const selected = card.dataset.selected || "";
-        const answer = card.dataset.answer;
-
-        card.querySelectorAll(".option").forEach(option => {
-          option.disabled = true;
-          const value = option.dataset.value;
-
-          option.classList.remove("correct", "wrong");
-
-          if (value === answer) option.classList.add("correct");
-          if (selected && value === selected && selected !== answer) option.classList.add("wrong");
-        });
-
-        if (selected === answer) correct++;
+        if(!card.dataset.selected) allAnswered = false;
       });
 
-      const total = cards.length;
-      const percent = Math.round((correct / total) * 100);
+      if(!allAnswered) {
+        if(!confirm("Hay preguntas sin responder. ¿Seguro que quieres entregar el examen?")) return;
+      }
 
-      let label = "Rendimiento muy bajo. Este modo está pensado para ser brutalmente difícil.";
-      if (percent >= 50) label = "Buen avance. Las alternativas mezcladas ya no te están destruyendo.";
-      if (percent >= 75) label = "Muy buen nivel. Estás reteniendo detalles finos.";
-      if (percent === 100) label = "Perfecto. Memorización quirúrgica.";
+      cards.forEach(card => {
+        card.classList.add("locked"); // Bloquear cambios
+        const selected = card.dataset.selected;
+        const answer = card.dataset.answer;
 
-      scoreText.textContent = `${correct}/${total}`;
-      scoreSub.textContent = `${percent}% de aciertos · ${label}`;
-      resultCard.classList.add("show");
-      resultCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        card.querySelectorAll(".option").forEach(opt => {
+          if(opt.dataset.value === answer) {
+            opt.classList.add("correct");
+          } else if(opt.dataset.value === selected) {
+            opt.classList.add("wrong");
+          }
+        });
+
+        if(selected === answer) correct++;
+      });
+
+      const percent = Math.round((correct / cards.length) * 100);
+      ui.scoreText.textContent = `${correct}/${cards.length}`;
+      
+      let phrase = "Necesitas estudiar mucho más. Los distractores te engañaron.";
+      if(percent >= 60) phrase = "Aprobado justo. Todavía dudas en los detalles.";
+      if(percent >= 80) phrase = "¡Muy bien! Tienes un excelente dominio de las normativas.";
+      if(percent === 100) phrase = "¡Impecable! Eres un experto en el reglamento consular.";
+
+      ui.scoreSub.textContent = `${percent}% de acierto. ${phrase}`;
+      ui.result.classList.add("show");
+      ui.submitGameBtn.disabled = true; // Evitar multi-clicks
+      ui.result.scrollIntoView({ behavior: "smooth", block: "center" });
     }
 
-    populateFilter();
-    renderStudy();
-    renderGame();
+    // Eventos
+    document.getElementById("openStudy").onclick = () => showMode("study");
+    document.getElementById("openGame").onclick = () => { showMode("game"); generateGame(); };
+    document.getElementById("homeBtn").onclick = () => { showMode("home"); window.speechSynthesis?.cancel(); };
+    document.getElementById("themeBtn").onclick = toggleTheme;
+    document.getElementById("readAllBtn").onclick = () => {
+      const data = ui.filter.value === "all" ? bank : bank.filter(i => i.section === ui.filter.value);
+      const fullText = data.map(i => `${i.q}. Respuesta: ${i.a}`).join(". ");
+      speakText(fullText);
+    };
+    document.getElementById("stopReadingBtn").onclick = () => window.speechSynthesis?.cancel();
+    document.getElementById("startGameBtn").onclick = generateGame;
+    document.getElementById("submitGameBtn").onclick = submitGame;
 
-    openStudy.addEventListener("click", () => showMode("study"));
-    openGame.addEventListener("click", () => showMode("game"));
-    homeBtn.addEventListener("click", goHome);
-    themeBtn.addEventListener("click", toggleTheme);
-
-    sectionFilter.addEventListener("change", renderStudy);
-
-    readAllBtn.addEventListener("click", () => {
-      const text = buildStudyText(sectionFilter.value);
-      speakText(text);
-    });
-
-    stopReadingBtn.addEventListener("click", stopSpeech);
-
-    startGameBtn.addEventListener("click", renderGame);
-    regenGameBtn.addEventListener("click", renderGame);
-    submitGameBtn.addEventListener("click", submitGame);
-
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden) stopSpeech();
-    });
+    // Inicializar
+    initStudy();
   </script>
 </body>
 </html>
