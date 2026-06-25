@@ -18,6 +18,8 @@
       --accent-2: #38bdf8;
       --ok: #86efac;
       --bad: #fca5a5;
+      --hard: #ef4444;
+      --hard-2: #dc2626;
       --shadow: 0 12px 30px rgba(0,0,0,.28);
       --radius: 18px;
       --max: 1100px;
@@ -36,6 +38,8 @@
       --accent-2: #0369a1;
       --ok: #15803d;
       --bad: #b91c1c;
+      --hard: #ef4444;
+      --hard-2: #b91c1c;
       --shadow: 0 12px 30px rgba(2, 8, 23, .08);
     }
 
@@ -148,6 +152,13 @@
       font-weight: 700;
     }
 
+    .btn-hard {
+      background: linear-gradient(180deg, var(--hard), var(--hard-2));
+      color: #fff;
+      border-color: transparent;
+      font-weight: 700;
+    }
+
     .btn-ghost {
       background: transparent;
     }
@@ -173,7 +184,7 @@
       margin: 0;
       font-size: clamp(1.4rem, 1rem + 2vw, 2.5rem);
       line-height: 1.08;
-      max-width: 18ch;
+      max-width: 25ch;
     }
 
     .hero-card p {
@@ -205,8 +216,11 @@
     }
 
     .mode-btn span {
-      color: var(--muted);
+      color: inherit;
+      opacity: 0.85;
       display: block;
+      font-weight: 400;
+      font-size: 0.95rem;
     }
 
     .section {
@@ -353,6 +367,12 @@
       padding: 8px 12px;
       font-size: .9rem;
     }
+    
+    .pill.pill-hard {
+      border-color: color-mix(in srgb, var(--hard) 40%, var(--line));
+      color: var(--hard);
+      background: color-mix(in srgb, var(--hard) 10%, var(--bg-soft));
+    }
 
     .question-text {
       margin: 0 0 14px;
@@ -432,11 +452,6 @@
       .mode-grid {
         grid-template-columns: 1fr;
       }
-
-      .actions {
-        width: 100%;
-        justify-content: flex-start;
-      }
     }
   </style>
 </head>
@@ -452,7 +467,7 @@
         </div>
         <div>
           <h1>Cuestionario Consular</h1>
-          <p>Modo estudio y modo juego en una sola interfaz.</p>
+          <p>Modo estudio y modos de examen avanzados.</p>
         </div>
       </div>
 
@@ -468,18 +483,28 @@
       <div class="hero-card">
         <div>
           <h2>Elegí cómo querés estudiar hoy.</h2>
-          <p>Podés entrar al modo cuestionario para leer y escuchar todas las preguntas con sus respuestas, o al juego de selección múltiple para practicar con distractores de alta dificultad diseñados para confundirte.</p>
+          <p>Tenés 4 opciones: modo de lectura general, examen con todas las preguntas del banco, o los nuevos "Modos Normativos" enfocados únicamente en dominar las leyes, decretos y resoluciones.</p>
         </div>
 
         <div class="mode-grid">
           <button class="btn mode-btn btn-primary" id="openStudy" type="button">
-            <strong>Modo cuestionarios</strong>
-            <span>Lista completa por secciones, con texto a voz para todo el contenido o por cada ítem.</span>
+            <strong>📖 Estudio General</strong>
+            <span style="color: var(--muted)">Lista completa por secciones, con texto a voz para todo el contenido o por cada ítem.</span>
+          </button>
+
+          <button class="btn mode-btn" id="openHardStudy" type="button" style="border-color: var(--hard); background: color-mix(in srgb, var(--hard) 8%, var(--card));">
+            <strong style="color: var(--hard)">📖 Estudio Normativo</strong>
+            <span style="color: var(--muted)">Lista filtrada automáticamente. Solo leerás las preguntas sobre normativas.</span>
           </button>
 
           <button class="btn mode-btn btn-accent" id="openGame" type="button">
-            <strong>Juego / Examen</strong>
-            <span>Selección múltiple extremadamente difícil. Las opciones erróneas son muy parecidas a las correctas.</span>
+            <strong>🎯 Examen General</strong>
+            <span style="color: #071018">Selección múltiple de todo el temario. Las opciones erróneas son muy parecidas a las correctas.</span>
+          </button>
+          
+          <button class="btn mode-btn btn-hard" id="openHardGame" type="button">
+            <strong>⚖️ Examen Normativo</strong>
+            <span>Modo ultra difícil. Filtra el cuestionario para evaluarte solo en las leyes y decretos.</span>
           </button>
         </div>
       </div>
@@ -488,8 +513,8 @@
     <section class="section" id="studySection">
       <div class="section-head">
         <div>
-          <h3>Modo cuestionarios</h3>
-          <p>Lectura organizada por tema, con controles de voz completos y por ítem.</p>
+          <h3 id="studyTitle">Modo cuestionarios</h3>
+          <p id="studyDesc">Lectura organizada por tema, con controles de voz completos y por ítem.</p>
         </div>
       </div>
 
@@ -511,8 +536,8 @@
     <section class="section" id="gameSection">
       <div class="section-head">
         <div>
-          <h3>Juego de selección múltiple</h3>
-          <p>Elegí cuántas preguntas querés ver. Cada nueva carga mezcla preguntas y alternativas.</p>
+          <h3 id="gameTitle">Juego de selección múltiple</h3>
+          <p id="gameDesc">Elegí cuántas preguntas querés ver. Cada nueva carga mezcla preguntas y alternativas.</p>
         </div>
       </div>
 
@@ -525,12 +550,11 @@
               <option value="10" selected>10 preguntas</option>
               <option value="15">15 preguntas</option>
               <option value="20">20 preguntas</option>
-              <option value="all">Todas</option>
+              <option value="all">Todas las disponibles</option>
             </select>
           </div>
           <button class="btn btn-accent" id="startGameBtn" type="button">Generar examen</button>
           <button class="btn" id="submitGameBtn" type="button">Corregir</button>
-          <button class="btn btn-ghost" id="regenGameBtn" type="button">Nueva selección</button>
         </div>
       </div>
 
@@ -546,16 +570,16 @@
   </main>
 
   <script>
-    // NUEVO BANCO DE PREGUNTAS: Con opciones trampa (distractors) diseñadas específicamente para cada pregunta.
     const bank = [
+      // --- DIRECCIÓN DE LEGALIZACIONES (Ex SIL) ---
       {
         section: "Dirección de Legalizaciones",
         q: "¿Mediante qué resolución se implementó el SIL?",
-        a: "Resolución N° 1.354 del 12 de diciembre de 2018.",
+        a: "Resolución N°1.354 del 12 de diciembre de 2018.",
         distractors: [
-          "Resolución N° 1.453 del 10 de diciembre de 2018.",
-          "Decreto N° 1.354 del 12 de noviembre de 2019.",
-          "Resolución N° 1.345 del 12 de diciembre de 2017."
+          "Resolución N°1.453 del 10 de diciembre de 2018.",
+          "Decreto N°1.354 del 12 de noviembre de 2019.",
+          "Resolución N°1.345 del 12 de diciembre de 2017."
         ]
       },
       {
@@ -580,7 +604,7 @@
       },
       {
         section: "Dirección de Legalizaciones",
-        q: "¿En qué comando del SIL se cargan las hojas que son asignadas como hojas de seguridad a los operadores?",
+        q: "¿En qué comando del SIL se cargan las hojas que son asignadas las hojas de seguridad a los operadores?",
         a: "Operaciones – Movimiento de hojas de Seguridad.",
         distractors: [
           "Operaciones – Stock Central de Recibos.",
@@ -604,8 +628,8 @@
         a: "Comprobante de Liquidación.",
         distractors: [
           "Carga de Recibo.",
-          "Ambas operaciones se realizan en simultáneo.",
-          "Depende del monto de la operación."
+          "Facturación Consular.",
+          "Apertura de Caja."
         ]
       },
       {
@@ -643,9 +667,9 @@
         q: "¿Qué operación se realiza en el SIL para anular una hoja que puede ser utilizada nuevamente?",
         a: "Anular Recibo – Hoja re utilizar.",
         distractors: [
-          "Anular Recibo – Hoja desechada.",
-          "Modificar Recibo – Reasignar.",
-          "Eliminar Registro – Recuperar hoja."
+          "Suspender Recibo – Retorno a Stock.",
+          "Cancelar Operación – Mantener Folio.",
+          "Anular Recibo – Hoja desechada."
         ]
       },
       {
@@ -653,18 +677,19 @@
         q: "¿Qué operación se realiza en el SIL para anular una hoja que no puede ser utilizada nuevamente?",
         a: "Anular Recibo – Hoja desechada.",
         distractors: [
+          "Eliminar Recibo – Destrucción Permanente.",
           "Anular Recibo – Hoja re utilizar.",
-          "Eliminar Definitivamente – Archivo nulo.",
-          "Operaciones – Baja de hoja de seguridad."
+          "Dar de Baja – Falla de Impresión."
         ]
       },
 
+      // --- VISAS ---
       {
         section: "Visas",
         q: "¿Qué países están exentos de la verificación de visa según la Resolución DNM N° 704/2023?",
-        a: "Países del MERCOSUR y Unión Europea, gran parte de América y ciertos países de Asia y Oriente Medio.",
+        a: "Países del MERCOSUR y Unión Europea gran parte de América y ciertos países de Asia y Oriente Medio.",
         distractors: [
-          "Solo países del MERCOSUR y Estados Unidos de América.",
+          "Solo países del Mercosur y Estados Unidos de América.",
           "Todos los países de Asia y África sin excepción.",
           "Países de la Comunidad Andina y el Caribe exclusivamente."
         ]
@@ -702,11 +727,11 @@
       {
         section: "Visas",
         q: "¿Qué resolución exonera de la verificación de visa a ciertos ciudadanos?",
-        a: "Resolución DNM N° 704/2023.",
+        a: "Resolución DNM N°704/2023.",
         distractors: [
-          "Resolución DNM N° 407/2022.",
-          "Decreto N° 704/2023.",
-          "Ley N° 704/2021."
+          "Resolución DNM N°407/2022.",
+          "Decreto N°704/2023.",
+          "Ley N°704/2021."
         ]
       },
       {
@@ -716,7 +741,7 @@
         distractors: [
           "USD 100.",
           "USD 50.",
-          "65 euros."
+          "USD 80."
         ]
       },
       {
@@ -765,8 +790,8 @@
         a: "Verdadero.",
         distractors: [
           "Falso.",
-          "Su costo varía dependiendo de la nacionalidad del solicitante.",
-          "El costo es de USD 165, combinando la entrada única y múltiple."
+          "Cuestan USD 65 igual que las de entrada única.",
+          "Son gratuitas si el solicitante viaja por negocios oficiales."
         ]
       },
       {
@@ -775,11 +800,12 @@
         a: "Falso.",
         distractors: [
           "Verdadero.",
-          "Verdadero, pero solo bajo autorización excepcional del Director General.",
-          "Se otorgan inicialmente por 180 días prorrogables."
+          "Se otorgan hasta por 1 año dependiendo de la autoridad.",
+          "Pueden extenderse de forma indefinida si hay reciprocidad."
         ]
       },
 
+      // --- PASAPORTES ---
       {
         section: "Pasaportes",
         q: "¿Qué datos biométricos se incluyen en el chip de los pasaportes consulares electrónicos?",
@@ -813,11 +839,11 @@
       {
         section: "Pasaportes",
         q: "¿Qué documento regula la expedición de Documentos de Viaje a cargo del Ministerio de Relaciones Exteriores?",
-        a: "Decreto Nº 1053.",
+        a: "Decreto Nº 1053/",
         distractors: [
-          "Decreto Nº 10512/24.",
-          "Ley Nº 1053.",
-          "Resolución Nº 1503."
+          "Ley Nº 1053/",
+          "Resolución Nº 1053/",
+          "Decreto Nº 1503/"
         ]
       },
       {
@@ -855,9 +881,9 @@
         q: "¿Qué documento se debe presentar para acreditar la condición de estudiante fuera del país para hijos mayores de edad que solicitan Pasaporte Diplomático?",
         a: "Constancia de estudios.",
         distractors: [
-          "Certificado de antecedentes académicos.",
-          "Matrícula consular actualizada anualmente.",
-          "Declaración jurada de dependencia económica."
+          "Cédula de identidad actualizada del país de residencia.",
+          "Permiso notarial de los padres.",
+          "Certificado de antecedentes académicos apostillado."
         ]
       },
       {
@@ -865,20 +891,21 @@
         q: "¿Qué se requiere para la captura de datos biométricos al solicitar un pasaporte?",
         a: "Comparecencia del solicitante.",
         distractors: [
-          "Envío de fotografías certificadas por escribano.",
-          "Autorización digital mediante el portal SIL.",
-          "Poder especial otorgado a un tercero."
+          "Envío de fotografías por correo diplomático.",
+          "Poder notarial otorgado a un tercero.",
+          "Certificado médico que avale la identidad visual."
         ]
       },
 
+      // --- POLÍTICA CONSULAR ---
       {
         section: "Política Consular",
         q: "¿Cuál es el objetivo del Protocolo Consular para la Detección, Asistencia y Derivación de Víctimas de Trata de Personas (PROCON-Trata)?",
         a: "Establecer un marco de acción efectivo contra la trata de personas.",
         distractors: [
-          "Sancionar penalmente a las redes de tráfico de personas en el exterior.",
-          "Financiar la repatriación voluntaria de migrantes económicos.",
-          "Restringir la emisión de visas a ciudadanos de países de alto riesgo."
+          "Aumentar los controles migratorios en las fronteras terrestres.",
+          "Establecer un fondo de repatriación obligatoria para todos los migrantes.",
+          "Sancionar penalmente a las aerolíneas que transporten indocumentados."
         ]
       },
       {
@@ -886,9 +913,9 @@
         q: "¿Cuáles son los aspectos fundamentales de la Convención de Viena sobre Relaciones Consulares?",
         a: "Es fundamental en la emisión de documentos consulares, además, define las funciones consulares, la comunicación con nacionales y la inviolabilidad de locales consulares.",
         distractors: [
-          "Define exclusivamente las inmunidades del personal diplomático de alto rango y el cobro de aranceles.",
-          "Establece las normas para la extradición de criminales buscados por Interpol.",
-          "Regula únicamente el establecimiento de relaciones comerciales bilaterales entre Estados."
+          "Establece exclusivamente las normativas de aduanas e importación de bienes diplomáticos.",
+          "Define la política militar de las embajadas y el manejo de refugiados de guerra.",
+          "Regula los tratados de libre comercio y la supresión de visas en todo el mundo."
         ]
       },
       {
@@ -896,9 +923,9 @@
         q: "¿Cuál es una de las funciones de la Dirección de Política Consular?",
         a: "Diseñar y sugerir políticas en materia de relaciones consulares.",
         distractors: [
-          "Ejecutar detenciones de ciudadanos paraguayos prófugos en el exterior.",
-          "Auditar los ingresos arancelarios de todas las embajadas mensualmente.",
-          "Emitir sentencias judiciales en casos de derecho de familia internacional."
+          "Aprobar el presupuesto general para todas las embajadas.",
+          "Juzgar y penalizar a cónsules que incumplan la normativa vigente.",
+          "Emitir directamente pasaportes a ciudadanos residentes en Asunción."
         ]
       },
       {
@@ -906,24 +933,25 @@
         q: "¿Qué se busca fortalecer con el Protocolo Consular para la Detección, Asistencia y Derivación de Víctimas de Trata de Personas?",
         a: "Identificación y asistencia inmediata a víctimas; Derivación efectiva a instituciones especializadas; Respuesta coordinada y humanitaria, respetando la dignidad de las personas.",
         distractors: [
-          "Persecución policial internacional; Enjuiciamiento de los tratantes; Decomiso de bienes ilícitos.",
-          "Repatriación forzosa de indocumentados; Cierre de fronteras temporales; Creación de albergues permanentes.",
-          "Registro biométrico obligatorio; Control migratorio severo; Intercambio de antecedentes penales."
+          "El arresto inmediato de los sospechosos en territorio extranjero y su extradición.",
+          "La recolección de pruebas penales para la Interpol.",
+          "La cancelación automática de pasaportes de personas bajo investigación de trata."
         ]
       },
       {
         section: "Política Consular",
         q: "¿Cuáles son las modalidades de inscripción para el voto en el extranjero?",
-        a: "Inscripción presencial en las Sedes Diplomáticas y Consulares; Inscripción vía web mediante la cual el ciudadano puede autogestionarse.",
+        a: "Inscripción presencial: en las Sedes Diplomáticas y Consulares - Inscripción vía web: mediante la cual el ciudadano puede autogestionarse su propia inscripción.",
         distractors: [
-          "Inscripción automática al renovar pasaporte; Inscripción por correo postal.",
-          "Inscripción exclusiva mediante la aplicación móvil del TSJE; Voto por correo certificado.",
-          "Inscripción a través de gestores consulares; Inscripción telefónica a la embajada."
+          "Únicamente mediante un apoderado en Paraguay que gestione el alta en el padrón.",
+          "Inscripción automática al cruzar la frontera mediante el registro de Migraciones.",
+          "Inscripción vía telefónica o enviando un correo postal al Tribunal Superior de Justicia Electoral."
         ]
       },
 
+      // --- CONARE ---
       {
-        section: "CONARE",
+        section: "Conare",
         q: "¿Qué es la CONARE?",
         a: "Organismo oficial, de carácter colegiado e intersectorial, que garantiza la protección integral de refugiados y apátridas en el territorio nacional.",
         distractors: [
@@ -933,7 +961,7 @@
         ]
       },
       {
-        section: "CONARE",
+        section: "Conare",
         q: "¿Qué ley establece los criterios para otorgar el estatus de refugiado en Paraguay?",
         a: "Ley N° 1938/02.",
         distractors: [
@@ -943,7 +971,7 @@
         ]
       },
       {
-        section: "CONARE",
+        section: "Conare",
         q: "¿Cuáles son los derechos garantizados para los solicitantes y refugiados?",
         a: "No devolución; Libre tránsito; Acceso a servicios; No discriminación.",
         distractors: [
@@ -953,7 +981,7 @@
         ]
       },
       {
-        section: "CONARE",
+        section: "Conare",
         q: "¿En qué consiste el derecho a la no devolución de solicitantes y refugiados?",
         a: "En la garantía absoluta de no ser retornado a situaciones de peligro o persecución.",
         distractors: [
@@ -963,7 +991,7 @@
         ]
       },
       {
-        section: "CONARE",
+        section: "Conare",
         q: "¿Cómo se aplica el derecho a la No Discriminación?",
         a: "Con un trato igualitario en la aplicación de las leyes paraguayas, sin distinción de origen o condición.",
         distractors: [
@@ -973,7 +1001,7 @@
         ]
       },
       {
-        section: "CONARE",
+        section: "Conare",
         q: "¿Cómo se establece el Acceso a los servicios?",
         a: "Garantizando el acceso al trabajo, a la salud pública y a la educación en igualdad de condiciones.",
         distractors: [
@@ -983,7 +1011,7 @@
         ]
       },
       {
-        section: "CONARE",
+        section: "Conare",
         q: "¿Qué organismo cuentan con representación en la Comisión Nacional para Apátridas y Refugiados?",
         a: "Cuenta con representantes del Poder Ejecutivo, Legislativo y organismos internacionales, además de organizaciones sin fines de lucro (ONG).",
         distractors: [
@@ -993,7 +1021,7 @@
         ]
       },
       {
-        section: "CONARE",
+        section: "Conare",
         q: "¿En qué consiste el Libre tránsito?",
         a: "Consiste en el derecho a circular libremente por todo el territorio paraguayo.",
         distractors: [
@@ -1003,9 +1031,9 @@
         ]
       },
       {
-        section: "CONARE",
+        section: "Conare",
         q: "¿Qué instituciones participan en la Comisión Nacional para Apátridas y Refugiados?",
-        a: "Ministerio de Relaciones Exteriores; Dirección Nacional de Migraciones; Ministerio del Interior; Ministerio de Justicia; Ministerio de Trabajo; Poder Legislativo (con voz, pero sin voto); Ministerio de la Defensa Pública; ACNUR; Semillas para la Democracia.",
+        a: "Ministerio de Relaciones Exteriores; Dirección Nacional de Migraciones; Ministerio del Interior; Ministerio de Justicia; Ministerio de Trabajo; Poder Legislativo (con voz pero sin voto); Ministerio de la Defensa Pública; ACNUR; Semillas para la Democracia.",
         distractors: [
           "Ministerio de Educación; Ministerio de Salud; Policía Nacional; Corte Suprema; ACNUR.",
           "Interpol; Corte Suprema de Justicia; Ministerio del Interior; Poder Legislativo pleno.",
@@ -1013,16 +1041,17 @@
         ]
       },
       {
-        section: "CONARE",
+        section: "Conare",
         q: "¿Quién preside la Comisión Nacional para Apátridas y Refugiados?",
         a: "El Director General de Asuntos Consulares del Ministerio de Relaciones Exteriores.",
         distractors: [
-          "El Ministro de Relaciones Exteriores directamente.",
-          "El Director General de Migraciones del Ministerio del Interior.",
-          "El Representante Regional del ACNUR."
+          "El Ministro del Interior.",
+          "El Director Nacional de Migraciones.",
+          "Un representante oficial del Alto Comisionado de las Naciones Unidas (ACNUR)."
         ]
       },
 
+      // --- DACPE ---
       {
         section: "DACPE",
         q: "¿Cuáles son las áreas de atención y asistencia de la DACPE?",
@@ -1058,47 +1087,62 @@
         q: "Algunas de las funciones del área de atención al migrante son:",
         a: "Asistencia a víctimas de violencia doméstica o intrafamiliar; Repatriaciones en coordinación con la SEDERREC; Autorizaciones para permisos de viaje de menores y pasaportes consulares de menores.",
         distractors: [
-          "Financiamiento total de pasajes aéreos; Tramitación de visas de trabajo extranjeras; Asesoría contable para remesas.",
-          "Búsqueda de empleo en el país de destino; Subsidios habitacionales; Validación de títulos universitarios.",
-          "Gestión de jubilaciones internacionales; Nacionalización de cónyuges extranjeros; Otorgamiento de becas de estudio."
+          "Pago de fianzas para liberación rápida; emisión de visas de trabajo temporales.",
+          "Revalidación de títulos universitarios extranjeros; gestión de becas de estudio en el exterior.",
+          "Búsqueda de empleo en el país de residencia y otorgamiento de créditos blandos para emprendedores."
         ]
       },
       {
         section: "DACPE",
         q: "Algunas de las funciones del área de connacionales detenidos son:",
-        a: "Informar a familiares sobre la detención; Velar por el debido proceso y derechos humanos; Solicitar rubro 846 de asistencia social (para higiene) si es necesario.",
+        a: "Informar a familiares sobre la detención; Velar por el debido proceso; En caso que no provean higiene básica, solicitar el rubro 846 de asistencia social.",
         distractors: [
-          "Pagar fianzas para liberación condicional; Contratar abogados defensores privados; Ocultar la identidad del detenido en la prensa.",
-          "Trasladar inmediatamente al detenido a una prisión paraguaya; Otorgar indultos consulares; Proveer viáticos mensuales.",
-          "Solicitar extradición inmediata en todos los casos; Asumir la responsabilidad civil del delito; Proveer armas para protección."
+          "Pagar a abogados privados en el extranjero; tramitar la libertad condicional de forma automática.",
+          "Intervenir judicialmente en los tribunales locales; exigir la extradición inmediata en todos los casos.",
+          "Abonar las multas penales; proveer viáticos semanales al detenido mediante fondos consulares."
         ]
       },
       {
         section: "DACPE",
         q: "¿En qué casos son aplicadas las asistencias económicas gestionadas a través del área de asistencia social?",
-        a: "Trata internacional de personas; Violencia doméstica; Privados de su libertad; Gastos médicos; Gastos fúnebres; Daños por catástrofes naturales.",
+        a: "Connacionales víctimas de trata; Víctimas de violencia doméstica; Privados de libertad; Gastos médicos; Gastos fúnebres; Daños por catástrofes naturales.",
         distractors: [
-          "Deudas bancarias; Financiamiento de emprendimientos comerciales; Préstamos estudiantiles.",
-          "Pérdida de equipaje en aerolíneas; Multas de tránsito; Exceso de días de turista.",
-          "Compra de pasajes por turismo; Renovación de documentos en casos no urgentes; Subsidio por desempleo en el exterior."
+          "Pérdida de vuelos comerciales; Multas de tránsito en el exterior; Deudas de tarjetas de crédito.",
+          "Subsidios por desempleo en el exterior; Financiamiento de estudios de grado universitario.",
+          "Pérdida de equipaje; Robo de artículos electrónicos; Cobertura de estadías turísticas prolongadas."
         ]
       }
     ];
 
+    // Variables de estado
+    let currentGameMode = 'normal'; // 'normal' o 'hard'
+    let currentStudyMode = 'normal'; // 'normal' o 'hard'
+    let currentTheme = "dark";
+    let currentGame = [];
+
+    // Expresión regular para encontrar normativas automáticamente
+    const normRegex = /(ley|decreto|resolución|resolucion|artículo|art\.|convención|protocolo|documento n|rubro 846)/i;
+
     const sections = [...new Set(bank.map(item => item.section))];
 
+    // Nodos UI
     const homeSection = document.getElementById("homeSection");
     const studySection = document.getElementById("studySection");
     const gameSection = document.getElementById("gameSection");
+    
     const studyContent = document.getElementById("studyContent");
     const gameContent = document.getElementById("gameContent");
     const sectionFilter = document.getElementById("sectionFilter");
+    
     const resultCard = document.getElementById("resultCard");
     const scoreText = document.getElementById("scoreText");
     const scoreSub = document.getElementById("scoreSub");
 
     const openStudy = document.getElementById("openStudy");
+    const openHardStudy = document.getElementById("openHardStudy");
     const openGame = document.getElementById("openGame");
+    const openHardGame = document.getElementById("openHardGame");
+    
     const homeBtn = document.getElementById("homeBtn");
     const themeBtn = document.getElementById("themeBtn");
 
@@ -1108,10 +1152,11 @@
     const questionCount = document.getElementById("questionCount");
     const startGameBtn = document.getElementById("startGameBtn");
     const submitGameBtn = document.getElementById("submitGameBtn");
-    const regenGameBtn = document.getElementById("regenGameBtn");
 
-    let currentTheme = "dark";
-    let currentGame = [];
+    const studyTitle = document.getElementById("studyTitle");
+    const studyDesc = document.getElementById("studyDesc");
+    const gameTitle = document.getElementById("gameTitle");
+    const gameDesc = document.getElementById("gameDesc");
 
     function showMode(mode) {
       homeSection.classList.add("hidden");
@@ -1163,13 +1208,24 @@
 
     function renderStudy() {
       const selected = sectionFilter.value;
-      const data = selected === "all" ? bank : bank.filter(item => item.section === selected);
+      
+      // Aplicar filtro de normativas si está activo el modo "hard" de estudio
+      let activeBank = currentStudyMode === 'hard' 
+        ? bank.filter(item => normRegex.test(item.q) || normRegex.test(item.a))
+        : bank;
+
+      const data = selected === "all" ? activeBank : activeBank.filter(item => item.section === selected);
 
       const grouped = data.reduce((acc, item) => {
         acc[item.section] ??= [];
         acc[item.section].push(item);
         return acc;
       }, {});
+
+      if (Object.keys(grouped).length === 0) {
+        studyContent.innerHTML = `<div class="panel"><p style="text-align:center; color:var(--muted)">No hay preguntas que coincidan con los filtros actuales en esta sección.</p></div>`;
+        return;
+      }
 
       studyContent.innerHTML = Object.entries(grouped).map(([section, items]) => `
         <section class="section-block">
@@ -1183,7 +1239,7 @@
                     class="tts-mini"
                     type="button"
                     aria-label="Leer este ítem"
-                    onclick="speakOne(${bank.indexOf(item)})"
+                    onclick="speakOne('${escapeHtml(item.q)}', '${escapeHtml(item.a)}')"
                     title="Leer este ítem"
                   >🔊</button>
                 </div>
@@ -1196,9 +1252,13 @@
     }
 
     function buildStudyText(filteredSection = "all") {
+      let activeBank = currentStudyMode === 'hard' 
+        ? bank.filter(item => normRegex.test(item.q) || normRegex.test(item.a))
+        : bank;
+
       const data = filteredSection === "all"
-        ? bank
-        : bank.filter(item => item.section === filteredSection);
+        ? activeBank
+        : activeBank.filter(item => item.section === filteredSection);
 
       const grouped = data.reduce((acc, item) => {
         acc[item.section] ??= [];
@@ -1226,7 +1286,6 @@
         alert("Tu navegador no soporta texto a voz.");
         return;
       }
-
       const utter = new SpeechSynthesisUtterance(text);
       utter.lang = "es-ES";
       utter.rate = 1;
@@ -1234,20 +1293,14 @@
       window.speechSynthesis.speak(utter);
     }
 
-    function speakOne(index) {
-      const item = bank[index];
-      const text = `Pregunta. ${item.q}. Respuesta. ${item.a}`;
+    function speakOne(q, a) {
+      const text = `Pregunta. ${q}. Respuesta. ${a}`;
       speakText(text);
     }
-
     window.speakOne = speakOne;
 
-    // Ya no usamos una función para adivinar distractores. 
-    // Ahora leemos los distractores diseñados a medida desde la base de datos.
     function buildGameQuestion(item, idx) {
-      // Tomamos la respuesta correcta (item.a) y los distractores manuales, y los mezclamos
       const options = shuffle([item.a, ...item.distractors]).slice(0, 4);
-
       return {
         id: `${item.section}-${idx}-${Math.random().toString(36).slice(2, 8)}`,
         section: item.section,
@@ -1260,17 +1313,42 @@
     function renderGame() {
       resultCard.classList.remove("show");
 
-      let count = questionCount.value === "all" ? bank.length : Number(questionCount.value);
-      count = Math.min(count, bank.length);
+      // Filtrar el banco de datos según el modo seleccionado
+      let activeBank = bank;
+      
+      if (currentGameMode === 'hard') {
+        activeBank = bank.filter(item => normRegex.test(item.q) || normRegex.test(item.a));
+        gameTitle.textContent = "⚖️ Examen Normativo (Difícil)";
+        gameDesc.textContent = "Filtrado automático: Solamente respondiendo preguntas sobre leyes, decretos, resoluciones y protocolos.";
+        startGameBtn.className = "btn btn-hard";
+      } else {
+        gameTitle.textContent = "🎯 Examen General";
+        gameDesc.textContent = "Elegí cuántas preguntas querés ver. Cada nueva carga mezcla preguntas y alternativas de todo el banco.";
+        startGameBtn.className = "btn btn-accent";
+      }
 
-      const selected = shuffle(bank).slice(0, count);
+      // Determinar la cantidad de preguntas a mostrar
+      let count = questionCount.value === "all" ? activeBank.length : Number(questionCount.value);
+      count = Math.min(count, activeBank.length);
+
+      // Si no hay suficientes preguntas normativas
+      if (count === 0) {
+        gameContent.innerHTML = "<p>No se encontraron preguntas bajo este criterio.</p>";
+        return;
+      }
+
+      // Seleccionar las preguntas aleatorias
+      const selected = shuffle(activeBank).slice(0, count);
       currentGame = selected.map(buildGameQuestion);
 
+      const pillClass = currentGameMode === 'hard' ? 'pill pill-hard' : 'pill';
+
+      // Renderizar
       gameContent.innerHTML = currentGame.map((item, index) => `
         <article class="question-card" data-question-id="${escapeHtml(item.id)}" data-answer="${escapeHtml(item.a)}">
           <div class="question-top">
-            <span class="pill">Pregunta ${index + 1}</span>
-            <span class="pill">${escapeHtml(item.section)}</span>
+            <span class="${pillClass}">Pregunta ${index + 1} de ${count}</span>
+            <span class="${pillClass}">${escapeHtml(item.section)}</span>
           </div>
           <p class="question-text">${escapeHtml(item.q)}</p>
           <div class="options">
@@ -1330,10 +1408,10 @@
       const total = cards.length;
       const percent = Math.round((correct / total) * 100);
 
-      let label = "Rendimiento bajo. Ahora los distractores son mucho más difíciles.";
+      let label = "Rendimiento bajo. Volvé a repasar esa normativa.";
       if (percent >= 50) label = "Buen avance. Estás logrando identificar las trampas.";
-      if (percent >= 75) label = "Muy buen nivel. Estás reteniendo detalles finos.";
-      if (percent === 100) label = "Perfecto. Memorización quirúrgica, no caíste en ninguna trampa.";
+      if (percent >= 75) label = "Muy buen nivel. Estás reteniendo los detalles finos.";
+      if (percent === 100) label = "Perfecto. Conocimiento dominado al máximo.";
 
       scoreText.textContent = `${correct}/${total}`;
       scoreSub.textContent = `${percent}% de aciertos · ${label}`;
@@ -1341,26 +1419,53 @@
       resultCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
 
+    // Inicializadores de Eventos
     populateFilter();
     renderStudy();
-    renderGame();
 
-    openStudy.addEventListener("click", () => showMode("study"));
-    openGame.addEventListener("click", () => showMode("game"));
+    openStudy.addEventListener("click", () => { 
+      currentStudyMode = 'normal';
+      studyTitle.textContent = "Modo Cuestionarios (General)";
+      studyDesc.textContent = "Lectura organizada por tema, con controles de voz completos y por ítem.";
+      showMode("study"); 
+      renderStudy();
+    });
+
+    openHardStudy.addEventListener("click", () => { 
+      currentStudyMode = 'hard';
+      studyTitle.textContent = "Estudio Normativo (Leyes y Decretos)";
+      studyDesc.textContent = "Lista filtrada automáticamente. Solo estás viendo las preguntas y respuestas sobre normativas.";
+      showMode("study"); 
+      renderStudy();
+    });
+    
+    openGame.addEventListener("click", () => { 
+      currentGameMode = 'normal'; 
+      showMode("game"); 
+      renderGame(); 
+    });
+
+    openHardGame.addEventListener("click", () => { 
+      currentGameMode = 'hard'; 
+      showMode("game"); 
+      renderGame(); 
+    });
+
     homeBtn.addEventListener("click", goHome);
     themeBtn.addEventListener("click", toggleTheme);
-
     sectionFilter.addEventListener("change", renderStudy);
 
     readAllBtn.addEventListener("click", () => {
       const text = buildStudyText(sectionFilter.value);
+      if (text.trim() === "") {
+        alert("No hay texto para leer en este filtro.");
+        return;
+      }
       speakText(text);
     });
-
     stopReadingBtn.addEventListener("click", stopSpeech);
 
     startGameBtn.addEventListener("click", renderGame);
-    regenGameBtn.addEventListener("click", renderGame);
     submitGameBtn.addEventListener("click", submitGame);
 
     document.addEventListener("visibilitychange", () => {
