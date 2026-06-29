@@ -1,0 +1,2518 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guía de Estudio · Gestión del Talento Humano en la Función Pública</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lexend:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0b1120;
+            --bg-soft: #0f172a;
+            --surface: #131c2e;
+            --surface-2: #1a2436;
+            --surface-3: #212d42;
+            --border: #243049;
+            --border-soft: #1c2740;
+            --text: #e7ecf5;
+            --text-soft: #aab4c8;
+            --text-dim: #7f8aa3;
+            --primary: #5b8cff;
+            --primary-soft: #2a3c66;
+            --accent: #2dd4bf;
+            --accent-2: #a78bfa;
+            --warn: #fbbf24;
+            --danger: #f87171;
+            --success: #34d399;
+            --shadow: 0 10px 40px -12px rgba(0, 0, 0, 0.6);
+            --radius: 16px;
+            --sidebar-w: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            background-image:
+                radial-gradient(900px circle at 12% -8%, rgba(91, 140, 255, 0.10), transparent 45%),
+                radial-gradient(800px circle at 95% 0%, rgba(167, 139, 250, 0.10), transparent 45%);
+            background-attachment: fixed;
+        }
+
+        ::-webkit-scrollbar {
+            width: 11px;
+            height: 11px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-soft);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--surface-3);
+            border-radius: 10px;
+            border: 2px solid var(--bg-soft);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2e3c59;
+        }
+
+        /* ===== Progress bar (top) ===== */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            z-index: 200;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 12px rgba(91, 140, 255, 0.6);
+        }
+
+        /* ===== Sidebar ===== */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: var(--sidebar-w);
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(12px);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 22px 22px 16px;
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-mark {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, var(--primary), var(--accent-2));
+            display: grid;
+            place-items: center;
+            font-weight: 800;
+            font-size: 19px;
+            color: white;
+            box-shadow: 0 6px 18px -4px rgba(91, 140, 255, 0.5);
+            font-family: 'Lexend', sans-serif;
+        }
+
+        .brand-text h1 {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            font-family: 'Lexend', sans-serif;
+        }
+
+        .brand-text p {
+            font-size: 11.5px;
+            color: var(--text-dim);
+            margin-top: 1px;
+        }
+
+        .search-box {
+            position: relative;
+            margin-top: 16px;
+        }
+
+        .search-box svg {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-dim);
+        }
+
+        #search {
+            width: 100%;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 10px 12px 10px 38px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        #search:focus {
+            border-color: var(--primary);
+        }
+
+        #search::placeholder {
+            color: var(--text-dim);
+        }
+
+        .nav-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding: 14px 12px 28px;
+        }
+
+        .nav-unit {
+            margin-bottom: 6px;
+        }
+
+        .nav-unit-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            background: transparent;
+            border: none;
+            color: var(--text-soft);
+            padding: 10px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-weight: 600;
+            font-family: inherit;
+            text-align: left;
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .nav-unit-btn:hover {
+            background: var(--surface-2);
+            color: var(--text);
+        }
+
+        .nav-unit-btn.active {
+            background: var(--primary-soft);
+            color: #cfe0ff;
+        }
+
+        .nav-num {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+            border-radius: 7px;
+            background: var(--surface-3);
+            display: grid;
+            place-items: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text);
+            font-family: 'Lexend', sans-serif;
+        }
+
+        .nav-unit-btn.active .nav-num {
+            background: var(--primary);
+            color: white;
+        }
+
+        .nav-unit-btn .chev {
+            margin-left: auto;
+            transition: transform 0.2s;
+            color: var(--text-dim);
+        }
+
+        .nav-unit-btn.open .chev {
+            transform: rotate(90deg);
+        }
+
+        .nav-sub {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.3s ease;
+        }
+
+        .nav-sub.open {
+            max-height: 600px;
+        }
+
+        .nav-sub a {
+            display: block;
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 12.5px;
+            padding: 7px 12px 7px 47px;
+            border-radius: 8px;
+            transition: color 0.15s, background 0.15s;
+            position: relative;
+        }
+
+        .nav-sub a:hover {
+            color: var(--text);
+            background: var(--surface);
+        }
+
+        .nav-sub a.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .nav-sub a.active::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+
+        .sidebar-footer {
+            padding: 14px 18px;
+            border-top: 1px solid var(--border-soft);
+            font-size: 11px;
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--success);
+            box-shadow: 0 0 8px var(--success);
+        }
+
+        /* ===== Main ===== */
+        .main {
+            margin-left: var(--sidebar-w);
+            min-height: 100vh;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(11, 17, 32, 0.82);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-soft);
+            padding: 13px 40px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            color: var(--text);
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            cursor: pointer;
+            place-items: center;
+        }
+
+        .crumb {
+            font-size: 13px;
+            color: var(--text-dim);
+            flex: 1;
+        }
+
+        .crumb b {
+            color: var(--text-soft);
+            font-weight: 600;
+        }
+
+        .topbar-meta {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            font-size: 12.5px;
+            color: var(--text-dim);
+        }
+
+        .topbar-meta .pct {
+            color: var(--accent);
+            font-weight: 700;
+            font-family: 'Lexend', sans-serif;
+        }
+
+        .content {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 0 40px 120px;
+        }
+
+        /* ===== Hero ===== */
+        .hero {
+            padding: 64px 0 40px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            font-size: 12px;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 {
+            font-family: 'Lexend', sans-serif;
+            font-size: 40px;
+            line-height: 1.15;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #fff 25%, #9db6ff 75%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 16px;
+            color: var(--text-soft);
+            max-width: 620px;
+            margin: 0 auto 30px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px 24px;
+            min-width: 120px;
+        }
+
+        .stat b {
+            display: block;
+            font-size: 26px;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .stat span {
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        /* ===== Module cards grid (dashboard) ===== */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-top: 14px;
+        }
+
+        .mod-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 22px;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mod-card::before {
+            content: '';
+            position: absolute;
+            inset: 0 auto 0 0;
+            width: 4px;
+            background: var(--accent-c, var(--primary));
+            opacity: 0.9;
+        }
+
+        .mod-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-c, var(--primary));
+            box-shadow: var(--shadow);
+        }
+
+        .mod-card .mc-num {
+            font-family: 'Lexend', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent-c, var(--primary));
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .mod-card h3 {
+            font-family: 'Lexend', sans-serif;
+            font-size: 17px;
+            margin: 8px 0 8px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .mod-card p {
+            font-size: 13px;
+            color: var(--text-soft);
+            margin-bottom: 14px;
+        }
+
+        .mod-card .mc-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .mc-tag {
+            font-size: 11px;
+            padding: 3px 9px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-dim);
+        }
+
+        /* ===== Sections ===== */
+        .unit {
+            padding-top: 40px;
+        }
+
+        .unit-head {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            padding: 26px;
+            background: linear-gradient(135deg, var(--surface), var(--surface-2));
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .unit-head::after {
+            content: '';
+            position: absolute;
+            top: -40%;
+            right: -10%;
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, var(--accent-c, var(--primary)), transparent 70%);
+            opacity: 0.12;
+            border-radius: 50%;
+        }
+
+        .unit-badge {
+            width: 56px;
+            height: 56px;
+            flex-shrink: 0;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--accent-c, var(--primary)), var(--accent-2));
+            display: grid;
+            place-items: center;
+            font-family: 'Lexend', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+            box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.5);
+        }
+
+        .unit-head .uh-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent-c, var(--primary));
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .unit-head h2 {
+            font-family: 'Lexend', sans-serif;
+            font-size: 25px;
+            font-weight: 800;
+            margin: 4px 0 8px;
+            line-height: 1.25;
+            letter-spacing: -0.3px;
+        }
+
+        .unit-head p {
+            font-size: 14px;
+            color: var(--text-soft);
+            max-width: 560px;
+        }
+
+        section.block {
+            scroll-margin-top: 80px;
+            padding-top: 34px;
+        }
+
+        section.block>h3 {
+            font-family: 'Lexend', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            letter-spacing: -0.2px;
+        }
+
+        section.block>h3 .hicon {
+            width: 30px;
+            height: 30px;
+            flex-shrink: 0;
+            border-radius: 9px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            display: grid;
+            place-items: center;
+            color: var(--accent-c, var(--primary));
+        }
+
+        .block-lead {
+            color: var(--text-soft);
+            font-size: 14.5px;
+            margin: 10px 0 4px;
+        }
+
+        p.body {
+            color: var(--text-soft);
+            font-size: 14.5px;
+            margin: 12px 0;
+        }
+
+        .body strong,
+        .lead strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* Cards / callouts */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px 22px;
+            margin: 16px 0;
+        }
+
+        .callout {
+            display: flex;
+            gap: 14px;
+            padding: 16px 18px;
+            border-radius: 12px;
+            margin: 18px 0;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            border-left: 4px solid var(--c, var(--primary));
+        }
+
+        .callout .ci {
+            flex-shrink: 0;
+            color: var(--c, var(--primary));
+            margin-top: 1px;
+        }
+
+        .callout .ct {
+            font-size: 13.5px;
+            color: var(--text-soft);
+        }
+
+        .callout .ct b {
+            color: var(--text);
+            display: block;
+            margin-bottom: 2px;
+            font-size: 13.5px;
+        }
+
+        .callout.info {
+            --c: var(--primary);
+        }
+
+        .callout.key {
+            --c: var(--accent);
+        }
+
+        .callout.warn {
+            --c: var(--warn);
+        }
+
+        .callout.law {
+            --c: var(--accent-2);
+        }
+
+        /* Feature list */
+        .flist {
+            list-style: none;
+            display: grid;
+            gap: 10px;
+            margin: 16px 0;
+        }
+
+        .flist li {
+            display: flex;
+            gap: 13px;
+            align-items: flex-start;
+            background: var(--surface);
+            border: 1px solid var(--border-soft);
+            border-radius: 11px;
+            padding: 13px 16px;
+            font-size: 14px;
+            color: var(--text-soft);
+            transition: border-color 0.2s, transform 0.2s;
+        }
+
+        .flist li:hover {
+            border-color: var(--border);
+            transform: translateX(3px);
+        }
+
+        .flist li .li-ic {
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+            border-radius: 6px;
+            margin-top: 1px;
+            background: var(--primary-soft);
+            color: var(--primary);
+            display: grid;
+            place-items: center;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .flist li b {
+            color: var(--text);
+        }
+
+        /* Pills grid */
+        .pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 16px 0;
+        }
+
+        .pill {
+            padding: 9px 16px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            font-size: 13px;
+            color: var(--text);
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pill .pd {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent-c, var(--primary));
+        }
+
+        /* Two-col compare */
+        .compare {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 18px 0;
+        }
+
+        .compare .col {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .compare .col-head {
+            padding: 12px 16px;
+            font-weight: 700;
+            font-size: 13.5px;
+            font-family: 'Lexend', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .compare .old .col-head {
+            background: rgba(248, 113, 113, 0.12);
+            color: #fca5a5;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .compare .new .col-head {
+            background: rgba(52, 211, 153, 0.12);
+            color: #6ee7b7;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .compare ul {
+            list-style: none;
+            padding: 6px;
+        }
+
+        .compare li {
+            font-size: 13px;
+            color: var(--text-soft);
+            padding: 9px 12px;
+            border-radius: 8px;
+            display: flex;
+            gap: 9px;
+        }
+
+        .compare li+li {
+            border-top: 1px solid var(--border-soft);
+        }
+
+        .compare .ic {
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Grid cards (3 col) */
+        .grid3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 18px 0;
+        }
+
+        .grid2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin: 18px 0;
+        }
+
+        .icard {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 18px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .icard:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent-c, var(--primary));
+        }
+
+        .icard .ic-top {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            display: grid;
+            place-items: center;
+            color: var(--accent-c, var(--primary));
+            margin-bottom: 12px;
+        }
+
+        .icard h4 {
+            font-size: 14.5px;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .icard p {
+            font-size: 12.5px;
+            color: var(--text-dim);
+            line-height: 1.55;
+        }
+
+        /* Numbered steps */
+        .steps {
+            display: grid;
+            gap: 12px;
+            margin: 18px 0;
+            counter-reset: step;
+        }
+
+        .step {
+            display: flex;
+            gap: 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 16px 18px;
+        }
+
+        .step .sn {
+            width: 34px;
+            height: 34px;
+            flex-shrink: 0;
+            border-radius: 10px;
+            font-family: 'Lexend', sans-serif;
+            background: linear-gradient(135deg, var(--accent-c, var(--primary)), var(--accent-2));
+            color: white;
+            display: grid;
+            place-items: center;
+            font-weight: 800;
+            font-size: 15px;
+        }
+
+        .step h4 {
+            font-size: 14.5px;
+            font-weight: 700;
+            margin-bottom: 3px;
+            font-family: 'Lexend', sans-serif;
+        }
+
+        .step p {
+            font-size: 13px;
+            color: var(--text-soft);
+        }
+
+        /* PHVA cycle */
+        .phva {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 18px 0;
+        }
+
+        .phva-card {
+            text-align: center;
+            padding: 20px 14px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            position: relative;
+        }
+
+        .phva-card .pl {
+            font-family: 'Lexend', sans-serif;
+            font-weight: 800;
+            font-size: 30px;
+            opacity: 0.18;
+            position: absolute;
+            top: 6px;
+            right: 12px;
+        }
+
+        .phva-card h4 {
+            font-family: 'Lexend', sans-serif;
+            font-size: 15px;
+            margin-bottom: 6px;
+            color: var(--phc);
+        }
+
+        .phva-card p {
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        .phva-card:nth-child(1) {
+            --phc: #5b8cff;
+        }
+
+        .phva-card:nth-child(2) {
+            --phc: #2dd4bf;
+        }
+
+        .phva-card:nth-child(3) {
+            --phc: #fbbf24;
+        }
+
+        .phva-card:nth-child(4) {
+            --phc: #a78bfa;
+        }
+
+        /* Table */
+        .tbl-wrap {
+            overflow-x: auto;
+            margin: 18px 0;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13.5px;
+        }
+
+        thead th {
+            background: var(--surface-2);
+            text-align: left;
+            padding: 13px 18px;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 700;
+            font-size: 12.5px;
+            color: var(--text);
+            border-bottom: 1px solid var(--border);
+        }
+
+        tbody td {
+            padding: 13px 18px;
+            color: var(--text-soft);
+            border-bottom: 1px solid var(--border-soft);
+            vertical-align: top;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover td {
+            background: var(--surface);
+        }
+
+        tbody td:first-child {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* Objectives box */
+        .obj-box {
+            background: linear-gradient(135deg, rgba(91, 140, 255, 0.08), rgba(167, 139, 250, 0.06));
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 22px;
+            margin: 16px 0;
+        }
+
+        .obj-box .ob-gen {
+            display: flex;
+            gap: 13px;
+            padding-bottom: 16px;
+            border-bottom: 1px dashed var(--border);
+            margin-bottom: 16px;
+        }
+
+        .obj-box .ob-gen .ob-ic {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            border-radius: 11px;
+            background: var(--primary);
+            display: grid;
+            place-items: center;
+            color: white;
+        }
+
+        .obj-box .ob-gen b {
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary);
+            margin-bottom: 3px;
+        }
+
+        .obj-box .ob-gen p {
+            font-size: 14px;
+            color: var(--text-soft);
+        }
+
+        .obj-box .ob-spec b {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .obj-list {
+            display: grid;
+            gap: 8px;
+        }
+
+        .obj-list div {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            font-size: 13.5px;
+            color: var(--text-soft);
+        }
+
+        .obj-list div svg {
+            flex-shrink: 0;
+            margin-top: 3px;
+            color: var(--accent);
+        }
+
+        /* Key term */
+        .kterm {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin: 16px 0;
+        }
+
+        .kterm b {
+            color: var(--accent);
+            font-family: 'Lexend', sans-serif;
+        }
+
+        /* Back to top */
+        #toTop {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 46px;
+            height: 46px;
+            border-radius: 13px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            color: var(--text);
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s, transform 0.2s;
+            z-index: 80;
+            box-shadow: var(--shadow);
+        }
+
+        #toTop.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #toTop:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 50px 0 0;
+        }
+
+        mark {
+            background: rgba(251, 191, 36, 0.35);
+            color: #fff;
+            border-radius: 3px;
+            padding: 0 2px;
+        }
+
+        .overlay {
+            display: none;
+        }
+
+        /* Footer */
+        .pg-footer {
+            text-align: center;
+            padding: 40px 0 0;
+            color: var(--text-dim);
+            font-size: 12.5px;
+            border-top: 1px solid var(--border-soft);
+            margin-top: 50px;
+        }
+
+        .pg-footer b {
+            color: var(--text-soft);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            :root {
+                --sidebar-w: 290px;
+            }
+
+            .content {
+                padding: 0 28px 100px;
+            }
+
+            .topbar {
+                padding: 13px 28px;
+            }
+        }
+
+        @media (max-width: 860px) {
+            .sidebar {
+                transform: translateX(-100%);
+                box-shadow: var(--shadow);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .menu-toggle {
+                display: grid;
+            }
+
+            .overlay.show {
+                display: block;
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 90;
+                backdrop-filter: blur(2px);
+            }
+
+            .modules-grid,
+            .compare,
+            .grid3,
+            .grid2,
+            .phva,
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            .content {
+                padding: 0 18px 90px;
+            }
+
+            .topbar {
+                padding: 11px 18px;
+            }
+
+            .topbar-meta .lbl {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="progress-bar"></div>
+
+    <!-- ===================== SIDEBAR ===================== -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="brand">
+                <div class="brand-mark">TH</div>
+                <div class="brand-text">
+                    <h1>Talento Humano</h1>
+                    <p>Función Pública · Paraguay</p>
+                </div>
+            </div>
+            <div class="search-box">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.3-4.3" />
+                </svg>
+                <input type="text" id="search" placeholder="Buscar en la guía…" autocomplete="off" />
+            </div>
+        </div>
+        <nav class="nav-scroll" id="nav"></nav>
+        <div class="sidebar-footer">
+            <span class="dot"></span> Guía de estudio interactiva
+        </div>
+    </aside>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- ===================== MAIN ===================== -->
+    <div class="main">
+        <header class="topbar">
+            <button class="menu-toggle" id="menuToggle" aria-label="Menú">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12h18M3 6h18M3 18h18" />
+                </svg>
+            </button>
+            <div class="crumb" id="crumb"><b>Inicio</b></div>
+            <div class="topbar-meta">
+                <span><span class="lbl">Progreso de lectura</span> <span class="pct" id="pctText">0%</span></span>
+            </div>
+        </header>
+
+        <main class="content">
+            <!-- HERO -->
+            <section class="hero" id="inicio">
+                <span class="hero-badge">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2 2 7l10 5 10-5-10-5Z" />
+                        <path d="m2 17 10 5 10-5M2 12l10 5 10-5" />
+                    </svg>
+                    Guía estructurada de estudio
+                </span>
+                <h1>Gestión del Talento Humano<br>en la Función Pública</h1>
+                <p>Material de estudio organizado en 4 módulos: fundamentos, marco legal (Ley&nbsp;7445/25), ética e integridad, y gestión por procesos en las instituciones públicas del Paraguay.</p>
+                <div class="hero-stats">
+                    <div class="stat"><b>4</b><span>Módulos</span></div>
+                    <div class="stat"><b>30+</b><span>Temas clave</span></div>
+                    <div class="stat"><b>2025</b><span>Normativa vigente</span></div>
+                </div>
+            </section>
+
+            <!-- DASHBOARD CARDS -->
+            <section style="padding-top:10px;">
+                <div class="modules-grid">
+                    <a class="mod-card" href="#u1" style="--accent-c:#5b8cff;">
+                        <span class="mc-num">Módulo 01</span>
+                        <h3>Introducción a la Gestión del Talento Humano</h3>
+                        <p>Concepto, principios y rol estratégico del talento humano en el sector público.</p>
+                        <div class="mc-tags"><span class="mc-tag">Concepto</span><span class="mc-tag">Principios</span><span class="mc-tag">Capital humano</span></div>
+                    </a>
+                    <a class="mod-card" href="#u2" style="--accent-c:#2dd4bf;">
+                        <span class="mc-num">Módulo 02</span>
+                        <h3>Marco Legal y Normativo · Ley 7445/25</h3>
+                        <p>Derechos, deberes, prohibiciones y régimen disciplinario del servidor público.</p>
+                        <div class="mc-tags"><span class="mc-tag">Ley 7445/25</span><span class="mc-tag">Derechos</span><span class="mc-tag">Disciplina</span></div>
+                    </a>
+                    <a class="mod-card" href="#u3" style="--accent-c:#a78bfa;">
+                        <span class="mc-num">Módulo 03</span>
+                        <h3>Ética e Integridad en la Función Pública</h3>
+                        <p>Principios éticos, sistema de gestión ética y Código del Poder Ejecutivo.</p>
+                        <div class="mc-tags"><span class="mc-tag">Ética</span><span class="mc-tag">Integridad</span><span class="mc-tag">Valores</span></div>
+                    </a>
+                    <a class="mod-card" href="#u4" style="--accent-c:#fbbf24;">
+                        <span class="mc-num">Módulo 04</span>
+                        <h3>Gestión por Procesos</h3>
+                        <p>Marco MECIP, ciclo PHVA, mapa de procesos y mejora continua institucional.</p>
+                        <div class="mc-tags"><span class="mc-tag">MECIP</span><span class="mc-tag">PHVA</span><span class="mc-tag">Procesos</span></div>
+                    </a>
+                </div>
+            </section>
+
+            <!-- ============================================================= -->
+            <!-- UNIDAD 1 -->
+            <!-- ============================================================= -->
+            <div class="unit" id="u1" style="--accent-c:#5b8cff;">
+                <div class="unit-head">
+                    <div class="unit-badge">1</div>
+                    <div>
+                        <div class="uh-label">Módulo 01</div>
+                        <h2>Introducción a la Gestión del Talento Humano</h2>
+                        <p>Evolución de la gestión del talento humano en la función pública del Paraguay: fundamentos, principios e importancia estratégica.</p>
+                    </div>
+                </div>
+
+                <section class="block" id="u1-obj">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <circle cx="12" cy="12" r="6" />
+                                <circle cx="12" cy="12" r="2" />
+                            </svg></span>Objetivos del módulo</h3>
+                    <div class="obj-box">
+                        <div class="ob-gen">
+                            <div class="ob-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                                    <circle cx="12" cy="12" r="3" />
+                                </svg></div>
+                            <div><b>Objetivo general</b>
+                                <p>Comprender los fundamentos, procesos y la importancia estratégica de la Gestión del Talento Humano dentro de las organizaciones modernas.</p>
+                            </div>
+                        </div>
+                        <div class="ob-spec">
+                            <b>Objetivos específicos</b>
+                            <div class="obj-list">
+                                <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M20 6 9 17l-5-5" />
+                                    </svg><span>Explicar qué es la Gestión del Talento Humano.</span></div>
+                                <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M20 6 9 17l-5-5" />
+                                    </svg><span>Identificar sus principales funciones.</span></div>
+                                <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M20 6 9 17l-5-5" />
+                                    </svg><span>Reconocer su impacto en la productividad y la cultura organizacional.</span></div>
+                                <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M20 6 9 17l-5-5" />
+                                    </svg><span>Analizar casos básicos de gestión de personas en empresas reales.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="block" id="u1-concepto">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                            </svg></span>Concepto de Talento Humano en el sector público</h3>
+                    <p class="body">La gestión del talento humano en el sector público es un <strong>proceso estratégico</strong> que busca seleccionar, desarrollar y retener servidores públicos competentes, utilizando concursos públicos de oposición, evaluación del desempeño y capacitación, con el objetivo de mejorar la eficiencia institucional, la transparencia y la calidad del servicio a la ciudadanía.</p>
+                    <div class="callout key">
+                        <div class="ci"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="m9 11 3 3L22 4" />
+                                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                            </svg></div>
+                        <div class="ct"><b>Diferencia clave con el sector privado</b>Su finalidad no es la rentabilidad, sino la <strong>generación de valor público</strong>, el fortalecimiento institucional y la prestación eficiente de servicios a la ciudadanía.</div>
+                    </div>
+                </section>
+
+                <section class="block" id="u1-principios">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 3 4 9v12h16V9z" />
+                                <path d="M9 21V12h6v9" />
+                            </svg></span>Principios de la Función Pública</h3>
+                    <p class="body">Los principios están respaldados por la <strong>Constitución Nacional</strong> y desarrollados en la <strong>Ley N° 1626/2000</strong>. Se han propuesto normativas más recientes como la <strong>Ley N° 7445/2025</strong> de la Función Pública y del Servicio Civil para fortalecer la carrera profesional.</p>
+                    <div class="pills">
+                        <span class="pill"><span class="pd"></span>Ética</span>
+                        <span class="pill"><span class="pd"></span>Eficiencia</span>
+                        <span class="pill"><span class="pd"></span>Igualdad</span>
+                        <span class="pill"><span class="pd"></span>Transparencia</span>
+                    </div>
+                    <div class="callout law">
+                        <div class="ci"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 3v18M3 7l9-4 9 4M5 11h14M5 11l-2 6h6zM19 11l2 6h-6z" />
+                            </svg></div>
+                        <div class="ct"><b>Ley N° 1626/00 de la Función Pública</b>Exige <strong>probidad, obediencia legal, idoneidad y responsabilidad</strong>, regulando el ingreso por concurso, la carrera administrativa y la conducta del funcionario.</div>
+                    </div>
+                </section>
+
+                <section class="block" id="u1-capital">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 3v18h18" />
+                                <path d="m19 9-5 5-4-4-3 3" />
+                            </svg></span>Importancia del capital humano</h3>
+                    <p class="body">La importancia del capital humano radica en la <strong>estrategia de toda organización</strong>: es la clave de todo recurso estratégico planificado, alineado directamente con la Visión, la Misión y los objetivos organizacionales.</p>
+                    <div class="card">
+                        <p class="body" style="margin:0;">Invertir en capital humano es clave para el éxito de cualquier organización. Al potenciar las <strong>habilidades, conocimientos y bienestar</strong> de los empleados, las organizaciones logran mejorar su gestión, afianzar los resultados y adaptarse mejor a los retos y constantes cambios del entorno.</p>
+                    </div>
+                </section>
+
+                <section class="block" id="u1-rol">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+                            </svg></span>Rol del Talento Humano</h3>
+                    <p class="body">Las <strong>Unidades de Gestión y Desarrollo de las Personas</strong> están llamadas a conducir y direccionar la gestión de personas hacia una perspectiva más estratégica; es decir, contribuir al logro de los objetivos establecidos por la organización.</p>
+                    <div class="callout info">
+                        <div class="ci"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg></div>
+                        <div class="ct"><b>Del enfoque operativo al estratégico</b>Estas direcciones deberán <strong>superar los límites</strong> de la mera atención a los procesos administrativos y operativos que vienen realizando históricamente.</div>
+                    </div>
+                </section>
+                <div class="section-divider"></div>
+            </div>
+
+            <!-- ============================================================= -->
+            <!-- UNIDAD 2 -->
+            <!-- ============================================================= -->
+            <div class="unit" id="u2" style="--accent-c:#2dd4bf;">
+                <div class="unit-head">
+                    <div class="unit-badge">2</div>
+                    <div>
+                        <div class="uh-label">Módulo 02</div>
+                        <h2>Marco Legal y Normativo de la Función Pública</h2>
+                        <p>Análisis de la Ley 7445/25 y las normativas que regulan la gestión del talento humano en el sector público paraguayo.</p>
+                    </div>
+                </div>
+
+                <section class="block" id="u2-obj">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <circle cx="12" cy="12" r="6" />
+                                <circle cx="12" cy="12" r="2" />
+                            </svg></span>Objetivos del módulo</h3>
+                    <div class="obj-box">
+                        <div class="ob-gen">
+                            <div class="ob-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                                    <circle cx="12" cy="12" r="3" />
+                                </svg></div>
+                            <div><b>Objetivo general</b>
+                                <p>Analizar el marco legal que regula la gestión del talento humano en el sector público paraguayo.</p>
+                            </div>
+                        </div>
+                        <div class="ob-spec">
+                            <b>Objetivos específicos</b>
+                            <div class="obj-list">
+                                <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M20 6 9 17l-5-5" />
+                                    </svg><span>Conocer el alcance de la Ley 7445/25 y sus atribuciones.</span></div>
+                                <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M20 6 9 17l-5-5" />
+                                    </svg><span>Profundizar en las normativas complementarias y reglamentaciones de la función pública.</span></div>
+                                <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M20 6 9 17l-5-5" />
+                                    </svg><span>Identificar los derechos, deberes y prohibiciones del servidor público.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="block" id="u2-dif">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 3 4 7l4 4M4 7h16M16 21l4-4-4-4M20 17H4" />
+                            </svg></span>Diferencias: Ley 1626/00 vs. Ley 7445/25</h3>
+                    <div class="tbl-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Aspecto</th>
+                                    <th>Cambio que introduce la Ley 7445/25</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Ingreso y estabilidad</td>
+                                    <td>Obligatoriedad del concurso público. La estabilidad se adquiere tras un periodo de prueba más estricto y un proceso de evaluación.</td>
+                                </tr>
+                                <tr>
+                                    <td>Carrera profesional</td>
+                                    <td>Fomenta la carrera administrativa basada en el mérito, la idoneidad y la capacitación constante.</td>
+                                </tr>
+                                <tr>
+                                    <td>Ámbito de aplicación</td>
+                                    <td>Incluye administración central, entes descentralizados, gobernaciones y municipios, reconociendo carreras especiales.</td>
+                                </tr>
+                                <tr>
+                                    <td>Personal de confianza</td>
+                                    <td>Se limita y regula con mayor precisión el uso de cargos de confianza.</td>
+                                </tr>
+                                <tr>
+                                    <td>Régimen disciplinario</td>
+                                    <td>Se tipifican detalladamente las causas de sanciones y destituciones.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="block" id="u2-mejoras">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="m12 2 2.4 7.4H22l-6 4.6 2.3 7.4-6.3-4.6L5.7 21 8 14 2 9.4h7.6z" />
+                            </svg></span>Mejoras de la Ley 7445/25</h3>
+                    <div class="grid3">
+                        <div class="icard">
+                            <div class="ic-top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="m12 2 2.4 7.4H22l-6 4.6 2.3 7.4-6.3-4.6L5.7 21 8 14 2 9.4h7.6z" />
+                                </svg></div>
+                            <h4>Mérito</h4>
+                            <p>Ingreso y ascenso basados en el mérito.</p>
+                        </div>
+                        <div class="icard">
+                            <div class="ic-top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                    <circle cx="9" cy="7" r="4" />
+                                </svg></div>
+                            <h4>Carrera civil</h4>
+                            <p>Carrera civil y estabilidad laboral.</p>
+                        </div>
+                        <div class="icard">
+                            <div class="ic-top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 11 12 14 22 4" />
+                                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                                </svg></div>
+                            <h4>Desempeño</h4>
+                            <p>Evaluaciones de desempeño obligatorias.</p>
+                        </div>
+                        <div class="icard">
+                            <div class="ic-top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path d="M12 6v6l4 2" />
+                                </svg></div>
+                            <h4>Transparencia</h4>
+                            <p>Transparencia y medidas anti-nepotismo.</p>
+                        </div>
+                        <div class="icard">
+                            <div class="ic-top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                                    <path d="M3 9h18M9 21V9" />
+                                </svg></div>
+                            <h4>Regulación unificada</h4>
+                            <p>Marco normativo único e integrado.</p>
+                        </div>
+                        <div class="icard">
+                            <div class="ic-top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20" />
+                                </svg></div>
+                            <h4>Movilidad</h4>
+                            <p>Movilidad laboral entre instituciones.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="block" id="u2-normas">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" />
+                            </svg></span>Normativas complementarias</h3>
+                    <ul class="flist">
+                        <li><span class="li-ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="M20 6 9 17l-5-5" />
+                                </svg></span>
+                            <div><b>Decreto N° 4770/2025</b> — Reglamenta las disposiciones generales de la ley.</div>
+                        </li>
+                        <li><span class="li-ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="M20 6 9 17l-5-5" />
+                                </svg></span>
+                            <div><b>Decreto N° 4230/2025</b> — Establece la competencia regulatoria de las autoridades de aplicación.</div>
+                        </li>
+                        <li><span class="li-ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="M20 6 9 17l-5-5" />
+                                </svg></span>
+                            <div><b>Reglamento Interno Institucional</b> — Instrumento de gestión que regula el funcionamiento interno.</div>
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="block" id="u2-derechos">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 7h-9M14 17H5M17 21a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM7 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" />
+                            </svg></span>Derechos, deberes y prohibiciones</h3>
+                    <div class="grid3">
+                        <div class="icard" style="--accent-c:#34d399;">
+                            <div class="ic-top" style="color:#34d399;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 12l2 2 4-4" />
+                                    <path d="M21 12c0 1.66-4 6-9 6s-9-4.34-9-6 4-6 9-6 9 4.34 9 6Z" />
+                                </svg></div>
+                            <h4 style="color:#6ee7b7;">Derechos</h4>
+                            <p>• Estabilidad laboral<br>• Capacitación continua<br>• Sindicalización y huelga<br>• Permisos especiales</p>
+                        </div>
+                        <div class="icard" style="--accent-c:#5b8cff;">
+                            <div class="ic-top" style="color:#5b8cff;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                    <path d="m9 11 3 3L22 4" />
+                                </svg></div>
+                            <h4 style="color:#9db6ff;">Deberes</h4>
+                            <p>• Ingreso por concurso<br>• Rendición de cuentas<br>• Evaluación anual<br>• Uso eficiente de recursos</p>
+                        </div>
+                        <div class="icard" style="--accent-c:#f87171;">
+                            <div class="ic-top" style="color:#f87171;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path d="m4.9 4.9 14.2 14.2" />
+                                </svg></div>
+                            <h4 style="color:#fca5a5;">Prohibiciones</h4>
+                            <p>• Nepotismo<br>• Inhabilidades por penas<br>• Cargos de confianza fuera de estabilidad<br>• Conflictos de interés</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="block" id="u2-disciplina">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 3v18M3 7l9-4 9 4M5 11h14M5 11l-2 6h6zM19 11l2 6h-6z" />
+                            </svg></span>Régimen disciplinario</h3>
+                    <div class="grid2">
+                        <div class="icard">
+                            <div class="ic-top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                    <path d="M14 2v6h6" />
+                                </svg></div>
+                            <h4>Responsabilidad administrativa</h4>
+                            <p>El servidor responde administrativamente por sus actos en el ejercicio del cargo.</p>
+                        </div>
+                        <div class="icard">
+                            <div class="ic-top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 6h18M3 12h18M3 18h12" />
+                                </svg></div>
+                            <h4>Tipificación de faltas</h4>
+                            <p>Clasificadas en leves, graves y gravísimas según su gravedad.</p>
+                        </div>
+                        <div class="icard">
+                            <div class="ic-top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="m12 2 2.4 7.4H22l-6 4.6 2.3 7.4-6.3-4.6L5.7 21 8 14 2 9.4h7.6z" />
+                                </svg></div>
+                            <h4>Sanciones</h4>
+                            <p>Amonestaciones, suspensiones y destitución según la falta cometida.</p>
+                        </div>
+                        <div class="icard">
+                            <div class="ic-top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 12l2 2 4-4" />
+                                    <circle cx="12" cy="12" r="10" />
+                                </svg></div>
+                            <h4>Debido proceso</h4>
+                            <p>Garantía del debido proceso antes de aplicar cualquier sanción.</p>
+                        </div>
+                    </div>
+                    <div class="callout warn">
+                        <div class="ci"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" />
+                                <path d="M12 9v4M12 17h.01" />
+                            </svg></div>
+                        <div class="ct"><b>Responsabilidades administrativas</b>Se fundamentan en normas y profesionalización, exigen cumplimiento de prohibiciones e idoneidad. Las sanciones se aplican <strong>tras sumario</strong>, con extinción de responsabilidad y responsabilidad sobre los nombramientos.</div>
+                    </div>
+                </section>
+                <div class="section-divider"></div>
+            </div>
+
+            <!-- ============================================================= -->
+            <!-- UNIDAD 3 -->
+            <!-- ============================================================= -->
+            <div class="unit" id="u3" style="--accent-c:#a78bfa;">
+                <div class="unit-head">
+                    <div class="unit-badge">3</div>
+                    <div>
+                        <div class="uh-label">Módulo 03</div>
+                        <h2>Ética e Integridad en la Función Pública</h2>
+                        <p>Marco conceptual, principios y sistema de gestión ética en el servicio público.</p>
+                    </div>
+                </div>
+
+                <section class="block" id="u3-concepto">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4 3 5.5V18a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-3.5c1.5-1.5 3-3 3-5.5a7 7 0 0 0-7-7Z" />
+                                <path d="M9 22h6" />
+                            </svg></span>Concepto de Ética</h3>
+                    <div class="kterm">
+                        <p style="margin:0;font-size:14px;color:var(--text-soft);"><b>Etimología.</b> Procede del griego antiguo <em>"ethos"</em>, que significa carácter, modo de ser o costumbre. Estudia el comportamiento moral del hombre como ser individual y social.</p>
+                    </div>
+                    <p class="body">Es una disciplina de la filosofía que estudia el comportamiento humano y su relación con:</p>
+                    <div class="pills">
+                        <span class="pill"><span class="pd"></span>El bien y el mal</span>
+                        <span class="pill"><span class="pd"></span>Preceptos morales y el deber</span>
+                        <span class="pill"><span class="pd"></span>La felicidad y el bienestar común</span>
+                    </div>
+                </section>
+
+                <section class="block" id="u3-profesional">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 7h-9M14 17H5" />
+                                <circle cx="17" cy="17" r="3" />
+                                <circle cx="7" cy="7" r="3" />
+                            </svg></span>De la ética a la ética profesional</h3>
+                    <p class="body">La ética profesional se centra en la <strong>actuación correcta</strong> que busca la excelencia en el servicio brindado a la sociedad. Toda actividad tiene un significado moral: beneficia o perjudica la vida de las personas en su entorno directo.</p>
+                    <h4 style="font-family:'Lexend',sans-serif;font-size:15px;margin:20px 0 4px;color:var(--text);">Características clave</h4>
+                    <ul class="flist">
+                        <li><span class="li-ic">1</span>
+                            <div><b>Conciencia de responsabilidad</b> — Crea un sentido de deber en cada individuo para lograr el mejor rendimiento profesional posible.</div>
+                        </li>
+                        <li><span class="li-ic">2</span>
+                            <div><b>Determinación de acción</b> — Define cómo debe actuar un profesional ante situaciones específicas y complejas.</div>
+                        </li>
+                        <li><span class="li-ic">3</span>
+                            <div><b>Vínculo deontológico</b> — No es coactiva (no impone sanciones legales per se), pero se normaliza mediante Códigos Deontológicos.</div>
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="block" id="u3-imperativos">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2 2 7l10 5 10-5-10-5Z" />
+                                <path d="m2 17 10 5 10-5" />
+                            </svg></span>Imperativos profesionales</h3>
+                    <div class="grid2">
+                        <div class="icard">
+                            <div class="ic-top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                    <circle cx="9" cy="7" r="4" />
+                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                                </svg></div>
+                            <h4>Solidaridad</h4>
+                            <p>Colaboración mutua y apoyo en la gestión.</p>
+                        </div>
+                        <div class="icard">
+                            <div class="ic-top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="m12 2 2.4 7.4H22l-6 4.6 2.3 7.4-6.3-4.6L5.7 21 8 14 2 9.4h7.6z" />
+                                </svg></div>
+                            <h4>Competencia</h4>
+                            <p>Capacidad técnica y moral comprobada.</p>
+                        </div>
+                        <div class="icard">
+                            <div class="ic-top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6" />
+                                    <path d="m3 8 9-5 9 5-9 5z" />
+                                </svg></div>
+                            <h4>Servicio</h4>
+                            <p>Enfoque total en el ciudadano y el cliente.</p>
+                        </div>
+                        <div class="icard">
+                            <div class="ic-top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
+                                </svg></div>
+                            <h4>Confiabilidad</h4>
+                            <p>Seguridad y reserva en el manejo de información.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="block" id="u3-publica">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 3 4 9v12h16V9z" />
+                                <path d="M9 21V12h6v9" />
+                            </svg></span>Ética Pública</h3>
+                    <div class="kterm">
+                        <p style="margin:0;font-size:14px;color:var(--text-soft);"><b>Definición.</b> Es la ética aplicada y puesta en práctica en el servicio público.</p>
+                    </div>
+                    <h4 style="font-family:'Lexend',sans-serif;font-size:15px;margin:20px 0 8px;color:var(--text);">Principios fundamentales</h4>
+                    <div class="pills">
+                        <span class="pill"><span class="pd"></span>Legalidad</span>
+                        <span class="pill"><span class="pd"></span>Interés general</span>
+                        <span class="pill"><span class="pd"></span>Transparencia</span>
+                        <span class="pill"><span class="pd"></span>Igualdad</span>
+                    </div>
+                    <h4 style="font-family:'Lexend',sans-serif;font-size:15px;margin:22px 0 8px;color:var(--text);">¿Por qué es necesaria?</h4>
+                    <div class="steps">
+                        <div class="step">
+                            <div class="sn">1</div>
+                            <div>
+                                <h4>Reflexión crítica</h4>
+                                <p>Para erradicar las malas prácticas y la corrupción.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="sn">2</div>
+                            <div>
+                                <h4>Eficiencia administrativa</h4>
+                                <p>Mejorar la administración mediante eficacia y economía.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="sn">3</div>
+                            <div>
+                                <h4>Demanda ciudadana</h4>
+                                <p>Responder a las exigencias legítimas de la población.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="block" id="u3-doble">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M16 16h6M19 13v6M9 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM3 20a6 6 0 0 1 12 0" />
+                            </svg></span>Doble responsabilidad</h3>
+                    <div class="compare">
+                        <div class="col new">
+                            <div class="col-head"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="8" r="5" />
+                                    <path d="M20 21a8 8 0 0 0-16 0" />
+                                </svg>Como persona</div>
+                            <ul>
+                                <li><span class="ic">•</span>Debe conducirse según las exigencias de la ética general que rige a todo ciudadano.</li>
+                            </ul>
+                        </div>
+                        <div class="col new">
+                            <div class="col-head"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 3 4 9v12h16V9z" />
+                                </svg>Como servidor</div>
+                            <ul>
+                                <li><span class="ic">•</span>Representa al Estado; su responsabilidad se acentúa por el impacto público de sus actos.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="block" id="u3-integridad">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
+                                <path d="m9 12 2 2 4-4" />
+                            </svg></span>Fundamentos del sistema: Integridad</h3>
+                    <div class="callout law">
+                        <div class="ci"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
+                            </svg></div>
+                        <div class="ct"><b>¿Qué es la integridad?</b>Es la cualidad de una persona que actúa con <strong>rectitud, honradez y coherencia</strong>. Implica que sus acciones están alineadas con sus valores éticos y morales, manteniendo una conducta recta <strong>incluso cuando nadie está observando</strong>.</div>
+                    </div>
+                    <div class="grid2">
+                        <div class="card">
+                            <h4 style="font-family:'Lexend',sans-serif;font-size:14.5px;margin-bottom:6px;">Integridad y confianza</h4>
+                            <p class="body" style="margin:0;font-size:13.5px;">La ausencia de ética deslegitima el sistema político y fomenta la corrupción. La meta es resguardar la función pública mediante los más altos estándares de responsabilidad.</p>
+                        </div>
+                        <div class="card">
+                            <h4 style="font-family:'Lexend',sans-serif;font-size:14.5px;margin-bottom:6px;">Integridad pública</h4>
+                            <p class="body" style="margin:0;font-size:13.5px;">Factor inherente al Estado democrático: alineamiento constante de valores y normas morales para priorizar el interés público.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="block" id="u3-pilares">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 21h18M5 21V7l8-4 8 4v14M9 9v.01M9 12v.01M9 15v.01M9 18v.01" />
+                            </svg></span>Pilares del sistema de integridad</h3>
+                    <div class="tbl-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Componente</th>
+                                    <th>Descripción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Voluntad política</td>
+                                    <td>Compromiso del Ejecutivo para prevenir y combatir la corrupción.</td>
+                                </tr>
+                                <tr>
+                                    <td>Servicio civil</td>
+                                    <td>Mérito, competencia, imparcialidad y profesionalismo.</td>
+                                </tr>
+                                <tr>
+                                    <td>Sector privado</td>
+                                    <td>Empresariado honesto, capaz y responsable.</td>
+                                </tr>
+                                <tr>
+                                    <td>Sociedad civil</td>
+                                    <td>Ciudadanía informada e implicada en el control social.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="block" id="u3-valores">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z" />
+                            </svg></span>Valores del Código de Ética</h3>
+                    <div class="pills">
+                        <span class="pill"><span class="pd"></span>Vocación de servicio</span>
+                        <span class="pill"><span class="pd"></span>Compromiso</span>
+                        <span class="pill"><span class="pd"></span>Transparencia</span>
+                        <span class="pill"><span class="pd"></span>Responsabilidad</span>
+                        <span class="pill"><span class="pd"></span>Legalidad</span>
+                        <span class="pill"><span class="pd"></span>Integridad</span>
+                        <span class="pill"><span class="pd"></span>Cordialidad</span>
+                        <span class="pill"><span class="pd"></span>Esmero y calidad</span>
+                        <span class="pill"><span class="pd"></span>Honestidad</span>
+                        <span class="pill"><span class="pd"></span>Respeto</span>
+                    </div>
+                </section>
+
+                <section class="block" id="u3-impacto">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 3v18h18" />
+                                <path d="m19 9-5 5-4-4-3 3" />
+                            </svg></span>Impacto y beneficios</h3>
+                    <div class="grid3">
+                        <div class="icard">
+                            <div class="ic-top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 12l2 2 4-4" />
+                                    <circle cx="12" cy="12" r="10" />
+                                </svg></div>
+                            <h4>Expectativas positivas</h4>
+                            <p>Genera un clima de seguridad y confianza interna y externa.</p>
+                        </div>
+                        <div class="icard">
+                            <div class="ic-top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
+                                </svg></div>
+                            <h4>Reducción de riesgos</h4>
+                            <p>Evita malas gestiones, prácticas corruptas o comportamientos irresponsables.</p>
+                        </div>
+                        <div class="icard">
+                            <div class="ic-top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 21h18M5 21V7l8-4 8 4v14" />
+                                </svg></div>
+                            <h4>Imagen institucional</h4>
+                            <p>Proyecta profesionalismo y excelencia ante la ciudadanía.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="block" id="u3-codigo">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                <path d="M14 2v6h6" />
+                            </svg></span>Código de Ética del Poder Ejecutivo</h3>
+                    <div class="callout law">
+                        <div class="ci"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 3v18M3 7l9-4 9 4M5 11h14" />
+                            </svg></div>
+                        <div class="ct"><b>Decreto N° 10.143/2012 — Aprobado el 28 de noviembre de 2012</b>Ámbito: aplicable a todo el Poder Ejecutivo de la República. Pone en vigencia un <strong>sistema de gestión ética integral</strong> y orienta la conducta de autoridades y servidores públicos.</div>
+                    </div>
+                </section>
+                <div class="section-divider"></div>
+            </div>
+
+            <!-- ============================================================= -->
+            <!-- UNIDAD 4 -->
+            <!-- ============================================================= -->
+            <div class="unit" id="u4" style="--accent-c:#fbbf24;">
+                <div class="unit-head">
+                    <div class="unit-badge">4</div>
+                    <div>
+                        <div class="uh-label">Módulo 04</div>
+                        <h2>Gestión por Procesos</h2>
+                        <p>Guía práctica para instituciones públicas del Paraguay, alineada con el Modelo Estándar de Control Interno (MECIP). USAID&nbsp;|&nbsp;CEAMSO.</p>
+                    </div>
+                </div>
+
+                <section class="block" id="u4-intro">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="3" />
+                                <path d="M12 1v6m0 6v6M4.2 4.2l4.3 4.3m6.9 6.9 4.3 4.3M1 12h6m6 0h6M4.2 19.8l4.3-4.3m6.9-6.9 4.3-4.3" />
+                            </svg></span>¿Qué es gestionar por procesos?</h3>
+                    <p class="body">Es administrar los recursos institucionales considerándola como una <strong>unidad integrada</strong>, donde cada parte participa en el resultado final. Supone situar al <strong>ciudadano</strong> como el cliente fundamental de la prestación del servicio público.</p>
+                    <ul class="flist">
+                        <li><span class="li-ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="M20 6 9 17l-5-5" />
+                                </svg></span>
+                            <div>Interconectividad total de áreas.</div>
+                        </li>
+                        <li><span class="li-ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="M20 6 9 17l-5-5" />
+                                </svg></span>
+                            <div>Eliminación de divisiones estancas.</div>
+                        </li>
+                        <li><span class="li-ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="M20 6 9 17l-5-5" />
+                                </svg></span>
+                            <div>Medición de resultados frente a objetivos.</div>
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="block" id="u4-vision">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 3 4 7l4 4M4 7h16M16 21l4-4-4-4M20 17H4" />
+                            </svg></span>Visión funcional vs. visión de procesos</h3>
+                    <div class="compare">
+                        <div class="col old">
+                            <div class="col-head"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path d="m15 9-6 6M9 9l6 6" />
+                                </svg>Visión funcional</div>
+                            <ul>
+                                <li><span class="ic">✕</span>¿Quién causó el problema?</li>
+                                <li><span class="ic">✕</span>Cuido de mi servicio</li>
+                                <li><span class="ic">✕</span>Barreras entre departamentos</li>
+                                <li><span class="ic">✕</span>Individualismo</li>
+                                <li><span class="ic">✕</span>Compromiso con metas de área</li>
+                                <li><span class="ic">✕</span>Orientado para el jefe</li>
+                            </ul>
+                        </div>
+                        <div class="col new">
+                            <div class="col-head"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                    <path d="m9 11 3 3L22 4" />
+                                </svg>Visión de procesos</div>
+                            <ul>
+                                <li><span class="ic">✓</span>¿Qué causó el problema?</li>
+                                <li><span class="ic">✓</span>Soy parte del proceso</li>
+                                <li><span class="ic">✓</span>Integración y flujo</li>
+                                <li><span class="ic">✓</span>Trabajo en equipo</li>
+                                <li><span class="ic">✓</span>Compromiso con metas institucionales</li>
+                                <li><span class="ic">✓</span>Orientado para el ciudadano/cliente</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="block" id="u4-phva">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 12a9 9 0 1 1-9-9c2.5 0 4.8 1 6.4 2.6L21 8" />
+                                <path d="M21 3v5h-5" />
+                            </svg></span>Mejora continua: Ciclo PHVA</h3>
+                    <div class="phva">
+                        <div class="phva-card"><span class="pl">P</span>
+                            <h4>Planificar</h4>
+                            <p>Establecer objetivos y procesos necesarios para conseguir resultados.</p>
+                        </div>
+                        <div class="phva-card"><span class="pl">H</span>
+                            <h4>Hacer</h4>
+                            <p>Implementar los procesos y ejecutar las actividades definidas.</p>
+                        </div>
+                        <div class="phva-card"><span class="pl">V</span>
+                            <h4>Verificar</h4>
+                            <p>Realizar seguimiento y medir procesos respecto a las políticas.</p>
+                        </div>
+                        <div class="phva-card"><span class="pl">A</span>
+                            <h4>Actuar</h4>
+                            <p>Tomar acciones para mejorar continuamente el desempeño.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="block" id="u4-objetivos">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <circle cx="12" cy="12" r="6" />
+                                <circle cx="12" cy="12" r="2" />
+                            </svg></span>Objetivos estratégicos</h3>
+                    <ul class="flist">
+                        <li><span class="li-ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="M20 6 9 17l-5-5" />
+                                </svg></span>
+                            <div><b>Eficiencia operativa</b> — Establecer el modelo de operación más eficiente.</div>
+                        </li>
+                        <li><span class="li-ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="M20 6 9 17l-5-5" />
+                                </svg></span>
+                            <div><b>Optimización</b> — Reducir repetitividad y minimizar burocracia.</div>
+                        </li>
+                        <li><span class="li-ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="M20 6 9 17l-5-5" />
+                                </svg></span>
+                            <div><b>Valor agregado</b> — Conocer el valor aportado en cada actividad del servicio.</div>
+                        </li>
+                        <li><span class="li-ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="M20 6 9 17l-5-5" />
+                                </svg></span>
+                            <div><b>Transparencia</b> — Facilitar la rendición de cuentas ante el ciudadano.</div>
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="block" id="u4-normograma">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 3v18M3 7l9-4 9 4M5 11h14M5 11l-2 6h6zM19 11l2 6h-6z" />
+                            </svg></span>Normograma: la base legal</h3>
+                    <p class="body">La operación de todo proceso parte de las normas que lo reglamentan. Es vital identificar la <strong>jerarquía normativa</strong>. El normograma socializa los requisitos legales entre los responsables del proceso.</p>
+                    <div class="steps">
+                        <div class="step">
+                            <div class="sn">1</div>
+                            <div>
+                                <h4>Constitución Nacional</h4>
+                                <p>Norma suprema del ordenamiento jurídico.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="sn">2</div>
+                            <div>
+                                <h4>Leyes y Decretos</h4>
+                                <p>Desarrollan los mandatos constitucionales.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="sn">3</div>
+                            <div>
+                                <h4>Resoluciones y Reglamentos Internos</h4>
+                                <p>Regulan la operación específica de cada institución.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="block" id="u4-macro">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="7" height="7" rx="1" />
+                                <rect x="14" y="3" width="7" height="7" rx="1" />
+                                <rect x="14" y="14" width="7" height="7" rx="1" />
+                                <rect x="3" y="14" width="7" height="7" rx="1" />
+                            </svg></span>Tipos de macroprocesos</h3>
+                    <div class="grid3">
+                        <div class="icard">
+                            <div class="ic-top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="m12 2 2.4 7.4H22l-6 4.6 2.3 7.4-6.3-4.6L5.7 21 8 14 2 9.4h7.6z" />
+                                </svg></div>
+                            <h4>Estratégicos</h4>
+                            <p>Orientan a la institución hacia el cumplimiento de su misión y visión.</p>
+                        </div>
+                        <div class="icard">
+                            <div class="ic-top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6" />
+                                    <path d="m3 8 9-5 9 5-9 5z" />
+                                </svg></div>
+                            <h4>Misionales</h4>
+                            <p>Directamente relacionados con la entrega de bienes y servicios al ciudadano.</p>
+                        </div>
+                        <div class="icard">
+                            <div class="ic-top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z" />
+                                </svg></div>
+                            <h4>De apoyo</h4>
+                            <p>Proveen los recursos necesarios para que los procesos misionales funcionen.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="block" id="u4-jerarquia">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="6" rx="1" />
+                                <rect x="7" y="15" width="10" height="6" rx="1" />
+                                <path d="M12 9v6" />
+                            </svg></span>De macroproceso a tarea</h3>
+                    <div class="steps">
+                        <div class="step">
+                            <div class="sn">1</div>
+                            <div>
+                                <h4>Macroproceso</h4>
+                                <p>Agrupación de procesos con un objetivo común institucional.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="sn">2</div>
+                            <div>
+                                <h4>Proceso</h4>
+                                <p>Conjunto de actividades interrelacionadas que crean valor.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="sn">3</div>
+                            <div>
+                                <h4>Subproceso</h4>
+                                <p>Desglose de un proceso complejo para garantizar su control.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="callout key">
+                        <div class="ci"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
+                            </svg></div>
+                        <div class="ct"><b>Regla de redacción</b>La definición de objetivos debe utilizar <strong>verbos en infinitivo</strong> para promover la acción.</div>
+                    </div>
+                </section>
+
+                <section class="block" id="u4-mapa">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3z" />
+                                <path d="M9 3v15M15 6v15" />
+                            </svg></span>Mapa de procesos</h3>
+                    <p class="body">Representación gráfica del modelo de gestión que permite visualizar:</p>
+                    <ul class="flist">
+                        <li><span class="li-ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="M20 6 9 17l-5-5" />
+                                </svg></span>
+                            <div>Secuencia de interacción.</div>
+                        </li>
+                        <li><span class="li-ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="M20 6 9 17l-5-5" />
+                                </svg></span>
+                            <div>Vinculación con lineamientos estratégicos.</div>
+                        </li>
+                        <li><span class="li-ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="M20 6 9 17l-5-5" />
+                                </svg></span>
+                            <div>Flujo de valor desde la entrada (necesidad) hasta la salida (satisfacción).</div>
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="block" id="u4-ficha">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" />
+                            </svg></span>La ficha de proceso</h3>
+                    <p class="body">Descripción detallada que permite asegurar que el proceso se <strong>planifica, controla y ejecuta correctamente</strong>.</p>
+                    <div class="tbl-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Elemento</th>
+                                    <th>Descripción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Entradas / Proveedores</td>
+                                    <td>Insumos, información o materiales requeridos.</td>
+                                </tr>
+                                <tr>
+                                    <td>Salidas / Clientes</td>
+                                    <td>Productos o servicios finales para el ciudadano.</td>
+                                </tr>
+                                <tr>
+                                    <td>Controles asociados</td>
+                                    <td>Mecanismos para asegurar la operación eficaz.</td>
+                                </tr>
+                                <tr>
+                                    <td>Indicadores</td>
+                                    <td>Métricas de eficacia y eficiencia (% de cumplimiento).</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="block" id="u4-compromiso">
+                    <h3><span class="hicon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+                            </svg></span>Compromiso y equipos</h3>
+                    <p class="body">La implementación es responsabilidad de las <strong>Máximas Autoridades</strong> y su equipo directivo.</p>
+                    <div class="compare">
+                        <div class="col new">
+                            <div class="col-head"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="m12 2 2.4 7.4H22l-6 4.6 2.3 7.4-6.3-4.6L5.7 21 8 14 2 9.4h7.6z" />
+                                </svg>Nivel estratégico</div>
+                            <ul>
+                                <li><span class="ic">•</span>Alta Dirección — responsable de los macroprocesos.</li>
+                            </ul>
+                        </div>
+                        <div class="col new">
+                            <div class="col-head"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z" />
+                                </svg>Nivel operativo</div>
+                            <ul>
+                                <li><span class="ic">•</span>Dirección Intermedia y Técnicos — procesos y tareas.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="callout info">
+                        <div class="ci"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M12 16v-4M12 8h.01" />
+                            </svg></div>
+                        <div class="ct"><b>Fuente</b>Material adaptado de la <em>Guía Práctica de Gestión por Procesos</em> — USAID / CEAMSO, alineada con el Modelo Estándar de Control Interno del Paraguay (MECIP).</div>
+                    </div>
+                </section>
+            </div>
+
+            <footer class="pg-footer">
+                <p><b>Guía de Estudio · Gestión del Talento Humano en la Función Pública del Paraguay</b></p>
+                <p style="margin-top:6px;">Material organizado en 4 módulos para estudio estructurado · Normativa vigente 2025</p>
+            </footer>
+        </main>
+    </div>
+
+    <button id="toTop" aria-label="Volver arriba">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m18 15-6-6-6 6" />
+        </svg>
+    </button>
+
+    <script>
+        (function () {
+            'use strict';
+
+            // ---- Navigation data ----
+            const NAV = [
+                {
+                    id: 'u1', n: '1', title: 'Introducción al Talento Humano', sub: [
+                        { id: 'u1-obj', t: 'Objetivos del módulo' },
+                        { id: 'u1-concepto', t: 'Concepto en el sector público' },
+                        { id: 'u1-principios', t: 'Principios de la Función Pública' },
+                        { id: 'u1-capital', t: 'Importancia del capital humano' },
+                        { id: 'u1-rol', t: 'Rol del Talento Humano' },
+                    ]
+                },
+                {
+                    id: 'u2', n: '2', title: 'Marco Legal · Ley 7445/25', sub: [
+                        { id: 'u2-obj', t: 'Objetivos del módulo' },
+                        { id: 'u2-dif', t: 'Ley 1626/00 vs. 7445/25' },
+                        { id: 'u2-mejoras', t: 'Mejoras de la Ley 7445/25' },
+                        { id: 'u2-normas', t: 'Normativas complementarias' },
+                        { id: 'u2-derechos', t: 'Derechos, deberes y prohibiciones' },
+                        { id: 'u2-disciplina', t: 'Régimen disciplinario' },
+                    ]
+                },
+                {
+                    id: 'u3', n: '3', title: 'Ética e Integridad', sub: [
+                        { id: 'u3-concepto', t: 'Concepto de Ética' },
+                        { id: 'u3-profesional', t: 'Ética profesional' },
+                        { id: 'u3-imperativos', t: 'Imperativos profesionales' },
+                        { id: 'u3-publica', t: 'Ética Pública' },
+                        { id: 'u3-doble', t: 'Doble responsabilidad' },
+                        { id: 'u3-integridad', t: 'Fundamentos: Integridad' },
+                        { id: 'u3-pilares', t: 'Pilares del sistema' },
+                        { id: 'u3-valores', t: 'Valores del Código' },
+                        { id: 'u3-impacto', t: 'Impacto y beneficios' },
+                        { id: 'u3-codigo', t: 'Código del Poder Ejecutivo' },
+                    ]
+                },
+                {
+                    id: 'u4', n: '4', title: 'Gestión por Procesos', sub: [
+                        { id: 'u4-intro', t: '¿Qué es gestionar por procesos?' },
+                        { id: 'u4-vision', t: 'Visión funcional vs. procesos' },
+                        { id: 'u4-phva', t: 'Ciclo PHVA' },
+                        { id: 'u4-objetivos', t: 'Objetivos estratégicos' },
+                        { id: 'u4-normograma', t: 'Normograma' },
+                        { id: 'u4-macro', t: 'Tipos de macroprocesos' },
+                        { id: 'u4-jerarquia', t: 'De macroproceso a tarea' },
+                        { id: 'u4-mapa', t: 'Mapa de procesos' },
+                        { id: 'u4-ficha', t: 'La ficha de proceso' },
+                        { id: 'u4-compromiso', t: 'Compromiso y equipos' },
+                    ]
+                },
+            ];
+
+            // ---- Build sidebar ----
+            const nav = document.getElementById('nav');
+            NAV.forEach(function (u) {
+                const wrap = document.createElement('div');
+                wrap.className = 'nav-unit';
+                const btn = document.createElement('button');
+                btn.className = 'nav-unit-btn';
+                btn.dataset.target = u.id;
+                btn.innerHTML = '<span class="nav-num">' + u.n + '</span><span>' + u.title + '</span>' +
+                    '<svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>';
+                const subWrap = document.createElement('div');
+                subWrap.className = 'nav-sub';
+                subWrap.id = 'sub-' + u.id;
+                u.sub.forEach(function (s) {
+                    const a = document.createElement('a');
+                    a.href = '#' + s.id;
+                    a.dataset.id = s.id;
+                    a.textContent = s.t;
+                    subWrap.appendChild(a);
+                });
+                btn.addEventListener('click', function () {
+                    const isOpen = subWrap.classList.contains('open');
+                    document.querySelectorAll('.nav-sub.open').forEach(function (el) { el.classList.remove('open'); });
+                    document.querySelectorAll('.nav-unit-btn.open').forEach(function (el) { el.classList.remove('open'); });
+                    if (!isOpen) {
+                        subWrap.classList.add('open');
+                        btn.classList.add('open');
+                    }
+                    document.getElementById(u.id).scrollIntoView({ behavior: 'smooth' });
+                    closeMobile();
+                });
+                wrap.appendChild(btn);
+                wrap.appendChild(subWrap);
+                nav.appendChild(wrap);
+            });
+
+            // ---- Smooth scroll for sub-links ----
+            nav.querySelectorAll('.nav-sub a').forEach(function (a) {
+                a.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const el = document.getElementById(a.dataset.id);
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    closeMobile();
+                });
+            });
+
+            // ---- Module dashboard cards smooth scroll ----
+            document.querySelectorAll('.mod-card').forEach(function (c) {
+                c.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const id = c.getAttribute('href').slice(1);
+                    const el = document.getElementById(id);
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // ---- Scroll spy ----
+            const allSections = Array.from(document.querySelectorAll('section.block'));
+            const units = Array.from(document.querySelectorAll('.unit'));
+            const crumb = document.getElementById('crumb');
+            const unitTitles = { u1: 'Módulo 1 · Talento Humano', u2: 'Módulo 2 · Marco Legal', u3: 'Módulo 3 · Ética', u4: 'Módulo 4 · Procesos' };
+
+            function setActive() {
+                const scrollPos = window.scrollY + 130;
+                let currentSub = null;
+                for (let i = 0; i < allSections.length; i++) {
+                    if (allSections[i].offsetTop <= scrollPos) currentSub = allSections[i].id;
+                }
+                let currentUnit = null;
+                for (let i = 0; i < units.length; i++) {
+                    if (units[i].offsetTop <= scrollPos + 60) currentUnit = units[i].id;
+                }
+
+                nav.querySelectorAll('.nav-sub a').forEach(function (a) {
+                    a.classList.toggle('active', a.dataset.id === currentSub);
+                });
+
+                nav.querySelectorAll('.nav-unit-btn').forEach(function (b) {
+                    const isCur = b.dataset.target === currentUnit;
+                    b.classList.toggle('active', isCur);
+                    const sub = document.getElementById('sub-' + b.dataset.target);
+                    if (isCur && !sub.classList.contains('open')) {
+                        document.querySelectorAll('.nav-sub.open').forEach(function (el) { el.classList.remove('open'); });
+                        document.querySelectorAll('.nav-unit-btn.open').forEach(function (el) { el.classList.remove('open'); });
+                        sub.classList.add('open');
+                        b.classList.add('open');
+                    }
+                });
+
+                // breadcrumb
+                if (currentUnit && window.scrollY > 200) {
+                    const subObj = currentSub ? findSub(currentSub) : null;
+                    crumb.innerHTML = '<b>' + (unitTitles[currentUnit] || '') + '</b>' + (subObj ? ' · ' + subObj.t : '');
+                } else {
+                    crumb.innerHTML = '<b>Inicio</b>';
+                }
+            }
+
+            function findSub(id) {
+                for (const u of NAV) { for (const s of u.sub) { if (s.id === id) return s; } }
+                return null;
+            }
+
+            // ---- Reading progress ----
+            const bar = document.getElementById('progress-bar');
+            const pctText = document.getElementById('pctText');
+            const toTop = document.getElementById('toTop');
+
+            function onScroll() {
+                const h = document.documentElement;
+                const scrolled = h.scrollTop;
+                const max = h.scrollHeight - h.clientHeight;
+                const pct = max > 0 ? (scrolled / max) * 100 : 0;
+                bar.style.width = pct + '%';
+                pctText.textContent = Math.round(pct) + '%';
+                toTop.classList.toggle('show', scrolled > 500);
+                setActive();
+            }
+
+            let ticking = false;
+            window.addEventListener('scroll', function () {
+                if (!ticking) {
+                    window.requestAnimationFrame(function () { onScroll(); ticking = false; });
+                    ticking = true;
+                }
+            });
+
+            toTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+            // ---- Mobile menu ----
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const menuToggle = document.getElementById('menuToggle');
+            function closeMobile() { sidebar.classList.remove('open'); overlay.classList.remove('show'); }
+            menuToggle.addEventListener('click', function () {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('show');
+            });
+            overlay.addEventListener('click', closeMobile);
+
+            // ---- Search ----
+            const search = document.getElementById('search');
+            const navUnits = Array.from(document.querySelectorAll('.nav-unit'));
+
+            search.addEventListener('input', function () {
+                const q = search.value.trim().toLowerCase();
+                if (!q) {
+                    navUnits.forEach(function (u) {
+                        u.style.display = '';
+                        u.querySelectorAll('.nav-sub a').forEach(function (a) { a.style.display = ''; });
+                    });
+                    return;
+                }
+                navUnits.forEach(function (u) {
+                    const btn = u.querySelector('.nav-unit-btn');
+                    const unitMatch = btn.textContent.toLowerCase().indexOf(q) !== -1;
+                    let anyChild = false;
+                    const sub = u.querySelector('.nav-sub');
+                    u.querySelectorAll('.nav-sub a').forEach(function (a) {
+                        const m = a.textContent.toLowerCase().indexOf(q) !== -1;
+                        a.style.display = (m || unitMatch) ? '' : 'none';
+                        if (m) anyChild = true;
+                    });
+                    if (unitMatch || anyChild) {
+                        u.style.display = '';
+                        sub.classList.add('open');
+                        btn.classList.add('open');
+                    } else {
+                        u.style.display = 'none';
+                    }
+                });
+            });
+
+            // open first unit by default + initial state
+            document.getElementById('sub-u1').classList.add('open');
+            document.querySelector('.nav-unit-btn').classList.add('open');
+            onScroll();
+        })();
+    </script>
+</body>
+
+</html>
