@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía de Estudio</title>
+<style>
+:root{
+  --bg:#f5f7fb;
+  --surface:#ffffff;
+  --surface-2:#eef3fb;
+  --text:#1f2937;
+  --muted:#5b6472;
+  --primary:#315a9a;
+  --primary-soft:#dfe9fb;
+  --accent:#5d7db8;
+  --border:#d8e1ee;
+  --success:#eaf8ee;
+  --warning:#fff7e6;
+  --danger:#fff0f0;
+  --info:#eef7ff;
+  --shadow:0 10px 30px rgba(24,39,75,.08);
+  --code:#0f172a;
+}
+body.dark{
+  --bg:#0f172a;
+  --surface:#111827;
+  --surface-2:#1f2937;
+  --text:#e5e7eb;
+  --muted:#aab2c0;
+  --primary:#8fb0ff;
+  --primary-soft:#1d2942;
+  --accent:#a8c1ff;
+  --border:#2c3a50;
+  --success:#10261b;
+  --warning:#2e2410;
+  --danger:#2d1515;
+  --info:#132535;
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+  --code:#e5e7eb;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.7;
+}
+.container{
+  width:min(1180px, 94%);
+  margin:0 auto;
+}
+header.hero{
+  background:linear-gradient(135deg, var(--primary-soft), var(--surface));
+  border-bottom:1px solid var(--border);
+  padding:42px 0 26px;
+  position:sticky;
+  top:0;
+  z-index:50;
+  backdrop-filter: blur(8px);
+}
+.hero-inner{
+  display:grid;
+  grid-template-columns: 1fr auto;
+  gap:18px;
+  align-items:center;
+}
+h1{
+  margin:0;
+  font-size:clamp(1.8rem, 3vw, 3rem);
+  line-height:1.15;
+}
+.subtitle{
+  color:var(--muted);
+  margin:.6rem 0 0;
+  max-width:920px;
+}
+.controls{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+button, .btn{
+  border:1px solid var(--border);
+  background:var(--surface);
+  color:var(--text);
+  padding:10px 14px;
+  border-radius:12px;
+  cursor:pointer;
+  box-shadow:var(--shadow);
+  font-size:.95rem;
+}
+button:hover, .btn:hover{transform:translateY(-1px)}
+.toolbar{
+  margin:24px 0;
+  display:grid;
+  grid-template-columns: 1fr auto auto;
+  gap:12px;
+}
+.search{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  padding:0 14px;
+  box-shadow:var(--shadow);
+}
+.search input{
+  width:100%;
+  padding:14px 10px;
+  border:none;
+  outline:none;
+  background:transparent;
+  color:var(--text);
+  font-size:1rem;
+}
+main{
+  padding:24px 0 60px;
+}
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:28px;
+  box-shadow:var(--shadow);
+  margin-bottom:24px;
+}
+#indice ol{
+  columns:2;
+  gap:28px;
+  padding-left:22px;
+}
+#indice li{
+  break-inside:avoid;
+  margin:0 0 10px;
+}
+#indice a{
+  color:var(--primary);
+  text-decoration:none;
+}
+#indice a:hover{text-decoration:underline}
+.unit{
+  margin-top:28px;
+}
+.unit h2{
+  font-size:2rem;
+  margin-top:0;
+  color:var(--primary);
+}
+.unit h3{
+  margin-top:26px;
+  padding-bottom:6px;
+  border-bottom:2px solid var(--primary-soft);
+  color:var(--accent);
+}
+.unit h4{
+  margin-top:20px;
+  margin-bottom:8px;
+}
+.note, .box{
+  border-left:5px solid var(--primary);
+  padding:16px 18px;
+  border-radius:14px;
+  margin:16px 0;
+  background:var(--surface-2);
+}
+.def{background:var(--info); border-left-color:#4b9fe8}
+.imp{background:var(--warning); border-left-color:#d69e2e}
+.ex{background:#eefcf3; border-left-color:#2f9e44}
+.rec{background:#f2f0ff; border-left-color:#6f42c1}
+.err{background:var(--danger); border-left-color:#d64545}
+.grid-2{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
+}
+.grid-3{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin:18px 0;
+  overflow:hidden;
+  border-radius:14px;
+}
+th, td{
+  border:1px solid var(--border);
+  padding:12px 14px;
+  vertical-align:top;
+}
+th{
+  background:var(--primary-soft);
+  text-align:left;
+}
+ul, ol{padding-left:22px}
+mark{
+  background:#ffef88;
+  color:#000;
+  padding:0 .1em;
+  border-radius:4px;
+}
+body.dark mark{
+  background:#f8d64e;
+  color:#111;
+}
+details{
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:12px 14px;
+  background:var(--surface);
+  margin:12px 0;
+}
+summary{
+  cursor:pointer;
+  font-weight:600;
+}
+.top-link{
+  display:inline-block;
+  margin-top:26px;
+  text-decoration:none;
+  color:var(--primary);
+  font-weight:600;
+}
+.small{
+  font-size:.94rem;
+  color:var(--muted);
+}
+.kpi{
+  background:linear-gradient(180deg, var(--surface), var(--surface-2));
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:16px;
+}
+.flow{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:14px 0;
+}
+.flow span{
+  background:var(--primary-soft);
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:8px 12px;
+  font-weight:600;
+}
+.quote{
+  font-style:italic;
+  color:var(--muted);
+  border-left:4px solid var(--border);
+  padding-left:14px;
+  margin:14px 0;
+}
+footer{
+  padding:28px 0 46px;
+  color:var(--muted);
+}
+.hidden{display:none}
+@media (max-width:900px){
+  .hero-inner, .toolbar, .grid-2, .grid-3{grid-template-columns:1fr}
+  #indice ol{columns:1}
+  .controls{justify-content:flex-start}
+}
+@media print{
+  header.hero, .toolbar, .top-link, .no-print{display:none!important}
+  body{
+    background:#fff;
+    color:#000;
+    font-size:12pt;
+  }
+  .card{
+    box-shadow:none;
+    border:1px solid #ccc;
+    break-inside:avoid;
+  }
+  a{text-decoration:none; color:#000}
+  .unit{page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="container hero-inner">
+    <div>
+      <h1>Guía de Estudio Integral de Administración Financiera del Estado</h1>
+      <p class="subtitle">
+        Material de estudio organizado como libro digital para preparar el examen a partir de todas las unidades proporcionadas. La Unidad 3 recibe un desarrollo especialmente profundo por su centralidad dentro de la materia.
+      </p>
+    </div>
+    <div class="controls">
+      <button id="toggleTheme">🌙 Modo oscuro</button>
+      <button onclick="window.print()">🖨️ Imprimir</button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <section class="toolbar no-print">
+    <label class="search">
+      🔎
+      <input id="searchInput" type="text" placeholder="Buscar conceptos, leyes, procedimientos, ejemplos..." />
+    </label>
+    <button id="clearSearch">Limpiar búsqueda</button>
+    <button id="expandAll">Abrir todo</button>
+  </section>
+
+  <section id="indice" class="card">
+    <h2>Índice</h2>
+    <ol>
+      <li><a href="#orientacion">Orientación general de estudio</a></li>
+      <li><a href="#unidad1">Unidad 1. Introducción a la Administración Financiera del Estado</a></li>
+      <li><a href="#unidad2">Unidad 2. Política Fiscal y su impacto en la economía</a></li>
+      <li><a href="#unidad3">Unidad 3. Presupuesto General de la Nación y Ley 1535/99</a></li>
+      <li><a href="#unidad4">Unidad 4. Análisis del Gasto Público</a></li>
+      <li><a href="#unidad7">Unidad 7. Sistema de Presupuesto</a></li>
+      <li><a href="#unidad8">Unidad 8. Financiamiento, deuda y mercado globales</a></li>
+      <li><a href="#unidad9">Unidad 9. Sistema de Tesorería</a></li>
+      <li><a href="#integracion">Relaciones integradoras entre unidades</a></li>
+      <li><a href="#repaso">Guía de repaso final</a></li>
+    </ol>
+    <p class="small">
+      La materia se estructura alrededor del Estado, sus funciones económicas, la política fiscal, el presupuesto, la ejecución, el gasto público, el financiamiento y la tesorería, todo ello dentro del marco de la administración financiera regulada por la Ley 1535/99 y sus sistemas asociados. [file:1][file:2][file:3][file:4][file:5][file:6][file:7]
+    </p>
+  </section>
+
+  <section id="orientacion" class="card unit">
+    <h2>Orientación general de estudio</h2>
+    <p>
+      La lógica de la materia sigue una secuencia: primero se comprende qué es el Estado y por qué interviene en la economía; luego se estudia la política fiscal; después se analiza el instrumento central de esa intervención, que es el Presupuesto General de la Nación; posteriormente se examinan el gasto público, la ejecución presupuestaria, las fuentes de financiamiento y el sistema de tesorería. [file:1][file:2][file:3][file:4][file:5][file:6][file:7]
+    </p>
+    <div class="rec box">
+      <strong>📌 Recordatorio:</strong> La Unidad 3 no debe estudiarse como un listado de artículos legales aislados, sino como el núcleo operativo que conecta planificación, ingresos, gastos, clasificación, financiamiento, ejecución, control y cumplimiento de objetivos estatales. [file:1][file:7][file:6]
+    </div>
+    <div class="flow">
+      <span>Estado</span>
+      <span>Política fiscal</span>
+      <span>Presupuesto</span>
+      <span>Ejecución</span>
+      <span>Gasto público</span>
+      <span>Financiamiento</span>
+      <span>Tesorería</span>
+      <span>Control y evaluación</span>
+    </div>
+  </section>
+
+  <section id="unidad1" class="card unit">
+    <h2>Unidad 1. Introducción a la Administración Financiera del Estado</h2>
+
+    <h3>Introducción</h3>
+    <p>
+      La Administración Financiera del Estado estudia cómo el sector público obtiene recursos, los asigna conforme a prioridades, los ejecuta y los controla para satisfacer necesidades colectivas. Esta unidad provee la base conceptual para comprender todas las demás, porque explica qué es el Estado, cuáles son sus fines y por qué la intervención pública se considera necesaria en la vida económica y social. [file:2]
+    </p>
+
+    <h3>Conceptos Fundamentales</h3>
+    <div class="def box">
+      <strong>✔ Definición:</strong> El Estado es la organización jurídica y política soberana, permanente, asentada sobre una población, un territorio y un poder institucionalizado. [file:2]
+    </div>
+    <div class="grid-2">
+      <div class="kpi">
+        <h4>Elementos del Estado</h4>
+        <ul>
+          <li>Población: conjunto de personas que habitan el territorio estatal. [file:2]</li>
+          <li>Territorio: espacio geográfico donde el Estado ejerce su autoridad. [file:2]</li>
+          <li>Gobierno: autoridades que ejercen el poder político. [file:2]</li>
+          <li>Soberanía: poder supremo para decidir sin subordinación a otro poder. [file:2]</li>
+        </ul>
+      </div>
+      <div class="kpi">
+        <h4>Fines del Estado</h4>
+        <ul>
+          <li>Eficiencia: asignación óptima de recursos públicos. [file:2]</li>
+          <li>Eficacia: logro de objetivos de política pública. [file:2]</li>
+          <li>Estabilidad: preservación del equilibrio macroeconómico y crecimiento sostenido. [file:2]</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Desarrollo Completo</h3>
+    <p>
+      Dos grandes enfoques explican la naturaleza del Estado. La concepción orgánica lo entiende como un organismo social vivo, superior al individuo y compuesto por partes interdependientes; la concepción mecanicista lo considera una creación artificial de los individuos para organizar la convivencia y garantizar el orden político. [file:2]
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Aspecto</th>
+          <th>Concepción orgánica</th>
+          <th>Concepción mecanicista</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Origen</td>
+          <td>El Estado evoluciona como un organismo social. [file:2]</td>
+          <td>El Estado es una herramienta creada por las personas. [file:2]</td>
+        </tr>
+        <tr>
+          <td>Relación individuo-Estado</td>
+          <td>El Estado es superior al individuo. [file:2]</td>
+          <td>El individuo es anterior y superior al Estado. [file:2]</td>
+        </tr>
+        <tr>
+          <td>Fundamento</td>
+          <td>Interdependencia social. [file:2]</td>
+          <td>Contrato social y voluntad humana. [file:2]</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      En la economía moderna, el Estado cumple tres funciones esenciales identificadas por Musgrave: asignación, distribución y estabilización. Estas funciones justifican la existencia de políticas, instituciones y sistemas financieros públicos, porque el mercado por sí solo no garantiza eficiencia plena, equidad distributiva ni estabilidad macroeconómica. [file:2]
+    </p>
+
+    <h3>Procedimientos</h3>
+    <ol>
+      <li>Identificar la necesidad colectiva o el problema público. [file:2]</li>
+      <li>Determinar si corresponde intervención estatal por eficiencia, equidad o estabilidad. [file:2]</li>
+      <li>Seleccionar instrumentos financieros y administrativos para obtener y usar recursos. [file:2]</li>
+      <li>Ejecutar el gasto y controlar su uso conforme a objetivos públicos. [file:2]</li>
+    </ol>
+
+    <h3>Ejemplos</h3>
+    <div class="ex box">
+      <strong>💡 Ejemplo:</strong> La construcción de infraestructura o la provisión de justicia no suelen ser financiadas adecuadamente por el mercado bajo criterios puramente privados, por lo que el Estado interviene a través de recursos públicos. [file:2]
+    </div>
+
+    <h3>Comparaciones</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Escuela</th>
+          <th>Visión del Estado</th>
+          <th>Consecuencia fiscal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Clásica</td>
+          <td>Intervención mínima; el mercado tiende al equilibrio. [file:2]</td>
+          <td>El gasto y la acción pública deben ser limitados. [file:2]</td>
+        </tr>
+        <tr>
+          <td>Keynesiana</td>
+          <td>El Estado debe intervenir para estabilizar y promover crecimiento. [file:2]</td>
+          <td>La política fiscal se usa activamente mediante gasto, impuestos y déficit. [file:2]</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Casos Prácticos</h3>
+    <p>
+      Cuando el desempleo aumenta y la economía se desacelera, la visión keynesiana justifica que el Estado incremente el gasto público para estimular la actividad. En cambio, una visión clásica tendería a confiar más en la autorregulación del mercado y en una menor intervención pública. [file:2]
+    </p>
+
+    <h3>Errores Frecuentes</h3>
+    <div class="err box">
+      <strong>❗ Error frecuente:</strong> Confundir Estado con gobierno. El Estado es permanente y comprende población, territorio, gobierno y soberanía; el gobierno es solo el conjunto de autoridades que ejercen temporalmente el poder. [file:2]
+    </div>
+
+    <h3>Aspectos Importantes</h3>
+    <ul>
+      <li>La administración financiera no es solo contabilidad; es instrumento de política pública. [file:2]</li>
+      <li>Las finanzas públicas estudian asignación eficiente, distribución de ingresos y estabilidad macroeconómica. [file:2]</li>
+      <li>Los fines del Estado orientan toda la actividad presupuestaria y financiera posterior. [file:2]</li>
+    </ul>
+
+    <h3>Relación con otras Unidades</h3>
+    <p>
+      Esta unidad explica el fundamento del resto del programa. La política fiscal de la Unidad 2 desarrolla la función estabilizadora y distributiva; la Unidad 3 materializa esas funciones mediante el presupuesto; la Unidad 4 estudia la incidencia del gasto; y las Unidades 7, 8 y 9 muestran cómo se ejecutan, financian y administran los recursos públicos. [file:1][file:2][file:3][file:4][file:5][file:6][file:7]
+    </p>
+
+    <h3>Preguntas posibles de examen</h3>
+    <ul>
+      <li>Defina Estado y explique sus elementos. [file:2]</li>
+      <li>Compare la concepción orgánica y la mecanicista del Estado. [file:2]</li>
+      <li>Explique las funciones de asignación, distribución y estabilización. [file:2]</li>
+      <li>¿Por qué la administración financiera es un instrumento de política pública? [file:2]</li>
+      <li>Diferencie la Escuela Clásica de la Keynesiana respecto al rol del Estado. [file:2]</li>
+    </ul>
+
+    <h3>Resumen conceptual</h3>
+    <p>
+      La Unidad 1 establece que el Estado es una organización soberana con fines de eficiencia, eficacia y estabilidad, y que la administración financiera es el conjunto de sistemas y procedimientos mediante los cuales obtiene, asigna, ejecuta y controla recursos para cumplir objetivos públicos. [file:2]
+    </p>
+    <a class="top-link" href="#indice">↑ Volver al índice</a>
+  </section>
+
+  <section id="unidad2" class="card unit">
+    <h2>Unidad 2. Política Fiscal y su impacto en la economía</h2>
+
+    <h3>Introducción</h3>
+    <p>
+      La política fiscal es una herramienta central del Estado para influir sobre la actividad económica, la distribución del ingreso y la estabilidad macroeconómica. Su estudio permite comprender cómo el gobierno utiliza el gasto, los impuestos y el endeudamiento como instrumentos para conducir la economía. [file:3]
+    </p>
+
+    <h3>Conceptos Fundamentales</h3>
+    <div class="def box">
+      <strong>✔ Definición:</strong> La política fiscal es el conjunto de decisiones y acciones del Estado, a través del gobierno central, sobre el nivel y composición del gasto público, la tributación y el endeudamiento para influir en la economía y en la distribución del ingreso. [file:3]
+    </div>
+    <div class="def box">
+      <strong>✔ Definición:</strong> La política monetaria consiste en acciones de la autoridad monetaria orientadas a controlar la oferta de dinero, las tasas de interés y la liquidez para asegurar estabilidad de precios y equilibrio macroeconómico. [file:3]
+    </div>
+
+    <h3>Desarrollo Completo</h3>
+    <p>
+      La política fiscal persigue tres grandes objetivos: promover mayores tasas de crecimiento, reducir las fluctuaciones del ciclo económico y disminuir la desigualdad mediante redistribución de la riqueza. Sin embargo, enfrenta límites, entre ellos el principio de estabilidad presupuestaria, según el cual los gastos no deberían superar a los ingresos. [file:3]
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Concepto</th>
+          <th>Contenido</th>
+          <th>Consecuencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Déficit fiscal</td>
+          <td>Diferencia negativa entre gastos e ingresos del gobierno. [file:3]</td>
+          <td>Puede aumentar deuda, presión inflacionaria y costos financieros. [file:3]</td>
+        </tr>
+        <tr>
+          <td>Superávit fiscal</td>
+          <td>Excedente de ingresos sobre gastos. [file:3]</td>
+          <td>Refleja capacidad de ahorro gubernamental. [file:3]</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Procedimientos</h3>
+    <ol>
+      <li>Analizar el contexto económico y la fase del ciclo. [file:3]</li>
+      <li>Definir si la política fiscal será expansiva o contractiva. [file:3]</li>
+      <li>Ajustar gasto, impuestos o endeudamiento según los objetivos públicos. [file:3]</li>
+      <li>Evaluar el impacto sobre crecimiento, distribución y sostenibilidad fiscal. [file:3]</li>
+    </ol>
+
+    <h3>Ejemplos</h3>
+    <div class="ex box">
+      <strong>💡 Ejemplo:</strong> En una recesión, una política fiscal expansiva puede incrementar el gasto público o reducir la carga tributaria para estimular producción y empleo. [file:3]
+    </div>
+
+    <h3>Comparaciones</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Aspecto</th>
+          <th>Política fiscal</th>
+          <th>Política monetaria</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Autoridad principal</td>
+          <td>Gobierno central y MEF. [file:3]</td>
+          <td>Autoridad monetaria o Banco Central. [file:3]</td>
+        </tr>
+        <tr>
+          <td>Instrumentos</td>
+          <td>Gasto, impuestos, endeudamiento. [file:3]</td>
+          <td>Dinero, tasas de interés, liquidez. [file:3]</td>
+        </tr>
+        <tr>
+          <td>Objetivos</td>
+          <td>Crecimiento, redistribución, estabilización. [file:3]</td>
+          <td>Estabilidad de precios y equilibrio monetario. [file:3]</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Casos Prácticos</h3>
+    <p>
+      Si el gobierno cubre un déficit mediante emisión monetaria, puede generarse inflación o incluso hiperinflación. Si lo financia con deuda, aumenta el stock de obligaciones y se reduce el espacio fiscal disponible en el futuro. [file:3]
+    </p>
+
+    <h3>Errores Frecuentes</h3>
+    <div class="err box">
+      <strong>❗ Error frecuente:</strong> Pensar que todo déficit es necesariamente positivo o necesariamente negativo. Su evaluación depende del contexto económico, de cómo se financia y de si contribuye o no a estabilidad y crecimiento sostenibles. [file:3]
+    </div>
+
+    <h3>Aspectos Importantes</h3>
+    <ul>
+      <li>Un déficit persistente puede elevar la deuda pública y el costo del servicio de esa deuda. [file:3]</li>
+      <li>La emisión para cubrir déficit puede inducir inflación. [file:3]</li>
+      <li>Un alto déficit puede reducir la confianza de inversores extranjeros. [file:3]</li>
+      <li>La política fiscal contracíclica busca amortiguar expansiones y recesiones. [file:3]</li>
+    </ul>
+
+    <h3>Relación con otras Unidades</h3>
+    <p>
+      La política fiscal se concreta materialmente en el PGN de la Unidad 3. Además, su dimensión redistributiva se profundiza en la Unidad 4, su sostenibilidad financiera se vincula con la Unidad 8 y su ejecución operativa se conecta con las Unidades 7 y 9. [file:1][file:3][file:4][file:5][file:6][file:7]
+    </p>
+
+    <h3>Preguntas posibles de examen</h3>
+    <ul>
+      <li>Defina política fiscal y diferénciela de la política monetaria. [file:3]</li>
+      <li>Explique los objetivos económicos de la política fiscal. [file:3]</li>
+      <li>Diferencie déficit fiscal y superávit fiscal. [file:3]</li>
+      <li>¿Cómo puede financiarse un déficit? [file:3]</li>
+      <li>Explique la relación entre política fiscal y ciclos económicos. [file:3]</li>
+    </ul>
+
+    <h3>Resumen conceptual</h3>
+    <p>
+      La política fiscal es el mecanismo mediante el cual el Estado modifica gasto, impuestos y endeudamiento para promover crecimiento, reducir desigualdad y estabilizar la economía, aunque siempre bajo restricciones de sostenibilidad y equilibrio presupuestario. [file:3]
+    </p>
+    <a class="top-link" href="#indice">↑ Volver al índice</a>
+  </section>
+
+  <section id="unidad3" class="card unit">
+    <h2>Unidad 3. Presupuesto General de la Nación y Ley 1535/99</h2>
+
+    <h3>Introducción</h3>
+    <p>
+      La Unidad 3 constituye el eje central de la materia porque explica el instrumento mediante el cual el Estado traduce sus políticas y objetivos en asignaciones concretas de recursos. El Presupuesto General de la Nación no es solo un documento contable, sino un mecanismo jurídico, político, técnico y administrativo que organiza ingresos, gastos, financiamiento, prioridades públicas, ejecución y control. [file:1]
+    </p>
+    <div class="imp box">
+      <strong>⚠ Importante:</strong> Estudiar esta unidad exige entender al mismo tiempo el marco legal, la lógica económica del presupuesto, los principios que lo rigen, su proceso de formulación, su clasificación, su estructura de ingresos y gastos, y su relación con la ejecución, el financiamiento y la evaluación. [file:1][file:7][file:6]
+    </div>
+
+    <h3>Conceptos Fundamentales</h3>
+    <div class="def box">
+      <strong>✔ Definición:</strong> La Ley 1535/99 regula la administración financiera del Estado como conjunto de sistemas, normas básicas y procedimientos administrativos para programar, gestionar, registrar, controlar y evaluar ingresos y destino de fondos públicos. [file:1]
+    </div>
+    <div class="def box">
+      <strong>✔ Definición:</strong> El Presupuesto General de la Nación es el instrumento de asignación de recursos financieros para el cumplimiento de las políticas y los objetivos estatales. [file:1]
+    </div>
+    <div class="def box">
+      <strong>✔ Definición:</strong> El clasificador presupuestario de ingresos, gastos y financiamiento es un instrumento metodológico que permite uniformidad, ordenamiento e interrelación de la información presupuestaria y facilita análisis, ejecución, modificación, control y evaluación. [file:1]
+    </div>
+
+    <h3>Desarrollo Completo</h3>
+    <h4>1. Sentido de la Ley 1535/99</h4>
+    <p>
+      La Ley 1535/99 busca que la administración financiera del Estado funcione con economicidad, eficiencia, eficacia y transparencia, generando además información oportuna y confiable, promoviendo técnicas modernas de gestión financiera y exigiendo personal idóneo y especializado. No se limita a ordenar trámites: construye un sistema integral para que los recursos públicos sean obtenidos y utilizados con racionalidad y control. [file:1]
+    </p>
+    <div class="grid-2">
+      <div class="kpi">
+        <h4>Finalidades de la ley</h4>
+        <ul>
+          <li>Economicidad en el uso de recursos. [file:1]</li>
+          <li>Eficiencia y eficacia en la gestión. [file:1]</li>
+          <li>Transparencia en obtención y empleo de fondos. [file:1]</li>
+          <li>Información confiable y oportuna. [file:1]</li>
+          <li>Modernización técnica. [file:1]</li>
+          <li>Profesionalización del personal. [file:1]</li>
+        </ul>
+      </div>
+      <div class="kpi">
+        <h4>Ámbito de aplicación</h4>
+        <ul>
+          <li>Poder Legislativo, Ejecutivo y Judicial. [file:1]</li>
+          <li>Banca Central del Estado. [file:1]</li>
+          <li>Gobiernos departamentales. [file:1]</li>
+          <li>Entes autónomos y autárquicos. [file:1]</li>
+          <li>Empresas públicas, universidades nacionales y otros órganos enumerados por la ley. [file:1]</li>
+        </ul>
+      </div>
+    </div>
+
+    <h4>2. Sistema Integrado de Administración Financiera</h4>
+    <p>
+      La ley establece el Sistema Integrado de Administración Financiera, de aplicación obligatoria, regido por el principio de centralización normativa y descentralización operativa. Esto significa que las reglas generales se fijan centralmente, pero la operación cotidiana se realiza en cada organismo o entidad dentro de ese marco. [file:1]
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Sistema del SIAF</th>
+          <th>Función esencial</th>
+          <th>Relación con la materia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Presupuesto</td>
+          <td>Planifica y autoriza recursos e gastos. [file:1]</td>
+          <td>Núcleo de la Unidad 3 y conexión con Unidad 7. [file:1][file:7]</td>
+        </tr>
+        <tr>
+          <td>Inversión</td>
+          <td>Ordena asignación a proyectos y capital público. [file:1]</td>
+          <td>Vincula gasto e infraestructura. [file:1][file:4]</td>
+        </tr>
+        <tr>
+          <td>Tesorería</td>
+          <td>Administra caja, recursos y transferencias. [file:1]</td>
+          <td>Se profundiza en Unidad 9. [file:6]</td>
+        </tr>
+        <tr>
+          <td>Crédito y deuda pública</td>
+          <td>Gestiona endeudamiento y obligaciones financieras. [file:1]</td>
+          <td>Se vincula con Unidad 8. [file:5]</td>
+        </tr>
+        <tr>
+          <td>Contabilidad</td>
+          <td>Registra operaciones y produce información. [file:1]</td>
+          <td>Base para control y evaluación. [file:1][file:7]</td>
+        </tr>
+        <tr>
+          <td>Control</td>
+          <td>Verifica legalidad, ejecución y resultados. [file:1]</td>
+          <td>Se articula con informes y evaluación presupuestaria. [file:7]</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>3. Naturaleza del PGN</h4>
+    <p>
+      El PGN expresa cómo se utilizará el dinero que percibe el Estado en programas de salud, educación, infraestructura, vivienda, inversión y múltiples áreas. Su importancia deriva de la escasez de recursos frente a necesidades siempre superiores, lo que obliga a decidir en qué gastar, cómo gastar y con qué prioridad. [file:1]
+    </p>
+    <p>
+      Por eso el presupuesto no es neutro. Incide en bienestar, salud, educación, competitividad, distribución de la renta y capacidad del Estado para cumplir sus fines. Un presupuesto refleja prioridades públicas y revela la orientación real de la política fiscal. [file:1][file:4]
+    </p>
+
+    <h4>4. Principios presupuestarios</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>Principio</th>
+          <th>Contenido</th>
+          <th>Importancia práctica</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Universalidad</td>
+          <td>Todos los ingresos y todos los gastos deben estar expresamente presupuestados. [file:1]</td>
+          <td>Evita ocultamiento de operaciones y mejora transparencia. [file:1]</td>
+        </tr>
+        <tr>
+          <td>Legalidad</td>
+          <td>Los gastos autorizados son el monto máximo a desembolsar, salvo que otra ley establezca algo distinto. [file:1]</td>
+          <td>Impide gastar por fuera de la autorización legal. [file:1]</td>
+        </tr>
+        <tr>
+          <td>Unidad</td>
+          <td>Ingresos, gastos y financiamientos deben integrarse en un solo documento. [file:1]</td>
+          <td>Permite análisis global y aprobación coherente. [file:1]</td>
+        </tr>
+        <tr>
+          <td>Anualidad</td>
+          <td>El presupuesto corresponde al ejercicio fiscal de cada año. [file:1]</td>
+          <td>Ordena temporalmente la programación y el control. [file:1]</td>
+        </tr>
+        <tr>
+          <td>Equilibrio</td>
+          <td>El presupuesto de gastos no puede exceder el total de ingresos y financiamiento. [file:1]</td>
+          <td>Vincula presupuesto con sostenibilidad fiscal. [file:1][file:3]</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="imp box">
+      <strong>⚠ Importante:</strong> En examen suele preguntarse no solo la definición de cada principio, sino su finalidad práctica. Debe explicarse cómo cada uno limita arbitrariedad, refuerza control y asegura racionalidad en el manejo de fondos públicos. [file:1]
+    </div>
+
+    <h4>5. Normas presupuestarias fundamentales</h4>
+    <p>
+      La ley dispone que ninguna entidad puede presupuestar recursos para planes o programas ajenos a sus fines y objetivos constitucionales, legales u orgánicos. También establece que la descentralización de recursos hacia gobiernos departamentales debe implementarse conforme a planes de desarrollo por áreas geográficas y programas del gobierno central, y prohíbe introducir en la ley presupuestaria cláusulas con vigencia fuera del ejercicio fiscal o que modifiquen leyes permanentes. [file:1]
+    </p>
+    <div class="rec box">
+      <strong>📌 Recordatorio:</strong> Estas normas muestran que el presupuesto no puede usarse para desnaturalizar competencias institucionales ni para introducir reformas permanentes encubiertas. [file:1]
+    </div>
+
+    <h4>6. Criterios de administración financiera aplicados al presupuesto</h4>
+    <p>
+      Los ingresos se estiman bajo el principio de disponibilidad y constituyen metas que pueden ser superadas por mayor recaudación; en cambio, las asignaciones o créditos presupuestarios son límites máximos para contraer obligaciones de pago. Además, el saldo disponible al cierre del ejercicio, una vez deducida la deuda flotante y fondos con afectación específica, se destina únicamente a financiar el presupuesto del ejercicio siguiente dentro de la política monetaria del gobierno. [file:1]
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Elemento</th>
+          <th>Naturaleza</th>
+          <th>Lectura correcta</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ingreso presupuestado</td>
+          <td>Estimación o meta. [file:1]</td>
+          <td>Puede superarse o no alcanzarse. [file:1]</td>
+        </tr>
+        <tr>
+          <td>Crédito presupuestario</td>
+          <td>Límite máximo legal para obligaciones. [file:1]</td>
+          <td>No habilita gasto ilimitado ni fuera de rubro. [file:1][file:7]</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>7. Cómo se elabora el PGN</h4>
+    <p>
+      El proceso de elaboración del PGN es anual y se inicia con lineamientos generales. Luego cada organismo prepara su presupuesto institucional, el Ministerio de Economía y Finanzas sistematiza la información en un anteproyecto, el Poder Ejecutivo remite el proyecto de ley al Congreso, este lo estudia y aprueba, y una vez convertido en ley comienza la fase de ejecución, control y evaluación. [file:1]
+    </p>
+    <div class="flow">
+      <span>Lineamientos</span>
+      <span>Presupuestos institucionales</span>
+      <span>Anteproyecto</span>
+      <span>Proyecto de ley</span>
+      <span>Aprobación legislativa</span>
+      <span>Ley del PGN</span>
+      <span>Ejecución</span>
+      <span>Control y evaluación</span>
+    </div>
+
+    <h4>8. Lineamientos presupuestarios</h4>
+    <p>
+      El MEF considera variables como el crecimiento económico, la inflación, el tipo de cambio, los ingresos del sector público, las prioridades de asignación conforme al Plan Nacional de Desarrollo 2030 y el tope de gasto para cada organismo. Esto demuestra que el presupuesto se formula en diálogo con la realidad macroeconómica y con objetivos estratégicos del Estado. [file:1]
+    </p>
+
+    <h4>9. Clasificador presupuestario</h4>
+    <p>
+      El clasificador es indispensable porque ordena y uniforma el lenguaje presupuestario. Sin él, no sería posible comparar instituciones, distinguir naturaleza de ingresos y gastos, analizar la política fiscal ni ejecutar, modificar, controlar y evaluar el presupuesto de forma coherente. [file:1]
+    </p>
+    <div class="grid-3">
+      <div class="kpi">
+        <h4>Sirve para</h4>
+        <ul>
+          <li>Uniformar transacciones financieras. [file:1]</li>
+          <li>Ordenar la información presupuestaria. [file:1]</li>
+          <li>Facilitar el análisis fiscal. [file:1]</li>
+        </ul>
+      </div>
+      <div class="kpi">
+        <h4>Permite</h4>
+        <ul>
+          <li>Ejecución ordenada. [file:1]</li>
+          <li>Modificaciones presupuestarias consistentes. [file:1][file:7]</li>
+          <li>Control y evaluación. [file:1][file:7]</li>
+        </ul>
+      </div>
+      <div class="kpi">
+        <h4>Evita</h4>
+        <ul>
+          <li>Duplicidades conceptuales. [file:1]</li>
+          <li>Registro arbitrario de operaciones. [file:1]</li>
+          <li>Incomparabilidad entre entes. [file:1]</li>
+        </ul>
+      </div>
+    </div>
+
+    <h4>10. Estructura de ingresos públicos del Estado</h4>
+    <p>
+      En el marco presupuestario, los ingresos públicos pueden comprender recursos tributarios, no tributarios, transferencias, ingresos de capital y recursos de financiamiento. La lógica presupuestaria exige distinguir claramente entre recursos corrientes, de capital y provenientes de endeudamiento, porque su naturaleza y sostenibilidad son diferentes. [file:1][file:5]
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Tipo de ingreso</th>
+          <th>Descripción</th>
+          <th>Ejemplos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Tributarios</td>
+          <td>Recursos provenientes de tributos exigidos por el Estado. [file:5]</td>
+          <td>IVA, IRE, IRP, ISC. [file:5]</td>
+        </tr>
+        <tr>
+          <td>No tributarios</td>
+          <td>Ingresos por tasas, multas, venta de bienes y servicios. [file:5]</td>
+          <td>Tasas y contribuciones. [file:5]</td>
+        </tr>
+        <tr>
+          <td>Transferencias</td>
+          <td>Recursos recibidos de binacionales, organismos internacionales y donaciones. [file:5]</td>
+          <td>Donaciones y transferencias externas. [file:5]</td>
+        </tr>
+        <tr>
+          <td>Capital</td>
+          <td>Venta de activos, recuperación de préstamos y dividendos. [file:5]</td>
+          <td>Venta de activos públicos. [file:5]</td>
+        </tr>
+        <tr>
+          <td>Financiamiento</td>
+          <td>Recursos provenientes de deuda o colocación de títulos. [file:1][file:5]</td>
+          <td>Bonos y préstamos internos o externos. [file:5]</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>11. Estructura del gasto público</h4>
+    <p>
+      El gasto público en el presupuesto puede observarse por su destino y por su naturaleza económica. Entre los conceptos claves incluidos en la unidad aparecen servicios personales, transferencias corrientes, inversión física e inversión financiera, todos ellos con finalidades distintas y efectos también distintos sobre el funcionamiento estatal y sobre la economía. [file:1]
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Componente del gasto</th>
+          <th>Contenido</th>
+          <th>Sentido práctico</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Servicios personales</td>
+          <td>Sueldos, bonificaciones y otros gastos de personal. [file:1]</td>
+          <td>Sostienen funcionamiento institucional. [file:1]</td>
+        </tr>
+        <tr>
+          <td>Transferencias corrientes</td>
+          <td>Transferencias al sector público no financiero, sector privado, jubilaciones y exterior. [file:1]</td>
+          <td>Financian redistribución y obligaciones corrientes. [file:1][file:4]</td>
+        </tr>
+        <tr>
+          <td>Inversión física</td>
+          <td>Inmuebles, construcciones, reparaciones mayores, maquinarias y equipos. [file:1]</td>
+          <td>Expande capacidad pública e infraestructura. [file:1]</td>
+        </tr>
+        <tr>
+          <td>Inversión financiera</td>
+          <td>Acciones, préstamos, títulos, valores y depósitos a plazo. [file:1]</td>
+          <td>Gestiona colocación o apoyo financiero. [file:1]</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>12. Saldo presupuestario y resultados fiscales</h4>
+    <p>
+      El resultado global se refiere a la diferencia entre ingresos y gastos totales: si es positivo hay superávit y si es negativo hay déficit. El resultado primario mide esa diferencia antes del pago de intereses de la deuda, por lo que es útil para analizar la situación fiscal subyacente sin el peso del servicio financiero acumulado. [file:1]
+    </p>
+
+    <h4>13. Fuentes de financiamiento</h4>
+    <p>
+      El presupuesto también debe identificar con qué fuente se financiará cada gasto. Entre los conceptos claves de la unidad figuran deuda pública interna, deuda pública externa y distintas fuentes asociadas al Tesoro o a recursos institucionales, lo cual resulta esencial porque la posibilidad de ejecutar gasto depende no solo de la autorización presupuestaria, sino también de la disponibilidad efectiva de financiamiento. [file:1][file:7][file:6]
+    </p>
+
+    <h4>14. Conceptos claves que deben dominarse</h4>
+    <details open>
+      <summary>Administración Central, Gobierno Central y Entidades Descentralizadas</summary>
+      <p>
+        La Administración Central comprende los poderes del Estado y otros órganos señalados en el material, mientras que el Gobierno Central integra la Administración Central más las entidades descentralizadas. Las Entidades Descentralizadas incluyen banca central del Estado, gobiernos departamentales, entes autónomos y autárquicos, entidades públicas de seguridad social, empresas públicas, empresas mixtas, entidades financieras oficiales y universidades nacionales. [file:1]
+      </p>
+    </details>
+    <details open>
+      <summary>Amortizaciones, deuda interna y deuda externa</summary>
+      <p>
+        Amortizar significa reembolsar gradualmente el capital de una deuda además del pago de intereses. La deuda pública interna es dinero prestado al Estado por sectores nacionales, mientras que la deuda pública externa proviene de sectores públicos o privados extranjeros. [file:1]
+      </p>
+    </details>
+    <details open>
+      <summary>Plan financiero, presupuesto aprobado y ejecutado</summary>
+      <p>
+        El plan financiero es el cronograma mensual de gastos públicos según flujo de ingresos y capacidad real de ejecución. El presupuesto aprobado es una previsión legal de ingresos y gastos; el ejecutado muestra cuánto ingresó y cuánto se gastó efectivamente. [file:1]
+      </p>
+    </details>
+
+    <h3>Procedimientos</h3>
+    <h4>Procedimiento paso a paso de elaboración del PGN</h4>
+    <ol>
+      <li>El Poder Ejecutivo fija lineamientos presupuestarios anuales. [file:1]</li>
+      <li>El MEF considera crecimiento económico, inflación, tipo de cambio, ingresos esperados y prioridades del Plan Nacional de Desarrollo. [file:1]</li>
+      <li>Cada organismo elabora su presupuesto institucional dentro de los topes definidos. [file:1]</li>
+      <li>El MEF sistematiza y consolida la información en un anteproyecto. [file:1]</li>
+      <li>El Poder Ejecutivo remite el proyecto de ley del PGN al Congreso. [file:1]</li>
+      <li>El Congreso estudia, discute y aprueba el proyecto. [file:1]</li>
+      <li>El proyecto aprobado se convierte en Ley del PGN. [file:1]</li>
+      <li>Comienza la ejecución presupuestaria, seguida de control y evaluación. [file:1][file:7]</li>
+    </ol>
+
+    <h4>Procedimiento lógico de análisis de una partida presupuestaria</h4>
+    <ol>
+      <li>Identificar la finalidad pública de la partida. [file:1]</li>
+      <li>Verificar si el organismo tiene competencia para ese gasto. [file:1]</li>
+      <li>Determinar la fuente de financiamiento correspondiente. [file:1][file:7]</li>
+      <li>Clasificar correctamente el ingreso o gasto mediante el clasificador presupuestario. [file:1]</li>
+      <li>Comprobar que el crédito sea suficiente y legalmente autorizado. [file:1]</li>
+      <li>Relacionar la ejecución con metas, resultados y control posterior. [file:7]</li>
+    </ol>
+
+    <h3>Ejemplos</h3>
+    <div class="ex box">
+      <strong>💡 Ejemplo:</strong> Si el Estado planea financiar infraestructura vial, esa decisión debe aparecer en el PGN, con crédito autorizado, fuente de financiamiento definida y clasificación correcta dentro del gasto. Solo después podrá ejecutarse conforme a plan financiero, caja y control institucional. [file:1][file:7][file:6]
+    </div>
+    <div class="ex box">
+      <strong>💡 Ejemplo:</strong> Si una institución recauda más de lo estimado, el ingreso presupuestado era una meta que puede ser superada, pero ello no habilita automáticamente cualquier gasto adicional fuera de las reglas presupuestarias. [file:1]
+    </div>
+
+    <h3>Comparaciones</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Comparación</th>
+          <th>Elemento A</th>
+          <th>Elemento B</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ingreso vs gasto</td>
+          <td>El ingreso es una estimación o meta presupuestaria. [file:1]</td>
+          <td>El gasto autorizado es un límite máximo legal. [file:1]</td>
+        </tr>
+        <tr>
+          <td>Presupuesto aprobado vs ejecutado</td>
+          <td>El aprobado expresa previsión normativa. [file:1]</td>
+          <td>El ejecutado muestra realización efectiva. [file:1]</td>
+        </tr>
+        <tr>
+          <td>Resultado global vs resultado primario</td>
+          <td>El global incluye ingresos y gastos totales. [file:1]</td>
+          <td>El primario excluye intereses de la deuda. [file:1]</td>
+        </tr>
+        <tr>
+          <td>Administración Central vs Gobierno Central</td>
+          <td>La Administración Central refiere a poderes y órganos centrales. [file:1]</td>
+          <td>El Gobierno Central suma la Administración Central y entidades descentralizadas. [file:1]</td>
+        </tr>
+        <tr>
+          <td>Inversión física vs inversión financiera</td>
+          <td>La física crea o mejora bienes de capital públicos. [file:1]</td>
+          <td>La financiera implica acciones, préstamos o colocaciones. [file:1]</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Casos Prácticos</h3>
+    <h4>Caso 1. Techo presupuestario y prioridades</h4>
+    <p>
+      Una institución solicita créditos para actividades que no guardan relación directa con sus fines legales. Conforme a las normas presupuestarias, dichos recursos no deberían incluirse en el presupuesto institucional, porque el presupuesto no puede desviar recursos hacia objetivos ajenos a la competencia del organismo. [file:1]
+    </p>
+    <h4>Caso 2. Necesidad de financiamiento adicional</h4>
+    <p>
+      Si durante el ejercicio aparecen necesidades superiores a las previstas, no basta con reconocer la necesidad material. Debe analizarse si existe base legal para modificación presupuestaria, si hay fuente de financiamiento y si el cambio respeta la estructura del sistema presupuestario. [file:1][file:7]
+    </p>
+    <h4>Caso 3. Déficit y lectura del resultado primario</h4>
+    <p>
+      Un presupuesto puede mostrar presión financiera por altos intereses de deuda, pero el resultado primario puede ser menos deficitario o incluso positivo. Esto permite distinguir problemas estructurales del gasto corriente respecto de la carga del endeudamiento acumulado. [file:1][file:5]
+    </p>
+
+    <h3>Errores Frecuentes</h3>
+    <div class="err box">
+      <strong>❗ Error frecuente:</strong> Creer que el presupuesto es solo un cálculo contable. En realidad es instrumento jurídico y político de asignación de recursos para cumplir objetivos del Estado. [file:1]
+    </div>
+    <div class="err box">
+      <strong>❗ Error frecuente:</strong> Pensar que, si el ingreso estimado aumenta, cualquier gasto puede ampliarse libremente. Los créditos de gasto siguen sujetos a legalidad, clasificación y procedimientos de modificación. [file:1][file:7]
+    </div>
+    <div class="err box">
+      <strong>❗ Error frecuente:</strong> Memorizar artículos sin comprender el ciclo completo del presupuesto. En examen suele valorarse la capacidad de relacionar formulación, autorización, ejecución, financiamiento y control. [file:1][file:7][file:6]
+    </div>
+
+    <h3>Aspectos Importantes</h3>
+    <ul>
+      <li>El PGN integra todos los presupuestos de organismos y entidades comprendidos por la ley. [file:1]</li>
+      <li>Los recursos son limitados y por eso el presupuesto expresa prioridades. [file:1]</li>
+      <li>El clasificador presupuestario es esencial para uniformidad y control. [file:1]</li>
+      <li>La estructura presupuestaria influye en bienestar, salud, educación, competitividad y distribución de la renta. [file:1]</li>
+      <li>La elaboración del PGN se basa en variables macroeconómicas y prioridades del desarrollo. [file:1]</li>
+      <li>El presupuesto se articula con ejecución, tesorería, deuda, control y evaluación. [file:1][file:5][file:6][file:7]</li>
+    </ul>
+
+    <h3>Relación con otras Unidades</h3>
+    <p>
+      La Unidad 3 se conecta con todas las demás. Retoma el fundamento del Estado y sus fines de la Unidad 1, operacionaliza la política fiscal de la Unidad 2, condiciona la incidencia del gasto analizada en la Unidad 4, se ejecuta mediante los mecanismos estudiados en la Unidad 7, depende de fuentes de financiamiento y deuda abordadas en la Unidad 8 y requiere programación de caja y pagos desarrollados en la Unidad 9. [file:1][file:2][file:3][file:4][file:5][file:6][file:7]
+    </p>
+
+    <h3>Preguntas posibles de examen</h3>
+    <ul>
+      <li>Explique el objeto y las finalidades de la Ley 1535/99. [file:1]</li>
+      <li>¿Qué es el SIAF y cuáles son sus componentes? [file:1]</li>
+      <li>Defina PGN y explique por qué es un instrumento de política pública. [file:1]</li>
+      <li>Desarrolle los principios presupuestarios de universalidad, legalidad, unidad, anualidad y equilibrio. [file:1]</li>
+      <li>Explique paso a paso cómo se elabora el PGN. [file:1]</li>
+      <li>¿Qué es el clasificador presupuestario y para qué sirve? [file:1]</li>
+      <li>Diferencie presupuesto aprobado y presupuesto ejecutado. [file:1]</li>
+      <li>Explique resultado global y resultado primario. [file:1]</li>
+      <li>Diferencie inversión física e inversión financiera. [file:1]</li>
+      <li>Relacione presupuesto, financiamiento, tesorería y control. [file:1][file:5][file:6][file:7]</li>
+    </ul>
+
+    <h3>Resumen conceptual</h3>
+    <p>
+      La Unidad 3 muestra que el PGN, dentro del marco de la Ley 1535/99 y del SIAF, es el instrumento mediante el cual el Estado asigna recursos para cumplir sus políticas y objetivos, bajo principios de legalidad, unidad, anualidad, universalidad y equilibrio, utilizando un proceso técnico de formulación, clasificación, financiamiento, ejecución y control. [file:1]
+    </p>
+    <a class="top-link" href="#indice">↑ Volver al índice</a>
+  </section>
+
+  <section id="unidad4" class="card unit">
+    <h2>Unidad 4. Análisis del Gasto Público</h2>
+
+    <h3>Introducción</h3>
+    <p>
+      El análisis del gasto público permite evaluar no solo cuánto gasta el Estado, sino para qué, sobre quiénes incide y con qué efectos económicos, sociales y distributivos. Desde la teoría de las finanzas públicas, el gasto es un instrumento operativo mediante el cual el Estado concreta sus funciones de asignación, distribución y estabilización. [file:4]
+    </p>
+
+    <h3>Conceptos Fundamentales</h3>
+    <div class="def box">
+      <strong>✔ Definición:</strong> La distribución de la renta se refiere a la forma en que el ingreso total de una economía se reparte entre individuos, hogares o factores productivos. [file:4]
+    </div>
+    <div class="def box">
+      <strong>✔ Definición:</strong> La incidencia del gasto público analiza quiénes se benefician efectivamente de bienes, servicios y transferencias financiados por el Estado. [file:4]
+    </div>
+    <div class="def box">
+      <strong>✔ Definición:</strong> Los bienes públicos son aquellos caracterizados por no rivalidad y no exclusión. [file:4]
+    </div>
+
+    <h3>Desarrollo Completo</h3>
+    <p>
+      El gasto público cumple funciones redistributivas, económicas y administrativas. Su dimensión redistributiva se orienta a mejorar condiciones de vida de sectores de menores ingresos; su dimensión económica regula la actividad y corrige fallas de mercado; y su dimensión administrativa permite el funcionamiento institucional del Estado. [file:4]
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Eje</th>
+          <th>Contenido</th>
+          <th>Relevancia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Distribución primaria</td>
+          <td>Surge del mercado a través de salarios, beneficios, rentas e intereses. [file:4]</td>
+          <td>Puede resultar socialmente desigual. [file:4]</td>
+        </tr>
+        <tr>
+          <td>Distribución secundaria</td>
+          <td>Resulta de impuestos, subsidios, transferencias y gasto social. [file:4]</td>
+          <td>Permite intervención redistributiva del Estado. [file:4]</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      La concepción utilitarista justifica asignar recursos allí donde la utilidad marginal social sea mayor, aunque presenta la limitación de poder sacrificar intereses de minorías si se considera solo el bienestar agregado. Por eso, el análisis contemporáneo del gasto debe complementarse con enfoques de equidad, derechos y protección de grupos vulnerables. [file:4]
+    </p>
+
+    <h3>Procedimientos</h3>
+    <ol>
+      <li>Identificar cuánto gasta el Estado y en qué rubros. [file:4]</li>
+      <li>Determinar quiénes reciben efectivamente los beneficios del gasto. [file:4]</li>
+      <li>Evaluar si la incidencia es progresiva o regresiva. [file:4]</li>
+      <li>Considerar problemas de medición de la renta y unidad de observación. [file:4]</li>
+      <li>Analizar efectos sobre precios relativos y bienestar real. [file:4]</li>
+    </ol>
+
+    <h3>Ejemplos</h3>
+    <div class="ex box">
+      <strong>💡 Ejemplo:</strong> Un programa de transferencias monetarias condicionadas puede reducir desigualdad al aumentar el ingreso disponible de hogares vulnerables. [file:4]
+    </div>
+    <div class="ex box">
+      <strong>💡 Ejemplo:</strong> La inversión en educación, salud preventiva o saneamiento puede aproximarse a una mejora paretiana al beneficiar a grupos vulnerables y elevar la productividad agregada. [file:4]
+    </div>
+
+    <h3>Comparaciones</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Tipo</th>
+          <th>Progresivo</th>
+          <th>Regresivo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Incidencia del gasto</td>
+          <td>Beneficia proporcionalmente más a hogares de menores ingresos. [file:4]</td>
+          <td>Beneficia más a hogares de mayores ingresos. [file:4]</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Casos Prácticos</h3>
+    <p>
+      Si una transferencia monetaria se entrega en una zona con oferta local rígida, parte del efecto sobre bienestar puede perderse por aumento de precios. Del mismo modo, una obra pública puede reducir costos logísticos y mejorar competitividad regional, modificando precios relativos de manera favorable. [file:4]
+    </p>
+
+    <h3>Errores Frecuentes</h3>
+    <div class="err box">
+      <strong>❗ Error frecuente:</strong> Suponer que todo gasto social es automáticamente progresivo. La incidencia real depende de a qué grupos llega efectivamente el beneficio. [file:4]
+    </div>
+
+    <h3>Aspectos Importantes</h3>
+    <ul>
+      <li>La movilidad social puede mejorar cuando el gasto público amplía oportunidades reales. [file:4]</li>
+      <li>La medición de la renta presenta dificultades por informalidad, subdeclaración e ingresos no monetarios. [file:4]</li>
+      <li>La unidad de observación correcta es crucial para no distorsionar diagnósticos. [file:4]</li>
+      <li>Los bienes públicos tienden a ser provistos insuficientemente por el mercado. [file:4]</li>
+    </ul>
+
+    <h3>Relación con otras Unidades</h3>
+    <p>
+      El gasto público que aquí se analiza es el mismo que en la Unidad 3 se autoriza en el presupuesto y en la Unidad 7 se ejecuta. Además, su financiamiento y sostenibilidad dependen de la Unidad 8, y su pago efectivo pasa por la Unidad 9. [file:1][file:4][file:5][file:6][file:7]
+    </p>
+
+    <h3>Preguntas posibles de examen</h3>
+    <ul>
+      <li>Explique las funciones del gasto público. [file:4]</li>
+      <li>Diferencie distribución primaria y secundaria de la renta. [file:4]</li>
+      <li>¿Qué significa incidencia progresiva y regresiva del gasto? [file:4]</li>
+      <li>Explique la concepción utilitarista y sus limitaciones. [file:4]</li>
+      <li>¿Qué son los bienes públicos y por qué justifican intervención estatal? [file:4]</li>
+    </ul>
+
+    <h3>Resumen conceptual</h3>
+    <p>
+      La Unidad 4 estudia el gasto público como instrumento de asignación, redistribución y estabilización, poniendo especial atención en la distribución de la renta, la incidencia del gasto, la medición del bienestar y la provisión de bienes públicos. [file:4]
+    </p>
+    <a class="top-link" href="#indice">↑ Volver al índice</a>
+  </section>
+
+  <section id="unidad7" class="card unit">
+    <h2>Unidad 7. Sistema de Presupuesto</h2>
+
+    <h3>Introducción</h3>
+    <p>
+      Esta unidad se enfoca en la ejecución del presupuesto, sus modificaciones, las metas e indicadores y el control y evaluación presupuestaria. Si la Unidad 3 explica cómo nace y se estructura el presupuesto, la Unidad 7 explica cómo se lo hace funcionar dentro del ejercicio fiscal. [file:7]
+    </p>
+
+    <h3>Conceptos Fundamentales</h3>
+    <div class="def box">
+      <strong>✔ Definición:</strong> La ejecución presupuestaria se realiza con base en planes financieros generales e institucionales que consideran flujo estacional de ingresos y capacidad real de ejecución. [file:7]
+    </div>
+    <div class="def box">
+      <strong>✔ Definición:</strong> Las etapas de ejecución del presupuesto comprenden, para ingresos, liquidación y recaudación; y para gastos, previsión, obligación y pago. [file:7]
+    </div>
+
+    <h3>Desarrollo Completo</h3>
+    <p>
+      La ejecución del presupuesto exige mantener equilibrio presupuestario y cumplir el plan de ejecución. Para ello, los organismos presentan planes anuales de cuotas de ingresos y gastos sobre la base de su calendario de realizaciones, de donde derivan los requerimientos de fondos necesarios para cumplir objetivos y metas institucionales. [file:7]
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Etapa</th>
+          <th>Contenido</th>
+          <th>Sentido</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Liquidación</td>
+          <td>Identificación de la fuente y cuantificación del monto a percibir. [file:7]</td>
+          <td>Inicio del ingreso devengado. [file:7]</td>
+        </tr>
+        <tr>
+          <td>Recaudación</td>
+          <td>Percepción efectiva del recurso. [file:7]</td>
+          <td>Ingreso material al sistema público. [file:7]</td>
+        </tr>
+        <tr>
+          <td>Previsión</td>
+          <td>Asignación específica del crédito presupuestario. [file:7]</td>
+          <td>Reserva legal para gastar. [file:7]</td>
+        </tr>
+        <tr>
+          <td>Obligación</td>
+          <td>Compromiso de pago surgido de vínculo jurídico financiero. [file:7]</td>
+          <td>Nace deber de pago. [file:7]</td>
+        </tr>
+        <tr>
+          <td>Pago</td>
+          <td>Cumplimiento parcial o total de obligaciones. [file:7]</td>
+          <td>Extinción financiera de la obligación. [file:7]</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Procedimientos</h3>
+    <ol>
+      <li>Programar cuotas anuales de ingresos y gastos. [file:7]</li>
+      <li>Ejecutar conforme al plan financiero y a disponibilidad real. [file:7]</li>
+      <li>Registrar etapas de ingresos y gastos. [file:7]</li>
+      <li>Solicitar modificaciones presupuestarias cuando corresponda. [file:7]</li>
+      <li>Informar resultados cuantitativos y cualitativos al MEF. [file:7]</li>
+    </ol>
+
+    <h3>Ejemplos</h3>
+    <div class="ex box">
+      <strong>💡 Ejemplo:</strong> Si una institución sufre insuficiencia de recaudación de recursos propios, puede solicitar cambio de fuente de financiamiento al Tesoro Público para garantizar continuidad operativa. [file:7]
+    </div>
+
+    <h3>Comparaciones</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Modificación</th>
+          <th>Qué hace</th>
+          <th>Límite</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ampliación presupuestaria</td>
+          <td>Aumenta gastos previstos asignando explícitamente recursos que los financien. [file:7]</td>
+          <td>Debe aprobarse por ley. [file:7]</td>
+        </tr>
+        <tr>
+          <td>Transferencia de créditos</td>
+          <td>Redistribuye créditos entre objetos, programas o proyectos. [file:7]</td>
+          <td>No incrementa presupuesto total institucional. [file:7]</td>
+        </tr>
+        <tr>
+          <td>Cambio de fuente</td>
+          <td>Sustituye fuente inicial de financiamiento por otra. [file:7]</td>
+          <td>Requiere procedimiento y aprobación correspondiente. [file:7]</td>
+        </tr>
+        <tr>
+          <td>Modificación de cuotas</td>
+          <td>Mueve recursos entre meses dentro del mismo rubro y fuente. [file:7]</td>
+          <td>No altera naturaleza del crédito. [file:7]</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Casos Prácticos</h3>
+    <p>
+      La modificación del anexo de personal es especialmente sensible porque afecta cargos, categorías, remuneraciones y dotación institucional. La creación de cargos y la modificación de remuneraciones previstas en el PGN solo pueden disponerse por ley, lo que muestra la fuerte reserva legal en materia de personal. [file:7]
+    </p>
+
+    <h3>Errores Frecuentes</h3>
+    <div class="err box">
+      <strong>❗ Error frecuente:</strong> Creer que toda modificación presupuestaria implica aumento del presupuesto. Las transferencias de créditos, por ejemplo, solo redistribuyen créditos existentes. [file:7]
+    </div>
+
+    <h3>Aspectos Importantes</h3>
+    <ul>
+      <li>Solo pueden contraerse obligaciones con cargo a saldos disponibles de asignación presupuestaria específica. [file:7]</li>
+      <li>Las cuotas y planes financieros ordenan temporalmente la ejecución. [file:7]</li>
+      <li>Los OEE deben presentar informe del primer semestre y Balance Anual de Gestión Pública. [file:7]</li>
+      <li>El incumplimiento informativo genera comunicación a órganos de control. [file:7]</li>
+    </ul>
+
+    <h3>Relación con otras Unidades</h3>
+    <p>
+      La Unidad 7 es la continuidad operativa de la Unidad 3. También se articula con Tesorería, porque el pago efectivo requiere plan de caja y transferencias, y con Gasto Público, porque la calidad de ejecución afecta incidencia y resultados sociales. [file:1][file:4][file:6][file:7]
+    </p>
+
+    <h3>Preguntas posibles de examen</h3>
+    <ul>
+      <li>Explique las etapas de ejecución del presupuesto. [file:7]</li>
+      <li>¿Qué es el plan financiero? [file:7]</li>
+      <li>Diferencie ampliación presupuestaria y transferencia de créditos. [file:7]</li>
+      <li>¿En qué consiste el cambio de fuente de financiamiento? [file:7]</li>
+      <li>Explique el control y evaluación presupuestaria. [file:7]</li>
+    </ul>
+
+    <h3>Resumen conceptual</h3>
+    <p>
+      La Unidad 7 estudia la ejecución real del presupuesto mediante planes financieros, etapas de ingreso y gasto, modificaciones presupuestarias, administración del personal y mecanismos de control y evaluación. [file:7]
+    </p>
+    <a class="top-link" href="#indice">↑ Volver al índice</a>
+  </section>
+
+  <section id="unidad8" class="card unit">
+    <h2>Unidad 8. Financiamiento, deuda y mercado globales</h2>
+
+    <h3>Introducción</h3>
+    <p>
+      La gestión financiera del Estado no se agota en recaudar impuestos. También comprende la obtención de fuentes de financiamiento que permitan sostener servicios públicos, inversión, programas sociales y obligaciones financieras, todo ello condicionado por estabilidad macroeconómica y reputación internacional. [file:5]
+    </p>
+
+    <h3>Conceptos Fundamentales</h3>
+    <div class="def box">
+      <strong>✔ Definición:</strong> El financiamiento público es el conjunto de mecanismos mediante los cuales el Estado obtiene recursos para financiar gastos corrientes y de capital. [file:5]
+    </div>
+    <div class="def box">
+      <strong>✔ Definición:</strong> La deuda pública es el conjunto de obligaciones financieras asumidas por el Estado con acreedores internos y externos. [file:5]
+    </div>
+
+    <h3>Desarrollo Completo</h3>
+    <p>
+      Las fuentes de financiamiento del Estado incluyen ingresos corrientes, ingresos de capital y financiamiento mediante endeudamiento. Entre los ingresos públicos se distinguen recursos tributarios, no tributarios y transferencias, mientras que el financiamiento incluye bonos, préstamos multilaterales y deuda interna o externa. [file:5]
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Fuente</th>
+          <th>Descripción</th>
+          <th>Ejemplo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ingresos corrientes</td>
+          <td>Recursos permanentes y recurrentes. [file:5]</td>
+          <td>IVA, IRP, IRE, aranceles. [file:5]</td>
+        </tr>
+        <tr>
+          <td>Ingresos de capital</td>
+          <td>Venta de activos, recuperación de préstamos, dividendos. [file:5]</td>
+          <td>Activos públicos. [file:5]</td>
+        </tr>
+        <tr>
+          <td>Financiamiento</td>
+          <td>Recursos obtenidos por endeudamiento. [file:5]</td>
+          <td>Bonos, préstamos multilaterales. [file:5]</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Procedimientos</h3>
+    <ol>
+      <li>Identificar necesidades de financiamiento del Estado. [file:5]</li>
+      <li>Seleccionar fuente adecuada según costo, plazo y sostenibilidad. [file:5]</li>
+      <li>Evaluar impacto en deuda pública y servicio futuro. [file:5]</li>
+      <li>Considerar condiciones de mercado y calificación soberana. [file:5]</li>
+    </ol>
+
+    <h3>Ejemplos</h3>
+    <div class="ex box">
+      <strong>💡 Ejemplo:</strong> Un proyecto de infraestructura puede financiarse mediante bonos soberanos o préstamos multilaterales, cada uno con diferencias en tasas, negociación, montos y supervisión. [file:5]
+    </div>
+
+    <h3>Comparaciones</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Aspecto</th>
+          <th>Bonos soberanos</th>
+          <th>Préstamos multilaterales</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Origen</td>
+          <td>Mercado financiero. [file:5]</td>
+          <td>Organismos internacionales. [file:5]</td>
+        </tr>
+        <tr>
+          <td>Negociación</td>
+          <td>Mercado abierto. [file:5]</td>
+          <td>Acuerdo bilateral. [file:5]</td>
+        </tr>
+        <tr>
+          <td>Tasa</td>
+          <td>Dependiente del mercado. [file:5]</td>
+          <td>Generalmente menor. [file:5]</td>
+        </tr>
+        <tr>
+          <td>Plazos</td>
+          <td>Medio y largo plazo. [file:5]</td>
+          <td>Largo plazo. [file:5]</td>
+        </tr>
+        <tr>
+          <td>Supervisión</td>
+          <td>Menor. [file:5]</td>
+          <td>Mayor control técnico. [file:5]</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Casos Prácticos</h3>
+    <p>
+      Una mejora en la calificación de riesgo soberano tiende a reducir costos de financiamiento externo, ampliar acceso al mercado e incrementar confianza de inversionistas. Una rebaja, en cambio, puede encarecer el crédito, desalentar inversión y deteriorar imagen país. [file:5]
+    </p>
+
+    <h3>Errores Frecuentes</h3>
+    <div class="err box">
+      <strong>❗ Error frecuente:</strong> Pensar que endeudarse siempre es negativo. La sostenibilidad depende del volumen de deuda, del costo financiero, de la capacidad de pago y del destino productivo o social de los recursos. [file:5]
+    </div>
+
+    <h3>Aspectos Importantes</h3>
+    <ul>
+      <li>La sostenibilidad de la deuda se mide con indicadores como deuda/PIB, servicio de deuda/ingresos, déficit fiscal y reservas internacionales. [file:5]</li>
+      <li>Las agencias calificadoras reducen asimetrías de información entre emisor y financiadores. [file:5]</li>
+      <li>El acceso a financiamiento favorable depende de estabilidad macroeconómica y sostenibilidad fiscal. [file:5]</li>
+    </ul>
+
+    <h3>Relación con otras Unidades</h3>
+    <p>
+      Las fuentes de financiamiento determinan la viabilidad del presupuesto de la Unidad 3, condicionan modificaciones y ejecución de la Unidad 7 y afectan la caja y transferencias de la Unidad 9. También se relacionan con la política fiscal y el saldo presupuestario estudiados en las Unidades 2 y 3. [file:1][file:3][file:5][file:6][file:7]
+    </p>
+
+    <h3>Preguntas posibles de examen</h3>
+    <ul>
+      <li>¿Qué es el financiamiento público? [file:5]</li>
+      <li>Diferencie deuda interna y deuda externa. [file:5]</li>
+      <li>Compare bonos soberanos y préstamos multilaterales. [file:5]</li>
+      <li>¿Qué es la calificación de riesgo soberano y por qué importa? [file:5]</li>
+      <li>Explique indicadores de sostenibilidad de la deuda. [file:5]</li>
+    </ul>
+
+    <h3>Resumen conceptual</h3>
+    <p>
+      La Unidad 8 estudia cómo el Estado se financia mediante ingresos corrientes, capital y endeudamiento, y cómo la deuda, los bonos, los préstamos multilaterales y la calificación de riesgo impactan en la sostenibilidad fiscal y en la capacidad de financiar políticas públicas. [file:5]
+    </p>
+    <a class="top-link" href="#indice">↑ Volver al índice</a>
+  </section>
+
+  <section id="unidad9" class="card unit">
+    <h2>Unidad 9. Sistema de Tesorería</h2>
+
+    <h3>Introducción</h3>
+    <p>
+      El sistema de tesorería administra los recursos financieros del Estado desde la percepción de ingresos hasta el pago de obligaciones e inversión de excedentes. Su importancia radica en que la autorización presupuestaria solo se vuelve operativa cuando existe programación de caja, transferencia de recursos y pago conforme a derecho. [file:6]
+    </p>
+
+    <h3>Conceptos Fundamentales</h3>
+    <div class="def box">
+      <strong>✔ Definición:</strong> La Dirección General del Tesoro Público administra los recursos financieros del Estado mediante registro, control, programación de caja y transferencia de recursos. [file:6]
+    </div>
+    <div class="def box">
+      <strong>✔ Definición:</strong> El plan de caja es un instrumento de corto plazo de la tesorería general proyectado trimestralmente y ajustado mensualmente según cuotas asignadas. [file:6]
+    </div>
+
+    <h3>Desarrollo Completo</h3>
+    <p>
+      El Tesoro Público comprende disponibilidades y activos financieros, la Tesorería General y las tesorerías institucionales de los organismos y entidades del Estado. La DGTP cumple funciones de administración de recursos, control de ingresos y gastos, programación de caja, análisis financiero del flujo de fondos, emisión de valores fiscales e inversiones financieras. [file:6]
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Instrumento</th>
+          <th>Función</th>
+          <th>Horizonte</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Presupuesto</td>
+          <td>Autoriza y fija límites legales de gasto. [file:6]</td>
+          <td>Anual. [file:6]</td>
+        </tr>
+        <tr>
+          <td>Plan financiero</td>
+          <td>Programa mensualmente el presupuesto según financiamiento real. [file:6]</td>
+          <td>Mensual. [file:6]</td>
+        </tr>
+        <tr>
+          <td>Plan de caja</td>
+          <td>Ordena la disponibilidad de fondos para pagos de corto plazo. [file:6]</td>
+          <td>Trimestral con ajustes mensuales. [file:6]</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Procedimientos</h3>
+    <ol>
+      <li>Aprobar previamente el rubro correspondiente en el plan financiero. [file:6]</li>
+      <li>Solicitar aprobación del plan de caja a la DGTP sin exceder el plan financiero. [file:6]</li>
+      <li>Vincular obligación aprobada con Solicitud de Transferencia de Recursos. [file:6]</li>
+      <li>La DGTP genera la Orden de Transferencia y la remite al Banco Central para desembolso. [file:6]</li>
+    </ol>
+
+    <h3>Ejemplos</h3>
+    <div class="ex box">
+      <strong>💡 Ejemplo:</strong> Aunque exista crédito presupuestario, un pago no puede realizarse válidamente sin obligación legal contabilizada, firmas requeridas y presentación de STR dentro del plazo máximo previsto. [file:6]
+    </div>
+
+    <h3>Comparaciones</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Aspecto</th>
+          <th>Plan financiero</th>
+          <th>Plan de caja</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Naturaleza</td>
+          <td>Programación mensual del presupuesto. [file:6]</td>
+          <td>Instrumento de corto plazo de tesorería. [file:6]</td>
+        </tr>
+        <tr>
+          <td>Base</td>
+          <td>Disponibilidad real de financiamiento. [file:6]</td>
+          <td>Cuotas asignadas a cada UAF. [file:6]</td>
+        </tr>
+        <tr>
+          <td>Propósito</td>
+          <td>Autorizar ritmo de obligaciones. [file:6]</td>
+          <td>Habilitar flujo efectivo de pagos. [file:6]</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Casos Prácticos</h3>
+    <p>
+      Una institución puede tener presupuesto aprobado y obligación registrada, pero si no obtiene la cuota de caja correspondiente, el pago no se materializa en ese momento. Esto muestra que tesorería no reemplaza al presupuesto, pero sí condiciona su realización efectiva en términos de flujo financiero. [file:6][file:7]
+    </p>
+
+    <h3>Errores Frecuentes</h3>
+    <div class="err box">
+      <strong>❗ Error frecuente:</strong> Pensar que presupuesto, plan financiero y plan de caja son lo mismo. En realidad corresponden a niveles distintos de autorización, programación y disponibilidad efectiva de fondos. [file:6]
+    </div>
+
+    <h3>Aspectos Importantes</h3>
+    <ul>
+      <li>Los pagos se realizan exclusivamente para obligaciones legales contabilizadas. [file:6]</li>
+      <li>Se requieren firmas del ordenador de gastos y del habilitado pagador. [file:6]</li>
+      <li>Las STR deben presentarse dentro del plazo máximo de 30 días tras aprobación en SITE. [file:6]</li>
+      <li>La DGTP articula con el Banco Central para el desembolso final. [file:6]</li>
+    </ul>
+
+    <h3>Relación con otras Unidades</h3>
+    <p>
+      Tesorería materializa financieramente lo autorizado en la Unidad 3 y ejecutado en la Unidad 7. Además, depende del perfil de financiamiento de la Unidad 8 y permite que el gasto público estudiado en la Unidad 4 llegue realmente a sus destinatarios. [file:1][file:4][file:5][file:6][file:7]
+    </p>
+
+    <h3>Preguntas posibles de examen</h3>
+    <ul>
+      <li>¿Qué funciones cumple la DGTP? [file:6]</li>
+      <li>Diferencie presupuesto, plan financiero y plan de caja. [file:6]</li>
+      <li>Explique el proceso de transferencia de recursos. [file:6]</li>
+      <li>¿Cuáles son los requisitos para los pagos del Tesoro? [file:6]</li>
+    </ul>
+
+    <h3>Resumen conceptual</h3>
+    <p>
+      La Unidad 9 muestra cómo la tesorería administra recursos, programa caja y hace efectivos los pagos del Estado, conectando presupuesto, obligación legal y disponibilidad real de fondos. [file:6]
+    </p>
+    <a class="top-link" href="#indice">↑ Volver al índice</a>
+  </section>
+
+  <section id="integracion" class="card unit">
+    <h2>Relaciones integradoras entre unidades</h2>
+    <p>
+      Toda la materia puede estudiarse como una cadena coherente. El Estado define fines y funciones; la política fiscal fija orientación macroeconómica; el PGN transforma esa orientación en asignaciones legales de recursos; el sistema de presupuesto ejecuta esas asignaciones; el análisis del gasto evalúa su impacto distributivo y social; el financiamiento asegura recursos suficientes; y la tesorería administra caja y pagos. [file:1][file:2][file:3][file:4][file:5][file:6][file:7]
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Unidad</th>
+          <th>Pregunta central</th>
+          <th>Conexión principal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Unidad 1</td>
+          <td>¿Qué es el Estado y por qué interviene? [file:2]</td>
+          <td>Base doctrinal y funcional. [file:2]</td>
+        </tr>
+        <tr>
+          <td>Unidad 2</td>
+          <td>¿Cómo usa el Estado la política fiscal? [file:3]</td>
+          <td>Dirección macroeconómica del presupuesto. [file:3]</td>
+        </tr>
+        <tr>
+          <td>Unidad 3</td>
+          <td>¿Cómo asigna formalmente los recursos? [file:1]</td>
+          <td>Núcleo del sistema financiero estatal. [file:1]</td>
+        </tr>
+        <tr>
+          <td>Unidad 4</td>
+          <td>¿A quién beneficia realmente el gasto? [file:4]</td>
+          <td>Evaluación distributiva y social. [file:4]</td>
+        </tr>
+        <tr>
+          <td>Unidad 7</td>
+          <td>¿Cómo se ejecuta y modifica el presupuesto? [file:7]</td>
+          <td>Operación institucional del PGN. [file:7]</td>
+        </tr>
+        <tr>
+          <td>Unidad 8</td>
+          <td>¿Con qué recursos se financia el Estado? [file:5]</td>
+          <td>Sostenibilidad fiscal y deuda. [file:5]</td>
+        </tr>
+        <tr>
+          <td>Unidad 9</td>
+          <td>¿Cómo se administra la caja y se pagan obligaciones? [file:6]</td>
+          <td>Materialización financiera del presupuesto. [file:6]</td>
+        </tr>
+      </tbody>
+    </table>
+    <a class="top-link" href="#indice">↑ Volver al índice</a>
+  </section>
+
+  <section id="repaso" class="card unit">
+    <h2>Guía de repaso final</h2>
+    <h3>Esquema para memorizar la materia</h3>
+    <ol>
+      <li>Estado: organización soberana con fines de eficiencia, eficacia y estabilidad. [file:2]</li>
+      <li>Política fiscal: usa gasto, impuestos y deuda para crecimiento, redistribución y estabilización. [file:3]</li>
+      <li>Ley 1535/99: ordena la administración financiera estatal y crea el SIAF. [file:1]</li>
+      <li>PGN: instrumento de asignación de recursos para políticas y objetivos del Estado. [file:1]</li>
+      <li>Principios presupuestarios: universalidad, legalidad, unidad, anualidad y equilibrio. [file:1]</li>
+      <li>Ejecución: liquidación, recaudación, previsión, obligación y pago. [file:7]</li>
+      <li>Gasto público: debe analizarse por su incidencia distributiva y eficiencia social. [file:4]</li>
+      <li>Financiamiento: impuestos, capital, bonos, préstamos y deuda. [file:5]</li>
+      <li>Tesorería: transforma crédito y obligación en pago efectivo a través de caja y transferencias. [file:6]</li>
+    </ol>
+
+    <h3>Preguntas integradoras de examen</h3>
+    <ul>
+      <li>Explique cómo se relacionan las funciones del Estado con el PGN. [file:1][file:2]</li>
+      <li>Relacione política fiscal, déficit, presupuesto y deuda pública. [file:1][file:3][file:5]</li>
+      <li>Describa el recorrido completo desde la formulación del presupuesto hasta el pago efectivo. [file:1][file:6][file:7]</li>
+      <li>Analice cómo el gasto público puede ser progresivo o regresivo y qué rol juega el presupuesto en ello. [file:1][file:4]</li>
+    </ul>
+    <a class="top-link" href="#indice">↑ Volver al índice</a>
+  </section>
+</main>
+
+<footer class="container">
+  <p>
+    Guía de estudio digital elaborada a partir de las unidades proporcionadas, integrando conceptos, procedimientos, comparaciones y relaciones temáticas en un único material de estudio. [file:1][file:2][file:3][file:4][file:5][file:6][file:7]
+  </p>
+</footer>
+
+<script>
+const body = document.body;
+const themeBtn = document.getElementById('toggleTheme');
+const savedTheme = localStorage.getItem('guide-theme');
+if(savedTheme === 'dark'){
+  body.classList.add('dark');
+  themeBtn.textContent = '☀️ Modo claro';
+}
+themeBtn.addEventListener('click', () => {
+  body.classList.toggle('dark');
+  const dark = body.classList.contains('dark');
+  localStorage.setItem('guide-theme', dark ? 'dark' : 'light');
+  themeBtn.textContent = dark ? '☀️ Modo claro' : '🌙 Modo oscuro';
+});
+
+const input = document.getElementById('searchInput');
+const clearBtn = document.getElementById('clearSearch');
+const expandBtn = document.getElementById('expandAll');
+
+function removeMarks(root){
+  root.querySelectorAll('mark').forEach(mark=>{
+    const parent = mark.parentNode;
+    parent.replaceChild(document.createTextNode(mark.textContent), mark);
+    parent.normalize();
+  });
+}
+function highlight(term){
+  const sections = document.querySelectorAll('main .card');
+  sections.forEach(sec => removeMarks(sec));
+  if(!term.trim()) return;
+  const regex = new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+  sections.forEach(sec=>{
+    for(const node of [...sec.childNodes]){
+      walk(node, regex);
+    }
+  });
+}
+function walk(node, regex){
+  if(node.nodeType === 3){
+    const text = node.nodeValue;
+    if(regex.test(text)){
+      const span = document.createElement('span');
+      span.innerHTML = text.replace(regex, match => `<mark>${match}</mark>`);
+      node.parentNode.replaceChild(span, node);
+    }
+    regex.lastIndex = 0;
+  }else if(node.nodeType === 1 && !['SCRIPT','STYLE','MARK','INPUT','BUTTON'].includes(node.tagName)){
+    [...node.childNodes].forEach(child => walk(child, regex));
+  }
+}
+input.addEventListener('input', e => highlight(e.target.value));
+clearBtn.addEventListener('click', ()=>{
+  input.value = '';
+  highlight('');
+});
+expandBtn.addEventListener('click', ()=>{
+  document.querySelectorAll('details').forEach(d => d.open = true);
+});
+</script>
+</body>
+</html>
