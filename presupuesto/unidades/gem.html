@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Estudio: Administración Financiera del Estado</title>
+    <style>
+        /* ==========================================================================
+           VARIABLES Y MODO OSCURO
+           ========================================================================== */
+        :root {
+            --bg-color: #f4f7f6;
+            --text-color: #333333;
+            --text-muted: #555555;
+            --sidebar-bg: #ffffff;
+            --content-bg: #ffffff;
+            --primary-color: #1a5276;
+            --secondary-color: #2980b9;
+            --border-color: #dddddd;
+            --hover-color: #ebf5fb;
+            --box-def-bg: #e8f4f8; --box-def-border: #3498db;
+            --box-imp-bg: #fdf2e9; --box-imp-border: #e67e22;
+            --box-ej-bg: #eaeded; --box-ej-border: #7f8c8d;
+            --box-rec-bg: #eafaf1; --box-rec-border: #2ecc71;
+            --box-err-bg: #f9ebea; --box-err-border: #e74c3c;
+            --table-head: #1a5276;
+            --table-head-text: #ffffff;
+            --table-row-even: #f9f9f9;
+        }
+
+        body.dark-mode {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --text-muted: #aaaaaa;
+            --sidebar-bg: #1e1e1e;
+            --content-bg: #1e1e1e;
+            --primary-color: #5dade2;
+            --secondary-color: #3498db;
+            --border-color: #333333;
+            --hover-color: #2c3e50;
+            --box-def-bg: rgba(52, 152, 219, 0.1);
+            --box-imp-bg: rgba(230, 126, 34, 0.1);
+            --box-ej-bg: rgba(127, 140, 141, 0.1);
+            --box-rec-bg: rgba(46, 204, 113, 0.1);
+            --box-err-bg: rgba(231, 76, 60, 0.1);
+            --table-head: #2c3e50;
+            --table-row-even: #2a2a2a;
+        }
+
+        /* ==========================================================================
+           RESET Y TIPOGRAFÍA
+           ========================================================================== */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            font-size: 16px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        h1, h2, h3, h4 { color: var(--primary-color); margin-top: 1.5em; margin-bottom: 0.5em; font-weight: 600; }
+        h1 { font-size: 2.2em; border-bottom: 3px solid var(--primary-color); padding-bottom: 10px; }
+        h2 { font-size: 1.8em; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; }
+        h3 { font-size: 1.4em; }
+        p { margin-bottom: 1em; text-align: justify; }
+        ul, ol { margin-bottom: 1em; margin-left: 2em; }
+        li { margin-bottom: 0.5em; }
+        a { color: var(--secondary-color); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* ==========================================================================
+           ESTRUCTURA (LAYOUT)
+           ========================================================================== */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; height: 60px;
+            background-color: var(--primary-color); color: white;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 20px; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .navbar h2 { color: white; margin: 0; border: none; font-size: 1.2em; }
+        .controls { display: flex; gap: 15px; align-items: center; }
+        .controls input {
+            padding: 6px 12px; border-radius: 20px; border: none; outline: none;
+            width: 250px; font-size: 0.9em;
+        }
+        .btn {
+            background-color: transparent; border: 1px solid white; color: white;
+            padding: 6px 12px; border-radius: 20px; cursor: pointer; transition: all 0.2s;
+        }
+        .btn:hover { background-color: white; color: var(--primary-color); }
+        .btn-action { background-color: var(--secondary-color); border: none; margin-top: 15px; padding: 8px 15px; }
+        .btn-action:hover { background-color: var(--primary-color); color: white; }
+
+        .container {
+            display: flex; max-width: 1400px; margin: 60px auto 0;
+            min-height: calc(100vh - 60px);
+        }
+        .sidebar {
+            width: 300px; background-color: var(--sidebar-bg); border-right: 1px solid var(--border-color);
+            padding: 20px; position: fixed; top: 60px; bottom: 0; overflow-y: auto;
+            transition: background-color 0.3s;
+        }
+        .sidebar ul { list-style: none; margin-left: 0; }
+        .sidebar li a {
+            display: block; padding: 8px 12px; color: var(--text-color);
+            border-radius: 5px; margin-bottom: 2px; transition: background 0.2s;
+        }
+        .sidebar li a:hover { background-color: var(--hover-color); text-decoration: none; }
+        .sidebar .sub-menu { margin-left: 15px; font-size: 0.9em; }
+
+        .main-content {
+            flex: 1; margin-left: 300px; padding: 40px 60px; background-color: var(--content-bg);
+            min-height: 100vh; transition: background-color 0.3s;
+        }
+
+        /* ==========================================================================
+           CAJAS VISUALES (CALLOUTS)
+           ========================================================================== */
+        .box {
+            padding: 15px 20px; margin: 20px 0; border-radius: 8px; border-left: 5px solid;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .box-title { font-weight: bold; margin-bottom: 8px; display: block; font-size: 1.1em; }
+        
+        .box-definicion { background-color: var(--box-def-bg); border-color: var(--box-def-border); }
+        .box-definicion .box-title { color: var(--box-def-border); }
+        
+        .box-importante { background-color: var(--box-imp-bg); border-color: var(--box-imp-border); }
+        .box-importante .box-title { color: var(--box-imp-border); }
+        
+        .box-ejemplo { background-color: var(--box-ej-bg); border-color: var(--box-ej-border); }
+        .box-ejemplo .box-title { color: var(--box-ej-border); }
+        
+        .box-recordatorio { background-color: var(--box-rec-bg); border-color: var(--box-rec-border); }
+        .box-recordatorio .box-title { color: var(--box-rec-border); }
+        
+        .box-error { background-color: var(--box-err-bg); border-color: var(--box-err-border); }
+        .box-error .box-title { color: var(--box-err-border); }
+
+        /* ==========================================================================
+           TABLAS
+           ========================================================================== */
+        table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 0.95em; }
+        th, td { border: 1px solid var(--border-color); padding: 12px 15px; text-align: left; }
+        th { background-color: var(--table-head); color: var(--table-head-text); font-weight: 600; }
+        tr:nth-child(even) { background-color: var(--table-row-even); }
+        
+        /* ==========================================================================
+           RESPONSIVE Y PRINT
+           ========================================================================== */
+        @media (max-width: 992px) {
+            .container { flex-direction: column; }
+            .sidebar { width: 100%; position: static; height: auto; border-right: none; border-bottom: 2px solid var(--border-color); }
+            .main-content { margin-left: 0; padding: 20px; }
+            .navbar { padding: 0 10px; }
+            .controls input { width: 150px; }
+        }
+        @media print {
+            .navbar, .sidebar, .btn-action, .no-print { display: none !important; }
+            .container { margin-top: 0; }
+            .main-content { margin-left: 0; padding: 0; background: white; color: black; }
+            .box { border-left-width: 2px; break-inside: avoid; }
+            h1, h2 { page-break-after: avoid; }
+            table { break-inside: avoid; }
+        }
+        
+        /* Highlight search */
+        .highlight { background-color: yellow; color: black; font-weight: bold; padding: 0 2px; border-radius: 2px; }
+    </style>
+</head>
+<body>
+
+    <!-- NAVEGACIÓN SUPERIOR -->
+    <nav class="navbar no-print">
+        <h2>📚 Guía Académica: Administración Financiera</h2>
+        <div class="controls">
+            <input type="text" id="searchInput" placeholder="Buscar en la guía..." onkeyup="searchGuide()">
+            <button class="btn" onclick="toggleDarkMode()">🌓 Modo Oscuro</button>
+            <button class="btn" onclick="window.print()">🖨️ Imprimir</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- ÍNDICE LATERAL -->
+        <aside class="sidebar no-print">
+            <h3>Índice Temático</h3>
+            <ul>
+                <li><a href="#unidad-1"><b>Unidad I:</b> Introducción a la Administración Financiera</a>
+                    <ul class="sub-menu">
+                        <li><a href="#u1-conceptos">Conceptos Fundamentales</a></li>
+                        <li><a href="#u1-escuelas">Escuelas del Pensamiento</a></li>
+                    </ul>
+                </li>
+                <li><a href="#unidad-2"><b>Unidad II:</b> Política Fiscal</a>
+                    <ul class="sub-menu">
+                        <li><a href="#u2-impacto">Impacto en la Economía</a></li>
+                        <li><a href="#u2-deficit">Déficit vs Superávit</a></li>
+                    </ul>
+                </li>
+                <li><a href="#unidad-3"><b>Unidad III:</b> Presupuesto General de la Nación (PGN) ⭐</a>
+                    <ul class="sub-menu">
+                        <li><a href="#u3-ley1535">Ley N.° 1535/99 y SIAF</a></li>
+                        <li><a href="#u3-proceso">Formulación y Aprobación</a></li>
+                        <li><a href="#u3-ingresos">Estructura de Ingresos</a></li>
+                        <li><a href="#u3-gastos">Estructura de Gastos (O.G.)</a></li>
+                    </ul>
+                </li>
+                <li><a href="#unidad-4"><b>Unidad IV:</b> Análisis del Gasto Público</a>
+                    <ul class="sub-menu">
+                        <li><a href="#u4-renta">Distribución de Renta</a></li>
+                        <li><a href="#u4-incidencia">Incidencia y Eficiencia</a></li>
+                    </ul>
+                </li>
+                <li><a href="#unidad-7"><b>Unidad VII:</b> Sistema de Presupuesto</a>
+                    <ul class="sub-menu">
+                        <li><a href="#u7-ejecucion">Ejecución y Modificaciones</a></li>
+                        <li><a href="#u7-control">Control y Evaluación</a></li>
+                    </ul>
+                </li>
+                <li><a href="#unidad-8"><b>Unidad VIII:</b> Financiamiento y Mercados</a>
+                    <ul class="sub-menu">
+                        <li><a href="#u8-deuda">Deuda y Bonos Soberanos</a></li>
+                        <li><a href="#u8-riesgo">Riesgo País</a></li>
+                    </ul>
+                </li>
+                <li><a href="#unidad-9"><b>Unidad IX:</b> Sistema de Tesorería</a>
+                    <ul class="sub-menu">
+                        <li><a href="#u9-dgtp">Plan de Caja y Pagos</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="main-content" id="mainContent">
+
+            <!-- ========================================================================================= -->
+            <!-- UNIDAD I -->
+            <!-- ========================================================================================= -->
+            <section id="unidad-1">
+                <h1>Unidad I: Introducción a la Administración Financiera del Estado</h1>
+                
+                <h3>1. Introducción</h3>
+                <p>El estudio de la Administración Financiera del Estado es el punto de partida para comprender cómo las sociedades modernas organizan sus recursos para satisfacer las necesidades colectivas. El Estado no es una entidad abstracta; requiere de un andamiaje legal, económico y administrativo para operar. Esta unidad sienta las bases teóricas sobre qué es el Estado, cómo se concibe su existencia, y cómo interviene económicamente para corregir las deficiencias del mercado.</p>
+
+                <h3 id="u1-conceptos">2. Conceptos Fundamentales</h3>
+                <div class="box box-definicion">
+                    <span class="box-title">✔ El Estado</span>
+                    <p>Es la organización jurídica y política soberana permanente, asentada sobre una población, un territorio y un poder institucionalizado.</p>
+                </div>
+                <p>Para que un Estado exista legal y materialmente, requiere ineludiblemente de cuatro elementos:</p>
+                <ul>
+                    <li><b>Población:</b> El componente humano. Es el conjunto de personas que habitan el territorio estatal.</li>
+                    <li><b>Territorio:</b> El espacio geográfico, la jurisdicción donde el Estado ejerce su autoridad exclusiva.</li>
+                    <li><b>Gobierno:</b> El aparato directivo. Es el conjunto de autoridades que ejercen el poder político y dirigen el rumbo de la nación.</li>
+                    <li><b>Soberanía:</b> El poder supremo. Es la capacidad del Estado para tomar decisiones sin estar subordinado a ningún otro poder interno o externo.</li>
+                </ul>
+
+                <h3>3. Desarrollo Completo: Rol y Naturaleza del Estado</h3>
+                <p>A lo largo de la historia, la naturaleza del Estado ha sido debatida. ¿Es una creación artificial o un ente natural?</p>
+                
+                <h4>Concepción Orgánica vs. Mecanicista</h4>
+                <table>
+                    <tr>
+                        <th>Criterio</th>
+                        <th>Concepción Orgánica</th>
+                        <th>Concepción Mecanicista</th>
+                    </tr>
+                    <tr>
+                        <td><b>Definición</b></td>
+                        <td>El Estado es un organismo social vivo que evoluciona naturalmente. No es un invento humano.</td>
+                        <td>El Estado es una estructura artificial, una herramienta creada por el ser humano mediante un "Contrato Social".</td>
+                    </tr>
+                    <tr>
+                        <td><b>Relación Individuo-Estado</b></td>
+                        <td>El Estado es superior al individuo. Las personas son simples partes interdependientes de un todo superior.</td>
+                        <td>El individuo es anterior y superior al Estado. El Estado existe para servir a necesidades específicas de los individuos.</td>
+                    </tr>
+                </table>
+
+                <h4>El Rol del Estado en la Economía (Funciones de Musgrave)</h4>
+                <p>El célebre economista Richard Musgrave identificó tres funciones esenciales mediante las cuales el Estado interviene en la economía:</p>
+                <ol>
+                    <li><b>Función de Asignación:</b> Ocurre cuando el mercado falla. Como señala <i>Joseph Stiglitz</i>, la intervención pública se justifica cuando los mercados no logran asignar eficientemente los recursos. El Estado provee bienes públicos (como la justicia o la defensa) que el sector privado no ofrecería de forma adecuada.</li>
+                    <li><b>Función de Distribución:</b> El mercado premia la eficiencia, pero no garantiza la justicia social. Según Musgrave, el mercado puede generar distribuciones de ingreso socialmente indeseables. El Estado interviene cobrando impuestos a los más ricos y otorgando subsidios a los más vulnerables.</li>
+                    <li><b>Función de Estabilización:</b> Como advirtió <i>John Maynard Keynes</i>, la economía fluctúa (ciclos de auge y recesión). El Estado interviene para mantener el equilibrio macroeconómico, reducir el desempleo en crisis y frenar la inflación en expansiones aceleradas.</li>
+                </ol>
+
+                <div class="box box-importante">
+                    <span class="box-title">⚠ Fines del Estado en la Administración Pública</span>
+                    <p>La actuación estatal debe perseguir tres fines ineludibles:</p>
+                    <ul>
+                        <li><b>Eficiencia:</b> Asignación óptima (lograr lo máximo con los recursos disponibles).</li>
+                        <li><b>Eficacia:</b> Cumplimiento real de los objetivos (hacer lo que se prometió).</li>
+                        <li><b>Estabilidad:</b> Mantener el equilibrio macroeconómico.</li>
+                    </ul>
+                </div>
+
+                <h3 id="u1-escuelas">4. Escuelas del Pensamiento Económico</h3>
+                <p>La forma en que se administran las finanzas públicas depende de la ideología económica adoptada por el gobierno de turno.</p>
+                <ul>
+                    <li><b>Escuela Clásica (Adam Smith, David Ricardo):</b> Defiende el liberalismo económico y la nula intervención del Estado. El mercado se autorregula ("mano invisible"). El Estado solo debe proveer: defensa nacional, justicia y ciertas obras públicas elementales.</li>
+                    <li><b>Escuela Keynesiana (John Maynard Keynes):</b> Surge tras la Gran Depresión. Cuestiona la autorregulación. Afirma que el Estado debe ser un agente interventor y estabilizador. En épocas de crisis, el Estado <b>debe incrementar el gasto público</b> (incluso generando déficit fiscal) para estimular la demanda y el empleo.</li>
+                </ul>
+
+                <h3>5. Procedimientos y Aplicaciones</h3>
+                <p>La <b>Administración Financiera</b> actúa como el brazo operativo de estas teorías. Es el conjunto de principios, normas y sistemas (presupuesto, tesorería, contabilidad) mediante los cuales el sector público obtiene recursos y los asigna conforme a las prioridades políticas, para satisfacer las necesidades colectivas.</p>
+
+                <h3>6. Ejemplos y Casos Prácticos</h3>
+                <div class="box box-ejemplo">
+                    <span class="box-title">💡 Caso Práctico: Aplicación de Funciones de Musgrave</span>
+                    <p>Si el Estado de Paraguay decide construir el Puente Héroes del Chaco, está aplicando la <b>Función de Asignación</b> (provisión de infraestructura). Si además, cobra un peaje diferenciado donde los vehículos de lujo pagan más para financiar el almuerzo escolar de niños en zonas rurales, aplica la <b>Función de Distribución</b>. Si la obra se aceleró específicamente en un año de recesión económica para generar empleos rápidos y reactivar el consumo de cemento local, está aplicando la <b>Función de Estabilización</b>.</p>
+                </div>
+
+                <h3>7. Errores Frecuentes</h3>
+                <div class="box box-error">
+                    <span class="box-title">❗ Confusión Común</span>
+                    <p>Es un error frecuente confundir <b>Eficiencia</b> con <b>Eficacia</b>. Un hospital público puede ser muy <i>eficiente</i> gastando poco dinero por paciente (ahorro), pero ser totalmente <i>ineficaz</i> si la tasa de mortalidad no disminuye (no cumple el objetivo). El Estado requiere ambas.</p>
+                </div>
+
+                <h3>8. Preguntas posibles de examen</h3>
+                <ul>
+                    <li>¿Cuáles son las tres funciones del Estado según Richard Musgrave y en qué consiste cada una?</li>
+                    <li>Explique la diferencia fundamental entre la concepción orgánica y mecanicista del Estado.</li>
+                    <li>Contraste la visión de la Escuela Clásica con la Escuela Keynesiana respecto al rol del Estado frente a una crisis económica.</li>
+                </ul>
+
+                <button class="btn btn-action no-print" onclick="window.scrollTo(0,0)">↑ Volver al índice</button>
+            </section>
+
+            <hr style="margin: 50px 0; border-color: var(--border-color);">
+
+            <!-- ========================================================================================= -->
+            <!-- UNIDAD II -->
+            <!-- ========================================================================================= -->
+            <section id="unidad-2">
+                <h1>Unidad II: Política Fiscal y su impacto en la economía</h1>
+
+                <h3>1. Introducción</h3>
+                <p>Si la Unidad I nos explicó por qué el Estado debe intervenir, la Unidad II nos explica <i>con qué herramientas</i> lo hace. La principal herramienta de intervención económica del gobierno central es la Política Fiscal, la cual actúa en conjunto (o a veces en tensión) con la Política Monetaria del Banco Central.</p>
+
+                <h3 id="u2-impacto">2. Conceptos Fundamentales</h3>
+                <div class="box box-definicion">
+                    <span class="box-title">✔ Política Fiscal</span>
+                    <p>Es el conjunto de decisiones y acciones adoptadas por el Estado (Ministerio de Economía y Finanzas - MEF) en relación con el nivel y composición del <b>gasto público</b>, la <b>tributación</b> (impuestos) y el <b>endeudamiento</b>. Su objetivo es influir en la actividad económica, distribuir la riqueza y mantener la estabilidad.</p>
+                </div>
+                <div class="box box-definicion">
+                    <span class="box-title">✔ Política Monetaria</span>
+                    <p>Es ejecutada por la autoridad monetaria (Banco Central del Paraguay - BCP). Se orienta a controlar la oferta de dinero, las tasas de interés y la liquidez, con el fin supremo de asegurar la <b>estabilidad de precios (controlar la inflación)</b>.</p>
+                </div>
+
+                <h3>3. Desarrollo Completo: Objetivos y Limitaciones</h3>
+                <p>Según Díaz-Giménez (2009), la Política Fiscal persigue tres grandes objetivos:</p>
+                <ol>
+                    <li>Promover mayores tasas de <b>crecimiento</b> económico a largo plazo.</li>
+                    <li>Reducir las fluctuaciones de los <b>ciclos económicos</b> (suavizar las crisis y los recalentamientos).</li>
+                    <li>Reducir la <b>desigualdad</b> redistribuyendo la riqueza.</li>
+                </ol>
+                <div class="box box-recordatorio">
+                    <span class="box-title">📌 Límite Principal</span>
+                    <p>La mayor limitación de la Política Fiscal es el <b>principio de estabilidad presupuestaria</b>: la regla de oro que dicta que, a largo plazo, los gastos no deben superar a los ingresos reales.</p>
+                </div>
+
+                <h3 id="u2-deficit">4. Déficit Fiscal vs. Superávit Fiscal</h3>
+                <p>El economista Gregory Mankiw es claro en su definición:</p>
+                <ul>
+                    <li><b>Déficit Fiscal:</b> Existe cuando los Gastos del Gobierno superan ampliamente a sus Ingresos.</li>
+                    <li><b>Superávit Fiscal:</b> Posición financiera donde hay un excedente de ingresos sobre gastos, generando <i>ahorro gubernamental</i>.</li>
+                </ul>
+                <p>Los ingresos provienen de tributos (IVA, IRE) y no tributos (multas, ganancias de empresas públicas). Los gastos financian salarios, infraestructura, transferencias y el pago de deuda pública. La finalidad última del gasto, según la teoría de la eficiencia en el sector público, es producir <b>bienes preferentes</b> (bienes imprescindibles como educación que el sector público obliga a consumir) y prestaciones monetarias (pensiones) para garantizar dignidad humana.</p>
+
+                <h3>5. Procedimientos: ¿Cómo se financia el Déficit?</h3>
+                <p>Cuando el Estado gasta más de lo que recauda, debe conseguir dinero de alguna parte. Tiene tres caminos principales:</p>
+                <ol>
+                    <li><b>Emisión de Billetes (Banco Central):</b> Imprimir dinero inorgánico. Peligro: Genera inflación o hiperinflación.</li>
+                    <li><b>Préstamos Internos/Externos:</b> Pedir dinero a bancos o entes multilaterales. Peligro: Aumenta el stock de deuda y reduce el espacio fiscal futuro.</li>
+                    <li><b>Colocación de Bonos del Tesoro:</b> Emitir títulos de deuda al mercado de capitales. Sujeto a los límites de la Ley de Responsabilidad Fiscal.</li>
+                </ol>
+
+                <h3>6. Análisis de Efectos Económicos (Autores Clave)</h3>
+                <p>Un déficit fiscal no es neutral; tiene severos impactos económicos advertidos por premios Nobel y economistas destacados:</p>
+                <table>
+                    <tr>
+                        <th>Autor</th>
+                        <th>Visión sobre el Déficit Fiscal Sostenido</th>
+                    </tr>
+                    <tr>
+                        <td><b>Nouriel Roubini</b></td>
+                        <td>Enfocado en la <b>Deuda</b>. Un déficit persistente eleva la deuda pública. Esto aumenta los costos de adquirir recursos, destinando cada vez más presupuesto solo a pagar "intereses", asfixiando el Estado.</td>
+                    </tr>
+                    <tr>
+                        <td><b>Milton Friedman</b></td>
+                        <td>Enfocado en la <b>Inflación</b>. Argumenta que las presiones políticas fuerzan a los Bancos Centrales a imprimir dinero para cubrir el déficit. Resultado ineludible: distorsión de precios e inflación estructural.</td>
+                    </tr>
+                    <tr>
+                        <td><b>Joseph Stiglitz</b></td>
+                        <td>Enfocado en la <b>Confianza y Desarrollo</b>. Un alto déficit en naciones emergentes destruye la confianza de inversores extranjeros, cayendo la Inversión Extranjera Directa (IED), lo que estanca el desarrollo del país.</td>
+                    </tr>
+                </table>
+
+                <h3>7. Errores Frecuentes</h3>
+                <div class="box box-error">
+                    <span class="box-title">❗ Error conceptual grave</span>
+                    <p>Asumir que el Banco Central del Paraguay (BCP) financia directamente el déficit del Ministerio de Economía (MEF). En economías modernas e institucionalizadas, el BCP tiene prohibido por Constitución financiar el déficit fiscal del gobierno central para evitar las consecuencias descritas por Friedman (inflación). El gobierno debe recurrir a deuda genuina.</p>
+                </div>
+
+                <h3>8. Preguntas posibles de examen</h3>
+                <ul>
+                    <li>Diferencie los objetivos y autoridades encargadas de la Política Fiscal y la Política Monetaria.</li>
+                    <li>Mencione y explique las tres formas de financiar un déficit fiscal.</li>
+                    <li>Según Joseph Stiglitz, ¿cómo afecta un alto déficit fiscal a una nación emergente?</li>
+                </ul>
+
+                <button class="btn btn-action no-print" onclick="window.scrollTo(0,0)">↑ Volver al índice</button>
+            </section>
+
+            <hr style="margin: 50px 0; border-color: var(--border-color);">
+
+            <!-- ========================================================================================= -->
+            <!-- UNIDAD III (LA MÁS IMPORTANTE - DESARROLLO EXHAUSTIVO) -->
+            <!-- ========================================================================================= -->
+            <section id="unidad-3">
+                <h1>Unidad III: Presupuesto General de la Nación (PGN) ⭐</h1>
+                
+                <h3>1. Introducción al Eje Central del Estado</h3>
+                <p>Esta unidad constituye la columna vertebral de las Finanzas Públicas. El Presupuesto General de la Nación (PGN) no es simplemente un documento contable; es el instrumento político, económico y jurídico más importante de un país. A través del PGN, el Estado decide de quién extraer recursos (impuestos) y a quién beneficiar con ellos (gasto social, infraestructura). Todo el engranaje estatal funciona exclusivamente a través del PGN.</p>
+
+                <h3 id="u3-ley1535">2. Marco Jurídico: Ley N.° 1535/99 de Administración Financiera del Estado</h3>
+                <p>En Paraguay, toda la actividad financiera estatal está regulada por la <b>Ley 1535/99</b>. Esta ley establece los sistemas, normas básicas y procedimientos para programar, gestionar, registrar, controlar y evaluar los ingresos y fondos públicos.</p>
+                
+                <div class="box box-definicion">
+                    <span class="box-title">✔ Sistema Integrado de Administración Financiera (SIAF) - Art. 2</span>
+                    <p>Es el mega-sistema obligatorio para todos los entes del Estado. Se rige por un principio vital: <b>Centralización normativa y Descentralización operativa</b> (el MEF pone las reglas para todos, pero cada institución ejecuta su propio presupuesto). Está compuesto por 6 subsistemas interconectados:</p>
+                    <ol>
+                        <li><b>Presupuesto:</b> Planificación de ingresos y gastos.</li>
+                        <li><b>Inversión:</b> Proyectos de capital (rutas, hospitales).</li>
+                        <li><b>Tesorería:</b> Manejo de la liquidez (caja) y pagos.</li>
+                        <li><b>Crédito y Deuda Pública:</b> Gestión de préstamos y bonos.</li>
+                        <li><b>Contabilidad:</b> Registro patrimonial y financiero.</li>
+                        <li><b>Control:</b> Evaluación y auditoría de los actos.</li>
+                    </ol>
+                </div>
+
+                <h4>Ámbito de Aplicación (Art. 3)</h4>
+                <p>¿A quiénes obliga la Ley 1535? A prácticamente todo el Estado: Los 3 Poderes (Ejecutivo, Legislativo, Judicial), Contraloría, Banca Central, Gobiernos Departamentales, Entes autónomos, Empresas públicas, Universidades. <i>Nota especial:</i> Se aplica de forma <b>supletoria</b> a las Municipalidades, las cuales gozan de autonomía constitucional.</p>
+
+                <h3>3. El Concepto y Principios del PGN (Arts. 5 y 6)</h3>
+                <p>El Art. 5 define al PGN como <i>"el instrumento de asignación de recursos financieros para el cumplimiento de las políticas y los objetivos estatales"</i>. Es la traducción en números del Plan Nacional de Desarrollo.</p>
+                
+                <div class="box box-importante">
+                    <span class="box-title">⚠ Los 5 Principios Presupuestarios Universales (Art. 6)</span>
+                    <p>El PGN debe respetar obligatoriamente estos postulados:</p>
+                    <ul>
+                        <li><b>Universalidad:</b> Absolutamente TODOS los ingresos y TODOS los gastos deben estar presupuestados. No existen fondos "secretos" fuera del presupuesto.</li>
+                        <li><b>Legalidad:</b> 
+                            <br>- <i>Ingresos:</i> Son meras <b>estimaciones</b> (si se recauda más, excelente).
+                            <br>- <i>Gastos:</i> Son <b>límites máximos</b>. Está penado por ley gastar un guaraní más de lo autorizado, salvo que otra Ley lo permita.</li>
+                        <li><b>Unidad:</b> Todo se incluye en un solo documento consolidado para evitar la dispersión de información.</li>
+                        <li><b>Anualidad:</b> Rige estrictamente para un ejercicio fiscal (del 1 de enero al 31 de diciembre).</li>
+                        <li><b>Equilibrio:</b> El total de Gastos NO puede exceder la suma del total de Ingresos + Financiamiento. El balance matemático debe ser cero.</li>
+                    </ul>
+                </div>
+
+                <h3 id="u3-proceso">4. Procedimiento Paso a Paso: El Ciclo de Vida del PGN</h3>
+                <p>El PGN no se hace en un día. Es un ciclo anual complejo que involucra a todo el aparato estatal, pasando por cuatro fases críticas:</p>
+
+                <h4>Fase A: Lineamientos y Programación Institucional</h4>
+                <p>El Poder Ejecutivo (MEF) dicta las reglas del juego evaluando variables macroeconómicas: inflación proyectada, crecimiento del PIB, tipo de cambio esperado, etc. A partir de allí:</p>
+                <ul>
+                    <li>Se establecen <b>topes de gasto</b> para cada institución.</li>
+                    <li>Cada institución elabora su <b>Pre-PAC</b> (Proyecto de Programa Anual de Contrataciones), analizando inventarios, mercado de proveedores y lecciones de años pasados para saber qué comprarán.</li>
+                </ul>
+
+                <h4>Fase B: Presentación de Anteproyectos al MEF (Hasta 30 de junio)</h4>
+                <p>Los Organismos y Entidades del Estado (OEE) deben entregar sus anteproyectos al MEF en el primer semestre. La fecha límite improrrogable es el <b>30 de junio</b>. Si una entidad no presenta, el MEF elaborará su presupuesto de oficio. La Dirección General de Presupuesto analiza, recorta, ajusta y consolida todos los pedidos.</p>
+
+                <h4>Fase C: Presentación al Congreso y Estudio Bicameral (Septiembre a Diciembre)</h4>
+                <p>El Poder Ejecutivo presenta el Proyecto Consolidado de PGN al Congreso Nacional a más tardar el <b>1 de Septiembre</b>. El proceso legislativo es el siguiente:</p>
+                <ol>
+                    <li><b>Comisión Bicameral de Presupuesto:</b> Senadores y Diputados se unen. Forman subcomisiones. Estudian y dictaminan un nuevo proyecto ("Versión Bicameral") a más tardar el 30 de octubre.</li>
+                    <li><b>Cámara de Diputados:</b> Analiza y remite a Senadores.</li>
+                    <li><b>Cámara de Senadores:</b> Analiza. Si modifica lo de Diputados, el documento vuelve a Diputados.</li>
+                    <li><b>Ping-Pong Legislativo:</b> Si hay desacuerdos, Diputados puede ratificarse en su versión inicial o aceptar la de Senadores. El proceso debe terminar indefectiblemente el <b>20 de diciembre</b>.</li>
+                </ol>
+
+                <h4>Fase D: Sanción, Promulgación o Veto</h4>
+                <p>Sancionado por el Congreso, pasa al Presidente. Debe promulgar o vetar antes del 31 de diciembre. Si hay veto total y el Congreso lo acepta, <b>rige el presupuesto del año anterior</b>.</p>
+
+                <h3>5. Estructura del Sector Público Paraguayo</h3>
+                <p>Para entender el presupuesto, hay que entender cómo se divide el Estado operativamente:</p>
+                <table>
+                    <tr>
+                        <th>Categoría</th>
+                        <th>Definición y Características</th>
+                        <th>Ejemplos de Instituciones</th>
+                    </tr>
+                    <tr>
+                        <td><b>Administración Central (Organismos)</b></td>
+                        <td>Poderes del Estado y entes sin independencia patrimonial total. Financiados primariamente por el Tesoro (impuestos). Rinden cuenta directa al poder central.</td>
+                        <td>Presidencia, Ministerios (MEF, MEC, MSPyBS), Congreso, Corte Suprema, Contraloría, Ministerio Público.</td>
+                    </tr>
+                    <tr>
+                        <td><b>Administración Descentralizada (Entidades)</b></td>
+                        <td>Tienen autonomía funcional, autarquía (independencia económica), patrimonio propio. Generan recursos por leyes orgánicas (cobran tasas, prestan servicios remunerados).</td>
+                        <td>Banco Central (BCP), IPS, Universidades Nacionales (UNA), Gobiernos Departamentales, ANDE.</td>
+                    </tr>
+                </table>
+
+                <h3 id="u3-ingresos">6. Estructura de los Ingresos Públicos (Clasificador Presupuestario)</h3>
+                <p>El Estado recibe fondos de múltiples orígenes. Para no mezclar, el <i>Clasificador Presupuestario</i> organiza de dónde viene el dinero mediante las <b>Fuentes de Financiamiento (FF)</b>:</p>
+
+                <div class="box box-definicion">
+                    <span class="box-title">FF 10: Recursos del Tesoro Público</span>
+                    <p>Es la "billetera general" del país administrada por el MEF. Está constituida por la recaudación genuina: <b>Impuestos</b> (IVA, IRE, ISC, Aranceles aduaneros). También incluye fondos gigantescos como los royalties y compensaciones de Itaipú y Yacyretá. Con la FF10 se pagan los sueldos de los maestros, médicos y policías.</p>
+                </div>
+                <div class="box box-importante">
+                    <span class="box-title">FF 20: Recursos del Crédito Público</span>
+                    <p>Es el dinero producto del endeudamiento (préstamos). Financian proyectos grandes y a largo plazo. 
+                    <br>- <i>Crédito Interno:</i> Venta de Bonos a bancos o inversores dentro de Paraguay.
+                    <br>- <i>Crédito Externo:</i> Préstamos del Banco Mundial, BID, o Bonos colocados en Wall Street.</p>
+                </div>
+                <div class="box box-ejemplo">
+                    <span class="box-title">FF 30: Recursos Institucionales</span>
+                    <p>Es la "plata propia" que genera cada institución. Por ejemplo: las matrículas que cobra la Universidad Nacional, los peajes del MOPC, las tarifas consulares, o las donaciones internacionales directas a un ministerio. La institución que recauda este dinero tiene el derecho prioritario de usarlo.</p>
+                </div>
+
+                <h4>Clasificación Contable de los Ingresos</h4>
+                <ul>
+                    <li><b>100 - Ingresos Corrientes:</b> Dinero del día a día (Impuestos, tasas, multas).
+                        <ul>
+                            <li><i>130 - No tributarios:</i> Regalías, multas.</li>
+                            <li><i>132 - Tasas y Derechos:</i> Pasaportes, peajes, entrada a museos.</li>
+                            <li><i>140 - Venta de Bienes y Servicios:</i> Venta de estampillas, cobro por servicios médicos arancelados.</li>
+                        </ul>
+                    </li>
+                    <li><b>200 - Ingresos de Capital:</b> Dinero esporádico obtenido por la venta de activos del Estado (venta de un inmueble público) o donaciones de capital para hacer obras.</li>
+                    <li><b>300 - Fuentes Financieras:</b> Dinero prestado (Endeudamiento) para cubrir el déficit.</li>
+                </ul>
+
+                <h3 id="u3-gastos">7. Estructura del Gasto Público (Objeto de Gasto)</h3>
+                <p>¿En qué se gasta el dinero? El <b>Objeto de Gasto (O.G.)</b> clasifica los desembolsos a través de códigos numéricos de tres dígitos, donde el primer dígito es el Grupo (G.G.), el segundo el Subgrupo y el tercero el Objeto específico.</p>
+
+                <table style="width: 100%;">
+                    <tr>
+                        <th>Grupo de Gasto (G.G.)</th>
+                        <th>Descripción Detallada</th>
+                        <th>Ejemplos de Partidas</th>
+                    </tr>
+                    <tr>
+                        <td><b>100 - Servicios Personales</b></td>
+                        <td>Es la nómina estatal. Toda retribución a funcionarios, empleados de cualquier nivel o contratados. Es el grupo de gasto más rígido y absorbente del presupuesto.</td>
+                        <td>Sueldos, aguinaldos, bonificaciones, contrataciones, gastos de residencia, viáticos al exterior.</td>
+                    </tr>
+                    <tr>
+                        <td><b>200 - Servicios No Personales</b></td>
+                        <td>Pagos para el funcionamiento operativo de los entes. Servicios de terceros que el Estado necesita para subsistir y operar sus edificios o sistemas.</td>
+                        <td>Luz (ANDE), agua (ESSAP), teléfono, internet, alquiler de edificios, servicios de limpieza, publicidad, honorarios profesionales.</td>
+                    </tr>
+                    <tr>
+                        <td><b>300 - Bienes de Consumo e Insumos</b></td>
+                        <td>Adquisición de elementos fungibles, que se consumen durante el año fiscal, esenciales para la labor diaria.</td>
+                        <td>Papel, tinta, computadoras menores, repuestos de vehículos, medicamentos para hospitales, combustible para patrulleras.</td>
+                    </tr>
+                    <tr>
+                        <td><b>500 - Inversiones</b></td>
+                        <td>Formación de capital fijo. Gastos que incrementan el patrimonio físico del Estado. Duran muchos años.</td>
+                        <td>Construcción de escuelas, hospitales, rutas, puentes, compra de grandes maquinarias, tomógrafos, inmuebles.</td>
+                    </tr>
+                    <tr>
+                        <td><b>800 - Transferencias</b></td>
+                        <td>Entregar dinero sin recibir un bien a cambio. Aportes solidarios o subsidios al sector público, privado o externo.</td>
+                        <td>Pensiones a adultos mayores, Tekoporã, subsidio a transportistas, aportes a organismos internacionales.</td>
+                    </tr>
+                    <tr>
+                        <td><b>900 - Otros Gastos</b></td>
+                        <td>Bolsa de gastos no contemplados arriba. Naturaleza financiera, reservas, deudas de años anteriores y gastos confidenciales.</td>
+                        <td>Gastos reservados (seguridad nacional), pago de deudas de ejercicios anteriores, pago de impuestos, reservas cambiarias.</td>
+                    </tr>
+                </table>
+
+                <div class="box box-recordatorio">
+                    <span class="box-title">📌 Clasificación Económica del Gasto</span>
+                    <p>Además de la codificación anterior, económicamente los gastos se dividen en:</p>
+                    <ul>
+                        <li><b>Gastos Corrientes:</b> Los grupos 100, 200, 300 y pago de <i>intereses</i>. No dejan activos para el futuro, pero son necesarios para funcionar hoy.</li>
+                        <li><b>Gastos de Capital:</b> Grupo 500. Construyen activos físicos y financieros (rutas, acciones).</li>
+                        <li><b>Financiamiento:</b> Pago del capital de la deuda (amortización).</li>
+                    </ul>
+                </div>
+
+                <h3>8. Casos Prácticos PGN</h3>
+                <div class="box box-ejemplo">
+                    <span class="box-title">💡 Ejercicio de Clasificación Presupuestaria</span>
+                    <p>El Ministerio de Obras Públicas compra cemento para reparar una ruta financiado con dinero del Banco Interamericano de Desarrollo (BID). ¿Cómo se clasifica esto?</p>
+                    <ul>
+                        <li><b>Institución:</b> Administración Central (Ministerio).</li>
+                        <li><b>Fuente de Financiamiento:</b> FF 20 (Recursos del Crédito Público externo).</li>
+                        <li><b>Grupo de Gasto:</b> 300 (Bienes de consumo e insumos - material para reparación).</li>
+                    </ul>
+                </div>
+
+                <h3>9. Conceptos Claves Adicionales (Glosario PGN)</h3>
+                <ul>
+                    <li><b>Amortizaciones:</b> Devolver el <i>capital</i> (el dinero principal) prestado. Distinto al pago de <i>intereses</i>.</li>
+                    <li><b>Presupuesto Aprobado vs. Ejecutado:</b> El aprobado es la <i>intención</i> de gastar (la Ley). El ejecutado es la realidad matemática a fin de año (lo que verdaderamente se pagó).</li>
+                    <li><b>Resultado Primario:</b> La resta entre Ingresos totales menos Gastos totales, <i>sin contar el pago de intereses de la deuda</i>. Si es positivo, el país tiene superávit primario, demostrando sanidad en sus cuentas corrientes operativas.</li>
+                </ul>
+
+                <h3>10. Preguntas posibles de examen (Unidad III)</h3>
+                <ul>
+                    <li>Defina el principio de Legalidad en el PGN y explique la diferencia en su aplicación para ingresos y para gastos.</li>
+                    <li>Describa el proceso legislativo que sufre el Proyecto del PGN desde el 1 de septiembre hasta el 20 de diciembre.</li>
+                    <li>Diferencie conceptual y financieramente la Fuente 10, Fuente 20 y Fuente 30. Dé un ejemplo de ingreso para cada una.</li>
+                    <li>¿En qué grupo de gasto se imputa el salario de un docente? ¿Y la construcción de una nueva escuela?</li>
+                </ul>
+
+                <button class="btn btn-action no-print" onclick="window.scrollTo(0,0)">↑ Volver al índice</button>
+            </section>
+
+            <hr style="margin: 50px 0; border-color: var(--border-color);">
+
+            <!-- ========================================================================================= -->
+            <!-- UNIDAD IV -->
+            <!-- ========================================================================================= -->
+            <section id="unidad-4">
+                <h1>Unidad IV: Análisis del Gasto Público</h1>
+
+                <h3>1. Introducción al Gasto como Herramienta</h3>
+                <p>No basta con saber en qué se gasta; el análisis moderno exige evaluar la eficiencia, equidad y el impacto real de cada guaraní invertido. El gasto público operativo materializa las funciones económicas del Estado y, en especial, su rol redistributivo.</p>
+
+                <h3 id="u4-renta">2. Distribución de la Renta y Conceptos Rectores</h3>
+                <p>La distribución de la renta mide cómo la riqueza generada en un país se reparte entre sus habitantes.</p>
+                <ul>
+                    <li><b>Distribución Primaria:</b> Es la que hace el mercado salvajemente (a través de salarios y ganancias de capital). El mercado premia el talento, el capital heredado y la suerte, generando disparidades abismales.</li>
+                    <li><b>Distribución Secundaria (Redistribución):</b> Ocurre luego de la intervención del Estado. El gobierno recauda impuestos progresivos a los de arriba y realiza transferencias o provee servicios gratuitos (salud, educación) a los de abajo.</li>
+                </ul>
+
+                <h4>La Concepción Utilitarista y la Maximización</h4>
+                <p>La <b>concepción utilitarista</b>, adoptada en finanzas modernas, establece que el gobierno debe gastar de forma tal que maximice el <i>bienestar social agregado</i>. 
+                <br><b>Criterio de Maximización:</b> Un guaraní gastado en nutrición infantil temprana o educación básica tiene un impacto (utilidad social) muchísimo mayor que un guaraní gastado en papelería para un ministerio. Maximizar no significa "gastar más en volumen", significa focalizar mejor, eliminar duplicidades y priorizar proyectos de alto impacto social.</p>
+
+                <h3 id="u4-incidencia">3. Incidencia del Gasto y Eficiencia de Pareto</h3>
+                <div class="box box-definicion">
+                    <span class="box-title">✔ Redistribución Pareto Eficiente</span>
+                    <p>En economía, una situación es "Pareto Eficiente" cuando es imposible mejorar la situación de una persona sin empeorar la de otra. En política fiscal, esto es casi un mito (cobrar impuestos a los ricos empeora teóricamente su situación). Sin embargo, <b>inversiones en educación pública o saneamiento</b> se acercan al ideal paretiano: benefician a los pobres de forma directa, pero al reducir enfermedades y aumentar la productividad laboral, terminan beneficiando indirectamente también a los empresarios y a toda la sociedad en conjunto.</p>
+                </div>
+
+                <h4>Progresividad vs Regresividad</h4>
+                <p>El análisis de la <b>Incidencia del Gasto</b> responde a la pregunta: ¿A quién le llega realmente el dinero?</p>
+                <ul>
+                    <li><b>Gasto Progresivo:</b> Beneficia proporcionalmente más a los estratos de menores ingresos. <i>Ejemplo:</i> Tekoporã, alimentación escolar en escuelas públicas periféricas.</li>
+                    <li><b>Gasto Regresivo:</b> Beneficia más a los ricos o clases altas. <i>Ejemplo:</i> Subsidios generalizados al combustible o a la tarifa eléctrica sin segmentación, ya que los hogares más ricos consumen mucha más electricidad y tienen más vehículos que los hogares pobres.</li>
+                </ul>
+
+                <h3>4. Problemas Técnicos de Medición y Bienes Públicos</h3>
+                <div class="box box-error">
+                    <span class="box-title">❗ Problemas de Medición de la Renta (INE)</span>
+                    <p>Determinar quién es pobre y quién no para asignar el gasto es muy difícil. En Paraguay, los problemas principales son: <b>Sub-declaración de ingresos</b> (la gente miente en las encuestas), <b>Informalidad laboral</b>, y el <b>Autoconsumo rural</b> (campesinos que no ganan dinero, pero consumen lo que plantan, lo cual tiene un valor no monetario). Elegir mal la <i>Unidad de Observación</i> (persona vs. hogar per cápita) puede distorsionar las políticas, excluyendo a pobres reales o incluyendo a quienes no lo necesitan ("filtraciones").</p>
+                </div>
+
+                <p><b>Bienes Públicos:</b> Son el objeto clásico de asignación de recursos. Tienen dos características técnicas: <i>No exclusión</i> (no se le puede prohibir el uso a nadie, p.ej. el alumbrado público) y <i>No rivalidad</i> (que yo use la defensa nacional no impide que mi vecino la use simultáneamente).</p>
+
+                <h3>5. Preguntas posibles de examen</h3>
+                <ul>
+                    <li>Diferencie la distribución primaria de la secundaria e indique cómo interviene el PGN en esta última.</li>
+                    <li>¿Qué es el criterio utilitarista y por qué "maximizar el gasto" no significa aumentar el tamaño del presupuesto?</li>
+                    <li>Explique, con ejemplos de la realidad paraguaya, qué es un gasto progresivo y uno regresivo.</li>
+                </ul>
+
+                <button class="btn btn-action no-print" onclick="window.scrollTo(0,0)">↑ Volver al índice</button>
+            </section>
+
+            <hr style="margin: 50px 0; border-color: var(--border-color);">
+
+            <!-- ========================================================================================= -->
+            <!-- UNIDAD VII -->
+            <!-- ========================================================================================= -->
+            <section id="unidad-7">
+                <h1>Unidad VII: Sistema de Presupuesto (Ejecución y Control)</h1>
+
+                <h3>1. Introducción a la Ejecución Presupuestaria</h3>
+                <p>Tener un Presupuesto aprobado (Ley) es solo el inicio. El Estado debe <i>ejecutarlo</i>. Aquí entran en juego los mecanismos de goteo financiero para asegurar que el gobierno no asuma deudas que luego no podrá pagar en efectivo.</p>
+
+                <h3 id="u7-ejecucion">2. Etapas de Ejecución (Art. 22, Ley 1535/99)</h3>
+                <p>La ejecución no ocurre de golpe, obedece a un flujo riguroso:</p>
+                
+                <h4>Lado de los Ingresos</h4>
+                <ul>
+                    <li><b>Liquidación:</b> Identificación de la fuente y cuantificación exacta del monto que el Estado tiene el derecho a percibir (Ej: Emitir una boleta de multa o calcular el impuesto a pagar).</li>
+                    <li><b>Recaudación:</b> El dinero entra físicamente (o electrónicamente) a las arcas del Estado. Percepción efectiva.</li>
+                </ul>
+
+                <h4>Lado de los Gastos</h4>
+                <ul>
+                    <li><b>Previsión:</b> Se identifica que existe crédito presupuestario (saldo en la ley) para realizar un gasto.</li>
+                    <li><b>Obligación:</b> Momento jurídico crítico. El Estado asume un compromiso formal de pago con un proveedor tras firmar un contrato o recibir un bien. </li>
+                    <li><b>Pago:</b> Cumplimiento total o parcial de la obligación financiera (desembolso de caja). Es simultáneo a la incorporación del bien/servicio al patrimonio del ente.</li>
+                </ul>
+
+                <h3>3. Plan Financiero vs. Plan de Caja (Art. 21)</h3>
+                <div class="box box-recordatorio">
+                    <span class="box-title">📌 Control del Gasto</span>
+                    <p>El Presupuesto aprobado es anual y gigante. Pero la recaudación real ocurre mes a mes.
+                    <br><b>Plan Financiero (Mensual):</b> Es el cronograma de "cuánto se puede comprometer y obligar" cada mes. Sirve como marco de referencia, tomando en cuenta la estacionalidad (en abril se cobran más impuestos que en febrero).
+                    <br><b>Plan de Caja:</b> Es la disponibilidad de plata "física" real, administrada por Tesorería. <i>Nadie puede contraer obligaciones si no hay cuota del plan financiero habilitada.</i></p>
+                </div>
+
+                <h3>4. Modificaciones Presupuestarias (Flexibilidad)</h3>
+                <p>La Ley del PGN no está tallada en piedra, la realidad exige ajustes. Las modificaciones principales son:</p>
+                <ul>
+                    <li><b>Ampliaciones Presupuestarias (Art. 23):</b> Aumentan el monto total del PGN. Requieren siempre indicar de dónde saldrá la nueva plata y obligatoriamente <b>deben ser aprobadas por LEY</b> del Congreso. Excepción temporal: saldos iniciales de caja o donaciones que salen por Decreto hasta cierta fecha.</li>
+                    <li><b>Transferencias de Créditos (Reprogramaciones):</b> Mover plata de un lado a otro (ej: sacar plata de "Papelería" para ponerla en "Combustible"). <i>No aumenta el total del presupuesto</i> de la entidad. Se aprueba por Decreto o Resolución. Hay rubros intocables por ley que no pueden disminuirse (ej: servicios básicos, aportes jubilatorios).</li>
+                    <li><b>Cambio de Fuente de Financiamiento:</b> Cambiar quién paga. Ej: Una universidad iba a comprar pupitres con FF30 (recursos propios), pero hubo huelga y no recaudó aranceles. Pide cambiar a FF10 (Tesoro Público) para que papá Estado cubra el agujero. Se aprueba por Decreto del Poder Ejecutivo.</li>
+                </ul>
+
+                <div class="box box-importante">
+                    <span class="box-title">⚠ Modificaciones del Anexo del Personal</span>
+                    <p>Es la modificación más sensible porque implica crear cargos o cambiar sueldos públicos, afectando jubilaciones y costos fijos perpetuos. <b>La creación de cargos y recategorizaciones masivas SOLO pueden disponerse por LEY (Congreso).</b> El MEF solo puede hacer ajustes y traslados de líneas dentro de márgenes estrictos, cuidando de no exceder topes ni crear jefaturas no autorizadas.</p>
+                </div>
+
+                <h3 id="u7-control">5. Sistema de Control y Evaluación</h3>
+                <p>Las instituciones (OEE) deben rendir cuentas de lo ejecutado, remitiendo informes de carácter obligatorio a la Dirección General de Presupuesto del MEF en formatos PDF/Excel:</p>
+                <ul>
+                    <li><b>Informe Primer Semestre:</b> Resultados al corte de junio (15 días de plazo).</li>
+                    <li><b>Balance Anual de Gestión Pública (BAGP):</b> El informe rey. Un resumen consolidado anual que además debe subirse obligatoriamente a la página web institucional (Ley de Transparencia 5189).</li>
+                </ul>
+                <p>Si no cumplen, el MEF "congela" o denuncia el incumplimiento a la Auditoría General y Contraloría. A su vez, el MEF presenta un Megainforme al Congreso Nacional informando cómo se comportó todo el Estado en el año.</p>
+
+                <h3>6. Preguntas posibles de examen</h3>
+                <ul>
+                    <li>Describa las 3 etapas de ejecución del Gasto Público e indique en cuál de ellas el Estado genera un vínculo jurídico.</li>
+                    <li>¿Cuál es la diferencia radical, en cuanto al método de aprobación legal, entre una Ampliación Presupuestaria y una Transferencia de Créditos?</li>
+                    <li>Mencione dos informes obligatorios del sistema de control y evaluación que deben emitir las instituciones.</li>
+                </ul>
+
+                <button class="btn btn-action no-print" onclick="window.scrollTo(0,0)">↑ Volver al índice</button>
+            </section>
+
+            <hr style="margin: 50px 0; border-color: var(--border-color);">
+
+            <!-- ========================================================================================= -->
+            <!-- UNIDAD VIII -->
+            <!-- ========================================================================================= -->
+            <section id="unidad-8">
+                <h1>Unidad VIII: Financiamiento, Deuda y Mercados Globales</h1>
+
+                <h3>1. Introducción al Endeudamiento Estatal</h3>
+                <p>El Estado tiene funciones expansivas que a menudo superan sus ingresos corrientes. Las inversiones masivas en infraestructura (rutas, hospitales) requieren cantidades enormes de capital inmediato, para lo cual es justificable emitir <b>Deuda Pública</b>, conectando al Estado con los mercados financieros globales.</p>
+
+                <h3 id="u8-deuda">2. Fuentes de Financiamiento Estructural</h3>
+                <p>Los recursos que mantienen la maquinaria estatal se dividen fundamentalmente en:</p>
+                <ul>
+                    <li><b>Ingresos Corrientes (Recurrentes):</b> Tributarios (IVA, IRE - la mayor fuente) y No tributarios (Tasas, multas).</li>
+                    <li><b>Ingresos de Capital (No recurrentes):</b> Venta de activos del Estado (privatizaciones, venta de tierras).</li>
+                    <li><b>Financiamiento (Deuda Pública):</b> Son obligaciones financieras. Aumentan la liquidez de hoy, pero comprometen los presupuestos del mañana (pago de capital e intereses).</li>
+                </ul>
+
+                <h3>3. Tipos de Deuda Pública e Instrumentos</h3>
+                <p>La Deuda se clasifica por su origen geográfico:</p>
+                <ul>
+                    <li><b>Deuda Interna:</b> Bonos del Tesoro comprados por bancos paraguayos, financieras o las propias AFPs locales.</li>
+                    <li><b>Deuda Externa:</b> Bonos emitidos en Wall Street y préstamos de organismos internacionales.</li>
+                </ul>
+
+                <h4>Cuadro Comparativo: Bonos vs. Préstamos</h4>
+                <table>
+                    <tr>
+                        <th>Aspecto</th>
+                        <th>Bonos Soberanos (Títulos de Deuda)</th>
+                        <th>Préstamos Multilaterales (Ej: BID, Banco Mundial)</th>
+                    </tr>
+                    <tr>
+                        <td><b>Origen / Negociación</b></td>
+                        <td>Mercados financieros abiertos globales. Inversores privados.</td>
+                        <td>Acuerdo bilateral y diplomático con Organismos Internacionales.</td>
+                    </tr>
+                    <tr>
+                        <td><b>Monto de capital</b></td>
+                        <td>Generalmente masivos (cientos de millones).</td>
+                        <td>Variables, a menudo vinculados a proyectos específicos.</td>
+                    </tr>
+                    <tr>
+                        <td><b>Supervisión / Burocracia</b></td>
+                        <td>Menor. El inversor quiere su interés, no audita el uso final en detalle.</td>
+                        <td>Alta y técnica. Exigen auditorías estrictas del proyecto.</td>
+                    </tr>
+                    <tr>
+                        <td><b>Tasa y Plazo</b></td>
+                        <td>Dependiente del riesgo de mercado. Mediano/Largo plazo.</td>
+                        <td>Generalmente menor (tasas de fomento). Plazos muy largos (gracias y décadas).</td>
+                    </tr>
+                </table>
+                <p><i>Organismos Multilaterales destacados:</i> BID (Infraestructura), Banco Mundial (Pobreza), CAF (Transporte), FONPLATA (Integración).</p>
+
+                <h3 id="u8-riesgo">4. Agencias Calificadoras y Riesgo Soberano</h3>
+                <p>El Estado no decide su propia tasa de interés al emitir bonos. Los mercados confían en intermediarios llamados <b>Agencias Calificadoras de Riesgo</b> (Fitch, Moody's, Standard & Poor's). Estas agencias ponen una "nota escolar" al país evaluando su estabilidad macro, sus reservas (BCP), y la sostenibilidad de su deuda (Ratio Deuda/PIB).</p>
+                
+                <div class="box box-ejemplo">
+                    <span class="box-title">💡 Efectos de la Calificación de Riesgo (Imagen País)</span>
+                    <p><b>Efectos de una Mejora (Upgrade - Grado de Inversión):</b> 
+                    <br>Disminuyen dramáticamente las tasas de interés (el país se financia muy barato). Aumenta la confianza global, lloviendo Inversión Extranjera Directa. Las empresas privadas paraguayas también consiguen créditos internacionales baratos gracias a que su Estado tiene buena calificación.
+                    <br><b>Efectos de una Rebaja (Downgrade):</b>
+                    <br>Los inversores venden bonos masivamente, el costo de emitir nueva deuda se dispara, se restringe el crédito comercial, fuga de capitales hacia mercados más seguros y ralentización del crecimiento económico local.</p>
+                </div>
+
+                <h3>5. Sostenibilidad de la Deuda</h3>
+                <p>Indicadores clave para saber si el país no quebrará:</p>
+                <ul>
+                    <li><b>Deuda Pública sobre el PIB:</b> Qué porcentaje del total de la economía representa la deuda.</li>
+                    <li><b>Servicio de la Deuda vs. Ingresos:</b> Cuántos guaraníes de cada 100 de impuestos recaudados se usan solo para pagar cuotas e intereses bancarios. Si supera márgenes sanos, el Estado pierde espacio para invertir en salud o educación.</li>
+                </ul>
+
+                <button class="btn btn-action no-print" onclick="window.scrollTo(0,0)">↑ Volver al índice</button>
+            </section>
+
+            <hr style="margin: 50px 0; border-color: var(--border-color);">
+
+            <!-- ========================================================================================= -->
+            <!-- UNIDAD IX -->
+            <!-- ========================================================================================= -->
+            <section id="unidad-9">
+                <h1>Unidad IX: Sistema de Tesorería</h1>
+
+                <h3>1. El Gestor de la Liquidez</h3>
+                <p>Si el Presupuesto es la autorización legal para gastar, el <b>Sistema de Tesorería</b> es la cuenta corriente que provee los billetes reales. Está administrado por la Dirección General del Tesoro Público (DGTP), inserta dentro del MEF.</p>
+
+                <h3 id="u9-dgtp">2. La DGTP y sus Funciones</h3>
+                <p>La Tesorería (Nivel central y las institucionales) comprende todas las disponibilidades y activos financieros (caja chica, cuentas bancarias, valores). 
+                Sus funciones son custodiar el dinero público, programar la caja, pagar a los proveedores, transferir fondos a entes descentralizados, e invertir temporalmente dinero ocioso en el mercado local ganando intereses para el Estado (letras de tesorería).</p>
+
+                <h3>3. Plan de Caja y Procesos de Pago</h3>
+                <div class="box box-definicion">
+                    <span class="box-title">✔ Plan de Caja</span>
+                    <p>Es un instrumento operativo de corto plazo. A diferencia del Plan Financiero (que te da el límite mensual para generar obligaciones legales), el <b>Plan de Caja te otorga cuotas de efectivo real</b>. Se proyecta por trimestre y se aprueba mes a mes. Protege al Tesoro de la iliquidez (quedarse sin fondos para afrontar cheques).</p>
+                </div>
+
+                <h4>Secuencia del Proceso de Pago</h4>
+                <p>El Estado no paga mediante un simple giro. Sigue un rastro de auditoría férreo:</p>
+                <ol>
+                    <li>Se requiere aprobación previa de cuota en el <b>Plan Financiero</b> y el <b>Plan de Caja</b>.</li>
+                    <li>La UAF de la institución contrae la <b>Obligación legal</b> (Ej: Certificado de obras entregado).</li>
+                    <li>La institución ingresa en el sistema informático (SITE) una <b>Solicitud de Transferencia de Recursos (STR)</b>. Esta solicitud debe tener la firma conjunta del <i>Ordenador de Gastos</i> (Ministro/Director) y el <i>Habilitado Pagador</i> (Director Administrativo).</li>
+                    <li>Una vez aprobada la STR, la DGTP emite la <b>Orden de Transferencia (OT)</b> y le avisa al <b>Banco Central del Paraguay (BCP)</b>.</li>
+                    <li>El BCP (Cajero del Gobierno) debita los fondos de la cuenta del Tesoro y hace la transferencia final a la cuenta bancaria del proveedor privado o del funcionario estatal.</li>
+                </ol>
+
+                <div class="box box-error">
+                    <span class="box-title">❗ Error Común en Gestión de Pagos</span>
+                    <p>Creer que tener saldo en el Plan Financiero garantiza un pago inmediato. Si la recaudación de impuestos (IVA/IRE) del mes fue catastrófica, la DGTP bajará los techos del <b>Plan de Caja</b>. Es decir, la institución tiene permiso legal para gastar, pero la Tesorería simplemente <i>no tiene los guaraníes físicos en el banco</i>, atrasando las STR.</p>
+                </div>
+
+                <h3>4. Preguntas posibles de examen</h3>
+                <ul>
+                    <li>Diferencie operativamente la función del Plan Financiero y la del Plan de Caja.</li>
+                    <li>¿Quiénes deben firmar obligatoriamente la Solicitud de Transferencia de Recursos (STR)?</li>
+                    <li>¿Qué entidad actúa como el banco pagador final que ejecuta físicamente la Orden de Transferencia dictada por la DGTP?</li>
+                </ul>
+
+                <button class="btn btn-action no-print" onclick="window.scrollTo(0,0)">↑ Volver al índice</button>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        // Funcionalidad de Modo Oscuro
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        // Funcionalidad de Búsqueda simple
+        // Oculta o resalta secciones completas basándose en la coincidencia de texto
+        function searchGuide() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let contentSections = document.querySelectorAll('.main-content section');
+            
+            contentSections.forEach(section => {
+                // Obtenemos el texto limpio del section
+                let text = section.innerText.toLowerCase();
+                
+                if(text.includes(input)) {
+                    section.style.display = "block";
+                } else {
+                    section.style.display = "none";
+                }
+            });
+            
+            // Si el input está vacío, restaurar todas las secciones
+            if(input === "") {
+                contentSections.forEach(section => {
+                    section.style.display = "block";
+                });
+            }
+        }
+    </script>
+</body>
+</html>
