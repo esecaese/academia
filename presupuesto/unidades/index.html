@@ -1116,17 +1116,42 @@
             }
         }
 
-        /* ===================== IMPRESIÓN ===================== */
+        /* ===================== IMPRESIÓN / PDF A4 ===================== */
+        @page {
+            size: A4;
+            margin: 16mm 14mm 18mm;
+        }
+
         @media print {
+
+            /* Forzar tema claro y conservar los colores del material en el PDF */
+            html,
+            html.dark {
+                --bg: #ffffff;
+                --bg2: #ffffff;
+                --surface: #ffffff;
+                --surface-2: #ffffff;
+                --text: #1c2530;
+                --text-soft: #2c3742;
+                --muted: #55606b;
+            }
+
             :root {
-                --reading-size: 11.5pt;
+                --reading-size: 10.8pt;
             }
 
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            html,
             body {
-                background: #fff;
-                color: #000;
+                background: #fff !important;
+                line-height: 1.5;
             }
 
+            /* Ocultar toda la interfaz interactiva */
             .toolbar,
             .sidebar,
             #toTop,
@@ -1134,13 +1159,16 @@
             #progress,
             .back-to-index,
             .toc-actions,
-            .collapse-btn {
+            .collapse-btn,
+            #menuBtn {
                 display: none !important;
             }
 
             .layout {
                 display: block;
                 max-width: none;
+                margin: 0;
+                gap: 0;
             }
 
             main {
@@ -1151,46 +1179,54 @@
                 max-width: none;
             }
 
+            /* Portada en su propia hoja */
+            .hero {
+                break-after: page;
+                border: 1px solid var(--border-strong);
+            }
+
+            /* Cada unidad comienza en una hoja nueva */
             section.unit {
-                break-inside: avoid-page;
-                margin-top: 1.2rem;
+                break-before: page;
+                margin-top: 0;
             }
 
             section.unit.collapsed .unit-body {
                 display: block !important;
             }
 
-            .unit-head {
-                background: #fff !important;
-                color: #000 !important;
-                border: 1px solid #999;
-                border-bottom: 0;
-                box-shadow: none;
-            }
-
-            .unit-num {
-                background: #ddd !important;
-                color: #000 !important;
-                border-color: #999;
-            }
-
+            /* Quitar sombras (no se ven en papel) */
+            .unit-head,
             .unit-body,
             .callout,
             .tbl-wrap,
             .exam,
             .summary,
             .idx-card,
-            .hero {
+            .hero,
+            .flow-step,
+            .keybox {
                 box-shadow: none !important;
             }
 
+            /* Evitar cortes internos poco elegantes */
             .callout,
             table.tbl,
             .flow,
-            .exam,
+            .flow-step,
+            .exam li,
             .summary,
-            .keybox {
+            .keybox,
+            figure,
+            .idx-card,
+            details {
                 break-inside: avoid;
+            }
+
+            h2,
+            h3,
+            h4 {
+                break-after: avoid;
             }
 
             table.tbl thead th {
@@ -1198,29 +1234,21 @@
             }
 
             a {
-                color: #000;
                 text-decoration: none;
             }
 
-            .hero {
-                border: 1px solid #999;
-            }
-
             mark.s-hit {
-                background: transparent;
+                background: transparent !important;
                 box-shadow: none;
             }
 
-            .exam details {
-                border: 0;
-            }
-
+            /* Mostrar todas las respuestas del examen al imprimir */
             .exam summary {
                 display: none;
             }
 
-            .exam details p {
-                display: block;
+            .exam details>*:not(summary) {
+                display: block !important;
             }
         }
     </style>
@@ -1246,6 +1274,7 @@
             <button id="fsMinus" aria-label="Reducir letra">A−</button>
             <button id="fsPlus" aria-label="Aumentar letra">A+</button>
         </div>
+        <button id="printBtn" class="tb-btn" title="Guardar como PDF tamaño A4" aria-label="Imprimir o guardar en PDF">🖨 PDF</button>
         <button id="themeBtn" class="tb-btn" aria-label="Cambiar tema">🌙 Oscuro</button>
     </header>
 
@@ -1268,7 +1297,15 @@
 
                 <!-- PORTADA -->
                 <div class="hero">
+                    <div class="kicker">Guía de Estudio Integral</div>
                     <h1>Administración Financiera del Estado</h1>
+                    <p>Material completo de preparación para examen. Integra y desarrolla la bibliografía de la materia en un único libro digital: del rol del Estado en la economía hasta el ciclo presupuestario, el gasto público, el financiamiento y la tesorería.</p>
+                    <div class="meta">
+                        <span class="chip">7 unidades</span>
+                        <span class="chip">Enfoque República del Paraguay</span>
+                        <span class="chip">Ley N.° 1535/99</span>
+                        <span class="chip">★ Unidad III ampliada</span>
+                    </div>
                 </div>
 
                 <!-- ÍNDICE -->
@@ -1287,11 +1324,11 @@
                             </div>
                             <p>Política fiscal vs. monetaria, déficit/superávit, financiamiento y ciclos económicos.</p>
                         </a>
-                        <a class="idx-card" href="#u3">
+                        <a class="idx-card star" href="#u3">
                             <div class="ic-top"><span class="ic-num">III</span>
                                 <h3>Presupuesto General de la Nación (PGN) y Ley 1535/99</h3>
                             </div>
-                            <p>SIAF, principios, ciclo presupuestario, clasificadores, ingresos y gastos públicos.</p>
+                            <p>SIAF, principios, ciclo presupuestario, clasificadores, ingresos y gastos públicos.</p><span class="badge">Núcleo del examen</span>
                         </a>
                         <a class="idx-card" href="#u4">
                             <div class="ic-top"><span class="ic-num">IV</span>
@@ -3766,6 +3803,27 @@
             applyFS();
             document.getElementById("fsMinus").addEventListener("click", function () { fs = Math.max(14, fs - 1); applyFS(); localStorage.setItem(FS_KEY, fs); });
             document.getElementById("fsPlus").addEventListener("click", function () { fs = Math.min(26, fs + 1); applyFS(); localStorage.setItem(FS_KEY, fs); });
+
+            /* ---------- IMPRESIÓN / PDF A4 ---------- */
+            var printBtn = document.getElementById("printBtn");
+            if (printBtn) printBtn.addEventListener("click", function () { window.print(); });
+            // Abrir todas las respuestas y desplegar las unidades al imprimir
+            window.addEventListener("beforeprint", function () {
+                [].slice.call(document.querySelectorAll("details")).forEach(function (d) {
+                    if (!d.open) { d.setAttribute("data-reopen", "1"); d.open = true; }
+                });
+                [].slice.call(document.querySelectorAll("section.unit.collapsed")).forEach(function (s) {
+                    s.setAttribute("data-recollapse", "1"); s.classList.remove("collapsed");
+                });
+            });
+            window.addEventListener("afterprint", function () {
+                [].slice.call(document.querySelectorAll("details[data-reopen]")).forEach(function (d) {
+                    d.open = false; d.removeAttribute("data-reopen");
+                });
+                [].slice.call(document.querySelectorAll("section.unit[data-recollapse]")).forEach(function (s) {
+                    s.classList.add("collapsed"); s.removeAttribute("data-recollapse");
+                });
+            });
 
             /* ---------- SIDEBAR / TOC AUTO ---------- */
             function slug(s) { return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 46); }
