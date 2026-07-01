@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Avanzado · Talento Humano</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        head: ['Lexend', 'sans-serif'],
+                    },
+                    colors: {
+                        bg: '#0b1120',
+                        surface: '#131c2e',
+                        surface2: '#1e293b',
+                        borderC: '#2a3c5a',
+                        primary: '#5b8cff',
+                        accent: '#2dd4bf',
+                        warn: '#fbbf24',
+                        danger: '#f87171',
+                        success: '#34d399',
+                    },
+                    boxShadow: {
+                        'glow': '0 0 20px rgba(91, 140, 255, 0.3)',
+                        'glow-success': '0 0 20px rgba(52, 211, 153, 0.3)',
+                        'glow-danger': '0 0 20px rgba(248, 113, 113, 0.3)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: theme('colors.bg');
+            color: #e2e8f0;
+            background-image: radial-gradient(circle at 15% 50%, rgba(91, 140, 255, 0.08), transparent 25%),
+                              radial-gradient(circle at 85% 30%, rgba(45, 212, 191, 0.08), transparent 25%);
+            background-attachment: fixed;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: theme('colors.bg'); }
+        ::-webkit-scrollbar-thumb { background: theme('colors.surface2'); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: theme('colors.borderC'); }
+
+        .glass-panel {
+            background: rgba(19, 28, 46, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid theme('colors.borderC');
+        }
+
+        /* Animations */
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        .slide-up { animation: slideUp 0.5s ease-out forwards; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Option Button Styles */
+        .option-btn {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .option-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: transparent;
+            transition: background 0.2s;
+        }
+        .option-btn:not(:disabled):hover {
+            transform: translateY(-2px);
+            border-color: theme('colors.primary');
+            background-color: rgba(91, 140, 255, 0.05);
+        }
+        .option-btn:not(:disabled):hover::before {
+            background: theme('colors.primary');
+        }
+        .option-btn:not(:disabled):active {
+            transform: translateY(0);
+        }
+
+        /* States for answers */
+        .option-btn.correct {
+            background-color: rgba(52, 211, 153, 0.1) !important;
+            border-color: theme('colors.success') !important;
+            box-shadow: theme('boxShadow.glow-success');
+        }
+        .option-btn.correct::before { background: theme('colors.success') !important; }
+        
+        .option-btn.incorrect {
+            background-color: rgba(248, 113, 113, 0.1) !important;
+            border-color: theme('colors.danger') !important;
+            box-shadow: theme('boxShadow.glow-danger');
+            opacity: 0.8;
+        }
+        .option-btn.incorrect::before { background: theme('colors.danger') !important; }
+        
+        .option-btn.show-correct {
+            border-color: theme('colors.success') !important;
+            background-color: rgba(52, 211, 153, 0.05) !important;
+        }
+        .option-btn.show-correct::before { background: theme('colors.success') !important; }
+        
+        .option-btn:disabled {
+            cursor: default;
+        }
+        .option-btn:disabled:not(.correct):not(.incorrect):not(.show-correct) {
+            opacity: 0.5;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: theme('colors.surface2');
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, theme('colors.primary'), theme('colors.accent'));
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* View Management */
+        .view { display: none; }
+        .view.active { display: block; }
+
+        /* Custom Checkbox for Setup */
+        .setup-btn {
+            border: 2px solid theme('colors.borderC');
+            transition: all 0.2s;
+        }
+        .setup-btn.selected {
+            border-color: theme('colors.primary');
+            background: rgba(91, 140, 255, 0.1);
+            color: white;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 sm:p-8">
+
+    <main class="w-full max-w-4xl mx-auto">
+        
+        <!-- ================= VIEW: SETUP ================= -->
+        <div id="view-setup" class="view active glass-panel rounded-2xl p-8 sm:p-12 shadow-2xl slide-up">
+            <div class="text-center mb-10">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent mb-6 shadow-glow">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        <path d="m9 12 2 2 4-4"/>
+                    </svg>
+                </div>
+                <h1 class="font-head text-3xl sm:text-4xl font-bold text-white mb-4 tracking-tight">Simulador de Evaluación</h1>
+                <p class="text-slate-400 text-lg max-w-2xl mx-auto">Gestión del Talento Humano en la Función Pública. Sistema de alta complejidad con generación aleatoria de escenarios.</p>
+            </div>
+
+            <div class="max-w-xl mx-auto">
+                <h3 class="font-head text-xl text-slate-200 mb-4 text-center">Configura tu desafío</h3>
+                <p class="text-slate-400 text-sm text-center mb-6">Selecciona la cantidad de preguntas. El orden y las trampas (respuestas falsas) se generarán de forma totalmente aleatoria.</p>
+                
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8" id="qty-selector">
+                    <button class="setup-btn rounded-xl py-4 font-head text-xl text-slate-300 hover:border-slate-400 focus:outline-none" data-val="5">5</button>
+                    <button class="setup-btn rounded-xl py-4 font-head text-xl text-slate-300 hover:border-slate-400 focus:outline-none selected" data-val="10">10</button>
+                    <button class="setup-btn rounded-xl py-4 font-head text-xl text-slate-300 hover:border-slate-400 focus:outline-none" data-val="15">15</button>
+                    <button class="setup-btn rounded-xl py-4 font-head text-xl text-slate-300 hover:border-slate-400 focus:outline-none" data-val="all">Todas</button>
+                </div>
+
+                <button id="btn-start" class="w-full bg-primary hover:bg-blue-600 text-white font-head text-lg py-4 rounded-xl transition-colors shadow-glow flex items-center justify-center gap-2">
+                    Iniciar Simulación
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= VIEW: QUIZ ================= -->
+        <div id="view-quiz" class="view glass-panel rounded-2xl p-6 sm:p-10 shadow-2xl relative">
+            <!-- Header & Progress -->
+            <div class="flex justify-between items-end mb-4">
+                <div>
+                    <span class="text-primary font-head text-sm tracking-widest uppercase" id="q-module">Módulo X</span>
+                    <h2 class="font-head text-2xl text-white mt-1">Pregunta <span id="q-current">1</span> <span class="text-slate-500 text-lg">/ <span id="q-total">10</span></span></h2>
+                </div>
+                <div class="text-right">
+                    <span class="text-slate-400 text-sm font-medium">Puntuación: <span id="score-display" class="text-white">0</span></span>
+                </div>
+            </div>
+            
+            <div class="progress-container mb-10">
+                <div class="progress-bar" id="progress" style="width: 10%;"></div>
+            </div>
+
+            <!-- Question Area -->
+            <div class="mb-8 min-h-[100px]">
+                <p id="question-text" class="text-lg sm:text-xl text-slate-200 leading-relaxed font-medium slide-up"></p>
+            </div>
+
+            <!-- Options Grid -->
+            <div id="options-container" class="grid gap-4 flex-col">
+                <!-- Options injected via JS -->
+            </div>
+
+            <!-- Footer actions -->
+            <div class="mt-8 pt-6 border-t border-borderC flex justify-between items-center h-12">
+                <div id="feedback-message" class="font-head text-lg opacity-0 transition-opacity duration-300"></div>
+                <button id="btn-next" class="hidden bg-white text-bg hover:bg-slate-200 font-head px-6 py-3 rounded-lg transition-colors items-center gap-2 slide-up">
+                    Siguiente
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= VIEW: RESULTS ================= -->
+        <div id="view-results" class="view glass-panel rounded-2xl p-8 sm:p-12 shadow-2xl text-center">
+            <div id="result-icon" class="inline-flex items-center justify-center w-20 h-20 rounded-full mb-6 mx-auto">
+                <!-- Injected via JS -->
+            </div>
+            <h2 id="result-title" class="font-head text-3xl sm:text-4xl text-white mb-2">¡Evaluación completada!</h2>
+            <p id="result-msg" class="text-slate-400 text-lg mb-8">Has finalizado el simulador.</p>
+
+            <div class="grid grid-cols-2 gap-4 max-w-md mx-auto mb-10">
+                <div class="bg-surface2 border border-borderC rounded-xl p-6">
+                    <div class="text-slate-400 text-sm font-medium mb-1">Aciertos</div>
+                    <div class="font-head text-4xl text-success" id="res-correct">0</div>
+                </div>
+                <div class="bg-surface2 border border-borderC rounded-xl p-6">
+                    <div class="text-slate-400 text-sm font-medium mb-1">Eficacia</div>
+                    <div class="font-head text-4xl text-white" id="res-pct">0%</div>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="btn-review" class="bg-surface2 hover:bg-borderC text-white border border-borderC font-head px-8 py-3 rounded-xl transition-colors">
+                    Revisar Respuestas
+                </button>
+                <button id="btn-restart" class="bg-primary hover:bg-blue-600 text-white font-head px-8 py-3 rounded-xl transition-colors shadow-glow">
+                    Nuevo Intento Aleatorio
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= MODAL: REVIEW ================= -->
+        <div id="modal-review" class="fixed inset-0 z-50 bg-bg/90 backdrop-blur-sm hidden items-center justify-center p-4">
+            <div class="bg-surface border border-borderC rounded-2xl w-full max-w-3xl max-h-[85vh] flex flex-col shadow-2xl slide-up">
+                <div class="p-6 border-b border-borderC flex justify-between items-center">
+                    <h3 class="font-head text-xl text-white">Revisión del Intento</h3>
+                    <button id="btn-close-review" class="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-surface2 transition-colors">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                    </button>
+                </div>
+                <div class="p-6 overflow-y-auto space-y-6" id="review-content">
+                    <!-- Content injected via JS -->
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        /**
+         * BANCO DE PREGUNTAS (ALTA COMPLEJIDAD)
+         * Estructura:
+         * mod: String (Etiqueta del módulo)
+         * q: String (Pregunta)
+         * c: String (Respuesta Correcta)
+         * w: Array[String] (Mínimo 7 respuestas falsas plausibles)
+         */
+        const QUESTION_BANK = [
+            {
+                mod: "Módulo 01 · Fundamentos",
+                q: "Según los conceptos modernos de la Función Pública, ¿cuál es la diferencia radical en la finalidad de la gestión del talento humano en el sector público frente al sector privado?",
+                c: "Su finalidad no es la rentabilidad financiera, sino la generación de valor público, el fortalecimiento institucional y la prestación eficiente de servicios a la ciudadanía.",
+                w: [
+                    "Se centra exclusivamente en la maximización de la recaudación fiscal mediante esquemas de incentivos punitivos para los contribuyentes.",
+                    "Busca reducir el tamaño del Estado delegando todas las funciones misionales a organizaciones no gubernamentales sin fines de lucro.",
+                    "Garantiza la inamovilidad absoluta y vitalicia del cargo desde el primer día de contrato para evitar presiones sindicales.",
+                    "Se enfoca en competir en el mercado abierto ofreciendo bienes y servicios a precios subsidiados para quebrar monopolios privados.",
+                    "Prioriza el cumplimiento de cuotas de afiliación política para asegurar la gobernabilidad de las autoridades de turno.",
+                    "Delega la responsabilidad del bienestar laboral a los gremios y sindicatos, deslindando al Estado de la administración de beneficios.",
+                    "Su meta es estandarizar salarios a nivel nacional, sin importar el mérito, idoneidad o la complejidad de las funciones asignadas.",
+                    "Opera bajo una lógica de subsistencia burocrática, donde el objetivo principal es ejecutar el 100% del presupuesto sin evaluar resultados."
+                ]
+            },
+            {
+                mod: "Módulo 01 · Fundamentos",
+                q: "La Ley N° 1626/00 de la Función Pública establece cuatro pilares fundamentales de conducta que se exigen al funcionario. ¿Cuáles son?",
+                c: "Probidad, obediencia legal, idoneidad y responsabilidad.",
+                w: [
+                    "Eficiencia comercial, rentabilidad financiera, proactividad gerencial y liderazgo transformacional.",
+                    "Obediencia partidaria, antigüedad en el cargo, sumisión jerárquica y discreción absoluta de la información.",
+                    "Innovación tecnológica constante, bilingüismo obligatorio, juventud académica y carisma personal.",
+                    "Imparcialidad política estricta, austeridad económica extrema, silencio administrativo y obediencia ciega.",
+                    "Transparencia radical de datos privados, agilidad operativa, disponibilidad para trabajo remoto y flexibilidad.",
+                    "Excelencia académica internacional, publicaciones científicas, dedicación exclusiva y docencia universitaria.",
+                    "Tolerancia cero a errores, mano dura procedimental, estructura de jerarquía paramilitar y control perimetral.",
+                    "Lealtad a la Máxima Autoridad, afiliación gremial, gestión de crisis mediática y oratoria política."
+                ]
+            },
+            {
+                mod: "Módulo 02 · Marco Legal",
+                q: "En un análisis comparativo entre la Ley 1626/00 y la nueva Ley 7445/25, ¿cuál es el cambio sustancial que introduce esta última respecto al régimen de ingreso y estabilidad?",
+                c: "Consolida la obligatoriedad del concurso público e instaura que la estabilidad se adquiere únicamente tras superar un periodo de prueba más estricto y una evaluación de desempeño vinculante.",
+                w: [
+                    "Elimina por completo la figura del periodo de prueba, otorgando estabilidad inmediata y fuero sindical al momento de la firma del contrato.",
+                    "Otorga la potestad absoluta al titular del Poder Ejecutivo para nombrar, ascender y destituir funcionarios sin necesidad de concurso ni sumario.",
+                    "Reduce el periodo de prueba a solo 30 días corridos, aplicable exclusivamente para aquellos cargos que no requieran título universitario.",
+                    "Establece el ingreso automático a la función pública por simple antigüedad para quienes hayan prestado servicios tercerizados al Estado por más de 5 años.",
+                    "Flexibiliza los requisitos técnicos y académicos de ingreso con el único fin de priorizar cuotas de inclusión social sin evaluación de competencias.",
+                    "Prohíbe totalmente cualquier tipo de contratación temporal o por proyecto, obligando a que todo vínculo con el Estado sea permanente desde el inicio.",
+                    "Delega de manera irrevocable los procesos de selección y evaluación de personal a consultoras privadas internacionales, eliminando la participación de la SFP.",
+                    "Instaura un sistema de sorteo público para el ingreso a los cargos administrativos de menor jerarquía, eliminando el requisito de idoneidad."
+                ]
+            },
+            {
+                mod: "Módulo 02 · Marco Legal",
+                q: "Dentro del régimen disciplinario regulado para la función pública, ¿cómo debe proceder la administración ante la presunta comisión de faltas clasificadas como 'graves' o 'gravísimas' antes de aplicar una sanción como la destitución?",
+                c: "Debe garantizar el debido proceso, lo que implica que las sanciones solo pueden aplicarse tras la instrucción, desarrollo y conclusión de un sumario administrativo.",
+                w: [
+                    "Puede aplicar la sanción de manera automática e inmediata mediante una notificación verbal de la Máxima Autoridad para proteger el patrimonio institucional.",
+                    "Debe esperar obligatoriamente a que exista una condena penal firme y ejecutoriada dictada por la Corte Suprema de Justicia por los mismos hechos.",
+                    "Tiene la potestad de emitir una resolución directa firmada por el jefe inmediato superior, anulando temporalmente el derecho a la legítima defensa.",
+                    "Está obligada a someter el caso a una consulta vinculante y arbitraje del sindicato mayoritario de trabajadores de la institución afectada.",
+                    "Debe convocar a una asamblea extraordinaria del plantel de funcionarios de la dependencia para que voten a mano alzada la culpabilidad del acusado.",
+                    "Solo puede proceder si la Contraloría General de la República emite un dictamen previo, vinculante y público que ordene la destitución.",
+                    "Debe aplicar primero tres amonestaciones verbales consecutivas en días distintos antes de poder iniciar cualquier trámite documental sancionatorio.",
+                    "Tiene que transferir administrativamente al funcionario a otra dependencia durante 5 años antes de poder iniciar un proceso de destitución formal."
+                ]
+            },
+            {
+                mod: "Módulo 03 · Ética e Integridad",
+                q: "La Ética Profesional posee una característica fundamental denominada 'Vínculo deontológico'. ¿Qué significa exactamente este concepto en la práctica pública?",
+                c: "Significa que la ética profesional no es coactiva (no impone sanciones legales directas per se como el código penal), pero sus principios se normalizan, documentan y exigen mediante Códigos Deontológicos o de Ética.",
+                w: [
+                    "Define de manera taxativa y cuantitativa las penas privativas de libertad aplicables exclusivamente por casos de mala praxis administrativa.",
+                    "Crea un sentido de deber individual supra-legal que reemplaza y anula completamente la jurisdicción de las leyes penales vigentes en el país.",
+                    "Consiste en un contrato notarial y legalmente vinculante que debe ser firmado entre el servidor público y cada ciudadano al que atiende.",
+                    "Establece la obligación irrenunciable y penalizada de denunciar a los superiores jerárquicos ante la prensa frente a cualquier desacuerdo técnico-operativo.",
+                    "Es la prerrogativa del funcionario para definir la 'acción correcta' basándose pura y exclusivamente en sus doctrinas o creencias religiosas personales.",
+                    "Es el mecanismo procesal mediante el cual las asociaciones gremiales están facultadas para cobrar multas monetarias directas a sus propios afiliados.",
+                    "Implica que la más mínima transgresión a la cortesía laboral conlleva automáticamente a la destitución inmediata y la inhabilitación perpetua para ejercer cargos públicos.",
+                    "Determina que los principios éticos solo son aplicables dentro del horario laboral y en las instalaciones físicas de la institución contratante."
+                ]
+            },
+            {
+                mod: "Módulo 03 · Ética e Integridad",
+                q: "En el marco conceptual del Sistema de Integridad Pública, ¿cómo se define específicamente la 'Integridad' del servidor?",
+                c: "Es la cualidad de actuar con rectitud, honradez y coherencia, alineando las acciones con los valores éticos institucionales, incluso cuando nadie está observando.",
+                w: [
+                    "Es la capacidad técnica de redactar documentos legales sin errores ortográficos ni vicios de forma durante toda la carrera administrativa.",
+                    "Es el cumplimiento estricto y cronometrado del horario laboral de entrada y salida, independientemente de los resultados obtenidos en la jornada.",
+                    "Es la lealtad incondicional a las directivas de las autoridades políticas de turno, priorizando sus mandatos por encima de las normativas vigentes.",
+                    "Es la disposición absoluta para realizar horas extras no remuneradas durante los fines de semana como muestra de sacrificio por la institución.",
+                    "Es la habilidad de ocultar los errores operativos del equipo de trabajo para mantener intacta la imagen pública de la Máxima Autoridad.",
+                    "Es la obligación de rechazar cualquier tipo de capacitación o actualización técnica externa para no contaminarse con doctrinas ajenas al Estado.",
+                    "Es la práctica de registrar en acta todas las conversaciones informales sostenidas con los compañeros de oficina para garantizar la transparencia interna.",
+                    "Es el compromiso de no afiliarse a ningún club deportivo, social o religioso para evitar la percepción de parcialidad en sus decisiones administrativas."
+                ]
+            },
+            {
+                mod: "Módulo 03 · Ética e Integridad",
+                q: "El Decreto N° 10.143/2012 es un hito normativo en Paraguay. ¿Qué instrumento fundamental aprueba y pone en vigencia para la administración pública?",
+                c: "Aprueba el Código de Ética del Poder Ejecutivo, estableciendo un sistema de gestión ética integral aplicable a todas sus dependencias.",
+                w: [
+                    "Aprueba el Manual de Procedimientos Disciplinarios y Sumariales Expresos para entes descentralizados y binacionales.",
+                    "Pone en vigencia la nueva escala salarial y matriz de beneficios extraordinarios para los ministerios del área social.",
+                    "Establece el Reglamento Interno Institucional Modelo, de adopción obligatoria para Gobernaciones y Municipios.",
+                    "Promulga la Ley General de la Función Pública y del Servicio Civil, derogando normativas de la década de los noventa.",
+                    "Crea la Secretaría Nacional Anticorrupción como órgano supra-ministerial con poderes de allanamiento y fiscalía.",
+                    "Aprueba el Tratado de Integridad Funcional del Mercosur, homologando los requisitos de ingreso a nivel regional.",
+                    "Dispone la publicación obligatoria de las declaraciones juradas de bienes de todos los ciudadanos mayores de edad vinculados al Estado.",
+                    "Reglamenta el uso exclusivo de software libre en todas las computadoras del gobierno para evitar fuga de información clasificada."
+                ]
+            },
+            {
+                mod: "Módulo 04 · Gestión por Procesos",
+                q: "Al comparar la 'Visión Funcional' tradicional con la 'Visión de Procesos', ¿qué características definen a la visión funcional u obsoleta?",
+                c: "Promueve el individualismo, crea barreras o divisiones estancas entre departamentos, busca culpables (quién causó el problema) y el compromiso se limita a metas del área.",
+                w: [
+                    "Fomenta la integración de flujos de trabajo continuo, la empatía interdepartamental y la corresponsabilidad en el logro de metas institucionales.",
+                    "Se orienta primordialmente hacia la satisfacción del ciudadano, considerándolo como el cliente final y razón de ser de la existencia de la institución.",
+                    "Prioriza el análisis sistémico buscando identificar 'qué' causó el problema operativo en lugar de perseguir penalmente al funcionario de ventanilla.",
+                    "Desarrolla en el servidor público la percepción clara de ser un eslabón vital dentro de un macroproceso que genera valor público tangible.",
+                    "Elimina proactivamente las jerarquías verticales para instaurar mesas de trabajo interdisciplinarias auto-gestionadas y sin jefaturas formales.",
+                    "Garantiza la interconectividad total de las áreas, fusionando presupuestos y eliminando las direcciones generales para reducir burocracia.",
+                    "Basa sus evaluaciones de desempeño exclusivamente en la medición matemática de resultados frente a objetivos transversales de impacto ciudadano.",
+                    "Utiliza metodologías ágiles de la industria del software para iterar servicios públicos cada dos semanas con retroalimentación ciudadana constante."
+                ]
+            },
+            {
+                mod: "Módulo 04 · Gestión por Procesos",
+                q: "En el ciclo de mejora continua PHVA impulsado por el MECIP, ¿cuál es el propósito específico de la fase de 'Actuar'?",
+                c: "Tomar decisiones y ejecutar acciones correctivas, preventivas o de mejora para optimizar continuamente el desempeño del proceso basándose en los resultados de la verificación.",
+                w: [
+                    "Realizar el seguimiento minucioso y medir los procesos estadísticamente para contrastarlos únicamente con el presupuesto ejecutado en el trimestre.",
+                    "Establecer la misión, visión, valores y objetivos estratégicos de la institución a largo plazo y presentarlos ante el Congreso Nacional.",
+                    "Implementar por primera vez, de manera piloto, los nuevos procedimientos diseñados y ejecutar las actividades sin posibilidad de modificar el manual.",
+                    "Sancionar administrativa y económicamente a los directores de área que no hayan logrado alcanzar el 100% de eficacia en sus indicadores operativos.",
+                    "Contratar firmas consultoras externas internacionales para que auditen la infraestructura de hardware y software del departamento de tecnología.",
+                    "Archivar de forma definitiva todas las evidencias documentales de la gestión anual y cerrar oficialmente el sistema para evitar alteraciones de datos.",
+                    "Capacitar de manera teórica al personal de nuevo ingreso sobre la historia normativa de la institución y sus fundadores ilustres.",
+                    "Publicar en la gaceta oficial y redes sociales los logros institucionales como estrategia de marketing político antes de las elecciones."
+                ]
+            },
+            {
+                mod: "Módulo 04 · Gestión por Procesos",
+                q: "Dentro de la tipología de Macroprocesos, ¿cómo se definen y qué función cumplen los procesos 'Misionales'?",
+                c: "Son aquellos que están directamente relacionados con la razón de ser de la institución, materializando la entrega de bienes y servicios finales al ciudadano.",
+                w: [
+                    "Son los encargados de proveer todos los recursos necesarios (financieros, humanos, tecnológicos) para que la institución pueda operar internamente.",
+                    "Son procesos de alta gerencia que orientan a la institución hacia el cumplimiento a largo plazo de las políticas de estado dictadas por el Ejecutivo.",
+                    "Se centran exclusivamente en las tareas de auditoría interna, control de legalidad de actos administrativos y sumarios disciplinarios.",
+                    "Son procesos transversales diseñados únicamente para administrar la infraestructura física, el parque automotor y el mantenimiento edilicio de la entidad.",
+                    "Son aquellos delegados por ley al sector privado (tercerizados) debido a su alta complejidad técnica y riesgo financiero para el Estado.",
+                    "Tienen como única finalidad la redacción, revisión y cabildeo de proyectos de ley que posteriormente serán enviados para su tratamiento al Poder Legislativo.",
+                    "Son procesos temporales que se activan exclusivamente durante los periodos de transición presidencial para asegurar el traspaso ordenado de mando.",
+                    "Se refieren a los protocolos de seguridad de la información, blindaje de datos y prevención de ataques cibernéticos a los servidores gubernamentales."
+                ]
+            },
+            {
+                mod: "Módulo 04 · Gestión por Procesos",
+                q: "Al estructurar el Normograma institucional que da soporte a los procesos, ¿cuál es la jerarquía jurídica correcta, desde la norma de mayor rango hasta la de menor rango?",
+                c: "Constitución Nacional, Leyes Nacionales, Decretos del Poder Ejecutivo, Resoluciones Institucionales y Reglamentos Internos.",
+                w: [
+                    "Leyes Nacionales, Decretos del Poder Ejecutivo, Constitución Nacional, Resoluciones Institucionales y Reglamentos Internos.",
+                    "Constitución Nacional, Resoluciones Institucionales, Reglamentos Internos, Leyes Nacionales y Decretos del Poder Ejecutivo.",
+                    "Resoluciones de la Máxima Autoridad, Leyes Nacionales, Decretos Presidenciales, Constitución Nacional y Acuerdos Sindicales.",
+                    "Decretos Presidenciales de Urgencia, Constitución Nacional, Leyes Orgánicas, Tratados Internacionales y Memorandos Internos.",
+                    "Reglamentos Internos, Resoluciones Ministeriales, Decretos del Ejecutivo, Leyes del Congreso, Constitución Nacional.",
+                    "Tratados Internacionales (ratificados y no ratificados), Ordenanzas Municipales, Constitución Nacional, Leyes de la República.",
+                    "Leyes del Congreso, Jurisprudencia de la Corte Suprema, Reglamentos Internos, Resoluciones Institucionales, Constitución Nacional.",
+                    "Constitución Nacional, Instructivos de Trabajo de Recursos Humanos, Leyes Nacionales, Circulares Informativas, Decretos."
+                ]
+            },
+            {
+                mod: "Módulo 04 · Gestión por Procesos",
+                q: "En el documento técnico conocido como 'Ficha de Proceso', ¿qué tipo de información debe documentarse ineludiblemente en la sección de 'Entradas / Proveedores'?",
+                c: "Los insumos, materiales, datos o información inicial requerida para poder ejecutar las actividades del proceso, identificando quién los provee.",
+                w: [
+                    "Los productos finales, servicios tangibles o dictámenes jurídicos que se entregan directamente para la satisfacción plena del ciudadano.",
+                    "Los mecanismos de control interno, la matriz de riesgos residuales y el cronograma de auditorías externas aplicables al departamento.",
+                    "Las fórmulas matemáticas de los indicadores de eficiencia institucional y los porcentajes de ejecución presupuestaria del año en curso.",
+                    "La nómina completa del personal permanente y contratado asignado al área, incluyendo salarios, bonificaciones y antigüedad laboral.",
+                    "El historial detallado de modificaciones de la ficha, actas de reuniones del comité de calidad y firmas de aprobación del Ministro.",
+                    "Las actas de recepción de activos fijos (computadoras, escritorios, vehículos) donados por organismos de cooperación internacional.",
+                    "La justificación filosófica y doctrinaria que fundamenta la existencia de la Dirección General dentro del organigrama del Estado.",
+                    "El listado de quejas, reclamos y sugerencias presentadas por los usuarios durante el último trimestre a través del portal web."
+                ]
+            }
+        ];
+
+        let appState = {
+            bank: [],
+            quizQueue: [],
+            currentIndex: 0,
+            score: 0,
+            answers: [] // Stores { qObj, selectedText, isCorrect }
+        };
+
+        // Utility: Fisher-Yates Shuffle
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        // DOM Elements
+        const views = {
+            setup: document.getElementById('view-setup'),
+            quiz: document.getElementById('view-quiz'),
+            results: document.getElementById('view-results')
+        };
+        
+        // Setup Logic
+        const qtyBtns = document.querySelectorAll('.setup-btn');
+        let selectedQty = 10; // Default
+
+        qtyBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                qtyBtns.forEach(b => b.classList.remove('selected'));
+                e.target.classList.add('selected');
+                selectedQty = e.target.dataset.val === 'all' ? QUESTION_BANK.length : parseInt(e.target.dataset.val);
+                // Cap at max available
+                if (selectedQty > QUESTION_BANK.length) selectedQty = QUESTION_BANK.length;
+            });
+        });
+
+        document.getElementById('btn-start').addEventListener('click', initializeQuiz);
+
+        function initializeQuiz() {
+            // 1. Shuffle main bank
+            appState.bank = shuffleArray(QUESTION_BANK);
+            
+            // 2. Take requested amount
+            const selectedQuestions = appState.bank.slice(0, selectedQty);
+            
+            // 3. Process each into a quiz item
+            appState.quizQueue = selectedQuestions.map(qData => {
+                // Shuffle the 7+ wrong answers and take exactly 3
+                const shuffledWrongs = shuffleArray(qData.w).slice(0, 3);
+                // Combine correct + 3 wrongs
+                const options = [qData.c, ...shuffledWrongs];
+                // Shuffle the final 4 options
+                const shuffledOptions = shuffleArray(options);
+                
+                return {
+                    original: qData,
+                    options: shuffledOptions,
+                    correctAnswer: qData.c
+                };
+            });
+
+            // Reset state
+            appState.currentIndex = 0;
+            appState.score = 0;
+            appState.answers = [];
+
+            // Transition UI
+            switchView('quiz');
+            renderQuestion();
+        }
+
+        function switchView(viewName) {
+            Object.values(views).forEach(v => {
+                v.classList.remove('active');
+                v.classList.remove('slide-up'); // reset animation
+            });
+            views[viewName].classList.add('active');
+            // Trigger reflow to restart animation
+            void views[viewName].offsetWidth; 
+            views[viewName].classList.add('slide-up');
+        }
+
+        function renderQuestion() {
+            const currentItem = appState.quizQueue[appState.currentIndex];
+            const qObj = currentItem.original;
+
+            // Update Header & Progress
+            document.getElementById('q-module').textContent = qObj.mod;
+            document.getElementById('q-current').textContent = appState.currentIndex + 1;
+            document.getElementById('q-total').textContent = appState.quizQueue.length;
+            
+            const progressPct = ((appState.currentIndex) / appState.quizQueue.length) * 100;
+            document.getElementById('progress').style.width = `${progressPct}%`;
+            
+            document.getElementById('score-display').textContent = appState.score;
+
+            // Question Text with animation reset
+            const qEl = document.getElementById('question-text');
+            qEl.classList.remove('slide-up');
+            void qEl.offsetWidth;
+            qEl.textContent = qObj.q;
+            qEl.classList.add('slide-up');
+
+            // Options
+            const optsContainer = document.getElementById('options-container');
+            optsContainer.innerHTML = '';
+            
+            // Hide next button & feedback
+            document.getElementById('btn-next').classList.add('hidden');
+            const feedback = document.getElementById('feedback-message');
+            feedback.style.opacity = '0';
+            feedback.className = 'font-head text-lg opacity-0 transition-opacity duration-300';
+
+            currentItem.options.forEach((optText, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn w-full text-left bg-surface2 border border-borderC rounded-xl p-4 sm:p-5 flex items-start gap-4 text-slate-300 slide-up';
+                btn.style.animationDelay = `${index * 0.1}s`;
+                
+                // Add letter marker (A, B, C, D)
+                const letter = String.fromCharCode(65 + index);
+                
+                btn.innerHTML = `
+                    <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-surface border border-borderC flex items-center justify-center font-head text-sm text-slate-400 marker-div">${letter}</div>
+                    <div class="flex-1 text-sm sm:text-base leading-relaxed pt-1">${optText}</div>
+                `;
+                
+                btn.onclick = () => handleAnswerSelect(btn, optText, currentItem);
+                optsContainer.appendChild(btn);
+            });
+        }
+
+        function handleAnswerSelect(clickedBtn, selectedText, currentItem) {
+            // Disable all buttons
+            const allBtns = document.querySelectorAll('.option-btn');
+            allBtns.forEach(b => b.disabled = true);
+
+            const isCorrect = selectedText === currentItem.correctAnswer;
+            
+            // Record answer
+            appState.answers.push({
+                qData: currentItem.original,
+                selected: selectedText,
+                isCorrect: isCorrect
+            });
+
+            // Styling feedback
+            if (isCorrect) {
+                appState.score++;
+                clickedBtn.classList.add('correct');
+                clickedBtn.querySelector('.marker-div').classList.replace('bg-surface', 'bg-success');
+                clickedBtn.querySelector('.marker-div').classList.replace('text-slate-400', 'text-bg');
+                showFeedback("¡Correcto!", 'text-success');
+            } else {
+                clickedBtn.classList.add('incorrect');
+                clickedBtn.querySelector('.marker-div').classList.replace('bg-surface', 'bg-danger');
+                clickedBtn.querySelector('.marker-div').classList.replace('text-slate-400', 'text-white');
+                
+                // Highlight correct one
+                allBtns.forEach(b => {
+                    if (b.innerText.includes(currentItem.correctAnswer)) {
+                        b.classList.add('show-correct');
+                    }
+                });
+                showFeedback("Incorrecto", 'text-danger');
+            }
+
+            // Update live score
+            document.getElementById('score-display').textContent = appState.score;
+
+            // Show Next button
+            const nextBtn = document.getElementById('btn-next');
+            nextBtn.classList.remove('hidden');
+            
+            // Change text if last question
+            if (appState.currentIndex === appState.quizQueue.length - 1) {
+                nextBtn.innerHTML = 'Ver Resultados <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+                nextBtn.classList.replace('bg-white', 'bg-primary');
+                nextBtn.classList.replace('text-bg', 'text-white');
+                nextBtn.classList.add('shadow-glow');
+            }
+        }
+
+        function showFeedback(text, colorClass) {
+            const feedback = document.getElementById('feedback-message');
+            feedback.textContent = text;
+            feedback.classList.add(colorClass);
+            feedback.style.opacity = '1';
+        }
+
+        document.getElementById('btn-next').addEventListener('click', () => {
+            appState.currentIndex++;
+            if (appState.currentIndex < appState.quizQueue.length) {
+                renderQuestion();
+            } else {
+                showResults();
+            }
+        });
+
+        function showResults() {
+            // Finish progress bar
+            document.getElementById('progress').style.width = `100%`;
+            
+            const total = appState.quizQueue.length;
+            const pct = Math.round((appState.score / total) * 100);
+            
+            document.getElementById('res-correct').textContent = `${appState.score} / ${total}`;
+            
+            const pctEl = document.getElementById('res-pct');
+            pctEl.textContent = `${pct}%`;
+            pctEl.className = 'font-head text-4xl'; // reset
+            
+            const titleEl = document.getElementById('result-title');
+            const msgEl = document.getElementById('result-msg');
+            const iconWrap = document.getElementById('result-icon');
+            
+            let iconSvg = '';
+
+            if (pct >= 90) {
+                pctEl.classList.add('text-success');
+                titleEl.textContent = "¡Sobresaliente!";
+                msgEl.textContent = "Demuestras un dominio profundo de la normativa y conceptos.";
+                iconWrap.className = "inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-success/20 text-success mb-6 mx-auto shadow-glow-success";
+                iconSvg = '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>';
+            } else if (pct >= 60) {
+                pctEl.classList.add('text-primary');
+                titleEl.textContent = "Buen trabajo";
+                msgEl.textContent = "Conoces las bases, pero hay detalles técnicos que repasar.";
+                iconWrap.className = "inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-primary/20 text-primary mb-6 mx-auto shadow-glow";
+                iconSvg = '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>';
+            } else {
+                pctEl.classList.add('text-warn');
+                titleEl.textContent = "Requiere estudio";
+                msgEl.textContent = "Te sugerimos repasar la guía. Las trampas han surtido efecto.";
+                iconWrap.className = "inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-warn/20 text-warn mb-6 mx-auto";
+                iconSvg = '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>';
+            }
+            
+            iconWrap.innerHTML = iconSvg;
+            switchView('results');
+        }
+
+        // Restart Flow
+        document.getElementById('btn-restart').addEventListener('click', () => {
+            // Reset "Next" button styling to default
+            const nextBtn = document.getElementById('btn-next');
+            nextBtn.className = 'hidden bg-white text-bg hover:bg-slate-200 font-head px-6 py-3 rounded-lg transition-colors items-center gap-2 slide-up';
+            nextBtn.innerHTML = 'Siguiente <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>';
+            
+            switchView('setup');
+        });
+
+        // Review Flow
+        const modalReview = document.getElementById('modal-review');
+        
+        document.getElementById('btn-review').addEventListener('click', () => {
+            const container = document.getElementById('review-content');
+            container.innerHTML = '';
+            
+            appState.answers.forEach((ans, index) => {
+                const item = document.createElement('div');
+                item.className = 'p-5 rounded-xl border ' + (ans.isCorrect ? 'bg-success/5 border-success/30' : 'bg-danger/5 border-danger/30');
+                
+                item.innerHTML = `
+                    <div class="flex items-start gap-3 mb-3">
+                        <div class="flex-shrink-0 mt-1">
+                            ${ans.isCorrect 
+                                ? '<svg width="20" height="20" class="text-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>'
+                                : '<svg width="20" height="20" class="text-danger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>'
+                            }
+                        </div>
+                        <div>
+                            <span class="text-xs font-head text-slate-400 uppercase tracking-wider block mb-1">Pregunta ${index + 1}</span>
+                            <p class="text-slate-200 text-sm sm:text-base font-medium">${ans.qData.q}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="ml-8 space-y-2 text-sm">
+                        ${!ans.isCorrect ? `
+                            <div class="flex gap-2 text-danger/80">
+                                <span class="font-bold flex-shrink-0">Tu respuesta:</span>
+                                <span>${ans.selected}</span>
+                            </div>
+                        ` : ''}
+                        <div class="flex gap-2 text-success">
+                            <span class="font-bold flex-shrink-0">Respuesta Correcta:</span>
+                            <span>${ans.qData.c}</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+            
+            modalReview.classList.remove('hidden');
+            modalReview.classList.add('flex');
+        });
+
+        document.getElementById('btn-close-review').addEventListener('click', () => {
+            modalReview.classList.add('hidden');
+            modalReview.classList.remove('flex');
+        });
+        
+        // Close modal on click outside
+        modalReview.addEventListener('click', (e) => {
+            if (e.target === modalReview) {
+                modalReview.classList.add('hidden');
+                modalReview.classList.remove('flex');
+            }
+        });
+
+    </script>
+</body>
+</html>
