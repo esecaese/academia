@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test · Administración Financiera del Estado</title>
+    <style>
+        /* ===================== VARIABLES / TEMA ===================== */
+        :root {
+            --bg: #f4f1ea;
+            --bg2: #efeae0;
+            --surface: #fffdf8;
+            --surface-2: #faf7f0;
+            --text: #26303b;
+            --text-soft: #3d4853;
+            --muted: #6b7681;
+            --border: #e6e0d3;
+            --border-strong: #d4ccba;
+            --accent: #2f6f8f;
+            --accent-ink: #234e63;
+            --accent-2: #a8772a;
+            --link: #2f6f8f;
+            --ok-bg: #e9f5ee;
+            --ok-bd: #2e8b6f;
+            --ok-tx: #1c5a48;
+            --bad-bg: #fdecec;
+            --bad-bd: #c0473a;
+            --bad-tx: #8a2e25;
+            --shadow: 0 1px 3px rgba(40, 40, 40, .08), 0 8px 28px rgba(40, 40, 40, .07);
+            --shadow-sm: 0 1px 2px rgba(40, 40, 40, .10);
+        }
+
+        html.dark {
+            --bg: #0f1216;
+            --bg2: #141821;
+            --surface: #181c23;
+            --surface-2: #1e232c;
+            --text: #e5e8ec;
+            --text-soft: #cdd2d8;
+            --muted: #98a2af;
+            --border: #2a313b;
+            --border-strong: #3a434f;
+            --accent: #6fb3d6;
+            --accent-ink: #a6cfe6;
+            --accent-2: #d8ad62;
+            --link: #7fc0e2;
+            --ok-bg: #14241d;
+            --ok-bd: #3da583;
+            --ok-tx: #a8e1cc;
+            --bad-bg: #2c1614;
+            --bad-bd: #d4675a;
+            --bad-tx: #f4b5ac;
+            --shadow: 0 1px 3px rgba(0, 0, 0, .45), 0 10px 34px rgba(0, 0, 0, .4);
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, .5);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(180deg, var(--bg), var(--bg2));
+            color: var(--text);
+            font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+            font-size: 17px;
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: var(--link);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===================== TOPBAR ===================== */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+            padding: .6rem clamp(1rem, 3vw, 2rem);
+            background: color-mix(in srgb, var(--surface) 88%, transparent);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            font-weight: 700;
+            color: var(--accent-ink);
+        }
+
+        .brand .logo {
+            font-size: 1.3rem;
+        }
+
+        .brand .txt {
+            font-size: 1rem;
+        }
+
+        .spacer {
+            flex: 1;
+        }
+
+        .tb-btn {
+            font: inherit;
+            font-size: .9rem;
+            cursor: pointer;
+            border: 1px solid var(--border-strong);
+            background: var(--surface-2);
+            color: var(--text);
+            padding: .4rem .8rem;
+            border-radius: 9px;
+            transition: background .15s, border-color .15s;
+        }
+
+        .tb-btn:hover {
+            border-color: var(--accent);
+        }
+
+        /* ===================== LAYOUT ===================== */
+        .wrap {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: clamp(1.2rem, 3vw, 2.4rem) clamp(1rem, 3vw, 1.6rem) 4rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: clamp(1.2rem, 3vw, 2rem);
+        }
+
+        h1 {
+            font-family: Georgia, "Times New Roman", serif;
+            color: var(--accent-ink);
+            font-size: clamp(1.6rem, 4vw, 2.2rem);
+            margin: 0 0 .4rem;
+            line-height: 1.2;
+        }
+
+        .sub {
+            color: var(--muted);
+            margin: 0 0 1.6rem;
+        }
+
+        /* ===================== START SCREEN ===================== */
+        .field {
+            margin: 1.4rem 0;
+        }
+
+        .field>label.h {
+            display: block;
+            font-weight: 700;
+            color: var(--accent-ink);
+            margin-bottom: .5rem;
+        }
+
+        .qty-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        input[type=range] {
+            flex: 1;
+            min-width: 180px;
+            accent-color: var(--accent);
+            height: 6px;
+        }
+
+        .qty-badge {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            min-width: 2.6ch;
+            text-align: center;
+        }
+
+        .presets {
+            display: flex;
+            gap: .5rem;
+            flex-wrap: wrap;
+            margin-top: .7rem;
+        }
+
+        .preset {
+            font: inherit;
+            cursor: pointer;
+            border: 1px solid var(--border-strong);
+            background: var(--surface-2);
+            color: var(--text-soft);
+            padding: .35rem .8rem;
+            border-radius: 999px;
+            font-size: .88rem;
+        }
+
+        .preset:hover {
+            border-color: var(--accent);
+        }
+
+        .preset.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        .chips {
+            display: flex;
+            gap: .5rem;
+            flex-wrap: wrap;
+        }
+
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            cursor: pointer;
+            border: 1px solid var(--border-strong);
+            background: var(--surface-2);
+            color: var(--text-soft);
+            padding: .4rem .75rem;
+            border-radius: 10px;
+            font-size: .88rem;
+            user-select: none;
+            transition: background .15s, border-color .15s, color .15s;
+        }
+
+        .chip input {
+            display: none;
+        }
+
+        .chip.on {
+            background: color-mix(in srgb, var(--accent) 16%, var(--surface));
+            border-color: var(--accent);
+            color: var(--accent-ink);
+        }
+
+        .chip .dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--border-strong);
+        }
+
+        .chip.on .dot {
+            background: var(--accent);
+        }
+
+        .muted-note {
+            color: var(--muted);
+            font-size: .9rem;
+            margin-top: .6rem;
+        }
+
+        /* ===================== BUTTONS ===================== */
+        .btn {
+            font: inherit;
+            cursor: pointer;
+            border: 1px solid var(--border-strong);
+            background: var(--surface-2);
+            color: var(--text);
+            padding: .7rem 1.3rem;
+            border-radius: 11px;
+            font-weight: 600;
+            transition: background .15s, border-color .15s, transform .05s;
+        }
+
+        .btn:hover {
+            border-color: var(--accent);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+            font-size: 1.05rem;
+            padding: .8rem 1.8rem;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-ink);
+            border-color: var(--accent-ink);
+        }
+
+        .btn:disabled {
+            opacity: .45;
+            cursor: not-allowed;
+        }
+
+        .start-actions {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* ===================== QUIZ SCREEN ===================== */
+        #quizScreen,
+        #resultScreen {
+            display: none;
+        }
+
+        .quiz-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: .8rem;
+            flex-wrap: wrap;
+        }
+
+        .counter {
+            font-weight: 700;
+            color: var(--accent-ink);
+        }
+
+        .scorebox {
+            font-size: .92rem;
+            color: var(--muted);
+        }
+
+        .scorebox b {
+            color: var(--ok-bd);
+        }
+
+        .pbar {
+            height: 8px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            overflow: hidden;
+            margin-bottom: 1.4rem;
+        }
+
+        .pbar>i {
+            display: block;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            transition: width .35s ease;
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: .74rem;
+            font-weight: 700;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+            color: #fff;
+            background: var(--accent-2);
+            padding: .18rem .6rem;
+            border-radius: 999px;
+            margin-bottom: .8rem;
+        }
+
+        .question {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(1.15rem, 3vw, 1.4rem);
+            line-height: 1.4;
+            color: var(--text);
+            margin: 0 0 1.3rem;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: .7rem;
+        }
+
+        .opt {
+            display: flex;
+            align-items: flex-start;
+            gap: .8rem;
+            text-align: left;
+            font: inherit;
+            cursor: pointer;
+            width: 100%;
+            border: 1.5px solid var(--border-strong);
+            background: var(--surface-2);
+            color: var(--text);
+            padding: .85rem 1rem;
+            border-radius: 12px;
+            transition: border-color .15s, background .15s, transform .05s;
+        }
+
+        .opt:hover:not(:disabled) {
+            border-color: var(--accent);
+            background: color-mix(in srgb, var(--accent) 8%, var(--surface-2));
+        }
+
+        .opt:active:not(:disabled) {
+            transform: translateY(1px);
+        }
+
+        .opt .key {
+            flex: none;
+            width: 1.7rem;
+            height: 1.7rem;
+            border-radius: 8px;
+            background: var(--surface);
+            border: 1px solid var(--border-strong);
+            display: grid;
+            place-items: center;
+            font-weight: 700;
+            font-size: .9rem;
+            color: var(--accent-ink);
+        }
+
+        .opt .txt {
+            flex: 1;
+            padding-top: .1rem;
+        }
+
+        .opt:disabled {
+            cursor: default;
+        }
+
+        .opt.correct {
+            border-color: var(--ok-bd);
+            background: var(--ok-bg);
+            color: var(--ok-tx);
+        }
+
+        .opt.correct .key {
+            background: var(--ok-bd);
+            color: #fff;
+            border-color: var(--ok-bd);
+        }
+
+        .opt.wrong {
+            border-color: var(--bad-bd);
+            background: var(--bad-bg);
+            color: var(--bad-tx);
+        }
+
+        .opt.wrong .key {
+            background: var(--bad-bd);
+            color: #fff;
+            border-color: var(--bad-bd);
+        }
+
+        .opt.dim {
+            opacity: .6;
+        }
+
+        .feedback {
+            display: none;
+            margin-top: 1.2rem;
+            padding: .9rem 1.1rem;
+            border-radius: 12px;
+            border-left: 5px solid var(--accent);
+            background: var(--surface-2);
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback .tag {
+            font-weight: 800;
+            display: block;
+            margin-bottom: .2rem;
+        }
+
+        .feedback.ok {
+            border-left-color: var(--ok-bd);
+        }
+
+        .feedback.ok .tag {
+            color: var(--ok-bd);
+        }
+
+        .feedback.bad {
+            border-left-color: var(--bad-bd);
+        }
+
+        .feedback.bad .tag {
+            color: var(--bad-bd);
+        }
+
+        .quiz-actions {
+            margin-top: 1.6rem;
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        /* ===================== RESULT SCREEN ===================== */
+        .result-head {
+            text-align: center;
+            margin-bottom: 1.6rem;
+        }
+
+        .score-num {
+            font-size: 3.4rem;
+            font-weight: 800;
+            line-height: 1;
+            color: var(--accent);
+        }
+
+        .score-pct {
+            font-size: 1.1rem;
+            color: var(--muted);
+            margin-top: .3rem;
+        }
+
+        .score-msg {
+            margin-top: .9rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .review h3 {
+            color: var(--accent-ink);
+            border-bottom: 2px solid var(--border);
+            padding-bottom: .3rem;
+            margin: 2rem 0 1rem;
+        }
+
+        .rev {
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--border-strong);
+            border-radius: 10px;
+            padding: .8rem 1rem;
+            margin: .8rem 0;
+            background: var(--surface-2);
+        }
+
+        .rev.ok {
+            border-left-color: var(--ok-bd);
+        }
+
+        .rev.bad {
+            border-left-color: var(--bad-bd);
+        }
+
+        .rev .rq {
+            font-weight: 700;
+            margin-bottom: .4rem;
+        }
+
+        .rev .ra {
+            font-size: .92rem;
+            margin: .15rem 0;
+        }
+
+        .rev .ra .lbl {
+            color: var(--muted);
+        }
+
+        .rev .ra.good {
+            color: var(--ok-tx);
+        }
+
+        .rev .ra.err {
+            color: var(--bad-tx);
+        }
+
+        .rev .rex {
+            font-size: .9rem;
+            color: var(--text-soft);
+            margin-top: .5rem;
+            padding-top: .5rem;
+            border-top: 1px dashed var(--border);
+        }
+
+        .result-actions {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 520px) {
+            .quiz-actions {
+                flex-direction: column-reverse;
+            }
+
+            .quiz-actions .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="topbar">
+        <span class="brand"><span class="logo">🧠</span><span class="txt">Test · Administración Financiera del Estado</span></span>
+        <span class="spacer"></span>
+        <a class="tb-btn" href="opus.html" title="Abrir la guía de estudio">📘 Guía</a>
+        <button id="themeBtn" class="tb-btn" aria-label="Cambiar tema">🌙 Oscuro</button>
+    </header>
+
+    <div class="wrap">
+
+        <!-- ===================== INICIO ===================== -->
+        <section id="startScreen" class="card">
+            <h1>Autoevaluación de opción múltiple</h1>
+            <p class="sub">Preguntas y opciones se presentan en orden aleatorio. Cada pregunta muestra
+                <strong>4 opciones</strong> elegidas al azar desde un banco de al menos 10 distractores, por lo que cada
+                intento es diferente.
+            </p>
+
+            <div class="field">
+                <label class="h" for="qty">¿Cuántas preguntas querés responder?</label>
+                <div class="qty-row">
+                    <input type="range" id="qty" min="1" max="45" value="10" step="1">
+                    <span class="qty-badge" id="qtyVal">10</span>
+                </div>
+                <div class="presets" id="presets">
+                    <button class="preset" data-n="5">5</button>
+                    <button class="preset" data-n="10">10</button>
+                    <button class="preset" data-n="20">20</button>
+                    <button class="preset" data-n="all">Todas</button>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="h">Temario incluido</label>
+                <div class="chips" id="unitChips"></div>
+                <p class="muted-note" id="poolNote"></p>
+            </div>
+
+            <div class="start-actions">
+                <button id="startBtn" class="btn btn-primary">Comenzar test ▸</button>
+            </div>
+        </section>
+
+        <!-- ===================== QUIZ ===================== -->
+        <section id="quizScreen" class="card">
+            <div class="quiz-top">
+                <span class="counter" id="counter">Pregunta 1 de 10</span>
+                <span class="scorebox">Aciertos: <b id="scoreNow">0</b> / <span id="answeredNow">0</span></span>
+            </div>
+            <div class="pbar"><i id="pbarFill"></i></div>
+
+            <span class="badge" id="qBadge">Unidad</span>
+            <p class="question" id="qText">…</p>
+            <div class="options" id="options"></div>
+
+            <div class="feedback" id="feedback">
+                <span class="tag" id="fbTag"></span>
+                <span id="fbText"></span>
+            </div>
+
+            <div class="quiz-actions">
+                <button id="quitBtn" class="btn">✕ Salir</button>
+                <button id="nextBtn" class="btn btn-primary" disabled>Siguiente ▸</button>
+            </div>
+        </section>
+
+        <!-- ===================== RESULTADOS ===================== -->
+        <section id="resultScreen" class="card">
+            <div class="result-head">
+                <div class="score-num" id="finalScore">0 / 0</div>
+                <div class="score-pct" id="finalPct">0%</div>
+                <div class="score-msg" id="finalMsg"></div>
+            </div>
+            <div class="review">
+                <h3>Revisión de respuestas</h3>
+                <div id="reviewList"></div>
+            </div>
+            <div class="result-actions">
+                <button id="retryBtn" class="btn btn-primary">↻ Reintentar</button>
+                <button id="newBtn" class="btn">⚙ Nuevo test</button>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        (function () {
+            "use strict";
+
+            /* ===================== BANCO DE PREGUNTAS =====================
+               Cada pregunta: 1 respuesta correcta + >= 10 distractores (traps).
+               En cada intento se muestran 4 opciones (correcta + 3 trampas al azar). */
+            var BANK = [
+                /* ---------- UNIDAD I ---------- */
+                {
+                    u: "I",
+                    q: "El poder supremo del Estado para decidir sin subordinación a ningún otro poder se denomina:",
+                    correct: "Soberanía",
+                    traps: ["Gobierno", "Territorio", "Población", "Autarquía", "Autonomía", "Jurisdicción", "Descentralización", "Personería jurídica", "Federalismo", "Contrato social", "Potestad de imperio", "Coparticipación"],
+                    explain: "La soberanía es el poder supremo del Estado para decidir sin subordinación a otro poder."
+                },
+                {
+                    u: "I",
+                    q: "Según Richard Musgrave, las tres funciones económicas del Estado son:",
+                    correct: "Asignación, distribución y estabilización",
+                    traps: ["Asignación, recaudación y control", "Planificación, ejecución y control", "Legislación, administración y justicia", "Eficiencia, eficacia y economía", "Producción, consumo y ahorro", "Regulación, supervisión y sanción", "Asignación, tributación y gasto", "Fiscal, monetaria y cambiaria", "Oferta, demanda y equilibrio", "Universalidad, unidad y anualidad", "Defensa, justicia y obras públicas"],
+                    explain: "Musgrave identificó las funciones de asignación, distribución y estabilización."
+                },
+                {
+                    u: "I",
+                    q: "La función del Estado que busca modificar la distribución del ingreso y la riqueza generada por el mercado para promover mayor equidad social es la función de:",
+                    correct: "Distribución",
+                    traps: ["Asignación", "Estabilización", "Regulación", "Recaudación", "Producción", "Compensación", "Fiscalización", "Coordinación", "Planificación", "Intervención", "Redistribución primaria"],
+                    explain: "La función de distribución modifica la distribución del ingreso y la riqueza para lograr mayor equidad."
+                },
+                {
+                    u: "I",
+                    q: "La concepción que interpreta al Estado como una estructura artificial creada por los individuos, basada en el Contrato Social, se denomina:",
+                    correct: "Concepción mecanicista",
+                    traps: ["Concepción orgánica", "Concepción keynesiana", "Concepción clásica", "Concepción utilitarista", "Concepción corporativa", "Concepción positivista", "Concepción marxista", "Concepción institucionalista", "Concepción liberal", "Concepción funcionalista", "Concepción naturalista"],
+                    explain: "La concepción mecanicista ve al Estado como herramienta artificial fundada en el Contrato Social; el individuo es anterior y superior al Estado."
+                },
+                {
+                    u: "I",
+                    q: "¿Qué escuela del pensamiento económico sostiene el liberalismo económico y la mínima intervención del Estado, con Adam Smith y David Ricardo entre sus autores?",
+                    correct: "Escuela Clásica",
+                    traps: ["Escuela Keynesiana", "Escuela Monetarista", "Escuela Marxista", "Escuela Neoclásica", "Escuela Institucionalista", "Escuela Austríaca", "Escuela Mercantilista", "Escuela Fisiócrata", "Escuela Estructuralista", "Escuela del Bienestar", "Escuela Cepalina"],
+                    explain: "La Escuela Clásica se basa en el liberalismo económico y la autorregulación del mercado (Smith, Ricardo)."
+                },
+
+                /* ---------- UNIDAD II ---------- */
+                {
+                    u: "II",
+                    q: "La política fiscal comprende las decisiones del Estado sobre:",
+                    correct: "El gasto público, la tributación y el endeudamiento",
+                    traps: ["La oferta de dinero y las tasas de interés", "El tipo de cambio y las reservas", "Las tasas de interés y el encaje legal", "La emisión monetaria y la liquidez", "Los precios y los salarios", "Los aranceles y las cuotas de importación", "El crédito bancario y los depósitos", "La inflación y el desempleo", "El ahorro y la inversión privada", "El comercio exterior y la balanza de pagos"],
+                    explain: "La política fiscal decide el nivel y composición del gasto, la tributación y el endeudamiento. La monetaria (BCP) maneja dinero, tasas y liquidez."
+                },
+                {
+                    u: "II",
+                    q: "Según Gregory Mankiw, el déficit fiscal se define como:",
+                    correct: "La diferencia entre los gastos del gobierno y sus ingresos, cuando los gastos superan a los ingresos",
+                    traps: ["El excedente de los ingresos sobre los gastos", "La suma total de la deuda pública acumulada", "El pago de los intereses de la deuda", "La diferencia entre exportaciones e importaciones", "El gasto público total del ejercicio", "La diferencia entre ingresos y gastos antes de intereses", "El total de impuestos recaudados en el año", "La emisión monetaria del Banco Central", "El ahorro corriente del gobierno", "La diferencia entre el PIB y el gasto público"],
+                    explain: "Para Mankiw, déficit = gastos − ingresos; existe déficit cuando los gastos superan a los ingresos."
+                },
+                {
+                    u: "II",
+                    q: "Ante una fase recesiva del ciclo económico, la política fiscal contracíclica recomienda una postura:",
+                    correct: "Expansiva: aumentar el gasto público y/o reducir la carga tributaria",
+                    traps: ["Contractiva: reducir el gasto y generar superávit", "Aumentar los impuestos para enfriar la economía", "Elevar las tasas de interés", "Reducir la oferta monetaria", "Congelar los salarios públicos", "Aumentar el encaje legal", "Aplicar consolidación fiscal", "Vender bonos para retirar liquidez", "Reducir la inversión pública", "Devaluar la moneda"],
+                    explain: "En recesión, postura expansiva (más gasto y/o menos impuestos). En auge, postura contractiva (consolidación y superávit)."
+                },
+                {
+                    u: "II",
+                    q: "El principio de estabilidad presupuestaria, que limita la política fiscal, sostiene que:",
+                    correct: "Los gastos no deben ser superiores a los ingresos",
+                    traps: ["El déficit no debe superar el 3% del PIB", "La deuda no debe superar el 40% del PIB", "Los ingresos deben crecer al ritmo de la inflación", "El gasto debe crecer con la población", "Los impuestos deben ser proporcionales", "El presupuesto debe aprobarse por decreto", "El superávit debe destinarse a deuda", "El gasto de capital debe superar al corriente", "Los ingresos deben ser plurianuales", "El Banco Central debe financiar el déficit"],
+                    explain: "La máxima del principio de estabilidad presupuestaria es que los gastos no deben superar a los ingresos."
+                },
+
+                /* ---------- UNIDAD III ---------- */
+                {
+                    u: "III",
+                    q: "La Ley N.° 1535/99 regula:",
+                    correct: "La Administración Financiera del Estado",
+                    traps: ["El Presupuesto General de la Nación de un año específico", "La Ley de Responsabilidad Fiscal", "El régimen tributario nacional", "Las Contrataciones Públicas", "La Organización Administrativa del Estado", "El Sistema Nacional de Inversión Pública", "La Función Pública", "El Código de Organización Judicial", "La descentralización municipal", "La Banca Central del Estado", "El Presupuesto Plurianual"],
+                    explain: "La Ley 1535/99 'De Administración Financiera del Estado' establece y regula el SIAF."
+                },
+                {
+                    u: "III",
+                    q: "El Sistema Integrado de Administración Financiera (SIAF) se rige por el principio de:",
+                    correct: "Centralización normativa y descentralización operativa",
+                    traps: ["Centralización normativa y operativa", "Descentralización normativa y operativa", "Descentralización normativa y centralización operativa", "Unidad, universalidad y equilibrio", "Economía, eficiencia y eficacia", "Legalidad y anualidad", "Autonomía y autarquía", "Coordinación y subsidiariedad", "Jerarquía y competencia", "Concentración y delegación", "Desconcentración territorial"],
+                    explain: "El SIAF combina centralización normativa (reglas únicas) con descentralización operativa (cada OEE ejecuta)."
+                },
+                {
+                    u: "III",
+                    q: "¿Cuáles son los seis sistemas que conforman el SIAF?",
+                    correct: "Presupuesto, Inversión, Tesorería, Crédito y deuda pública, Contabilidad y Control",
+                    traps: ["Presupuesto, Tesorería, Contabilidad, Control, Auditoría y Planificación", "Presupuesto, Inversión, Tributación, Tesorería, Contabilidad y Control", "Presupuesto, Crédito, Tesorería, Recaudación, Contabilidad y Control", "Planificación, Presupuesto, Inversión, Tesorería, Deuda y Control", "Ingresos, Gastos, Inversión, Deuda, Contabilidad y Control", "Presupuesto, Inversión, Tesorería, Deuda, Contabilidad y Auditoría", "Presupuesto, Inversión, Tesorería, Crédito, Contabilidad y Evaluación", "Presupuesto, Compras, Tesorería, Deuda, Contabilidad y Control", "Presupuesto, Inversión, Caja, Crédito, Contabilidad y Fiscalización", "Presupuesto, Inversión, Tesorería, Crédito, Auditoría y Control"],
+                    explain: "Regla P-I-T-C-C-C: Presupuesto, Inversión, Tesorería, Crédito y deuda pública, Contabilidad y Control."
+                },
+                {
+                    u: "III",
+                    q: "Según el Art. 5 de la Ley 1535/99, el Presupuesto General de la Nación es:",
+                    correct: "El instrumento de asignación de recursos financieros para el cumplimiento de las políticas y los objetivos estatales",
+                    traps: ["La estimación de la recaudación tributaria del año", "El plan de caja mensual del Tesoro", "El registro contable de los gastos ejecutados", "La ley que crea los impuestos nacionales", "El balance anual de gestión pública", "El cronograma de la deuda pública", "El plan de inversión plurianual", "El clasificador presupuestario de gastos", "El informe de ejecución presupuestaria", "El presupuesto exclusivo del Poder Ejecutivo"],
+                    explain: "El Art. 5 define el PGN como el instrumento de asignación de recursos para cumplir las políticas y objetivos estatales."
+                },
+                {
+                    u: "III",
+                    q: "Los cinco principios presupuestarios del Art. 6 de la Ley 1535/99 son:",
+                    correct: "Universalidad, legalidad, unidad, anualidad y equilibrio",
+                    traps: ["Economía, eficiencia, eficacia, ejecutividad y efectividad", "Universalidad, legalidad, unidad, anualidad y transparencia", "Universalidad, legalidad, unidad, plurianualidad y equilibrio", "Legalidad, publicidad, unidad, anualidad y equilibrio", "Universalidad, legalidad, especialidad, anualidad y equilibrio", "Unidad, universalidad, exactitud, anualidad y control", "Centralización, descentralización, unidad, anualidad y equilibrio", "Universalidad, legalidad, unidad, temporalidad y déficit cero", "Universalidad, moralidad, unidad, anualidad y equilibrio", "Igualdad, legalidad, unidad, anualidad y equilibrio"],
+                    explain: "Art. 6: universalidad, legalidad, unidad, anualidad y equilibrio."
+                },
+                {
+                    u: "III",
+                    q: "El principio presupuestario de LEGALIDAD establece que:",
+                    correct: "Los gastos autorizados son el monto máximo a desembolsar y no pueden sobrepasarse, salvo que otra ley lo establezca; los ingresos son estimaciones",
+                    traps: ["Todos los ingresos y gastos deben estar expresamente presupuestados", "Todos los ingresos, gastos y financiamientos van en un solo documento", "El presupuesto abarca un único ejercicio fiscal anual", "El gasto no puede exceder el total de ingresos y financiamiento", "Los ingresos son metas máximas que no pueden superarse", "Los gastos son estimaciones que pueden ampliarse libremente", "El presupuesto debe aprobarse por decreto del Ejecutivo", "Los créditos pueden usarse para cualquier finalidad", "El saldo al 31 de diciembre se reparte entre los OEE", "Los ingresos deben igualar exactamente a los gastos"],
+                    explain: "Legalidad: los ingresos son estimaciones (pueden superarse); los gastos autorizados son el tope máximo, no sobrepasable salvo otra ley."
+                },
+                {
+                    u: "III",
+                    q: "El principio de EQUILIBRIO presupuestario significa que:",
+                    correct: "El monto del presupuesto de gastos no podrá exceder el total del presupuesto de ingresos y de financiamiento",
+                    traps: ["Todos los ingresos y gastos deben estar presupuestados", "El presupuesto se incluye en un solo documento", "Los gastos son el monto máximo a desembolsar", "El presupuesto es de carácter anual", "Los ingresos deben ser iguales a los gastos corrientes", "El déficit no puede superar el 1,5% del PIB", "El gasto corriente no puede superar al de capital", "Los ingresos tributarios financian todo el gasto", "El financiamiento no forma parte del presupuesto", "El superávit es obligatorio cada ejercicio"],
+                    explain: "Equilibrio: gastos ≤ ingresos + financiamiento."
+                },
+                {
+                    u: "III",
+                    q: "La fecha tope para que los OEE presenten sus anteproyectos de presupuesto al Ministerio de Economía y Finanzas es:",
+                    correct: "El 30 de junio de cada año",
+                    traps: ["El 1 de septiembre", "El 30 de octubre", "El 20 de diciembre", "El 31 de diciembre", "El 30 de noviembre", "El 1 de julio", "El 15 de agosto", "El 31 de marzo", "El 30 de septiembre", "El 1 de enero", "El 15 de junio"],
+                    explain: "Los anteproyectos se presentan dentro del primer semestre; la fecha tope es el 30 de junio."
+                },
+                {
+                    u: "III",
+                    q: "El Poder Ejecutivo debe presentar el Proyecto de Ley del PGN al Congreso a más tardar el:",
+                    correct: "1 de septiembre de cada año",
+                    traps: ["30 de junio", "30 de octubre", "20 de diciembre", "31 de diciembre", "1 de julio", "15 de agosto", "1 de agosto", "30 de septiembre", "30 de noviembre", "1 de octubre"],
+                    explain: "El Ejecutivo presenta el proyecto al Congreso a más tardar el 1 de septiembre."
+                },
+                {
+                    u: "III",
+                    q: "El estudio parlamentario del PGN debe culminar el:",
+                    correct: "20 de diciembre de cada año",
+                    traps: ["31 de diciembre", "1 de septiembre", "30 de octubre", "30 de junio", "15 de diciembre", "1 de diciembre", "31 de octubre", "30 de noviembre", "10 de diciembre", "1 de enero"],
+                    explain: "El proceso parlamentario culmina el 20 de diciembre; la promulgación o veto del Ejecutivo, antes del 31 de diciembre."
+                },
+                {
+                    u: "III",
+                    q: "Si el Poder Ejecutivo veta totalmente el presupuesto y el Congreso no reúne los votos para rechazar el veto:",
+                    correct: "Se ejecuta el presupuesto (proyecto) del año anterior",
+                    traps: ["Se ejecuta el proyecto del Poder Ejecutivo", "El país queda sin presupuesto", "Decide la Corte Suprema de Justicia", "Se prorroga automáticamente por decreto", "Se convoca a nuevas elecciones", "Gobierna el MEF por resolución", "Se aprueba la versión de Senadores", "Se somete a referéndum", "Se reduce el gasto en un 10%", "Lo fija la Contraloría General"],
+                    explain: "Si el veto total no se rechaza, se ejecuta el presupuesto del año anterior."
+                },
+                {
+                    u: "III",
+                    q: "La Fuente de Financiamiento FF 10 corresponde a:",
+                    correct: "Recursos del Tesoro",
+                    traps: ["Recursos del Crédito Público", "Recursos Institucionales", "Recursos de las binacionales", "Recursos de donaciones externas", "Recursos propios de los OEE", "Recursos con afectación específica", "Recursos de capital", "Recursos de coparticipación", "Recursos de la deuda interna", "Recursos de organismos multilaterales"],
+                    explain: "FF 10 = Recursos del Tesoro (ordinarios de la Tesorería General, administrados por la DGTP del MEF)."
+                },
+                {
+                    u: "III",
+                    q: "La Fuente de Financiamiento FF 20 corresponde a:",
+                    correct: "Recursos del Crédito Público (endeudamiento interno y externo)",
+                    traps: ["Recursos del Tesoro", "Recursos Institucionales", "Recursos propios de los OEE", "Recursos con afectación específica", "Royalties de Itaipú y Yacyretá", "Transferencias corrientes", "Ingresos tributarios (IVA, IRE)", "Venta de bienes y servicios", "Donaciones internas", "Tasas y aranceles"],
+                    explain: "FF 20 = Recursos del Crédito Público: colocación de bonos o títulos y desembolso de préstamos (interno y externo)."
+                },
+                {
+                    u: "III",
+                    q: "La Fuente de Financiamiento FF 30 corresponde a:",
+                    correct: "Recursos Institucionales",
+                    traps: ["Recursos del Tesoro", "Recursos del Crédito Público", "Recursos de la deuda externa", "Bonos soberanos", "Préstamos multilaterales", "Emisión monetaria del BCP", "Impuestos nacionales (IVA, IRE, IRP)", "Regalías de las hidroeléctricas", "Recursos ordinarios de la Tesorería General", "Fuentes financieras de balance"],
+                    explain: "FF 30 = Recursos Institucionales (peajes, aranceles, tasas, donaciones) administrados por la propia entidad receptora."
+                },
+                {
+                    u: "III",
+                    q: "En el clasificador por Objeto del Gasto, el Grupo de Gasto (G.G.) 100 corresponde a:",
+                    correct: "Servicios Personales",
+                    traps: ["Servicios No Personales", "Bienes de Consumo e Insumos", "Inversiones", "Transferencias", "Otros Gastos", "Servicios Básicos", "Remuneraciones Básicas", "Deuda Pública", "Amortizaciones", "Gastos de Capital"],
+                    explain: "G.G. 100 = Servicios Personales (sueldos, remuneraciones y demás gastos del personal)."
+                },
+
+                /* ---------- UNIDAD IV ---------- */
+                {
+                    u: "IV",
+                    q: "Los bienes públicos se caracterizan por:",
+                    correct: "No rivalidad y no exclusión",
+                    traps: ["Rivalidad y exclusión", "No rivalidad y exclusión", "Rivalidad y no exclusión", "Escasez y precio de mercado", "Alta elasticidad y sustituibilidad", "Exclusividad y apropiabilidad", "Divisibilidad y rivalidad", "Consumo individual y excluyente", "Provisión exclusivamente privada", "Beneficio limitado al comprador"],
+                    explain: "Bienes públicos: no rivalidad (el consumo de uno no reduce el de otro) y no exclusión (es difícil impedir el beneficio a terceros)."
+                },
+                {
+                    u: "IV",
+                    q: "La distribución de la renta que surge directamente del funcionamiento del mercado (salarios, beneficios, rentas e intereses) se denomina:",
+                    correct: "Distribución primaria",
+                    traps: ["Distribución secundaria", "Redistribución", "Distribución óptima", "Distribución pareto-eficiente", "Distribución progresiva", "Distribución funcional del Estado", "Distribución post-fiscal", "Distribución utilitarista", "Incidencia del gasto", "Movilidad social"],
+                    explain: "La distribución primaria es la del mercado (salarios, beneficios, rentas); la secundaria resulta de impuestos y transferencias."
+                },
+                {
+                    u: "IV",
+                    q: "Un gasto público se considera PROGRESIVO cuando:",
+                    correct: "Beneficia proporcionalmente más a los hogares de menores ingresos",
+                    traps: ["Beneficia proporcionalmente más a los hogares de mayores ingresos", "Beneficia por igual a todos los hogares", "Aumenta con el nivel general de precios", "Se financia con deuda externa", "Reduce el gasto social", "Se distribuye por igual entre departamentos", "Beneficia a las empresas públicas", "Se ejecuta a inicios del ejercicio", "Crece más rápido que el PIB", "Depende de la recaudación del IVA"],
+                    explain: "Progresivo: beneficia proporcionalmente más a los de menores ingresos; regresivo: más a los de mayores ingresos."
+                },
+                {
+                    u: "IV",
+                    q: "Una redistribución es Pareto eficiente cuando:",
+                    correct: "Mejora la situación de al menos un grupo sin empeorar la de ningún otro",
+                    traps: ["Mejora a todos los grupos por igual", "Empeora a los ricos para mejorar a los pobres", "Maximiza la recaudación tributaria", "Iguala totalmente los ingresos", "Reduce el gasto público total", "Aumenta el PIB per cápita", "Elimina todos los impuestos distorsivos", "Beneficia solo a la mayoría", "Requiere consenso unánime del Congreso", "Compensa a los perdedores con deuda"],
+                    explain: "Una mejora de Pareto beneficia a al menos un grupo sin perjudicar a ningún otro."
+                },
+                {
+                    u: "IV",
+                    q: "En los estudios de distribución del ingreso, la unidad de observación más utilizada suele ser:",
+                    correct: "El hogar, ajustado por ingreso per cápita o escalas de equivalencia",
+                    traps: ["El individuo aislado", "La empresa", "El municipio", "El departamento", "El país en su conjunto", "El sector económico", "La región", "El grupo etario", "La unidad productiva agrícola", "El Poder del Estado"],
+                    explain: "La unidad más usada es el hogar, ajustado por ingreso per cápita o escalas de equivalencia."
+                },
+
+                /* ---------- UNIDAD VII ---------- */
+                {
+                    u: "VII",
+                    q: "Según el Art. 22 de la Ley 1535/99, las etapas de ejecución del GASTO son:",
+                    correct: "Previsión, obligación y pago",
+                    traps: ["Liquidación y recaudación", "Compromiso, devengado y pagado", "Previsión, compromiso, devengado y pago", "Obligación, liquidación y pago", "Estimación, ejecución y control", "Previsión, ejecución y evaluación", "Asignación, obligación y rendición", "Previsión, obligación y rendición", "Programación, ejecución y cierre", "Liquidación, obligación y pago"],
+                    explain: "Etapas del gasto (Art. 22): previsión, obligación y pago. Liquidación y recaudación corresponden al ingreso."
+                },
+                {
+                    u: "VII",
+                    q: "Según el Art. 22 de la Ley 1535/99, las etapas de ejecución de los INGRESOS son:",
+                    correct: "Liquidación y recaudación",
+                    traps: ["Previsión y obligación", "Obligación y pago", "Previsión, obligación y pago", "Estimación y percepción", "Devengado y percibido", "Compromiso y cobro", "Liquidación y pago", "Recaudación y rendición", "Previsión y recaudación", "Estimación y liquidación"],
+                    explain: "Ingresos: liquidación (identificar y cuantificar el recurso) y recaudación (percepción efectiva)."
+                },
+                {
+                    u: "VII",
+                    q: "Las ampliaciones presupuestarias que incrementan el gasto total, por regla general, deben aprobarse por:",
+                    correct: "Ley",
+                    traps: ["Decreto del Poder Ejecutivo", "Resolución del MEF", "Resolución de la máxima autoridad institucional", "Acordada de la Corte Suprema", "Dictamen de la Contraloría", "Decreto del Ministerio de Hacienda", "Ordenanza", "Resolución de la Dirección General de Presupuesto", "Convenio interinstitucional", "Acuerdo del Congreso sin ley"],
+                    explain: "Las ampliaciones que aumentan el gasto se aprueban por Ley, asignando explícitamente los recursos con que se sufragarán."
+                },
+                {
+                    u: "VII",
+                    q: "El cambio de fuente de financiamiento de un gasto (por ejemplo, de FF 30 a FF 10) se aprueba por:",
+                    correct: "Decreto del Poder Ejecutivo",
+                    traps: ["Ley del Congreso", "Resolución del MEF", "Resolución institucional", "Acordada judicial", "Dictamen de la Contraloría", "Decreto del BCP", "Convenio de préstamo", "Resolución de la DGTP", "Ordenanza departamental", "Acuerdo bicameral"],
+                    explain: "El cambio de fuente de financiamiento se aprueba por Decreto del Poder Ejecutivo."
+                },
+                {
+                    u: "VII",
+                    q: "Las transferencias de créditos presupuestarios (de un objeto de gasto a otro):",
+                    correct: "No incrementan el presupuesto total institucional",
+                    traps: ["Aumentan el presupuesto total institucional", "Requieren siempre una ley", "Solo las aprueba el Congreso", "Incrementan la fuente de financiamiento", "Crean nuevos cargos de personal", "Duplican el crédito reasignado", "Reducen el presupuesto de la Nación", "Modifican la deuda pública", "Cambian la fuente de financiamiento", "Aumentan las cuotas del plan de caja"],
+                    explain: "Las transferencias de créditos reasignan entre objetos o programas, pero NO incrementan el total institucional."
+                },
+                {
+                    u: "VII",
+                    q: "El informe anual único que presentan los OEE con los resultados de su gestión se denomina:",
+                    correct: "Balance Anual de Gestión Pública (BAGP)",
+                    traps: ["Informe de Control Financiero", "Cuenta de Inversión", "Balance General de la Nación", "Informe de Ejecución Presupuestaria", "Rendición de Cuentas Anual", "Memoria Institucional", "Estado de Situación Financiera", "Informe del Primer Semestre", "Dictamen de la Contraloría", "Plan Anual de Contrataciones"],
+                    explain: "El informe de cierre anual único es el Balance Anual de Gestión Pública (BAGP)."
+                },
+
+                /* ---------- UNIDAD VIII ---------- */
+                {
+                    u: "VIII",
+                    q: "La deuda pública EXTERNA es la contraída con:",
+                    correct: "Acreedores extranjeros (Banco Mundial, BID, CAF, etc.)",
+                    traps: ["Acreedores dentro del país (bonos locales)", "El Banco Central del Paraguay", "Los OEE del Estado", "Los contribuyentes nacionales", "Las Tesorerías Institucionales", "Los gobiernos departamentales", "La Dirección General del Tesoro", "Los bancos públicos nacionales", "Las empresas públicas nacionales", "El sector privado paraguayo"],
+                    explain: "Deuda externa = acreedores extranjeros (BM, BID, CAF). La interna se contrae dentro del país (p. ej., bonos locales)."
+                },
+                {
+                    u: "VIII",
+                    q: "Las agencias calificadoras de riesgo soberano cumplen la función de:",
+                    correct: "Reducir la asimetría de información entre emisores de deuda y financiadores, evaluando la capacidad de pago del Estado",
+                    traps: ["Prestar directamente los recursos al Estado", "Fijar las tasas de interés del mercado", "Emitir los bonos soberanos del país", "Recaudar los impuestos nacionales", "Administrar las reservas internacionales", "Aprobar el Presupuesto General de la Nación", "Controlar la ejecución del gasto público", "Otorgar préstamos multilaterales", "Regular la política monetaria", "Garantizar el pago de la deuda pública"],
+                    explain: "Las calificadoras reducen la asimetría de información evaluando la capacidad y disposición del Estado para honrar sus obligaciones."
+                },
+                {
+                    u: "VIII",
+                    q: "Una MEJORA en la calificación de riesgo soberano de un país produce:",
+                    correct: "Menores tasas de interés y mayor acceso a financiamiento",
+                    traps: ["Mayores tasas de interés", "Menor inversión extranjera", "Mayor percepción de riesgo", "Aumento del costo de financiamiento", "Salida de capitales", "Reducción de las reservas", "Mayor inflación", "Devaluación de la moneda", "Menor acceso a los mercados", "Caída del PIB"],
+                    explain: "Una mejor calificación reduce las tasas, atrae inversión extranjera y amplía el acceso a los mercados."
+                },
+                {
+                    u: "VIII",
+                    q: "En comparación con los bonos soberanos, los préstamos multilaterales suelen tener:",
+                    correct: "Menor tasa de interés y mayor control técnico",
+                    traps: ["Mayor tasa de interés y menor control", "Plazos más cortos", "Mayor monto en todos los casos", "Negociación en mercado abierto", "Menor supervisión técnica", "Origen en el mercado financiero", "Tasa dependiente del mercado", "Menor plazo de amortización", "Ausencia de condiciones y seguimiento", "Emisión pública de títulos"],
+                    explain: "Los préstamos multilaterales (BID, BM, CAF) suelen tener tasa menor, largo plazo y mayor control técnico."
+                },
+                {
+                    u: "VIII",
+                    q: "¿Cuál de los siguientes es un indicador de sostenibilidad de la deuda pública?",
+                    correct: "Deuda Pública / PIB",
+                    traps: ["IVA / Consumo", "Salarios / Empleo público", "Gasto corriente / Gasto de capital", "Exportaciones / Importaciones", "Inflación / Desempleo", "Recaudación / Población", "Inversión / Ahorro privado", "Reservas / Base monetaria", "PIB / Habitante", "Déficit / Superávit comercial"],
+                    explain: "Indicadores clave: Deuda/PIB, Servicio de la deuda/Ingresos, déficit fiscal y reservas internacionales."
+                },
+
+                /* ---------- UNIDAD IX ---------- */
+                {
+                    u: "IX",
+                    q: "El organismo que administra los recursos financieros del Estado (registro, control, programación de caja y transferencia de recursos), según el Art. 76 de la Ley 1535/99, es:",
+                    correct: "La Dirección General del Tesoro Público (DGTP)",
+                    traps: ["El Banco Central del Paraguay", "La Dirección General de Presupuesto", "La Subsecretaría de Tributación", "La Contraloría General de la República", "La Dirección General de Contabilidad Pública", "La Tesorería Institucional de cada OEE", "La Auditoría General del Poder Ejecutivo", "La Dirección de Crédito Público", "El Congreso Nacional", "El Ministerio de Hacienda de cada OEE"],
+                    explain: "La Dirección General del Tesoro Público (DGTP), según el Art. 76, administra los recursos del Tesoro Público."
+                },
+                {
+                    u: "IX",
+                    q: "El instrumento de corto plazo de la Tesorería General que se proyecta trimestralmente y se ajusta mensualmente según las cuotas asignadas a cada UAF es:",
+                    correct: "El Plan de Caja",
+                    traps: ["El Plan Financiero", "El Presupuesto", "El Plan Anual de Contrataciones", "La Orden de Transferencia", "La Solicitud de Transferencia de Recursos", "El Plan Operativo Anual", "El clasificador presupuestario", "El Balance Anual de Gestión", "El plan plurianual", "El presupuesto de caja institucional"],
+                    explain: "El Plan de Caja es un instrumento de corto plazo: se proyecta trimestralmente y se ajusta mensualmente por UAF."
+                },
+                {
+                    u: "IX",
+                    q: "Ordene la jerarquía de la planificación financiera, del horizonte más amplio al más concreto:",
+                    correct: "Presupuesto → Plan Financiero → Plan de Caja",
+                    traps: ["Plan de Caja → Plan Financiero → Presupuesto", "Plan Financiero → Presupuesto → Plan de Caja", "Presupuesto → Plan de Caja → Plan Financiero", "Plan Financiero → Plan de Caja → Presupuesto", "Plan de Caja → Presupuesto → Plan Financiero", "Presupuesto → Plan Operativo → Plan de Caja", "Plan Nacional → Presupuesto → Plan Financiero", "Presupuesto → Plan Financiero → Orden de Transferencia", "Plan Financiero → STR → Plan de Caja", "Presupuesto → Plan de Caja → STR"],
+                    explain: "Del más amplio al más concreto: Presupuesto (anual) → Plan Financiero (mensual) → Plan de Caja (trimestral/mensual)."
+                },
+                {
+                    u: "IX",
+                    q: "El proceso de transferencia de recursos culmina con la Orden de Transferencia (OT), que la DGTP envía para el desembolso a:",
+                    correct: "El Banco Central del Paraguay (BCP)",
+                    traps: ["El Ministerio de Economía y Finanzas", "La Tesorería Institucional del OEE", "El proveedor directamente", "La Contraloría General de la República", "El banco comercial del beneficiario", "La Dirección General de Presupuesto", "El Congreso Nacional", "La UAF institucional", "El Habilitado Pagador", "El Ordenador de Gastos"],
+                    explain: "La DGTP genera la Orden de Transferencia (OT) y la envía al Banco Central del Paraguay para el desembolso."
+                },
+                {
+                    u: "IX",
+                    q: "Para realizar un pago, la normativa exige las firmas de:",
+                    correct: "El Ordenador de Gastos y el Habilitado Pagador",
+                    traps: ["El Presidente y el Ministro de Economía", "El Tesorero General y el Contralor", "La Máxima Autoridad y el Auditor", "El Director de Presupuesto y el de Tesorería", "El Ordenador de Gastos y el Auditor Interno", "El Habilitado Pagador y el proveedor", "El Contador y el Síndico", "El Ministro y el Presidente del BCP", "El Ordenador de Gastos y el Director de la DGTP", "Dos miembros del Congreso"],
+                    explain: "El pago exige las firmas del Ordenador de Gastos y del Habilitado Pagador; la STR se presenta en un máximo de 30 días tras su aprobación en SITE."
+                }
+            ];
+
+            /* ===================== NOMBRES DE UNIDADES ===================== */
+            var UNIT_NAMES = {
+                "I": "Unidad I · Introducción",
+                "II": "Unidad II · Política Fiscal",
+                "III": "Unidad III · Presupuesto (PGN)",
+                "IV": "Unidad IV · Gasto Público",
+                "VII": "Unidad VII · Ejecución Presupuestaria",
+                "VIII": "Unidad VIII · Financiamiento y Deuda",
+                "IX": "Unidad IX · Tesorería"
+            };
+            var UNIT_ORDER = ["I", "II", "III", "IV", "VII", "VIII", "IX"];
+            var OPT_KEYS = ["A", "B", "C", "D"];
+
+            /* ===================== UTILIDADES ===================== */
+            function shuffle(arr) {
+                var a = arr.slice();
+                for (var i = a.length - 1; i > 0; i--) {
+                    var j = Math.floor(Math.random() * (i + 1));
+                    var t = a[i]; a[i] = a[j]; a[j] = t;
+                }
+                return a;
+            }
+
+            function byId(id) { return document.getElementById(id); }
+
+            /* ===================== TEMA ===================== */
+            var root = document.documentElement;
+            var THEME_KEY = "guia-afe-tema";
+            var themeBtn = byId("themeBtn");
+            var savedTheme = localStorage.getItem(THEME_KEY);
+            if (!savedTheme) { savedTheme = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light"; }
+            if (savedTheme === "dark") root.classList.add("dark");
+            function updTheme() { themeBtn.textContent = root.classList.contains("dark") ? "☀️ Claro" : "🌙 Oscuro"; }
+            updTheme();
+            themeBtn.addEventListener("click", function () {
+                root.classList.toggle("dark");
+                localStorage.setItem(THEME_KEY, root.classList.contains("dark") ? "dark" : "light");
+                updTheme();
+            });
+
+            /* ===================== ESTADO ===================== */
+            var quiz = [];
+            var idx = 0, score = 0, answered = false;
+
+            /* ===================== INICIO: FILTROS Y CANTIDAD ===================== */
+            var chipsBox = byId("unitChips");
+            var selectedUnits = {};
+            UNIT_ORDER.forEach(function (u) {
+                if (!BANK.some(function (q) { return q.u === u; })) return;
+                selectedUnits[u] = true;
+                var count = BANK.filter(function (q) { return q.u === u; }).length;
+                var label = document.createElement("label");
+                label.className = "chip on";
+                label.setAttribute("data-u", u);
+                label.innerHTML = '<span class="dot"></span><input type="checkbox" checked>' +
+                    UNIT_NAMES[u].replace(/·.*/, "").trim() + ' <span style="opacity:.6">(' + count + ')</span>';
+                var cb = label.querySelector("input");
+                cb.addEventListener("change", function () {
+                    selectedUnits[u] = cb.checked;
+                    label.classList.toggle("on", cb.checked);
+                    refreshPool();
+                });
+                chipsBox.appendChild(label);
+            });
+
+            var qty = byId("qty");
+            var qtyVal = byId("qtyVal");
+            var poolNote = byId("poolNote");
+            var presetBtns = [].slice.call(document.querySelectorAll(".preset"));
+
+            function poolSize() {
+                return BANK.filter(function (q) { return selectedUnits[q.u]; }).length;
+            }
+
+            function refreshPool() {
+                var max = poolSize();
+                if (max < 1) {
+                    poolNote.textContent = "Seleccioná al menos una unidad para comenzar.";
+                    qty.max = 1; qty.value = 1; qtyVal.textContent = "0";
+                    byId("startBtn").disabled = true;
+                    return;
+                }
+                byId("startBtn").disabled = false;
+                qty.max = max;
+                if (parseInt(qty.value, 10) > max) qty.value = max;
+                qtyVal.textContent = qty.value;
+                poolNote.textContent = "Hay " + max + " preguntas disponibles con el temario seleccionado.";
+                syncPresets();
+            }
+
+            function syncPresets() {
+                var v = parseInt(qty.value, 10);
+                var max = poolSize();
+                presetBtns.forEach(function (b) {
+                    var n = b.getAttribute("data-n");
+                    var target = (n === "all") ? max : Math.min(parseInt(n, 10), max);
+                    b.classList.toggle("active", target === v);
+                });
+            }
+
+            qty.addEventListener("input", function () { qtyVal.textContent = qty.value; syncPresets(); });
+            presetBtns.forEach(function (b) {
+                b.addEventListener("click", function () {
+                    var n = b.getAttribute("data-n");
+                    var max = poolSize();
+                    qty.value = (n === "all") ? max : Math.min(parseInt(n, 10), max);
+                    qtyVal.textContent = qty.value;
+                    syncPresets();
+                });
+            });
+
+            refreshPool();
+
+            /* ===================== CONSTRUCCIÓN DEL TEST ===================== */
+            function buildQuiz(count) {
+                var pool = BANK.filter(function (q) { return selectedUnits[q.u]; });
+                pool = shuffle(pool).slice(0, count);
+                quiz = pool.map(function (q) {
+                    var traps = shuffle(q.traps).slice(0, 3);
+                    var options = shuffle(traps.concat([q.correct]));
+                    return { u: q.u, q: q.q, explain: q.explain, correct: q.correct, options: options, chosen: null };
+                });
+            }
+
+            /* ===================== PANTALLAS ===================== */
+            function showScreen(which) {
+                byId("startScreen").style.display = (which === "start") ? "block" : "none";
+                byId("quizScreen").style.display = (which === "quiz") ? "block" : "none";
+                byId("resultScreen").style.display = (which === "result") ? "block" : "none";
+                window.scrollTo(0, 0);
+            }
+
+            /* ===================== RENDER PREGUNTA ===================== */
+            function renderQuestion() {
+                var item = quiz[idx];
+                answered = false;
+                byId("counter").textContent = "Pregunta " + (idx + 1) + " de " + quiz.length;
+                byId("scoreNow").textContent = score;
+                byId("answeredNow").textContent = idx;
+                byId("pbarFill").style.width = (idx / quiz.length * 100) + "%";
+                byId("qBadge").textContent = UNIT_NAMES[item.u] || item.u;
+                byId("qText").textContent = item.q;
+
+                var box = byId("options");
+                box.innerHTML = "";
+                item.options.forEach(function (opt, i) {
+                    var btn = document.createElement("button");
+                    btn.className = "opt";
+                    btn.type = "button";
+                    btn.innerHTML = '<span class="key">' + OPT_KEYS[i] + '</span><span class="txt"></span>';
+                    btn.querySelector(".txt").textContent = opt;
+                    btn.addEventListener("click", function () { choose(opt, btn); });
+                    box.appendChild(btn);
+                });
+
+                var fb = byId("feedback");
+                fb.className = "feedback";
+                var nextBtn = byId("nextBtn");
+                nextBtn.disabled = true;
+                nextBtn.textContent = (idx === quiz.length - 1) ? "Ver resultados ▸" : "Siguiente ▸";
+            }
+
+            function choose(opt, btn) {
+                if (answered) return;
+                answered = true;
+                var item = quiz[idx];
+                item.chosen = opt;
+                var buttons = [].slice.call(byId("options").children);
+                var isOk = (opt === item.correct);
+                if (isOk) score++;
+
+                buttons.forEach(function (b) {
+                    b.disabled = true;
+                    var txt = b.querySelector(".txt").textContent;
+                    if (txt === item.correct) b.classList.add("correct");
+                    else if (b === btn) b.classList.add("wrong");
+                    else b.classList.add("dim");
+                });
+
+                var fb = byId("feedback");
+                fb.className = "feedback show " + (isOk ? "ok" : "bad");
+                byId("fbTag").textContent = isOk ? "✔ ¡Correcto!" : "✘ Incorrecto";
+                byId("fbText").textContent = item.explain;
+
+                byId("scoreNow").textContent = score;
+                byId("answeredNow").textContent = idx + 1;
+                byId("pbarFill").style.width = ((idx + 1) / quiz.length * 100) + "%";
+                byId("nextBtn").disabled = false;
+            }
+
+            function nextQuestion() {
+                if (!answered) return;
+                idx++;
+                if (idx >= quiz.length) { showResults(); }
+                else { renderQuestion(); }
+            }
+
+            /* ===================== RESULTADOS ===================== */
+            function showResults() {
+                var total = quiz.length;
+                var pct = total ? Math.round(score / total * 100) : 0;
+                byId("finalScore").textContent = score + " / " + total;
+                byId("finalPct").textContent = pct + "% de aciertos";
+                var msg;
+                if (pct >= 90) msg = "¡Excelente! Dominás el temario.";
+                else if (pct >= 70) msg = "Muy bien. Repasá los puntos que fallaste.";
+                else if (pct >= 50) msg = "Aprobado ajustado. Reforzá los conceptos clave.";
+                else msg = "Necesitás repasar. ¡Seguí practicando!";
+                byId("finalMsg").textContent = msg;
+
+                var list = byId("reviewList");
+                list.innerHTML = "";
+                quiz.forEach(function (item, i) {
+                    var ok = (item.chosen === item.correct);
+                    var div = document.createElement("div");
+                    div.className = "rev " + (ok ? "ok" : "bad");
+                    var html = '<div class="rq">' + (i + 1) + '. ' + escapeHtml(item.q) + '</div>';
+                    if (ok) {
+                        html += '<div class="ra good"><span class="lbl">Tu respuesta (correcta):</span> ' + escapeHtml(item.correct) + '</div>';
+                    } else {
+                        html += '<div class="ra err"><span class="lbl">Tu respuesta:</span> ' + escapeHtml(item.chosen || "(sin responder)") + '</div>';
+                        html += '<div class="ra good"><span class="lbl">Correcta:</span> ' + escapeHtml(item.correct) + '</div>';
+                    }
+                    html += '<div class="rex">' + escapeHtml(item.explain) + '</div>';
+                    div.innerHTML = html;
+                    list.appendChild(div);
+                });
+                showScreen("result");
+            }
+
+            function escapeHtml(s) {
+                return String(s).replace(/[&<>"']/g, function (c) {
+                    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+                });
+            }
+
+            /* ===================== EVENTOS ===================== */
+            byId("startBtn").addEventListener("click", function () {
+                var max = poolSize();
+                if (max < 1) return;
+                var count = Math.max(1, Math.min(parseInt(qty.value, 10) || 1, max));
+                // Sincronizar control y badge con el valor realmente usado
+                qty.value = count;
+                qtyVal.textContent = count;
+                buildQuiz(count);
+                idx = 0; score = 0;
+                showScreen("quiz");
+                renderQuestion();
+            });
+
+            byId("nextBtn").addEventListener("click", nextQuestion);
+
+            byId("quitBtn").addEventListener("click", function () {
+                if (confirm("¿Salir del test? Se perderá el progreso actual.")) showScreen("start");
+            });
+
+            byId("retryBtn").addEventListener("click", function () {
+                buildQuiz(quiz.length);
+                idx = 0; score = 0;
+                showScreen("quiz");
+                renderQuestion();
+            });
+
+            byId("newBtn").addEventListener("click", function () { showScreen("start"); });
+
+            /* Atajos de teclado durante el test */
+            document.addEventListener("keydown", function (e) {
+                if (byId("quizScreen").style.display !== "block") return;
+                if (e.key >= "1" && e.key <= "4") {
+                    var btns = byId("options").children;
+                    var n = parseInt(e.key, 10) - 1;
+                    if (!answered && btns[n]) btns[n].click();
+                } else if (e.key === "Enter") {
+                    if (answered) nextQuestion();
+                }
+            });
+
+        })();
+    </script>
+</body>
+
+</html>
