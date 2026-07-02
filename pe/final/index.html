@@ -1,0 +1,1968 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guía de Estudio · Política Exterior del Paraguay</title>
+    <meta name="description" content="Guía de estudio integral sobre política exterior del Paraguay: fundamentos teóricos, integración regional 1954-2018 y ejes estratégicos 2003-2026." />
+    <style>
+        /* ===== SYSTEM FONTS (100% offline) ===== */
+        :root {
+            --font-body: 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+            --font-heading: 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+            /* Dark mode (default) */
+            --bg: #0b1120;
+            --bg-soft: #0f172a;
+            --surface: #131c2e;
+            --surface-2: #1a2436;
+            --surface-3: #212d42;
+            --border: #243049;
+            --border-soft: #1c2740;
+            --text: #e7ecf5;
+            --text-soft: #aab4c8;
+            --text-dim: #7f8aa3;
+            --primary: #5b8cff;
+            --primary-soft: #2a3c66;
+            --accent: #2dd4bf;
+            --accent-2: #a78bfa;
+            --warn: #fbbf24;
+            --danger: #f87171;
+            --success: #34d399;
+            --shadow: 0 10px 40px -12px rgba(0, 0, 0, 0.6);
+            --radius: 16px;
+            --sidebar-w: 320px;
+        }
+
+        /* ===== LIGHT MODE ===== */
+        html.light {
+            --bg: #f5f7fb;
+            --bg-soft: #ebeef5;
+            --surface: #ffffff;
+            --surface-2: #f0f2f8;
+            --surface-3: #e4e7ef;
+            --border: #d1d5e0;
+            --border-soft: #dde0ea;
+            --text: #1a1e2e;
+            --text-soft: #4a5068;
+            --text-dim: #6b7280;
+            --primary: #3b6de6;
+            --primary-soft: #dce6fb;
+            --accent: #0d9485;
+            --accent-2: #7c5cbf;
+            --warn: #d4990a;
+            --danger: #dc3545;
+            --success: #16a06a;
+            --shadow: 0 10px 40px -12px rgba(0, 0, 0, 0.12);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.75;
+            -webkit-font-smoothing: antialiased;
+            background-image:
+                radial-gradient(900px circle at 12% -8%, rgba(91, 140, 255, 0.08), transparent 45%),
+                radial-gradient(800px circle at 95% 0%, rgba(167, 139, 250, 0.08), transparent 45%);
+            background-attachment: fixed;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        html.light body {
+            background-image:
+                radial-gradient(900px circle at 12% -8%, rgba(91, 140, 255, 0.05), transparent 45%),
+                radial-gradient(800px circle at 95% 0%, rgba(167, 139, 250, 0.04), transparent 45%);
+        }
+
+        ::-webkit-scrollbar { width: 11px; height: 11px; }
+        ::-webkit-scrollbar-track { background: var(--bg-soft); }
+        ::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 10px; border: 2px solid var(--bg-soft); }
+        ::-webkit-scrollbar-thumb:hover { background: #2e3c59; }
+
+        /* ===== Progress bar ===== */
+        #progress-bar {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            z-index: 200; transition: width 0.1s linear;
+            box-shadow: 0 0 12px rgba(91, 140, 255, 0.6);
+        }
+
+        /* ===== Sidebar ===== */
+        .sidebar {
+            position: fixed; top: 0; left: 0; height: 100vh; width: var(--sidebar-w);
+            background: rgba(15, 23, 42, 0.92); backdrop-filter: blur(12px);
+            border-right: 1px solid var(--border); display: flex; flex-direction: column;
+            z-index: 100; transition: transform 0.3s ease, background 0.3s;
+        }
+        html.light .sidebar { background: rgba(255,255,255,0.95); }
+
+        .sidebar-header { padding: 22px 22px 16px; border-bottom: 1px solid var(--border-soft); }
+        .brand { display: flex; align-items: center; gap: 12px; }
+        .brand-mark {
+            width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
+            background: linear-gradient(135deg, var(--primary), var(--accent-2));
+            display: grid; place-items: center; font-weight: 800; font-size: 19px;
+            color: white; box-shadow: 0 6px 18px -4px rgba(91, 140, 255, 0.5);
+            font-family: var(--font-heading);
+        }
+        .brand-text h1 { font-size: 14px; font-weight: 700; letter-spacing: 0.2px; font-family: var(--font-heading); }
+        .brand-text p { font-size: 11.5px; color: var(--text-dim); margin-top: 1px; }
+
+        .search-box { position: relative; margin-top: 16px; }
+        .search-box svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-dim); }
+        #search {
+            width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text);
+            padding: 10px 12px 10px 38px; border-radius: 10px; font-size: 13px;
+            font-family: inherit; outline: none; transition: border-color 0.2s;
+        }
+        #search:focus { border-color: var(--primary); }
+        #search::placeholder { color: var(--text-dim); }
+
+        .nav-scroll { flex: 1; overflow-y: auto; padding: 14px 12px 28px; }
+        .nav-unit { margin-bottom: 6px; }
+        .nav-unit-btn {
+            width: 100%; display: flex; align-items: center; gap: 11px; background: transparent;
+            border: none; color: var(--text-soft); padding: 10px 12px; border-radius: 10px;
+            cursor: pointer; font-size: 13.5px; font-weight: 600; font-family: inherit;
+            text-align: left; transition: background 0.15s, color 0.15s;
+        }
+        .nav-unit-btn:hover { background: var(--surface-2); color: var(--text); }
+        .nav-unit-btn.active { background: var(--primary-soft); color: #cfe0ff; }
+        html.light .nav-unit-btn.active { color: var(--primary); }
+
+        .nav-num {
+            width: 24px; height: 24px; flex-shrink: 0; border-radius: 7px;
+            background: var(--surface-3); display: grid; place-items: center;
+            font-size: 12px; font-weight: 700; color: var(--text); font-family: var(--font-heading);
+        }
+        .nav-unit-btn.active .nav-num { background: var(--primary); color: white; }
+        .nav-unit-btn .chev { margin-left: auto; transition: transform 0.2s; color: var(--text-dim); }
+        .nav-unit-btn.open .chev { transform: rotate(90deg); }
+
+        .nav-sub { overflow: hidden; max-height: 0; transition: max-height 0.3s ease; }
+        .nav-sub.open { max-height: 2000px; }
+        .nav-sub a {
+            display: block; color: var(--text-dim); text-decoration: none; font-size: 12.5px;
+            padding: 7px 12px 7px 47px; border-radius: 8px; transition: color 0.15s, background 0.15s;
+            position: relative;
+        }
+        .nav-sub a:hover { color: var(--text); background: var(--surface); }
+        .nav-sub a.active { color: var(--primary); font-weight: 600; }
+        .nav-sub a.active::before {
+            content: ''; position: absolute; left: 30px; top: 50%; transform: translateY(-50%);
+            width: 5px; height: 5px; border-radius: 50%; background: var(--primary);
+        }
+
+        .sidebar-footer {
+            padding: 14px 18px; border-top: 1px solid var(--border-soft);
+            font-size: 11px; color: var(--text-dim); display: flex; align-items: center; gap: 8px;
+        }
+        .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); box-shadow: 0 0 8px var(--success); }
+
+        /* ===== Main ===== */
+        .main { margin-left: var(--sidebar-w); min-height: 100vh; }
+        .topbar {
+            position: sticky; top: 0; z-index: 50;
+            background: rgba(11, 17, 32, 0.82); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-soft); padding: 13px 40px;
+            display: flex; align-items: center; gap: 16px;
+        }
+        html.light .topbar { background: rgba(245, 247, 251, 0.88); }
+
+        .menu-toggle {
+            display: none; background: var(--surface-2); border: 1px solid var(--border);
+            color: var(--text); width: 38px; height: 38px; border-radius: 10px;
+            cursor: pointer; place-items: center;
+        }
+        .crumb { font-size: 13px; color: var(--text-dim); flex: 1; }
+        .crumb b { color: var(--text-soft); font-weight: 600; }
+        .topbar-meta { display: flex; align-items: center; gap: 18px; font-size: 12.5px; color: var(--text-dim); }
+        .topbar-meta .pct { color: var(--accent); font-weight: 700; font-family: var(--font-heading); }
+
+        .theme-toggle {
+            background: var(--surface-2); border: 1px solid var(--border); color: var(--text);
+            width: 38px; height: 38px; border-radius: 10px; cursor: pointer;
+            display: grid; place-items: center; transition: border-color 0.2s;
+        }
+        .theme-toggle:hover { border-color: var(--primary); }
+
+        .content { max-width: 880px; margin: 0 auto; padding: 0 40px 120px; }
+
+        /* ===== Hero ===== */
+        .hero { padding: 64px 0 40px; text-align: center; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px;
+            background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px;
+            font-size: 12px; color: var(--accent); font-weight: 600; margin-bottom: 22px;
+        }
+        .hero h1 {
+            font-family: var(--font-heading); font-size: 38px; line-height: 1.18;
+            font-weight: 800; letter-spacing: -0.5px; margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--text) 25%, var(--primary) 75%);
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero p { font-size: 16px; color: var(--text-soft); max-width: 640px; margin: 0 auto 30px; }
+        .hero-stats { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+        .stat {
+            background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+            padding: 16px 24px; min-width: 120px;
+        }
+        .stat b { display: block; font-size: 26px; font-family: var(--font-heading); font-weight: 800; color: var(--text); }
+        .stat span { font-size: 12px; color: var(--text-dim); }
+
+        /* ===== Module cards grid ===== */
+        .modules-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 14px; }
+        .mod-card {
+            background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 22px; cursor: pointer; text-decoration: none; color: inherit;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+            position: relative; overflow: hidden;
+        }
+        .mod-card::before {
+            content: ''; position: absolute; inset: 0 auto 0 0; width: 4px;
+            background: var(--accent-c, var(--primary)); opacity: 0.9;
+        }
+        .mod-card:hover { transform: translateY(-4px); border-color: var(--accent-c, var(--primary)); box-shadow: var(--shadow); }
+        .mod-card .mc-num { font-family: var(--font-heading); font-size: 13px; font-weight: 700; color: var(--accent-c, var(--primary)); letter-spacing: 1px; text-transform: uppercase; }
+        .mod-card h3 { font-family: var(--font-heading); font-size: 17px; margin: 8px 0 8px; font-weight: 700; line-height: 1.3; }
+        .mod-card p { font-size: 13px; color: var(--text-soft); margin-bottom: 14px; }
+        .mod-card .mc-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .mc-tag { font-size: 11px; padding: 3px 9px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 6px; color: var(--text-dim); }
+
+        /* ===== Sections ===== */
+        .unit { padding-top: 40px; }
+        .unit-head {
+            display: flex; align-items: flex-start; gap: 18px; padding: 26px;
+            background: linear-gradient(135deg, var(--surface), var(--surface-2));
+            border: 1px solid var(--border); border-radius: var(--radius);
+            margin-bottom: 14px; position: relative; overflow: hidden;
+        }
+        .unit-head::after {
+            content: ''; position: absolute; top: -40%; right: -10%;
+            width: 280px; height: 280px;
+            background: radial-gradient(circle, var(--accent-c, var(--primary)), transparent 70%);
+            opacity: 0.12; border-radius: 50%;
+        }
+        .unit-badge {
+            width: 56px; height: 56px; flex-shrink: 0; border-radius: 14px;
+            background: linear-gradient(135deg, var(--accent-c, var(--primary)), var(--accent-2));
+            display: grid; place-items: center; font-family: var(--font-heading);
+            font-size: 24px; font-weight: 800; color: white;
+            box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.5);
+        }
+        .unit-head .uh-label { font-size: 12px; font-weight: 700; color: var(--accent-c, var(--primary)); letter-spacing: 1.5px; text-transform: uppercase; }
+        .unit-head h2 { font-family: var(--font-heading); font-size: 25px; font-weight: 800; margin: 4px 0 8px; line-height: 1.25; letter-spacing: -0.3px; }
+        .unit-head p { font-size: 14px; color: var(--text-soft); max-width: 560px; }
+
+        section.block { scroll-margin-top: 80px; padding-top: 34px; }
+        section.block>h3 {
+            font-family: var(--font-heading); font-size: 20px; font-weight: 700;
+            margin-bottom: 6px; display: flex; align-items: center; gap: 11px; letter-spacing: -0.2px;
+        }
+        section.block>h3 .hicon {
+            width: 30px; height: 30px; flex-shrink: 0; border-radius: 9px;
+            background: var(--surface-2); border: 1px solid var(--border);
+            display: grid; place-items: center; color: var(--accent-c, var(--primary));
+        }
+        .block-lead { color: var(--text-soft); font-size: 14.5px; margin: 10px 0 4px; }
+        p.body { color: var(--text-soft); font-size: 14.5px; margin: 12px 0; line-height: 1.8; }
+        .body strong, .lead strong { color: var(--text); font-weight: 600; }
+
+        h4.sub-title {
+            font-family: var(--font-heading); font-size: 17px; font-weight: 700;
+            margin: 28px 0 8px; color: var(--text); padding-bottom: 6px;
+            border-bottom: 1px solid var(--border-soft);
+        }
+        h5.sub-sub { font-size: 15px; font-weight: 700; margin: 20px 0 6px; color: var(--text); }
+
+        /* Cards / callouts */
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px; margin: 16px 0; }
+        .callout {
+            display: flex; gap: 14px; padding: 16px 18px; border-radius: 12px;
+            margin: 18px 0; border: 1px solid var(--border); background: var(--surface);
+            border-left: 4px solid var(--c, var(--primary));
+        }
+        .callout .ci { flex-shrink: 0; color: var(--c, var(--primary)); margin-top: 1px; font-size: 20px; }
+        .callout .ct { font-size: 13.5px; color: var(--text-soft); }
+        .callout .ct b { color: var(--text); display: block; margin-bottom: 2px; font-size: 13.5px; }
+        .callout.info { --c: var(--primary); }
+        .callout.key { --c: var(--accent); }
+        .callout.warn { --c: var(--warn); }
+        .callout.law { --c: var(--accent-2); }
+        .callout.danger { --c: var(--danger); }
+        .callout.note { --c: var(--text-dim); }
+
+        /* Feature list */
+        .flist { list-style: none; display: grid; gap: 10px; margin: 16px 0; }
+        .flist li {
+            display: flex; gap: 13px; align-items: flex-start; background: var(--surface);
+            border: 1px solid var(--border-soft); border-radius: 11px; padding: 13px 16px;
+            font-size: 14px; color: var(--text-soft); transition: border-color 0.2s, transform 0.2s;
+        }
+        .flist li:hover { border-color: var(--border); transform: translateX(3px); }
+        .flist li .li-ic {
+            width: 22px; height: 22px; flex-shrink: 0; border-radius: 6px; margin-top: 1px;
+            background: var(--primary-soft); color: var(--primary);
+            display: grid; place-items: center; font-size: 12px; font-weight: 700;
+        }
+        .flist li b { color: var(--text); }
+
+        /* Pills */
+        .pills { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; }
+        .pill {
+            padding: 9px 16px; background: var(--surface-2); border: 1px solid var(--border);
+            border-radius: 999px; font-size: 13px; color: var(--text); font-weight: 500;
+            display: inline-flex; align-items: center; gap: 8px;
+        }
+        .pill .pd { width: 7px; height: 7px; border-radius: 50%; background: var(--accent-c, var(--primary)); }
+
+        /* Compare columns */
+        .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0; }
+        .compare .col { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+        .compare .col-head { padding: 12px 16px; font-weight: 700; font-size: 13.5px; font-family: var(--font-heading); display: flex; align-items: center; gap: 9px; }
+        .compare .old .col-head { background: rgba(248, 113, 113, 0.12); color: #fca5a5; border-bottom: 1px solid var(--border); }
+        .compare .new .col-head { background: rgba(52, 211, 153, 0.12); color: #6ee7b7; border-bottom: 1px solid var(--border); }
+        html.light .compare .old .col-head { color: var(--danger); }
+        html.light .compare .new .col-head { color: var(--success); }
+        .compare ul { list-style: none; padding: 6px; }
+        .compare li { font-size: 13px; color: var(--text-soft); padding: 9px 12px; border-radius: 8px; display: flex; gap: 9px; }
+        .compare li+li { border-top: 1px solid var(--border-soft); }
+        .compare .ic { flex-shrink: 0; margin-top: 2px; }
+
+        /* Grid layouts */
+        .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 18px 0; }
+        .grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin: 18px 0; }
+        .icard {
+            background: var(--surface); border: 1px solid var(--border); border-radius: 13px;
+            padding: 18px; transition: transform 0.2s, border-color 0.2s;
+        }
+        .icard:hover { transform: translateY(-3px); border-color: var(--accent-c, var(--primary)); }
+        .icard .ic-top {
+            width: 38px; height: 38px; border-radius: 10px; background: var(--surface-2);
+            border: 1px solid var(--border); display: grid; place-items: center;
+            color: var(--accent-c, var(--primary)); margin-bottom: 12px; font-size: 18px;
+        }
+        .icard h4 { font-size: 14.5px; font-family: var(--font-heading); font-weight: 700; margin-bottom: 5px; }
+        .icard p { font-size: 12.5px; color: var(--text-dim); line-height: 1.55; }
+
+        /* Steps */
+        .steps { display: grid; gap: 12px; margin: 18px 0; counter-reset: step; }
+        .step {
+            display: flex; gap: 16px; background: var(--surface); border: 1px solid var(--border);
+            border-radius: 13px; padding: 16px 18px;
+        }
+        .step .sn {
+            width: 34px; height: 34px; flex-shrink: 0; border-radius: 10px;
+            font-family: var(--font-heading);
+            background: linear-gradient(135deg, var(--accent-c, var(--primary)), var(--accent-2));
+            color: white; display: grid; place-items: center; font-weight: 800; font-size: 15px;
+        }
+        .step h4 { font-size: 14.5px; font-weight: 700; margin-bottom: 3px; font-family: var(--font-heading); }
+        .step p { font-size: 13px; color: var(--text-soft); }
+
+        /* Table */
+        .tbl-wrap { overflow-x: auto; margin: 18px 0; border: 1px solid var(--border); border-radius: 13px; }
+        table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+        thead th {
+            background: var(--surface-2); text-align: left; padding: 13px 18px;
+            font-family: var(--font-heading); font-weight: 700; font-size: 12.5px;
+            color: var(--text); border-bottom: 1px solid var(--border);
+        }
+        tbody td { padding: 13px 18px; color: var(--text-soft); border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:hover td { background: var(--surface); }
+        tbody td:first-child { color: var(--text); font-weight: 600; }
+
+        /* Key term */
+        .kterm { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 16px 0; }
+        .kterm b { color: var(--accent); font-family: var(--font-heading); }
+
+        /* Questions box */
+        .exam-box {
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.08), rgba(91, 140, 255, 0.06));
+            border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; margin: 24px 0;
+        }
+        .exam-box h4 { font-family: var(--font-heading); font-weight: 700; font-size: 16px; margin-bottom: 14px; color: var(--accent-2); }
+        .exam-box ol { padding-left: 20px; }
+        .exam-box li { font-size: 14px; color: var(--text-soft); margin-bottom: 8px; line-height: 1.6; }
+
+        /* Summary schema */
+        .schema-box {
+            background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 22px; margin: 24px 0;
+        }
+        .schema-box h4 { font-family: var(--font-heading); font-weight: 700; font-size: 16px; margin-bottom: 14px; color: var(--accent); }
+        .schema-box ul { padding-left: 18px; list-style: none; }
+        .schema-box li { font-size: 13.5px; color: var(--text-soft); margin-bottom: 4px; padding: 2px 0; }
+        .schema-box li::before { content: '›'; color: var(--primary); font-weight: 700; margin-right: 8px; }
+        .schema-box ul ul { margin-top: 4px; margin-left: 16px; }
+        .schema-box ul ul li::before { content: '–'; color: var(--accent); }
+
+        /* Back to top */
+        #toTop {
+            position: fixed; bottom: 28px; right: 28px; width: 46px; height: 46px;
+            border-radius: 13px; background: var(--surface-2); border: 1px solid var(--border);
+            color: var(--text); cursor: pointer; display: grid; place-items: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.2s;
+            z-index: 80; box-shadow: var(--shadow);
+        }
+        #toTop.show { opacity: 1; pointer-events: auto; }
+        #toTop:hover { transform: translateY(-3px); border-color: var(--primary); color: var(--primary); }
+
+        .section-divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 50px 0 0; }
+
+        mark { background: rgba(251, 191, 36, 0.35); color: inherit; border-radius: 3px; padding: 0 2px; }
+        .overlay { display: none; }
+
+        /* Footer */
+        .pg-footer { text-align: center; padding: 40px 0 0; color: var(--text-dim); font-size: 12.5px; border-top: 1px solid var(--border-soft); margin-top: 50px; }
+        .pg-footer b { color: var(--text-soft); }
+
+        /* Back-link */
+        .back-link {
+            display: inline-flex; align-items: center; gap: 6px; color: var(--primary);
+            font-size: 13px; font-weight: 600; text-decoration: none; margin-top: 24px;
+            padding: 8px 14px; border-radius: 8px; background: var(--primary-soft);
+            transition: background 0.2s;
+        }
+        .back-link:hover { background: var(--surface-3); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            :root { --sidebar-w: 290px; }
+            .content { padding: 0 28px 100px; }
+            .topbar { padding: 13px 28px; }
+        }
+        @media (max-width: 860px) {
+            .sidebar { transform: translateX(-100%); box-shadow: var(--shadow); }
+            .sidebar.open { transform: translateX(0); }
+            .main { margin-left: 0; }
+            .menu-toggle { display: grid; }
+            .overlay.show { display: block; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 90; backdrop-filter: blur(2px); }
+            .modules-grid, .compare, .grid3, .grid2 { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 28px; }
+            .content { padding: 0 18px 90px; }
+            .topbar { padding: 11px 18px; }
+            .topbar-meta .lbl { display: none; }
+        }
+
+        /* ===== PRINT A4 ===== */
+        @media print {
+            @page { size: A4; margin: 2cm 2cm 2.5cm 2cm; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            html, body {
+                background: white !important; color: #1a1e2e !important;
+                font-size: 11pt !important; line-height: 1.6 !important;
+            }
+            .sidebar, .overlay, #progress-bar, #toTop, .topbar, .hero-badge, .hero-stats,
+            .modules-grid, .back-link, .theme-toggle, .menu-toggle, #search { display: none !important; }
+            .main { margin-left: 0 !important; }
+            .content { max-width: 100% !important; padding: 0 !important; }
+            .hero { padding: 0 0 20px !important; text-align: left !important; }
+            .hero h1 {
+                font-size: 24pt !important; background: none !important;
+                -webkit-text-fill-color: #1a1e2e !important; color: #1a1e2e !important;
+            }
+            .hero p { font-size: 11pt !important; color: #4a5068 !important; max-width: 100% !important; margin: 8px 0 16px !important; }
+            .unit { page-break-before: always; padding-top: 0 !important; }
+            .unit:first-of-type { page-break-before: avoid; }
+            .unit-head {
+                background: #f0f2f8 !important; border: 1px solid #ccc !important;
+                page-break-after: avoid; margin-bottom: 12px !important;
+            }
+            .unit-head::after { display: none; }
+            .unit-badge { background: #3b6de6 !important; }
+            section.block { page-break-inside: avoid; padding-top: 18px !important; }
+            .callout, .kterm, .card, .exam-box, .schema-box { page-break-inside: avoid; border: 1px solid #ccc !important; background: #f8f9fb !important; }
+            .callout { border-left: 4px solid #3b6de6 !important; }
+            .callout.key { border-left-color: #0d9485 !important; }
+            .callout.warn { border-left-color: #d4990a !important; }
+            .callout.danger { border-left-color: #dc3545 !important; }
+            .callout.law { border-left-color: #7c5cbf !important; }
+            table { page-break-inside: avoid; font-size: 10pt !important; }
+            thead th { background: #e8eaf0 !important; color: #1a1e2e !important; }
+            tbody td { color: #333 !important; }
+            .tbl-wrap { border: 1px solid #ccc !important; }
+            .section-divider { background: #ccc !important; }
+            p.body, .ct, .flist li, .icard p, .step p, .exam-box li { color: #333 !important; }
+            .text, h2, h3, h4, h5, b, strong { color: #1a1e2e !important; }
+            a { color: #3b6de6 !important; text-decoration: none !important; }
+            .icard, .flist li, .step, .pill { border: 1px solid #ccc !important; background: #f8f9fb !important; }
+            .compare .col { border: 1px solid #ccc !important; }
+            .pg-footer { border-top: 1px solid #ccc !important; }
+        }
+    </style>
+</head>
+<body>
+    <div id="progress-bar"></div>
+
+    <!-- ===================== SIDEBAR ===================== -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="brand">
+                <div class="brand-mark">PE</div>
+                <div class="brand-text">
+                    <h1>Política Exterior</h1>
+                    <p>Paraguay · Guía de Estudio</p>
+                </div>
+            </div>
+            <div class="search-box">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <input type="text" id="search" placeholder="Buscar en la guía…" autocomplete="off" />
+            </div>
+        </div>
+        <nav class="nav-scroll" id="nav"></nav>
+        <div class="sidebar-footer">
+            <span class="dot"></span> Guía de estudio interactiva · 100% offline
+        </div>
+    </aside>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- ===================== MAIN ===================== -->
+    <div class="main">
+        <header class="topbar">
+            <button class="menu-toggle" id="menuToggle" aria-label="Menú">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+            </button>
+            <div class="crumb" id="crumb"><b>Inicio</b></div>
+            <div class="topbar-meta">
+                <span><span class="lbl">Progreso </span><span class="pct" id="pctText">0%</span></span>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema" title="Modo Claro / Oscuro">
+                <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+        </header>
+
+        <main class="content">
+            <!-- ===== HERO ===== -->
+            <section class="hero" id="inicio">
+                <span class="hero-badge">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></svg>
+                    Guía integral de estudio · Examen final
+                </span>
+                <h1>Política Exterior<br>de la República del Paraguay</h1>
+                <p>Material integrado de estudio organizado en 3 temas: fundamentos teóricos, integración regional (1954-2018) y ejes estratégicos de la política exterior paraguaya (2003-2026). Todo el contenido en un único documento.</p>
+                <div class="hero-stats">
+                    <div class="stat"><b>3</b><span>Temas</span></div>
+                    <div class="stat"><b>30+</b><span>Secciones</span></div>
+                    <div class="stat"><b>13</b><span>Ejes estratégicos</span></div>
+                </div>
+            </section>
+
+            <!-- DASHBOARD CARDS -->
+            <section style="padding-top:10px;">
+                <div class="modules-grid">
+                    <a class="mod-card" href="#u1" style="--accent-c:#5b8cff;">
+                        <span class="mc-num">Tema 01</span>
+                        <h3>Fundamentos Teóricos de la Política Exterior</h3>
+                        <p>Concepto, componentes, factores y actores. La política exterior como política pública.</p>
+                        <div class="mc-tags"><span class="mc-tag">Concepto</span><span class="mc-tag">Interés Nacional</span><span class="mc-tag">Actores</span></div>
+                    </a>
+                    <a class="mod-card" href="#u2" style="--accent-c:#2dd4bf;">
+                        <span class="mc-num">Tema 02</span>
+                        <h3>Integración Regional del Paraguay (1954-2018)</h3>
+                        <p>Del aislamiento al Mercosur: planes de desarrollo, relaciones pendulares y modelos de integración.</p>
+                        <div class="mc-tags"><span class="mc-tag">Historia</span><span class="mc-tag">Mercosur</span><span class="mc-tag">Planes</span></div>
+                    </a>
+                    <a class="mod-card" href="#u3" style="--accent-c:#a78bfa;" class="mod-card-wide">
+                        <span class="mc-num">Tema 03</span>
+                        <h3>Ejes Estratégicos de la Política Exterior (2003-2026)</h3>
+                        <p>Los 13 ejes que articulan la política exterior contemporánea: soberanía, DDHH, energía, comercio, cooperación y más.</p>
+                        <div class="mc-tags"><span class="mc-tag">13 Ejes</span><span class="mc-tag">Soberanía</span><span class="mc-tag">Energía</span><span class="mc-tag">Comercio</span></div>
+                    </a>
+                </div>
+            </section>
+
+            <!-- ============================================================= -->
+            <!-- TEMA 1: FUNDAMENTOS TEÓRICOS -->
+            <!-- ============================================================= -->
+            <div class="unit" id="u1" style="--accent-c:#5b8cff;">
+                <div class="unit-head">
+                    <div class="unit-badge">1</div>
+                    <div>
+                        <div class="uh-label">Tema 01</div>
+                        <h2>Fundamentos Teóricos de la Política Exterior</h2>
+                        <p>Marco conceptual completo para comprender qué es la política exterior, quién la formula, cómo se ejecuta y qué factores la determinan. Base teórica indispensable para el análisis de cualquier caso nacional.</p>
+                    </div>
+                </div>
+
+                <!-- 1.1 Concepto -->
+                <section class="block" id="u1-concepto">
+                    <h3><span class="hicon">📖</span>¿Qué es la Política Exterior?</h3>
+                    <p class="body">Definir el concepto de política exterior constituye una tarea compleja, dado que existen diversas interpretaciones sobre el término, sus objetivos, su contenido y sus funciones. Las distintas escuelas de pensamiento de las Relaciones Internacionales ofrecen perspectivas diferentes: los <strong>realistas</strong> la relacionan con asuntos de seguridad nacional; los enfoques <strong>liberales</strong> la consideran un mecanismo para impulsar el desarrollo; los <strong>marxistas</strong> la vinculan con el modelo de desarrollo económico; y los <strong>constructivistas</strong> la ubican como una expresión de la identidad nacional y los valores socioculturales.</p>
+
+                    <div class="kterm"><b>Definición básica:</b> La política exterior es el <strong>conjunto de acciones que lleva a cabo un Estado más allá de sus fronteras con base en el interés nacional</strong>. Esta definición cubre cuatro elementos esenciales: ¿qué la compone? (conjunto de acciones), ¿quién la realiza? (el Estado), ¿dónde tiene lugar? (en el sistema internacional), ¿para qué? (consecución del interés nacional).</div>
+
+                    <p class="body">Una conceptualización más elaborada reconoce que la política exterior es un <strong>proceso muy complejo</strong> que involucra una serie amplia de elementos y condicionantes que se encuentran tanto al interior como al exterior de los Estados. Desde esta perspectiva, las decisiones y acciones hacia el exterior están determinadas por el interés nacional, la capacidad de negociación internacional (poder relativo), el proyecto de nación, el equilibrio de poder global, la identidad nacional, las preferencias de diferentes actores relevantes, la presión ejercida por los grupos de interés, el funcionamiento del sistema político y el modelo de desarrollo económico, entre otros factores.</p>
+
+                    <div class="callout key">
+                        <div class="ci">✔</div>
+                        <div class="ct"><b>Definición integral</b>La política exterior es un conjunto de acciones y decisiones que lleva a cabo un Estado en el sistema internacional, basadas en el interés nacional. Estas acciones están determinadas por condicionantes internos y externos en un momento específico; por la capacidad de negociación internacional que tenga el Estado; por el proyecto de nación definido por el grupo en el poder; por la identidad nacional; y por los valores y normas de conducta previamente establecidas. Incluye objetivos, estrategias e instrumentos que establecen los distintos actores gubernamentales y no gubernamentales vinculados al proceso de toma de decisiones.</div>
+                    </div>
+
+                    <p class="body">En el proceso de toma de decisiones, los responsables deben: (1) identificar alternativas viables de acción, (2) analizar cada opción estableciendo ventajas y desventajas, costos y beneficios, y (3) elegir la acción más adecuada para llevarla a la práctica. Todo esto implica establecer <strong>objetivos concretos</strong>, identificar <strong>estrategias</strong>, seleccionar <strong>instrumentos</strong> y responder a las necesidades más apremiantes, tomando en cuenta los valores que se buscan proyectar externamente.</p>
+                </section>
+
+                <!-- 1.2 Componentes -->
+                <section class="block" id="u1-componentes">
+                    <h3><span class="hicon">🏛️</span>Componentes de la Política Exterior</h3>
+
+                    <h4 class="sub-title">El Estado</h4>
+                    <p class="body">El Estado es el <strong>único actor que puede ejercer una política exterior</strong>. Desde la perspectiva del Derecho Internacional, es el único que puede adquirir responsabilidades y compromisos de política exterior. Otros actores —organizaciones internacionales, empresas transnacionales, medios de comunicación, iglesias, organizaciones de la sociedad civil— participan en las relaciones internacionales pero jurídicamente no hacen política exterior.</p>
+
+                    <div class="callout warn">
+                        <div class="ci">⚠</div>
+                        <div class="ct"><b>Distinción fundamental</b>Al interior de los Estados, solamente los <strong>gobiernos federales o centrales</strong> pueden participar en la formulación y ejecución de la política exterior. La actividad de actores locales (estados, provincias, municipios) en el plano internacional se denomina <strong>paradiplomacia</strong> o diplomacia local, pero no constituye política exterior.</div>
+                    </div>
+
+                    <p class="body">El Estado es una entidad de carácter jurídico-administrativo compuesta por tres elementos básicos: <strong>territorio, población y gobierno</strong>. Algunos especialistas agregan el reconocimiento de la comunidad internacional como cuarto elemento, aunque existen casos especiales como Palestina (reconocimiento parcial), los kurdos (nación sin territorio propio) o El Vaticano (carácter sui generis).</p>
+                    <p class="body">Si bien el proceso de globalización plantea desafíos al concepto tradicional de Estado, éste sigue siendo el actor principal del sistema internacional. Dos de sus funciones primordiales permanecen inalteradas: <strong>proveer seguridad</strong> a la población y <strong>generar prosperidad</strong> para sus habitantes. Para ambos propósitos, la política exterior constituye un instrumento clave.</p>
+
+                    <h4 class="sub-title">El Interés Nacional</h4>
+                    <p class="body">El interés nacional es un concepto altamente complejo y controvertido debido a la carga ideológica que contiene. Las distintas corrientes teóricas lo interpretan de manera diferente:</p>
+
+                    <div class="grid2">
+                        <div class="icard">
+                            <div class="ic-top">🔴</div>
+                            <h4>Realistas</h4>
+                            <p>El interés nacional está en función de la supervivencia del Estado. Su seguridad nacional es la prioridad. El objetivo básico es conseguir, conservar y aumentar el poder.</p>
+                        </div>
+                        <div class="icard">
+                            <div class="ic-top">🔵</div>
+                            <h4>Liberales / Idealistas</h4>
+                            <p>El interés debe ser la promoción del crecimiento económico y mejoramiento social. La política exterior es un instrumento para el desarrollo.</p>
+                        </div>
+                        <div class="icard">
+                            <div class="ic-top">🟡</div>
+                            <h4>Marxistas</h4>
+                            <p>No puede existir un interés nacional único porque la lucha de clases impide consensos. El interés responde a las élites dominantes.</p>
+                        </div>
+                        <div class="icard">
+                            <div class="ic-top">🟢</div>
+                            <h4>Constructivistas</h4>
+                            <p>La identidad nacional es la que construye el interés nacional. Los Estados actúan según cómo se identifican a sí mismos frente a los otros.</p>
+                        </div>
+                    </div>
+
+                    <p class="body">A pesar de las diferentes interpretaciones, existe consenso en que <strong>el interés nacional es el motor de la política exterior</strong>. Todos los Estados, en todo momento, entienden su interés nacional como la garantía de tres objetivos centrales con un orden de prelación jerárquico:</p>
+
+                    <div class="steps">
+                        <div class="step">
+                            <div class="sn">1</div>
+                            <div><h4>Sobrevivencia del Estado</h4><p>Seguridad y estabilidad. Es el objetivo primario sin el cual no se puede avanzar a los siguientes.</p></div>
+                        </div>
+                        <div class="step">
+                            <div class="sn">2</div>
+                            <div><h4>Bienestar</h4><p>Crecimiento y desarrollo económicos. Solo puede alcanzarse si se ha garantizado la seguridad.</p></div>
+                        </div>
+                        <div class="step">
+                            <div class="sn">3</div>
+                            <div><h4>Promoción de valores</h4><p>Proyección de principios y valores nacionales. Requiere haber alcanzado los dos objetivos anteriores.</p></div>
+                        </div>
+                    </div>
+
+                    <div class="callout danger">
+                        <div class="ci">❗</div>
+                        <div class="ct"><b>Error frecuente: Confundir política de Estado con política de gobierno</b>La <strong>política exterior de Estado</strong> responde al interés supremo de la nación, mientras que la <strong>política exterior de gobierno</strong> busca satisfacer los intereses de los grupos privilegiados en el poder. Cuando el grupo gobernante define el interés nacional sin controles, la política exterior puede basarse en intereses de élite y no de la nación.</div>
+                    </div>
+
+                    <p class="body">El interés nacional puede identificarse de dos maneras: (1) por la interpretación que hace el grupo en el poder, con el riesgo de que se convierta en interés de grupo; o (2) a partir de las condiciones internas y externas en un momento determinado, es decir, en función de las necesidades políticas, económicas y sociales del país, la estructura de poder del sistema internacional y los objetivos que tienen otros actores.</p>
+
+                    <div class="kterm"><b>Definición operativa:</b> El interés nacional representa las <strong>necesidades de un Estado para procurar su seguridad, bienestar y valores en la arena internacional</strong>.</div>
+
+                    <h4 class="sub-title">El Proyecto de Nación</h4>
+                    <p class="body">El proyecto de nación da contenido al interés nacional. Se define como el <strong>conjunto de aspiraciones que tiene una comunidad nacional proyectadas hacia el futuro de manera colectiva</strong>. Es la forma o estrategia que una comunidad define sobre cómo alcanzar los objetivos del interés nacional. La historia —un pasado compartido— constituye su fuente principal, imprimiendo valores culturales que luego se convierten en la base doctrinal de la conducta exterior.</p>
+
+                    <div class="callout info">
+                        <div class="ci">💡</div>
+                        <div class="ct"><b>Ejemplo histórico: Dos proyectos de nación en México (siglo XIX)</b>Los liberales (sistema republicano, democrático y federal, con igualdad ante la ley) y los conservadores (sistema monárquico, censatario y centralizado, con fueros para iglesia y ejército) buscaban el mismo interés nacional pero con estrategias opuestas. Con la derrota de Maximiliano en 1867, se impuso el proyecto liberal. Esto demuestra cómo un mismo interés nacional puede traducirse en proyectos de nación radicalmente diferentes.</div>
+                    </div>
+
+                    <p class="body">Un proyecto de nación tiene <strong>tres vertientes fundamentales</strong>:</p>
+                    <ul class="flist">
+                        <li><span class="li-ic">1</span><div><b>Sistema político:</b> El tipo de régimen (democracia vs. dictadura) influye decisivamente en las decisiones de política exterior. Una democracia tendrá actitudes distintas frente al ambiente internacional.</div></li>
+                        <li><span class="li-ic">2</span><div><b>Modelo de desarrollo económico:</b> Las estrategias económicas están íntimamente ligadas al tipo de política exterior. Un cambio sustantivo en el modelo de desarrollo usualmente implica una renovación en las acciones externas.</div></li>
+                        <li><span class="li-ic">3</span><div><b>Sistema educativo:</b> Lo que se enseña en las escuelas construye la identidad nacional, fomenta la cultura y genera valores con impacto directo en el diseño de la política exterior.</div></li>
+                    </ul>
+
+                    <div class="callout law">
+                        <div class="ci">📌</div>
+                        <div class="ct"><b>Principios vs. Pragmatismo</b>Existe un debate sobre si la política exterior debe basarse en principios permanentes o ser pragmática ante circunstancias coyunturales. La mejor política exterior combina <strong>equilibradamente principios e intereses</strong>: consecución del interés nacional bajo la guía de los principios y valores. Asimismo, debe contener un proyecto específico pero ser lo suficientemente flexible ante acontecimientos imprevistos. Una política sin proyecto no es una política pública.</div>
+                    </div>
+                </section>
+
+                <!-- 1.3 Capacidad de negociación -->
+                <section class="block" id="u1-capacidad">
+                    <h3><span class="hicon">⚖️</span>Capacidad de Negociación Internacional</h3>
+                    <p class="body">La capacidad de negociación internacional que tiene un Estado está ligada al <strong>poder</strong> que posee para alcanzar sus objetivos. Puede entenderse como la posibilidad de alcanzar el interés nacional con base en circunstancias internas y externas. Es <strong>variable y relativa</strong>, porque cambia de acuerdo con el poder relativo del país frente a los demás Estados.</p>
+
+                    <p class="body">Un paso fundamental en el proceso de toma de decisiones es la evaluación de esta capacidad. Uno de los objetivos permanentes de los Estados es <strong>maximizarla</strong>. Los elementos que la determinan pueden clasificarse en:</p>
+
+                    <div class="tbl-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Factores internos (Endógenos)</th><th>Factores externos (Exógenos)</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td colspan="2" style="color:var(--primary);font-weight:700;text-align:center;">Tangibles</td></tr>
+                                <tr><td>Poder militar</td><td>Eventos internacionales</td></tr>
+                                <tr><td>Desarrollo económico</td><td>Equilibrio del poder global</td></tr>
+                                <tr><td>Tamaño y posición geográfica</td><td>Grado de interdependencia y polarización</td></tr>
+                                <tr><td>Población</td><td>Existencia y funcionamiento de organizaciones internacionales</td></tr>
+                                <tr><td>Bases tecnológico-materiales</td><td>Opinión pública internacional</td></tr>
+                                <tr><td>Recursos naturales</td><td>Presión de otros Estados</td></tr>
+                                <tr><td colspan="2" style="color:var(--accent-2);font-weight:700;text-align:center;">Intangibles</td></tr>
+                                <tr><td>Moral nacional</td><td rowspan="4">Intereses de actores transnacionales</td></tr>
+                                <tr><td>Prestigio internacional</td></tr>
+                                <tr><td>Cohesión social</td></tr>
+                                <tr><td>Estabilidad política interna</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="kterm"><b>Poder duro, blando e inteligente (Joseph Nye):</b> El <strong>poder duro</strong> se sustenta en el poderío militar, tecnológico y económico. El <strong>poder blando</strong> se basa en elementos ideológicos, culturales, sociales, de imagen y prestigio, que otorgan influencia sin recurrir a la fuerza. El <strong>poder inteligente</strong> es la combinación efectiva de ambos, resultando más efectivo para lograr los objetivos propuestos.</div>
+                </section>
+
+                <!-- 1.4 Objetivos, estrategias, instrumentos -->
+                <section class="block" id="u1-objetivos">
+                    <h3><span class="hicon">🎯</span>Objetivos, Estrategias, Instrumentos y Acciones</h3>
+
+                    <h4 class="sub-title">Objetivos</h4>
+                    <p class="body">Los objetivos de política exterior son aquellos propósitos que un gobierno establece más allá de sus fronteras para satisfacer las necesidades de la población. De manera general, buscan <strong>modificar una situación previamente establecida o mantenerla</strong>. Deben ser formulaciones concretas derivadas del interés nacional y de la situación global prevaleciente, claros, dirigidos a la solución de un problema, y <strong>realistas</strong>.</p>
+
+                    <div class="callout info">
+                        <div class="ci">💡</div>
+                        <div class="ct"><b>Ejemplo</b>Si un país mantiene una relación de dependencia económica con otro, un objetivo sería diversificar las relaciones económicas para reducir esa dependencia. Al contrario, un país puede buscar evitar cambios, como Estados Unidos conteniendo el comunismo al final de la Segunda Guerra Mundial.</div>
+                    </div>
+
+                    <h4 class="sub-title">Estrategias</h4>
+                    <p class="body">Las estrategias son actividades específicas que ayudan a alcanzar los objetivos. Son más concretas que los objetivos, pero muchas veces difíciles de identificar por su carácter oculto. Los diseñadores de la política exterior establecen <strong>quién, cuándo y cómo</strong> se llevará a cabo una acción. Por ejemplo, si el objetivo es diversificar las relaciones económicas, una estrategia puede ser la firma de acuerdos comerciales con otros países.</p>
+
+                    <h4 class="sub-title">Instrumentos</h4>
+                    <p class="body">Los instrumentos son mecanismos institucionalizados y reconocidos por la comunidad internacional que ayudan al logro de los objetivos. Se clasifican en tres tipos:</p>
+
+                    <div class="grid3">
+                        <div class="icard">
+                            <div class="ic-top">🛡️</div>
+                            <h4>Poder duro</h4>
+                            <p>Militar: disuasión, alianzas, guerra (último recurso, mayor costo en vidas y recursos).</p>
+                        </div>
+                        <div class="icard">
+                            <div class="ic-top">💰</div>
+                            <h4>Poder intermedio</h4>
+                            <p>Comercial y coercitivo: sanciones económicas, diplomacia coercitiva, amenazas y premios.</p>
+                        </div>
+                        <div class="icard">
+                            <div class="ic-top">🤝</div>
+                            <h4>Poder blando</h4>
+                            <p>Diplomacia pública, cultural, deportiva, académica, de principios. Cooperación internacional para el desarrollo.</p>
+                        </div>
+                    </div>
+
+                    <div class="callout law">
+                        <div class="ci">📌</div>
+                        <div class="ct"><b>Principios normativos de la Política Exterior de México</b>Forjados por la experiencia histórica y consagrados en la Constitución: no intervención, autodeterminación de los pueblos, igualdad jurídica de los Estados, solución pacífica de las controversias, cooperación internacional para el desarrollo, promoción de la paz y seguridad internacionales, defensa de los derechos humanos.</div>
+                    </div>
+
+                    <h4 class="sub-title">Acciones</h4>
+                    <p class="body">Las acciones son el <strong>resultado final</strong> del proceso de toma de decisiones. Antes de elegir, los funcionarios evalúan cada opción, seleccionando la que más beneficios traiga, menos costos represente, mejor alcance los objetivos y responda al interés nacional. Tras la acción viene la <strong>evaluación y retroalimentación</strong>, actividades clave porque permiten reconsiderar o mantener la decisión según los resultados obtenidos.</p>
+                </section>
+
+                <!-- 1.5 Factores -->
+                <section class="block" id="u1-factores">
+                    <h3><span class="hicon">⚙️</span>Factores que determinan la Política Exterior</h3>
+                    <p class="body">Los factores se clasifican según su naturaleza (internos vs. externos) y su tangibilidad. A continuación se desarrollan los principales:</p>
+
+                    <h4 class="sub-title">Factores tangibles internos</h4>
+                    <h5 class="sub-sub">Factores geográficos</h5>
+                    <p class="body">La Geopolítica es una variable de mucho peso. El tamaño del país y su posición geográfica influyen determinantemente en las relaciones. Países grandes con múltiples fronteras pueden enfrentar conflictos fronterizos o esquemas de cooperación. La posición estratégica confiere ventajas o desventajas. El clima, el acceso al mar, las características hidrográficas y orográficas, y la posesión de recursos naturales afectan el margen de negociación. Un caso emblemático es el de <strong>Paraguay</strong>, cuya condición de país <strong>mediterráneo</strong> (sin litoral marítimo) ha constituido históricamente un condicionante fundamental de su política exterior.</p>
+
+                    <h5 class="sub-sub">Factores demográficos</h5>
+                    <p class="body">Las variables más importantes son el número de población, su localización, edad, salud, tasas de natalidad y mortalidad. Países con alta población pueden tener ventajas (mano de obra, poder adquisitivo, efectivos militares), pero si los habitantes no tienen acceso a empleo o educación, el rasgo se convierte en desventaja y genera emigración, colocando los asuntos migratorios en el centro de la agenda exterior.</p>
+
+                    <h5 class="sub-sub">Factores económicos</h5>
+                    <p class="body">El modelo de desarrollo económico está íntimamente ligado a las estrategias de política exterior. Un país con modelo abierto al comercio y la inversión extranjera tendrá mayor presencia internacional, mientras que uno con esquema proteccionista tenderá al aislacionismo. El nivel de desarrollo económico impacta directamente en la capacidad de negociación. Naciones con graves problemas de deuda externa, crisis o dependencia de importaciones básicas se encontrarán en posición de dependencia.</p>
+
+                    <h5 class="sub-sub">Factores tecnológicos y militares</h5>
+                    <p class="body">El desarrollo científico-tecnológico mejora la posición negociadora. La infraestructura (carreteras, puertos, aeropuertos, telecomunicaciones) facilita el comercio. El poderío bélico —efectivos militares, armamento, bases, presupuesto— tiene alto impacto en el comportamiento internacional, aunque el poder militar es relativo: países poderosos han perdido guerras contra naciones más débiles (como EE.UU. frente a Vietnam).</p>
+
+                    <h4 class="sub-title">Factores intangibles internos</h4>
+                    <h5 class="sub-sub">Factores político-ideológicos</h5>
+                    <p class="body">Las características del sistema político influyen determinantemente. Kant planteaba que entre democracias era más difícil recurrir a la guerra. La <strong>estabilidad política</strong> aumenta el margen de negociación, mientras la inestabilidad hace vulnerable al Estado frente a amenazas externas. La <strong>cohesión social</strong> y el apoyo de la población al gobierno fortalecen la capacidad negociadora. Los factores ideológicos determinan el tipo de comportamiento: entre países democráticos, las posibilidades de cooperación son mayores y las de conflicto se reducen.</p>
+
+                    <h5 class="sub-sub">Factores socioculturales</h5>
+                    <p class="body">Las costumbres, la identidad nacional, los valores, el carácter nacional y los elementos culturales son determinantes. Muchos países proyectan sus riquezas culturales como instrumento de <strong>poder blando</strong>. La música, los bailes, el cine, la literatura, la pintura, la gastronomía, el idioma y la religión forman parte del carácter nacional y se reflejan en las acciones exteriores. Los países que se identifican mutuamente desarrollan vínculos de solidaridad y cooperación; los que no, pueden generar interacciones conflictivas.</p>
+
+                    <h4 class="sub-title">Factores externos</h4>
+                    <p class="body">Dos elementos son fundamentales: (1) el <strong>equilibrio de poder</strong> del sistema internacional (unipolar, bipolar o multipolar), que determina las reglas del juego de la política internacional; y (2) los <strong>objetivos e intereses de otros actores</strong>, ya que países más fuertes pueden ejercer presión importante sobre los más débiles. En el caso paraguayo, la vecindad con Argentina y Brasil —y más ampliamente con el subsistema sudamericano— ha sido el factor externo que más ha impactado en la definición de su política exterior.</p>
+                </section>
+
+                <!-- 1.6 Actores -->
+                <section class="block" id="u1-actores">
+                    <h3><span class="hicon">👥</span>Actores de la Política Exterior</h3>
+
+                    <h4 class="sub-title">Actores gubernamentales</h4>
+                    <p class="body">Los <strong>jefes de Estado o gobierno</strong> son los actores que inciden de manera determinante. Sus poderes están contenidos en la Constitución y leyes secundarias, más otros derivados de la costumbre. Poseen una visión más amplia del interés nacional y cuentan con una compleja estructura para obtener información interna y externa (servicio diplomático).</p>
+
+                    <p class="body">Las <strong>agencias burocráticas</strong> son las estructuras administrativas que apoyan al jefe de Estado. Cada una tiene sus propias preferencias: los ministerios de defensa orientan hacia lo militar, los de relaciones exteriores enfatizan la diplomacia. Las cancillerías están a cargo de diseñar y ejecutar la política exterior, con servicios exteriores profesionales encargados de asesorar, proveer información, ejecutar instrucciones y proteger ciudadanos en el extranjero.</p>
+
+                    <p class="body">Existen <strong>agencias de primer nivel</strong> (relaciones exteriores, defensa, economía/hacienda) con relación directa con temas de política exterior, y <strong>agencias de segundo nivel</strong> (educación, turismo, salud, medio ambiente) con funciones indirectas.</p>
+
+                    <p class="body">El <strong>poder Legislativo</strong> actúa como sistema de pesos y contrapesos: aprueba tratados internacionales, ratifica nombramientos del servicio exterior, autoriza la salida de tropas. Sin embargo, suele tener una visión más localista y carecer de grupo permanente de asesores especializados, lo que le representa desventajas para influir eficazmente.</p>
+
+                    <h4 class="sub-title">Actores no gubernamentales</h4>
+                    <p class="body">Si bien el gobierno formula y ejecuta la política exterior, diversos actores no gubernamentales ejercen <strong>influencia extrainstitucional</strong>:</p>
+
+                    <ul class="flist">
+                        <li><span class="li-ic">🏢</span><div><b>Empresas:</b> Los actores no gubernamentales más influyentes, por su poder económico y capacidad de cabildeo. Muchos acuerdos de libre comercio se deben a su presión para facilitar el acceso a mercados.</div></li>
+                        <li><span class="li-ic">🏛️</span><div><b>Partidos políticos:</b> Promueven sus preferencias internacionales en plataformas políticas. El partido gobernante defiende las acciones exteriores; la oposición las critica buscando rédito electoral.</div></li>
+                        <li><span class="li-ic">📢</span><div><b>Opinión pública:</b> Dos grupos: el público general (influencia reducida, salvo en guerras o eventos de alto impacto) y el público informado (reducido pero más efectivo). Los medios de comunicación también inciden.</div></li>
+                        <li><span class="li-ic">🌍</span><div><b>Grupos étnicos, sindicatos, ONGs, iglesias, academia:</b> Cada uno ejerce presión según sus intereses particulares. Por ejemplo, los grupos judíos y cubano-estadounidenses influyen en la política de EE.UU. hacia Medio Oriente y Cuba.</div></li>
+                    </ul>
+
+                    <div class="callout warn">
+                        <div class="ci">⚠</div>
+                        <div class="ct"><b>Importante</b>Una política exterior que no toma en cuenta las necesidades de la población ni escucha a la sociedad civil posee rasgos antidemocráticos. Sin embargo, actores externos —especialmente empresas transnacionales— también pueden influir determinantemente en la política exterior de un país.</div>
+                    </div>
+                </section>
+
+                <!-- 1.7 PE como política pública -->
+                <section class="block" id="u1-ppublica">
+                    <h3><span class="hicon">📋</span>La Política Exterior como Política Pública</h3>
+                    <p class="body">Desde el fin de la Guerra Fría, cobró relevancia en la literatura la consideración de la <strong>política exterior dentro del conjunto de las políticas públicas</strong>. Esta visión fue cada vez más extendida y tiene implicancias importantes, ya que reconoce la influencia de los factores domésticos y que distintos agentes internos pueden intervenir en estos procesos.</p>
+
+                    <p class="body">Para que la política exterior pueda ser entendida como política pública deben apreciarse dos aspectos: (1) que considere las <strong>necesidades domésticas</strong> y busque en el plano externo una solución a las mismas, y (2) que sea <strong>influenciada por lo que ocurre en el sistema internacional</strong>. Estas dos condiciones le confieren un carácter <strong>interméstico</strong> (intersección entre lo internacional y lo doméstico).</p>
+
+                    <div class="kterm"><b>Carácter interméstico:</b> La política exterior, al ser abordada como política pública, posee dos rasgos clave: toma en consideración las necesidades domésticas y les busca soluciones internacionales, al tiempo que lo acontecido en el plano externo también influye en ella. Esta <strong>interacción de ambos planos</strong> fue analizada por Putnam (1988) con su teoría del "juego de dos niveles", que permitió que la política interna encontrara un lugar como variable explicativa importante de la política exterior.</div>
+
+                    <p class="body">Los desarrollos de Robert Putnam fueron importantes para incorporar la política interna como variable explicativa en la disciplina de las Relaciones Internacionales. Los gobiernos pueden buscar soluciones subóptimas debido a problemas de agencia, y las diversas instituciones del país pueden entorpecer la cooperación internacional u otra actividad en la esfera exterior. Esta perspectiva es especialmente relevante para comprender el caso paraguayo, donde los <strong>planes de desarrollo</strong> constituyen una expresión formal del modelo adoptado y la integración regional aparece —o no— como prioridad dentro de ellos.</p>
+                </section>
+
+                <!-- 1.8 Preguntas de examen Tema 1 -->
+                <section class="block" id="u1-preguntas">
+                    <h3><span class="hicon">❓</span>Preguntas posibles de examen</h3>
+                    <div class="exam-box">
+                        <h4>🎓 Tema 1 — Fundamentos Teóricos</h4>
+                        <ol>
+                            <li>Defina el concepto de política exterior e identifique sus cuatro elementos esenciales.</li>
+                            <li>¿Por qué solamente el Estado puede ejercer política exterior? ¿Qué diferencia existe con la paradiplomacia?</li>
+                            <li>Explique el concepto de interés nacional según las distintas corrientes teóricas (realismo, liberalismo, marxismo, constructivismo).</li>
+                            <li>¿Cuáles son los tres objetivos jerárquicos del interés nacional y por qué existe prelación entre ellos?</li>
+                            <li>Diferencie entre política exterior de Estado y política exterior de gobierno.</li>
+                            <li>¿Qué es el proyecto de nación y cuáles son sus tres vertientes fundamentales?</li>
+                            <li>Explique la distinción entre poder duro, poder blando y poder inteligente según Joseph Nye.</li>
+                            <li>Compare los factores tangibles e intangibles que determinan la capacidad de negociación internacional.</li>
+                            <li>¿Por qué se dice que la política exterior tiene un carácter "interméstico"?</li>
+                            <li>Analice el rol de los actores no gubernamentales en el proceso de formulación de la política exterior.</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <!-- 1.9 Resumen conceptual Tema 1 -->
+                <section class="block" id="u1-resumen">
+                    <h3><span class="hicon">🗂️</span>Resumen conceptual</h3>
+                    <div class="schema-box">
+                        <h4>Esquema jerárquico — Tema 1</h4>
+                        <ul>
+                            <li>Política Exterior
+                                <ul>
+                                    <li>Definición: acciones del Estado más allá de sus fronteras, basadas en el interés nacional</li>
+                                    <li>Componentes
+                                        <ul>
+                                            <li>Estado (territorio, población, gobierno)</li>
+                                            <li>Interés Nacional (seguridad → bienestar → valores)</li>
+                                            <li>Proyecto de Nación (sistema político, modelo económico, sistema educativo)</li>
+                                            <li>Capacidad de negociación (poder relativo)</li>
+                                        </ul>
+                                    </li>
+                                    <li>Proceso de toma de decisiones
+                                        <ul>
+                                            <li>Objetivos → Estrategias → Instrumentos → Acciones → Evaluación</li>
+                                        </ul>
+                                    </li>
+                                    <li>Factores determinantes
+                                        <ul>
+                                            <li>Internos tangibles: geográficos, demográficos, económicos, tecnológicos, militares</li>
+                                            <li>Internos intangibles: político-ideológicos, socioculturales</li>
+                                            <li>Externos: equilibrio de poder, intereses de otros actores</li>
+                                        </ul>
+                                    </li>
+                                    <li>Actores
+                                        <ul>
+                                            <li>Gubernamentales: Jefe de Estado, cancillería, burocracias, legislativo</li>
+                                            <li>No gubernamentales: empresas, partidos, opinión pública, ONGs, academia</li>
+                                        </ul>
+                                    </li>
+                                    <li>Como política pública: carácter interméstico (Putnam)</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="#inicio" class="back-link">↑ Volver al índice</a>
+                </section>
+                <div class="section-divider"></div>
+            </div>
+
+            <!-- ============================================================= -->
+            <!-- TEMA 2: INTEGRACIÓN REGIONAL DEL PARAGUAY -->
+            <!-- ============================================================= -->
+            <div class="unit" id="u2" style="--accent-c:#2dd4bf;">
+                <div class="unit-head">
+                    <div class="unit-badge">2</div>
+                    <div>
+                        <div class="uh-label">Tema 02</div>
+                        <h2>Integración Regional del Paraguay (1954-2018)</h2>
+                        <p>Un recorrido histórico por el aislamiento paraguayo, los planes de desarrollo, la relación pendular con Argentina y Brasil, y la evolución de la integración regional desde el stronismo hasta la era democrática.</p>
+                    </div>
+                </div>
+
+                <!-- 2.1 Contexto -->
+                <section class="block" id="u2-contexto">
+                    <h3><span class="hicon">🏝️</span>"Una isla rodeada de tierra": el aislamiento paraguayo</h3>
+                    <p class="body">La localización geográfica de Paraguay ha sido históricamente un aspecto condicionante. El hecho de no contar con litoral marítimo colocó al país en cierta desventaja. La expresión <strong>"una isla rodeada de tierra"</strong>, acuñada por el notable escritor paraguayo Augusto Roa Bastos en 1977, captura una realidad que excede lo territorial y abarca dimensiones económicas, políticas y culturales del aislamiento.</p>
+
+                    <h4 class="sub-title">El aislamiento económico</h4>
+                    <p class="body">Desde el siglo XVI, los territorios paraguayos fueron poco atractivos para la Corona española por no contar con los metales preciosos que tanto interés suscitaban. Si bien poseía amplios terrenos para actividades agrícolas y ganaderas, su <strong>comercio exterior fue siempre muy limitado</strong>, principalmente por las condiciones tributarias durante la colonia.</p>
+                    <p class="body">Con <strong>José Gaspar Rodríguez de Francia</strong> (gobernante hasta 1840), la iniciativa privada se redujo notoriamente. Su política exterior incluyó el aislamiento: toda comunicación o viaje debía realizarse con su autorización, bajo severas penas. Paradójicamente, Francia tenía gran interés por los asuntos exteriores, siguiéndolos a través de publicaciones extranjeras.</p>
+                    <p class="body">El gobierno de <strong>Carlos Antonio López</strong> (desde 1844) afianzó la soberanía nacional mediante la firma de documentos, la instalación de industrias e infraestructura. Su hijo <strong>Francisco Solano López</strong> abandonó la política de aislamiento e intervino activamente en cuestiones regionales, lo que desembocaría en la <strong>Guerra de la Triple Alianza</strong> (1865-1870) contra Argentina, Brasil y Uruguay, cuyas consecuencias fueron devastadoras para la economía paraguaya.</p>
+
+                    <h4 class="sub-title">El aislamiento político</h4>
+                    <p class="body">La política interna paraguaya estuvo marcada por una alternancia entre <strong>figuras fuertes de larga permanencia</strong> en el poder y <strong>periodos de gran inestabilidad</strong>. Ambas situaciones generan aislamiento: la primera, porque al centralizarse el poder, es potestad del gobernante establecer su estrategia de vinculación (que puede implicar el "no relacionamiento"); la segunda, porque cuando la clave es la supervivencia en el poder, el plano externo es valorado solo si resulta funcional a ese imperativo.</p>
+
+                    <h4 class="sub-title">El aislamiento cultural</h4>
+                    <p class="body">Incluso en el plano cultural, Paraguay resulta poco conocido. Como señaló Roa Bastos, "los indagadores de la cultura de nuestra América no se habían esforzado mucho en desentrañar las causas que hacen de la cultura paraguaya una tierra incógnita". La historiadora Barbara Potthast lo confirma: "Paraguay es diferente. Se trata de un país poco investigado, al que sin embargo se considera de antemano una excepción entre las sociedades de América Latina".</p>
+
+                    <div class="callout law">
+                        <div class="ci">📌</div>
+                        <div class="ct"><b>Recordatorio</b>El aislamiento paraguayo es multidimensional. No se trata solo de una cuestión geográfica (mediterraneidad), sino que abarca lo económico (comercio limitado), lo político (centralización del poder o inestabilidad) y lo cultural. Comprender esto es fundamental para analizar por qué la integración regional ha sido una necesidad estratégica para el país.</div>
+                    </div>
+                </section>
+
+                <!-- 2.2 PE como PP en Paraguay -->
+                <section class="block" id="u2-pepp">
+                    <h3><span class="hicon">📊</span>Política Exterior como Política Pública: el caso paraguayo</h3>
+                    <p class="body">Considerar la política exterior como una de las expresiones de las políticas públicas tiene implicancias directas para el caso paraguayo. Esta premisa remite a que distintos agentes domésticos pueden intervenir en los procesos de política exterior, y que las vinculaciones externas dan alternativas a las necesidades internas, consolidando (o no) ciertos modelos de desarrollo.</p>
+
+                    <p class="body">Los <strong>planes de desarrollo</strong> son expresiones amplias de las visiones de los gobernantes. Son documentos estratégicos que alientan la coordinación de acciones sectoriales del Poder Ejecutivo con los diferentes niveles de gobierno, el sector privado, la sociedad civil y otros poderes del Estado. Constituyen una expresión formal del modelo de desarrollo adoptado.</p>
+
+                    <div class="callout warn">
+                        <div class="ci">⚠</div>
+                        <div class="ct"><b>Limitación importante</b>La consideración de los planes de desarrollo como expresión de políticas públicas puede resultar algo <strong>limitada en entornos de institucionalidad débil</strong>. En estos contextos, el contexto político-económico es el que finalmente señala los rumbos a seguir, como se observó en la mayor parte del periodo analizado (1954-2018). La coyuntura fue influenciada principalmente por aspectos domésticos que encontraron en el plano externo un apoyo.</div>
+                    </div>
+
+                    <h4 class="sub-title">La integración: condición, proceso o resultado</h4>
+                    <p class="body">Un aspecto metodológico relevante es que la <strong>integración</strong> puede ser una condición, un proceso o un resultado. Esto implica que surge de la voluntad, y para ésta se debe encontrar un motivo (que puede estar en los modelos de desarrollo). Además, la integración no puede ser coercitiva y su definición va variando conforme a la posición adoptada. Es considerada un "proceso dinámico con diversas posibilidades de expandirse, profundizar, estancarse y/o retroceder".</p>
+
+                    <div class="kterm"><b>Economía Política Internacional (EPI):</b> El enfoque teórico utilizado para este análisis es la EPI, que por su interdisciplinariedad considera disciplinas como economía, política e historia, y establece dos niveles analíticos: el <strong>doméstico</strong> y el <strong>sistémico</strong>. Esto permite capturar diversas situaciones más allá de un solo campo o plano analítico.</div>
+                </section>
+
+                <!-- 2.3 Planes de desarrollo -->
+                <section class="block" id="u2-planes">
+                    <h3><span class="hicon">📝</span>Planes de Desarrollo del Paraguay (1962-2018)</h3>
+
+                    <h4 class="sub-title">Contexto institucional</h4>
+                    <p class="body">La inestabilidad fue una característica de la situación interna paraguaya desde la Guerra de la Triple Alianza (1865) hasta la llegada de Stroessner al poder (1954). La falta de institucionalidad favoreció el predominio de lo coyuntural. La Constitución de 1940 expresaba que "el Estado regulará la vida económica nacional", pero no mencionaba los medios para hacerlo.</p>
+
+                    <p class="body">El primer paso hacia mayor institucionalidad en la planificación se dio con la creación de la <strong>Secretaría Técnica de Planificación (STP)</strong> el 6 de marzo de 1962, mediante el Decreto Ley N° 312. En noviembre de ese mismo año, la STP suscribió un convenio con la <strong>CEPAL</strong> para recibir asesoramiento en la elaboración del primer Plan Nacional de Desarrollo.</p>
+
+                    <div class="callout info">
+                        <div class="ci">💡</div>
+                        <div class="ct"><b>Contexto regional</b>En 1960 se constituyó la ALALC (Asociación Latinoamericana de Libre Comercio). En 1961, la administración Kennedy lanzó la <strong>Alianza para el Progreso</strong>, un programa que aspiraba a que cada país de América Latina contara con un plan individual de desarrollo para vincular lo particular con un plan general.</div>
+                    </div>
+
+                    <h4 class="sub-title">Planes del periodo stronista (1962-1989)</h4>
+                    <div class="tbl-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Plan</th><th>Referencia al plano externo</th><th>Referencia a integración regional</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Plan 1965/1966</td>
+                                    <td>Análisis del equilibrio financiero externo; niveles requeridos de inversión extranjera.</td>
+                                    <td>No se aprecia</td>
+                                </tr>
+                                <tr>
+                                    <td>Plan 1967/1968</td>
+                                    <td>Objetivo de largo plazo: consolidar el equilibrio financiero externo mediante aumento de exportaciones.</td>
+                                    <td>No se aprecia</td>
+                                </tr>
+                                <tr>
+                                    <td>Plan 1971/1975</td>
+                                    <td>Puntualiza el comercio exterior y la integración económica. Retoma objetivo del equilibrio financiero externo.</td>
+                                    <td><strong>Sí:</strong> "Orientar y perfeccionar la organización institucional tendiendo a una mayor participación del país en la integración económica regional"</td>
+                                </tr>
+                                <tr>
+                                    <td>Plan 1977/1981</td>
+                                    <td>Menciona el equilibrio financiero externo y la integración.</td>
+                                    <td><strong>Sí (con matiz de infraestructura):</strong> "Consolidar la integración física y económica del territorio nacional como base para el desarrollo global y perfeccionar el sistema económico orientado a mayor participación en la integración latinoamericana"</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="body" style="font-size:12px;color:var(--text-dim);">Fuente: Elaboración propia a partir de STP (1982).</p>
+
+                    <p class="body">Los dos primeros planes reflejaban una visión más doméstica (influida por el plano internacional a través de la Alianza para el Progreso), mientras que los planes de 1971-1975 y 1977-1981 incorporaron explícitamente aspectos vinculados a la integración. Notablemente, el último plan ligó la integración a la <strong>infraestructura física</strong>, un matiz que reaparecerá décadas después.</p>
+
+                    <h4 class="sub-title">Planes del periodo democrático (1989-2018)</h4>
+                    <p class="body">Tras la caída de Stroessner (3 de febrero de 1989), el contexto cambió a nivel internacional (fin de la Guerra Fría, Consenso de Washington) y nacional (nueva Constitución de 1992). La nueva carta magna estableció que el Estado promovería el desarrollo económico, social y cultural (Art. 176), y que los planes de desarrollo serían "indicativos para el sector privado y de cumplimiento obligatorio para el sector público".</p>
+
+                    <div class="tbl-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Plan</th><th>Referencia a integración regional</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>PEES (2001)</td><td>Participación activa en la Agenda del Mercosur; negociaciones con la Unión Europea.</td></tr>
+                                <tr><td>ENLP (2006)</td><td>"Mejorar el posicionamiento del país en el sistema de relaciones internacionales". "Fortalecimiento de la integración regional, orientada a equilibrar positivamente las condiciones económicas entre los países del bloque".</td></tr>
+                                <tr><td>PEES (2008)</td><td>Reconoce la triangulación comercial con inserción regional. Propone estimular negociaciones multilaterales, regionales y bilaterales.</td></tr>
+                                <tr><td>PND Paraguay 2030 (2014, actualizado 2021)</td><td>Eje estratégico: "Proyección de Paraguay en el mundo". Profundización de acuerdos del Mercosur. "Exploración de puentes con la Alianza del Pacífico". Estrategia 3.3: "Fortalecer la integración económica regional".</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <p class="body">Un rasgo notorio es que la integración regional es un aspecto <strong>explícito en todos los planes del periodo democrático</strong>. El PND Paraguay 2030, resultado de un proceso participativo con más de 2.000 actores, tuvo tres ejes (más un cuarto añadido en 2021): Reducción de la pobreza, Crecimiento económico inclusivo, e Inserción de Paraguay en el mundo. La idea de integración presenta un matiz predominantemente de <strong>infraestructura física vinculado a lo económico</strong>.</p>
+                </section>
+
+                <!-- 2.4 Integración durante el stronismo -->
+                <section class="block" id="u2-stronismo">
+                    <h3><span class="hicon">🔒</span>Integración durante el stronismo (1954-1989)</h3>
+
+                    <h4 class="sub-title">Relación con Argentina y Brasil: la política pendular</h4>
+                    <p class="body">La relación de Paraguay con sus vecinos ha sido calificada como <strong>"pendular"</strong>, oscilando en su cercanía con Argentina y Brasil. Sin embargo, existen voces discordantes que afirman que durante el stronismo no existió un sesgo hacia uno de ellos, sino que se buscaban buenas relaciones con ambos, más allá de la simpatía de Stroessner hacia Brasilia.</p>
+
+                    <p class="body">La condición <strong>mediterránea</strong> hizo que la relación con los vecinos y las alternativas frente a este problema variaran con el tiempo. Si bien esta característica pudiera parecer una desventaja económica, la articulación de una integración efectiva emerge como una posibilidad de reducirla.</p>
+
+                    <h4 class="sub-title">La "Marcha hacia el Este" y la relación con Brasil</h4>
+                    <p class="body">Durante el stronismo se desarrolló la llamada <strong>"Marcha hacia el Este"</strong>, nombre dado a la estrecha relación con Brasil. Esta vinculación se manifestaba en múltiples facetas: cooperación, comercio, agricultura y, sobre todo, la creación de <strong>Itaipú Binacional</strong>, la iniciativa que coronaría esta relación. Con Argentina, la vinculación durante este periodo fue menos intensa, especialmente tras el retorno de la democracia argentina en 1983.</p>
+
+                    <h4 class="sub-title">Pilares económicos y orientación externa</h4>
+                    <p class="body">Los pilares de la economía durante el stronismo estuvieron asociados a la interacción con los vecinos: la <strong>expansión de rubros agrícolas de exportación</strong>, la <strong>triangulación comercial</strong> y la <strong>construcción de Itaipú</strong>. En los planes no existía referencia explícita al modelo agroexportador y de gran apertura comercial que fue la estrategia adoptada.</p>
+
+                    <p class="body">Las orientaciones de la política exterior incluían: buen vínculo con Argentina, Brasil, Estados Unidos y los países europeos; obtención de cooperación internacional; y seguimiento de la <strong>Doctrina de Seguridad Nacional</strong> norteamericana.</p>
+
+                    <div class="callout key">
+                        <div class="ci">✔</div>
+                        <div class="ct"><b>Conclusión clave del periodo</b>Paraguay evidenció una activa participación en las iniciativas regionales de integración (ALALC, ALADI), a pesar de que esto no haya sido contemplado explícitamente en los planes de desarrollo. La integración fue adoptada por dos motivos: (1) participación en esquemas impulsados por EE.UU. en la disputa bipolar, y (2) la estabilidad interna. El plano externo actuó como un <strong>"legitimador"</strong> del régimen stronista, brindándole herramientas para consolidar su posición interna a través de la cooperación y el respaldo político.</div>
+                    </div>
+                </section>
+
+                <!-- 2.5 Transición democrática -->
+                <section class="block" id="u2-democracia">
+                    <h3><span class="hicon">🗳️</span>Transición Democrática e Integración (1989-2018)</h3>
+
+                    <h4 class="sub-title">El nuevo contexto (1989-2000)</h4>
+                    <p class="body">La caída del stronismo marcó un cambio pero también cierta continuidad: los nuevos protagonistas no eran desconocidos —muchos eran cercanos al poder—, incluyendo a Andrés Rodríguez, consuegro de Stroessner y líder del golpe. En el plano internacional, el mundo también se transformaba con el fin de la Guerra Fría y el Consenso de Washington.</p>
+
+                    <p class="body">La participación en el <strong>Mercosur</strong> (fundado en 1991 por el Tratado de Asunción) fue quizás la apuesta más importante. Paraguay se sumó al proyecto cuando éste ya estaba muy avanzado (iniciado por Argentina y Brasil con el Acta de Yguazú en 1985), lo que le restó margen de negociación. Uruguay facilitó la participación de Paraguay. Al momento de ingresar, Paraguay ya poseía una economía muy abierta, en lo que puede denominarse una <strong>"integración puertas adentro"</strong>, por lo que la apertura comercial por sí sola no tuvo el impacto deseado.</p>
+
+                    <p class="body">La decisión de integrarse al Mercosur puede entenderse en clave interna: a pesar de no contar con un plan de desarrollo que sirviera de guía, se basó en las urgencias de superar el aislamiento del último tramo de la década de 1980. La <strong>democracia e integración regional constituyeron un "binomio indivisible"</strong>.</p>
+
+                    <h4 class="sub-title">Hitos del periodo democrático</h4>
+                    <ul class="flist">
+                        <li><span class="li-ic">92</span><div><b>Constitución Nacional de 1992:</b> Nuevo marco para la política exterior. Establece que los planes de desarrollo serán indicativos para el sector privado y obligatorios para el sector público.</div></li>
+                        <li><span class="li-ic">95</span><div><b>Crisis financiera de mediados de los 90:</b> Sumió a la economía paraguaya en una profunda crisis que se prolongó hasta el tercer milenio.</div></li>
+                        <li><span class="li-ic">00</span><div><b>Ley 1635/2000:</b> Reorganización de la política exterior paraguaya. Creación del Viceministerio de Economía e Integración.</div></li>
+                    </ul>
+
+                    <h4 class="sub-title">El regionalismo post-neoliberal (2000s)</h4>
+                    <p class="body">A inicios del tercer milenio, un escenario económico favorable y nuevos liderazgos regionales generaron un viraje en la orientación de los esquemas de integración, dando cabida a temas sociales, políticos, de seguridad, energéticos y de infraestructura. Esta etapa fue denominada <strong>"regionalismo postneoliberal"</strong>.</p>
+
+                    <p class="body">En diciembre de 2006, surgió la <strong>UNASUR</strong> (Unión de Naciones Sudamericanas), de la cual Paraguay fue miembro fundador. El liderazgo de <strong>Nicanor Duarte Frutos</strong> (2003-2008) valoró al Mercosur como elemento central para la integración y tomó una "clara opción por un mundo multipolar".</p>
+
+                    <p class="body"><strong>Fernando Lugo</strong> (2008-2012) rompió 61 años de hegemonía del Partido Colorado. Se mostró favorable al Mercosur y promovió el ingreso de Venezuela al bloque. Impulsó la renegociación de las compensaciones de Itaipú con Brasil, un logro significativo para la política exterior paraguaya. Sin embargo, su relación con el Parlamento fue "realmente conflictiva".</p>
+
+                    <h4 class="sub-title">Crisis de 2012: la destitución de Lugo</h4>
+                    <p class="body">Lugo fue destituido mediante un juicio político desarrollado con gran celeridad en 2012, recibiendo denominaciones como "golpe parlamentario", "juicio express" o "juicio relámpago". Las reacciones regionales fueron inmediatas: en el Mercosur, fue aplicado el <strong>Protocolo de Ushuaia</strong> (compromiso democrático), suspendiéndose a Paraguay. En UNASUR, una delegación visitó el país.</p>
+
+                    <p class="body">Esta coyuntura llevó a cuestionar los esquemas de integración y a considerar otras posibilidades, como el ingreso a la <strong>Alianza del Pacífico</strong>. Con la asunción de <strong>Horacio Cartes</strong> (2013-2018), la suspensión fue levantada, pero Paraguay dejó de pertenecer a UNASUR en 2019.</p>
+
+                    <div class="compare">
+                        <div class="col old">
+                            <div class="col-head">⬇ Factores de debilitamiento</div>
+                            <ul>
+                                <li><span class="ic">✗</span>Fin del "superciclo de los commodities"</li>
+                                <li><span class="ic">✗</span>Problemas económicos de los Estados-parte</li>
+                                <li><span class="ic">✗</span>Viraje ideológico regional</li>
+                                <li><span class="ic">✗</span>Suspensión de Paraguay por Protocolo de Ushuaia</li>
+                                <li><span class="ic">✗</span>Reprimarización de exportaciones</li>
+                            </ul>
+                        </div>
+                        <div class="col new">
+                            <div class="col-head">⬆ Factores de fortalecimiento</div>
+                            <ul>
+                                <li><span class="ic">✓</span>Nuevos liderazgos regionales (años 2000)</li>
+                                <li><span class="ic">✓</span>Ampliación temática: lo social, político, energético</li>
+                                <li><span class="ic">✓</span>Renegociación de Itaipú</li>
+                                <li><span class="ic">✓</span>Presencia explícita en planes de desarrollo</li>
+                                <li><span class="ic">✓</span>Participación como miembro fundador en esquemas</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2.6 Reflexiones -->
+                <section class="block" id="u2-reflexiones">
+                    <h3><span class="hicon">💭</span>Reflexiones: la integración como estrategia reactiva</h3>
+                    <p class="body">La integración regional resultó de un <strong>proceso más bien reactivo</strong>, en el cual Paraguay se adhirió a diferentes esquemas para atender urgencias, muchas de ellas vinculadas a encontrar en el plano externo una herramienta de la cual asirse para sostener la situación interna. Esto se apreció tanto en el periodo 1954-1989 como en el retorno de la democracia.</p>
+
+                    <div class="callout key">
+                        <div class="ci">✔</div>
+                        <div class="ct"><b>Conclusión central de la investigación</b>La integración regional fue una <strong>estrategia derivada de factores internos</strong>, la cual en muchos casos ni siquiera fue asumida como parte de un modelo de desarrollo. Esto deja entrever que <strong>no fue una política activa independiente</strong>, sino que la coyuntura político-económica es la que fortaleció o desalentó el proceso de integración.</div>
+                    </div>
+
+                    <p class="body">Durante el stronismo, el número de actores en el esquema decisorio era extremadamente reducido; durante el periodo democrático aumentó. La institucionalidad tuvo cambios sustanciales, pero no así la coordinación entre los distintos estamentos.</p>
+
+                    <p class="body">La integración no solo impacta el comercio, sino que puede servir como poderoso instrumento para superar la <strong>mediterraneidad</strong>. Los costos agregados del aislamiento pueden subsanarse si se mitigan la deficiencia en infraestructura y la falta de interconectividad. Este aspecto será retomado en los ejes estratégicos contemporáneos.</p>
+
+                    <p class="body">En sus treinta primeros años, el Mercosur experimentó diferentes fases, determinadas por una conjunción del contexto externo, las necesidades internas y las personalidades de los gobernantes. Paraguay siempre se mostró proclive a fortalecer el bloque, lo que condice con la línea mantenida a través del tiempo.</p>
+                </section>
+
+                <!-- 2.7 Preguntas -->
+                <section class="block" id="u2-preguntas">
+                    <h3><span class="hicon">❓</span>Preguntas posibles de examen</h3>
+                    <div class="exam-box">
+                        <h4>🎓 Tema 2 — Integración Regional</h4>
+                        <ol>
+                            <li>¿En qué sentido puede afirmarse que el aislamiento de Paraguay es un fenómeno multidimensional?</li>
+                            <li>Explique el rol de la Secretaría Técnica de Planificación (STP) y su relación con los planes de desarrollo.</li>
+                            <li>¿Por qué los primeros planes de desarrollo (1965-1968) no mencionaban la integración regional?</li>
+                            <li>Describa la relación "pendular" de Paraguay con Argentina y Brasil durante el stronismo.</li>
+                            <li>¿Cuál fue la importancia de Itaipú Binacional en la relación Paraguay-Brasil?</li>
+                            <li>¿Por qué la adhesión de Paraguay al Mercosur puede interpretarse en clave interna?</li>
+                            <li>Explique cómo la destitución de Lugo en 2012 impactó la integración regional de Paraguay.</li>
+                            <li>¿Qué es el "regionalismo post-neoliberal" y cómo se reflejó en el caso paraguayo?</li>
+                            <li>Analice la conclusión de que la integración regional fue una "estrategia reactiva derivada de factores internos".</li>
+                            <li>¿Cómo evolucionó la presencia de la integración regional en los planes de desarrollo del periodo democrático?</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <!-- 2.8 Resumen -->
+                <section class="block" id="u2-resumen">
+                    <h3><span class="hicon">🗂️</span>Resumen conceptual</h3>
+                    <div class="schema-box">
+                        <h4>Esquema jerárquico — Tema 2</h4>
+                        <ul>
+                            <li>Paraguay: "isla rodeada de tierra"
+                                <ul>
+                                    <li>Aislamiento multidimensional: económico, político, cultural</li>
+                                    <li>Condición mediterránea como factor condicionante</li>
+                                </ul>
+                            </li>
+                            <li>Planes de Desarrollo (1962-2018)
+                                <ul>
+                                    <li>STP creada en 1962 (asesoramiento de CEPAL)</li>
+                                    <li>Stronismo: integración ausente en planes 65-68, presente en 71-75 y 77-81</li>
+                                    <li>Democracia: integración explícita en todos los planes (PEES, ENLP, PND 2030)</li>
+                                </ul>
+                            </li>
+                            <li>Esquemas de integración
+                                <ul>
+                                    <li>ALALC (1960) → ALADI (1980): Paraguay miembro fundador</li>
+                                    <li>Mercosur (1991): apuesta más importante del periodo democrático</li>
+                                    <li>UNASUR (2006): miembro fundador, retirado en 2019</li>
+                                </ul>
+                            </li>
+                            <li>Conclusión: integración como estrategia reactiva
+                                <ul>
+                                    <li>Derivada de factores internos</li>
+                                    <li>No fue política activa independiente</li>
+                                    <li>Coyuntura político-económica determinante</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="#inicio" class="back-link">↑ Volver al índice</a>
+                </section>
+                <div class="section-divider"></div>
+            </div>
+
+            <!-- ============================================================= -->
+            <!-- TEMA 3: EJES ESTRATÉGICOS -->
+            <!-- ============================================================= -->
+            <div class="unit" id="u3" style="--accent-c:#a78bfa;">
+                <div class="unit-head">
+                    <div class="unit-badge">3</div>
+                    <div>
+                        <div class="uh-label">Tema 03</div>
+                        <h2>Ejes Estratégicos de la Política Exterior (2003-2026)</h2>
+                        <p>Los 13 ejes que articulan la política exterior contemporánea del Paraguay, desde la gestión Rachid-Ramírez (2003-2008) hasta la administración Peña-Ramírez (2023-presente). Un recorrido por soberanía, DDHH, energía, comercio, cooperación, identidad y seguridad.</p>
+                    </div>
+                </div>
+
+                <!-- 3.1 Eje 1: Soberanía -->
+                <section class="block" id="u3-eje1">
+                    <h3><span class="hicon">🛡️</span>Eje 1: Defensa de la Soberanía e Integridad Territorial</h3>
+                    <p class="body">Fundamentado en el Artículo 1 de la Constitución Nacional: "la República del Paraguay es para siempre libre e independiente". Este eje se desglosa en tres componentes esenciales.</p>
+
+                    <h4 class="sub-title">Conceptos fundamentales de delimitación</h4>
+                    <div class="grid2">
+                        <div class="icard"><h4>Frontera</h4><p>Franja de territorio o región a ambos lados de un límite internacional.</p></div>
+                        <div class="icard"><h4>Límite</h4><p>Línea legal precisa e invisible que separa la soberanía de dos Estados vecinos.</p></div>
+                        <div class="icard"><h4>Delimitación</h4><p>Fase jurídica: definición por escrito y mapas de la trayectoria del límite mediante instrumento internacional.</p></div>
+                        <div class="icard"><h4>Demarcación</h4><p>Fase técnica y física: se traslada el límite del papel al terreno mediante coordenadas y monumentos.</p></div>
+                        <div class="icard"><h4>Caracterización</h4><p>Densificación: colocación de marcas intermedias para que el límite sea visible a simple vista.</p></div>
+                        <div class="icard"><h4>Batimetría</h4><p>Medición de profundidades de ríos/lagos fronterizos para determinar relieve subacuático y fijar límites.</p></div>
+                    </div>
+
+                    <h4 class="sub-title">1.1 Límites territoriales y demarcación</h4>
+                    <p class="body">La <strong>Comisión Nacional Demarcadora de Límites (CNDL)</strong>, regulada por el Decreto Ley Nº 89/1953 y presidida por el Embajador Carlos Fleitas Rodríguez, ejecuta los trabajos de caracterización, demarcación, registro y vigilancia. A la fecha, no se registran conflictos limítrofes, sino diferencias técnicas con Argentina y Brasil.</p>
+
+                    <div class="tbl-wrap">
+                        <table>
+                            <thead><tr><th>País vecino</th><th>Estado de la demarcación</th><th>Hitos y particularidades</th></tr></thead>
+                            <tbody>
+                                <tr><td>Bolivia</td><td>742 km absolutamente demarcados y acordados (2007). Protocolo Adicional creó Comisión Mixta Bilateral.</td><td>Hito Esmeralda (trifinio Paraguay-Bolivia-Argentina). Paraguay es el único país sudamericano con demarcación total con un limítrofe.</td></tr>
+                                <tr><td>Brasil</td><td>Vigilancia y mantenimiento en puntos neurálgicos. 7 hitos principales e hitos secundarios en frontera seca.</td><td>Diferencias técnicas: aguas jurisdiccionales en zona de Itaipú y Reserva Mbaracayú. Hitos trifinios: Tres Fronteras (Pdte. Franco) y confluencia río Negro-río Paraguay (Bahía Negra).</td></tr>
+                                <tr><td>Argentina</td><td>14 hitos testigos en río Pilcomayo. Cartografía 1:25.000 en río Paraguay. Más de 70 islas pendientes de adjudicación.</td><td>Tratado de 1876. Criterios para islas: sistema de derecho (adyacencia al tiempo del tratado) o criterio de equidad (evitando "enclaves").</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4 class="sub-title">1.2 Cooperación militar y seguridad bilateral</h4>
+                    <p class="body">La política exterior ha canalizado la custodia del territorio mediante acuerdos de cooperación militar, ejercicios regulados por notas reversales y Memorandos de Entendimiento entre Ministros de Relaciones Exteriores y Defensa con sus pares de Argentina, Brasil y Bolivia. Con EE.UU., destaca el <strong>Acuerdo SOFA</strong> (Status of Forces Agreement), que establece el marco legal para personal militar estadounidense en territorio paraguayo para entrenamientos, ejercicios conjuntos y asistencia humanitaria.</p>
+
+                    <h4 class="sub-title">1.3 Integración fronteriza</h4>
+                    <p class="body">La diplomacia paraguaya ha impulsado una evolución conceptual: de la frontera como <strong>barrera geopolítica</strong> al concepto de <strong>"zona de integración y mercados interregionales"</strong>. En el Mercosur, se participa en el Grupo Ad-Hoc para cuestiones fronterizas. El Programa Binacional de Desarrollo Fronterizo entre Paraguay y Argentina actúa como grupo de trabajo permanente para complementar sectores productivos y facilitar el tránsito vecinal.</p>
+                </section>
+
+                <!-- 3.2 Eje 2: DDHH -->
+                <section class="block" id="u3-eje2">
+                    <h3><span class="hicon">⚖️</span>Eje 2: Democracia y Derechos Humanos</h3>
+                    <p class="body">Responde a la directiva constitucional del Art. 1: la República adopta la democracia representativa, participativa y pluralista, fundada en el reconocimiento de la dignidad humana. La <strong>Unidad General de Derechos Humanos (UGDH)</strong> del MRE coordina la participación en instancias internacionales.</p>
+
+                    <h4 class="sub-title">2.1 Participación en foros internacionales</h4>
+                    <p class="body">En 2003-2008 se logró la primera membresía en la Comisión de DDHH de la ONU (2003-2005) y la primera sesión de la <strong>Corte IDH fuera de su sede, celebrada en Asunción en 2005</strong>. En 2026, Paraguay presentó su Informe ante el <strong>Examen Periódico Universal (EPU)</strong>. Destaca el <strong>SIMORE</strong> (Sistema de Monitoreo de Recomendaciones), mecanismo interinstitucional para el seguimiento de recomendaciones internacionales, convertido en programa de cooperación Sur-Sur.</p>
+
+                    <h4 class="sub-title">2.2 Memoria histórica</h4>
+                    <p class="body">La <strong>Comisión de Verdad y Justicia</strong> (Ley Nº 2225/03) investigó las graves violaciones a los DDHH entre mayo de 1954 y octubre de 2003, con énfasis en la dictadura de Stroessner. La UGDH integra el ENABI (Equipo Nacional para investigación, búsqueda e identificación de personas del periodo 1954-1989).</p>
+
+                    <h4 class="sub-title">2.3 Sentencias y casos emblemáticos</h4>
+                    <p class="body">La Corte IDH ordenó reparaciones en casos como <strong>Panchito López</strong> (incendio del centro de reclusión de menores) y <strong>Goiburú y otros</strong> (desapariciones forzadas). En 2018 se inauguró la <strong>"Plaza de los Desaparecidos"</strong> junto al Palacio de López. La <strong>CICSI</strong> (Comisión Interinstitucional para Compromisos Internacionales en DDHH), presidida por el Vicepresidente y coordinada por el MRE, está a cargo del cumplimiento.</p>
+
+                    <h4 class="sub-title">2.4 Migrantes y refugiados</h4>
+                    <p class="body">Destaca la "Declaración de Asunción" (2006) contra la discriminación de connacionales en el exterior, los Acuerdos de Residencia del Mercosur, el fortalecimiento de <strong>CONARE</strong> (Comisión Nacional de Apátridas y Refugiados), y el acuerdo de <strong>Tercer País Seguro</strong> (2025) con EE.UU., que permite la recepción de hasta 25 solicitantes de refugio hispanohablantes por mes.</p>
+                </section>
+
+                <!-- 3.3 Eje 3: Medio Ambiente -->
+                <section class="block" id="u3-eje3">
+                    <h3><span class="hicon">🌿</span>Eje 3: Medio Ambiente y Recursos Hídricos</h3>
+                    <p class="body">Se fundamenta en la gobernanza multilateral preventiva y la defensa de la soberanía sobre recursos naturales estratégicos. La <strong>UDSMA</strong> (Unidad de Desarrollo Sostenible y Medioambiente) del MRE articula con el MADES. Se analizan tres sistemas hídricos transfronterizos:</p>
+
+                    <div class="grid3">
+                        <div class="icard">
+                            <div class="ic-top">💧</div>
+                            <h4>Acuífero Guaraní</h4>
+                            <p>~30.000 km³ de agua dulce compartidos entre Brasil, Argentina, Paraguay y Uruguay. Acuerdo de 2010, ratificado por Ley Nº 6037/2018. Comisión internacional para cooperación transfronteriza.</p>
+                        </div>
+                        <div class="icard">
+                            <div class="ic-top">🏞️</div>
+                            <h4>Cuenca del Pilcomayo</h4>
+                            <p>1.590 km, 290.000 km². Paraguay (44%), Bolivia (31%), Argentina (25%). 125 millones de ton. de sedimentos/año. Comisión Trinacional. Debate sobre presa El Carrizal (Bolivia).</p>
+                        </div>
+                        <div class="icard">
+                            <div class="ic-top">🐟</div>
+                            <h4>Cuenca del Río Apa</h4>
+                            <p>4.098 km², 380 km de frontera con Brasil. Ciudades gemelas Bella Vista Norte - Bela Vista. Comisión Mixta para desarrollo sostenible y gestión integrada.</p>
+                        </div>
+                    </div>
+
+                    <h4 class="sub-title">Diplomacia medioambiental actual</h4>
+                    <p class="body">El <strong>Presidente Santiago Peña</strong> defiende un modelo de desarrollo sostenible que rechaza restricciones climáticas injustas, destaca a Paraguay como potencia en energía limpia, seguridad alimentaria y agua dulce, y promueve la <strong>Ley de Créditos de Carbono</strong>. El <strong>Canciller Ramírez Lezcano</strong> enfoca sus discursos en la sostenibilidad productiva, el uso de energía limpia y la defensa de la soberanía frente a exigencias internacionales, particularmente las normativas ambientales de la UE sobre la soja.</p>
+                </section>
+
+                <!-- 3.4 Eje 5: Mercados -->
+                <section class="block" id="u3-eje5">
+                    <h3><span class="hicon">📈</span>Eje 5: Apertura de Mercados, Comercio Justo y Atracción de Inversiones</h3>
+                    <p class="body">La política económica internacional ha transitado desde un esquema predominantemente reivindicativo hacia una <strong>diplomacia de competitividad pragmática y apertura proactiva</strong>.</p>
+
+                    <h4 class="sub-title">Acuerdos de integración (vía ALADI)</h4>
+                    <div class="tbl-wrap">
+                        <table>
+                            <thead><tr><th>Acuerdo</th><th>Orientación</th></tr></thead>
+                            <tbody>
+                                <tr><td>ACE Nº 35 — Chile</td><td>Carne bovina y agroindustria</td></tr>
+                                <tr><td>ACE Nº 36 — Bolivia</td><td>Comercio fronterizo, integración energética y agroindustrial</td></tr>
+                                <tr><td>ACE Nº 58 — Perú / ACE Nº 59 — CAN</td><td>Sector manufacturero y alimentos</td></tr>
+                                <tr><td>ACE Nº 55 — México</td><td>Sector automotor y preferencias arancelarias parciales</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4 class="sub-title">Negociaciones extrazona del Mercosur</h4>
+                    <p class="body">El hito de 2026 es la entrada en vigor del <strong>Acuerdo Mercosur-Unión Europea</strong> (1 de mayo): acceso a 27 países y 700+ millones de consumidores, arancel cero para 95% de exportaciones paraguayas, capítulos para MiPyMEs. Se suman: <strong>Mercosur-Israel</strong> (primer TLC extrazona, 2007), <strong>Mercosur-SACU</strong> (África Austral), <strong>Mercosur-CCG</strong> (Golfo).</p>
+
+                    <h4 class="sub-title">OMC: tres ventajas estratégicas</h4>
+                    <div class="steps">
+                        <div class="step"><div class="sn">1</div><div><h4>Reglas Claras</h4><p>El principio de Nación Más Favorecida (NMF) protege contra imposiciones arancelarias arbitrarias.</p></div></div>
+                        <div class="step"><div class="sn">2</div><div><h4>Facilitación del Comercio</h4><p>Obliga a países de tránsito a agilizar el paso de mercancías, mitigando costos de la mediterraneidad.</p></div></div>
+                        <div class="step"><div class="sn">3</div><div><h4>Previsibilidad Jurídica</h4><p>Factor de atracción para la Inversión Extranjera Directa (IED).</p></div></div>
+                    </div>
+
+                    <h4 class="sub-title">Grado de inversión</h4>
+                    <p class="body">Paraguay obtuvo el <strong>"Grado de Inversión"</strong> de Moody's y Standard & Poor's, un certificado de buena conducta financiera que otorga: acceso a grandes capitales (muchos fondos tienen prohibido invertir en países sin este grado), financiamiento más barato y reconocimiento a largo plazo de la estabilidad macroeconómica.</p>
+
+                    <h4 class="sub-title">Institucionalidad</h4>
+                    <p class="body">El <strong>Viceministerio de Relaciones Económicas e Integración</strong> coordina las políticas de comercio e inversiones. Dentro de éste, la <strong>Dirección General de Comercio Exterior (DGCE)</strong> y la <strong>Dirección de Comercio Exterior e Inversiones (DCEI)</strong> se encargan de la promoción externa. La Cancillería trabaja con <strong>REDIEX</strong> (Red de Inversiones y Exportaciones, dependiente del MIC) para atracción de capitales. Al cierre de 2025, más de 2.000 empresas internacionales mostraron interés en el país.</p>
+                </section>
+
+                <!-- 3.5 Eje 6: Comercio justo -->
+                <section class="block" id="u3-eje6">
+                    <h3><span class="hicon">🌐</span>Eje 6: Comercio Exterior Justo y Equitativo</h3>
+                    <p class="body">La <strong>DGPE</strong> (Dirección General de Política Económica) atiende los asuntos económicos bilaterales y multilaterales. Paraguay busca una inserción internacional más justa, defendiendo condiciones especiales para superar sus desventajas estructurales como país en desarrollo y sin litoral.</p>
+
+                    <h4 class="sub-title">Pilares conceptuales</h4>
+                    <div class="pills">
+                        <span class="pill"><span class="pd"></span>Trato Especial y Diferenciado</span>
+                        <span class="pill"><span class="pd"></span>Reconocimiento de Asimetrías</span>
+                        <span class="pill"><span class="pd"></span>Eliminación de Barreras y Distorsiones</span>
+                    </div>
+
+                    <h4 class="sub-title">Evolución del discurso diplomático</h4>
+                    <div class="compare">
+                        <div class="col old">
+                            <div class="col-head">Antes</div>
+                            <ul>
+                                <li><span class="ic">•</span>Discurso predominantemente reivindicativo y jurídico</li>
+                                <li><span class="ic">•</span>Énfasis exclusivo en el reclamo de trato especial</li>
+                                <li><span class="ic">•</span>Foco en la defensa en foros multilaterales</li>
+                            </ul>
+                        </div>
+                        <div class="col new">
+                            <div class="col-head">Actualidad</div>
+                            <ul>
+                                <li><span class="ic">•</span>Enfoque marcadamente económico y pragmático</li>
+                                <li><span class="ic">•</span>Énfasis en inversiones, competitividad e innovación</li>
+                                <li><span class="ic">•</span>Diplomacia económica proactiva para abrir mercados</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h4 class="sub-title">Del GATT a la OMC</h4>
+                    <p class="body">El <strong>GATT</strong> fue suscrito en 1947 por 23 países como acuerdo provisional. Llegó a contar con 125 naciones y regular el 90% del comercio mundial. La <strong>OMC</strong> (creada por la Ronda Uruguay, 1986-1994) nació como organización formal con personalidad jurídica propia y sistema de solución de diferencias casi judicial. Hoy cuenta con 166 miembros (98% del comercio internacional). La Misión Permanente de Paraguay en Ginebra representa al país ante la OMC, en coordinación con la DOEM.</p>
+                </section>
+
+                <!-- 3.6 Eje 7: Integración física -->
+                <section class="block" id="u3-eje7">
+                    <h3><span class="hicon">🛤️</span>Eje 7: Integración Física, Logística y Conectividad</h3>
+                    <p class="body">El desarrollo de infraestructura y transporte multimodal es determinante para superar la mediterraneidad y consolidar al país como <strong>hub logístico en el Cono Sur</strong>.</p>
+
+                    <h4 class="sub-title">7.1 El Corredor Bioceánico</h4>
+                    <p class="body">Ha transitado a fase avanzada de ejecución: puente internacional <strong>Carmelo Peralta - Porto Murtinho</strong> y pavimentación de la Ruta PY15 como columna vertebral del Chaco. Orientado a reducir tiempos y costos de exportación hacia puertos del Pacífico. La <strong>DIFTI</strong> (Dirección de Integración Física y Transportes Internacionales) lidera el proyecto.</p>
+
+                    <h4 class="sub-title">7.2 La Hidrovía Paraguay-Paraná</h4>
+                    <p class="body">Corredor fluvial de más de <strong>3.400 km</strong> que conecta 5 países y canaliza aproximadamente el <strong>80% del comercio exterior</strong> paraguayo. Regulada por el <strong>Acuerdo de Santa Cruz de la Sierra</strong> (firmado 1992, en vigor 1995), que garantiza libertad de navegación, trato nacional y eliminación de trabas. Gobernada por el <strong>Comité Intergubernamental de la Hidrovía (CIH)</strong> con sede en Buenos Aires, la Comisión del Acuerdo en el MRE paraguayo, y la Secretaría Ejecutiva.</p>
+
+                    <div class="callout warn">
+                        <div class="ci">⚠</div>
+                        <div class="ct"><b>Tensiones actuales</b>El periodo actual se caracteriza por tensiones diplomáticas vinculadas a la aplicación de peajes, la soberanía fluvial y la necesidad de perfeccionar las reglas de gobernanza del acuerdo internacional de la hidrovía.</div>
+                    </div>
+
+                    <h4 class="sub-title">7.3 Mercosur como plataforma</h4>
+                    <p class="body">Para el presidente <strong>Santiago Peña</strong>, el Mercosur es una <strong>plataforma estratégica indispensable</strong> para la proyección internacional y económica. Su enfoque se centra en profundizar la integración basada en comercio, competitividad y firma de acuerdos del bloque.</p>
+                </section>
+
+                <!-- 3.7 Eje 8: Energía -->
+                <section class="block" id="u3-eje8">
+                    <h3><span class="hicon">⚡</span>Eje 8: Paraguay como Centro Estratégico de Energía</h3>
+                    <p class="body">La era hidroeléctrica comenzó con la Central Hidroeléctrica <strong>Acaray</strong> (1968), consolidándose con <strong>Itaipú</strong> (1984) y <strong>Yacyretá</strong> (1994). Paraguay es un hub energético regional: productor y exportador neto de energía limpia.</p>
+
+                    <div class="grid2">
+                        <div class="icard" style="--accent-c:#5b8cff;">
+                            <div class="ic-top">⚡</div>
+                            <h4>Itaipú (con Brasil)</h4>
+                            <p>En 2006, incremento del pago por cesión (~USD 100M/año). En 2008, eliminación del "factor de ajuste" de la deuda (beneficio estimado: USD 9.000M hasta 2023). En 2026: eficiencia del 95,85%, producción récord de 7.767 GWh, USD 107M en royalties y cesión. Plantas solares flotantes y capacitación fotovoltaica.</p>
+                        </div>
+                        <div class="icard" style="--accent-c:#2dd4bf;">
+                            <div class="ic-top">⚡</div>
+                            <h4>Yacyretá (con Argentina)</h4>
+                            <p>Memorándum 2006 para reestructuración de pasivos. Proyecto represa Aña Cuá: +270 MW (+10% generación anual), ingresos adicionales ~USD 90M/año. Inversiones en infraestructura social, salud y educación en Misiones, Itapúa y Ñe'embucú.</p>
+                        </div>
+                    </div>
+
+                    <h4 class="sub-title">Corpus Christi y nuevas alternativas</h4>
+                    <p class="body">Proyecto actualizado: 2.800 MW, inversión estimada de USD 4.200 millones. Se debate un nuevo plebiscito en la Provincia de Misiones (Argentina). Alternativa: <strong>Itatí-Itacorá</strong> en la zona compartida con Corrientes.</p>
+
+                    <h4 class="sub-title">Evolución de la doctrina energética presidencial</h4>
+                    <div class="tbl-wrap">
+                        <table>
+                            <thead><tr><th>Gobierno</th><th>Enfoque energético</th></tr></thead>
+                            <tbody>
+                                <tr><td>Fernando Lugo (2008-2012)</td><td>Renegociación del Tratado de Itaipú. Justicia energética. Aumento de compensaciones por cesión (2009).</td></tr>
+                                <tr><td>Horacio Cartes (2013-2018)</td><td>Modernización de ANDE. Inversión en redes de transmisión. Energía barata como ventaja competitiva para industrias.</td></tr>
+                                <tr><td>Mario Abdo (2018-2023)</td><td>Preparación de las bases de negociación del Anexo C de Itaipú (2023). Soberanía sobre excedentes.</td></tr>
+                                <tr><td>Santiago Peña (2023-presente)</td><td>Estrategia global: 100% electricidad renovable. Plan de Electrificación Universal. Hidrógeno verde, energía solar, energía nuclear modular.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- 3.8 Eje 9: Cooperación -->
+                <section class="block" id="u3-eje9">
+                    <h3><span class="hicon">🤝</span>Eje 9: Cooperación Internacional</h3>
+                    <p class="body">La cooperación internacional constituye el brazo solidario de la diplomacia, articulada para canalizar asistencia técnica y financiera hacia las prioridades de desarrollo. Regulada inicialmente por Decreto Nº 17.836/1997, hoy las funciones están centralizadas en el <strong>Viceministerio de Economía y Planificación</strong> del MEF (Ley Nº 7158/2023).</p>
+
+                    <h4 class="sub-title">Modalidades de cooperación</h4>
+                    <div class="grid3">
+                        <div class="icard"><h4>Bilateral Vertical</h4><p>De Estados con mayor desarrollo (Alemania, Francia, España, Japón, Corea, Taiwán). Reembolsable o no reembolsable.</p></div>
+                        <div class="icard"><h4>Bilateral Horizontal (Sur-Sur)</h4><p>En paridad con países similares (Argentina, Brasil, Chile, Colombia, México, Perú). Alta eficiencia por afinidad cultural. Costos compartidos.</p></div>
+                        <div class="icard"><h4>Multilateral</h4><p>De organismos internacionales: BID, Banco Mundial, UE, sistema ONU (FAO, PNUD, UNESCO).</p></div>
+                        <div class="icard"><h4>Triangular</h4><p>Fuente tradicional + país de desarrollo medio para beneficiar a otro. Ejemplo: CNIME + México + JICA (programa de maquila).</p></div>
+                        <div class="icard"><h4>Birregional</h4><p>Entre bloques (ej. Mercosur-UE) o en el seno de un espacio de integración.</p></div>
+                        <div class="icard"><h4>Intrarregional</h4><p>Entre miembros de un mismo bloque. Ejemplo: FOCEM del Mercosur.</p></div>
+                    </div>
+
+                    <h4 class="sub-title">Convenios recientes (2025-2026)</h4>
+                    <ul class="flist">
+                        <li><span class="li-ic">🇧🇷</span><div><b>Cooperación en Seguridad con Brasil (mayo 2026):</b> Combate al lavado de dinero, capacitación policial, comando bipartito Puerto Murtinho-Carmelo Peralta.</div></li>
+                        <li><span class="li-ic">🇨🇭</span><div><b>Convenio con Cruz Roja Suiza (abril 2026):</b> Gestión de riesgos de desastres naturales y fortalecimiento de salud pública.</div></li>
+                        <li><span class="li-ic">🇸🇻</span><div><b>Cooperación Académica con El Salvador (abril 2026):</b> MOU entre academias diplomáticas para profesionalización del cuerpo diplomático.</div></li>
+                        <li><span class="li-ic">🇯🇵</span><div><b>Acuerdo con Japón (octubre 2025):</b> 350 millones de yenes (~USD 2,4M) para equipar laboratorios de SENACSA.</div></li>
+                    </ul>
+
+                    <h4 class="sub-title">Tablero — Mapa de Cooperantes</h4>
+                    <p class="body">Visualizador interactivo del MEF para monitorear iniciativas y alinearlas con el PND. La planificación ha evolucionado del <strong>PND Paraguay 2030</strong> (2014, 3 ejes + 4to en 2021) al <strong>PND Paraguay 2050</strong> (2025, 4 pilares: Personas, Infraestructura, Ambiente, Instituciones).</p>
+                </section>
+
+                <!-- 3.9 Eje 10: Identidad -->
+                <section class="block" id="u3-eje10">
+                    <h3><span class="hicon">🎭</span>Eje 10: Identidad Nacional y Marca País</h3>
+                    <p class="body">Propone la identidad cultural y la riqueza autóctona como <strong>activos estratégicos de proyección internacional</strong>, no como elementos de consumo interno.</p>
+
+                    <h4 class="sub-title">Bilingüismo y guaraní</h4>
+                    <p class="body">Paraguay capitalizó su condición sociolingüística única (bilingüismo español-guaraní mayoritario). Se creó la <strong>Red de Educación Intercultural Multilingüe (RECIM)</strong> con Bolivia, Perú y Ecuador, con Secretaría Ejecutiva en Asunción. El guaraní fue reconocido como idioma oficial de trabajo del Mercosur. La <strong>Ley de Lenguas Nº 4251/2010</strong> y la Coordinación de la Unidad de Asuntos Lingüísticos de la Cancillería institucionalizaron este marco.</p>
+
+                    <h4 class="sub-title">Reconocimientos UNESCO y Marca País</h4>
+                    <p class="body">Hitos ante la UNESCO: inscripción del <strong>Tereré</strong> (2020) y el <strong>Poncho Para'í de 60 Listas de Piribebuy</strong> (2023) como Patrimonio Cultural Inmaterial. La Marca País ha evolucionado de una visión centrada en patrimonio histórico a una estrategia tridimensional: turismo + exportaciones no tradicionales + atracción de inversiones. En el <strong>Global Soft Power Index 2026</strong>, Paraguay ascendió al puesto 78 global (de 193 países) con mejoras en reputación, gobernanza e influencia cultural. Eventos deportivos de proyección: Juegos Suramericanos 2022, WRC, Panamericanos Junior 2025, Panamericanos 2031.</p>
+                </section>
+
+                <!-- 3.10 Eje 11: Seguridad -->
+                <section class="block" id="u3-eje11">
+                    <h3><span class="hicon">🔐</span>Eje 11: Seguridad y Lucha contra el Terrorismo</h3>
+                    <p class="body">Paraguay ha adoptado enfoques de seguridad amplios frente a amenazas complejas. Se defiende el Estado en sus tres componentes: <strong>población, territorio y gobierno</strong>. La articulación entre niveles político-estratégicos y operacionales es un desafío que requiere colaboración entre sector público, privado, académico y sociedad civil.</p>
+
+                    <h4 class="sub-title">Designación de grupos terroristas</h4>
+                    <p class="body">Paraguay ha oficializado designaciones formales mediante leyes y decretos presidenciales, activando bloqueos financieros y de inteligencia:</p>
+                    <ul class="flist">
+                        <li><span class="li-ic">🌍</span><div><b>Organizaciones internacionales:</b> Al Qaeda, Estado Islámico (ISIS), Hezbollah, Hamás (todas las alas), Cuerpo de la Guardia Revolucionaria Islámica (CGRI) de Irán.</div></li>
+                        <li><span class="li-ic">🌎</span><div><b>Organizaciones de impacto regional:</b> Primer Comando de la Capital (PCC), Comando Vermelho, Cartel de los Soles.</div></li>
+                    </ul>
+                </section>
+
+                <!-- 3.11 Eje 12: Multilateralismo -->
+                <section class="block" id="u3-eje12">
+                    <h3><span class="hicon">🏢</span>Eje 12: Participación Multilateral</h3>
+                    <p class="body">Como Estado de dimensiones moderadas, sin litoral y dependiente de un entorno internacional estable, Paraguay ha encontrado en el <strong>multilateralismo</strong> un mecanismo esencial para proyectar sus intereses, fortalecer su inserción y promover el desarrollo, la paz y la cooperación.</p>
+
+                    <h4 class="sub-title">Periodo 2003-2008</h4>
+                    <p class="body">Se otorgó especial importancia a la <strong>reforma del Consejo de Seguridad de la ONU</strong>, el fortalecimiento de la Asamblea General, la participación en operaciones de mantenimiento de la paz, y la obtención de cargos electivos en organismos internacionales. Se participó activamente en la OEA, Cumbres Iberoamericanas, Grupo de Río, FOCALAE, ASPA y ASA.</p>
+
+                    <h4 class="sub-title">Evolución hacia 2026</h4>
+                    <p class="body">Continuidad de principios con adaptación a nuevas dinámicas: cambio climático, seguridad alimentaria, transición energética, gobernanza tecnológica, crimen transnacional y resiliencia de cadenas logísticas. Paraguay busca posicionarse como <strong>proveedor confiable de alimentos, energía renovable y servicios logísticos regionales</strong>.</p>
+
+                    <div class="callout key">
+                        <div class="ci">✔</div>
+                        <div class="ct"><b>Conclusión del eje</b>Más que una ruptura, la política exterior paraguaya evidencia una <strong>evolución que mantiene sus fundamentos históricos</strong> mientras incorpora nuevas prioridades. La defensa del multilateralismo, la paz, la integración regional y la participación en organismos internacionales continúan como componentes esenciales.</div>
+                    </div>
+                </section>
+
+                <!-- 3.12 Eje 13: Servicio exterior -->
+                <section class="block" id="u3-eje13">
+                    <h3><span class="hicon">🎖️</span>Eje 13: Fortalecimiento del Servicio Exterior</h3>
+                    <p class="body">La profesionalización del servicio exterior ha sido un proceso gradual. El MRE se constituyó oficialmente en <strong>noviembre de 1855</strong>, durante el gobierno de Carlos Antonio López. El primer canciller fue <strong>José Falcón</strong>.</p>
+
+                    <h4 class="sub-title">Evolución jurídica</h4>
+                    <div class="tbl-wrap">
+                        <table>
+                            <thead><tr><th>Normativa</th><th>Contenido principal</th></tr></thead>
+                            <tbody>
+                                <tr><td>Ley N°219/1970</td><td>Primera ley que creó la "Carrera Diplomática y Consular" y el sistema de Escalafón (Adicto hasta Embajador). Creó la Academia Diplomática y el Tribunal de Calificaciones y Disciplina.</td></tr>
+                                <tr><td>Ley Nº 1335/1999</td><td>Modernización del Servicio Diplomático y Consular. Redefinió la carrera como cuerpo de funcionarios permanentes y técnicamente capacitados. Estableció porcentaje para nombramientos discrecionales.</td></tr>
+                                <tr><td>Ley Nº 1635/2000</td><td>Ley Orgánica del MRE. La Cancillería como órgano de planificar, coordinar y ejecutar la política exterior bajo la dirección del Presidente.</td></tr>
+                                <tr><td>Ley Nº 6935/2022</td><td>Unifica gestión del talento humano. Formaliza escalafón para personal administrativo y técnico. Complementada por Decreto Reglamentario N° 3907/2025. Marco jurídico vigente.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="callout info">
+                        <div class="ci">💡</div>
+                        <div class="ct"><b>Escalafón de la carrera diplomática (Ley 219/1970)</b>a) Adicto y Vice-cónsul → b) Segundo Secretario y Cónsul de Segunda → c) Primer Secretario y Cónsul de Primera → d) Consejero y Cónsul General → e) Ministro → f) Embajador.</div>
+                    </div>
+                </section>
+
+                <!-- 3.13 Preguntas de examen -->
+                <section class="block" id="u3-preguntas">
+                    <h3><span class="hicon">❓</span>Preguntas posibles de examen</h3>
+                    <div class="exam-box">
+                        <h4>🎓 Tema 3 — Ejes Estratégicos</h4>
+                        <ol>
+                            <li>Distinga entre frontera, límite, delimitación y demarcación. ¿Por qué Paraguay es el único país sudamericano con demarcación total con un limítrofe?</li>
+                            <li>¿Qué innovación conceptual impulsó la diplomacia paraguaya en materia de integración fronteriza?</li>
+                            <li>¿Qué es el SIMORE y cómo se convirtió en instrumento de cooperación Sur-Sur?</li>
+                            <li>Describa los tres sistemas hídricos transfronterizos analizados en el Eje 3 y su relevancia estratégica.</li>
+                            <li>¿Qué beneficios concretos trajo para Paraguay la obtención del Grado de Inversión?</li>
+                            <li>Compare el discurso diplomático "antes" y "actualidad" en materia de comercio exterior justo.</li>
+                            <li>¿Qué es la Hidrovía Paraguay-Paraná, cuánto del comercio exterior canaliza y cómo se gobierna?</li>
+                            <li>Explique la evolución de la doctrina energética presidencial de Lugo a Santiago Peña.</li>
+                            <li>Identifique y explique las seis modalidades de cooperación internacional del Paraguay.</li>
+                            <li>¿Cómo ha evolucionado la Marca País de Paraguay y qué resultados concretos se reflejan en el Global Soft Power Index 2026?</li>
+                            <li>¿Cuáles son las principales leyes que han regido la carrera diplomática y consular del Paraguay?</li>
+                            <li>Analice cómo el acuerdo Mercosur-Unión Europea (2026) representa la evolución de la política económica internacional paraguaya.</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <!-- 3.14 Resumen -->
+                <section class="block" id="u3-resumen">
+                    <h3><span class="hicon">🗂️</span>Resumen conceptual</h3>
+                    <div class="schema-box">
+                        <h4>Esquema jerárquico — Tema 3</h4>
+                        <ul>
+                            <li>Ejes Estratégicos (2003-2026)
+                                <ul>
+                                    <li>Eje 1: Soberanía (CNDL, demarcación, cooperación militar, integración fronteriza)</li>
+                                    <li>Eje 2: DDHH (UGDH, SIMORE, Corte IDH, CONARE, Tercer País Seguro)</li>
+                                    <li>Eje 3: Medio Ambiente (Acuífero Guaraní, Pilcomayo, Río Apa, Créditos de Carbono)</li>
+                                    <li>Eje 5: Mercados (ACEs vía ALADI, Mercosur-UE, OMC, Grado de Inversión)</li>
+                                    <li>Eje 6: Comercio Justo (GATT→OMC, trato diferenciado, DGPE)</li>
+                                    <li>Eje 7: Logística (Corredor Bioceánico, Hidrovía Paraguay-Paraná, DIFTI)</li>
+                                    <li>Eje 8: Energía (Itaipú, Yacyretá, Corpus Christi, doctrina presidencial)</li>
+                                    <li>Eje 9: Cooperación (6 modalidades, Tablero de Cooperantes, PND 2030→2050)</li>
+                                    <li>Eje 10: Identidad (guaraní, Marca País, soft power, UNESCO)</li>
+                                    <li>Eje 11: Seguridad (designación de terroristas, defensa nacional)</li>
+                                    <li>Eje 12: Multilateralismo (ONU, OEA, evolución continuista)</li>
+                                    <li>Eje 13: Servicio Exterior (Ley 219/1970 → Ley 6935/2022)</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="#inicio" class="back-link">↑ Volver al índice</a>
+                </section>
+            </div>
+
+            <!-- ===================== TEMA 4 ===================== -->
+            <div class="unit" id="unit-4" style="display:none;">
+                <div class="unit-hero">
+                    <span class="unit-num">TEMA 4</span>
+                    <h2>Síntesis Estructurada: Criterios Clave</h2>
+                    <p>Refuerzo de la guía basado en los criterios específicos solicitados.</p>
+                </div>
+
+                <!-- 4.1 Los Ejes -->
+                <section class="block" id="u4-ejes">
+                    <h3><span class="hicon">📌</span>1. Los ejes</h3>
+                    <p class="body">Los ejes estratégicos constituyen las directrices fundamentales a largo plazo que orientan las acciones internacionales del Estado, buscando la consecución del interés nacional y el desarrollo sostenible.</p>
+                    <div class="grid3">
+                        <div class="callout key">
+                            <span class="co-icon">📍</span>
+                            <strong>Naturaleza de los Ejes</strong>
+                            <p>Son lineamientos transversales que abarcan desde la soberanía y los derechos humanos hasta la integración física, medio ambiente, comercio justo y el fortalecimiento del servicio exterior, diseñados para superar la condición de mediterraneidad e impulsar la economía paraguaya.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4.2 Politica Exterior de Mexico -->
+                <section class="block" id="u4-mexico">
+                    <h3><span class="hicon">🇲🇽</span>2. Política exterior (Base teórica: Caso México)</h3>
+                    
+                    <h4 id="u4-mexico-conceptos">2.1 Conceptos</h4>
+                    <p class="body">La política exterior es el conjunto de acciones y decisiones que lleva a cabo un Estado en el sistema internacional, basadas en el interés nacional. Está determinada por condicionantes internos y externos, la capacidad de negociación, el proyecto de nación y la identidad nacional.</p>
+                    
+                    <h4 id="u4-mexico-componentes">2.2 Componentes</h4>
+                    <div class="grid2">
+                        <div class="kterm">
+                            <span>Estado</span>
+                            <p>Único actor que puede ejercer formalmente una política exterior y adquirir compromisos internacionales (gobierno central).</p>
+                        </div>
+                        <div class="kterm">
+                            <span>Proyecto de nación</span>
+                            <p>Conjunto de aspiraciones futuras de una comunidad colectiva. Da contenido al interés nacional basándose en un pasado compartido.</p>
+                        </div>
+                        <div class="kterm">
+                            <span>Capacidad de negociación</span>
+                            <p>Posibilidad de alcanzar el interés nacional. Determinada por factores tangibles (geografía, economía, milicia) e intangibles (prestigio, cohesión social).</p>
+                        </div>
+                        <div class="kterm">
+                            <span>Objetivos y estrategias</span>
+                            <p>Propósitos concretos y actividades específicas utilizando instrumentos diplomáticos, coercitivos o armados.</p>
+                        </div>
+                    </div>
+
+                    <h4 id="u4-mexico-interes">2.3 Interés nacional</h4>
+                    <p class="body">El motor de la política exterior. Representa las necesidades del Estado y tiene prelación en tres niveles fundamentales:</p>
+                    <ul class="steps">
+                        <li><strong>1. Sobrevivencia del Estado</strong> (seguridad y estabilidad).</li>
+                        <li><strong>2. Bienestar</strong> (crecimiento y desarrollo económicos).</li>
+                        <li><strong>3. Promoción de valores</strong> (proyección de principios internacionales).</li>
+                    </ul>
+
+                    <h4 id="u4-mexico-construccion">2.4 Construcción del interés</h4>
+                    <p class="body">La construcción del interés nacional puede ser abordada desde la interpretación del grupo en el poder (interés gubernamental vs. de Estado) o a partir de las condiciones estructurales, económicas y políticas coyunturales del país en el contexto del sistema internacional.</p>
+                </section>
+
+                <!-- 4.3 Politica Exterior Cabral Lopez -->
+                <section class="block" id="u4-cabral">
+                    <h3><span class="hicon">🇵🇾</span>3. Política exterior según Cabral López</h3>
+
+                    <h4 id="u4-cabral-integracion">3.1 Conceptos de Integración Regional</h4>
+                    <p class="body">La integración regional se entiende como un proceso dinámico. Para Paraguay, históricamente resultó ser una estrategia derivada de factores internos, utilizada a menudo como respuesta reactiva para superar crisis, mantener la estabilidad doméstica y superar el aislamiento, más que como una política activa e independiente.</p>
+
+                    <h4 id="u4-cabral-modelos">3.2 Modelos de Desarrollo</h4>
+                    <p class="body">Los planes de desarrollo nacionales han estado influidos históricamente por factores externos (Alianza para el Progreso, CEPAL) y han consolidado modelos de apertura comercial y agroexportación (triangulación, Itaipú). Sin embargo, la debilidad institucional permitió que la coyuntura político-económica, más que el plan formal, dictara el rumbo real.</p>
+                    
+                    <h4 id="u4-cabral-pe">3.3 Política Exterior</h4>
+                    <div class="callout info">
+                        <span class="co-icon">💡</span>
+                        <strong>Política Interméstica</strong>
+                        <p>La política exterior paraguaya se comporta como una política pública <em>interméstica</em>: las necesidades domésticas buscan soluciones en el plano externo, mientras que el contexto internacional influye directamente en las decisiones nacionales. Marcada por pragmatismo (alianzas para sostén interno del régimen) y movimientos pendulares entre países vecinos.</p>
+                    </div>
+
+                    <h4 id="u4-cabral-relaciones">3.4 Relaciones Internacionales</h4>
+                    <p class="body">Las relaciones de Paraguay siempre han estado supeditadas a mitigar la asimetría y mediterraneidad. Destaca su participación fluctuante en bloques (ALALC, ALADI, Mercosur, UNASUR) condicionada por liderazgos regionales y transiciones ideológicas en Sudamérica, evidenciando vulnerabilidad a presiones externas.</p>
+
+                    <h4 id="u4-cabral-historia">3.5 Historia de las Relaciones Internacionales</h4>
+                    <ul class="flist">
+                        <li><span class="f-ico">🏛️</span><strong>Aislamiento:</strong> Desde "madre de ciudades" al enclaustramiento francista.</li>
+                        <li><span class="f-ico">⚔️</span><strong>Conflictos:</strong> Guerra de la Triple Alianza y del Chaco definieron las limitaciones materiales posteriores.</li>
+                        <li><span class="f-ico">🤝</span><strong>Stronismo:</strong> Acercamiento a Brasil ("Marcha hacia el Este") y alineación con EE.UU. en Guerra Fría.</li>
+                        <li><span class="f-ico">🌐</span><strong>Democracia:</strong> Apertura e ingreso pleno al Mercosur en los 90s, atravesando crisis institucionales recientes.</li>
+                    </ul>
+
+                    <a href="#inicio" class="back-link">↑ Volver al índice</a>
+                </section>
+                <div class="section-divider"></div>
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="pg-footer">
+                <p>Guía de Estudio · <b>Política Exterior de la República del Paraguay</b></p>
+                <p style="margin-top:6px;">Material integrado a partir de fuentes académicas · Julio 2026</p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- BACK TO TOP -->
+    <button id="toTop" aria-label="Ir arriba">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+    </button>
+
+    <!-- ===================== JAVASCRIPT ===================== -->
+    <script>
+    (function () {
+        'use strict';
+
+        // ---- Theme toggle ----
+        var html = document.documentElement;
+        var themeBtn = document.getElementById('themeToggle');
+        var themeIcon = document.getElementById('themeIcon');
+        var saved = localStorage.getItem('theme');
+        if (saved === 'light') html.classList.add('light');
+
+        function updateIcon() {
+            if (html.classList.contains('light')) {
+                themeIcon.innerHTML = '<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>';
+            } else {
+                themeIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+            }
+        }
+        updateIcon();
+
+        themeBtn.addEventListener('click', function () {
+            html.classList.toggle('light');
+            localStorage.setItem('theme', html.classList.contains('light') ? 'light' : 'dark');
+            updateIcon();
+        });
+
+        // ---- Navigation data ----
+        var NAV = [
+            {
+                id: 'u1', n: '1', t: 'Fundamentos Teóricos',
+                sub: [
+                    { id: 'u1-concepto', t: '¿Qué es la Política Exterior?' },
+                    { id: 'u1-componentes', t: 'Componentes (Estado, Interés Nacional…)' },
+                    { id: 'u1-capacidad', t: 'Capacidad de Negociación' },
+                    { id: 'u1-objetivos', t: 'Objetivos, Estrategias, Instrumentos' },
+                    { id: 'u1-factores', t: 'Factores determinantes' },
+                    { id: 'u1-actores', t: 'Actores de la Política Exterior' },
+                    { id: 'u1-ppublica', t: 'PE como Política Pública' },
+                    { id: 'u1-preguntas', t: 'Preguntas de examen' },
+                    { id: 'u1-resumen', t: 'Resumen conceptual' }
+                ]
+            },
+            {
+                id: 'u2', n: '2', t: 'Integración Regional (1954-2018)',
+                sub: [
+                    { id: 'u2-contexto', t: '"Una isla rodeada de tierra"' },
+                    { id: 'u2-pepp', t: 'PE como Política Pública: caso PY' },
+                    { id: 'u2-planes', t: 'Planes de Desarrollo (1962-2018)' },
+                    { id: 'u2-stronismo', t: 'Integración en el stronismo' },
+                    { id: 'u2-democracia', t: 'Transición democrática e integración' },
+                    { id: 'u2-reflexiones', t: 'Reflexiones finales' },
+                    { id: 'u2-preguntas', t: 'Preguntas de examen' },
+                    { id: 'u2-resumen', t: 'Resumen conceptual' }
+                ]
+            },
+            {
+                id: 'u3', n: '3', t: 'Ejes Estratégicos (2003-2026)',
+                sub: [
+                    { id: 'u3-eje1', t: 'Eje 1: Soberanía Territorial' },
+                    { id: 'u3-eje2', t: 'Eje 2: Democracia y DDHH' },
+                    { id: 'u3-eje3', t: 'Eje 3: Medio Ambiente' },
+                    { id: 'u3-eje5', t: 'Eje 5: Mercados e Inversiones' },
+                    { id: 'u3-eje6', t: 'Eje 6: Comercio Justo' },
+                    { id: 'u3-eje7', t: 'Eje 7: Logística y Conectividad' },
+                    { id: 'u3-eje8', t: 'Eje 8: Energía' },
+                    { id: 'u3-eje9', t: 'Eje 9: Cooperación Internacional' },
+                    { id: 'u3-eje10', t: 'Eje 10: Identidad y Marca País' },
+                    { id: 'u3-eje11', t: 'Eje 11: Seguridad' },
+                    { id: 'u3-eje12', t: 'Eje 12: Multilateralismo' },
+                    { id: 'u3-eje13', t: 'Eje 13: Servicio Exterior' },
+                    { id: 'u3-preguntas', t: 'Preguntas de examen' },
+                    { id: 'u3-resumen', t: 'Resumen conceptual' }
+                ]
+            },
+            {
+                id: 'u4', n: '4', t: 'Síntesis Estructurada',
+                sub: [
+                    { id: 'u4-ejes', t: '1. Los Ejes' },
+                    { id: 'u4-mexico', t: '2. PE Teórica (México)' },
+                    { id: 'u4-cabral', t: '3. PE (Cabral López)' }
+                ]
+            }
+        ];
+
+        // ---- Build nav ----
+        var nav = document.getElementById('nav');
+        NAV.forEach(function (u) {
+            var wrap = document.createElement('div');
+            wrap.className = 'nav-unit';
+            var btn = document.createElement('button');
+            btn.className = 'nav-unit-btn';
+            btn.dataset.target = u.id;
+            btn.innerHTML = '<span class="nav-num">' + u.n + '</span>' + u.t +
+                '<svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>';
+            var subWrap = document.createElement('div');
+            subWrap.className = 'nav-sub';
+            subWrap.id = 'sub-' + u.id;
+            u.sub.forEach(function (s) {
+                var a = document.createElement('a');
+                a.href = '#' + s.id;
+                a.dataset.id = s.id;
+                a.textContent = s.t;
+                subWrap.appendChild(a);
+            });
+            btn.addEventListener('click', function () {
+                var isOpen = subWrap.classList.contains('open');
+                document.querySelectorAll('.nav-sub.open').forEach(function (el) { el.classList.remove('open'); });
+                document.querySelectorAll('.nav-unit-btn.open').forEach(function (el) { el.classList.remove('open'); });
+                if (!isOpen) { subWrap.classList.add('open'); btn.classList.add('open'); }
+                document.getElementById(u.id).scrollIntoView({ behavior: 'smooth' });
+                closeMobile();
+            });
+            wrap.appendChild(btn);
+            wrap.appendChild(subWrap);
+            nav.appendChild(wrap);
+        });
+
+        // ---- Sub-links ----
+        nav.querySelectorAll('.nav-sub a').forEach(function (a) {
+            a.addEventListener('click', function (e) {
+                e.preventDefault();
+                var el = document.getElementById(a.dataset.id);
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+                closeMobile();
+            });
+        });
+
+        // ---- Dashboard cards ----
+        document.querySelectorAll('.mod-card').forEach(function (c) {
+            c.addEventListener('click', function (e) {
+                e.preventDefault();
+                var id = c.getAttribute('href').slice(1);
+                var el = document.getElementById(id);
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // ---- Scroll spy ----
+        var allSections = Array.from(document.querySelectorAll('section.block'));
+        var units = Array.from(document.querySelectorAll('.unit'));
+        var crumb = document.getElementById('crumb');
+        var unitTitles = {
+            u1: 'Tema 1 · Fundamentos Teóricos',
+            u2: 'Tema 2 · Integración Regional',
+            u3: 'Tema 3 · Ejes Estratégicos'
+        };
+
+        function setActive() {
+            var scrollPos = window.scrollY + 130;
+            var currentSub = null;
+            for (var i = 0; i < allSections.length; i++) {
+                if (allSections[i].offsetTop <= scrollPos) currentSub = allSections[i].id;
+            }
+            var currentUnit = null;
+            for (var j = 0; j < units.length; j++) {
+                if (units[j].offsetTop <= scrollPos + 60) currentUnit = units[j].id;
+            }
+            nav.querySelectorAll('.nav-sub a').forEach(function (a) {
+                a.classList.toggle('active', a.dataset.id === currentSub);
+            });
+            nav.querySelectorAll('.nav-unit-btn').forEach(function (b) {
+                var isCur = b.dataset.target === currentUnit;
+                b.classList.toggle('active', isCur);
+                var sub = document.getElementById('sub-' + b.dataset.target);
+                if (isCur && !sub.classList.contains('open')) {
+                    document.querySelectorAll('.nav-sub.open').forEach(function (el) { el.classList.remove('open'); });
+                    document.querySelectorAll('.nav-unit-btn.open').forEach(function (el) { el.classList.remove('open'); });
+                    sub.classList.add('open');
+                    b.classList.add('open');
+                }
+            });
+            if (currentUnit && window.scrollY > 200) {
+                var subObj = currentSub ? findSub(currentSub) : null;
+                crumb.innerHTML = '<b>' + (unitTitles[currentUnit] || '') + '</b>' + (subObj ? ' · ' + subObj.t : '');
+            } else {
+                crumb.innerHTML = '<b>Inicio</b>';
+            }
+        }
+
+        function findSub(id) {
+            for (var u = 0; u < NAV.length; u++) { for (var s = 0; s < NAV[u].sub.length; s++) { if (NAV[u].sub[s].id === id) return NAV[u].sub[s]; } }
+            return null;
+        }
+
+        // ---- Progress ----
+        var bar = document.getElementById('progress-bar');
+        var pctText = document.getElementById('pctText');
+        var toTop = document.getElementById('toTop');
+
+        function onScroll() {
+            var h = document.documentElement;
+            var scrolled = h.scrollTop;
+            var max = h.scrollHeight - h.clientHeight;
+            var pct = max > 0 ? (scrolled / max) * 100 : 0;
+            bar.style.width = pct + '%';
+            pctText.textContent = Math.round(pct) + '%';
+            toTop.classList.toggle('show', scrolled > 500);
+            setActive();
+        }
+
+        var ticking = false;
+        window.addEventListener('scroll', function () {
+            if (!ticking) {
+                window.requestAnimationFrame(function () { onScroll(); ticking = false; });
+                ticking = true;
+            }
+        });
+        toTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+        // ---- Mobile ----
+        var sidebar = document.getElementById('sidebar');
+        var overlay = document.getElementById('overlay');
+        var menuToggle = document.getElementById('menuToggle');
+        function closeMobile() { sidebar.classList.remove('open'); overlay.classList.remove('show'); }
+        menuToggle.addEventListener('click', function () { sidebar.classList.toggle('open'); overlay.classList.toggle('show'); });
+        overlay.addEventListener('click', closeMobile);
+
+        // ---- Full-text search with highlighting ----
+        var searchInput = document.getElementById('search');
+        var contentArea = document.querySelector('.content');
+        var navUnits = Array.from(document.querySelectorAll('.nav-unit'));
+        var originalHTML = null;
+
+        function clearHighlights() {
+            if (originalHTML !== null) {
+                contentArea.innerHTML = originalHTML;
+                originalHTML = null;
+                // Re-bind dashboard cards
+                document.querySelectorAll('.mod-card').forEach(function (c) {
+                    c.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        var id = c.getAttribute('href').slice(1);
+                        var el = document.getElementById(id);
+                        if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    });
+                });
+                // Re-bind back links
+                document.querySelectorAll('.back-link').forEach(function(a) {
+                    a.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    });
+                });
+            }
+        }
+
+        function highlightText(node, query) {
+            if (node.nodeType === 3) {
+                var text = node.nodeValue;
+                var lower = text.toLowerCase();
+                var idx = lower.indexOf(query);
+                if (idx >= 0) {
+                    var span = document.createElement('span');
+                    span.innerHTML = text.substring(0, idx) + '<mark>' + text.substring(idx, idx + query.length) + '</mark>' + text.substring(idx + query.length);
+                    node.parentNode.replaceChild(span, node);
+                    return true;
+                }
+            } else if (node.nodeType === 1 && node.tagName !== 'SCRIPT' && node.tagName !== 'STYLE' && node.tagName !== 'MARK') {
+                var children = Array.from(node.childNodes);
+                for (var i = 0; i < children.length; i++) {
+                    highlightText(children[i], query);
+                }
+            }
+            return false;
+        }
+
+        searchInput.addEventListener('input', function () {
+            var q = searchInput.value.trim().toLowerCase();
+            clearHighlights();
+
+            // Nav filtering
+            navUnits.forEach(function (u) {
+                var btn = u.querySelector('.nav-unit-btn');
+                var unitMatch = btn.textContent.toLowerCase().indexOf(q) !== -1;
+                var anyChild = false;
+                var sub = u.querySelector('.nav-sub');
+                u.querySelectorAll('.nav-sub a').forEach(function (a) {
+                    var m = a.textContent.toLowerCase().indexOf(q) !== -1;
+                    a.style.display = (m || unitMatch || !q) ? '' : 'none';
+                    if (m) anyChild = true;
+                });
+                if (!q || unitMatch || anyChild) {
+                    u.style.display = '';
+                    if (q) { sub.classList.add('open'); btn.classList.add('open'); }
+                } else {
+                    u.style.display = 'none';
+                }
+            });
+
+            // Content highlighting
+            if (q.length >= 2) {
+                originalHTML = contentArea.innerHTML;
+                highlightText(contentArea, q);
+                var firstMark = contentArea.querySelector('mark');
+                if (firstMark) {
+                    firstMark.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        });
+
+        // ---- Back-links smooth scroll ----
+        document.querySelectorAll('.back-link').forEach(function(a) {
+            a.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // ---- Init ----
+        document.getElementById('sub-u1').classList.add('open');
+        document.querySelector('.nav-unit-btn').classList.add('open');
+        onScroll();
+    })();
+    </script>
+</body>
+</html>
