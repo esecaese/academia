@@ -181,12 +181,14 @@
         .topbar-meta { display: flex; align-items: center; gap: 18px; font-size: 12.5px; color: var(--text-dim); }
         .topbar-meta .pct { color: var(--accent); font-weight: 700; font-family: var(--font-heading); }
 
-        .theme-toggle {
+        .theme-toggle, .tts-global-btn {
             background: var(--surface-2); border: 1px solid var(--border); color: var(--text);
             width: 38px; height: 38px; border-radius: 10px; cursor: pointer;
-            display: grid; place-items: center; transition: border-color 0.2s;
+            display: grid; place-items: center; transition: border-color 0.2s, background 0.2s;
         }
-        .theme-toggle:hover { border-color: var(--primary); }
+        .theme-toggle:hover, .tts-global-btn:hover { border-color: var(--primary); }
+        
+        .tts-global-btn.active { color: var(--accent); border-color: var(--accent); }
 
         .content { max-width: 880px; margin: 0 auto; padding: 0 40px 120px; }
 
@@ -261,6 +263,18 @@
             font-family: var(--font-heading); font-size: 20px; font-weight: 700;
             margin-bottom: 6px; display: flex; align-items: center; gap: 11px; letter-spacing: -0.2px;
         }
+        
+        /* TTS Buttons Styles */
+        .tts-title-wrap { display: flex; align-items: center; gap: 11px; flex: 1; }
+        .tts-section-btn {
+            background: var(--surface-2); border: 1px solid var(--border);
+            color: var(--text-soft); width: 32px; height: 32px; border-radius: 8px;
+            cursor: pointer; display: grid; place-items: center; flex-shrink: 0;
+            transition: all 0.2s;
+        }
+        .tts-section-btn:hover { background: var(--surface-3); color: var(--primary); border-color: var(--primary); }
+        .tts-section-btn.active { color: var(--accent); border-color: var(--accent); }
+
         section.block>h3 .hicon {
             width: 30px; height: 30px; flex-shrink: 0; border-radius: 9px;
             background: var(--surface-2); border: 1px solid var(--border);
@@ -448,49 +462,84 @@
             .topbar-meta .lbl { display: none; }
         }
 
-        /* ===== PRINT A4 ===== */
+        /* ========================================================================= */
+        /* ========================== PRINT A4 OPTIMIZATION ========================== */
+        /* ========================================================================= */
         @media print {
             @page { size: A4; margin: 2cm 2cm 2.5cm 2cm; }
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            
+            /* Hide UI Elements */
+            .sidebar, .overlay, #progress-bar, #toTop, .topbar, .hero-badge, .hero-stats,
+            .modules-grid, .back-link, .theme-toggle, .menu-toggle, #search, 
+            .tts-global-btn, .tts-section-btn { 
+                display: none !important; 
+            }
+            
+            /* Basic resets for Print */
             html, body {
                 background: white !important; color: #1a1e2e !important;
                 font-size: 11pt !important; line-height: 1.6 !important;
             }
-            .sidebar, .overlay, #progress-bar, #toTop, .topbar, .hero-badge, .hero-stats,
-            .modules-grid, .back-link, .theme-toggle, .menu-toggle, #search { display: none !important; }
             .main { margin-left: 0 !important; }
             .content { max-width: 100% !important; padding: 0 !important; }
+            
+            /* Hero adjustments */
             .hero { padding: 0 0 20px !important; text-align: left !important; }
             .hero h1 {
                 font-size: 24pt !important; background: none !important;
                 -webkit-text-fill-color: #1a1e2e !important; color: #1a1e2e !important;
             }
             .hero p { font-size: 11pt !important; color: #4a5068 !important; max-width: 100% !important; margin: 8px 0 16px !important; }
+            
+            /* Section and Pages Breaks */
             .unit { page-break-before: always; padding-top: 0 !important; }
             .unit:first-of-type { page-break-before: avoid; }
+            section.block { page-break-inside: auto; padding-top: 18px !important; }
+            
+            /* PREVENT AWKWARD JUMPS (Orphans/Widows & Avoid Breaks) */
+            p { orphans: 3; widows: 3; }
+            h1, h2, h3, h4, h5 { 
+                page-break-after: avoid !important; 
+                break-after: avoid !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+                color: #1a1e2e !important;
+            }
+            
+            /* Components that MUST NOT break across pages */
+            .callout, .kterm, .card, .exam-box, .schema-box, .icard, .step, 
+            table, tr, .flist li, .compare .col, .pill {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+                border: 1px solid #ccc !important; 
+                background: #f8f9fb !important;
+                margin-bottom: 12px !important;
+            }
+            
+            /* Styling components for print ink saving */
             .unit-head {
                 background: #f0f2f8 !important; border: 1px solid #ccc !important;
                 page-break-after: avoid; margin-bottom: 12px !important;
             }
-            .unit-head::after { display: none; }
+            .unit-head::after { display: none !important; }
             .unit-badge { background: #3b6de6 !important; }
-            section.block { page-break-inside: avoid; padding-top: 18px !important; }
-            .callout, .kterm, .card, .exam-box, .schema-box { page-break-inside: avoid; border: 1px solid #ccc !important; background: #f8f9fb !important; }
+            
             .callout { border-left: 4px solid #3b6de6 !important; }
             .callout.key { border-left-color: #0d9485 !important; }
             .callout.warn { border-left-color: #d4990a !important; }
             .callout.danger { border-left-color: #dc3545 !important; }
             .callout.law { border-left-color: #7c5cbf !important; }
-            table { page-break-inside: avoid; font-size: 10pt !important; }
+            
+            table { font-size: 10pt !important; }
             thead th { background: #e8eaf0 !important; color: #1a1e2e !important; }
             tbody td { color: #333 !important; }
             .tbl-wrap { border: 1px solid #ccc !important; }
+            
             .section-divider { background: #ccc !important; }
             p.body, .ct, .flist li, .icard p, .step p, .exam-box li { color: #333 !important; }
-            .text, h2, h3, h4, h5, b, strong { color: #1a1e2e !important; }
+            b, strong { color: #1a1e2e !important; font-weight: 700 !important; }
             a { color: #3b6de6 !important; text-decoration: none !important; }
-            .icard, .flist li, .step, .pill { border: 1px solid #ccc !important; background: #f8f9fb !important; }
-            .compare .col { border: 1px solid #ccc !important; }
             .pg-footer { border-top: 1px solid #ccc !important; }
         }
     </style>
@@ -530,6 +579,12 @@
             <div class="topbar-meta">
                 <span><span class="lbl">Progreso </span><span class="pct" id="pctText">0%</span></span>
             </div>
+            
+            <!-- Global TTS Button -->
+            <button class="tts-global-btn" id="ttsGlobal" aria-label="Leer todo el documento" title="Leer documento completo (Voz a texto)">
+                <svg id="ttsGlobalIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+            </button>
+            
             <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema" title="Modo Claro / Oscuro">
                 <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             </button>
@@ -1675,7 +1730,127 @@
             localStorage.setItem('theme', html.classList.contains('light') ? 'light' : 'dark');
             updateIcon();
         });
+        
+        // ==============================================================================
+        // ---- TTS (TEXT-TO-SPEECH) IMPLEMENTATION ----
+        // ==============================================================================
+        const synth = window.speechSynthesis;
+        let activeTTSBtn = null;
+        let currentUtterance = null;
+        
+        // SVG Icons
+        const playIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
+        const stopIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>';
+        const globalPlayIcon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>';
+        const globalStopIcon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="6" width="12" height="12"></rect><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>';
 
+        // Function to extract clean text from a DOM element (removes hidden items, buttons, etc)
+        function getCleanText(element) {
+            let clone = element.cloneNode(true);
+            // Remove TTS buttons from the clone before extracting text
+            let btns = clone.querySelectorAll('.tts-section-btn');
+            btns.forEach(b => b.remove());
+            return clone.innerText.trim();
+        }
+
+        // Global TTS stop function
+        function stopTTS() {
+            synth.cancel();
+            if (activeTTSBtn) {
+                if(activeTTSBtn.id === 'ttsGlobal') {
+                    activeTTSBtn.innerHTML = globalPlayIcon;
+                } else {
+                    activeTTSBtn.innerHTML = playIcon;
+                }
+                activeTTSBtn.classList.remove('active');
+                activeTTSBtn = null;
+            }
+        }
+
+        // Play specific text
+        function playTTS(text, btnElement) {
+            // If clicking the currently active button, just stop
+            if (activeTTSBtn === btnElement) {
+                stopTTS();
+                return;
+            }
+            
+            // Stop any ongoing speech
+            stopTTS();
+            
+            if(!text) return;
+
+            // Set new active state
+            activeTTSBtn = btnElement;
+            activeTTSBtn.classList.add('active');
+            activeTTSBtn.innerHTML = (btnElement.id === 'ttsGlobal') ? globalStopIcon : stopIcon;
+
+            currentUtterance = new SpeechSynthesisUtterance(text);
+            
+            // Prefer Spanish voice if available
+            let voices = synth.getVoices();
+            let esVoice = voices.find(v => v.lang.startsWith('es'));
+            if(esVoice) currentUtterance.voice = esVoice;
+            
+            currentUtterance.rate = 1.0;
+            currentUtterance.pitch = 1.0;
+            
+            currentUtterance.onend = () => stopTTS();
+            currentUtterance.onerror = () => stopTTS();
+
+            synth.speak(currentUtterance);
+        }
+
+        // INJECT SECTION TTS BUTTONS DINAMICALLY (WITHOUT ALTERING HTML STRUCTURE MANUALLY)
+        document.querySelectorAll('section.block > h3').forEach(h3 => {
+            // Wrapper to keep title and button nicely aligned
+            const wrap = document.createElement('div');
+            wrap.className = 'tts-title-wrap';
+            
+            // Move contents of h3 into the wrapper safely
+            while(h3.firstChild) {
+                wrap.appendChild(h3.firstChild);
+            }
+            
+            // Create TTS button for this section
+            const btn = document.createElement('button');
+            btn.className = 'tts-section-btn';
+            btn.title = "Escuchar esta sección";
+            btn.setAttribute('aria-label', "Leer sección en voz alta");
+            btn.innerHTML = playIcon;
+            
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const sectionContent = getCleanText(h3.parentElement);
+                playTTS(sectionContent, btn);
+            });
+            
+            // Append back to H3
+            h3.appendChild(wrap);
+            h3.appendChild(btn);
+            h3.style.display = 'flex';
+            h3.style.justifyContent = 'space-between';
+            h3.style.alignItems = 'center';
+        });
+
+        // GLOBAL TTS BUTTON LISTENER
+        document.getElementById('ttsGlobal').addEventListener('click', function(e) {
+            e.preventDefault();
+            // Collect text from all .unit containers to read everything
+            let fullText = "Guía de Estudio. Política Exterior del Paraguay. ";
+            document.querySelectorAll('.unit').forEach(unit => {
+                if(unit.style.display !== 'none') {
+                    fullText += getCleanText(unit) + ". ";
+                }
+            });
+            playTTS(fullText, this);
+        });
+
+        // Ensure TTS stops when user leaves page
+        window.addEventListener('beforeunload', stopTTS);
+
+        // ==============================================================================
         // ---- Navigation data ----
         var NAV = [
             {
@@ -1877,6 +2052,7 @@
             if (originalHTML !== null) {
                 contentArea.innerHTML = originalHTML;
                 originalHTML = null;
+                
                 // Re-bind dashboard cards
                 document.querySelectorAll('.mod-card').forEach(function (c) {
                     c.addEventListener('click', function (e) {
@@ -1893,6 +2069,30 @@
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                     });
                 });
+                
+                // Note: Re-inject TTS buttons because replacing innerHTML removes them
+                document.querySelectorAll('section.block > h3').forEach(h3 => {
+                    const wrap = document.createElement('div');
+                    wrap.className = 'tts-title-wrap';
+                    while(h3.firstChild) { wrap.appendChild(h3.firstChild); }
+                    
+                    const btn = document.createElement('button');
+                    btn.className = 'tts-section-btn';
+                    btn.title = "Escuchar esta sección";
+                    btn.innerHTML = playIcon;
+                    
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        playTTS(getCleanText(h3.parentElement), btn);
+                    });
+                    
+                    h3.appendChild(wrap);
+                    h3.appendChild(btn);
+                    h3.style.display = 'flex';
+                    h3.style.justifyContent = 'space-between';
+                    h3.style.alignItems = 'center';
+                });
             }
         }
 
@@ -1907,7 +2107,7 @@
                     node.parentNode.replaceChild(span, node);
                     return true;
                 }
-            } else if (node.nodeType === 1 && node.tagName !== 'SCRIPT' && node.tagName !== 'STYLE' && node.tagName !== 'MARK') {
+            } else if (node.nodeType === 1 && node.tagName !== 'SCRIPT' && node.tagName !== 'STYLE' && node.tagName !== 'MARK' && !node.classList.contains('tts-section-btn')) {
                 var children = Array.from(node.childNodes);
                 for (var i = 0; i < children.length; i++) {
                     highlightText(children[i], query);
@@ -1965,4 +2165,4 @@
     })();
     </script>
 </body>
-</html>
+</html
