@@ -3,61 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulador de Examen final - Política Exterior</title>
+    <title>Simulador Avanzado - Política Exterior</title>
     <style>
-        /* Variables extraídas de index.html */
         :root {
-            --bg: #f8fafc;
-            --surface: #ffffff;
-            --surface-2: #f1f5f9;
-            --text: #0f172a;
-            --text-dim: #64748b;
-            --border: #e2e8f0;
-            --primary: #3b82f6;
-            --primary-soft: #eff6ff;
-            --accent: #2563eb;
-            --danger: #ef4444;
-            --success: #10b981;
-            --font-main: 'Inter', -apple-system, sans-serif;
+            --bg: #f8fafc; --surface: #ffffff; --surface-2: #f1f5f9;
+            --text: #0f172a; --text-dim: #64748b; --border: #e2e8f0;
+            --primary: #3b82f6; --primary-soft: #eff6ff; --accent: #2563eb;
+            --danger: #ef4444; --success: #10b981; --font-main: 'Inter', sans-serif;
         }
-
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg: #0b0f19;
-                --surface: #111827;
-                --surface-2: #1e293b;
-                --text: #f1f5f9;
-                --text-dim: #94a3b8;
-                --border: #334155;
-                --primary: #3b82f6;
-                --primary-soft: #1e3a8a;
-                --accent: #60a5fa;
+                --bg: #0b0f19; --surface: #111827; --surface-2: #1e293b;
+                --text: #f1f5f9; --text-dim: #94a3b8; --border: #334155;
+                --primary: #3b82f6; --primary-soft: #1e3a8a;
             }
         }
-
-        body { font-family: var(--font-main); background: var(--bg); color: var(--text); margin: 0; padding: 20px; line-height: 1.6; }
+        body { font-family: var(--font-main); background: var(--bg); color: var(--text); padding: 20px; line-height: 1.6; }
         .container { max-width: 800px; margin: 0 auto; }
         .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 30px; margin-bottom: 20px; }
-        
-        .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+        .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.2s; }
         .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        
         .option-btn {
             display: block; width: 100%; text-align: left; background: var(--surface-2); border: 1px solid var(--border);
             color: var(--text); padding: 15px; margin-bottom: 10px; border-radius: 10px; cursor: pointer; transition: 0.2s;
         }
         .option-btn.selected { border-color: var(--primary); background: var(--primary-soft); box-shadow: 0 0 0 2px var(--primary); }
-
         .screen { display: none; }
         .screen.active { display: block; }
-        
         select { width: 100%; padding: 10px; margin-bottom: 20px; border-radius: 8px; background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
-        
         .result-item { border-bottom: 1px solid var(--border); padding: 20px 0; }
         .badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; margin-bottom: 10px; }
         .badge.correct { background: rgba(16, 185, 129, 0.2); color: var(--success); }
         .badge.incorrect { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
-        
         .explanation { background: var(--surface-2); padding: 15px; border-radius: 8px; margin-top: 10px; border-left: 4px solid var(--danger); font-size: 14px; }
     </style>
 </head>
@@ -65,8 +42,8 @@
 
 <div class="container">
     <div id="setup-screen" class="screen card active">
-        <h1 style="text-align: center;">Simulador Avanzado</h1>
-        <p style="text-align: center; color: var(--text-dim);">Política Exterior del Paraguay</p>
+        <h1 style="text-align: center;">Simulador Nivel Experto</h1>
+        <p style="text-align: center; color: var(--text-dim);">Política Exterior del Paraguay - Sin preguntas repetidas</p>
         <label>¿Cuántas preguntas deseas responder?</label>
         <select id="q-count">
             <option value="10">10 Preguntas</option>
@@ -74,7 +51,7 @@
             <option value="30">30 Preguntas</option>
             <option value="40" selected>40 Preguntas (Completo)</option>
         </select>
-        <button class="btn" style="width: 100%;" onclick="startQuiz()">Comenzar Examen</button>
+        <button class="btn" style="width: 100%;" onclick="startQuiz()">Comenzar Examen Aleatorio</button>
     </div>
 
     <div id="quiz-screen" class="screen card">
@@ -97,1705 +74,1364 @@
 </div>
 
 <script>
-    // Se inyecta la base de datos de preguntas
     const ALL_QUESTIONS = [
   {
-    "question": "Seg\u00fan el enfoque constructivista de las Relaciones Internacionales, \u00bfqu\u00e9 elemento determina principalmente la pol\u00edtica exterior de un Estado?",
-    "correct": "La identidad nacional y los valores socioculturales.",
+    "question": "En el debate sobre el 'inter\u00e9s nacional', \u00bfcu\u00e1l es el postulado central del constructivismo en contraposici\u00f3n al realismo cl\u00e1sico?",
+    "correct": "Que el inter\u00e9s nacional no est\u00e1 dado por la anarqu\u00eda del sistema, sino que se construye a partir de la identidad y los valores socioculturales.",
     "incorrects": [
       {
-        "text": "La lucha de clases y el modelo econ\u00f3mico.",
-        "reason": "Esta es la visi\u00f3n marxista de la pol\u00edtica exterior."
+        "text": "Que el inter\u00e9s nacional debe enfocarse en la cooperaci\u00f3n econ\u00f3mica absoluta para evitar la guerra militar.",
+        "reason": "Esta es una premisa del institucionalismo liberal, no del constructivismo."
       },
       {
-        "text": "La seguridad nacional y la supervivencia del Estado.",
-        "reason": "Esta es la perspectiva del realismo pol\u00edtico."
+        "text": "Que la identidad nacional es irrelevante y las decisiones se basan en un c\u00e1lculo puramente racional de costo-beneficio.",
+        "reason": "Al contrario, el constructivismo rechaza la racionalidad pura divorciada de la identidad."
       },
       {
-        "text": "La promoci\u00f3n del libre comercio y el desarrollo social.",
-        "reason": "Este es el enfoque liberal o idealista."
+        "text": "Que el inter\u00e9s supremo del Estado se define exclusivamente por su capacidad de proyecci\u00f3n de poder duro.",
+        "reason": "Esa es la postura del realismo estructural (neorealismo)."
       },
       {
-        "text": "La capacidad militar y tecnol\u00f3gica exclusivamente.",
-        "reason": "Esto corresponde al poder duro dentro del realismo."
+        "text": "Que no existe un inter\u00e9s nacional \u00fanico, sino un reflejo de los intereses de la clase econ\u00f3mica dominante.",
+        "reason": "Este es el postulado del marxismo y la teor\u00eda de la dependencia."
       },
       {
-        "text": "El tama\u00f1o territorial y la posici\u00f3n geogr\u00e1fica.",
-        "reason": "Estos son factores geopol\u00edticos tangibles, no identitarios."
+        "text": "Que el comportamiento del Estado est\u00e1 predeterminado inmutablemente por sus factores geogr\u00e1ficos.",
+        "reason": "Eso corresponde al determinismo geopol\u00edtico."
       },
       {
-        "text": "Las directrices de organizaciones internacionales como la ONU.",
-        "reason": "El constructivismo se centra en la identidad end\u00f3gena del Estado."
+        "text": "Que los Estados deben ceder su soberan\u00eda a instituciones supranacionales para redefinir su inter\u00e9s.",
+        "reason": "El constructivismo analiza c\u00f3mo se forma la identidad, no aboga necesariamente por la supranacionalidad."
       },
       {
-        "text": "El nivel de dependencia de importaciones b\u00e1sicas.",
-        "reason": "Este es un factor econ\u00f3mico, no sociocultural."
+        "text": "Que la pol\u00edtica exterior es independiente del proyecto de naci\u00f3n y solo responde a amenazas externas.",
+        "reason": "El constructivismo sostiene que el proyecto de naci\u00f3n e identidad son inseparables de la pol\u00edtica exterior."
       }
     ]
   },
   {
-    "question": "\u00bfCu\u00e1l es la diferencia fundamental entre pol\u00edtica exterior y paradiplomacia?",
-    "correct": "La pol\u00edtica exterior es exclusiva del gobierno central, mientras que la paradiplomacia la realizan gobiernos locales.",
+    "question": "\u00bfQu\u00e9 rasgo distingue esencialmente a la 'pol\u00edtica exterior de Estado' frente a la 'pol\u00edtica exterior de gobierno'?",
+    "correct": "La pol\u00edtica de Estado responde a intereses supremos y permanentes de la naci\u00f3n, trascendiendo a la administraci\u00f3n de turno.",
     "incorrects": [
       {
-        "text": "La pol\u00edtica exterior busca la paz, la paradiplomacia busca acuerdos comerciales.",
-        "reason": "Ambas pueden buscar lo mismo; la diferencia es el actor."
+        "text": "La pol\u00edtica de Estado es ejecutada por el Legislativo, mientras que la de gobierno por el Ejecutivo.",
+        "reason": "Ambas son ejecutadas por el Ejecutivo, la diferencia radica en la temporalidad de los intereses que defienden."
       },
       {
-        "text": "La pol\u00edtica exterior la hacen las empresas y la paradiplomacia el Estado.",
-        "reason": "Las empresas no hacen pol\u00edtica exterior ni paradiplomacia (lobby/negocios)."
+        "text": "La pol\u00edtica de Estado requiere aprobaci\u00f3n de organizaciones multilaterales para ser implementada.",
+        "reason": "Ninguna pol\u00edtica exterior soberana requiere aprobaci\u00f3n multilateral previa."
       },
       {
-        "text": "La paradiplomacia se realiza \u00fanicamente en organismos multilaterales.",
-        "reason": "La diplomacia en foros multilaterales es pol\u00edtica exterior formal."
+        "text": "La pol\u00edtica de Estado se enfoca en el corto plazo y en resolver crisis inmediatas.",
+        "reason": "La pol\u00edtica de Estado se caracteriza por tener visi\u00f3n de largo plazo."
       },
       {
-        "text": "La pol\u00edtica exterior es vinculante, pero la paradiplomacia la hacen ONGs.",
-        "reason": "Las ONGs no son gobiernos locales."
+        "text": "La pol\u00edtica de gobierno utiliza poder duro, y la pol\u00edtica de Estado utiliza poder blando.",
+        "reason": "Ambas pueden usar cualquier instrumento de poder."
       },
       {
-        "text": "No hay diferencia, son sin\u00f3nimos.",
-        "reason": "Son conceptos distintos en Derecho Internacional."
+        "text": "La pol\u00edtica de gobierno est\u00e1 codificada en la Constituci\u00f3n Nacional, siendo inmodificable.",
+        "reason": "Es la pol\u00edtica de Estado la que suele estar anclada en principios constitucionales (ej. Art. 143 CN paraguaya)."
       },
       {
-        "text": "La paradiplomacia es de Estado y la pol\u00edtica exterior es de gobierno.",
-        "reason": "Error conceptual; la diferencia de Estado/Gobierno refiere a la temporalidad."
+        "text": "La pol\u00edtica de Estado permite la injerencia de actores no gubernamentales extranjeros en su formulaci\u00f3n.",
+        "reason": "La formulaci\u00f3n es potestad soberana del Estado, no de actores extranjeros."
       },
       {
-        "text": "La pol\u00edtica exterior usa poder duro y la paradiplomacia poder blando.",
-        "reason": "La distinci\u00f3n es el nivel administrativo (nacional vs subnacional)."
+        "text": "La pol\u00edtica de gobierno se limita exclusivamente a la diplomacia comercial y consular.",
+        "reason": "La pol\u00edtica de gobierno abarca todas las \u00e1reas (pol\u00edtica, seguridad, comercial), pero guiada por intereses partidarios o de facci\u00f3n."
       }
     ]
   },
   {
-    "question": "\u00bfCu\u00e1l es el orden jer\u00e1rquico tradicional de los objetivos del inter\u00e9s nacional?",
-    "correct": "1\u00ba Sobrevivencia, 2\u00ba Bienestar, 3\u00ba Promoci\u00f3n de valores.",
+    "question": "Desde la perspectiva de la pol\u00edtica exterior como 'pol\u00edtica p\u00fablica', \u00bfqu\u00e9 implica su car\u00e1cter 'interm\u00e9stico'?",
+    "correct": "La difuminaci\u00f3n de las fronteras tradicionales: las necesidades internas buscan soluciones externas, y el entorno internacional condiciona lo local.",
     "incorrects": [
       {
-        "text": "1\u00ba Promoci\u00f3n de valores, 2\u00ba Bienestar, 3\u00ba Sobrevivencia.",
-        "reason": "Sin sobrevivencia no se pueden promover valores."
+        "text": "La obligaci\u00f3n del Estado de consultar todas las decisiones internacionales mediante refer\u00e9ndum vinculante.",
+        "reason": "El car\u00e1cter interm\u00e9stico es un concepto anal\u00edtico (Juego de dos niveles de Putnam), no un mandato legal de refer\u00e9ndum."
       },
       {
-        "text": "1\u00ba Bienestar econ\u00f3mico, 2\u00ba Seguridad militar, 3\u00ba Identidad nacional.",
-        "reason": "La seguridad militar siempre antecede al bienestar econ\u00f3mico."
+        "text": "La subordinaci\u00f3n total de la pol\u00edtica econ\u00f3mica nacional a los dictados de los organismos de cr\u00e9dito internacional.",
+        "reason": "Implica interacci\u00f3n e interdependencia, no necesariamente subordinaci\u00f3n absoluta."
       },
       {
-        "text": "1\u00ba Alianzas, 2\u00ba Comercio, 3\u00ba Paz.",
-        "reason": "Las alianzas son un medio, no el objetivo supremo del inter\u00e9s nacional."
+        "text": "El traslado de las competencias del Ministerio de Relaciones Exteriores al Ministerio del Interior.",
+        "reason": "Institucionalmente, el MRE sigue siendo el rector, aunque deba coordinar con otras agencias."
       },
       {
-        "text": "1\u00ba Poder blando, 2\u00ba Poder intermedio, 3\u00ba Poder duro.",
-        "reason": "Esta es la clasificaci\u00f3n de los instrumentos (Nye)."
+        "text": "La primac\u00eda incondicional del derecho interno sobre los tratados internacionales ratificados.",
+        "reason": "En Paraguay, los tratados aprobados y ratificados tienen prelaci\u00f3n sobre las leyes ordinarias (Art. 137)."
       },
       {
-        "text": "1\u00ba Exportaciones, 2\u00ba Importaciones, 3\u00ba Balanza comercial.",
-        "reason": "Son objetivos comerciales de corto plazo, no fines supremos del Estado."
+        "text": "La exclusi\u00f3n de los actores no gubernamentales (ONGs, empresas) en el proceso de toma de decisiones.",
+        "reason": "Al contrario, el enfoque de pol\u00edtica p\u00fablica reconoce el cabildeo y participaci\u00f3n de estos actores internos."
       },
       {
-        "text": "1\u00ba Soberan\u00eda, 2\u00ba Integraci\u00f3n, 3\u00ba Derechos Humanos.",
-        "reason": "La teor\u00eda cl\u00e1sica marca Sobrevivencia, Bienestar y Valores."
+        "text": "La aplicaci\u00f3n de principios de paradiplomacia donde las municipalidades firman acuerdos de libre comercio.",
+        "reason": "Las municipalidades no tienen potestad constitucional para firmar TLCs."
       },
       {
-        "text": "No tienen jerarqu\u00eda, todos son simult\u00e1neos.",
-        "reason": "Hay estricta prelaci\u00f3n: primero la supervivencia del Estado."
+        "text": "La renuncia a la soberan\u00eda territorial en favor de la creaci\u00f3n de enclaves econ\u00f3micos internacionales.",
+        "reason": "El concepto interm\u00e9stico no requiere ceder territorio f\u00edsico."
       }
     ]
   },
   {
-    "question": "En pol\u00edtica exterior, \u00bfqu\u00e9 se entiende por 'poder inteligente' (smart power)?",
-    "correct": "La combinaci\u00f3n efectiva del poder duro y el poder blando.",
+    "question": "\u00bfC\u00f3mo se define el 'poder inteligente' (smart power) en la ejecuci\u00f3n de la pol\u00edtica exterior?",
+    "correct": "La capacidad de combinar estrat\u00e9gicamente la coerci\u00f3n militar/econ\u00f3mica (poder duro) con la persuasi\u00f3n y atracci\u00f3n cultural (poder blando).",
     "incorrects": [
       {
-        "text": "El uso exclusivo de la diplomacia cultural.",
-        "reason": "Eso es poder blando."
+        "text": "El uso exclusivo de la diplomacia digital y las redes sociales para influir en las elecciones de otros pa\u00edses.",
+        "reason": "Eso es una forma moderna de diplomacia p\u00fablica o propaganda, pero no abarca todo el concepto de smart power."
       },
       {
-        "text": "El despliegue de fuerzas militares de forma encubierta.",
-        "reason": "Sigue siendo poder duro/militar."
+        "text": "La renuncia voluntaria y permanente al uso de las fuerzas armadas para garantizar la paz regional.",
+        "reason": "El poder inteligente requiere mantener el poder duro como herramienta de disuasi\u00f3n efectiva."
       },
       {
-        "text": "La imposici\u00f3n de sanciones econ\u00f3micas.",
-        "reason": "Es considerado poder intermedio o coercitivo."
+        "text": "La delegaci\u00f3n de la negociaci\u00f3n diplom\u00e1tica a corporaciones tecnol\u00f3gicas multinacionales.",
+        "reason": "El Estado no delega su soberan\u00eda representativa a empresas."
       },
       {
-        "text": "La capacidad para manipular organizaciones internacionales.",
-        "reason": "El smart power es sobre recursos, no sobre manipulaci\u00f3n institucional exclusiva."
+        "text": "El enfoque prioritario en sanciones econ\u00f3micas unilaterales para forzar cambios de r\u00e9gimen.",
+        "reason": "Eso es puramente poder coercitivo (poder duro/intermedio), ignorando la atracci\u00f3n del poder blando."
       },
       {
-        "text": "El uso de inteligencia artificial en diplomacia.",
-        "reason": "El concepto fue creado por J. Nye antes de la IA moderna, refiri\u00e9ndose a estrategias de poder."
+        "text": "La adaptaci\u00f3n de la pol\u00edtica exterior a los algoritmos predictivos de inteligencia artificial.",
+        "reason": "El concepto de J. Nye refiere a estrategia pol\u00edtica (hard + soft), no a herramientas de software."
       },
       {
-        "text": "Delegar la diplomacia a empresas.",
-        "reason": "Eso es corporativismo, no poder inteligente estatal."
+        "text": "La estrategia de alineamiento incondicional con la potencia hegem\u00f3nica de turno.",
+        "reason": "El alineamiento incondicional (bandwagoning) es una estrategia de supervivencia, no una definici\u00f3n de smart power."
       },
       {
-        "text": "Renunciar al armamento militar.",
-        "reason": "El poder inteligente requiere mantener y saber usar el poder duro cuando es necesario."
+        "text": "El uso de misiones de paz de la ONU para ocupar militarmente territorios en disputa.",
+        "reason": "Las misiones de paz no son fuerzas de ocupaci\u00f3n unilateral, y su uso distorsionado no define el smart power."
       }
     ]
   },
   {
-    "question": "\u00bfQu\u00e9 implica que la pol\u00edtica exterior tenga un 'car\u00e1cter interm\u00e9stico'?",
-    "correct": "Que existe interacci\u00f3n entre las necesidades internas que buscan soluciones externas y la influencia internacional en lo dom\u00e9stico.",
+    "question": "En la clasificaci\u00f3n de factores que determinan la pol\u00edtica exterior, \u00bfqu\u00e9 constituye un factor 'intangible interno'?",
+    "correct": "La moral de la poblaci\u00f3n, la cohesi\u00f3n social y el apoyo p\u00fablico al gobierno.",
     "incorrects": [
       {
-        "text": "Que solo debe ser dise\u00f1ada por el Ministerio del Interior.",
-        "reason": "El Ministerio de Relaciones Exteriores es el encargado principal."
+        "text": "El volumen de exportaciones agr\u00edcolas y el Producto Interno Bruto.",
+        "reason": "Estos son indicadores econ\u00f3micos, por ende, factores tangibles internos."
       },
       {
-        "text": "La p\u00e9rdida de soberan\u00eda por la globalizaci\u00f3n.",
-        "reason": "Significa interdependencia, no p\u00e9rdida de soberan\u00eda."
+        "text": "La ubicaci\u00f3n geogr\u00e1fica estrat\u00e9gica como pa\u00eds mediterr\u00e1neo.",
+        "reason": "La geograf\u00eda es el factor tangible por excelencia."
       },
       {
-        "text": "Que las decisiones internacionales requieren refer\u00e9ndum.",
-        "reason": "No requiere refer\u00e9ndum, solo reconoce la influencia de factores locales."
+        "text": "La estructura y modernizaci\u00f3n del equipamiento de las fuerzas armadas.",
+        "reason": "El poder\u00edo militar (equipamiento, tropas) es un factor tangible."
       },
       {
-        "text": "El rechazo del derecho internacional.",
-        "reason": "El concepto no promueve el rechazo al derecho internacional."
+        "text": "El prestigio internacional y la percepci\u00f3n de otros Estados sobre el pa\u00eds.",
+        "reason": "El prestigio es intangible, pero es un factor externo (c\u00f3mo nos ven los dem\u00e1s en el sistema)."
       },
       {
-        "text": "Que solo participan ONGs en la diplomacia.",
-        "reason": "Los Estados siguen siendo los actores centrales."
+        "text": "La membres\u00eda y peso de voto dentro de organizaciones internacionales.",
+        "reason": "Este es un factor pol\u00edtico/institucional externo."
       },
       {
-        "text": "Que los TLCs reemplazan las constituciones nacionales.",
-        "reason": "No la reemplazan, se integran jur\u00eddicamente."
+        "text": "La dependencia de importaciones de derivados del petr\u00f3leo.",
+        "reason": "Es una vulnerabilidad econ\u00f3mica tangible."
       },
       {
-        "text": "Que las embajadas dirigen el comercio interno.",
-        "reason": "Su funci\u00f3n es externa, no regular el comercio nacional."
+        "text": "El tama\u00f1o demogr\u00e1fico y la distribuci\u00f3n etaria de la poblaci\u00f3n.",
+        "reason": "La demograf\u00eda es un elemento material y cuantificable, por tanto tangible."
       }
     ]
   },
   {
-    "question": "Identifique un factor 'tangible e interno' que determina la pol\u00edtica exterior paraguaya.",
-    "correct": "Su condici\u00f3n geogr\u00e1fica de pa\u00eds mediterr\u00e1neo.",
+    "question": "\u00bfCu\u00e1l es la jerarqu\u00eda correcta y l\u00f3gica de los objetivos permanentes del inter\u00e9s nacional seg\u00fan la teor\u00eda cl\u00e1sica?",
+    "correct": "Supervivencia del Estado (seguridad), Bienestar (desarrollo econ\u00f3mico), Promoci\u00f3n de valores (identidad/principios).",
     "incorrects": [
       {
-        "text": "El prestigio internacional por su diplomacia.",
-        "reason": "El prestigio es INTANGIBLE."
+        "text": "Desarrollo econ\u00f3mico, Promoci\u00f3n de la democracia, Expansi\u00f3n territorial.",
+        "reason": "La expansi\u00f3n territorial no es un objetivo permanente leg\u00edtimo moderno, y la seguridad debe ir primero."
       },
       {
-        "text": "El equilibrio de poder global.",
-        "reason": "Es un factor EXTERNO."
+        "text": "Promoci\u00f3n de valores, Bienestar de la poblaci\u00f3n, Supervivencia del Estado.",
+        "reason": "Ning\u00fan Estado puede promover valores si no asegura primero su propia existencia f\u00edsica y pol\u00edtica."
       },
       {
-        "text": "La cohesi\u00f3n social.",
-        "reason": "Es INTANGIBLE e interno."
+        "text": "Alianzas estrat\u00e9gicas, Inserci\u00f3n comercial, Paz perpetua.",
+        "reason": "Las alianzas y el comercio son estrategias/instrumentos, no los fines supremos en s\u00ed mismos."
       },
       {
-        "text": "Las pol\u00edticas del FMI.",
-        "reason": "Es EXTERNO (institucional)."
+        "text": "Soberan\u00eda energ\u00e9tica, Libre navegaci\u00f3n, Derechos Humanos.",
+        "reason": "Estos son objetivos espec\u00edficos de la pol\u00edtica exterior paraguaya, no la categorizaci\u00f3n te\u00f3rica universal."
       },
       {
-        "text": "La moral de la poblaci\u00f3n.",
-        "reason": "Es INTANGIBLE."
+        "text": "Poder duro, Poder blando, Poder inteligente.",
+        "reason": "Esta es la taxonom\u00eda de los recursos e instrumentos de poder, no de los objetivos."
       },
       {
-        "text": "Las sanciones del Mercosur.",
-        "reason": "Es EXTERNO (coerci\u00f3n de terceros)."
+        "text": "Inter\u00e9s del gobierno, Inter\u00e9s de facci\u00f3n, Inter\u00e9s nacional.",
+        "reason": "El inter\u00e9s nacional es \u00fanico y superior, no debe subordinarse a facciones."
       },
       {
-        "text": "La opini\u00f3n p\u00fablica extranjera.",
-        "reason": "Es EXTERNO."
+        "text": "Seguridad hemisf\u00e9rica, Libre mercado, Cooperaci\u00f3n t\u00e9cnica.",
+        "reason": "Son reg\u00edmenes internacionales, no la prelaci\u00f3n te\u00f3rica de objetivos existenciales de un Estado."
       }
     ]
   },
   {
-    "question": "\u00bfQu\u00e9 riesgo conlleva confundir la 'pol\u00edtica de Estado' con la 'pol\u00edtica de gobierno'?",
-    "correct": "Que la pol\u00edtica exterior beneficie solo a la \u00e9lite en el poder en lugar del inter\u00e9s supremo de la naci\u00f3n.",
+    "question": "Identifique el actor gubernamental con capacidad jur\u00eddica para comprometer al Estado en pol\u00edtica exterior, frente al cual los actores no gubernamentales solo pueden ejercer influencia extrainstitucional.",
+    "correct": "El Jefe de Estado o de Gobierno, apoyado por su Canciller\u00eda.",
     "incorrects": [
       {
-        "text": "Que las OIs desconozcan al gobierno.",
-        "reason": "Las OIs reconocen a los Estados de facto/iure, no juzgan la pureza de la pol\u00edtica."
+        "text": "Las organizaciones internacionales multilaterales.",
+        "reason": "Son foros formados por Estados, no actores internos que dirigen la pol\u00edtica del pa\u00eds."
       },
       {
-        "text": "Perder el asiento en la ONU.",
-        "reason": "No es causal de expulsi\u00f3n de la ONU."
+        "text": "Las corporaciones transnacionales operando en el territorio.",
+        "reason": "Son actores no gubernamentales con gran influencia (lobby), pero sin personer\u00eda jur\u00eddica para comprometer al Estado."
       },
       {
-        "text": "Que la pol\u00edtica exterior se vuelva puramente pragm\u00e1tica.",
-        "reason": "Las pol\u00edticas de gobierno suelen ser altamente ideologizadas."
+        "text": "Los gobiernos subnacionales (Gobernaciones e Intendencias).",
+        "reason": "Realizan paradiplomacia, pero la constituci\u00f3n reserva el monopolio de la pol\u00edtica exterior al gobierno central."
       },
       {
-        "text": "Que el Legislativo tome las embajadas.",
-        "reason": "El Ejecutivo tiene el mandato constitucional irreductible."
+        "text": "El Poder Legislativo en pleno.",
+        "reason": "Act\u00faa como contrapeso (ratifica tratados), pero la direcci\u00f3n y representaci\u00f3n oficial recae en el Ejecutivo."
       },
       {
-        "text": "La eliminaci\u00f3n del servicio diplom\u00e1tico.",
-        "reason": "El servicio se puede politizar, pero rara vez se elimina."
+        "text": "La opini\u00f3n p\u00fablica y los medios de comunicaci\u00f3n.",
+        "reason": "Son actores no gubernamentales que condicionan la agenda, pero no ejecutan actos de Estado."
       },
       {
-        "text": "Invasi\u00f3n militar preventiva.",
-        "reason": "No es una consecuencia geopol\u00edtica l\u00f3gica de un error conceptual interno."
+        "text": "Los partidos pol\u00edticos en la oposici\u00f3n.",
+        "reason": "Tienen influencia pol\u00edtica interna, pero no ejercen la titularidad de la diplomacia oficial."
       },
       {
-        "text": "Anulaci\u00f3n autom\u00e1tica de tratados.",
-        "reason": "Los tratados son de Estado a Estado (Pacta sunt servanda)."
+        "text": "El Poder Judicial a trav\u00e9s de la Corte Suprema.",
+        "reason": "Su rol es el control de constitucionalidad interno, no la direcci\u00f3n de las relaciones diplom\u00e1ticas."
       }
     ]
   },
   {
-    "question": "\u00bfQu\u00e9 son las 'estrategias' en pol\u00edtica exterior?",
-    "correct": "Actividades espec\u00edficas que definen qui\u00e9n, cu\u00e1ndo y c\u00f3mo se ejecutar\u00e1 una acci\u00f3n.",
+    "question": "\u00bfEn qu\u00e9 etapa del proceso de toma de decisiones se sit\u00faan las 'acciones' de pol\u00edtica exterior?",
+    "correct": "Son el resultado final de la evaluaci\u00f3n de opciones, materializando la elecci\u00f3n que maximiza beneficios y responde al inter\u00e9s nacional.",
     "incorrects": [
       {
-        "text": "Prop\u00f3sitos que buscan modificar el status quo.",
-        "reason": "Esos son los OBJETIVOS."
+        "text": "Son los prop\u00f3sitos abstractos iniciales antes de definir las estrategias.",
+        "reason": "Los prop\u00f3sitos abstractos iniciales son los 'Objetivos'."
       },
       {
-        "text": "Recursos militares y econ\u00f3micos.",
-        "reason": "Esos son los INSTRUMENTOS."
+        "text": "Son los recursos coercitivos (sanciones, fuerza militar) de uso exclusivo.",
+        "reason": "Esos son los 'Instrumentos' (poder duro/intermedio)."
       },
       {
-        "text": "Leyes constitucionales internas.",
-        "reason": "Son condicionantes jur\u00eddicos."
+        "text": "Constituyen la etapa de retroalimentaci\u00f3n posterior a la crisis.",
+        "reason": "La retroalimentaci\u00f3n ocurre despu\u00e9s de la acci\u00f3n para evaluar su efectividad, no es la acci\u00f3n misma."
       },
       {
-        "text": "La retroalimentaci\u00f3n de la opini\u00f3n p\u00fablica.",
-        "reason": "Es un factor de evaluaci\u00f3n, no la estrategia ex-ante."
+        "text": "Son equivalentes al proyecto de naci\u00f3n a largo plazo.",
+        "reason": "El proyecto de naci\u00f3n es el marco doctrinal permanente, las acciones son respuestas concretas coyunturales."
       },
       {
-        "text": "Aspiraciones hist\u00f3ricas colectivas.",
-        "reason": "Es la definici\u00f3n de PROYECTO DE NACI\u00d3N."
+        "text": "Representan las demandas no satisfechas de la sociedad civil.",
+        "reason": "Eso constituye el input o demanda del entorno dom\u00e9stico, previo a la formulaci\u00f3n."
       },
       {
-        "text": "ONGs y empresas transnacionales.",
-        "reason": "Son ACTORES no gubernamentales."
+        "text": "Son las leyes ratificadas exclusivamente por el Congreso Nacional.",
+        "reason": "Las acciones incluyen m\u00faltiples actos del Ejecutivo (votos en foros, notas diplom\u00e1ticas, visitas) sin pasar siempre por el Congreso."
       },
       {
-        "text": "Las resoluciones de la ONU.",
-        "reason": "Son instrumentos del derecho internacional, no estrategias nacionales per se."
+        "text": "Es el dise\u00f1o te\u00f3rico de qui\u00e9n, cu\u00e1ndo y c\u00f3mo se har\u00e1 algo.",
+        "reason": "El dise\u00f1o del 'qui\u00e9n, cu\u00e1ndo y c\u00f3mo' corresponde a la 'Estrategia', no a su ejecuci\u00f3n (la acci\u00f3n)."
       }
     ]
   },
   {
-    "question": "Desde el Derecho Internacional, \u00bfqui\u00e9n tiene el monopolio exclusivo de la pol\u00edtica exterior?",
-    "correct": "El Estado a trav\u00e9s de su gobierno central.",
+    "question": "Bajo la teor\u00eda del Juego de Dos Niveles (Robert Putnam), \u00bfqu\u00e9 limitaci\u00f3n enfrenta un Jefe de Estado al negociar internacionalmente?",
+    "correct": "Que todo acuerdo internacional (Nivel 1) debe ser ratificado o aceptado pol\u00edticamente por las instituciones y grupos de presi\u00f3n dom\u00e9sticos (Nivel 2).",
     "incorrects": [
       {
-        "text": "La Organizaci\u00f3n de Naciones Unidas.",
-        "reason": "Es un foro multilateral, no un Estado soberano."
+        "text": "Que las decisiones deben someterse a la aprobaci\u00f3n del Consejo de Seguridad de la ONU antes de ser v\u00e1lidas.",
+        "reason": "La teor\u00eda de Putnam refiere a la pol\u00edtica dom\u00e9stica (nivel 2), no a instancias multilaterales externas."
       },
       {
-        "text": "Las corporaciones multinacionales.",
-        "reason": "Son actores econ\u00f3micos privados, carecen de soberan\u00eda."
+        "text": "Que los gobiernos locales tienen poder de veto directo sobre cualquier pol\u00edtica del presidente.",
+        "reason": "Los gobiernos locales no tienen poder de veto directo; es el legislativo y los grupos de presi\u00f3n (lobby) los que conforman el Nivel 2."
       },
       {
-        "text": "Los gobiernos municipales.",
-        "reason": "Realizan paradiplomacia (diplomacia subnacional)."
+        "text": "Que el Estado debe tener igual poder militar que la contraparte para poder sentarse a negociar.",
+        "reason": "El poder relativo afecta, pero la teor\u00eda de Putnam aplica a negociaciones asim\u00e9tricas tambi\u00e9n."
       },
       {
-        "text": "Las ONGs globales.",
-        "reason": "No son sujetos primarios del DIP para firmar tratados soberanos."
+        "text": "Que las empresas multinacionales pueden anular tratados mediante tribunales arbitrales privados.",
+        "reason": "Los tribunales arbitrales act\u00faan a posteriori por incumplimientos, no son el 'Nivel 2' del modelo de Putnam de ratificaci\u00f3n pol\u00edtica."
       },
       {
-        "text": "El Parlamento.",
-        "reason": "El parlamento ratifica, pero el Ejecutivo dirige la pol\u00edtica exterior."
+        "text": "Que la opini\u00f3n p\u00fablica internacional decide la viabilidad del acuerdo.",
+        "reason": "El Nivel 2 es estrictamente la pol\u00edtica interna (opini\u00f3n p\u00fablica nacional, congreso)."
       },
       {
-        "text": "La ciudadan\u00eda mediante refer\u00e9ndum.",
-        "reason": "La pol\u00edtica exterior se delega en los poderes del Estado (democracia representativa)."
+        "text": "Que el Presidente no puede salir del pa\u00eds durante la etapa de negociaciones.",
+        "reason": "Las negociaciones presenciales (diplomacia de cumbres) son una caracter\u00edstica central del Nivel 1."
       },
       {
-        "text": "El bloque de integraci\u00f3n regional.",
-        "reason": "Mercosur es un foro intergubernamental; los Estados mantienen el monopolio soberano final."
+        "text": "Que se proh\u00edbe el uso de diplomacia secreta bajo cualquier circunstancia.",
+        "reason": "La teor\u00eda asume que a menudo el Nivel 1 opera a puerta cerrada, pero la validaci\u00f3n requiere exposici\u00f3n al Nivel 2."
       }
     ]
   },
   {
-    "question": "\u00bfCu\u00e1l es la premisa de la escuela realista en RR.II.?",
-    "correct": "El sistema es an\u00e1rquico y prioriza la supervivencia, el poder militar y la seguridad nacional.",
+    "question": "Identifique una debilidad inherente al Poder Legislativo cuando intenta influir directamente en el dise\u00f1o de la pol\u00edtica exterior.",
+    "correct": "Suele tener una visi\u00f3n m\u00e1s localista y carecer de cuerpos permanentes de asesores diplom\u00e1ticos especializados.",
     "incorrects": [
       {
-        "text": "El libre comercio previene las guerras.",
-        "reason": "Premisa liberal/institucionalista."
+        "text": "Su incapacidad legal para ratificar tratados internacionales.",
+        "reason": "Por mandato constitucional, el Legislativo ES quien ratifica los tratados."
       },
       {
-        "text": "La identidad y las normas moldean la pol\u00edtica.",
-        "reason": "Premisa constructivista."
+        "text": "Su mandato es de menor duraci\u00f3n que el del Presidente de la Rep\u00fablica.",
+        "reason": "En Paraguay y muchos pa\u00edses, coinciden en duraci\u00f3n (5 a\u00f1os)."
       },
       {
-        "text": "La pol\u00edtica refleja la lucha de clases.",
-        "reason": "Premisa marxista."
+        "text": "Su subordinaci\u00f3n absoluta al Ministerio de Relaciones Exteriores.",
+        "reason": "Es un poder del Estado independiente; no est\u00e1 subordinado a un ministerio."
       },
       {
-        "text": "Cesi\u00f3n total de soberan\u00eda a la ONU.",
-        "reason": "El realismo es ac\u00e9rrimo defensor de la soberan\u00eda nacional exclusiva."
+        "text": "La prohibici\u00f3n de convocar a ministros para interpelaciones sobre pol\u00edtica exterior.",
+        "reason": "El Congreso s\u00ed posee la facultad constitucional de interpelar a los Ministros."
       },
       {
-        "text": "Las empresas importan m\u00e1s que el Estado.",
-        "reason": "Para el realismo, el Estado-naci\u00f3n es el \u00fanico actor verdaderamente relevante."
+        "text": "Su falta de representaci\u00f3n de los partidos pol\u00edticos de oposici\u00f3n.",
+        "reason": "El Legislativo es precisamente el \u00f3rgano m\u00e1s representativo y plural de todas las fuerzas pol\u00edticas."
       },
       {
-        "text": "El derecho internacional es superior al inter\u00e9s nacional.",
-        "reason": "El realismo ve al DIP como subordinado a los intereses de poder."
+        "text": "La incapacidad de aprobar el presupuesto para el servicio diplom\u00e1tico.",
+        "reason": "El Congreso aprueba anualmente el Presupuesto General de la Naci\u00f3n, siendo esto una de sus principales herramientas de presi\u00f3n."
       },
       {
-        "text": "Abolici\u00f3n total de ej\u00e9rcitos.",
-        "reason": "El realismo requiere poder\u00edo militar para la disuasi\u00f3n en un entorno an\u00e1rquico."
+        "text": "La obligaci\u00f3n de viajar junto al Presidente en todas las giras oficiales.",
+        "reason": "No existe tal obligaci\u00f3n; la representaci\u00f3n oficial recae en el Ejecutivo."
       }
     ]
   },
   {
-    "question": "\u00bfCu\u00e1l fue el objetivo de la 'Marcha hacia el Este' de Alfredo Stroessner?",
-    "correct": "Reducir la dependencia de Argentina integr\u00e1ndose geoecon\u00f3micamente a Brasil (ej. Itaip\u00fa, Puente de la Amistad).",
+    "question": "\u00bfCu\u00e1l de las siguientes afirmaciones describe con mayor precisi\u00f3n la estrategia de la 'Marcha hacia el Este' bajo Stroessner?",
+    "correct": "Un giro geoecon\u00f3mico buscando diversificar la salida al mundo de Paraguay y romper el monopolio de tr\u00e1nsito argentino mediante obras de infraestructura hacia Brasil.",
     "incorrects": [
       {
-        "text": "Aislar a Paraguay construyendo muros fronterizos.",
-        "reason": "Buscaba abrir una nueva ruta comercial, no aislarse."
+        "text": "Un aislamiento total de los mercados occidentales para integrarse al bloque socialista oriental.",
+        "reason": "Stroessner mantuvo un fuerte alineamiento anticomunista con EE.UU. y Taiw\u00e1n."
       },
       {
-        "text": "Aliarse con la Uni\u00f3n Sovi\u00e9tica.",
-        "reason": "Stroessner era ultraderechista y anticomunista, aliado de EE.UU."
+        "text": "El traslado compulsivo de la poblaci\u00f3n campesina hacia los territorios del Chaco paraguayo.",
+        "reason": "El Chaco queda al occidente (oeste). La marcha fue hacia la frontera oriental (Alto Paran\u00e1)."
       },
       {
-        "text": "Promover migraci\u00f3n masiva a \u00c1frica.",
-        "reason": "Se refer\u00eda al este del propio territorio paraguayo, l\u00edmite con Brasil."
+        "text": "La renuncia a la navegaci\u00f3n del r\u00edo Paraguay a cambio de subsidios econ\u00f3micos brasile\u00f1os.",
+        "reason": "Paraguay nunca renunci\u00f3 a sus derechos fluviales, simplemente desarroll\u00f3 rutas complementarias terrestres/energ\u00e9ticas."
       },
       {
-        "text": "Retirarse del Mercosur.",
-        "reason": "Mercosur no exist\u00eda en esa \u00e9poca (se fund\u00f3 en 1991)."
+        "text": "La creaci\u00f3n de una confederaci\u00f3n pol\u00edtica supranacional con Brasil anulando las fronteras.",
+        "reason": "Fue un acercamiento pragm\u00e1tico para el desarrollo, sin ceder soberan\u00eda pol\u00edtica formal."
       },
       {
-        "text": "Cerrar fronteras al comercio.",
-        "reason": "Fue un plan de expansi\u00f3n comercial y territorial agr\u00edcola."
+        "text": "El abandono del Tratado de Asunci\u00f3n y la formaci\u00f3n de una alianza militar con Argentina.",
+        "reason": "El Tratado de Asunci\u00f3n (Mercosur) es de 1991, Stroessner fue derrocado en 1989."
       },
       {
-        "text": "Mudar la capital a Ciudad del Este.",
-        "reason": "Fund\u00f3 la ciudad como puerto estrat\u00e9gico, pero la capital se mantuvo en Asunci\u00f3n."
+        "text": "La estatizaci\u00f3n total de la agricultura para exportar exclusivamente a puertos asi\u00e1ticos.",
+        "reason": "El modelo estronista foment\u00f3 el agro-negocio privado y la colonizaci\u00f3n con inmigrantes (brasiguayos)."
       },
       {
-        "text": "Atacar militarmente a Argentina.",
-        "reason": "Us\u00f3 diplomacia, no guerra, para equilibrar su poder frente a sus vecinos."
+        "text": "El cierre del Puente de la Amistad para fomentar la industria de sustituci\u00f3n de importaciones.",
+        "reason": "El Puente de la Amistad fue la obra cumbre que facilit\u00f3 el comercio, no se construy\u00f3 para cerrarlo."
       }
     ]
   },
   {
-    "question": "\u00bfC\u00f3mo se llama la estrategia paraguaya de balancear relaciones entre Brasil y Argentina?",
-    "correct": "Diplomacia Pendular.",
+    "question": "La 'Diplomacia Pendular' paraguaya se caracteriz\u00f3 hist\u00f3ricamente por:",
+    "correct": "Oscilar alianzas t\u00e1cticas entre Brasil y Argentina para evitar la hegemon\u00eda absoluta de uno de ellos y extraer concesiones de ambos.",
     "incorrects": [
       {
-        "text": "Aislamiento Voluntario.",
-        "reason": "Es lo contrario a negociar activamente con ambos vecinos."
+        "text": "Alternar el reconocimiento diplom\u00e1tico entre China Continental y Taiw\u00e1n cada cinco a\u00f1os.",
+        "reason": "Paraguay ha mantenido relaciones ininterrumpidas exclusivamente con Taiw\u00e1n desde 1957."
       },
       {
-        "text": "Diplomacia de Ca\u00f1onero.",
-        "reason": "T\u00e1ctica imperialista del siglo XIX (fuerza naval), no paraguaya."
+        "text": "Cambiar la capital del pa\u00eds peri\u00f3dicamente entre Asunci\u00f3n y Encarnaci\u00f3n.",
+        "reason": "La capital nunca fue trasladada bajo este concepto."
       },
       {
-        "text": "Integraci\u00f3n Supranacional.",
-        "reason": "La supranacionalidad implica ceder soberan\u00eda a instituciones comunes (ej. UE)."
+        "text": "Romper relaciones con EE.UU. durante gobiernos dem\u00f3cratas y retomarlas con republicanos.",
+        "reason": "Mantuvo relaci\u00f3n fluida con EE.UU. sin importar el partido en el poder, priorizando el anticomunismo."
       },
       {
-        "text": "Doctrina Drago.",
-        "reason": "Doctrina argentina sobre cobro de deuda externa soberana."
+        "text": "Alternar la adhesi\u00f3n de Paraguay entre la Comunidad Andina y el Mercosur.",
+        "reason": "Paraguay es fundador del Mercosur y nunca fue miembro pleno de la CAN."
       },
       {
-        "text": "Pol\u00edtica del Buen Vecino.",
-        "reason": "Fue la pol\u00edtica de EE.UU. hacia Latinoam\u00e9rica (FDR)."
+        "text": "Ceder temporalmente territorio a Argentina a cambio de libre navegaci\u00f3n fluvial.",
+        "reason": "La diplomacia pendular buscaba proteger la soberan\u00eda, no ceder territorio."
       },
       {
-        "text": "Neutralidad Armada.",
-        "reason": "Paraguay oscilaba activamente para conseguir favores, no era pasivo-neutral."
+        "text": "El uso exclusivo de organismos multilaterales abandonando el bilateralismo.",
+        "reason": "La diplomacia pendular fue eminentemente un juego pol\u00edtico bilateral entre los tres pa\u00edses."
       },
       {
-        "text": "Paradiplomacia Fronteriza.",
-        "reason": "La diplomacia pendular era pol\u00edtica de Estado del Ejecutivo central, no de gobernadores locales."
+        "text": "Alinear toda la pol\u00edtica exterior con el bloque sovi\u00e9tico durante la Guerra Fr\u00eda.",
+        "reason": "Paraguay form\u00f3 parte del bloque occidental anticomunista (Plan C\u00f3ndor)."
       }
     ]
   },
   {
-    "question": "\u00bfCu\u00e1ndo se firm\u00f3 el Tratado de Asunci\u00f3n y qui\u00e9nes fundaron el Mercosur?",
-    "correct": "1991 (Argentina, Brasil, Paraguay, Uruguay).",
+    "question": "A nivel de integraci\u00f3n profunda, \u00bfqu\u00e9 diferencia sustancial impide que el Mercosur actual se considere un Mercado Com\u00fan pleno?",
+    "correct": "Las severas restricciones vigentes a la libre circulaci\u00f3n de servicios y factores productivos (trabajo y capital), as\u00ed como el Arancel Externo Com\u00fan perforado.",
     "incorrects": [
       {
-        "text": "1985 (solo Argentina y Brasil).",
-        "reason": "Esa fue la Declaraci\u00f3n de Foz de Iguaz\u00fa (precedente)."
+        "text": "La ausencia de una moneda \u00fanica obligatoria para transacciones minoristas.",
+        "reason": "La moneda \u00fanica no es un requisito de un Mercado Com\u00fan, sino de una Uni\u00f3n Econ\u00f3mica."
       },
       {
-        "text": "1994 (toda Sudam\u00e9rica).",
-        "reason": "UNASUR (2008) incluy\u00f3 a toda Sudam\u00e9rica, no Mercosur en el 94."
+        "text": "La prohibici\u00f3n de que los ciudadanos del bloque viajen usando su documento de identidad nacional.",
+        "reason": "Hoy en d\u00eda el Mercosur permite viajar con c\u00e9dula de identidad sin pasaporte (Acuerdo Migratorio)."
       },
       {
-        "text": "1991 (Paraguay, Bolivia, Chile, Per\u00fa).",
-        "reason": "Esos pa\u00edses andinos/pac\u00edficos no fueron miembros fundadores."
+        "text": "La falta de un Tratado que establezca la paz perpetua entre los Estados partes.",
+        "reason": "El Tratado de Asunci\u00f3n y la zona de paz son hechos consolidados, la falla est\u00e1 en lo comercial."
       },
       {
-        "text": "1989 (Acuerdo bilateral con Brasil).",
-        "reason": "El Mercosur es cuatripartito, firmado en 1991."
+        "text": "El mantenimiento de aranceles internos del 100% para todo tipo de manufacturas.",
+        "reason": "El comercio intrazona est\u00e1 mayormente liberado de aranceles (salvo excepciones como automotriz/azucarero)."
       },
       {
-        "text": "2002 (Paraguay, Uruguay, Venezuela, Colombia).",
-        "reason": "Venezuela ingres\u00f3 despu\u00e9s; Colombia no es miembro pleno."
+        "text": "La inexistencia total de \u00f3rganos institucionales como el Parlamento o Tribunal.",
+        "reason": "El Mercosur cuenta con el Parlasur y el Tribunal Permanente de Revisi\u00f3n."
       },
       {
-        "text": "1991 (con Bolivia como fundador pleno).",
-        "reason": "Bolivia inici\u00f3 como Estado asociado, su adhesi\u00f3n plena tard\u00f3 d\u00e9cadas."
+        "text": "La negativa de Paraguay a firmar el Tratado de Asunci\u00f3n.",
+        "reason": "Paraguay es signatario original del Tratado de Asunci\u00f3n (1991)."
       },
       {
-        "text": "1973 (junto con Itaip\u00fa).",
-        "reason": "1973 es el a\u00f1o de las binacionales energ\u00e9ticas, no del bloque comercial."
+        "text": "El ingreso de Venezuela, que oblig\u00f3 jur\u00eddicamente a retroceder a Zona de Libre Comercio.",
+        "reason": "El retroceso o estancamiento del Mercosur es estructural y multifactorial, no dictado jur\u00eddicamente por el ingreso de Venezuela."
       }
     ]
   },
   {
-    "question": "\u00bfQu\u00e9 motiv\u00f3 la suspensi\u00f3n de Paraguay del Mercosur en 2012?",
-    "correct": "El juicio pol\u00edtico expedito al presidente Fernando Lugo (invocaci\u00f3n del Protocolo de Ushuaia).",
+    "question": "\u00bfQu\u00e9 implicancias jur\u00eddicas y pol\u00edticas tuvo la Declaraci\u00f3n de Foz de Iguaz\u00fa (1985)?",
+    "correct": "Descomprimi\u00f3 la tensi\u00f3n por el aprovechamiento de recursos h\u00eddricos compartidos y sent\u00f3 las bases pol\u00edticas de confianza para la futura integraci\u00f3n sudamericana.",
     "incorrects": [
       {
-        "text": "Golpe militar contra Rodr\u00edguez.",
-        "reason": "No hubo golpe contra Rodr\u00edguez; \u00e9l instaur\u00f3 la transici\u00f3n."
+        "text": "Cre\u00f3 oficialmente el Mercosur con la inclusi\u00f3n inmediata de Paraguay y Uruguay.",
+        "reason": "Fue un acuerdo bilateral (Argentina-Brasil); el Mercosur se crear\u00eda en 1991."
       },
       {
-        "text": "Rechazo del Senado al TLC con Europa.",
-        "reason": "El TLC a\u00fan no est\u00e1 en vigor; no caus\u00f3 suspensiones."
+        "text": "Anul\u00f3 los tratados de Itaip\u00fa y Corpus por considerarlos atentatorios al ambiente.",
+        "reason": "No anul\u00f3 los tratados; de hecho, super\u00f3 el conflicto de la compatibilidad operativa (Acuerdo Tripartito de 1979)."
       },
       {
-        "text": "Cierre de fronteras por pandemia.",
-        "reason": "Ocurri\u00f3 en 2020 y todos lo hicieron por emergencia sanitaria."
+        "text": "Estableci\u00f3 un Parlamento supranacional con poder de veto sobre leyes nacionales.",
+        "reason": "Fue una declaraci\u00f3n pol\u00edtica, no cre\u00f3 instituciones supranacionales."
       },
       {
-        "text": "Nacionalizaci\u00f3n de Itaip\u00fa.",
-        "reason": "Paraguay no ha nacionalizado Itaip\u00fa, es una entidad binacional compartida."
+        "text": "Decret\u00f3 el uso del Real brasile\u00f1o como moneda comercial \u00fanica.",
+        "reason": "El proceso de integraci\u00f3n no inclu\u00eda (ni incluye) convergencia monetaria obligatoria."
       },
       {
-        "text": "Asesinato del vicepresidente Arga\u00f1a.",
-        "reason": "Fue en 1999 (Marzo Paraguayo), hubo advertencia pero no suspensi\u00f3n formal con exclusi\u00f3n."
+        "text": "Oblig\u00f3 a Paraguay a renunciar a sus derechos de navegaci\u00f3n en la Hidrov\u00eda.",
+        "reason": "Paraguay protegi\u00f3 e increment\u00f3 sus derechos de navegaci\u00f3n fluvial."
       },
       {
-        "text": "Salida voluntaria por diferencias arancelarias.",
-        "reason": "Fue expulsado temporalmente (suspendido) por los otros socios."
+        "text": "Expuls\u00f3 a Chile del proceso de integraci\u00f3n del Cono Sur.",
+        "reason": "Chile no participaba; la declaraci\u00f3n buscaba acercamiento, no exclusi\u00f3n."
       },
       {
-        "text": "Reconocimiento de Taiw\u00e1n.",
-        "reason": "Taiw\u00e1n no es un tema de jurisdicci\u00f3n democr\u00e1tica del Mercosur."
+        "text": "Aplic\u00f3 sanciones militares contra el r\u00e9gimen estronista en Paraguay.",
+        "reason": "Fue un acuerdo de cooperaci\u00f3n pac\u00edfica bilateral argentino-brasile\u00f1a sin componentes militares sancionatorios."
       }
     ]
   },
   {
-    "question": "\u00bfQu\u00e9 diferencia a una Uni\u00f3n Aduanera de una Zona de Libre Comercio?",
-    "correct": "La Uni\u00f3n Aduanera impone un Arancel Externo Com\u00fan (AEC) frente a pa\u00edses no miembros.",
+    "question": "En la historia diplom\u00e1tica reciente de Sudam\u00e9rica, UNASUR surgi\u00f3 principalmente como:",
+    "correct": "Un proyecto de concertaci\u00f3n pol\u00edtica e infraestructura con una fuerte carga ideol\u00f3gica ('giro a la izquierda'), que buscaba excluir la influencia de EE.UU.",
     "incorrects": [
       {
-        "text": "Libre tr\u00e1nsito de personas vs solo bienes.",
-        "reason": "El libre tr\u00e1nsito de factores productivos corresponde al Mercado Com\u00fan."
+        "text": "Un acuerdo estrictamente aduanero y arancelario sin ning\u00fan componente pol\u00edtico.",
+        "reason": "UNASUR era eminentemente pol\u00edtico, no un \u00e1rea de libre comercio tradicional."
       },
       {
-        "text": "Uso de moneda \u00fanica obligatoria.",
-        "reason": "La moneda \u00fanica es caracter\u00edstica de la Uni\u00f3n Econ\u00f3mica y Monetaria (ej. Euro)."
+        "text": "Una extensi\u00f3n de la OEA financiada directamente por Estados Unidos.",
+        "reason": "Buscaba deliberadamente desplazar a la OEA y minimizar la influencia de Washington."
       },
       {
-        "text": "Parlamento supranacional exclusivo.",
-        "reason": "No es requisito definitorio; hay uniones aduaneras intergubernamentales."
+        "text": "Un bloque militar ofensivo liderado por Colombia para pacificar Centroam\u00e9rica.",
+        "reason": "Pose\u00eda un Consejo de Defensa, pero como mecanismo de confianza mutua, no ofensivo, y Colombia ten\u00eda reticencias."
       },
       {
-        "text": "Proh\u00edbe la diplomacia bilateral pol\u00edtica.",
-        "reason": "Limita los tratados comerciales (TLCs), no la pol\u00edtica exterior general."
+        "text": "Un tratado bilateral entre Venezuela y Cuba para exportar petr\u00f3leo subsidiado.",
+        "reason": "Eso describe al ALBA-Petrocaribe; UNASUR involucraba a 12 pa\u00edses sudamericanos."
       },
       {
-        "text": "Cobro de impuestos internos fronterizos.",
-        "reason": "Ambas eliminan aranceles internos."
+        "text": "La primera Uni\u00f3n Econ\u00f3mica y Monetaria de Am\u00e9rica, con el 'Sucre' como moneda.",
+        "reason": "El Sucre fue una unidad de cuenta del ALBA, UNASUR nunca implement\u00f3 una moneda real."
       },
       {
-        "text": "Exclusividad del continente europeo.",
-        "reason": "El Mercosur opera como Uni\u00f3n Aduanera (imperfecta) en Sudam\u00e9rica."
+        "text": "Un organismo dise\u00f1ado para administrar exclusivamente el tratado ant\u00e1rtico.",
+        "reason": "Su \u00e1mbito era la integraci\u00f3n sudamericana, no la administraci\u00f3n ant\u00e1rtica."
       },
       {
-        "text": "Pol\u00edticas macroecon\u00f3micas comunes.",
-        "reason": "Eso ocurre en fases m\u00e1s avanzadas de integraci\u00f3n."
+        "text": "Una iniciativa paraguaya para obligar a sus vecinos a ceder puertos mar\u00edtimos.",
+        "reason": "Fue impulsada primariamente por el Brasil de Lula da Silva, no por Paraguay."
       }
     ]
   },
   {
-    "question": "\u00bfQu\u00e9 organismo de marcado corte pol\u00edtico, creado en 2008, fue abandonado masivamente por Paraguay y otros pa\u00edses para crear PROSUR?",
-    "correct": "UNASUR.",
+    "question": "\u00bfBajo qu\u00e9 figura jur\u00eddica ampar\u00f3 el Mercosur la suspensi\u00f3n de Paraguay en el a\u00f1o 2012?",
+    "correct": "El Protocolo de Ushuaia, argumentando que el sumar\u00edsimo juicio pol\u00edtico al presidente Lugo constituy\u00f3 una 'ruptura del orden democr\u00e1tico'.",
     "incorrects": [
       {
-        "text": "ALADI.",
-        "reason": "Sigue vigente desde 1980, perfil puramente t\u00e9cnico-comercial."
+        "text": "El Protocolo de Olivos, tras fallar a favor de Venezuela en una disputa comercial.",
+        "reason": "El Protocolo de Olivos es para controversias comerciales; el juicio fue pol\u00edtico (Ushuaia)."
       },
       {
-        "text": "OEA.",
-        "reason": "Organismo hemisf\u00e9rico (1948), Paraguay no lo ha abandonado."
+        "text": "El Tratado de Asunci\u00f3n, acusando a Paraguay de elevar el Arancel Externo Com\u00fan.",
+        "reason": "La suspensi\u00f3n fue por motivos estrictamente pol\u00edticos y constitucionales, no comerciales."
       },
       {
-        "text": "ALBA.",
-        "reason": "Bloque bolivariano (Venezuela/Cuba); Paraguay nunca fue miembro pleno."
+        "text": "La Cl\u00e1usula Democr\u00e1tica de la OEA, ejecutada por el Parlamento del Mercosur.",
+        "reason": "El Parlasur no tiene poder ejecutivo; la decisi\u00f3n la tomaron los Presidentes (CMC) usando normas propias del Mercosur."
       },
       {
-        "text": "Comunidad Andina.",
-        "reason": "Paraguay no pertenece a la CAN como miembro pleno."
+        "text": "El Protocolo de Ouro Preto, ante la falta de pago de aportes a la Secretar\u00eda.",
+        "reason": "La morosidad institucional quita derecho a voto, pero no suspende la participaci\u00f3n total como bloque pol\u00edtico."
       },
       {
-        "text": "CELAC.",
-        "reason": "Paraguay participa activamente en CELAC hoy en d\u00eda."
+        "text": "La Convenci\u00f3n de Viena, por violaci\u00f3n de inmunidad diplom\u00e1tica de embajadores brasile\u00f1os.",
+        "reason": "No hubo incidentes con embajadores que motivaran la sanci\u00f3n del bloque."
       },
       {
-        "text": "URUPABOL.",
-        "reason": "Bloque hist\u00f3rico subregional de los a\u00f1os 60."
+        "text": "El Tratado Tripartito, alegando el uso excesivo del caudal del R\u00edo Paran\u00e1.",
+        "reason": "El Tratado de 1979 regula niveles del r\u00edo (Itaip\u00fa/Corpus), sin relaci\u00f3n con el orden democr\u00e1tico interno."
       },
       {
-        "text": "Zicosur.",
-        "reason": "Es un esquema subnacional (gobernadores/intendentes), no de Jefes de Estado."
+        "text": "La Carta Magna de Asunci\u00f3n de 1991, que proh\u00edbe los juicios pol\u00edticos presidenciales.",
+        "reason": "El Tratado de 1991 no proh\u00edbe el juicio pol\u00edtico (herramienta constitucional v\u00e1lida), la disputa fue por el debido proceso (tiempo)."
       }
     ]
   },
   {
-    "question": "\u00bfQu\u00e9 presidente hist\u00f3rico encarna la m\u00e1xima expresi\u00f3n de aislamiento nacional del Paraguay?",
-    "correct": "Jos\u00e9 Gaspar Rodr\u00edguez de Francia.",
+    "question": "\u00bfPor qu\u00e9 el ingreso de Venezuela al Mercosur en 2012 gener\u00f3 una controversia jur\u00eddica sostenida por Paraguay?",
+    "correct": "Porque se aprob\u00f3 aprovechando la suspensi\u00f3n paraguaya, violando el principio del Tratado de Asunci\u00f3n que exige consenso un\u00e1nime de todos los miembros plenos para nuevas adhesiones.",
     "incorrects": [
       {
-        "text": "Carlos Antonio L\u00f3pez.",
-        "reason": "Don Carlos abri\u00f3 el pa\u00eds comercial y culturalmente."
+        "text": "Porque Venezuela no posee territorio contiguo con ninguno de los pa\u00edses del Mercosur.",
+        "reason": "Venezuela limita extensa y directamente con Brasil."
       },
       {
-        "text": "Francisco Solano L\u00f3pez.",
-        "reason": "Llev\u00f3 a cabo diplomacia activa que desemboc\u00f3 en la Guerra Guasu."
+        "text": "Porque Paraguay exig\u00eda que Venezuela abandonara previamente la OEA.",
+        "reason": "Paraguay exig\u00eda el respeto al proceso de ratificaci\u00f3n legislativa interna (Senado paraguayo), no condiciones sobre la OEA."
       },
       {
-        "text": "Eusebio Ayala.",
-        "reason": "Diplomacia activa del siglo XX (Guerra del Chaco)."
+        "text": "Porque Venezuela impuso el uso obligatorio del Bol\u00edvar en el comercio del bloque.",
+        "reason": "El ingreso no conllev\u00f3 cambios monetarios obligatorios para los dem\u00e1s socios."
       },
       {
-        "text": "Alfredo Stroessner.",
-        "reason": "Abri\u00f3 fronteras con Brasil y atrajo migrantes/inversiones."
+        "text": "Porque el Estatuto del Mercosur proh\u00edbe expl\u00edcitamente el ingreso de pa\u00edses petroleros.",
+        "reason": "No existe tal prohibici\u00f3n econ\u00f3mica sectorial en los tratados del bloque."
       },
       {
-        "text": "Eligio Ayala.",
-        "reason": "Liberal, integrado financieramente al exterior."
+        "text": "Porque Paraguay reclamaba el pago de una deuda hist\u00f3rica de PDVSA antes de aceptar el ingreso.",
+        "reason": "La deuda con PDVSA exist\u00eda, pero el bloqueo al ingreso fue pol\u00edtico-institucional del Senado, no un chantaje formal."
       },
       {
-        "text": "Fulgencio Yegros.",
-        "reason": "Militar pr\u00f3cer, no gobern\u00f3 con dictadura aislacionista."
+        "text": "Porque Uruguay amenaz\u00f3 con retirarse si Paraguay ejerc\u00eda su derecho a veto.",
+        "reason": "Uruguay apoy\u00f3 el ingreso junto con Argentina y Brasil (el 'lo pol\u00edtico supera a lo jur\u00eddico' de Mujica)."
       },
       {
-        "text": "Andr\u00e9s Rodr\u00edguez.",
-        "reason": "Inici\u00f3 la transici\u00f3n democr\u00e1tica y la firma del Mercosur (apertura total)."
+        "text": "Porque el ingreso de Venezuela obligaba a Paraguay a romper relaciones con Estados Unidos.",
+        "reason": "El Mercosur no dicta las relaciones diplom\u00e1ticas bilaterales de sus miembros con terceros."
       }
     ]
   },
   {
-    "question": "\u00bfQu\u00e9 documento fundacional permiti\u00f3 sancionar a Paraguay en 2012 por 'ruptura democr\u00e1tica'?",
-    "correct": "El Protocolo de Ushuaia.",
+    "question": "\u00bfQu\u00e9 representa el Fondo para la Convergencia Estructural del Mercosur (FOCEM) para Paraguay?",
+    "correct": "El principal instrumento solidario del bloque para mitigar asimetr\u00edas, financiando infraestructuras viales y energ\u00e9ticas (ej. l\u00ednea de 500kV) de las que Paraguay es el mayor beneficiario.",
     "incorrects": [
       {
-        "text": "Tratado de Tordesillas.",
-        "reason": "Tratado ib\u00e9rico del siglo XV, no aplicable."
+        "text": "Un banco central regional encargado de emitir billetes con valor en toda Sudam\u00e9rica.",
+        "reason": "El FOCEM reparte fondos para proyectos no reembolsables, no es un banco emisor de moneda."
       },
       {
-        "text": "Protocolo de Ouro Preto.",
-        "reason": "Define la estructura institucional y personalidad jur\u00eddica del bloque (1994)."
+        "text": "Un arancel punitivo cobrado a los pa\u00edses que exportan sin valor agregado.",
+        "reason": "Es un fondo de cooperaci\u00f3n integrado por aportes asim\u00e9tricos (Brasil y Argentina pagan m\u00e1s), no un impuesto punitivo."
       },
       {
-        "text": "Protocolo de Olivos.",
-        "reason": "Es para la soluci\u00f3n de controversias jur\u00eddicas (2002)."
+        "text": "El presupuesto destinado a mantener operativo el Parlamento del Mercosur en Montevideo.",
+        "reason": "El Parlasur se financia del presupuesto ordinario institucional; FOCEM es para obras de infraestructura."
       },
       {
-        "text": "Cl\u00e1usula del Arancel Externo.",
-        "reason": "Es normativa comercial y aduanera, no pol\u00edtica."
+        "text": "Un mecanismo para subsidiar directamente los salarios de la administraci\u00f3n p\u00fablica paraguaya.",
+        "reason": "Financia proyectos estructurales auditables, no gastos corrientes o salarios estatales."
       },
       {
-        "text": "Carta Interamericana de OEA.",
-        "reason": "Es de la OEA, no del Mercosur; la OEA no suspendi\u00f3 a Paraguay."
+        "text": "Un fondo de rescate utilizado para pagar la deuda externa con el FMI.",
+        "reason": "Sus fondos tienen destino espec\u00edfico en obras f\u00edsicas y sociales, prohibido su uso para pago de deuda soberana."
       },
       {
-        "text": "Tratado de Itaip\u00fa.",
-        "reason": "Es binacional (energ\u00e9tico) y no tiene cl\u00e1usulas democr\u00e1ticas aplicables a terceros socios."
+        "text": "Una entidad supranacional que fija los precios de la soja y la carne.",
+        "reason": "El Mercosur no tiene fijaci\u00f3n de precios, opera bajo econom\u00eda de libre mercado."
       },
       {
-        "text": "Declaraci\u00f3n de Foz de Iguaz\u00fa.",
-        "reason": "Acuerdo precursor (1985), no contiene la cl\u00e1usula democr\u00e1tica vinculante moderna."
+        "text": "Un programa militar para estandarizar el armamento de las cuatro fuerzas armadas.",
+        "reason": "El Mercosur carece de dimensi\u00f3n militar/defensa integrada."
       }
     ]
   },
   {
-    "question": "En 2012, aprovechando la suspensi\u00f3n paraguaya, \u00bfqu\u00e9 hicieron los dem\u00e1s socios del Mercosur?",
-    "correct": "Aprobaron el ingreso de Venezuela al bloque (bloqueado previamente por el Congreso paraguayo).",
+    "question": "\u00bfQu\u00e9 caracter\u00edstica define la vulnerabilidad estructural de Paraguay calificada como 'doblemente asim\u00e9trica' en la literatura de integraci\u00f3n?",
+    "correct": "Es asim\u00e9trico por el tama\u00f1o relativo de su econom\u00eda frente a potencias (Brasil/Argentina) y, a la vez, por su encierro geogr\u00e1fico (mediterraneidad).",
     "incorrects": [
       {
-        "text": "Expulsaron a Paraguay para siempre.",
-        "reason": "Fue suspensi\u00f3n temporal; Paraguay reingres\u00f3 con el nuevo gobierno electo."
+        "text": "Posee la inflaci\u00f3n m\u00e1s alta del continente y la menor cantidad de agua dulce.",
+        "reason": "Paraguay tiene estabilidad macroecon\u00f3mica hist\u00f3rica y es una potencia h\u00eddrica mundial."
       },
       {
-        "text": "Firmaron el TLC con Europa.",
-        "reason": "Las negociaciones continuaron y se cerraron en principio reci\u00e9n en 2019 con Paraguay presente."
+        "text": "Tiene un territorio dividido en dos continentes y sufre de bloqueos navales europeos.",
+        "reason": "Es un pa\u00eds puramente sudamericano y no sufre bloqueos navales europeos actuales."
       },
       {
-        "text": "Anularon Itaip\u00fa y Yacyret\u00e1.",
-        "reason": "Estos tratados son bilaterales e independientes del Mercosur."
+        "text": "Depende totalmente de la exportaci\u00f3n de petr\u00f3leo y est\u00e1 aislado de Asia.",
+        "reason": "No exporta petr\u00f3leo; su fuerte es la agroindustria y la hidroenerg\u00eda."
       },
       {
-        "text": "Mudaron la Secretar\u00eda a Buenos Aires.",
-        "reason": "La sede hist\u00f3rica y actual del Mercosur est\u00e1 en Montevideo."
+        "text": "Carece de servicio diplom\u00e1tico y no pertenece a las Naciones Unidas.",
+        "reason": "Posee una canciller\u00eda estructurada y es fundador de la ONU (1945)."
       },
       {
-        "text": "Eliminaron el Arancel Externo.",
-        "reason": "El AEC se mantuvo legalmente vigente."
+        "text": "No produce alimentos suficientes y no tiene constituci\u00f3n nacional.",
+        "reason": "Es top 10 mundial exportador de soja/carne y su constituci\u00f3n rige desde 1992."
       },
       {
-        "text": "Crearon una moneda sudamericana.",
-        "reason": "No se concret\u00f3 ninguna moneda \u00fanica (ej. Sucre o Sur)."
+        "text": "Est\u00e1 rodeado de potencias nucleares hostiles y sufre sanciones de la OEA.",
+        "reason": "El Cono Sur es zona libre de armas nucleares (Tlatelolco) y Paraguay no sufre sanciones de OEA."
       },
       {
-        "text": "Sustituyeron el FOCEM.",
-        "reason": "El FOCEM se mantuvo operativo."
+        "text": "Comparte moneda con Argentina, importando su inflaci\u00f3n y deuda.",
+        "reason": "Mantiene estricta independencia monetaria con el Guaran\u00ed."
       }
     ]
   },
   {
-    "question": "\u00bfCu\u00e1l es la principal asimetr\u00eda que Paraguay enfrenta en el Mercosur?",
-    "correct": "Su menor desarrollo relativo y su mediterraneidad.",
+    "question": "\u00bfCu\u00e1l fue el impacto del retorno de la democracia en 1989 sobre la pol\u00edtica exterior paraguaya?",
+    "correct": "El fin del aislamiento ideol\u00f3gico, permitiendo una apertura total, el ingreso al Mercosur y la diversificaci\u00f3n de relaciones internacionales basadas en principios de Estado de Derecho.",
     "incorrects": [
       {
-        "text": "Falta de energ\u00eda propia.",
-        "reason": "Es superavitario y gran exportador de hidroenerg\u00eda."
+        "text": "La ruptura inmediata de todas las relaciones diplom\u00e1ticas con el hemisferio occidental.",
+        "reason": "Al contrario, se fortaleci\u00f3 la inserci\u00f3n en Occidente superando el estigma de la dictadura."
       },
       {
-        "text": "Falta de relaciones con Europa.",
-        "reason": "Mantiene relaciones diplom\u00e1ticas y exporta all\u00ed."
+        "text": "El retiro de Paraguay de la OEA por considerarla una herramienta del imperialismo.",
+        "reason": "La nueva constituci\u00f3n de 1992 reivindic\u00f3 la integraci\u00f3n multilateral fuertemente."
       },
       {
-        "text": "D\u00e9ficit en producci\u00f3n de alimentos.",
-        "reason": "Es un gigantesco agroexportador global."
+        "text": "La militarizaci\u00f3n de la diplomacia, reemplazando civiles por generales en todas las embajadas.",
+        "reason": "Inici\u00f3 un proceso de profesionalizaci\u00f3n y desmilitarizaci\u00f3n del servicio exterior (Ley 1335)."
       },
       {
-        "text": "Rechazo a firmar tratados de DD.HH.",
-        "reason": "Paraguay ratific\u00f3 los principales convenios del Sistema Interamericano."
+        "text": "El desconocimiento de los Tratados de Itaip\u00fa y Yacyret\u00e1, paralizando ambas obras.",
+        "reason": "Los tratados se respetaron bajo el principio de continuidad jur\u00eddica del Estado."
       },
       {
-        "text": "Uso del Guaran\u00ed.",
-        "reason": "La moneda propia no es una barrera asim\u00e9trica, de hecho le da estabilidad macroecon\u00f3mica."
+        "text": "El abandono del modelo agroexportador para establecer una econom\u00eda comunista planificada.",
+        "reason": "El modelo econ\u00f3mico liberal-exportador se profundiz\u00f3 tras el golpe de 1989."
       },
       {
-        "text": "Ausencia absoluta de r\u00edos navegables.",
-        "reason": "Posee la vital Hidrov\u00eda Paraguay-Paran\u00e1."
+        "text": "La declaraci\u00f3n de neutralidad armada perpetua, prohibiendo al pa\u00eds firmar tratados comerciales.",
+        "reason": "Paraguay nunca adopt\u00f3 neutralidad suiza; se involucr\u00f3 activamente en el libre comercio."
       },
       {
-        "text": "Constituci\u00f3n aislacionista.",
-        "reason": "El Art. 143/145 CN promueve la integraci\u00f3n internacional."
+        "text": "La exigencia de indemnizaciones de guerra a Brasil y Argentina como condici\u00f3n para dialogar.",
+        "reason": "La integraci\u00f3n mercosure\u00f1a se bas\u00f3 en mirar al futuro, no en reclamos b\u00e9licos del siglo XIX."
       }
     ]
   },
   {
-    "question": "Eje de Soberan\u00eda: \u00bfQu\u00e9 prioriza Paraguay en sus RR.II. respecto a este eje?",
-    "correct": "La no injerencia externa en sus asuntos internos y su autonom\u00eda de decisi\u00f3n.",
+    "question": "Dentro del Eje Estrat\u00e9gico de 'Reivindicaci\u00f3n de la Soberan\u00eda', \u00bfc\u00f3mo se posiciona Paraguay ante las intervenciones externas?",
+    "correct": "Rechaza cualquier injerencia en sus asuntos internos, afirmando que el modelo de desarrollo y las decisiones pol\u00edticas corresponden exclusivamente al pueblo paraguayo.",
     "incorrects": [
       {
-        "text": "Reclamar territorios hist\u00f3ricamente perdidos.",
-        "reason": "Paraguay respeta plenamente los tratados de l\u00edmites vigentes."
+        "text": "Apoya las intervenciones armadas preventivas de la ONU para imponer democracias.",
+        "reason": "La Constituci\u00f3n proh\u00edbe la injerencia y aboga por la soluci\u00f3n pac\u00edfica de controversias."
       },
       {
-        "text": "Desconocer sentencias de la Corte Interamericana.",
-        "reason": "Paraguay acata los fallos de la Corte IDH, honrando sus compromisos."
+        "text": "Delega la revisi\u00f3n de su Constituci\u00f3n al Tribunal Permanente del Mercosur.",
+        "reason": "El orden de prelaci\u00f3n jur\u00eddica coloca a la Constituci\u00f3n Nacional por encima de todo tratado supranacional."
       },
       {
-        "text": "Ceder su ej\u00e9rcito al Mercosur.",
-        "reason": "La soberan\u00eda nacional excluye la integraci\u00f3n militar supranacional."
+        "text": "Permite que potencias extranjeras dicten sus pol\u00edticas agropecuarias para evitar sanciones comerciales.",
+        "reason": "Soberan\u00eda es precisamente resistir imposiciones for\u00e1neas sobre la estructura productiva (ej. normativas ambientales europeas unilaterales)."
       },
       {
-        "text": "Nacionalizar empresas extranjeras.",
-        "reason": "Paraguay busca atraer inversi\u00f3n, no confiscarla."
+        "text": "Fomenta la secesi\u00f3n de territorios para crear zonas francas independientes bajo control de la OMC.",
+        "reason": "La integridad territorial es un pilar innegociable de la soberan\u00eda de Estado."
       },
       {
-        "text": "Romper embajadas con gobiernos socialistas.",
-        "reason": "Mantiene diplomacia de Estado, pragm\u00e1tica frente a ideolog\u00edas."
+        "text": "Renuncia a aplicar su c\u00f3digo penal a extranjeros que inviertan m\u00e1s de un mill\u00f3n de d\u00f3lares.",
+        "reason": "El Estado ejerce soberan\u00eda jur\u00eddica igualitaria sobre todo individuo en su territorio."
       },
       {
-        "text": "Bloquear exportaciones como protesta ambiental.",
-        "reason": "Defiende el medio ambiente, pero proteger sus exportaciones es vital."
+        "text": "Cierra sistem\u00e1ticamente sus fronteras al libre tr\u00e1nsito civil en represalia por pol\u00edticas migratorias vecinas.",
+        "reason": "La defensa de la soberan\u00eda se da en el marco del derecho internacional, no de medidas hostiles aut\u00e1rquicas."
       },
       {
-        "text": "Aislarse del libre comercio.",
-        "reason": "Busca soberanamente insertarse en cadenas de valor globales."
+        "text": "Supedita su voto en foros multilaterales a lo que dictamine el consenso exclusivo de UNASUR.",
+        "reason": "Conserva independencia de voto de acuerdo a sus intereses, no act\u00faa como bloque autom\u00e1tico si le perjudica."
       }
     ]
   },
   {
-    "question": "Eje Consular y Migratorio: \u00bfCu\u00e1l es la labor central de la Canciller\u00eda?",
-    "correct": "Proteger, asistir y documentar a la di\u00e1spora paraguaya en el exterior.",
+    "question": "En materia de Derechos Humanos (Eje Estrat\u00e9gico), \u00bfqu\u00e9 es el SIMORE Plus?",
+    "correct": "Un sistema inform\u00e1tico paraguayo interinstitucional que vincula el cumplimiento de recomendaciones internacionales de DD.HH. con los Objetivos de Desarrollo Sostenible (ODS).",
     "incorrects": [
       {
-        "text": "Promover la emigraci\u00f3n laboral.",
-        "reason": "El Estado no fomenta la expulsi\u00f3n de su fuerza laboral."
+        "text": "Una fuerza policial de \u00e9lite entrenada por la ONU para intervenir en c\u00e1rceles.",
+        "reason": "Es un sistema tecnol\u00f3gico de monitoreo de datos, no una fuerza operativa de seguridad."
       },
       {
-        "text": "Prohibir el ingreso de extranjeros.",
-        "reason": "Fomenta la migraci\u00f3n regular y la atracci\u00f3n de talentos/capitales."
+        "text": "Un tratado de libre comercio condicionado al respeto a la libertad de prensa.",
+        "reason": "No es un tratado comercial, es una herramienta estatal interna de seguimiento."
       },
       {
-        "text": "Cobrar impuestos a los emigrantes.",
-        "reason": "El fisco paraguayo tiene base territorial, no grava rentas globales extraterritoriales de su di\u00e1spora."
+        "text": "El fondo econ\u00f3mico indemnizatorio para v\u00edctimas del terrorismo de Estado en los a\u00f1os 70.",
+        "reason": "Existe una Defensor\u00eda del Pueblo para eso; el SIMORE monitorea recomendaciones actuales vigentes."
       },
       {
-        "text": "Limitar pasaportes a diplom\u00e1ticos.",
-        "reason": "El pasaporte es un derecho ciudadano administrado por el Estado."
+        "text": "Una ONG internacional con sede en Asunci\u00f3n que audita las elecciones presidenciales.",
+        "reason": "Es una plataforma del Estado Paraguayo (Canciller\u00eda + Ministerio de Justicia), no una ONG."
       },
       {
-        "text": "Expulsar refugiados internacionales.",
-        "reason": "Paraguay respeta el principio de no devoluci\u00f3n (non-refoulement) y el derecho de asilo."
+        "text": "El programa de becas universitarias para refugiados en situaci\u00f3n de vulnerabilidad.",
+        "reason": "Aunque los DDHH abarcan refugiados, SIMORE es espec\u00edficamente de monitoreo de recomendaciones y tratados."
       },
       {
-        "text": "Delegar asistencia consular a Brasil.",
-        "reason": "Ejerce su propia soberan\u00eda consular mediante su red de misiones."
+        "text": "La cl\u00e1usula del Mercosur que sanciona penalmente a presidentes por corrupci\u00f3n.",
+        "reason": "El Mercosur no tiene jurisdicci\u00f3n penal. SIMORE es paraguayo y enfocado en DD.HH."
       },
       {
-        "text": "Organizar votos solo para el Parlasur.",
-        "reason": "Los paraguayos votan para Presidente y Vicepresidente desde el exterior."
+        "text": "Un radar militar para vigilar violaciones de espacio a\u00e9reo por naves del narcotr\u00e1fico.",
+        "reason": "Pertenece a la dimensi\u00f3n de derechos fundamentales civiles/sociales, no vigilancia aeropespacial militar."
       }
     ]
   },
   {
-    "question": "Eje Diplomacia Energ\u00e9tica: \u00bfD\u00f3nde reside la mayor fortaleza negociadora paraguaya?",
-    "correct": "En su co-propiedad sobre Itaip\u00fa y Yacyret\u00e1 (energ\u00eda hidroel\u00e9ctrica).",
+    "question": "Bajo el Eje de 'Diplomacia Energ\u00e9tica', la revisi\u00f3n del Anexo C del Tratado de Itaip\u00fa (cumplidos 50 a\u00f1os) involucr\u00f3 el debate sobre:",
+    "correct": "Las bases financieras y de prestaci\u00f3n de servicios de electricidad, incluyendo la tarifa y el destino de la energ\u00eda excedente paraguaya.",
     "incorrects": [
       {
-        "text": "En sus masivos pozos petroleros del Chaco.",
-        "reason": "No produce petr\u00f3leo a escala comercial."
+        "text": "La demolici\u00f3n de la represa para restaurar los Saltos del Guair\u00e1 y cumplir normativas de la UNESCO.",
+        "reason": "La revisi\u00f3n es estrictamente t\u00e9cnica y financiera, la infraestructura f\u00edsica (represa) es permanente y vital para ambas econom\u00edas."
       },
       {
-        "text": "En sus centrales nucleares.",
-        "reason": "No posee tecnolog\u00eda ni plantas nucleares."
+        "text": "La transferencia de la propiedad total de la represa a manos de la Rep\u00fablica del Brasil.",
+        "reason": "La soberan\u00eda sobre el 50% de la entidad es un logro hist\u00f3rico irrenunciable paraguayo."
       },
       {
-        "text": "En su carb\u00f3n mineral.",
-        "reason": "Su matriz energ\u00e9tica se basa en biomasa e hidroelectricidad, no en carb\u00f3n."
+        "text": "La inclusi\u00f3n de Argentina y Bolivia como nuevos socios igualitarios en la represa binacional.",
+        "reason": "Itaip\u00fa es exclusivamente binacional (Brasil-Paraguay)."
       },
       {
-        "text": "En su control de la OPEP.",
-        "reason": "No pertenece a la Organizaci\u00f3n de Pa\u00edses Exportadores de Petr\u00f3leo."
+        "text": "El pago de peajes a Naciones Unidas por el uso del caudal del r\u00edo Paran\u00e1.",
+        "reason": "El r\u00edo Paran\u00e1 es recurso compartido soberano, no tributa a la ONU."
       },
       {
-        "text": "En sus minas de litio.",
-        "reason": "No tiene producci\u00f3n de litio."
+        "text": "La prohibici\u00f3n de utilizar el r\u00edo para navegaci\u00f3n comercial mientras operen las turbinas.",
+        "reason": "La navegabilidad (esclusas proyectadas) no choca existencialmente con la revisi\u00f3n financiera del Anexo C."
       },
       {
-        "text": "En gasoductos exportadores.",
-        "reason": "No exporta gas natural, es importador."
+        "text": "El abandono del uso del D\u00f3lar estadounidense para pasar a facturar la energ\u00eda exclusivamente en Reales.",
+        "reason": "El Tratado estipula al D\u00f3lar como moneda de referencia fundamental para evitar devaluaciones asim\u00e9tricas."
       },
       {
-        "text": "En el peaje de la Hidrov\u00eda.",
-        "reason": "La Hidrov\u00eda es navegabilidad y log\u00edstica, no generaci\u00f3n de energ\u00eda el\u00e9ctrica."
+        "text": "La privatizaci\u00f3n de la ANDE para que empresas extranjeras controlen la distribuci\u00f3n de luz en Paraguay.",
+        "reason": "La ANDE es un monopolio estatal estrat\u00e9gico; la diplomacia defiende la soberan\u00eda el\u00e9ctrica del Estado."
       }
     ]
   },
   {
-    "question": "Eje de Inserci\u00f3n Econ\u00f3mica: \u00bfQu\u00e9 exige Paraguay en el Mercosur?",
-    "correct": "Eliminar barreras arancelarias y no arancelarias para consolidar un libre comercio real y perfeccionar el bloque.",
+    "question": "En cuanto al 'Trato Especial y Diferenciado para PDSL' (Pa\u00edses en Desarrollo Sin Litoral), \u00bfqu\u00e9 foro o mecanismo internacional es clave para canalizar estos reclamos?",
+    "correct": "El Programa de Acci\u00f3n de Viena y conferencias de Naciones Unidas que buscan compensaciones estructurales en infraestructura y facilitaci\u00f3n del comercio.",
     "incorrects": [
       {
-        "text": "Disolver el bloque para negociar solo.",
-        "reason": "Apuesta por fortalecer el bloque, consider\u00e1ndolo su mercado natural."
+        "text": "El Consejo de Seguridad de la ONU, que emite resoluciones vinculantes de embargo contra pa\u00edses que nieguen acceso al mar.",
+        "reason": "El Consejo de Seguridad atiende temas de paz y guerra, no controversias log\u00edsticas o econ\u00f3micas comerciales rutinarias."
       },
       {
-        "text": "Imponer un arancel 0% a China unilateralmente.",
-        "reason": "Las negociaciones arancelarias extrazona se hacen en bloque (AEC)."
+        "text": "La Corte Penal Internacional, mediante querellas por cr\u00edmenes de lesa humanidad contra los Estados ribere\u00f1os.",
+        "reason": "La CPI juzga a individuos por genocidio y cr\u00edmenes de guerra, no cuestiones de tr\u00e1nsito comercial de Estados."
       },
       {
-        "text": "Eliminar el fondo FOCEM.",
-        "reason": "El FOCEM es clave para compensar sus asimetr\u00edas como econom\u00eda menor."
+        "text": "El Tratado del Atl\u00e1ntico Norte (OTAN), que proporciona escolta militar para la flota mercante fluvial paraguaya.",
+        "reason": "La OTAN es una alianza de defensa europea/norteamericana sin jurisdicci\u00f3n ni inter\u00e9s directo en r\u00edos sudamericanos."
       },
       {
-        "text": "Cerrar exportaciones intra-zona.",
-        "reason": "Busca ampliar su cuota exportadora regional (ej. industria de maquila)."
+        "text": "El Parlamento Europeo, que subsidia directamente los fletes de exportadores paraguayos.",
+        "reason": "Europa apoya la integraci\u00f3n, pero la diplomacia PDSL se gestiona universalmente en la ONU (G77, OMC), no bajo tutelaje parlamentario europeo."
       },
       {
-        "text": "Cuotas a productos de Brasil.",
-        "reason": "Las cuotas violan el tratado de asunci\u00f3n de libre circulaci\u00f3n de bienes."
+        "text": "El ALBA-TCP, que garantiza transporte gratuito mar\u00edtimo a cambio de petr\u00f3leo subsidiado.",
+        "reason": "Paraguay busca derechos de tr\u00e1nsito institucionales, no acuerdos ideol\u00f3gicos de transporte."
       },
       {
-        "text": "Adoptar el Peso Argentino.",
-        "reason": "Conserva la independencia de su Banco Central y su moneda, el Guaran\u00ed."
+        "text": "La Organizaci\u00f3n de Pa\u00edses Exportadores de Petr\u00f3leo (OPEP), mediante la provisi\u00f3n de combustible libre de impuestos.",
+        "reason": "La desventaja mediterr\u00e1nea no se resuelve mendigando crudo, sino con derecho al mar y reducci\u00f3n de costos de transacci\u00f3n fronteriza."
       },
       {
-        "text": "Abandonar la Hidrov\u00eda fluvial.",
-        "reason": "La hidrov\u00eda es su arteria vital de comercio (soja, granos, carne)."
+        "text": "El Banco Interamericano de Desarrollo (BID), asumiendo la soberan\u00eda de los puertos mar\u00edtimos de Argentina.",
+        "reason": "El BID es una banca de financiamiento, no asume soberan\u00eda ni administra puertos internacionales."
       }
     ]
   },
   {
-    "question": "Eje Ambiental: \u00bfQu\u00e9 principio invoca Paraguay frecuentemente frente a las exigencias clim\u00e1ticas internacionales?",
-    "correct": "Responsabilidades comunes pero diferenciadas, argumentando que no es gran emisor y necesita desarrollarse.",
+    "question": "Eje 'Medio Ambiente y Cambio Clim\u00e1tico': \u00bfCu\u00e1l es la postura firme de Paraguay respecto a las regulaciones de trazabilidad impulsadas por la Uni\u00f3n Europea (Ej. Reglamento Libre de Deforestaci\u00f3n)?",
+    "correct": "Sostiene que estas normativas son barreras paraarancelarias unilaterales que violan normas de la OMC e imponen costos injustos a los productores locales.",
     "incorrects": [
       {
-        "text": "Reforestaci\u00f3n forzosa del 100% agr\u00edcola.",
-        "reason": "El pa\u00eds defiende su econom\u00eda agro-ganadera evitando imposiciones extremas."
+        "text": "Acepta someter toda la producci\u00f3n agr\u00edcola a la auditor\u00eda del Parlamento Europeo a cambio de subsidios.",
+        "reason": "Rechaza enf\u00e1ticamente la injerencia extranjera y la afectaci\u00f3n a su competitividad soberana."
       },
       {
-        "text": "Negacionismo clim\u00e1tico.",
-        "reason": "Firma los Acuerdos de Par\u00eds y acepta la existencia del problema."
+        "text": "Decidi\u00f3 abandonar el bloque Mercosur porque los dem\u00e1s socios acordaron firmar el tratado a ciegas.",
+        "reason": "Brasil y Argentina comparten visiones similares frente al proteccionismo verde europeo; no provoc\u00f3 salidas del bloque."
       },
       {
-        "text": "Aceptaci\u00f3n de multas europeas.",
-        "reason": "Rechaza resoluciones coercitivas unilaterales europeas (Pacto Verde) que traben comercio."
+        "text": "Propone destruir las selvas restantes para forzar a Europa a comprar productos m\u00e1s caros.",
+        "reason": "Paraguay cuenta con leyes de deforestaci\u00f3n cero en ciertas regiones y promueve la siembra directa sustentable."
       },
       {
-        "text": "Acusar de robo de bonos de carbono.",
-        "reason": "No acusa de robo, pide que los mecanismos de compensaci\u00f3n sean justos."
+        "text": "Exige que la Uni\u00f3n Europea desmantele toda su industria automotriz como compensaci\u00f3n.",
+        "reason": "La diplomacia exige trato justo y apego a la OMC, no hace exigencias absurdas a econom\u00edas de terceros."
       },
       {
-        "text": "Financiamiento del fisco v\u00eda ONU.",
-        "reason": "Los fondos verdes son para proyectos ambientales, no para salvar presupuestos fiscales generales."
+        "text": "Renuncia voluntariamente a exportar soja y carne para enfocarse \u00fanicamente en servicios inform\u00e1ticos.",
+        "reason": "La econom\u00eda paraguaya es estructuralmente dependiente de sus commodities agr\u00edcolas; renunciar ser\u00eda catastr\u00f3fico."
       },
       {
-        "text": "Prohibici\u00f3n de represas hidroel\u00e9ctricas.",
-        "reason": "Las defiende internacionalmente como fuente de energ\u00eda totalmente verde."
+        "text": "Acude al Tribunal Permanente de Revisi\u00f3n del Mercosur para demandar al Banco Central Europeo.",
+        "reason": "El Tribunal del Mercosur juzga asimetr\u00edas internas, no tiene jurisdicci\u00f3n sobre normativas comunitarias europeas."
       },
       {
-        "text": "Sanciones directas a la Amazon\u00eda.",
-        "reason": "No interviene en la pol\u00edtica interna de sus pa\u00edses vecinos."
+        "text": "Promueve la salida masiva de Am\u00e9rica Latina del Acuerdo de Par\u00eds.",
+        "reason": "Paraguay sigue en el Acuerdo de Par\u00eds, separando el compromiso clim\u00e1tico global de las trabas comerciales unilaterales europeas."
       }
     ]
   },
   {
-    "question": "Eje Multilateral: \u00bfPor qu\u00e9 foros como la ONU son vitales para la diplomacia paraguaya?",
-    "correct": "Garantizan la igualdad jur\u00eddica de los Estados, donde el voto paraguayo pesa lo mismo que el de una potencia.",
+    "question": "Respecto a la 'Diplomacia Econ\u00f3mica Comercial' y la atracci\u00f3n de Inversi\u00f3n Extranjera Directa (IED), \u00bfqu\u00e9 r\u00e9gimen jur\u00eddico interno promueve activamente la Canciller\u00eda en el exterior?",
+    "correct": "El r\u00e9gimen de Maquila, la Ley 60/90 de incentivos fiscales y el R\u00e9gimen de Zonas Francas, destacando la estabilidad macroecon\u00f3mica ('Regla Fiscal').",
     "incorrects": [
       {
-        "text": "Porque all\u00ed Paraguay tiene poder de veto.",
-        "reason": "El veto es exclusivo de los 5 miembros permanentes del Consejo de Seguridad."
+        "text": "La expropiaci\u00f3n sin indemnizaci\u00f3n de tierras para entregarlas gratuitamente a consorcios multinacionales.",
+        "reason": "La Constituci\u00f3n garantiza la propiedad privada (Art. 109). Nadie invertir\u00eda bajo riesgo de expropiaci\u00f3n an\u00e1rquica."
       },
       {
-        "text": "Porque entregan subsidios incondicionales a los pa\u00edses sin mar.",
-        "reason": "Ning\u00fan foro entrega dinero sin condiciones/proyectos de por medio."
+        "text": "La obligatoriedad de que toda empresa extranjera transfiera el 51% de sus acciones al gobierno paraguayo.",
+        "reason": "El pa\u00eds fomenta el libre mercado y la propiedad privada plena de los inversionistas extranjeros (no hay ley de nacionalizaci\u00f3n forzosa)."
       },
       {
-        "text": "Porque all\u00ed se legaliza el uso unilateral de la fuerza.",
-        "reason": "La ONU busca erradicar la guerra y proh\u00edbe el uso de la fuerza unilateral."
+        "text": "El uso exclusivo de criptomonedas (Bitcoin) para evadir el pago de aranceles en el comercio con Brasil.",
+        "reason": "La diplomacia econ\u00f3mica promociona ventajas competitivas legales, no esquemas de evasi\u00f3n aduanera."
       },
       {
-        "text": "Porque Paraguay lidera hegem\u00f3nicamente.",
-        "reason": "Paraguay ejerce poder blando, no hegemon\u00eda global (poder duro/estructural)."
+        "text": "La prohibici\u00f3n de repatriar utilidades durante los primeros 20 a\u00f1os de inversi\u00f3n.",
+        "reason": "Al contrario, la ley de inversiones garantiza el libre flujo de capitales y remesa de utilidades."
       },
       {
-        "text": "Porque sus leyes anulan la constituci\u00f3n nacional.",
-        "reason": "La Constituci\u00f3n paraguaya tiene supremac\u00eda jur\u00eddica interna."
+        "text": "El establecimiento de monopolios estatales para importar bienes de consumo masivo.",
+        "reason": "El modelo paraguayo es de los m\u00e1s liberalizados de la regi\u00f3n, opuesto al monopolio comercial estatal."
       },
       {
-        "text": "Porque el guaran\u00ed es lengua oficial en la ONU.",
-        "reason": "Solo lo es a nivel Mercosur, no en Naciones Unidas."
+        "text": "El desconocimiento de los tribunales de arbitraje internacional (CIADI) en caso de disputa.",
+        "reason": "Paraguay somete disputas comerciales internacionales al CIADI para dar seguridad jur\u00eddica a los capitales."
       },
       {
-        "text": "Porque la ONU proh\u00edbe el comercio bilateral con Brasil.",
-        "reason": "La ONU fomenta el libre comercio global y regional, no lo proh\u00edbe."
+        "text": "La imposici\u00f3n de cuotas que obligan a contratar \u00fanicamente obreros provenientes del extranjero.",
+        "reason": "Las leyes laborales promueven el empleo de mano de obra nacional como objetivo fundamental de la Maquila."
       }
     ]
   },
   {
-    "question": "Eje de Pa\u00edses Sin Litoral (PDSL): \u00bfCu\u00e1l es el reclamo central de Paraguay al derecho internacional?",
-    "correct": "Garantizar el libre tr\u00e1nsito fluido por el territorio de pa\u00edses ribere\u00f1os y acceso irrestricto a los puertos mar\u00edtimos.",
+    "question": "En el Eje de 'Cooperaci\u00f3n Internacional', \u00bfc\u00f3mo ha evolucionado el perfil de Paraguay en las \u00faltimas d\u00e9cadas?",
+    "correct": "Ha transitado de ser exclusivamente un pa\u00eds 'receptor' de ayuda a posicionarse gradualmente como un actor de Cooperaci\u00f3n Sur-Sur (oferente de asistencia t\u00e9cnica en \u00e1reas de \u00e9xito local).",
     "incorrects": [
       {
-        "text": "Exigir territorio costero soberano al Brasil.",
-        "reason": "Paraguay no tiene reclamos de anexi\u00f3n territorial hacia sus vecinos."
+        "text": "Ha rechazado tajantemente cualquier donaci\u00f3n financiera para evitar la dependencia del imperialismo occidental.",
+        "reason": "Paraguay recibe cooperaci\u00f3n financiera no reembolsable (ej. JICA, Koica, USAID, UE) bajo alineaci\u00f3n con sus planes nacionales."
       },
       {
-        "text": "Prohibir inspecciones policiales en sus barcos.",
-        "reason": "El libre tr\u00e1nsito no anula el control de aduanas por motivos de seguridad o salud."
+        "text": "Se ha convertido en el principal financista econ\u00f3mico del presupuesto regular de la Organizaci\u00f3n de Estados Americanos.",
+        "reason": "Mantiene cuotas obligatorias, pero no tiene el volumen econ\u00f3mico para sostener presupuestos de OIs enteras."
       },
       {
-        "text": "Nacionalizar los puertos francos.",
-        "reason": "Posee zonas francas en Argentina, Brasil y Chile por tratado, pero el territorio sigue siendo extranjero."
+        "text": "Decret\u00f3 el fin legal del Ministerio de Relaciones Exteriores delegando la cooperaci\u00f3n a ONGs privadas.",
+        "reason": "La cooperaci\u00f3n t\u00e9cnica es gestionada institucionalmente por agencias estatales (STP/MRE)."
       },
       {
-        "text": "Militarizar la desembocadura del R\u00edo de la Plata.",
-        "reason": "Paraguay promueve la paz y diplomacia, no la acci\u00f3n armada."
+        "text": "Ha comenzado a exigir la devoluci\u00f3n con intereses de toda la ayuda social recibida en el siglo XX.",
+        "reason": "La cooperaci\u00f3n hist\u00f3rica fue no reembolsable, carece de sentido exigir su reintegro retrospectivo."
       },
       {
-        "text": "Bloquear la integraci\u00f3n con Sudam\u00e9rica.",
-        "reason": "La integraci\u00f3n sudamericana es precisamente el medio para alcanzar el mar."
+        "text": "Desarroll\u00f3 un programa de armas de destrucci\u00f3n masiva para obligar a pa\u00edses vecinos a cooperar.",
+        "reason": "Paraguay tiene una tradici\u00f3n constitucional pacifista y carece de programas de ADM."
       },
       {
-        "text": "Demandas en la Haya contra Bolivia.",
-        "reason": "Su tr\u00e1nsito de ultramar es a trav\u00e9s de Argentina, Brasil, y puertos de Chile/Uruguay, no Bolivia."
+        "text": "Cancel\u00f3 todos los programas de becas internacionales (BECAL) por considerarlos una fuga de cerebros.",
+        "reason": "Becal es una pol\u00edtica de Estado insignia para traer conocimiento, esencial para su desarrollo."
       },
       {
-        "text": "Exigir impuestos a\u00e9reos a los vecinos.",
-        "reason": "Su desventaja es de log\u00edstica fluvial/mar\u00edtima y terrestre, no de espacio a\u00e9reo."
+        "text": "Subordin\u00f3 el control del r\u00edo Paraguay a un consorcio norteamericano a cambio de donaciones de vacunas.",
+        "reason": "La cooperaci\u00f3n no implica enajenar la soberan\u00eda del territorio ni recursos h\u00eddricos."
       }
     ]
   },
   {
-    "question": "Eje DD.HH.: \u00bfCu\u00e1l es el mecanismo nacional creado por Paraguay que es promocionado a nivel internacional como buena pr\u00e1ctica?",
-    "correct": "El SIMORE (Sistema de Monitoreo de Recomendaciones de Derechos Humanos).",
+    "question": "\u00bfCu\u00e1l es la pol\u00edtica invariable y tradicional del Eje de 'Asilo Pol\u00edtico' en Paraguay?",
+    "correct": "Respeto irrestricto al asilo pol\u00edtico como instituci\u00f3n humanitaria y latinoamericana, basado en tratados internacionales, no sujeto a presiones pol\u00edticas coyunturales.",
     "incorrects": [
       {
-        "text": "Creaci\u00f3n de una Corte Nacional de DDHH superior a la CIDH.",
-        "reason": "Paraguay respeta a la Corte Interamericana; no cre\u00f3 un tribunal superior a ella."
+        "text": "El rechazo sistem\u00e1tico a conceder asilo a cualquier ciudadano perteneciente a pa\u00edses del Mercosur.",
+        "reason": "El asilo se juzga por el nivel de persecuci\u00f3n pol\u00edtica demostrada, sin excluir per se a ciudadanos del Mercosur."
       },
       {
-        "text": "La Polic\u00eda Internacional de Derechos Humanos.",
-        "reason": "No existe tal organismo creado por Paraguay."
+        "text": "La exigencia del pago de una fianza en d\u00f3lares para ingresar al pa\u00eds en condici\u00f3n de refugiado.",
+        "reason": "El refugio y asilo son derechos humanos de protecci\u00f3n, no est\u00e1n sujetos a transacciones pecuniarias."
       },
       {
-        "text": "El Embargo de Estado a dictaduras.",
-        "reason": "Paraguay no ejecuta pol\u00edticas de embargos econ\u00f3micos unilaterales."
+        "text": "La extradici\u00f3n autom\u00e1tica de los asilados si el gobierno del cual huyeron ofrece ventajas comerciales al Paraguay.",
+        "reason": "La concesi\u00f3n del asilo pol\u00edtico impide la extradici\u00f3n y no es un bien de intercambio mercantil."
       },
       {
-        "text": "El cierre del Consejo de DDHH de la ONU.",
-        "reason": "Al contrario, integra ese Consejo habitualmente y lo defiende."
+        "text": "El asilo exclusivo otorgado \u00fanicamente a dictadores militares derrocados, neg\u00e1ndolo a civiles.",
+        "reason": "El asilo aplica a cualquier persona cuya vida/libertad corra peligro por causas pol\u00edticas, sin distinguir estrato."
       },
       {
-        "text": "El bloqueo de relatores especiales.",
-        "reason": "Mantiene invitaci\u00f3n abierta ('Standing Invitation') a todos los mecanismos internacionales."
+        "text": "La delegaci\u00f3n de la facultad de conceder asilo directamente a la Corte Suprema de Justicia.",
+        "reason": "La concesi\u00f3n del asilo territorial y diplom\u00e1tico es prerrogativa exclusiva del Poder Ejecutivo."
       },
       {
-        "text": "El boicot comercial a potencias que violen DDHH.",
-        "reason": "Su econom\u00eda peque\u00f1a exige pragmatismo (ej. comercia con China Continental pese a la pol\u00edtica interna de esta)."
+        "text": "El uso de embajadas paraguayas como c\u00e1rceles encubiertas para disidentes extranjeros.",
+        "reason": "Las embajadas otorgan asilo diplom\u00e1tico (refugio seguro), no funcionan como centros de reclusi\u00f3n."
       },
       {
-        "text": "La subordinaci\u00f3n constitucional a ONGs.",
-        "reason": "Mecanismos como SIMORE monitorean, pero el Estado no delega su soberan\u00eda a ONGs."
+        "text": "La abolici\u00f3n del derecho de asilo en la Constituci\u00f3n de 1992 para evitar conflictos con potencias.",
+        "reason": "La Constituci\u00f3n Nacional consagra expl\u00edcitamente el derecho de asilo en su Art\u00edculo 43."
       }
     ]
   },
   {
-    "question": "Eje de Relaciones Bilaterales: \u00bfC\u00f3mo se maneja Paraguay frente a cambios ideol\u00f3gicos en los gobiernos de la regi\u00f3n?",
-    "correct": "Con pragmatismo y pol\u00edtica de Estado, priorizando la cooperaci\u00f3n y el inter\u00e9s nacional, sin inmiscuirse en asuntos internos.",
+    "question": "Dentro de la inserci\u00f3n internacional paraguaya, \u00bfqu\u00e9 impacto tiene la hist\u00f3rica y continua relaci\u00f3n diplom\u00e1tica con la Rep\u00fablica de China (Taiw\u00e1n)?",
+    "correct": "Le otorga un fuerte aliado de cooperaci\u00f3n tecnol\u00f3gica y financiera, pero a la vez imposibilita formalizar relaciones diplom\u00e1ticas oficiales y TLCs con la Rep\u00fablica Popular China debido al principio de 'Una sola China'.",
     "incorrects": [
       {
-        "text": "Rompiendo relaciones si el pa\u00eds vecino elige a un presidente comunista.",
-        "reason": "Mantuvo s\u00f3lidas relaciones pragm\u00e1ticas con gobiernos de distinto signo (ej. Brasil bajo el PT, Argentina bajo el kirchnerismo)."
+        "text": "Le permite a Paraguay importar productos electr\u00f3nicos taiwaneses libres de impuestos, hundiendo la industria brasile\u00f1a.",
+        "reason": "Paraguay importa masivamente de China Continental tambi\u00e9n y el Mercosur regula los aranceles (AEC)."
       },
       {
-        "text": "Ali\u00e1ndose militarmente para intervenir el pa\u00eds vecino.",
-        "reason": "El principio de No Intervenci\u00f3n lo proh\u00edbe absolutamente."
+        "text": "Ha provocado que la Rep\u00fablica Popular China proh\u00edba a nivel mundial la compra indirecta de soja paraguaya.",
+        "reason": "Aunque no hay relaciones formales, gigantescos vol\u00famenes de soja y carne paraguaya llegan a China continental mediante triangulaci\u00f3n privada."
       },
       {
-        "text": "Reconociendo solo a democracias de centro-derecha.",
-        "reason": "Las relaciones son entre Estados soberanos, no entre partidos afines."
+        "text": "Llev\u00f3 a la expulsi\u00f3n de Paraguay de la Asamblea General de la ONU por presiones de Beijing.",
+        "reason": "Paraguay es miembro pleno de la ONU; China tiene poder de veto en el Consejo de Seguridad, pero no puede expulsar arbitrariamente de la Asamblea."
       },
       {
-        "text": "Cambiando su constituci\u00f3n si un socio lo exige.",
-        "reason": "El pa\u00eds conserva su plena autodeterminaci\u00f3n legal interna."
+        "text": "Significa que Paraguay debe mantener una base de misiles taiwaneses en el Chaco.",
+        "reason": "Las relaciones son de cooperaci\u00f3n pac\u00edfica, econ\u00f3mica y t\u00e9cnica; no implica bases militares extranjeras ofensivas."
       },
       {
-        "text": "Cerrando sus fronteras terrestres como forma de protesta pol\u00edtica.",
-        "reason": "Las fronteras abiertas son vitales para su econom\u00eda (pa\u00eds mediterr\u00e1neo)."
+        "text": "Oblig\u00f3 a que el guaran\u00ed paraguayo est\u00e9 respaldado en reservas de oro depositadas en Taipei.",
+        "reason": "El Banco Central del Paraguay administra soberanamente sus reservas en diversas canastas de divisas en instituciones financieras globales est\u00e1ndar."
       },
       {
-        "text": "Condicionando extradiciones a simpat\u00eda pol\u00edtica.",
-        "reason": "Las extradiciones se basan en tratados penales, no en afinidad pol\u00edtica."
+        "text": "Facilita el ingreso autom\u00e1tico sin visa de ciudadanos paraguayos a toda Asia Oriental.",
+        "reason": "Los reg\u00edmenes de visados son bilaterales y cada pa\u00eds asi\u00e1tico aplica los suyos independientemente de la relaci\u00f3n con Taiw\u00e1n."
       },
       {
-        "text": "Expulsando autom\u00e1ticamente embajadores del pa\u00eds ideol\u00f3gicamente distinto.",
-        "reason": "La expulsi\u00f3n (persona non grata) ocurre por faltas diplom\u00e1ticas graves, no por ser de otra ideolog\u00eda."
+        "text": "Demuestra la adhesi\u00f3n de Paraguay al dogma marxista-leninista asi\u00e1tico.",
+        "reason": "Taiw\u00e1n es una democracia capitalista de libre mercado, hist\u00f3ricamente aliada contra el comunismo."
       }
     ]
   },
   {
-    "question": "Eje de Seguridad Transnacional: \u00bfQu\u00e9 foco prioritario tiene la pol\u00edtica exterior paraguaya en sus fronteras?",
-    "correct": "La lucha coordinada contra el narcotr\u00e1fico, el contrabando y el crimen organizado.",
+    "question": "Bajo el eje 'Promoci\u00f3n del Comercio Exterior', la pol\u00edtica agroexportadora paraguaya demanda principalmente en el exterior:",
+    "correct": "Previsibilidad de las reglas, eliminaci\u00f3n de subsidios distorsivos de pa\u00edses desarrollados, y apertura real de cuotas para carne y granos (ej. Acuerdos con la Uni\u00f3n Europea).",
     "incorrects": [
       {
-        "text": "Defensa de ataques con misiles bal\u00edsticos.",
-        "reason": "No existe riesgo de proliferaci\u00f3n bal\u00edstica hostil en el Cono Sur."
+        "text": "El cierre de las importaciones de tecnolog\u00eda agr\u00edcola para fomentar la tracci\u00f3n a sangre local.",
+        "reason": "El agronegocio paraguayo es altamente tecnificado y requiere importaci\u00f3n de maquinaria y tecnolog\u00eda avanzada."
       },
       {
-        "text": "Prevenci\u00f3n de la pirater\u00eda mar\u00edtima en \u00c1frica.",
-        "reason": "El riesgo es local (R\u00edo Paran\u00e1, fronteras secas), no ultramarino/africano."
+        "text": "Exigir que la ONU decrete precios m\u00ednimos obligatorios para la carne a nivel mundial.",
+        "reason": "La comercializaci\u00f3n se rige por precios de libre mercado internacional (Chicago, etc.), no decretos de la ONU."
       },
       {
-        "text": "Construcci\u00f3n de un muro perimetral en toda su frontera.",
-        "reason": "Dada la extensi\u00f3n fronteriza (miles de kms), es inviable e ineficaz; se usa cooperaci\u00f3n."
+        "text": "Fomentar el dumping, vendiendo por debajo del costo de producci\u00f3n para arruinar a vecinos.",
+        "reason": "El dumping es una pr\u00e1ctica comercial desleal sancionada por la OMC; Paraguay busca competir con ventajas comparativas leg\u00edtimas."
       },
       {
-        "text": "Despliegue militar ofensivo dentro del territorio brasile\u00f1o.",
-        "reason": "Violar\u00eda el territorio brasile\u00f1o y provocar\u00eda un conflicto internacional grav\u00edsimo."
+        "text": "Prohibir la venta de materias primas para obligar a todos los socios a comprar productos hiper-procesados.",
+        "reason": "Si bien busca agregar valor (industrializaci\u00f3n), su fortaleza fundamental sigue siendo la exportaci\u00f3n primaria eficiente."
       },
       {
-        "text": "Ciberseguridad contra sat\u00e9lites rusos.",
-        "reason": "El problema inminente es el Comando Vermelho, PCC y contrabando cotidiano, no sat\u00e9lites extranjeros."
+        "text": "Crear un c\u00e1rtel sudamericano de la soja similar a la OPEP para extorsionar a Europa.",
+        "reason": "Paraguay promueve el libre comercio multilateral y rechaza los monopolios estatales o c\u00e1rteles extorsivos."
       },
       {
-        "text": "Bombardeo a\u00e9reo de cultivos ilegales en pa\u00edses lim\u00edtrofes.",
-        "reason": "Eso constituir\u00eda un acto de guerra. La erradicaci\u00f3n se hace internamente."
+        "text": "Asignar la gesti\u00f3n de la pol\u00edtica aduanera nacional al Banco Mundial.",
+        "reason": "La Aduana (hoy DNIT) ejerce el control soberano del comercio, no se delega a bancas internacionales."
       },
       {
-        "text": "Despenalizaci\u00f3n unilateral de narc\u00f3ticos para acabar las mafias.",
-        "reason": "El Estado paraguayo suscribe los convenios de la ONU para el control de estupefacientes."
+        "text": "Aceptar que organismos multilaterales limiten constitucionalmente la cantidad de vacas permitidas por hect\u00e1rea.",
+        "reason": "Se defiende la potestad regulatoria interna sobre el uso de la tierra sin intervenciones supranacionales forzosas."
       }
     ]
   },
   {
-    "question": "Pregunta te\u00f3rica nivel avanzado (S\u00edntesis) #21: Analizando la doctrina paraguaya de inserci\u00f3n, \u00bfqu\u00e9 afirmaci\u00f3n es correcta respecto a la soberan\u00eda?",
-    "correct": "La soberan\u00eda paraguaya implica negociar desde la igualdad jur\u00eddica sin ceder autodeterminaci\u00f3n pol\u00edtica esencial.",
+    "question": "Al cruzar el concepto te\u00f3rico de 'factores determinantes geogr\u00e1ficos' (Tema 1) con la pol\u00edtica exterior paraguaya real, \u00bfqu\u00e9 conclusi\u00f3n se extrae sobre su diplomacia?",
+    "correct": "Que la mediterraneidad es el factor de mayor peso hist\u00f3rico estructural, obligando a una pol\u00edtica exterior enfocada en garantizar corredores bioce\u00e1nicos, integraci\u00f3n fluvial e infraestructura vecinal.",
     "incorrects": [
       {
-        "text": "La soberan\u00eda significa aislamiento total del sistema financiero global.",
-        "reason": "Aislamiento total es autarqu\u00eda, no soberan\u00eda moderna."
+        "text": "Que ser una isla en el centro de Am\u00e9rica le permite aislarse de crisis pand\u00e9micas globales sin consecuencias.",
+        "reason": "No es una isla f\u00edsica; depende de sus vecinos terrestres para el flujo cr\u00edtico de provisiones e insumos m\u00e9dicos."
       },
       {
-        "text": "Se puede ceder territorio si hay compensaci\u00f3n en criptomonedas.",
-        "reason": "La cesi\u00f3n territorial es inconstitucional bajo cualquier concepto econ\u00f3mico moderno."
+        "text": "Que la carencia de petr\u00f3leo forz\u00f3 a Paraguay a aliarse con Venezuela renunciando a su soberan\u00eda pol\u00edtica.",
+        "reason": "Paraguay importaba de PDVSA, pero suspendi\u00f3 a Venezuela del Mercosur demostrando que no hipotec\u00f3 su pol\u00edtica exterior."
       },
       {
-        "text": "La soberan\u00eda reside en el Mercosur, no en el Estado paraguayo.",
-        "reason": "El Mercosur es intergubernamental; los Estados conservan su plena soberan\u00eda."
+        "text": "Que la cercan\u00eda al Ecuador (l\u00ednea ecuatorial) determina su liderazgo en tratados aeroespaciales globales.",
+        "reason": "Paraguay est\u00e1 muy al sur de la l\u00ednea del Ecuador, su inter\u00e9s espacial es marginal en su diplomacia hist\u00f3rica."
       },
       {
-        "text": "Paraguay renuncia a la soberan\u00eda fluvial entreg\u00e1ndola a empresas navieras extranjeras.",
-        "reason": "Las navieras operan bajo concesi\u00f3n o normativas locales, el Estado mantiene la soberan\u00eda del r\u00edo."
+        "text": "Que el exceso de monta\u00f1as (orograf\u00eda) dificulta sus relaciones con el bloque del Pac\u00edfico.",
+        "reason": "Paraguay es mayormente llano; la barrera andina afecta m\u00e1s la infraestructura log\u00edstica general que la pol\u00edtica en s\u00ed."
       },
       {
-        "text": "El pa\u00eds debe votar siempre en consonancia con Brasil en la ONU.",
-        "reason": "Paraguay tiene agenda propia (ej. Taiw\u00e1n, DDHH) e independencia de voto."
+        "text": "Que el tama\u00f1o reducido de su territorio lo descalifica jur\u00eddicamente para opinar en foros de la OMC.",
+        "reason": "La igualdad jur\u00eddica soberana (un pa\u00eds, un voto) permite que incluso microestados participen en la OMC."
       },
       {
-        "text": "La diplomacia econ\u00f3mica exige suspender el derecho laboral nacional.",
-        "reason": "Las garant\u00edas constitucionales no se negocian por tratados de libre comercio."
+        "text": "Que poseer acceso directo a las costas del Caribe le garantiza ingresos por turismo de cruceros.",
+        "reason": "No posee acceso al mar, mucho menos al Mar Caribe."
       },
       {
-        "text": "Soberan\u00eda es sin\u00f3nimo de proteccionismo arancelario del 100%.",
-        "reason": "Paraguay es de las econom\u00edas m\u00e1s abiertas de la regi\u00f3n, la soberan\u00eda se ejerce compitiendo."
+        "text": "Que la diplomacia ignora totalmente la geograf\u00eda, basando sus embajadas \u00fanicamente en afinidad religiosa.",
+        "reason": "La geopol\u00edtica y la geoeconom\u00eda (exportaciones, puertos francos) dictan el mapa de embajadas cr\u00edticas."
       }
     ]
   },
   {
-    "question": "Pregunta te\u00f3rica nivel avanzado (S\u00edntesis) #22: Analizando la doctrina paraguaya de inserci\u00f3n, \u00bfqu\u00e9 afirmaci\u00f3n es correcta respecto a la soberan\u00eda?",
-    "correct": "La soberan\u00eda paraguaya implica negociar desde la igualdad jur\u00eddica sin ceder autodeterminaci\u00f3n pol\u00edtica esencial.",
+    "question": "\u00bfC\u00f3mo se aplica la teor\u00eda del 'Juego de dos niveles' (Putnam) al proceso de renegociaci\u00f3n del Anexo C de Itaip\u00fa?",
+    "correct": "Los negociadores paraguayos (Nivel 1) enfrentan un entorno internacional duro (Brasil), pero deben simult\u00e1neamente satisfacer la alta sensibilidad y exigencia pol\u00edtica del Congreso y opini\u00f3n p\u00fablica interna (Nivel 2) para validar el acuerdo.",
     "incorrects": [
       {
-        "text": "La soberan\u00eda significa aislamiento total del sistema financiero global.",
-        "reason": "Aislamiento total es autarqu\u00eda, no soberan\u00eda moderna."
+        "text": "Brasil negocia simult\u00e1neamente con Paraguay y Argentina, enga\u00f1ando a ambos para obtener r\u00e9ditos dobles.",
+        "reason": "Esa es diplomacia pendular o juego triangular, no el concepto te\u00f3rico de los dos niveles de Putnam (internacional vs. dom\u00e9stico)."
       },
       {
-        "text": "Se puede ceder territorio si hay compensaci\u00f3n en criptomonedas.",
-        "reason": "La cesi\u00f3n territorial es inconstitucional bajo cualquier concepto econ\u00f3mico moderno."
+        "text": "El Canciller negocia a nivel presidencial, pero deja los detalles t\u00e9cnicos al Tribunal de Cuentas brasile\u00f1o.",
+        "reason": "El Tribunal de Cuentas brasile\u00f1o es un \u00f3rgano interno extranjero, no el 'Nivel 2' paraguayo."
       },
       {
-        "text": "La soberan\u00eda reside en el Mercosur, no en el Estado paraguayo.",
-        "reason": "El Mercosur es intergubernamental; los Estados conservan su plena soberan\u00eda."
+        "text": "Se requiere que el acuerdo pase por la aprobaci\u00f3n de las Naciones Unidas como segunda instancia obligatoria.",
+        "reason": "No requiere aval de la ONU; el Nivel 2 de Putnam se refiere exclusivamente al proceso de validaci\u00f3n democr\u00e1tica/institucional interno (Ej. parlamento nacional)."
       },
       {
-        "text": "Paraguay renuncia a la soberan\u00eda fluvial entreg\u00e1ndola a empresas navieras extranjeras.",
-        "reason": "Las navieras operan bajo concesi\u00f3n o normativas locales, el Estado mantiene la soberan\u00eda del r\u00edo."
+        "text": "La diplomacia paraguaya cede soberan\u00eda en el Nivel 1 a cambio de impunidad en tribunales del Nivel 2.",
+        "reason": "Interpretaci\u00f3n c\u00ednica y ajena al modelo te\u00f3rico de ratificaci\u00f3n pol\u00edtica."
       },
       {
-        "text": "El pa\u00eds debe votar siempre en consonancia con Brasil en la ONU.",
-        "reason": "Paraguay tiene agenda propia (ej. Taiw\u00e1n, DDHH) e independencia de voto."
+        "text": "La sociedad civil paraguaya debe negociar directamente con los fiscales del gobierno federal brasile\u00f1o.",
+        "reason": "El Estado retiene el monopolio de la negociaci\u00f3n internacional (Nivel 1)."
       },
       {
-        "text": "La diplomacia econ\u00f3mica exige suspender el derecho laboral nacional.",
-        "reason": "Las garant\u00edas constitucionales no se negocian por tratados de libre comercio."
+        "text": "El Tratado especifica la resoluci\u00f3n de disputas mediante partidos de f\u00fatbol binacionales (Nivel l\u00fadico 2).",
+        "reason": "Absurdo total."
       },
       {
-        "text": "Soberan\u00eda es sin\u00f3nimo de proteccionismo arancelario del 100%.",
-        "reason": "Paraguay es de las econom\u00edas m\u00e1s abiertas de la regi\u00f3n, la soberan\u00eda se ejerce compitiendo."
+        "text": "El Ejecutivo debe convocar elecciones presidenciales anticipadas para validar jur\u00eddicamente cada cl\u00e1usula renegociada.",
+        "reason": "El Nivel 2 no exige derrocar/renovar gobiernos, sino lograr ratificaci\u00f3n congresual de los tratados."
       }
     ]
   },
   {
-    "question": "Pregunta te\u00f3rica nivel avanzado (S\u00edntesis) #23: Analizando la doctrina paraguaya de inserci\u00f3n, \u00bfqu\u00e9 afirmaci\u00f3n es correcta respecto a la soberan\u00eda?",
-    "correct": "La soberan\u00eda paraguaya implica negociar desde la igualdad jur\u00eddica sin ceder autodeterminaci\u00f3n pol\u00edtica esencial.",
+    "question": "\u00bfDe qu\u00e9 manera el ingreso pleno de Paraguay al Mercosur (1991) transform\u00f3 su 'Proyecto de Naci\u00f3n' econ\u00f3mico y pol\u00edtico?",
+    "correct": "Ciment\u00f3 la transici\u00f3n hacia una econom\u00eda de mercado abierta, consolid\u00f3 la inserci\u00f3n democr\u00e1tica en el sistema internacional y forz\u00f3 la profesionalizaci\u00f3n de sus est\u00e1ndares productivos y burocr\u00e1ticos.",
     "incorrects": [
       {
-        "text": "La soberan\u00eda significa aislamiento total del sistema financiero global.",
-        "reason": "Aislamiento total es autarqu\u00eda, no soberan\u00eda moderna."
+        "text": "Consolid\u00f3 la doctrina militarista de seguridad nacional, cerrando la econom\u00eda a la competencia extranjera.",
+        "reason": "El Mercosur represent\u00f3 exactamente lo contrario: desarancelizaci\u00f3n, integraci\u00f3n y cl\u00e1usulas democr\u00e1ticas."
       },
       {
-        "text": "Se puede ceder territorio si hay compensaci\u00f3n en criptomonedas.",
-        "reason": "La cesi\u00f3n territorial es inconstitucional bajo cualquier concepto econ\u00f3mico moderno."
+        "text": "Inaugur\u00f3 la era del proteccionismo absoluto y el modelo de sustituci\u00f3n extrema de importaciones agrarias.",
+        "reason": "Paraguay desmantel\u00f3 aranceles, siendo el socio con vocaci\u00f3n m\u00e1s librecambista del bloque."
       },
       {
-        "text": "La soberan\u00eda reside en el Mercosur, no en el Estado paraguayo.",
-        "reason": "El Mercosur es intergubernamental; los Estados conservan su plena soberan\u00eda."
+        "text": "Permiti\u00f3 que Paraguay transfiriera todo el poder judicial a la Corte Suprema de Buenos Aires.",
+        "reason": "No existi\u00f3 delegaci\u00f3n supranacional del monopolio judicial nacional (falta de supranacionalidad del bloque)."
       },
       {
-        "text": "Paraguay renuncia a la soberan\u00eda fluvial entreg\u00e1ndola a empresas navieras extranjeras.",
-        "reason": "Las navieras operan bajo concesi\u00f3n o normativas locales, el Estado mantiene la soberan\u00eda del r\u00edo."
+        "text": "Estableci\u00f3 el sistema de partido hegem\u00f3nico \u00fanico respaldado jur\u00eddicamente por la normativa del bloque.",
+        "reason": "El Protocolo de Ushuaia exige pluralismo pol\u00edtico e instituciones democr\u00e1ticas libres."
       },
       {
-        "text": "El pa\u00eds debe votar siempre en consonancia con Brasil en la ONU.",
-        "reason": "Paraguay tiene agenda propia (ej. Taiw\u00e1n, DDHH) e independencia de voto."
+        "text": "Desvincul\u00f3 al Paraguay del resto del mundo occidental, enfoc\u00e1ndose solo en el comercio con Brasil.",
+        "reason": "El Mercosur busca negociar TLCs con otros bloques (ej. Uni\u00f3n Europea)."
       },
       {
-        "text": "La diplomacia econ\u00f3mica exige suspender el derecho laboral nacional.",
-        "reason": "Las garant\u00edas constitucionales no se negocian por tratados de libre comercio."
+        "text": "Determin\u00f3 el abandono de la agricultura para convertir a Paraguay en un para\u00edso fiscal exclusivo.",
+        "reason": "La agro-ganader\u00eda se moderniz\u00f3 y potenci\u00f3 enormemente aprovechando la escala regional y global."
       },
       {
-        "text": "Soberan\u00eda es sin\u00f3nimo de proteccionismo arancelario del 100%.",
-        "reason": "Paraguay es de las econom\u00edas m\u00e1s abiertas de la regi\u00f3n, la soberan\u00eda se ejerce compitiendo."
+        "text": "Decret\u00f3 el uso oficial e institucional de las lenguas ind\u00edgenas en todo el continente americano.",
+        "reason": "Se reconoci\u00f3 el guaran\u00ed en el bloque mucho despu\u00e9s (2006/2009), pero no oblig\u00f3 al continente ni cambi\u00f3 la base del modelo nacional econ\u00f3mico."
       }
     ]
   },
   {
-    "question": "Pregunta te\u00f3rica nivel avanzado (S\u00edntesis) #24: Analizando la doctrina paraguaya de inserci\u00f3n, \u00bfqu\u00e9 afirmaci\u00f3n es correcta respecto a la soberan\u00eda?",
-    "correct": "La soberan\u00eda paraguaya implica negociar desde la igualdad jur\u00eddica sin ceder autodeterminaci\u00f3n pol\u00edtica esencial.",
+    "question": "\u00bfQu\u00e9 relaci\u00f3n existe entre la 'pol\u00edtica exterior pragm\u00e1tica' impulsada por los recientes gobiernos paraguayos y el reconocimiento de Taiw\u00e1n?",
+    "correct": "Aunque el pragmatismo sugiere buscar mercados gigantes (China), Paraguay mantiene la alianza con Taiw\u00e1n bas\u00e1ndose en una rentabilidad pol\u00edtica, hist\u00f3rica y t\u00e9cnica, mientras fomenta fuertes lazos comerciales privados indirectos con China.",
     "incorrects": [
       {
-        "text": "La soberan\u00eda significa aislamiento total del sistema financiero global.",
-        "reason": "Aislamiento total es autarqu\u00eda, no soberan\u00eda moderna."
+        "text": "El pragmatismo dictamin\u00f3 la inmediata ruptura de v\u00ednculos con Taiw\u00e1n en el a\u00f1o 2018 para integrarse al BRICS.",
+        "reason": "Paraguay sigue reconociendo formalmente a la Rep\u00fablica de China (Taiw\u00e1n) a d\u00eda de hoy."
       },
       {
-        "text": "Se puede ceder territorio si hay compensaci\u00f3n en criptomonedas.",
-        "reason": "La cesi\u00f3n territorial es inconstitucional bajo cualquier concepto econ\u00f3mico moderno."
+        "text": "La relaci\u00f3n demuestra la falta de pragmatismo, guiada \u00fanicamente por el odio de la Canciller\u00eda al comercio asi\u00e1tico.",
+        "reason": "Paraguay importa la mayor parte de su tecnolog\u00eda y bienes de consumo de China, no hay rechazo al comercio asi\u00e1tico."
       },
       {
-        "text": "La soberan\u00eda reside en el Mercosur, no en el Estado paraguayo.",
-        "reason": "El Mercosur es intergubernamental; los Estados conservan su plena soberan\u00eda."
+        "text": "Taiw\u00e1n absorbe actualmente el 100% de la producci\u00f3n de soja, haciendo irrelevante a China Continental.",
+        "reason": "Taiw\u00e1n es un mercado muy peque\u00f1o y lejano (importa carne porcina y bovina); China es el principal comprador mundial de commodities agropecuarios."
       },
       {
-        "text": "Paraguay renuncia a la soberan\u00eda fluvial entreg\u00e1ndola a empresas navieras extranjeras.",
-        "reason": "Las navieras operan bajo concesi\u00f3n o normativas locales, el Estado mantiene la soberan\u00eda del r\u00edo."
+        "text": "La pol\u00edtica exterior de Estado obliga constitucionalmente a romper cualquier negocio de privados paraguayos con Pek\u00edn.",
+        "reason": "No existe tal prohibici\u00f3n; el sector privado opera regido por el libre mercado y comercia fuertemente con Pek\u00edn."
       },
       {
-        "text": "El pa\u00eds debe votar siempre en consonancia con Brasil en la ONU.",
-        "reason": "Paraguay tiene agenda propia (ej. Taiw\u00e1n, DDHH) e independencia de voto."
+        "text": "Mantiene Taiw\u00e1n porque el Mercosur obliga a todos sus miembros a rechazar a la Rep\u00fablica Popular China.",
+        "reason": "Falso, Brasil, Argentina y Uruguay tienen relaciones plenas e intensas con la Rep\u00fablica Popular China."
       },
       {
-        "text": "La diplomacia econ\u00f3mica exige suspender el derecho laboral nacional.",
-        "reason": "Las garant\u00edas constitucionales no se negocian por tratados de libre comercio."
+        "text": "Paraguay se niega a venderle materia prima a China como represalia por el financiamiento chino a partidos de izquierda.",
+        "reason": "La triangulaci\u00f3n de exportaciones (v\u00eda Argentina/Uruguay) hace que la soja paraguaya termine masivamente en el mercado chino."
       },
       {
-        "text": "Soberan\u00eda es sin\u00f3nimo de proteccionismo arancelario del 100%.",
-        "reason": "Paraguay es de las econom\u00edas m\u00e1s abiertas de la regi\u00f3n, la soberan\u00eda se ejerce compitiendo."
+        "text": "El pragmatismo exige aliarse militarmente con Taiw\u00e1n para patrullar el Mar de la China Meridional.",
+        "reason": "No hay tratado de defensa militar mutua ni proyecci\u00f3n militar paraguaya en el Pac\u00edfico."
       }
     ]
   },
   {
-    "question": "Pregunta te\u00f3rica nivel avanzado (S\u00edntesis) #25: Analizando la doctrina paraguaya de inserci\u00f3n, \u00bfqu\u00e9 afirmaci\u00f3n es correcta respecto a la soberan\u00eda?",
-    "correct": "La soberan\u00eda paraguaya implica negociar desde la igualdad jur\u00eddica sin ceder autodeterminaci\u00f3n pol\u00edtica esencial.",
+    "question": "Desde la perspectiva te\u00f3rica institucional, el 'Servicio Diplom\u00e1tico y Consular' se define como un actor burocr\u00e1tico, pero \u00bfqu\u00e9 funci\u00f3n cr\u00edtica cumple para la supervivencia de la pol\u00edtica de Estado?",
+    "correct": "Proporciona continuidad, memoria institucional y peritaje t\u00e9cnico a largo plazo, amortiguando los bandazos ideol\u00f3gicos de los gobiernos de turno.",
     "incorrects": [
       {
-        "text": "La soberan\u00eda significa aislamiento total del sistema financiero global.",
-        "reason": "Aislamiento total es autarqu\u00eda, no soberan\u00eda moderna."
+        "text": "Ejerce el poder de veto sobre las decisiones presidenciales, actuando como un cuarto poder del Estado.",
+        "reason": "Los embajadores no tienen poder de veto, ejecutan las pol\u00edticas definidas por el Ejecutivo."
       },
       {
-        "text": "Se puede ceder territorio si hay compensaci\u00f3n en criptomonedas.",
-        "reason": "La cesi\u00f3n territorial es inconstitucional bajo cualquier concepto econ\u00f3mico moderno."
+        "text": "Opera como agencia de espionaje militar aut\u00f3noma financiada con gastos reservados del Congreso.",
+        "reason": "La diplomacia es recolecci\u00f3n de informaci\u00f3n abierta y an\u00e1lisis pol\u00edtico (Ley 1335), no espionaje paramilitar aut\u00f3nomo."
       },
       {
-        "text": "La soberan\u00eda reside en el Mercosur, no en el Estado paraguayo.",
-        "reason": "El Mercosur es intergubernamental; los Estados conservan su plena soberan\u00eda."
+        "text": "Asegura la impunidad judicial de los actores pol\u00edticos mediante la inmunidad de jurisdicci\u00f3n permanente interna.",
+        "reason": "La inmunidad diplom\u00e1tica aplica frente a Estados receptores (extranjeros), no es un escudo frente a la justicia del propio pa\u00eds."
       },
       {
-        "text": "Paraguay renuncia a la soberan\u00eda fluvial entreg\u00e1ndola a empresas navieras extranjeras.",
-        "reason": "Las navieras operan bajo concesi\u00f3n o normativas locales, el Estado mantiene la soberan\u00eda del r\u00edo."
+        "text": "Sustituye la necesidad de ratificaci\u00f3n parlamentaria firmando acuerdos de manera secreta y vinculante.",
+        "reason": "La firma requiere Plenos Poderes, pero la vigencia interna de un Tratado requiere imperativamente aprobaci\u00f3n del Legislativo."
       },
       {
-        "text": "El pa\u00eds debe votar siempre en consonancia con Brasil en la ONU.",
-        "reason": "Paraguay tiene agenda propia (ej. Taiw\u00e1n, DDHH) e independencia de voto."
+        "text": "Se encarga de organizar referendos ciudadanos para avalar las candidaturas del bloque de integraci\u00f3n.",
+        "reason": "La justicia electoral interna y el parlamento asumen esas funciones; la canciller\u00eda se ocupa de las RRII."
       },
       {
-        "text": "La diplomacia econ\u00f3mica exige suspender el derecho laboral nacional.",
-        "reason": "Las garant\u00edas constitucionales no se negocian por tratados de libre comercio."
+        "text": "Ejerce influencia financiando campa\u00f1as electorales de la oposici\u00f3n en pa\u00edses lim\u00edtrofes.",
+        "reason": "Intervenir en procesos electorales extranjeros viola tajantemente el principio fundamental de no intervenci\u00f3n."
       },
       {
-        "text": "Soberan\u00eda es sin\u00f3nimo de proteccionismo arancelario del 100%.",
-        "reason": "Paraguay es de las econom\u00edas m\u00e1s abiertas de la regi\u00f3n, la soberan\u00eda se ejerce compitiendo."
+        "text": "Promueve la disoluci\u00f3n del Estado-Naci\u00f3n para instaurar una rep\u00fablica corporativa multinacional.",
+        "reason": "La diplomacia tradicional defiende la soberan\u00eda e intereses del Estado-Naci\u00f3n que representa."
       }
     ]
   },
   {
-    "question": "Pregunta te\u00f3rica nivel avanzado (S\u00edntesis) #26: Analizando la doctrina paraguaya de inserci\u00f3n, \u00bfqu\u00e9 afirmaci\u00f3n es correcta respecto a la soberan\u00eda?",
-    "correct": "La soberan\u00eda paraguaya implica negociar desde la igualdad jur\u00eddica sin ceder autodeterminaci\u00f3n pol\u00edtica esencial.",
+    "question": "\u00bfPor qu\u00e9 las negociaciones de pol\u00edtica exterior relativas al 'Eje de Infraestructura F\u00edsica e Hidrov\u00eda' son tan sensibles para la seguridad econ\u00f3mica paraguaya?",
+    "correct": "Porque al ser pa\u00eds mediterr\u00e1neo, el cobro unilateral de peajes (ej. por parte de Argentina) o trabas aduaneras elevan dr\u00e1sticamente los costos del flete, asfixiando la competitividad de sus exportaciones agr\u00edcolas e industriales.",
     "incorrects": [
       {
-        "text": "La soberan\u00eda significa aislamiento total del sistema financiero global.",
-        "reason": "Aislamiento total es autarqu\u00eda, no soberan\u00eda moderna."
+        "text": "Porque la hidrov\u00eda es la \u00fanica ruta por donde ingresan los turistas asi\u00e1ticos de alto poder adquisitivo.",
+        "reason": "El turismo fluvial en Paraguay es marginal; la crisis log\u00edstica asfixia el tr\u00e1fico comercial de carga pesada."
       },
       {
-        "text": "Se puede ceder territorio si hay compensaci\u00f3n en criptomonedas.",
-        "reason": "La cesi\u00f3n territorial es inconstitucional bajo cualquier concepto econ\u00f3mico moderno."
+        "text": "Porque Paraguay obtiene el 90% de sus ingresos fiscales cobrando peaje a los barcos bolivianos.",
+        "reason": "Paraguay argumenta en contra de los peajes unilaterales que limitan el libre tr\u00e1nsito, no se enriquece extorsionando el flujo comercial regional."
       },
       {
-        "text": "La soberan\u00eda reside en el Mercosur, no en el Estado paraguayo.",
-        "reason": "El Mercosur es intergubernamental; los Estados conservan su plena soberan\u00eda."
+        "text": "Porque un conflicto fluvial obligar\u00eda a Paraguay a desplegar submarinos nucleares en el R\u00edo de la Plata.",
+        "reason": "Paraguay carece de armada submarina nuclear y la v\u00eda de resoluci\u00f3n de estos temas (Tratado de Santa Cruz de la Sierra) es la negociaci\u00f3n y los tribunales arbitrales."
       },
       {
-        "text": "Paraguay renuncia a la soberan\u00eda fluvial entreg\u00e1ndola a empresas navieras extranjeras.",
-        "reason": "Las navieras operan bajo concesi\u00f3n o normativas locales, el Estado mantiene la soberan\u00eda del r\u00edo."
+        "text": "Porque si Argentina cobra peaje, Brasil debe obligatoriamente suspender las cuotas de Itaip\u00fa.",
+        "reason": "Las cuestiones comerciales hidroviarias operan por canales separados de los compromisos el\u00e9ctricos de las binacionales (cl\u00e1usula de no reciprocidad asim\u00e9trica forzosa)."
       },
       {
-        "text": "El pa\u00eds debe votar siempre en consonancia con Brasil en la ONU.",
-        "reason": "Paraguay tiene agenda propia (ej. Taiw\u00e1n, DDHH) e independencia de voto."
+        "text": "Porque los bloqueos de hidrov\u00eda reducen la exportaci\u00f3n de petr\u00f3leo paraguayo hacia Medio Oriente.",
+        "reason": "Paraguay no exporta petr\u00f3leo."
       },
       {
-        "text": "La diplomacia econ\u00f3mica exige suspender el derecho laboral nacional.",
-        "reason": "Las garant\u00edas constitucionales no se negocian por tratados de libre comercio."
+        "text": "Porque afecta directamente la conectividad de los cables submarinos de internet de banda ancha de las empresas telef\u00f3nicas paraguayas.",
+        "reason": "Las redes de fibra \u00f3ptica tienen m\u00faltiples anillos de conexi\u00f3n terrestre redundantes hacia Brasil y Argentina, independientes de los bloqueos navieros."
       },
       {
-        "text": "Soberan\u00eda es sin\u00f3nimo de proteccionismo arancelario del 100%.",
-        "reason": "Paraguay es de las econom\u00edas m\u00e1s abiertas de la regi\u00f3n, la soberan\u00eda se ejerce compitiendo."
+        "text": "Porque el Tratado de Asunci\u00f3n proh\u00edbe expl\u00edcitamente transportar soja en barcazas sin motor.",
+        "reason": "No existe tal prohibici\u00f3n irracional; el problema reside en el cobro de tasas sin contraprestaci\u00f3n efectiva de servicios (dragado/balizamiento)."
       }
     ]
   },
   {
-    "question": "Pregunta te\u00f3rica nivel avanzado (S\u00edntesis) #27: Analizando la doctrina paraguaya de inserci\u00f3n, \u00bfqu\u00e9 afirmaci\u00f3n es correcta respecto a la soberan\u00eda?",
-    "correct": "La soberan\u00eda paraguaya implica negociar desde la igualdad jur\u00eddica sin ceder autodeterminaci\u00f3n pol\u00edtica esencial.",
+    "question": "En el Eje de 'Comercio Justo y Acceso a Mercados', \u00bfqu\u00e9 amenaza externa principal enfrenta hoy el modelo exportador paraguayo adem\u00e1s del cl\u00e1sico proteccionismo arancelario?",
+    "correct": "Las barreras paraarancelarias y medidas fitosanitarias extremas y arbitrarias impuestas por pa\u00edses desarrollados (Ej. est\u00e1ndares ambientales europeos) bajo el argumento del 'Pacto Verde'.",
     "incorrects": [
       {
-        "text": "La soberan\u00eda significa aislamiento total del sistema financiero global.",
-        "reason": "Aislamiento total es autarqu\u00eda, no soberan\u00eda moderna."
+        "text": "Las sanciones financieras directas de la Organizaci\u00f3n Mundial del Comercio (OMC) por manipulaci\u00f3n cambiaria.",
+        "reason": "Paraguay tiene un r\u00e9gimen de flotaci\u00f3n libre del tipo de cambio, nunca ha sido sancionado por la OMC por manipulaci\u00f3n monetaria."
       },
       {
-        "text": "Se puede ceder territorio si hay compensaci\u00f3n en criptomonedas.",
-        "reason": "La cesi\u00f3n territorial es inconstitucional bajo cualquier concepto econ\u00f3mico moderno."
+        "text": "El boicot organizado de las potencias nucleares exigiendo cese de investigaci\u00f3n at\u00f3mica en el territorio guaran\u00ed.",
+        "reason": "Carece totalmente de base emp\u00edrica, ya que no existe un programa nuclear de uso b\u00e9lico ni dual en el pa\u00eds."
       },
       {
-        "text": "La soberan\u00eda reside en el Mercosur, no en el Estado paraguayo.",
-        "reason": "El Mercosur es intergubernamental; los Estados conservan su plena soberan\u00eda."
+        "text": "La prohibici\u00f3n absoluta de importar repuestos para maquinaria agr\u00edcola dictada por el Mercosur.",
+        "reason": "El Mercosur no proh\u00edbe importar bienes de capital, al contrario, existen reg\u00edmenes de excepci\u00f3n (BK/BIT) para favorecer la mecanizaci\u00f3n."
       },
       {
-        "text": "Paraguay renuncia a la soberan\u00eda fluvial entreg\u00e1ndola a empresas navieras extranjeras.",
-        "reason": "Las navieras operan bajo concesi\u00f3n o normativas locales, el Estado mantiene la soberan\u00eda del r\u00edo."
+        "text": "La constante depreciaci\u00f3n del D\u00f3lar estadounidense, que hace que los precios de las exportaciones paraguayas sean artificialmente altos en todo el mundo.",
+        "reason": "El d\u00f3lar suele ser fuerte, lo cual en general abarata las exportaciones paraguayas y beneficia los ingresos de los productores (pagados en USD, con costos locales en Gs)."
       },
       {
-        "text": "El pa\u00eds debe votar siempre en consonancia con Brasil en la ONU.",
-        "reason": "Paraguay tiene agenda propia (ej. Taiw\u00e1n, DDHH) e independencia de voto."
+        "text": "El rechazo del bloque de la Alianza del Pac\u00edfico a aceptar cualquier tipo de productos c\u00e1rnicos provenientes de pa\u00edses sin litoral.",
+        "reason": "La Alianza del Pac\u00edfico (Chile, Colombia, etc.) compra activamente y en altos vol\u00famenes productos paraguayos (ej. Chile es el principal comprador de carne bovina paraguaya)."
       },
       {
-        "text": "La diplomacia econ\u00f3mica exige suspender el derecho laboral nacional.",
-        "reason": "Las garant\u00edas constitucionales no se negocian por tratados de libre comercio."
+        "text": "La presi\u00f3n para estatizar el 100% de los latifundios como requisito ineludible para exportar a Estados Unidos.",
+        "reason": "Estados Unidos nunca ha impuesto reformas agrarias estatizantes como prerrequisito comercial, m\u00e1s bien exige reglas fitosanitarias de sanidad animal/vegetal."
       },
       {
-        "text": "Soberan\u00eda es sin\u00f3nimo de proteccionismo arancelario del 100%.",
-        "reason": "Paraguay es de las econom\u00edas m\u00e1s abiertas de la regi\u00f3n, la soberan\u00eda se ejerce compitiendo."
+        "text": "El chantaje del gobierno de Taiw\u00e1n que exige exclusividad monop\u00f3lica para adquirir toda la producci\u00f3n nacional.",
+        "reason": "Taiw\u00e1n opera bajo l\u00f3gicas de mercado libre, sin esquemas coercitivos monopolistas estatales sobre sus aliados diplom\u00e1ticos."
       }
     ]
   },
   {
-    "question": "Pregunta te\u00f3rica nivel avanzado (S\u00edntesis) #28: Analizando la doctrina paraguaya de inserci\u00f3n, \u00bfqu\u00e9 afirmaci\u00f3n es correcta respecto a la soberan\u00eda?",
-    "correct": "La soberan\u00eda paraguaya implica negociar desde la igualdad jur\u00eddica sin ceder autodeterminaci\u00f3n pol\u00edtica esencial.",
+    "question": "Si una ONG acusa internacionalmente a Paraguay de violar DD.HH. por sus leyes de propiedad de tierras, y el Estado defiende su soberan\u00eda territorial apelando a la ley, \u00bfqu\u00e9 debate te\u00f3rico (Tema 1) de pol\u00edtica exterior se evidencia?",
+    "correct": "La tensi\u00f3n entre la soberan\u00eda nacional (autonom\u00eda interna del Estado frente al derecho local) y la presi\u00f3n de actores no gubernamentales globalizados respaldados por reg\u00edmenes internacionales (car\u00e1cter interm\u00e9stico).",
     "incorrects": [
       {
-        "text": "La soberan\u00eda significa aislamiento total del sistema financiero global.",
-        "reason": "Aislamiento total es autarqu\u00eda, no soberan\u00eda moderna."
+        "text": "La guerra inminente entre la clase proletaria (ONGs) y la burgues\u00eda capitalista mundial que dirige el FMI.",
+        "reason": "Explicaci\u00f3n r\u00edgidamente marxista ortodoxa que no aborda los conceptos de soberan\u00eda vs actores transnacionales contempor\u00e1neos."
       },
       {
-        "text": "Se puede ceder territorio si hay compensaci\u00f3n en criptomonedas.",
-        "reason": "La cesi\u00f3n territorial es inconstitucional bajo cualquier concepto econ\u00f3mico moderno."
+        "text": "El conflicto cl\u00e1sico de la Guerra Fr\u00eda entre bloques ideol\u00f3gicos alineados con Mosc\u00fa o Washington.",
+        "reason": "El conflicto descrito es contempor\u00e1neo y no responde a la l\u00f3gica de polaridad Este-Oeste extinta."
       },
       {
-        "text": "La soberan\u00eda reside en el Mercosur, no en el Estado paraguayo.",
-        "reason": "El Mercosur es intergubernamental; los Estados conservan su plena soberan\u00eda."
+        "text": "La aplicaci\u00f3n inmediata de las fuerzas militares conjuntas del Mercosur para aplacar rebeliones internas.",
+        "reason": "El bloque no dispone de Fuerzas Armadas conjuntas, rige la no intervenci\u00f3n y soberan\u00eda sobre orden p\u00fablico interno."
       },
       {
-        "text": "Paraguay renuncia a la soberan\u00eda fluvial entreg\u00e1ndola a empresas navieras extranjeras.",
-        "reason": "Las navieras operan bajo concesi\u00f3n o normativas locales, el Estado mantiene la soberan\u00eda del r\u00edo."
+        "text": "El proceso de paradiplomacia de la ONG intentando firmar acuerdos comerciales en zonas rurales aut\u00f3nomas.",
+        "reason": "Las acusaciones de ONGs son presi\u00f3n pol\u00edtica global (lobby/advocacy), no firma de tratados comerciales paradiplom\u00e1ticos."
       },
       {
-        "text": "El pa\u00eds debe votar siempre en consonancia con Brasil en la ONU.",
-        "reason": "Paraguay tiene agenda propia (ej. Taiw\u00e1n, DDHH) e independencia de voto."
+        "text": "La demostraci\u00f3n de la superioridad absoluta del poder duro sobre cualquier herramienta de poder blando.",
+        "reason": "La actuaci\u00f3n de la ONG usando narrativas, naming & shaming e influencia es, justamente, un ejercicio de poder blando intenso."
       },
       {
-        "text": "La diplomacia econ\u00f3mica exige suspender el derecho laboral nacional.",
-        "reason": "Las garant\u00edas constitucionales no se negocian por tratados de libre comercio."
+        "text": "La obligaci\u00f3n jur\u00eddica vinculante del Poder Ejecutivo de disolver el Congreso Nacional inmediatamente si la ONU lo ordena.",
+        "reason": "Violaci\u00f3n flagrante de la divisi\u00f3n de poderes y la constituci\u00f3n nacional; inaceptable pol\u00edtica y legalmente."
       },
       {
-        "text": "Soberan\u00eda es sin\u00f3nimo de proteccionismo arancelario del 100%.",
-        "reason": "Paraguay es de las econom\u00edas m\u00e1s abiertas de la regi\u00f3n, la soberan\u00eda se ejerce compitiendo."
+        "text": "El principio de reciprocidad aduanera, donde Paraguay aumentar\u00eda aranceles a las importaciones de insumos de las ONGs.",
+        "reason": "Las ONGs no son estados comerciales soberanos sujetos a aranceles compensatorios (dumping/subvenciones)."
       }
     ]
   },
   {
-    "question": "Pregunta te\u00f3rica nivel avanzado (S\u00edntesis) #29: Analizando la doctrina paraguaya de inserci\u00f3n, \u00bfqu\u00e9 afirmaci\u00f3n es correcta respecto a la soberan\u00eda?",
-    "correct": "La soberan\u00eda paraguaya implica negociar desde la igualdad jur\u00eddica sin ceder autodeterminaci\u00f3n pol\u00edtica esencial.",
+    "question": "Identifique el elemento clave que convierte a las hidroel\u00e9ctricas binacionales (Eje 7) no solo en un recurso econ\u00f3mico, sino en la herramienta geopol\u00edtica (Tema 1) m\u00e1s importante del pa\u00eds.",
+    "correct": "Confieren un inmenso 'poder de negociaci\u00f3n' e interdependencia asim\u00e9trica inversa, ya que la provisi\u00f3n estable de energ\u00eda limpia es fundamental para el sostenimiento de los polos industriales estrat\u00e9gicos de Brasil (S\u00e3o Paulo).",
     "incorrects": [
       {
-        "text": "La soberan\u00eda significa aislamiento total del sistema financiero global.",
-        "reason": "Aislamiento total es autarqu\u00eda, no soberan\u00eda moderna."
+        "text": "Sirven como bases de operaciones navales ocultas para garantizar el control militar armado de la Cuenca del Plata.",
+        "reason": "Las binacionales son infraestructuras estrictamente civiles de generaci\u00f3n el\u00e9ctrica y control de inundaciones, no instalaciones b\u00e9licas secretas."
       },
       {
-        "text": "Se puede ceder territorio si hay compensaci\u00f3n en criptomonedas.",
-        "reason": "La cesi\u00f3n territorial es inconstitucional bajo cualquier concepto econ\u00f3mico moderno."
+        "text": "Permiten inundar arbitrariamente todo el territorio argentino abriendo las compuertas en caso de conflicto diplom\u00e1tico grave.",
+        "reason": "El uso del agua como arma de destrucci\u00f3n masiva (guerra ambiental) contraviene el derecho internacional humanitario y provocar\u00eda represalias fatales para el propio Paraguay."
       },
       {
-        "text": "La soberan\u00eda reside en el Mercosur, no en el Estado paraguayo.",
-        "reason": "El Mercosur es intergubernamental; los Estados conservan su plena soberan\u00eda."
+        "text": "Obligan a Estados Unidos y Europa a consultar con Paraguay cada decisi\u00f3n importante sobre emisiones de gases de efecto invernadero en el mundo.",
+        "reason": "Paraguay posee prestigio ambiental (energ\u00eda limpia), pero no tiene poder de veto estructural global sobre las megapotencias industriales."
       },
       {
-        "text": "Paraguay renuncia a la soberan\u00eda fluvial entreg\u00e1ndola a empresas navieras extranjeras.",
-        "reason": "Las navieras operan bajo concesi\u00f3n o normativas locales, el Estado mantiene la soberan\u00eda del r\u00edo."
+        "text": "Financian el 100% de la deuda p\u00fablica de todos los pa\u00edses miembros de UNASUR gracias a sus utilidades excedentarias.",
+        "reason": "Los ingresos y beneficios econ\u00f3micos (royalties, compensaciones) se distribuyen exclusivamente entre las altas partes contratantes (Brasil/Argentina y Paraguay)."
       },
       {
-        "text": "El pa\u00eds debe votar siempre en consonancia con Brasil en la ONU.",
-        "reason": "Paraguay tiene agenda propia (ej. Taiw\u00e1n, DDHH) e independencia de voto."
+        "text": "Garantizan constitucionalmente que el Director General de Itaip\u00fa sea autom\u00e1ticamente el Ministro de Relaciones Exteriores.",
+        "reason": "Institucionalmente, son cargos diferentes con funciones distintas, si bien coordinan estrechamente (el Director es ejecutor t\u00e9cnico, el MRE dirige la diplomacia)."
       },
       {
-        "text": "La diplomacia econ\u00f3mica exige suspender el derecho laboral nacional.",
-        "reason": "Las garant\u00edas constitucionales no se negocian por tratados de libre comercio."
+        "text": "Proporcionan uranio enriquecido para la exportaci\u00f3n, posicionando al pa\u00eds como l\u00edder de la carrera at\u00f3mica pac\u00edfica.",
+        "reason": "Las represas utilizan el caudal h\u00eddrico gravitacional (energ\u00eda cin\u00e9tica), no reactores nucleares."
       },
       {
-        "text": "Soberan\u00eda es sin\u00f3nimo de proteccionismo arancelario del 100%.",
-        "reason": "Paraguay es de las econom\u00edas m\u00e1s abiertas de la regi\u00f3n, la soberan\u00eda se ejerce compitiendo."
+        "text": "Fuerzan la adopci\u00f3n obligatoria del idioma guaran\u00ed en los sistemas educativos fronterizos brasile\u00f1os de Foz de Iguaz\u00fa bajo amenaza de cortes de luz.",
+        "reason": "Las relaciones culturales y ling\u00fc\u00edsticas fronterizas evolucionan por \u00f3smosis social (portu\u00f1ol, biling\u00fcismo), no por coacci\u00f3n hidroenerg\u00e9tica estatal."
       }
     ]
   },
   {
-    "question": "Pregunta te\u00f3rica nivel avanzado (S\u00edntesis) #30: Analizando la doctrina paraguaya de inserci\u00f3n, \u00bfqu\u00e9 afirmaci\u00f3n es correcta respecto a la soberan\u00eda?",
-    "correct": "La soberan\u00eda paraguaya implica negociar desde la igualdad jur\u00eddica sin ceder autodeterminaci\u00f3n pol\u00edtica esencial.",
+    "question": "\u00bfEn qu\u00e9 sentido la postura de pol\u00edtica exterior paraguaya sobre el libre comercio converge con la premisa te\u00f3rica de la 'Escuela Liberal o Institucionalista' (Tema 1)?",
+    "correct": "Ambas asumen que el fomento de la interdependencia comercial, la apertura de fronteras y el desarrollo de instituciones (como el Mercosur y OMC) reducen los conflictos y generan un crecimiento econ\u00f3mico de beneficio mutuo (juego de suma positiva).",
     "incorrects": [
       {
-        "text": "La soberan\u00eda significa aislamiento total del sistema financiero global.",
-        "reason": "Aislamiento total es autarqu\u00eda, no soberan\u00eda moderna."
+        "text": "En la creencia de que el libre comercio internacional invariablemente empobrece a las naciones perif\u00e9ricas y debe ser resistido mediante la planificaci\u00f3n centralizada del Estado.",
+        "reason": "Esta afirmaci\u00f3n describe exactamente los temores te\u00f3ricos de la teor\u00eda de la dependencia y el marxismo estructural, no del liberalismo internacional."
       },
       {
-        "text": "Se puede ceder territorio si hay compensaci\u00f3n en criptomonedas.",
-        "reason": "La cesi\u00f3n territorial es inconstitucional bajo cualquier concepto econ\u00f3mico moderno."
+        "text": "En que la seguridad nacional militar debe financiarse cerrando la econom\u00eda a las importaciones que compitan con la industria de armamentos estatal.",
+        "reason": "Esta pol\u00edtica proteccionista extrema para subsidiar un complejo militar-industrial refleja preceptos realistas o mercantilistas estatistas."
       },
       {
-        "text": "La soberan\u00eda reside en el Mercosur, no en el Estado paraguayo.",
-        "reason": "El Mercosur es intergubernamental; los Estados conservan su plena soberan\u00eda."
+        "text": "En la asunci\u00f3n de que las organizaciones comerciales multilaterales son un enga\u00f1o dise\u00f1ado exclusivamente para disolver las identidades culturales ind\u00edgenas.",
+        "reason": "Perspectiva cr\u00edtica-decolonial o posmoderna, radicalmente opuesta a la tesis institucionalista que percibe beneficios racionales en la institucionalidad."
       },
       {
-        "text": "Paraguay renuncia a la soberan\u00eda fluvial entreg\u00e1ndola a empresas navieras extranjeras.",
-        "reason": "Las navieras operan bajo concesi\u00f3n o normativas locales, el Estado mantiene la soberan\u00eda del r\u00edo."
+        "text": "En el argumento de que el comercio exterior debe estar monopolizado por el estamento militar para garantizar que las utilidades se dediquen a la construcci\u00f3n naval ofensiva.",
+        "reason": "Estrategia hiper-estatista t\u00edpica de imperios navales del siglo XVII-XVIII (mercantilismo), contraria al liberalismo de mercado del siglo XXI."
       },
       {
-        "text": "El pa\u00eds debe votar siempre en consonancia con Brasil en la ONU.",
-        "reason": "Paraguay tiene agenda propia (ej. Taiw\u00e1n, DDHH) e independencia de voto."
+        "text": "En la idea de que la mejor pol\u00edtica comercial de un pa\u00eds subdesarrollado es aislarse completamente, forzando la autosuficiencia alimentaria extrema y prohibiendo exportar cualquier materia prima.",
+        "reason": "Ideolog\u00eda de autarqu\u00eda extrema (Ej. Juche o aislacionismo del Dr. Francia), ant\u00edtesis filos\u00f3fica de la teor\u00eda de la interdependencia liberal."
       },
       {
-        "text": "La diplomacia econ\u00f3mica exige suspender el derecho laboral nacional.",
-        "reason": "Las garant\u00edas constitucionales no se negocian por tratados de libre comercio."
+        "text": "En la convicci\u00f3n de que los Acuerdos de Libre Comercio son vinculantes \u00fanicamente si son refrendados un\u00e1nimemente y anualmente mediante asambleas populares directas barriales.",
+        "reason": "Mecanismo anarco-sindicalista o de democracia directa radical que colisiona con el modelo de democracia republicana representativa y las reglas de ratificaci\u00f3n del DIP."
       },
       {
-        "text": "Soberan\u00eda es sin\u00f3nimo de proteccionismo arancelario del 100%.",
-        "reason": "Paraguay es de las econom\u00edas m\u00e1s abiertas de la regi\u00f3n, la soberan\u00eda se ejerce compitiendo."
-      }
-    ]
-  },
-  {
-    "question": "Pregunta te\u00f3rica nivel avanzado (S\u00edntesis) #31: Analizando la doctrina paraguaya de inserci\u00f3n, \u00bfqu\u00e9 afirmaci\u00f3n es correcta respecto a la soberan\u00eda?",
-    "correct": "La soberan\u00eda paraguaya implica negociar desde la igualdad jur\u00eddica sin ceder autodeterminaci\u00f3n pol\u00edtica esencial.",
-    "incorrects": [
-      {
-        "text": "La soberan\u00eda significa aislamiento total del sistema financiero global.",
-        "reason": "Aislamiento total es autarqu\u00eda, no soberan\u00eda moderna."
-      },
-      {
-        "text": "Se puede ceder territorio si hay compensaci\u00f3n en criptomonedas.",
-        "reason": "La cesi\u00f3n territorial es inconstitucional bajo cualquier concepto econ\u00f3mico moderno."
-      },
-      {
-        "text": "La soberan\u00eda reside en el Mercosur, no en el Estado paraguayo.",
-        "reason": "El Mercosur es intergubernamental; los Estados conservan su plena soberan\u00eda."
-      },
-      {
-        "text": "Paraguay renuncia a la soberan\u00eda fluvial entreg\u00e1ndola a empresas navieras extranjeras.",
-        "reason": "Las navieras operan bajo concesi\u00f3n o normativas locales, el Estado mantiene la soberan\u00eda del r\u00edo."
-      },
-      {
-        "text": "El pa\u00eds debe votar siempre en consonancia con Brasil en la ONU.",
-        "reason": "Paraguay tiene agenda propia (ej. Taiw\u00e1n, DDHH) e independencia de voto."
-      },
-      {
-        "text": "La diplomacia econ\u00f3mica exige suspender el derecho laboral nacional.",
-        "reason": "Las garant\u00edas constitucionales no se negocian por tratados de libre comercio."
-      },
-      {
-        "text": "Soberan\u00eda es sin\u00f3nimo de proteccionismo arancelario del 100%.",
-        "reason": "Paraguay es de las econom\u00edas m\u00e1s abiertas de la regi\u00f3n, la soberan\u00eda se ejerce compitiendo."
-      }
-    ]
-  },
-  {
-    "question": "Pregunta te\u00f3rica nivel avanzado (S\u00edntesis) #32: Analizando la doctrina paraguaya de inserci\u00f3n, \u00bfqu\u00e9 afirmaci\u00f3n es correcta respecto a la soberan\u00eda?",
-    "correct": "La soberan\u00eda paraguaya implica negociar desde la igualdad jur\u00eddica sin ceder autodeterminaci\u00f3n pol\u00edtica esencial.",
-    "incorrects": [
-      {
-        "text": "La soberan\u00eda significa aislamiento total del sistema financiero global.",
-        "reason": "Aislamiento total es autarqu\u00eda, no soberan\u00eda moderna."
-      },
-      {
-        "text": "Se puede ceder territorio si hay compensaci\u00f3n en criptomonedas.",
-        "reason": "La cesi\u00f3n territorial es inconstitucional bajo cualquier concepto econ\u00f3mico moderno."
-      },
-      {
-        "text": "La soberan\u00eda reside en el Mercosur, no en el Estado paraguayo.",
-        "reason": "El Mercosur es intergubernamental; los Estados conservan su plena soberan\u00eda."
-      },
-      {
-        "text": "Paraguay renuncia a la soberan\u00eda fluvial entreg\u00e1ndola a empresas navieras extranjeras.",
-        "reason": "Las navieras operan bajo concesi\u00f3n o normativas locales, el Estado mantiene la soberan\u00eda del r\u00edo."
-      },
-      {
-        "text": "El pa\u00eds debe votar siempre en consonancia con Brasil en la ONU.",
-        "reason": "Paraguay tiene agenda propia (ej. Taiw\u00e1n, DDHH) e independencia de voto."
-      },
-      {
-        "text": "La diplomacia econ\u00f3mica exige suspender el derecho laboral nacional.",
-        "reason": "Las garant\u00edas constitucionales no se negocian por tratados de libre comercio."
-      },
-      {
-        "text": "Soberan\u00eda es sin\u00f3nimo de proteccionismo arancelario del 100%.",
-        "reason": "Paraguay es de las econom\u00edas m\u00e1s abiertas de la regi\u00f3n, la soberan\u00eda se ejerce compitiendo."
-      }
-    ]
-  },
-  {
-    "question": "Pregunta te\u00f3rica nivel avanzado (S\u00edntesis) #33: Analizando la doctrina paraguaya de inserci\u00f3n, \u00bfqu\u00e9 afirmaci\u00f3n es correcta respecto a la soberan\u00eda?",
-    "correct": "La soberan\u00eda paraguaya implica negociar desde la igualdad jur\u00eddica sin ceder autodeterminaci\u00f3n pol\u00edtica esencial.",
-    "incorrects": [
-      {
-        "text": "La soberan\u00eda significa aislamiento total del sistema financiero global.",
-        "reason": "Aislamiento total es autarqu\u00eda, no soberan\u00eda moderna."
-      },
-      {
-        "text": "Se puede ceder territorio si hay compensaci\u00f3n en criptomonedas.",
-        "reason": "La cesi\u00f3n territorial es inconstitucional bajo cualquier concepto econ\u00f3mico moderno."
-      },
-      {
-        "text": "La soberan\u00eda reside en el Mercosur, no en el Estado paraguayo.",
-        "reason": "El Mercosur es intergubernamental; los Estados conservan su plena soberan\u00eda."
-      },
-      {
-        "text": "Paraguay renuncia a la soberan\u00eda fluvial entreg\u00e1ndola a empresas navieras extranjeras.",
-        "reason": "Las navieras operan bajo concesi\u00f3n o normativas locales, el Estado mantiene la soberan\u00eda del r\u00edo."
-      },
-      {
-        "text": "El pa\u00eds debe votar siempre en consonancia con Brasil en la ONU.",
-        "reason": "Paraguay tiene agenda propia (ej. Taiw\u00e1n, DDHH) e independencia de voto."
-      },
-      {
-        "text": "La diplomacia econ\u00f3mica exige suspender el derecho laboral nacional.",
-        "reason": "Las garant\u00edas constitucionales no se negocian por tratados de libre comercio."
-      },
-      {
-        "text": "Soberan\u00eda es sin\u00f3nimo de proteccionismo arancelario del 100%.",
-        "reason": "Paraguay es de las econom\u00edas m\u00e1s abiertas de la regi\u00f3n, la soberan\u00eda se ejerce compitiendo."
-      }
-    ]
-  },
-  {
-    "question": "Pregunta te\u00f3rica nivel avanzado (S\u00edntesis) #34: Analizando la doctrina paraguaya de inserci\u00f3n, \u00bfqu\u00e9 afirmaci\u00f3n es correcta respecto a la soberan\u00eda?",
-    "correct": "La soberan\u00eda paraguaya implica negociar desde la igualdad jur\u00eddica sin ceder autodeterminaci\u00f3n pol\u00edtica esencial.",
-    "incorrects": [
-      {
-        "text": "La soberan\u00eda significa aislamiento total del sistema financiero global.",
-        "reason": "Aislamiento total es autarqu\u00eda, no soberan\u00eda moderna."
-      },
-      {
-        "text": "Se puede ceder territorio si hay compensaci\u00f3n en criptomonedas.",
-        "reason": "La cesi\u00f3n territorial es inconstitucional bajo cualquier concepto econ\u00f3mico moderno."
-      },
-      {
-        "text": "La soberan\u00eda reside en el Mercosur, no en el Estado paraguayo.",
-        "reason": "El Mercosur es intergubernamental; los Estados conservan su plena soberan\u00eda."
-      },
-      {
-        "text": "Paraguay renuncia a la soberan\u00eda fluvial entreg\u00e1ndola a empresas navieras extranjeras.",
-        "reason": "Las navieras operan bajo concesi\u00f3n o normativas locales, el Estado mantiene la soberan\u00eda del r\u00edo."
-      },
-      {
-        "text": "El pa\u00eds debe votar siempre en consonancia con Brasil en la ONU.",
-        "reason": "Paraguay tiene agenda propia (ej. Taiw\u00e1n, DDHH) e independencia de voto."
-      },
-      {
-        "text": "La diplomacia econ\u00f3mica exige suspender el derecho laboral nacional.",
-        "reason": "Las garant\u00edas constitucionales no se negocian por tratados de libre comercio."
-      },
-      {
-        "text": "Soberan\u00eda es sin\u00f3nimo de proteccionismo arancelario del 100%.",
-        "reason": "Paraguay es de las econom\u00edas m\u00e1s abiertas de la regi\u00f3n, la soberan\u00eda se ejerce compitiendo."
-      }
-    ]
-  },
-  {
-    "question": "Pregunta te\u00f3rica nivel avanzado (S\u00edntesis) #35: Analizando la doctrina paraguaya de inserci\u00f3n, \u00bfqu\u00e9 afirmaci\u00f3n es correcta respecto a la soberan\u00eda?",
-    "correct": "La soberan\u00eda paraguaya implica negociar desde la igualdad jur\u00eddica sin ceder autodeterminaci\u00f3n pol\u00edtica esencial.",
-    "incorrects": [
-      {
-        "text": "La soberan\u00eda significa aislamiento total del sistema financiero global.",
-        "reason": "Aislamiento total es autarqu\u00eda, no soberan\u00eda moderna."
-      },
-      {
-        "text": "Se puede ceder territorio si hay compensaci\u00f3n en criptomonedas.",
-        "reason": "La cesi\u00f3n territorial es inconstitucional bajo cualquier concepto econ\u00f3mico moderno."
-      },
-      {
-        "text": "La soberan\u00eda reside en el Mercosur, no en el Estado paraguayo.",
-        "reason": "El Mercosur es intergubernamental; los Estados conservan su plena soberan\u00eda."
-      },
-      {
-        "text": "Paraguay renuncia a la soberan\u00eda fluvial entreg\u00e1ndola a empresas navieras extranjeras.",
-        "reason": "Las navieras operan bajo concesi\u00f3n o normativas locales, el Estado mantiene la soberan\u00eda del r\u00edo."
-      },
-      {
-        "text": "El pa\u00eds debe votar siempre en consonancia con Brasil en la ONU.",
-        "reason": "Paraguay tiene agenda propia (ej. Taiw\u00e1n, DDHH) e independencia de voto."
-      },
-      {
-        "text": "La diplomacia econ\u00f3mica exige suspender el derecho laboral nacional.",
-        "reason": "Las garant\u00edas constitucionales no se negocian por tratados de libre comercio."
-      },
-      {
-        "text": "Soberan\u00eda es sin\u00f3nimo de proteccionismo arancelario del 100%.",
-        "reason": "Paraguay es de las econom\u00edas m\u00e1s abiertas de la regi\u00f3n, la soberan\u00eda se ejerce compitiendo."
-      }
-    ]
-  },
-  {
-    "question": "Pregunta te\u00f3rica nivel avanzado (S\u00edntesis) #36: Analizando la doctrina paraguaya de inserci\u00f3n, \u00bfqu\u00e9 afirmaci\u00f3n es correcta respecto a la soberan\u00eda?",
-    "correct": "La soberan\u00eda paraguaya implica negociar desde la igualdad jur\u00eddica sin ceder autodeterminaci\u00f3n pol\u00edtica esencial.",
-    "incorrects": [
-      {
-        "text": "La soberan\u00eda significa aislamiento total del sistema financiero global.",
-        "reason": "Aislamiento total es autarqu\u00eda, no soberan\u00eda moderna."
-      },
-      {
-        "text": "Se puede ceder territorio si hay compensaci\u00f3n en criptomonedas.",
-        "reason": "La cesi\u00f3n territorial es inconstitucional bajo cualquier concepto econ\u00f3mico moderno."
-      },
-      {
-        "text": "La soberan\u00eda reside en el Mercosur, no en el Estado paraguayo.",
-        "reason": "El Mercosur es intergubernamental; los Estados conservan su plena soberan\u00eda."
-      },
-      {
-        "text": "Paraguay renuncia a la soberan\u00eda fluvial entreg\u00e1ndola a empresas navieras extranjeras.",
-        "reason": "Las navieras operan bajo concesi\u00f3n o normativas locales, el Estado mantiene la soberan\u00eda del r\u00edo."
-      },
-      {
-        "text": "El pa\u00eds debe votar siempre en consonancia con Brasil en la ONU.",
-        "reason": "Paraguay tiene agenda propia (ej. Taiw\u00e1n, DDHH) e independencia de voto."
-      },
-      {
-        "text": "La diplomacia econ\u00f3mica exige suspender el derecho laboral nacional.",
-        "reason": "Las garant\u00edas constitucionales no se negocian por tratados de libre comercio."
-      },
-      {
-        "text": "Soberan\u00eda es sin\u00f3nimo de proteccionismo arancelario del 100%.",
-        "reason": "Paraguay es de las econom\u00edas m\u00e1s abiertas de la regi\u00f3n, la soberan\u00eda se ejerce compitiendo."
-      }
-    ]
-  },
-  {
-    "question": "Pregunta te\u00f3rica nivel avanzado (S\u00edntesis) #37: Analizando la doctrina paraguaya de inserci\u00f3n, \u00bfqu\u00e9 afirmaci\u00f3n es correcta respecto a la soberan\u00eda?",
-    "correct": "La soberan\u00eda paraguaya implica negociar desde la igualdad jur\u00eddica sin ceder autodeterminaci\u00f3n pol\u00edtica esencial.",
-    "incorrects": [
-      {
-        "text": "La soberan\u00eda significa aislamiento total del sistema financiero global.",
-        "reason": "Aislamiento total es autarqu\u00eda, no soberan\u00eda moderna."
-      },
-      {
-        "text": "Se puede ceder territorio si hay compensaci\u00f3n en criptomonedas.",
-        "reason": "La cesi\u00f3n territorial es inconstitucional bajo cualquier concepto econ\u00f3mico moderno."
-      },
-      {
-        "text": "La soberan\u00eda reside en el Mercosur, no en el Estado paraguayo.",
-        "reason": "El Mercosur es intergubernamental; los Estados conservan su plena soberan\u00eda."
-      },
-      {
-        "text": "Paraguay renuncia a la soberan\u00eda fluvial entreg\u00e1ndola a empresas navieras extranjeras.",
-        "reason": "Las navieras operan bajo concesi\u00f3n o normativas locales, el Estado mantiene la soberan\u00eda del r\u00edo."
-      },
-      {
-        "text": "El pa\u00eds debe votar siempre en consonancia con Brasil en la ONU.",
-        "reason": "Paraguay tiene agenda propia (ej. Taiw\u00e1n, DDHH) e independencia de voto."
-      },
-      {
-        "text": "La diplomacia econ\u00f3mica exige suspender el derecho laboral nacional.",
-        "reason": "Las garant\u00edas constitucionales no se negocian por tratados de libre comercio."
-      },
-      {
-        "text": "Soberan\u00eda es sin\u00f3nimo de proteccionismo arancelario del 100%.",
-        "reason": "Paraguay es de las econom\u00edas m\u00e1s abiertas de la regi\u00f3n, la soberan\u00eda se ejerce compitiendo."
-      }
-    ]
-  },
-  {
-    "question": "Pregunta te\u00f3rica nivel avanzado (S\u00edntesis) #38: Analizando la doctrina paraguaya de inserci\u00f3n, \u00bfqu\u00e9 afirmaci\u00f3n es correcta respecto a la soberan\u00eda?",
-    "correct": "La soberan\u00eda paraguaya implica negociar desde la igualdad jur\u00eddica sin ceder autodeterminaci\u00f3n pol\u00edtica esencial.",
-    "incorrects": [
-      {
-        "text": "La soberan\u00eda significa aislamiento total del sistema financiero global.",
-        "reason": "Aislamiento total es autarqu\u00eda, no soberan\u00eda moderna."
-      },
-      {
-        "text": "Se puede ceder territorio si hay compensaci\u00f3n en criptomonedas.",
-        "reason": "La cesi\u00f3n territorial es inconstitucional bajo cualquier concepto econ\u00f3mico moderno."
-      },
-      {
-        "text": "La soberan\u00eda reside en el Mercosur, no en el Estado paraguayo.",
-        "reason": "El Mercosur es intergubernamental; los Estados conservan su plena soberan\u00eda."
-      },
-      {
-        "text": "Paraguay renuncia a la soberan\u00eda fluvial entreg\u00e1ndola a empresas navieras extranjeras.",
-        "reason": "Las navieras operan bajo concesi\u00f3n o normativas locales, el Estado mantiene la soberan\u00eda del r\u00edo."
-      },
-      {
-        "text": "El pa\u00eds debe votar siempre en consonancia con Brasil en la ONU.",
-        "reason": "Paraguay tiene agenda propia (ej. Taiw\u00e1n, DDHH) e independencia de voto."
-      },
-      {
-        "text": "La diplomacia econ\u00f3mica exige suspender el derecho laboral nacional.",
-        "reason": "Las garant\u00edas constitucionales no se negocian por tratados de libre comercio."
-      },
-      {
-        "text": "Soberan\u00eda es sin\u00f3nimo de proteccionismo arancelario del 100%.",
-        "reason": "Paraguay es de las econom\u00edas m\u00e1s abiertas de la regi\u00f3n, la soberan\u00eda se ejerce compitiendo."
-      }
-    ]
-  },
-  {
-    "question": "Pregunta te\u00f3rica nivel avanzado (S\u00edntesis) #39: Analizando la doctrina paraguaya de inserci\u00f3n, \u00bfqu\u00e9 afirmaci\u00f3n es correcta respecto a la soberan\u00eda?",
-    "correct": "La soberan\u00eda paraguaya implica negociar desde la igualdad jur\u00eddica sin ceder autodeterminaci\u00f3n pol\u00edtica esencial.",
-    "incorrects": [
-      {
-        "text": "La soberan\u00eda significa aislamiento total del sistema financiero global.",
-        "reason": "Aislamiento total es autarqu\u00eda, no soberan\u00eda moderna."
-      },
-      {
-        "text": "Se puede ceder territorio si hay compensaci\u00f3n en criptomonedas.",
-        "reason": "La cesi\u00f3n territorial es inconstitucional bajo cualquier concepto econ\u00f3mico moderno."
-      },
-      {
-        "text": "La soberan\u00eda reside en el Mercosur, no en el Estado paraguayo.",
-        "reason": "El Mercosur es intergubernamental; los Estados conservan su plena soberan\u00eda."
-      },
-      {
-        "text": "Paraguay renuncia a la soberan\u00eda fluvial entreg\u00e1ndola a empresas navieras extranjeras.",
-        "reason": "Las navieras operan bajo concesi\u00f3n o normativas locales, el Estado mantiene la soberan\u00eda del r\u00edo."
-      },
-      {
-        "text": "El pa\u00eds debe votar siempre en consonancia con Brasil en la ONU.",
-        "reason": "Paraguay tiene agenda propia (ej. Taiw\u00e1n, DDHH) e independencia de voto."
-      },
-      {
-        "text": "La diplomacia econ\u00f3mica exige suspender el derecho laboral nacional.",
-        "reason": "Las garant\u00edas constitucionales no se negocian por tratados de libre comercio."
-      },
-      {
-        "text": "Soberan\u00eda es sin\u00f3nimo de proteccionismo arancelario del 100%.",
-        "reason": "Paraguay es de las econom\u00edas m\u00e1s abiertas de la regi\u00f3n, la soberan\u00eda se ejerce compitiendo."
-      }
-    ]
-  },
-  {
-    "question": "Pregunta te\u00f3rica nivel avanzado (S\u00edntesis) #40: Analizando la doctrina paraguaya de inserci\u00f3n, \u00bfqu\u00e9 afirmaci\u00f3n es correcta respecto a la soberan\u00eda?",
-    "correct": "La soberan\u00eda paraguaya implica negociar desde la igualdad jur\u00eddica sin ceder autodeterminaci\u00f3n pol\u00edtica esencial.",
-    "incorrects": [
-      {
-        "text": "La soberan\u00eda significa aislamiento total del sistema financiero global.",
-        "reason": "Aislamiento total es autarqu\u00eda, no soberan\u00eda moderna."
-      },
-      {
-        "text": "Se puede ceder territorio si hay compensaci\u00f3n en criptomonedas.",
-        "reason": "La cesi\u00f3n territorial es inconstitucional bajo cualquier concepto econ\u00f3mico moderno."
-      },
-      {
-        "text": "La soberan\u00eda reside en el Mercosur, no en el Estado paraguayo.",
-        "reason": "El Mercosur es intergubernamental; los Estados conservan su plena soberan\u00eda."
-      },
-      {
-        "text": "Paraguay renuncia a la soberan\u00eda fluvial entreg\u00e1ndola a empresas navieras extranjeras.",
-        "reason": "Las navieras operan bajo concesi\u00f3n o normativas locales, el Estado mantiene la soberan\u00eda del r\u00edo."
-      },
-      {
-        "text": "El pa\u00eds debe votar siempre en consonancia con Brasil en la ONU.",
-        "reason": "Paraguay tiene agenda propia (ej. Taiw\u00e1n, DDHH) e independencia de voto."
-      },
-      {
-        "text": "La diplomacia econ\u00f3mica exige suspender el derecho laboral nacional.",
-        "reason": "Las garant\u00edas constitucionales no se negocian por tratados de libre comercio."
-      },
-      {
-        "text": "Soberan\u00eda es sin\u00f3nimo de proteccionismo arancelario del 100%.",
-        "reason": "Paraguay es de las econom\u00edas m\u00e1s abiertas de la regi\u00f3n, la soberan\u00eda se ejerce compitiendo."
+        "text": "En supeditar todo acuerdo comercial a la precondici\u00f3n inexcusable de que la contraparte extranjera garantice asistencia t\u00e9cnica militar para invadir a un tercer pa\u00eds.",
+        "reason": "Actitud sumamente belicista propia de un realismo ofensivo primitivo y expansionista, violatoria de los principios pacifistas y cooperativos de la Constituci\u00f3n paraguaya (Art. 143)."
       }
     ]
   }
@@ -1853,7 +1489,7 @@
             container.appendChild(btn);
         });
         
-        document.getElementById('next-btn').innerText = currentIndex === currentQuestions.length - 1 ? 'Finalizar' : 'Siguiente';
+        document.getElementById('next-btn').innerText = currentIndex === currentQuestions.length - 1 ? 'Finalizar Examen' : 'Siguiente';
     }
 
     function nextQuestion() {
@@ -1879,8 +1515,8 @@
             if (ans.isCorrect) correctCount++;
             
             let html = `<div class="result-item">
-                <div class="badge ${ans.isCorrect ? 'correct' : 'incorrect'}">${ans.isCorrect ? '¡Correcto!' : 'Incorrecto'}</div>
-                <h3>${i + 1}. ${q.question}</h3>
+                <div class="badge ${ans.isCorrect ? 'correct' : 'incorrect'}">${ans.isCorrect ? '¡Acertaste!' : 'Incorrecto'}</div>
+                <h3 style="margin-top: 5px;">${i + 1}. ${q.question}</h3>
                 <p><strong>Tu respuesta:</strong> ${ans.text}</p>`;
             
             if (!ans.isCorrect) {
