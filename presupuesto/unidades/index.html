@@ -1252,6 +1252,33 @@
             }
         }
     </style>
+    <style>
+        .play-btn {
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, .4);
+            background: rgba(255, 255, 255, .12);
+            color: #fff;
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            font-size: 1rem;
+            display: grid;
+            place-items: center;
+            transition: transform .2s, background .2s;
+            flex: none;
+            margin-right: 0.3rem;
+        }
+        .play-btn:hover {
+            background: rgba(255, 255, 255, .25);
+        }
+        .play-btn.playing {
+            background: rgba(255, 255, 255, .4);
+            box-shadow: 0 0 10px rgba(255, 255, 255, .3);
+        }
+        @media print {
+            .play-btn, #ttsVoiceSelect { display: none !important; }
+        }
+    </style>
 </head>
 
 <body>
@@ -1274,6 +1301,9 @@
             <button id="fsMinus" aria-label="Reducir letra">A−</button>
             <button id="fsPlus" aria-label="Aumentar letra">A+</button>
         </div>
+        <select id="ttsVoiceSelect" class="tb-btn" title="Seleccionar voz de lectura" style="max-width: 140px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; cursor: pointer;">
+            <option value="">Cargando voces...</option>
+        </select>
         <button id="printBtn" class="tb-btn" title="Guardar como PDF tamaño A4" aria-label="Imprimir o guardar en PDF">🖨 PDF</button>
         <button id="themeBtn" class="tb-btn" aria-label="Cambiar tema">🌙 Oscuro</button>
     </header>
@@ -3974,6 +4004,129 @@
             /* ---------- ATAJO TECLADO: "/" enfoca búsqueda ---------- */
             document.addEventListener("keydown", function (e) {
                 if (e.key === "/" && document.activeElement !== input) { e.preventDefault(); input.focus(); }
+            });
+        })();
+    </script>
+
+    <!-- Script de Text-To-Speech (Lectura de Unidades) -->
+    <script>
+        (function() {
+            var synth = window.speechSynthesis;
+            var voiceSelect = document.getElementById('ttsVoiceSelect');
+            var voices = [];
+            
+            function populateVoiceList() {
+                voices = synth.getVoices();
+                if(voices.length === 0) return;
+                
+                voiceSelect.innerHTML = '';
+                var savedVoiceURI = localStorage.getItem('tts_voice_uri');
+                var defaultFound = false;
+
+                voices.forEach(function(voice) {
+                    var option = document.createElement('option');
+                    option.textContent = voice.name + ' (' + voice.lang + ')';
+                    option.value = voice.voiceURI;
+                    
+                    if(savedVoiceURI === voice.voiceURI) {
+                        option.selected = true;
+                        defaultFound = true;
+                    }
+                    voiceSelect.appendChild(option);
+                });
+
+                if(!defaultFound && voices.length > 0) {
+                    for(var i = 0; i < voices.length; i++) {
+                        if(voices[i].lang.startsWith('es')) {
+                            voiceSelect.selectedIndex = i;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            populateVoiceList();
+            if (speechSynthesis.onvoiceschanged !== undefined) {
+                speechSynthesis.onvoiceschanged = populateVoiceList;
+            }
+
+            voiceSelect.addEventListener('change', function() {
+                localStorage.setItem('tts_voice_uri', voiceSelect.value);
+            });
+
+            var units = document.querySelectorAll('.unit');
+            var currentUtterance = null;
+            var currentPlayingBtn = null;
+
+            units.forEach(function(unit) {
+                var head = unit.querySelector('.unit-head');
+                if(!head) return;
+                
+                var btn = document.createElement('button');
+                btn.className = 'play-btn';
+                btn.title = 'Escuchar unidad';
+                btn.innerHTML = '🔊';
+                
+                var collapseBtn = head.querySelector('.collapse-btn');
+                if (collapseBtn) {
+                    head.insertBefore(btn, collapseBtn);
+                } else {
+                    head.appendChild(btn);
+                }
+
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+
+                    if (synth.speaking) {
+                        synth.cancel();
+                        if (currentPlayingBtn) {
+                            currentPlayingBtn.innerHTML = '🔊';
+                            currentPlayingBtn.classList.remove('playing');
+                        }
+                        if (currentPlayingBtn === btn) {
+                            currentPlayingBtn = null;
+                            return;
+                        }
+                    }
+
+                    var body = unit.querySelector('.unit-body');
+                    if(!body) return;
+
+                    var textToSpeak = body.innerText || body.textContent;
+
+                    currentUtterance = new SpeechSynthesisUtterance(textToSpeak);
+                    
+                    var selectedOption = voiceSelect.value;
+                    for(var i = 0; i < voices.length; i++) {
+                        if(voices[i].voiceURI === selectedOption) {
+                            currentUtterance.voice = voices[i];
+                            break;
+                        }
+                    }
+                    
+                    currentUtterance.onend = function() {
+                        btn.innerHTML = '🔊';
+                        btn.classList.remove('playing');
+                        currentPlayingBtn = null;
+                    };
+                    
+                    currentUtterance.onerror = function() {
+                        btn.innerHTML = '🔊';
+                        btn.classList.remove('playing');
+                        currentPlayingBtn = null;
+                    };
+
+                    synth.speak(currentUtterance);
+                    btn.innerHTML = '⏹️';
+                    btn.classList.add('playing');
+                    currentPlayingBtn = btn;
+                });
+            });
+
+            window.addEventListener('beforeunload', function() {
+                if (synth.speaking) {
+                    synth.cancel();
+                }
             });
         })();
     </script>
