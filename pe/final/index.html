@@ -3039,22 +3039,31 @@
                 voices = synth.getVoices();
                 if (!voices.length) return;
                 voiceSelect.innerHTML = '';
-
-                // Prioritize Spanish voices
+                
+                // Filter only Spanish voices
                 let esVoices = voices.filter(v => v.lang.startsWith('es'));
-                let otherVoices = voices.filter(v => !v.lang.startsWith('es'));
-                let sortedVoices = esVoices.concat(otherVoices);
-
-                sortedVoices.forEach((voice) => {
+                let savedVoice = localStorage.getItem('ttsVoice');
+                
+                esVoices.forEach((voice) => {
                     let option = document.createElement('option');
                     option.textContent = voice.name + ' (' + voice.lang + ')';
                     if (voice.default) option.textContent += ' -- DEFAULT';
                     option.setAttribute('data-lang', voice.lang);
                     option.setAttribute('data-name', voice.name);
+                    if (voice.name === savedVoice) {
+                        option.selected = true;
+                    }
                     voiceSelect.appendChild(option);
                 });
             }
-
+            
+            voiceSelect.addEventListener('change', function() {
+                let selectedVoiceName = this.options[this.selectedIndex]?.getAttribute('data-name');
+                if (selectedVoiceName) {
+                    localStorage.setItem('ttsVoice', selectedVoiceName);
+                }
+            });
+            
             populateVoiceList();
             if (speechSynthesis.onvoiceschanged !== undefined) {
                 speechSynthesis.onvoiceschanged = populateVoiceList;
