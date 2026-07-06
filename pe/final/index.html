@@ -1352,6 +1352,7 @@
             * {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
+                color: black !important;
             }
 
             /* Hide UI Elements */
@@ -1666,7 +1667,8 @@
                 <section class="block" id="u1-concepto">
                     <h3><span class="hicon">📖</span>¿Qué es la Política Exterior?</h3>
                     <p class="body">Definir el concepto de política exterior constituye una tarea compleja, dado que existen diversas interpretaciones sobre el término, sus objetivos, su contenido y sus funciones. Las distintas escuelas de pensamiento de las Relaciones Internacionales ofrecen perspectivas diferentes: los <strong>realistas</strong> la relacionan con asuntos de seguridad nacional; los enfoques <strong>liberales</strong> la consideran un mecanismo para impulsar el desarrollo; los
-                        <strong>marxistas</strong> la vinculan con el modelo de desarrollo económico; y los <strong>constructivistas</strong> la ubican como una expresión de la identidad nacional y los valores socioculturales.</p>
+                        <strong>marxistas</strong> la vinculan con el modelo de desarrollo económico; y los <strong>constructivistas</strong> la ubican como una expresión de la identidad nacional y los valores socioculturales.
+                    </p>
 
                     <div class="kterm"><b>Definición básica:</b> La política exterior es el <strong>conjunto de acciones que lleva a cabo un Estado más allá de sus fronteras con base en el interés nacional</strong>. Esta definición cubre cuatro elementos esenciales: ¿qué la compone? (conjunto de acciones), ¿quién la realiza? (el Estado), ¿dónde tiene lugar? (en el sistema internacional), ¿para qué? (consecución del interés nacional).</div>
 
@@ -1983,7 +1985,8 @@
                         como variable explicativa importante de la política exterior.</div>
 
                     <p class="body">Los desarrollos de Robert Putnam fueron importantes para incorporar la política interna como variable explicativa en la disciplina de las Relaciones Internacionales. Los gobiernos pueden buscar soluciones subóptimas debido a problemas de agencia, y las diversas instituciones del país pueden entorpecer la cooperación internacional u otra actividad en la esfera exterior. Esta perspectiva es especialmente relevante para comprender el caso paraguayo, donde los
-                        <strong>planes de desarrollo</strong> constituyen una expresión formal del modelo adoptado y la integración regional aparece —o no— como prioridad dentro de ellos.</p>
+                        <strong>planes de desarrollo</strong> constituyen una expresión formal del modelo adoptado y la integración regional aparece —o no— como prioridad dentro de ellos.
+                    </p>
                 </section>
 
                 <!-- 1.8 Preguntas de examen Tema 1 -->
@@ -2229,7 +2232,8 @@
                     <p class="body">La caída del stronismo marcó un cambio pero también cierta continuidad: los nuevos protagonistas no eran desconocidos —muchos eran cercanos al poder—, incluyendo a Andrés Rodríguez, consuegro de Stroessner y líder del golpe. En el plano internacional, el mundo también se transformaba con el fin de la Guerra Fría y el Consenso de Washington.</p>
 
                     <p class="body">La participación en el <strong>Mercosur</strong> (fundado en 1991 por el Tratado de Asunción) fue quizás la apuesta más importante. Paraguay se sumó al proyecto cuando éste ya estaba muy avanzado (iniciado por Argentina y Brasil con el Acta de Yguazú en 1985), lo que le restó margen de negociación. Uruguay facilitó la participación de Paraguay. Al momento de ingresar, Paraguay ya poseía una economía muy abierta, en lo que puede denominarse una
-                        <strong>"integración puertas adentro"</strong>, por lo que la apertura comercial por sí sola no tuvo el impacto deseado.</p>
+                        <strong>"integración puertas adentro"</strong>, por lo que la apertura comercial por sí sola no tuvo el impacto deseado.
+                    </p>
 
                     <p class="body">La decisión de integrarse al Mercosur puede entenderse en clave interna: a pesar de no contar con un plan de desarrollo que sirviera de guía, se basó en las urgencias de superar el aislamiento del último tramo de la década de 1980. La <strong>democracia e integración regional constituyeron un "binomio indivisible"</strong>.</p>
 
@@ -2959,12 +2963,6 @@
                 </section>
                 <div class="section-divider"></div>
             </div>
-
-            <!-- FOOTER -->
-            <footer class="pg-footer">
-                <p>Guía de Estudio · <b>Política Exterior de la República del Paraguay</b></p>
-                <p style="margin-top:6px;">Material integrado a partir de fuentes académicas · Julio 2026</p>
-            </footer>
         </main>
     </div>
 
@@ -3021,16 +3019,16 @@
                 // Remove TTS buttons from the clone before extracting text
                 let btns = clone.querySelectorAll('.tts-section-btn');
                 btns.forEach(b => b.remove());
-                
+
                 // Remove icon containers
                 let icons = clone.querySelectorAll('.hicon, .f-ico, .co-icon, .ic-top, .ic, .ci, svg');
                 icons.forEach(i => i.remove());
-                
+
                 let text = clone.innerText;
                 // Remove emojis and common symbols to prevent TTS from reading them
                 text = text.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '');
                 text = text.replace(/[↑↓←→⬆⬇✔✗⚠]/g, '');
-                
+
                 return text.trim();
             }
 
@@ -3041,12 +3039,12 @@
                 voices = synth.getVoices();
                 if (!voices.length) return;
                 voiceSelect.innerHTML = '';
-                
+
                 // Prioritize Spanish voices
                 let esVoices = voices.filter(v => v.lang.startsWith('es'));
                 let otherVoices = voices.filter(v => !v.lang.startsWith('es'));
                 let sortedVoices = esVoices.concat(otherVoices);
-                
+
                 sortedVoices.forEach((voice) => {
                     let option = document.createElement('option');
                     option.textContent = voice.name + ' (' + voice.lang + ')';
@@ -3056,7 +3054,7 @@
                     voiceSelect.appendChild(option);
                 });
             }
-            
+
             populateVoiceList();
             if (speechSynthesis.onvoiceschanged !== undefined) {
                 speechSynthesis.onvoiceschanged = populateVoiceList;
