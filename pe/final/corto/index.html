@@ -1,173 +1,777 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>resumen-conceptual-politica-exterior-paraguay</title>
-  <meta name="description" content="Resumen conceptual interactivo de los 3 temas de Política Exterior de la República del Paraguay." />
-  <style>
-    :root,[data-theme="light"]{--bg:#f6f5f1;--surface:#fbfaf7;--surface-2:#f1eee8;--surface-3:#ebe7df;--border:#d6d0c7;--text:#22201b;--muted:#706d67;--primary:#0a6c70;--accent:#7d4ec9;--success:#357a38;--warning:#b56a1d;--shadow:0 12px 28px rgba(0,0,0,.08);--radius:18px}
-    [data-theme="dark"]{--bg:#141312;--surface:#1b1a18;--surface-2:#23211f;--surface-3:#2a2724;--border:#3a3732;--text:#e8e2d9;--muted:#a29c93;--primary:#4da3a6;--accent:#b388f2;--success:#69b05b;--warning:#d28b43;--shadow:0 14px 34px rgba(0,0,0,.3)}
-    *{box-sizing:border-box;margin:0;padding:0} body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6} a{text-decoration:none;color:inherit} .app{max-width:1180px;margin:0 auto;padding:22px}
-    .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}.brand{display:flex;align-items:center;gap:14px}.logo{width:50px;height:50px;border-radius:16px;background:linear-gradient(135deg,var(--primary),var(--accent));display:grid;place-items:center;color:#fff;font-weight:800;box-shadow:var(--shadow)}
-    .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)} .hero-main,.hero-side,.section,.sidebar{padding:24px}
-    h1{font-size:2.2rem;line-height:1.05;margin-bottom:10px} h2{font-size:1.5rem;margin-bottom:10px} h3{font-size:1.15rem;margin-bottom:8px} p{margin-bottom:10px}.muted{color:var(--muted)}
-    .badge,.chip{display:inline-flex;align-items:center;padding:7px 11px;border-radius:999px;background:var(--surface-2);border:1px solid var(--border);font-size:.86rem}.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}.stat{padding:14px;border-radius:16px;background:var(--surface-2);border:1px solid var(--border)} .stat b{display:block;font-size:1.45rem}
-    .layout{display:grid;grid-template-columns:300px 1fr;gap:18px;margin-top:18px}.sidebar{position:sticky;top:16px;height:max-content}.navlist{display:grid;gap:10px;margin-top:12px}.navitem{padding:12px 14px;border-radius:14px;background:var(--surface-2);border:1px solid var(--border)} .navitem:hover{border-color:var(--primary)}
-    .section{margin-bottom:18px}.kgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}.card{padding:16px;border-radius:16px;background:var(--surface-2);border:1px solid var(--border)}
-    .schema{margin-top:14px;padding:16px;border-radius:16px;background:var(--surface-2);border:1px solid var(--border)} .schema ul{margin-left:18px}.schema li{margin:6px 0}
-    .callout{margin-top:12px;padding:14px 16px;border-radius:16px;background:var(--surface-2);border:1px solid var(--border);border-left:5px solid var(--primary)}
-    .compare{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}.pill{display:inline-block;padding:4px 10px;border-radius:999px;background:var(--surface-3);border:1px solid var(--border);font-size:.82rem;margin-bottom:8px}
-    .btn{padding:12px 16px;border-radius:14px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);cursor:pointer;font:inherit}
-    @media(max-width:960px){.hero,.layout,.stats,.kgrid,.compare{grid-template-columns:1fr}.app{padding:16px}.hero-main,.hero-side,.section,.sidebar{padding:20px}.sidebar{position:static}}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Estudio – Política Exterior de Paraguay</title>
+    <style>
+        /* RESET y configuración de impresión A4 */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-<style id="print-style">
-  @page{size:A4 portrait;margin:14mm 12mm 14mm 12mm}
-  @media print{
-    html,body{background:#fff!important;color:#111!important} 
-    .topbar .btn,#themeToggle{display:none!important}
-    .layout{display:block!important}
-    .sidebar{display:none!important}
-    main{display:block!important}
-    .app{max-width:none!important;padding:0!important}
-    .panel{box-shadow:none!important;border:1px solid #cfcfcf!important;background:#fff!important;page-break-inside:avoid;break-inside:avoid}
-    .hero{grid-template-columns:1fr!important;gap:10px!important}
-    .hero-main,.hero-side{display:none!important}
-    .hero-main,.hero-side,.section{padding:14px!important;page-break-inside:avoid;break-inside:avoid}
-    .section{display:block!important;page-break-inside:auto;break-inside:auto;margin-bottom:10px!important}
-    /* Saltos de página para cada tema */
-    #tema1, #tema2, #tema3 {
-      page-break-before: always;
-      break-before: page;
-      margin-top: 0 !important;
-      display: block !important;
-    }
-    /* El primer tema no necesita salto antes, pero si se pone no afecta */
-    #tema1 { page-break-before: avoid; break-before: auto; } /* opcional: para que no deje página en blanco al inicio */
-    .kgrid,.compare,.stats{grid-template-columns:1fr 1fr!important;gap:8px!important;page-break-inside:avoid;break-inside:avoid}
-    .card,.schema,.callout,.stat{background:#fff!important;border:1px solid #d7d7d7!important;break-inside:avoid;page-break-inside:avoid}
-    h1{font-size:20pt!important} h2{font-size:15pt!important} h3{font-size:11.5pt!important} p,li,.chip,.badge,.pill,.muted{font-size:10pt!important;color:#111!important}
-    .chips{margin-top:8px!important}.callout{border-left:4px solid #666!important}
-    a{color:#111!important;text-decoration:none!important}
-  }
-</style>
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            background: #fafafa;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .guide-container {
+            max-width: 1000px;
+            width: 100%;
+            background: white;
+            padding: 2.2rem 2.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            border-radius: 8px;
+        }
+
+        /* Estilos para la versión impresa (A4) */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+                display: block;
+            }
+            .guide-container {
+                max-width: 100%;
+                padding: 2cm 2.2cm;
+                box-shadow: none;
+                border-radius: 0;
+            }
+            .no-print {
+                display: none !important;
+            }
+            h1 {
+                font-size: 22pt;
+            }
+            h2 {
+                font-size: 16pt;
+            }
+            h3 {
+                font-size: 13pt;
+            }
+            p,
+            li,
+            .cita {
+                font-size: 11pt;
+            }
+            .eje-block {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            .tts-controls-global {
+                display: none !important;
+            }
+            .btn-tts-block {
+                display: none !important;
+            }
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        /* Tipografía y espacios */
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0a2f44;
+            border-bottom: 3px solid #1e7e34;
+            padding-bottom: 0.3em;
+            margin-bottom: 0.6em;
+            letter-spacing: -0.3px;
+        }
+
+        h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a4b6d;
+            margin-top: 1.8em;
+            margin-bottom: 0.5em;
+            border-left: 5px solid #1e7e34;
+            padding-left: 12px;
+        }
+
+        h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1e5a7a;
+            margin-top: 1.2em;
+            margin-bottom: 0.3em;
+        }
+
+        p {
+            font-size: 12px;
+            line-height: 1.6;
+            margin-bottom: 0.8em;
+            color: #1e1e1e;
+        }
+
+        ul,
+        ol {
+            padding-left: 1.8em;
+            margin-bottom: 0.8em;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        li {
+            margin-bottom: 0.2em;
+        }
+
+        /* Estilo de cita sin pseudo-elementos */
+        .cita {
+            background: #f2f7f2;
+            border-left: 4px solid #1e7e34;
+            padding: 0.6rem 1rem;
+            margin: 0.8rem 0 1.2rem 0;
+            font-style: italic;
+            border-radius: 0 4px 4px 0;
+            font-size: 12px;
+            color: #1a3a2a;
+        }
+        .cita .comilla {
+            color: #1e7e34;
+            font-style: normal;
+            font-weight: 600;
+        }
+
+        .eje-block {
+            margin-bottom: 1.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px dashed #d0d8d0;
+            position: relative;
+        }
+
+        .eje-block:last-of-type {
+            border-bottom: none;
+        }
+
+        .badge-eje {
+            display: inline-block;
+            background: #1e7e34;
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 0.1rem 0.8rem;
+            border-radius: 20px;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            margin-right: 8px;
+        }
+
+        .btn-print {
+            background: #1e7e34;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.2s;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-print:hover {
+            background: #14622a;
+            transform: scale(1.02);
+        }
+
+        .footer-guia {
+            margin-top: 2.5rem;
+            text-align: center;
+            font-size: 11px;
+            color: #555;
+            border-top: 1px solid #ddd;
+            padding-top: 1rem;
+        }
+
+        /* Mejoras de legibilidad */
+        strong {
+            color: #0a2f44;
+        }
+
+        .concepto-clave {
+            font-weight: 600;
+            color: #1a4b6d;
+        }
+
+        /* Controles TTS globales */
+        .tts-controls-global {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px 16px;
+            background: #f4f8f4;
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            margin: 1.2rem 0 0.4rem 0;
+            border: 1px solid #c8dcc8;
+        }
+        .tts-controls-global select {
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid #b0c8b0;
+            background: white;
+            font-size: 12px;
+            min-width: 180px;
+            flex: 1 1 auto;
+        }
+        .tts-controls-global button {
+            background: #1e7e34;
+            color: white;
+            border: none;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.15s;
+            white-space: nowrap;
+        }
+        .tts-controls-global button:hover {
+            background: #14622a;
+        }
+        .tts-controls-global button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .tts-status {
+            font-size: 12px;
+            color: #2a5a2a;
+            margin-left: auto;
+            font-weight: 500;
+        }
+
+        /* Botón de lectura por bloque */
+        .btn-tts-block {
+            background: #e6f0e6;
+            border: 1px solid #b0c8b0;
+            color: #1a4b2a;
+            padding: 2px 14px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        .btn-tts-block:hover {
+            background: #cde0cd;
+            border-color: #1e7e34;
+        }
+        .btn-tts-block:active {
+            transform: scale(0.95);
+        }
+        .btn-tts-block.playing {
+            background: #d4e8d4;
+            border-color: #14622a;
+            box-shadow: 0 0 0 2px #b0d0b0;
+        }
+
+        .tts-block-wrapper {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px 10px;
+        }
+
+        .pilar-block {
+            background: #f5f9f5;
+            padding: 1rem 1.4rem;
+            border-radius: 8px;
+            border-left: 6px solid #1e7e34;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        .pilar-block h3 {
+            margin-top: 0;
+            color: #0a3d2a;
+        }
+
+        /* Ajustes para pantallas pequeñas */
+        @media (max-width: 640px) {
+            .guide-container {
+                padding: 1.2rem;
+            }
+            h1 {
+                font-size: 20px;
+            }
+            h2 {
+                font-size: 16px;
+            }
+            p,
+            li,
+            .cita {
+                font-size: 11px;
+            }
+            .tts-controls-global {
+                flex-direction: column;
+                align-items: stretch;
+                border-radius: 20px;
+            }
+            .tts-status {
+                margin-left: 0;
+                text-align: center;
+            }
+            .btn-tts-block {
+                margin-left: 0;
+                margin-top: 4px;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="app">
-  <div class="topbar">
-    <div class="brand"><div class="logo">PE</div><div><div class="muted">Resumen separado de la guía</div><h2>Política Exterior del Paraguay</h2></div></div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="printBtn">Exportar / Imprimir PDF A4</button><button class="btn" id="themeToggle">Cambiar tema</button></div>
-  </div>
 
-  <div class="layout">
-    <aside class="panel sidebar">
-      <h2>Navegación</h2>
-      <div class="navlist">
-        <a class="navitem" href="#tema1">Tema 1 · Fundamentos teóricos</a>
-        <a class="navitem" href="#tema2">Tema 2 · Paraguay como isla e integración</a>
-        <a class="navitem" href="#tema3">Tema 3 · 13 ejes estratégicos</a>
-      </div>
-      <div class="callout"><b>Sugerencia:</b> si estudiás para examen oral, memorizá primero definiciones, después relaciones causales y al final ejemplos históricos.</div>
-    </aside>
+    <div class="guide-container" id="guia">
 
-    <main>
-      <section class="panel section" id="tema1">
-        <div class="pill">Tema 1</div>
-        <h2>Fundamentos teóricos de la política exterior</h2>
-        <p>La política exterior es el conjunto de acciones que realiza el Estado más allá de sus fronteras con base en el interés nacional. La guía la presenta como un proceso complejo en el que intervienen factores internos y externos, actores gubernamentales y no gubernamentales, y decisiones orientadas por objetivos, estrategias e instrumentos.</p>
-        <div class="kgrid">
-          <div class="card"><h3>Definición base</h3><p>Sus cuatro elementos esenciales son: conjunto de acciones, Estado, sistema internacional e interés nacional.</p></div>
-          <div class="card"><h3>Actor central</h3><p>Solo el Estado puede ejercer política exterior; la actividad internacional de gobiernos locales es paradiplomacia y no política exterior.</p></div>
-          <div class="card"><h3>Motor</h3><p>El interés nacional orienta la política exterior y se expresa jerárquicamente en seguridad, bienestar y promoción de valores.</p></div>
-          <div class="card"><h3>Proyecto de nación</h3><p>Da contenido al interés nacional y se apoya en sistema político, modelo de desarrollo económico y sistema educativo.</p></div>
-        </div>
-        <div class="compare">
-          <div class="card"><h3>Capacidad de negociación</h3><p>Depende del poder relativo del Estado y de factores tangibles e intangibles, internos y externos.</p></div>
-          <div class="card"><h3>Actores</h3><p>Intervienen jefe de Estado, cancillería, burocracias y Legislativo, además de empresas, partidos, opinión pública, ONGs y academia.</p></div>
-          <div class="card"><h3>Carácter interméstico</h3><p>La política exterior como política pública conecta necesidades domésticas con condicionamientos del sistema internacional.</p></div>
-        </div>
-        <div class="callout"><b>Idea central:</b> no alcanza con definir política exterior como diplomacia; hay que entenderla como política pública, proceso de decisión y expresión del interés nacional.</div>
-        <div class="schema">
-          <h3>Esquema jerárquico</h3>
-          <ul>
-            <li>Política exterior: acciones del Estado más allá de sus fronteras, basadas en el interés nacional.</li>
-            <li>Componentes: Estado, interés nacional, proyecto de nación, capacidad de negociación.</li>
-            <li>Proceso decisorio: objetivos, estrategias, instrumentos, acciones, evaluación.</li>
-            <li>Factores: internos tangibles, internos intangibles y externos.</li>
-            <li>Actores: gubernamentales y no gubernamentales.</li>
-            <li>Como política pública: carácter interméstico según Putnam.</li>
-          </ul>
-        </div>
-      </section>
+        <!-- Título principal -->
+        <h1>📘 Guía de Estudio – Política Exterior de Paraguay (2003‑2026)</h1>
 
-      <section class="panel section" id="tema2">
-        <div class="pill">Tema 2</div>
-        <h2>Paraguay como “isla” e integración regional</h2>
-        <p>La guía interpreta a Paraguay como una “isla rodeada de tierra”, expresión que resume un aislamiento no solo geográfico, sino también económico, político y cultural. Desde esa condición, la integración regional aparece como una necesidad estratégica vinculada a la superación de la mediterraneidad y a la búsqueda de apoyo externo para problemas internos.</p>
-        <div class="kgrid">
-          <div class="card"><h3>Aislamiento</h3><p>Es multidimensional: comercio exterior históricamente limitado, centralización o inestabilidad política, y escasa visibilidad cultural.</p></div>
-          <div class="card"><h3>Planes de desarrollo</h3><p>La STP fue creada en 1962 y trabajó con la CEPAL; desde allí la planificación se volvió una vía para observar el vínculo entre modelo de desarrollo e integración.</p></div>
-          <div class="card"><h3>Lectura metodológica</h3><p>La Economía Política Internacional analiza el tema desde dos planos, doméstico y sistémico, y la integración puede ser condición, proceso o resultado.</p></div>
-          <div class="card"><h3>Relación vecinal</h3><p>Durante el stronismo predominó una relación “pendular” con Argentina y Brasil, con especial peso de la Marcha hacia el Este y de Itaipú en el vínculo con Brasil.</p></div>
+        <!-- =================================================== -->
+        <!-- SECCIÓN 1: MARCO CONCEPTUAL (de Política Exterior de México) -->
+        <!-- =================================================== -->
+        <div class="tts-block-wrapper" style="margin-top:1.2rem;">
+            <h2 style="margin-top:0; border-left-color:#2a6b8a;">1. Marco conceptual de la política exterior</h2>
+            <button class="btn-tts-block" data-target="marco-conceptos">🔊 Leer sección</button>
         </div>
-        <div class="compare">
-          <div class="card"><h3>Stronismo</h3><p>La integración estuvo presente en la práctica regional, aunque no siempre de forma explícita en los primeros planes; el plano externo funcionó como legitimador del régimen.</p></div>
-          <div class="card"><h3>Democracia</h3><p>Con el Mercosur, la integración se volvió la apuesta principal del periodo democrático y apareció explícitamente en todos los planes de desarrollo.</p></div>
-          <div class="card"><h3>Conclusión</h3><p>La investigación concluye que la integración regional fue una estrategia reactiva derivada de factores internos, más que una política activa independiente.</p></div>
-        </div>
-        <div class="callout"><b>Idea central:</b> la integración paraguaya no puede entenderse solo como comercio; también fue una respuesta histórica al aislamiento y a la necesidad de sostener proyectos internos.</div>
-        <div class="schema">
-          <h3>Esquema jerárquico</h3>
-          <ul>
-            <li>Paraguay como isla rodeada de tierra: aislamiento económico, político y cultural.</li>
-            <li>Planes de desarrollo: STP, CEPAL y evolución de la presencia de la integración.</li>
-            <li>Esquemas regionales: ALALC, ALADI, Mercosur y UNASUR.</li>
-            <li>Stronismo: política pendular, Marcha hacia el Este, Itaipú, legitimación externa.</li>
-            <li>Democracia: Mercosur, binomio democracia-integración, regionalismo postneoliberal.</li>
-            <li>Conclusión: integración como estrategia reactiva derivada de factores internos.</li>
-          </ul>
-        </div>
-      </section>
 
-      <section class="panel section" id="tema3">
-        <div class="pill">Tema 3</div>
-        <h2>Los 13 ejes estratégicos de la política exterior</h2>
-        <p>La política exterior contemporánea del Paraguay se organiza en 13 ejes estratégicos que combinan continuidad histórica con nuevas prioridades. El conjunto abarca soberanía, derechos humanos, ambiente, apertura de mercados, comercio justo, logística, energía, cooperación, identidad, seguridad, multilateralismo y fortalecimiento del servicio exterior.</p>
-        <div class="kgrid">
-          <div class="card"><h3>Soberanía y fronteras</h3><p>Incluye delimitación, demarcación, cooperación militar y una visión de frontera como zona de integración.</p></div>
-          <div class="card"><h3>DDHH y democracia</h3><p>Se apoya en la UGDH, el SIMORE, la memoria histórica, casos ante la Corte IDH y políticas para migrantes y refugiados.</p></div>
-          <div class="card"><h3>Ambiente y recursos hídricos</h3><p>Destaca el Acuífero Guaraní, el Pilcomayo y el Río Apa, junto con una diplomacia ambiental ligada a soberanía y desarrollo sostenible.</p></div>
-          <div class="card"><h3>Mercados y comercio</h3><p>La política económica internacional pasó a una diplomacia pragmática de competitividad, apertura de mercados, OMC y atracción de inversiones.</p></div>
-          <div class="card"><h3>Logística y energía</h3><p>La hidrovía, el corredor bioceánico e Itaipú/Yacyretá aparecen como pilares para superar la mediterraneidad y proyectar al país como hub logístico y energético.</p></div>
-          <div class="card"><h3>Cooperación, identidad y servicio exterior</h3><p>La cooperación adopta varias modalidades; la Marca País y el guaraní fortalecen la proyección internacional; y el servicio exterior busca mayor profesionalización.</p></div>
+        <div id="marco-conceptos" class="tts-readable">
+            <h3>1.1 Definición</h3>
+            <p>La <strong>política exterior</strong> es el conjunto de acciones que lleva a cabo un Estado más allá de sus fronteras con base en el <strong>interés nacional</strong>. Es un proceso complejo que involucra condicionantes internos y externos, y está determinado por la capacidad de negociación internacional, el proyecto de nación, la identidad nacional, los valores, y la presión de actores diversos.</p>
+
+            <h3>1.2 Componentes fundamentales</h3>
+            <ul>
+                <li><span class="concepto-clave">Estado:</span> único actor jurídico que ejerce política exterior; compuesto por territorio, población y gobierno.</li>
+                <li><span class="concepto-clave">Interés nacional:</span> necesidades del Estado para procurar su <strong>seguridad</strong>, <strong>bienestar</strong> y <strong>valores</strong> en el plano internacional. Tiene prelación: primero la sobrevivencia, luego el desarrollo económico, y finalmente la promoción de principios.</li>
+                <li><span class="concepto-clave">Proyecto de nación:</span> aspiraciones colectivas de futuro; da contenido al interés nacional y se refleja en el sistema político, el modelo económico y el sistema educativo.</li>
+                <li><span class="concepto-clave">Capacidad de negociación internacional:</span> poder relativo del Estado para alcanzar sus objetivos; se apoya en factores tangibles (militar, económico, geográfico, demográfico, tecnológico) e intangibles (moral nacional, prestigio, cohesión social, estabilidad política).</li>
+                <li><span class="concepto-clave">Objetivos, estrategias, instrumentos y acciones:</span> los objetivos son propósitos concretos derivados del interés nacional; las estrategias son actividades específicas; los instrumentos son mecanismos (negociación, guerra, diplomacia coercitiva, alianzas, etc.); las acciones son la materialización final.</li>
+            </ul>
+
+            <h3>1.3 Factores determinantes</h3>
+            <p><strong>Internos</strong> (endógenos): geográficos, demográficos, económicos, tecnológicos, militares (tangibles); político‑ideológicos y socioculturales (intangibles).<br>
+                <strong>Externos</strong> (exógenos): equilibrio de poder global, eventos internacionales, presión de otros Estados, organizaciones internacionales, opinión pública internacional, intereses de actores transnacionales.</p>
+
+            <h3>1.4 Actores principales</h3>
+            <ul>
+                <li><strong>Gubernamentales:</strong> Jefe de Estado/Gobierno, Cancillería (Ministerio de Relaciones Exteriores), otras agencias (Defensa, Economía, etc.), Poder Legislativo (aprobación de tratados, control).</li>
+                <li><strong>No gubernamentales:</strong> empresas, grupos de presión, partidos políticos, opinión pública, medios, iglesias, ONGs, academia, sindicatos, grupos étnicos.</li>
+            </ul>
+            <div class="cita">
+                <span class="comilla">“</span>La política exterior es el conjunto de acciones y decisiones que lleva a cabo un Estado en el sistema internacional y que están basadas en el interés nacional.<span class="comilla">”</span>
+            </div>
         </div>
-        <div class="compare">
-          <div class="card"><h3>Ejes económicos</h3><p>Ejes 5, 6, 7 y 8: mercados, comercio justo, conectividad y energía.</p></div>
-          <div class="card"><h3>Ejes político-institucionales</h3><p>Ejes 1, 2, 11, 12 y 13: soberanía, DDHH, seguridad, multilateralismo y servicio exterior.</p></div>
-          <div class="card"><h3>Ejes de proyección</h3><p>Ejes 3, 9 y 10: ambiente, cooperación internacional e identidad/marca país.</p></div>
+
+        <!-- =================================================== -->
+        <!-- SECCIÓN 2: EJES DE POLÍTICA EXTERIOR DE PARAGUAY -->
+        <!-- =================================================== -->
+        <h2>2. Ejes de la política exterior paraguaya (2003‑2026)</h2>
+        <p style="margin-bottom:1.2rem;">A continuación se resumen los principales ejes temáticos, con una <strong>cita textual</strong> extraída del documento de referencia que sintetiza su esencia.</p>
+
+        <!-- EJE 1 -->
+        <div class="eje-block tts-readable" id="eje1">
+            <div class="tts-block-wrapper">
+                <h3 style="margin-top:0;"><span class="badge-eje">Eje 1</span> Gestión 2003‑2008: Límites, Cooperación Militar e Integración Fronteriza</h3>
+                <button class="btn-tts-block" data-target="eje1">🔊 Leer eje</button>
+            </div>
+            <p><strong>Demarcación de límites:</strong> avances en la caracterización de fronteras con Bolivia, Brasil y Argentina. <strong>Cooperación militar:</strong> ejercicios con EE.UU. bajo Notas Reversales aprobadas por el Legislativo. <strong>Integración fronteriza:</strong> cambio de visión de “línea divisoria” a “zona dinámica de integración”.</p>
+            <div class="cita">
+                <span class="comilla">“</span>La Comisión Nacional Demarcadora de Límites trabajó en 2.300 km de frontera. Se caracterizaron 742 km con Bolivia (70 años después del Tratado de 1938).<span class="comilla">”</span>
+            </div>
         </div>
-        <div class="callout"><b>Idea central:</b> los 13 ejes muestran una política exterior que mantiene fundamentos históricos, pero amplía su agenda hacia energía, logística, cooperación, marca país y gobernanza global.</div>
-        <div class="schema">
-          <h3>Esquema jerárquico</h3>
-          <ul>
-            <li>Eje 1: soberanía, límites, demarcación, cooperación militar, integración fronteriza.</li>
-            <li>Eje 2: democracia y derechos humanos.</li>
-            <li>Eje 3: medio ambiente y recursos hídricos.</li>
-            <li>Ejes 5 y 6: apertura de mercados, comercio justo, OMC, inversiones.</li>
-            <li>Ejes 7 y 8: conectividad física, hidrovía, corredor bioceánico, energía.</li>
-            <li>Ejes 9 y 10: cooperación internacional, identidad nacional y marca país.</li>
-            <li>Ejes 11, 12 y 13: seguridad, multilateralismo y fortalecimiento del servicio exterior.</li>
-          </ul>
+
+        <!-- EJE 2 -->
+        <div class="eje-block tts-readable" id="eje2">
+            <div class="tts-block-wrapper">
+                <h3 style="margin-top:0;"><span class="badge-eje">Eje 2</span> Defensa y promoción de la democracia y los derechos humanos</h3>
+                <button class="btn-tts-block" data-target="eje2">🔊 Leer eje</button>
+            </div>
+            <p>Paraguay mantiene una <strong>invitación permanente</strong> a relatores especiales de la ONU desde 2003. Desarrolló el <strong>SIMORE Plus</strong>, sistema de monitoreo de recomendaciones vinculado a los ODS. Fue sede de la Asamblea General de la OEA en 2014 y 2024, y logró la elección del primer juez paraguayo en la Corte IDH.</p>
+            <div class="cita">
+                <span class="comilla">“</span>Desde el 2003, Paraguay mantiene una invitación abierta y permanente para que expertos internacionales, en diversas temáticas de derechos humanos, visiten el país.<span class="comilla">”</span>
+            </div>
         </div>
-      </section>
-    </main>
-  </div>
-</div>
-<script>
-  document.getElementById('themeToggle').onclick=()=>document.documentElement.setAttribute('data-theme',document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark');
-  document.getElementById('printBtn').onclick=()=>window.print();
-</script>
+
+        <!-- EJE 3 -->
+        <div class="eje-block tts-readable" id="eje3">
+            <div class="tts-block-wrapper">
+                <h3 style="margin-top:0;"><span class="badge-eje">Eje 3</span> Política ambiental y desarrollo sostenible</h3>
+                <button class="btn-tts-block" data-target="eje3">🔊 Leer eje</button>
+            </div>
+            <p>La protección del ambiente tiene base constitucional (art. 7). La Cancillería creó la <strong>Unidad de Desarrollo Sostenible y Medioambiente</strong> (UDSMA). Paraguay participa en numerosos convenios multilaterales (cambio climático, biodiversidad, CITES, etc.) y promueve el principio de <strong>“conservación y uso sostenible”</strong> como posición nacional.</p>
+            <div class="cita">
+                <span class="comilla">“</span>En materia medioambiental y de cambio climático, la posición nacional se centra siempre en respetar las responsabilidades comunes pero diferenciadas y en transmitir la solicitud de transferencia de tecnologías y financiamiento.<span class="comilla">”</span>
+            </div>
+        </div>
+
+        <!-- EJE 4 -->
+        <div class="eje-block tts-readable" id="eje4">
+            <div class="tts-block-wrapper">
+                <h3 style="margin-top:0;"><span class="badge-eje">Eje 4</span> Integración regional como herramienta para superar la pobreza</h3>
+                <button class="btn-tts-block" data-target="eje4">🔊 Leer eje</button>
+            </div>
+            <p>El MERCOSUR es la plataforma estratégica para la inserción paraguaya. Durante 2003‑2008 se impulsó la integración como motor de desarrollo y reducción de la pobreza. Hoy el bloque enfrenta desafíos de modernización, y se destaca el avance del acuerdo MERCOSUR‑UE.</p>
+            <div class="cita">
+                <span class="comilla">“</span>La integración regional debía convertirse en una herramienta estratégica para superar la pobreza, fortalecer la cooperación entre los países y generar mejores condiciones para el desarrollo de los pueblos.<span class="comilla">”</span>
+            </div>
+        </div>
+
+        <!-- EJE 5 -->
+        <div class="eje-block tts-readable" id="eje5">
+            <div class="tts-block-wrapper">
+                <h3 style="margin-top:0;"><span class="badge-eje">Eje 5</span> Apertura de nuevos mercados y difusión de ventajas para la IED</h3>
+                <button class="btn-tts-block" data-target="eje5">🔊 Leer eje</button>
+            </div>
+            <p>Paraguay ofrece un <strong>régimen tributario 10‑10‑10</strong>, energía limpia y competitiva, y una población joven (70% menor de 35 años). Instrumentos clave: <strong>Ley de Maquila</strong> (tributo único del 1%), <strong>Ley 7548/2025</strong> (exoneraciones para bienes de capital) y <strong>Ley de Garantía de Inversiones</strong>. Se proyecta captar más de USD 700 millones en nuevas iniciativas industriales.</p>
+            <div class="cita">
+                <span class="comilla">“</span>Paraguay se ha posicionado como una de las economías más resilientes de la región, apoyada en una disciplina fiscal sólida y una estructura de costos altamente competitiva.<span class="comilla">”</span>
+            </div>
+        </div>
+
+        <!-- EJE 6 -->
+        <div class="eje-block tts-readable" id="eje6">
+            <div class="tts-block-wrapper">
+                <h3 style="margin-top:0;"><span class="badge-eje">Eje 6</span> Posición geoestratégica e integración física y logística</h3>
+                <button class="btn-tts-block" data-target="eje6">🔊 Leer eje</button>
+            </div>
+            <p>La <strong>Hidrovía Paraguay‑Paraná</strong>, el <strong>Corredor Bioceánico</strong> (PY15) y los nuevos puentes con Brasil (Carmelo Peralta‑Porto Murtinho, Presidente Franco‑Foz do Iguaçu) consolidan a Paraguay como eje de tránsito regional. Se avanza en controles integrados del MERCOSUR y en la modernización vial.</p>
+            <div class="cita">
+                <span class="comilla">“</span>Paraguay no debía pensarse como 'encerrado', sino como territorio de tránsito y articulación. Hoy el desafío es operacionalizar la estrategia: terminar la PY15, poner en servicio el puente bioceánico, hacer funcionar los controles integrados y blindar la hidrovía.<span class="comilla">”</span>
+            </div>
+        </div>
+
+        <!-- EJE 8 -->
+        <div class="eje-block tts-readable" id="eje8">
+            <div class="tts-block-wrapper">
+                <h3 style="margin-top:0;"><span class="badge-eje">Eje 8</span> Evolución de la política energética</h3>
+                <button class="btn-tts-block" data-target="eje8">🔊 Leer eje</button>
+            </div>
+            <p>La energía hidroeléctrica (Itaipú, Yacyretá) es el pilar geopolítico. En 2023 se canceló la deuda de Itaipú y en 2024 se fijó una tarifa de USD 19,28 kW/mes, inyectando USD 1.250 millones anuales. El <strong>PND 2050</strong> promueve el <strong>powershoring</strong> y la diversificación de la matriz (solar, eólica, biomasa) para garantizar seguridad energética y descarbonización.</p>
+            <div class="cita">
+                <span class="comilla">“</span>La energía ha dejado de ser un asunto de exclusiva competencia técnica para convertirse en la principal herramienta de negociación internacional del Estado paraguayo.<span class="comilla">”</span>
+            </div>
+        </div>
+
+        <!-- EJE 9 -->
+        <div class="eje-block tts-readable" id="eje9">
+            <div class="tts-block-wrapper">
+                <h3 style="margin-top:0;"><span class="badge-eje">Eje 9</span> Fortalecimiento de la cooperación internacional y asistencia técnica</h3>
+                <button class="btn-tts-block" data-target="eje9">🔊 Leer eje</button>
+            </div>
+            <p>La cooperación se concibe como <strong>co‑inversión y transferencia de conocimiento</strong>. Actúan actores como la UE (Programa Indicativo Plurianual), KOICA (Corea del Sur), JICA (Japón), CEPAL y la República de China (Taiwán). Se enfoca en dimensiones económica, social y cultural, con énfasis en Mipymes, TIC, salud y educación.</p>
+            <div class="cita">
+                <span class="comilla">“</span>La Cooperación Internacional para el Desarrollo y la Asistencia Técnica se han consolidado no como meros actos de beneficencia, sino como herramientas estratégicas de co‑inversión, transferencia de conocimiento y fortalecimiento institucional.<span class="comilla">”</span>
+            </div>
+        </div>
+
+        <!-- EJE 10 -->
+        <div class="eje-block tts-readable" id="eje10">
+            <div class="tts-block-wrapper">
+                <h3 style="margin-top:0;"><span class="badge-eje">Eje 10</span> Afirmación de la identidad nacional y desarrollo de la “Marca País”</h3>
+                <button class="btn-tts-block" data-target="eje10">🔊 Leer eje</button>
+            </div>
+            <p>El proyecto <strong>Mundo Guaraní</strong> (2005) y la <strong>Estrategia Marca País Paraguay</strong> (desde 2015) buscan posicionar la imagen del país. Se apoya en pilares: estabilidad macroeconómica, hub regional, país verde y bono demográfico. En 2026, Paraguay ascendió al puesto 78 en el Global Soft Power Index.</p>
+            <div class="cita">
+                <span class="comilla">“</span>El fomento de la marca país va mucho más allá de una estrategia de mercadotecnia. Es la forma más directa que tiene un país de transmitir su imagen e identificar la procedencia de sus productos y servicios más representativos.<span class="comilla">”</span>
+            </div>
+        </div>
+
+        <!-- EJE 11 -->
+        <div class="eje-block tts-readable" id="eje11">
+            <div class="tts-block-wrapper">
+                <h3 style="margin-top:0;"><span class="badge-eje">Eje 11</span> Lucha contra el terrorismo y la delincuencia organizada transnacional</h3>
+                <button class="btn-tts-block" data-target="eje11">🔊 Leer eje</button>
+            </div>
+            <p>Paraguay participa en el <strong>CICTE</strong> (OEA), <strong>AMERIPOL</strong> y en el sistema de intercambio de información del MERCOSUR. En la actualidad, el <strong>Primer Comando da Capital (PCC)</strong> y el <strong>Comando Vermelho</strong> operan en zonas fronterizas. Se ha diseñado la <strong>Estrategia Nacional 2026‑2030</strong> con cuatro pilares (PREVENIR, PERSEGUIR, PROTEGER, PROMOVER) y se fortalece la cooperación con la UE (PACCTO 2.0, EUROFRONT, COPOLAD III).</p>
+            <div class="cita">
+                <span class="comilla">“</span>La política exterior de seguridad es, en última instancia, la expresión hacia afuera de lo que el Estado es capaz de garantizar hacia adentro.<span class="comilla">”</span>
+            </div>
+        </div>
+
+        <!-- EJE 12 -->
+        <div class="eje-block tts-readable" id="eje12">
+            <div class="tts-block-wrapper">
+                <h3 style="margin-top:0;"><span class="badge-eje">Eje 12</span> Agenda multilateral</h3>
+                <button class="btn-tts-block" data-target="eje12">🔊 Leer eje</button>
+            </div>
+            <p>Paraguay es miembro fundador de la <strong>ONU</strong> y ha ocupado tres veces un escaño en el <strong>Consejo de Seguridad</strong> (1994‑1996, 2006‑2008, 2019‑2021) y nuevamente en el período 2024‑2026. También participa activamente en la <strong>OEA</strong>, en las <strong>Cumbres de las Américas</strong> y en el <strong>MERCOSUR Político</strong>. En 2026 fue elegido vicepresidente de la 81ª Asamblea General de la ONU.</p>
+            <div class="cita">
+                <span class="comilla">“</span>Paraguay fue electo para ocupar una de las vicepresidencias del 81° Período de Sesiones de la Asamblea General de la ONU (septiembre 2026 - septiembre 2027).<span class="comilla">”</span>
+            </div>
+        </div>
+
+        <!-- EJE 13 -->
+        <div class="eje-block tts-readable" id="eje13">
+            <div class="tts-block-wrapper">
+                <h3 style="margin-top:0;"><span class="badge-eje">Eje 13</span> Fortalecimiento institucional del Ministerio de Relaciones Exteriores</h3>
+                <button class="btn-tts-block" data-target="eje13">🔊 Leer eje</button>
+            </div>
+            <p>La <strong>Ley 6935/2022</strong> reemplazó a la Ley 1335/99, ampliando el servicio a las ramas administrativa y técnica, y fortaleciendo la carrera profesional mediante concurso público. Se moderniza la infraestructura (Palacio Benigno López) y se promueve la sostenibilidad financiera a través de tasas consulares y digitalización.</p>
+            <div class="cita">
+                <span class="comilla">“</span>El fortalecimiento institucional debe concebirse como un proceso permanente destinado a garantizar una política exterior eficiente, moderna y capaz de responder a los intereses estratégicos de la República del Paraguay.<span class="comilla">”</span>
+            </div>
+        </div>
+
+        <!-- =================================================== -->
+        <!-- SECCIÓN 3: PILARES DEL PLAN NACIONAL DE DESARROLLO 2050 -->
+        <!-- =================================================== -->
+        <h2>3. Pilares del Plan Nacional de Desarrollo 2050 (PND 2050)</h2>
+        <p>El PND 2050 constituye la hoja de ruta de largo plazo para el desarrollo integral de Paraguay. Sus cuatro pilares articulan las políticas públicas, incluyendo la política exterior, hacia una visión de país sostenible, inclusivo y competitivo.</p>
+
+        <div style="display:grid; grid-template-columns:1fr; gap:1rem; margin-top:0.8rem;">
+
+            <div class="pilar-block tts-readable" id="pilar1">
+                <div class="tts-block-wrapper">
+                    <h3 style="margin-top:0; color:#0a3d2a;">Pilar 1: Personas y sociedad</h3>
+                    <button class="btn-tts-block" data-target="pilar1">🔊 Leer pilar</button>
+                </div>
+                <p>Centrado en el <strong>capital humano</strong> y la <strong>cohesión social</strong>. Busca reducir la pobreza y la desigualdad, garantizar el acceso universal a educación de calidad, salud integral, agua potable y saneamiento. Promueve la protección social, la inclusión de grupos vulnerables y el fortalecimiento de la identidad cultural. La política exterior contribuye atrayendo cooperación técnica y financiera para estos fines.</p>
+            </div>
+
+            <div class="pilar-block tts-readable" id="pilar2" style="border-left-color:#2a6b8a;">
+                <div class="tts-block-wrapper">
+                    <h3 style="margin-top:0; color:#0a3d2a;">Pilar 2: Infraestructura, innovación y competitividad</h3>
+                    <button class="btn-tts-block" data-target="pilar2">🔊 Leer pilar</button>
+                </div>
+                <p>Orientado a la <strong>transformación productiva</strong> y la <strong>conectividad</strong>. Impulsa la inversión en infraestructura vial, logística, digitalización y energía. Fomenta la innovación tecnológica, la diversificación de la matriz productiva y el fortalecimiento de las Mipymes. La diplomacia comercial y la integración física (corredores bioceánicos, hidrovía) son herramientas clave para posicionar a Paraguay como <strong>hub logístico y de inversiones</strong>.</p>
+            </div>
+
+            <div class="pilar-block tts-readable" id="pilar3" style="border-left-color:#3d8b3d;">
+                <div class="tts-block-wrapper">
+                    <h3 style="margin-top:0; color:#0a3d2a;">Pilar 3: Ambiente y energía</h3>
+                    <button class="btn-tts-block" data-target="pilar3">🔊 Leer pilar</button>
+                </div>
+                <p>Apuesta por la <strong>sostenibilidad ambiental</strong> y la <strong>seguridad energética</strong>. Promueve la conservación de ecosistemas, la gestión sostenible de recursos naturales y la mitigación del cambio climático. En energía, busca diversificar la matriz (solar, eólica, biomasa) y potenciar el <strong>powershoring</strong> (atracción de industrias verdes). La política exterior ambiental defiende el principio de “responsabilidades comunes pero diferenciadas” y negocia financiamiento y transferencia tecnológica.</p>
+            </div>
+
+            <div class="pilar-block tts-readable" id="pilar4" style="border-left-color:#4a6a8a;">
+                <div class="tts-block-wrapper">
+                    <h3 style="margin-top:0; color:#0a3d2a;">Pilar 4: Instituciones, seguridad y proyección internacional</h3>
+                    <button class="btn-tts-block" data-target="pilar4">🔊 Leer pilar</button>
+                </div>
+                <p>Fortalecimiento del <strong>Estado de derecho</strong>, la <strong>calidad institucional</strong> y la <strong>seguridad ciudadana</strong>. Incluye la modernización del servicio civil, la lucha contra la corrupción y el crimen organizado, y la consolidación de una política exterior autónoma y activa. La proyección internacional se sustenta en la diplomacia económica, la participación en foros multilaterales y la construcción de una <strong>marca país</strong> sólida.</p>
+            </div>
+
+        </div>
+
+    </div> <!-- /guide-container -->
+
+    <!-- Controles TTS globales -->
+    <div class="tts-controls-global no-print" id="ttsControls">
+        <select id="voiceSelect" aria-label="Seleccionar voz"></select>
+        <button id="ttsStopBtn">⏹ Detener lectura</button>
+        <span class="tts-status" id="ttsStatus">✅ Listo</span>
+    </div>
+
+    <!-- Botón de impresión -->
+    <button class="btn-print no-print" onclick="window.print();">🖨️ Imprimir / Guardar como PDF</button>
+
+    <script>
+        (function() {
+            'use strict';
+
+            // Elementos
+            const voiceSelect = document.getElementById('voiceSelect');
+            const stopBtn = document.getElementById('ttsStopBtn');
+            const statusSpan = document.getElementById('ttsStatus');
+
+            let currentUtterance = null;
+            let isSpeaking = false;
+            let selectedVoiceURI = null;
+
+            // Cargar voz guardada
+            try {
+                const saved = localStorage.getItem('tts_voice_uri');
+                if (saved) selectedVoiceURI = saved;
+            } catch (e) {}
+
+            // Poblar voces
+            function populateVoices() {
+                const voices = speechSynthesis.getVoices();
+                if (!voices || voices.length === 0) return;
+                const currentVal = voiceSelect.value;
+                voiceSelect.innerHTML = '';
+                let defaultIndex = 0;
+                voices.forEach((voice, index) => {
+                    const opt = document.createElement('option');
+                    opt.value = voice.voiceURI;
+                    opt.textContent = `${voice.name} (${voice.lang})`;
+                    if (voice.voiceURI === selectedVoiceURI) {
+                        defaultIndex = index;
+                    }
+                    voiceSelect.appendChild(opt);
+                });
+                if (voiceSelect.options.length > 0) {
+                    if (!selectedVoiceURI) {
+                        for (let i = 0; i < voices.length; i++) {
+                            if (voices[i].lang.startsWith('es')) {
+                                defaultIndex = i;
+                                break;
+                            }
+                        }
+                    }
+                    voiceSelect.selectedIndex = defaultIndex;
+                    const selected = voiceSelect.options[defaultIndex];
+                    if (selected) {
+                        selectedVoiceURI = selected.value;
+                        try { localStorage.setItem('tts_voice_uri', selectedVoiceURI); } catch (e) {}
+                    }
+                }
+            }
+
+            if (window.speechSynthesis) {
+                speechSynthesis.onvoiceschanged = function() {
+                    populateVoices();
+                };
+                setTimeout(populateVoices, 100);
+            }
+
+            // Guardar selección de voz
+            voiceSelect.addEventListener('change', function() {
+                const val = this.value;
+                if (val) {
+                    selectedVoiceURI = val;
+                    try { localStorage.setItem('tts_voice_uri', val); } catch (e) {}
+                }
+            });
+
+            function getSelectedVoice() {
+                const voices = speechSynthesis.getVoices();
+                const uri = voiceSelect.value;
+                for (let v of voices) {
+                    if (v.voiceURI === uri) return v;
+                }
+                return null;
+            }
+
+            // Leer un bloque específico
+            function speakBlock(blockElement) {
+                if (!window.speechSynthesis) {
+                    statusSpan.textContent = '❌ TTS no soportado';
+                    return;
+                }
+                // Cancelar cualquier lectura en curso
+                if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+                    window.speechSynthesis.cancel();
+                }
+
+                // Obtener texto del bloque (excluyendo botones y elementos no deseados)
+                const clone = blockElement.cloneNode(true);
+                // Eliminar cualquier botón .btn-tts-block dentro del bloque
+                const btns = clone.querySelectorAll('.btn-tts-block');
+                btns.forEach(b => b.remove());
+                // Eliminar también .tts-block-wrapper (que contiene el título y el botón) pero dejamos el título
+                const wrappers = clone.querySelectorAll('.tts-block-wrapper');
+                wrappers.forEach(w => {
+                    // Reemplazar por su contenido (sin el botón)
+                    const parent = w.parentNode;
+                    while (w.firstChild) {
+                        parent.insertBefore(w.firstChild, w);
+                    }
+                    parent.removeChild(w);
+                });
+                // También eliminar badges
+                const badges = clone.querySelectorAll('.badge-eje');
+                badges.forEach(b => b.remove());
+
+                let text = clone.textContent.trim();
+                if (!text) {
+                    statusSpan.textContent = '⚠️ Bloque vacío';
+                    return;
+                }
+
+                currentUtterance = new SpeechSynthesisUtterance(text);
+                const voice = getSelectedVoice();
+                if (voice) currentUtterance.voice = voice;
+                currentUtterance.lang = voice ? voice.lang : 'es-ES';
+                currentUtterance.rate = 0.9;
+                currentUtterance.pitch = 1;
+
+                currentUtterance.onstart = function() {
+                    isSpeaking = true;
+                    statusSpan.textContent = '🔊 Leyendo bloque...';
+                    stopBtn.disabled = false;
+                };
+
+                currentUtterance.onend = function() {
+                    isSpeaking = false;
+                    statusSpan.textContent = '✅ Lectura finalizada';
+                    stopBtn.disabled = true;
+                    currentUtterance = null;
+                };
+
+                currentUtterance.onerror = function(e) {
+                    isSpeaking = false;
+                    statusSpan.textContent = '❌ Error: ' + (e.error || 'desconocido');
+                    stopBtn.disabled = true;
+                    currentUtterance = null;
+                };
+
+                window.speechSynthesis.speak(currentUtterance);
+            }
+
+            // Detener lectura
+            function stopSpeaking() {
+                if (window.speechSynthesis) {
+                    window.speechSynthesis.cancel();
+                }
+                isSpeaking = false;
+                if (currentUtterance) {
+                    currentUtterance = null;
+                }
+                stopBtn.disabled = true;
+                statusSpan.textContent = '⏹ Detenido';
+            }
+
+            // Eventos para los botones de bloque
+            document.querySelectorAll('.btn-tts-block').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.dataset.target;
+                    if (!targetId) return;
+                    const block = document.getElementById(targetId);
+                    if (block) {
+                        speakBlock(block);
+                    } else {
+                        statusSpan.textContent = '⚠️ Bloque no encontrado';
+                    }
+                });
+            });
+
+            // Botón detener global
+            stopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                stopSpeaking();
+            });
+
+            // Estado inicial
+            stopBtn.disabled = true;
+
+            if (!window.speechSynthesis) {
+                voiceSelect.disabled = true;
+                document.querySelectorAll('.btn-tts-block').forEach(b => b.disabled = true);
+                stopBtn.disabled = true;
+                statusSpan.textContent = '❌ TTS no disponible';
+            }
+
+        })();
+    </script>
+
 </body>
 </html>
