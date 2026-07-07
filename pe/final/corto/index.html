@@ -22,12 +22,32 @@
     .btn{padding:12px 16px;border-radius:14px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);cursor:pointer;font:inherit}
     @media(max-width:960px){.hero,.layout,.stats,.kgrid,.compare{grid-template-columns:1fr}.app{padding:16px}.hero-main,.hero-side,.section,.sidebar{padding:20px}.sidebar{position:static}}
   </style>
+
+  <style id="print-style">
+    @page{size:A4 portrait;margin:14mm 12mm 14mm 12mm}
+    @media print{
+      html,body{background:#fff!important;color:#111!important} 
+      .topbar .btn,#themeToggle{display:none!important}
+      .layout{display:block!important}
+      .sidebar{display:none!important}
+      .app{max-width:none!important;padding:0!important}
+      .panel{box-shadow:none!important;border:1px solid #cfcfcf!important;background:#fff!important}
+      .hero{grid-template-columns:1fr!important;gap:10px!important}
+      .hero-main,.hero-side,.section{padding:14px!important}
+      .section{page-break-inside:avoid;break-inside:avoid;margin-bottom:10px!important}
+      .kgrid,.compare,.stats{grid-template-columns:1fr 1fr!important;gap:8px!important}
+      .card,.schema,.callout,.stat{background:#fff!important;border:1px solid #d7d7d7!important}
+      h1{font-size:20pt!important} h2{font-size:15pt!important} h3{font-size:11.5pt!important} p,li,.chip,.badge,.pill,.muted{font-size:10pt!important;color:#111!important}
+      .chips{margin-top:8px!important}.callout{border-left:4px solid #666!important}
+      a{color:#111!important;text-decoration:none!important}
+    }
+  </style>
 </head>
 <body>
 <div class="app">
   <div class="topbar">
     <div class="brand"><div class="logo">PE</div><div><div class="muted">Resumen separado de la guía</div><h2>Política Exterior del Paraguay</h2></div></div>
-    <button class="btn" id="themeToggle">Cambiar tema</button>
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="printBtn">Exportar / Imprimir PDF A4</button><button class="btn" id="themeToggle">Cambiar tema</button></div>
   </div>
 
   <section class="hero">
@@ -60,28 +80,28 @@
       <section class="panel section" id="tema1">
         <div class="pill">Tema 1</div>
         <h2>Fundamentos teóricos de la política exterior</h2>
-        <p>La política exterior es el conjunto de acciones que realiza el Estado más allá de sus fronteras con base en el interés nacional. La guía la presenta como un proceso complejo en el que intervienen factores internos y externos, actores gubernamentales y no gubernamentales, y decisiones orientadas por objetivos, estrategias e instrumentos.</p>
+        <p>La política exterior es el conjunto de acciones que realiza el Estado más allá de sus fronteras con base en el interés nacional. La guía la presenta como un proceso complejo en el que intervienen factores internos y externos, actores gubernamentales y no gubernamentales, y decisiones orientadas por objetivos, estrategias e instrumentos. [file:2]</p>
         <div class="kgrid">
-          <div class="card"><h3>Definición base</h3><p>Sus cuatro elementos esenciales son: conjunto de acciones, Estado, sistema internacional e interés nacional.</p></div>
-          <div class="card"><h3>Actor central</h3><p>Solo el Estado puede ejercer política exterior; la actividad internacional de gobiernos locales es paradiplomacia y no política exterior.</p></div>
-          <div class="card"><h3>Motor</h3><p>El interés nacional orienta la política exterior y se expresa jerárquicamente en seguridad, bienestar y promoción de valores.</p></div>
-          <div class="card"><h3>Proyecto de nación</h3><p>Da contenido al interés nacional y se apoya en sistema político, modelo de desarrollo económico y sistema educativo.</p></div>
+          <div class="card"><h3>Definición base</h3><p>Sus cuatro elementos esenciales son: conjunto de acciones, Estado, sistema internacional e interés nacional. [file:2]</p></div>
+          <div class="card"><h3>Actor central</h3><p>Solo el Estado puede ejercer política exterior; la actividad internacional de gobiernos locales es paradiplomacia y no política exterior. [file:2]</p></div>
+          <div class="card"><h3>Motor</h3><p>El interés nacional orienta la política exterior y se expresa jerárquicamente en seguridad, bienestar y promoción de valores. [file:2]</p></div>
+          <div class="card"><h3>Proyecto de nación</h3><p>Da contenido al interés nacional y se apoya en sistema político, modelo de desarrollo económico y sistema educativo. [file:2]</p></div>
         </div>
         <div class="compare">
-          <div class="card"><h3>Capacidad de negociación</h3><p>Depende del poder relativo del Estado y de factores tangibles e intangibles, internos y externos.</p></div>
-          <div class="card"><h3>Actores</h3><p>Intervienen jefe de Estado, cancillería, burocracias y Legislativo, además de empresas, partidos, opinión pública, ONGs y academia.</p></div>
-          <div class="card"><h3>Carácter interméstico</h3><p>La política exterior como política pública conecta necesidades domésticas con condicionamientos del sistema internacional.</p></div>
+          <div class="card"><h3>Capacidad de negociación</h3><p>Depende del poder relativo del Estado y de factores tangibles e intangibles, internos y externos. [file:2]</p></div>
+          <div class="card"><h3>Actores</h3><p>Intervienen jefe de Estado, cancillería, burocracias y Legislativo, además de empresas, partidos, opinión pública, ONGs y academia. [file:2]</p></div>
+          <div class="card"><h3>Carácter interméstico</h3><p>La política exterior como política pública conecta necesidades domésticas con condicionamientos del sistema internacional. [file:2]</p></div>
         </div>
-        <div class="callout"><b>Idea central:</b> no alcanza con definir política exterior como diplomacia; hay que entenderla como política pública, proceso de decisión y expresión del interés nacional.</div>
+        <div class="callout"><b>Idea central:</b> no alcanza con definir política exterior como diplomacia; hay que entenderla como política pública, proceso de decisión y expresión del interés nacional. [file:2]</div>
         <div class="schema">
           <h3>Esquema jerárquico</h3>
           <ul>
-            <li>Política exterior: acciones del Estado más allá de sus fronteras, basadas en el interés nacional.</li>
-            <li>Componentes: Estado, interés nacional, proyecto de nación, capacidad de negociación.</li>
-            <li>Proceso decisorio: objetivos, estrategias, instrumentos, acciones, evaluación.</li>
-            <li>Factores: internos tangibles, internos intangibles y externos.</li>
-            <li>Actores: gubernamentales y no gubernamentales.</li>
-            <li>Como política pública: carácter interméstico según Putnam.</li>
+            <li>Política exterior: acciones del Estado más allá de sus fronteras, basadas en el interés nacional. [file:2]</li>
+            <li>Componentes: Estado, interés nacional, proyecto de nación, capacidad de negociación. [file:2]</li>
+            <li>Proceso decisorio: objetivos, estrategias, instrumentos, acciones, evaluación. [file:2]</li>
+            <li>Factores: internos tangibles, internos intangibles y externos. [file:2]</li>
+            <li>Actores: gubernamentales y no gubernamentales. [file:2]</li>
+            <li>Como política pública: carácter interméstico según Putnam. [file:2]</li>
           </ul>
         </div>
       </section>
@@ -89,28 +109,28 @@
       <section class="panel section" id="tema2">
         <div class="pill">Tema 2</div>
         <h2>Paraguay como “isla” e integración regional</h2>
-        <p>La guía interpreta a Paraguay como una “isla rodeada de tierra”, expresión que resume un aislamiento no solo geográfico, sino también económico, político y cultural. Desde esa condición, la integración regional aparece como una necesidad estratégica vinculada a la superación de la mediterraneidad y a la búsqueda de apoyo externo para problemas internos.</p>
+        <p>La guía interpreta a Paraguay como una “isla rodeada de tierra”, expresión que resume un aislamiento no solo geográfico, sino también económico, político y cultural. Desde esa condición, la integración regional aparece como una necesidad estratégica vinculada a la superación de la mediterraneidad y a la búsqueda de apoyo externo para problemas internos. [file:2]</p>
         <div class="kgrid">
-          <div class="card"><h3>Aislamiento</h3><p>Es multidimensional: comercio exterior históricamente limitado, centralización o inestabilidad política, y escasa visibilidad cultural.</p></div>
-          <div class="card"><h3>Planes de desarrollo</h3><p>La STP fue creada en 1962 y trabajó con la CEPAL; desde allí la planificación se volvió una vía para observar el vínculo entre modelo de desarrollo e integración.</p></div>
-          <div class="card"><h3>Lectura metodológica</h3><p>La EPI analiza el tema desde dos planos, doméstico y sistémico, y la integración puede ser condición, proceso o resultado.</p></div>
-          <div class="card"><h3>Relación vecinal</h3><p>Durante el stronismo predominó una relación “pendular” con Argentina y Brasil, con especial peso de la Marcha hacia el Este y de Itaipú en el vínculo con Brasil.</p></div>
+          <div class="card"><h3>Aislamiento</h3><p>Es multidimensional: comercio exterior históricamente limitado, centralización o inestabilidad política, y escasa visibilidad cultural. [file:2]</p></div>
+          <div class="card"><h3>Planes de desarrollo</h3><p>La STP fue creada en 1962 y trabajó con la CEPAL; desde allí la planificación se volvió una vía para observar el vínculo entre modelo de desarrollo e integración. [file:2]</p></div>
+          <div class="card"><h3>Lectura metodológica</h3><p>La EPI analiza el tema desde dos planos, doméstico y sistémico, y la integración puede ser condición, proceso o resultado. [file:2]</p></div>
+          <div class="card"><h3>Relación vecinal</h3><p>Durante el stronismo predominó una relación “pendular” con Argentina y Brasil, con especial peso de la Marcha hacia el Este y de Itaipú en el vínculo con Brasil. [file:2]</p></div>
         </div>
         <div class="compare">
-          <div class="card"><h3>Stronismo</h3><p>La integración estuvo presente en la práctica regional, aunque no siempre de forma explícita en los primeros planes; el plano externo funcionó como legitimador del régimen.</p></div>
-          <div class="card"><h3>Democracia</h3><p>Con el Mercosur, la integración se volvió la apuesta principal del periodo democrático y apareció explícitamente en todos los planes de desarrollo.</p></div>
-          <div class="card"><h3>Conclusión</h3><p>La investigación concluye que la integración regional fue una estrategia reactiva derivada de factores internos, más que una política activa independiente.</p></div>
+          <div class="card"><h3>Stronismo</h3><p>La integración estuvo presente en la práctica regional, aunque no siempre de forma explícita en los primeros planes; el plano externo funcionó como legitimador del régimen. [file:2]</p></div>
+          <div class="card"><h3>Democracia</h3><p>Con el Mercosur, la integración se volvió la apuesta principal del periodo democrático y apareció explícitamente en todos los planes de desarrollo. [file:2]</p></div>
+          <div class="card"><h3>Conclusión</h3><p>La investigación concluye que la integración regional fue una estrategia reactiva derivada de factores internos, más que una política activa independiente. [file:2]</p></div>
         </div>
-        <div class="callout"><b>Idea central:</b> la integración paraguaya no puede entenderse solo como comercio; también fue una respuesta histórica al aislamiento y a la necesidad de sostener proyectos internos.</div>
+        <div class="callout"><b>Idea central:</b> la integración paraguaya no puede entenderse solo como comercio; también fue una respuesta histórica al aislamiento y a la necesidad de sostener proyectos internos. [file:2]</div>
         <div class="schema">
           <h3>Esquema jerárquico</h3>
           <ul>
-            <li>Paraguay como isla rodeada de tierra: aislamiento económico, político y cultural.</li>
-            <li>Planes de desarrollo: STP, CEPAL y evolución de la presencia de la integración.</li>
-            <li>Esquemas regionales: ALALC, ALADI, Mercosur y UNASUR.</li>
-            <li>Stronismo: política pendular, Marcha hacia el Este, Itaipú, legitimación externa.</li>
-            <li>Democracia: Mercosur, binomio democracia-integración, regionalismo postneoliberal.</li>
-            <li>Conclusión: integración como estrategia reactiva derivada de factores internos.</li>
+            <li>Paraguay como isla rodeada de tierra: aislamiento económico, político y cultural. [file:2]</li>
+            <li>Planes de desarrollo: STP, CEPAL y evolución de la presencia de la integración. [file:2]</li>
+            <li>Esquemas regionales: ALALC, ALADI, Mercosur y UNASUR. [file:2]</li>
+            <li>Stronismo: política pendular, Marcha hacia el Este, Itaipú, legitimación externa. [file:2]</li>
+            <li>Democracia: Mercosur, binomio democracia-integración, regionalismo postneoliberal. [file:2]</li>
+            <li>Conclusión: integración como estrategia reactiva derivada de factores internos. [file:2]</li>
           </ul>
         </div>
       </section>
@@ -118,31 +138,31 @@
       <section class="panel section" id="tema3">
         <div class="pill">Tema 3</div>
         <h2>Los 13 ejes estratégicos de la política exterior</h2>
-        <p>La política exterior contemporánea del Paraguay se organiza en 13 ejes estratégicos que combinan continuidad histórica con nuevas prioridades. El conjunto abarca soberanía, derechos humanos, ambiente, apertura de mercados, comercio justo, logística, energía, cooperación, identidad, seguridad, multilateralismo y fortalecimiento del servicio exterior.</p>
+        <p>La política exterior contemporánea del Paraguay se organiza en 13 ejes estratégicos que combinan continuidad histórica con nuevas prioridades. El conjunto abarca soberanía, derechos humanos, ambiente, apertura de mercados, comercio justo, logística, energía, cooperación, identidad, seguridad, multilateralismo y fortalecimiento del servicio exterior. [file:2]</p>
         <div class="kgrid">
-          <div class="card"><h3>Soberanía y fronteras</h3><p>Incluye delimitación, demarcación, cooperación militar y una visión de frontera como zona de integración.</p></div>
-          <div class="card"><h3>DDHH y democracia</h3><p>Se apoya en la UGDH, el SIMORE, la memoria histórica, casos ante la Corte IDH y políticas para migrantes y refugiados.</p></div>
-          <div class="card"><h3>Ambiente y recursos hídricos</h3><p>Destaca el Acuífero Guaraní, el Pilcomayo y el Río Apa, junto con una diplomacia ambiental ligada a soberanía y desarrollo sostenible.</p></div>
-          <div class="card"><h3>Mercados y comercio</h3><p>La política económica internacional pasó a una diplomacia pragmática de competitividad, apertura de mercados, OMC y atracción de inversiones.</p></div>
-          <div class="card"><h3>Logística y energía</h3><p>La hidrovía, el corredor bioceánico e Itaipú/Yacyretá aparecen como pilares para superar la mediterraneidad y proyectar al país como hub logístico y energético.</p></div>
-          <div class="card"><h3>Cooperación, identidad y servicio exterior</h3><p>La cooperación adopta varias modalidades; la Marca País y el guaraní fortalecen la proyección internacional; y el servicio exterior busca mayor profesionalización.</p></div>
+          <div class="card"><h3>Soberanía y fronteras</h3><p>Incluye delimitación, demarcación, cooperación militar y una visión de frontera como zona de integración. [file:2]</p></div>
+          <div class="card"><h3>DDHH y democracia</h3><p>Se apoya en la UGDH, el SIMORE, la memoria histórica, casos ante la Corte IDH y políticas para migrantes y refugiados. [file:2]</p></div>
+          <div class="card"><h3>Ambiente y recursos hídricos</h3><p>Destaca el Acuífero Guaraní, el Pilcomayo y el Río Apa, junto con una diplomacia ambiental ligada a soberanía y desarrollo sostenible. [file:2]</p></div>
+          <div class="card"><h3>Mercados y comercio</h3><p>La política económica internacional pasó a una diplomacia pragmática de competitividad, apertura de mercados, OMC y atracción de inversiones. [file:2]</p></div>
+          <div class="card"><h3>Logística y energía</h3><p>La hidrovía, el corredor bioceánico e Itaipú/Yacyretá aparecen como pilares para superar la mediterraneidad y proyectar al país como hub logístico y energético. [file:2]</p></div>
+          <div class="card"><h3>Cooperación, identidad y servicio exterior</h3><p>La cooperación adopta varias modalidades; la Marca País y el guaraní fortalecen la proyección internacional; y el servicio exterior busca mayor profesionalización. [file:2]</p></div>
         </div>
         <div class="compare">
-          <div class="card"><h3>Ejes económicos</h3><p>Ejes 5, 6, 7 y 8: mercados, comercio justo, conectividad y energía.</p></div>
-          <div class="card"><h3>Ejes político-institucionales</h3><p>Ejes 1, 2, 11, 12 y 13: soberanía, DDHH, seguridad, multilateralismo y servicio exterior.</p></div>
-          <div class="card"><h3>Ejes de proyección</h3><p>Ejes 3, 9 y 10: ambiente, cooperación internacional e identidad/marca país.</p></div>
+          <div class="card"><h3>Ejes económicos</h3><p>Ejes 5, 6, 7 y 8: mercados, comercio justo, conectividad y energía. [file:2]</p></div>
+          <div class="card"><h3>Ejes político-institucionales</h3><p>Ejes 1, 2, 11, 12 y 13: soberanía, DDHH, seguridad, multilateralismo y servicio exterior. [file:2]</p></div>
+          <div class="card"><h3>Ejes de proyección</h3><p>Ejes 3, 9 y 10: ambiente, cooperación internacional e identidad/marca país. [file:2]</p></div>
         </div>
-        <div class="callout"><b>Idea central:</b> los 13 ejes muestran una política exterior que mantiene fundamentos históricos, pero amplía su agenda hacia energía, logística, cooperación, marca país y gobernanza global.</div>
+        <div class="callout"><b>Idea central:</b> los 13 ejes muestran una política exterior que mantiene fundamentos históricos, pero amplía su agenda hacia energía, logística, cooperación, marca país y gobernanza global. [file:2]</div>
         <div class="schema">
           <h3>Esquema jerárquico</h3>
           <ul>
-            <li>Eje 1: soberanía, límites, demarcación, cooperación militar, integración fronteriza.]</li>
-            <li>Eje 2: democracia y derechos humanos.</li>
-            <li>Eje 3: medio ambiente y recursos hídricos.]</li>
-            <li>Ejes 5 y 6: apertura de mercados, comercio justo, OMC, inversiones.</li>
-            <li>Ejes 7 y 8: conectividad física, hidrovía, corredor bioceánico, energía.</li>
-            <li>Ejes 9 y 10: cooperación internacional, identidad nacional y marca país.]</li>
-            <li>Ejes 11, 12 y 13: seguridad, multilateralismo y fortalecimiento del servicio exterior. </li>
+            <li>Eje 1: soberanía, límites, demarcación, cooperación militar, integración fronteriza. [file:2]</li>
+            <li>Eje 2: democracia y derechos humanos. [file:2]</li>
+            <li>Eje 3: medio ambiente y recursos hídricos. [file:2]</li>
+            <li>Ejes 5 y 6: apertura de mercados, comercio justo, OMC, inversiones. [file:2]</li>
+            <li>Ejes 7 y 8: conectividad física, hidrovía, corredor bioceánico, energía. [file:2]</li>
+            <li>Ejes 9 y 10: cooperación internacional, identidad nacional y marca país. [file:2]</li>
+            <li>Ejes 11, 12 y 13: seguridad, multilateralismo y fortalecimiento del servicio exterior. [file:2]</li>
           </ul>
         </div>
       </section>
@@ -151,6 +171,7 @@
 </div>
 <script>
   document.getElementById('themeToggle').onclick=()=>document.documentElement.setAttribute('data-theme',document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark');
+  document.getElementById('printBtn').onclick=()=>window.print();
 </script>
 </body>
 </html>
