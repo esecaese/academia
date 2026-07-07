@@ -3,472 +3,147 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>quiz-politica-exterior-paraguay</title>
-  <meta name="description" content="Quiz interactivo y exigente sobre Política Exterior del Paraguay, con 50 preguntas, selección múltiple, verdadero/falso, aleatoriedad y retroalimentación explicativa." />
+  <title>quiz-politica-exterior-paraguay-explicito</title>
+  <meta name="description" content="Quiz interactivo basado exclusivamente en contenido explícito de la guía Política Exterior de la República del Paraguay." />
   <style>
-    :root, [data-theme="light"] {
-      --bg:#f7f6f2; --surface:#f9f8f5; --surface-2:#fbfbf9; --surface-offset:#edeae5; --border:#d4d1ca;
-      --text:#28251d; --muted:#7a7974; --faint:#bab9b4; --primary:#01696f; --primary-hover:#0c4e54; --accent:#7a39bb;
-      --success:#437a22; --warning:#964219; --error:#a12c7b; --shadow:0 12px 32px rgba(0,0,0,.08);
-      --radius:18px; --radius-sm:12px; --space-1:.25rem; --space-2:.5rem; --space-3:.75rem; --space-4:1rem; --space-5:1.25rem; --space-6:1.5rem; --space-8:2rem; --space-10:2.5rem; --space-12:3rem;
-      --text-xs:clamp(.75rem,.7rem + .25vw,.875rem); --text-sm:clamp(.875rem,.8rem + .35vw,1rem); --text-base:clamp(1rem,.95rem + .25vw,1.125rem); --text-lg:clamp(1.125rem,1rem + .75vw,1.5rem); --text-xl:clamp(1.5rem,1.2rem + 1.25vw,2.25rem); --text-2xl:clamp(2rem,1.2rem + 2.5vw,3.5rem);
-      --grad:linear-gradient(135deg, color-mix(in srgb, var(--primary) 16%, white), color-mix(in srgb, var(--accent) 12%, white));
-    }
-    [data-theme="dark"] {
-      --bg:#171614; --surface:#1c1b19; --surface-2:#201f1d; --surface-offset:#2d2c2a; --border:#393836;
-      --text:#cdccca; --muted:#97958f; --faint:#5a5957; --primary:#4f98a3; --primary-hover:#227f8b; --accent:#a86fdf;
-      --success:#6daa45; --warning:#bb653b; --error:#d163a7; --shadow:0 16px 40px rgba(0,0,0,.35);
-      --grad:linear-gradient(135deg, color-mix(in srgb, var(--primary) 18%, transparent), color-mix(in srgb, var(--accent) 16%, transparent));
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{min-height:100dvh;font-family:Inter,system-ui,sans-serif;background:radial-gradient(circle at top left, color-mix(in srgb, var(--primary) 12%, transparent), transparent 38%), radial-gradient(circle at top right, color-mix(in srgb, var(--accent) 10%, transparent), transparent 42%), var(--bg);color:var(--text);line-height:1.6}
-    button,input,select{font:inherit}
-    button{cursor:pointer;border:none}
-    .app{max-width:1120px;margin:0 auto;padding:var(--space-6)}
-    .topbar{display:flex;gap:var(--space-3);justify-content:space-between;align-items:center;margin-bottom:var(--space-6);flex-wrap:wrap}
-    .brand{display:flex;gap:var(--space-4);align-items:center}
-    .logo{width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,var(--primary),var(--accent));display:grid;place-items:center;color:white;font-weight:800;box-shadow:var(--shadow)}
-    .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:var(--space-6);align-items:stretch}
-    .panel{background:color-mix(in srgb, var(--surface) 86%, transparent);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);backdrop-filter:blur(10px)}
-    .hero-main{padding:var(--space-8);background:var(--grad)}
-    .hero-main h1{font-size:var(--text-2xl);line-height:1.05;margin-bottom:var(--space-4)}
-    .hero-main p{max-width:58ch;color:var(--muted);font-size:var(--text-base)}
-    .chips{display:flex;gap:var(--space-2);flex-wrap:wrap;margin-top:var(--space-5)}
-    .chip{padding:.45rem .8rem;border-radius:999px;border:1px solid var(--border);background:var(--surface-2);font-size:var(--text-xs)}
-    .controls{padding:var(--space-8);display:grid;gap:var(--space-5)}
-    .form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-4)}
-    .field label{display:block;font-size:var(--text-sm);font-weight:700;margin-bottom:var(--space-2)}
-    .field select,.field input{width:100%;padding:.95rem 1rem;border-radius:14px;background:var(--surface-2);border:1px solid var(--border);color:var(--text)}
-    .actions{display:flex;gap:var(--space-3);flex-wrap:wrap}
-    .btn{padding:.95rem 1.2rem;border-radius:14px;font-weight:700;transition:.18s ease;background:var(--surface-2);color:var(--text);border:1px solid var(--border)}
-    .btn:hover{transform:translateY(-1px);border-color:var(--primary)}
-    .btn-primary{background:var(--primary);color:white;border-color:transparent}
-    .btn-primary:hover{background:var(--primary-hover)}
-    .meta-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-4);margin-top:var(--space-6)}
-    .stat{padding:var(--space-4);border-radius:16px;background:var(--surface-2);border:1px solid var(--border)}
-    .stat b{display:block;font-size:var(--text-lg)}
-    .quiz-shell{display:none;margin-top:var(--space-6);grid-template-columns:320px 1fr;gap:var(--space-6)}
-    .quiz-shell.active{display:grid}
-    .sidebar{padding:var(--space-5);position:sticky;top:var(--space-4);height:max-content}
-    .progress-ring{display:grid;gap:var(--space-4)}
-    .numbers{display:grid;grid-template-columns:repeat(5,1fr);gap:.45rem}
-    .num{height:42px;border-radius:12px;background:var(--surface-2);border:1px solid var(--border);color:var(--muted);font-weight:700}
-    .num.current{border-color:var(--primary);color:var(--primary)}
-    .num.done{background:color-mix(in srgb, var(--primary) 18%, var(--surface-2));color:var(--text)}
-    .num.review{border-color:var(--warning);color:var(--warning)}
-    .question-card{padding:var(--space-8)}
-    .badge-row{display:flex;justify-content:space-between;gap:var(--space-3);align-items:center;flex-wrap:wrap;margin-bottom:var(--space-4)}
-    .badge{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .8rem;border-radius:999px;background:var(--surface-2);border:1px solid var(--border);font-size:var(--text-xs)}
-    .question-card h2{font-size:var(--text-xl);line-height:1.2;margin-bottom:var(--space-4)}
-    .question-text{font-size:var(--text-lg);margin-bottom:var(--space-5)}
-    .options{display:grid;gap:var(--space-3)}
-    .option{padding:1rem 1rem 1rem 1.1rem;border-radius:16px;border:1px solid var(--border);background:var(--surface-2);display:flex;gap:.9rem;align-items:flex-start;text-align:left;color:var(--text)}
-    .option:hover{border-color:var(--primary)}
-    .option.selected{border-color:var(--primary);background:color-mix(in srgb, var(--primary) 14%, var(--surface-2))}
-    .option.correct{border-color:var(--success);background:color-mix(in srgb, var(--success) 15%, var(--surface-2))}
-    .option.incorrect{border-color:var(--error);background:color-mix(in srgb, var(--error) 14%, var(--surface-2))}
-    .letter{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--surface-offset);font-weight:800;flex-shrink:0}
-    .feedback{margin-top:var(--space-5);padding:var(--space-5);border-radius:16px;border:1px solid var(--border);display:none;background:var(--surface-2)}
-    .feedback.show{display:block}
-    .feedback.correct{border-color:color-mix(in srgb, var(--success) 50%, var(--border))}
-    .feedback.incorrect{border-color:color-mix(in srgb, var(--error) 50%, var(--border))}
-    .feedback h3{margin-bottom:.5rem}
-    .nav-actions{display:flex;justify-content:space-between;gap:var(--space-3);margin-top:var(--space-6);flex-wrap:wrap}
-    .results{display:none;margin-top:var(--space-6)}
-    .results.active{display:block}
-    .results-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-4);margin-top:var(--space-5)}
-    .review-list{display:grid;gap:var(--space-4);margin-top:var(--space-6)}
-    .review-item{padding:var(--space-5);border-radius:18px;background:var(--surface);border:1px solid var(--border)}
-    .review-item.good{border-color:color-mix(in srgb, var(--success) 35%, var(--border))}
-    .review-item.bad{border-color:color-mix(in srgb, var(--error) 35%, var(--border))}
-    .muted{color:var(--muted)}
-    .small{font-size:var(--text-sm)}
-    .hidden{display:none!important}
-    @media (max-width: 960px){.hero,.quiz-shell,.results-grid,.form-grid{grid-template-columns:1fr}.sidebar{position:static}.app{padding:var(--space-4)}.hero-main,.controls,.question-card{padding:var(--space-6)}.meta-grid{grid-template-columns:repeat(2,1fr)}}
+    :root,[data-theme="light"]{--bg:#f6f5f1;--surface:#fbfaf7;--surface-2:#f1eee8;--border:#d6d0c7;--text:#22201b;--muted:#706d67;--primary:#0a6c70;--accent:#7d4ec9;--success:#357a38;--error:#a62f6b;--warning:#b56a1d;--shadow:0 12px 28px rgba(0,0,0,.08);--radius:18px}
+    [data-theme="dark"]{--bg:#141312;--surface:#1b1a18;--surface-2:#23211f;--border:#3a3732;--text:#e8e2d9;--muted:#a29c93;--primary:#4da3a6;--accent:#b388f2;--success:#69b05b;--error:#d567a0;--warning:#d28b43;--shadow:0 14px 34px rgba(0,0,0,.3)}
+    *{box-sizing:border-box;margin:0;padding:0} body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6} button,select{font:inherit} button{cursor:pointer} .app{max-width:1120px;margin:0 auto;padding:24px} .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+    .brand{display:flex;gap:14px;align-items:center}.logo{width:50px;height:50px;border-radius:16px;background:linear-gradient(135deg,var(--primary),var(--accent));display:grid;place-items:center;color:#fff;font-weight:800;box-shadow:var(--shadow)}
+    .hero,.quiz{display:grid;grid-template-columns:1.1fr .9fr;gap:20px}.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)} .hero-main,.controls,.question-card,.results{padding:26px}
+    h1{font-size:2.1rem;line-height:1.05;margin-bottom:10px} h2{font-size:1.4rem;margin-bottom:10px} p{margin-bottom:10px}.muted{color:var(--muted)} .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.chip,.badge{display:inline-flex;align-items:center;padding:7px 11px;border-radius:999px;background:var(--surface-2);border:1px solid var(--border);font-size:.85rem}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}.stat{padding:16px;border-radius:16px;background:var(--surface-2);border:1px solid var(--border)} .stat b{display:block;font-size:1.5rem}
+    .field{margin-bottom:14px}.field label{display:block;font-weight:700;margin-bottom:7px}.field select{width:100%;padding:12px 14px;border-radius:14px;border:1px solid var(--border);background:var(--surface-2);color:var(--text)}
+    .actions{display:flex;gap:10px;flex-wrap:wrap}.btn{padding:12px 16px;border-radius:14px;border:1px solid var(--border);background:var(--surface-2);color:var(--text)} .btn.primary{background:var(--primary);color:#fff;border-color:transparent}
+    .quiz{display:none;margin-top:20px;grid-template-columns:300px 1fr}.quiz.active{display:grid}.sidebar{padding:20px;position:sticky;top:18px;height:max-content}.numbers{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:14px}.num{height:40px;border-radius:12px;border:1px solid var(--border);background:var(--surface-2);color:var(--muted);font-weight:700}.num.current{border-color:var(--primary);color:var(--primary)}.num.done{background:rgba(77,163,166,.14);color:var(--text)}.num.bad{border-color:var(--error);color:var(--error)}
+    .question-card h3{font-size:1.3rem;margin-bottom:10px}.options{display:grid;gap:12px;margin-top:14px}.option{display:flex;gap:12px;align-items:flex-start;text-align:left;padding:14px;border-radius:16px;border:1px solid var(--border);background:var(--surface-2);color:var(--text)} .option:hover{border-color:var(--primary)} .option.selected{border-color:var(--primary);background:rgba(77,163,166,.14)} .option.correct{border-color:var(--success);background:rgba(105,176,91,.14)} .option.incorrect{border-color:var(--error);background:rgba(213,103,160,.14)}
+    .letter{width:34px;height:34px;border-radius:10px;background:var(--surface);border:1px solid var(--border);display:grid;place-items:center;font-weight:800;flex-shrink:0} .feedback{display:none;margin-top:16px;padding:16px;border-radius:16px;border:1px solid var(--border);background:var(--surface-2)} .feedback.show{display:block}
+    .nav{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:20px}.results{display:none;margin-top:20px}.results.active{display:block}.review-list{display:grid;gap:14px;margin-top:18px}.review{padding:18px;border:1px solid var(--border);border-radius:16px}.review.good{border-color:rgba(105,176,91,.5)}.review.bad{border-color:rgba(213,103,160,.5)} .hidden{display:none!important}
+    @media(max-width:960px){.hero,.quiz,.stats{grid-template-columns:1fr}.app{padding:16px}.hero-main,.controls,.question-card,.results,.sidebar{padding:20px}}
   </style>
 </head>
 <body>
-  <div class="app">
-    <header class="topbar">
-      <div class="brand">
-        <div class="logo" aria-hidden="true">PE</div>
-        <div>
-          <p class="small muted">Quiz interactivo separado de la guía</p>
-          <h1 style="font-size:var(--text-lg)">Política Exterior del Paraguay</h1>
-        </div>
-      </div>
-      <div class="actions">
-        <button class="btn" id="themeToggle" type="button">Cambiar tema</button>
-      </div>
-    </header>
-
-    <section class="hero">
-      <article class="panel hero-main">
-        <p class="badge">Banco difícil de práctica</p>
-        <h1>Test exigente con mezcla aleatoria y retroalimentación explicada.</h1>
-        <p>Este juego está separado de tu guía y fue pensado para autoevaluación seria: 50 preguntas, combinación de selección múltiple y verdadero/falso, distractores plausibles, orden aleatorio y explicación del porqué del error.</p>
-        <div class="chips">
-          <span class="chip">3 temas</span>
-          <span class="chip">50 preguntas</span>
-          <span class="chip">4 opciones visibles</span>
-          <span class="chip">7+ distractores por múltiple</span>
-          <span class="chip">Reintento aleatorio</span>
-        </div>
-        <div class="meta-grid">
-          <div class="stat"><span class="muted small">Banco total</span><b>50</b></div>
-          <div class="stat"><span class="muted small">Selección múltiple</span><b>34</b></div>
-          <div class="stat"><span class="muted small">Verdadero/Falso</span><b>16</b></div>
-          <div class="stat"><span class="muted small">Temas</span><b>3</b></div>
-        </div>
-      </article>
-
-      <aside class="panel controls">
-        <div>
-          <h2 style="font-size:var(--text-xl);margin-bottom:.45rem">Configurar prueba</h2>
-          <p class="muted">Elegí cuántas preguntas querés rendir. El sistema armará una versión distinta en cada intento.</p>
-        </div>
-        <div class="form-grid">
-          <div class="field">
-            <label for="questionCount">Cantidad de preguntas</label>
-            <select id="questionCount">
-              <option value="10">10</option>
-              <option value="15">15</option>
-              <option value="20" selected>20</option>
-              <option value="30">30</option>
-              <option value="40">40</option>
-              <option value="50">50</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="mode">Modo</label>
-            <select id="mode">
-              <option value="mixed" selected>Mixto</option>
-              <option value="multiple">Solo selección múltiple</option>
-              <option value="vf">Solo verdadero / falso</option>
-            </select>
-          </div>
-        </div>
-        <div class="actions">
-          <button class="btn btn-primary" id="startBtn" type="button">Iniciar test</button>
-          <button class="btn" id="previewBtn" type="button">Ver criterios</button>
-        </div>
-        <div id="previewBox" class="feedback">
-          <h3>Cómo está pensado</h3>
-          <p class="muted">Las preguntas están repartidas equilibradamente entre fundamentos teóricos, integración regional 1954-2018 y ejes estratégicos 2003-2026. En selección múltiple se eligen 3 distractores al azar desde bolsas amplias de trampas; en verdadero/falso, la corrección explica el matiz conceptual o histórico que vuelve falsa la afirmación.</p>
-        </div>
-      </aside>
-    </section>
-
-    <section id="quizShell" class="quiz-shell">
-      <aside class="panel sidebar">
-        <div class="progress-ring">
-          <div>
-            <p class="small muted">Progreso</p>
-            <h2 id="progressTitle" style="font-size:var(--text-xl);margin-top:.25rem">Pregunta 1</h2>
-          </div>
-          <div class="stat">
-            <span class="muted small">Respondidas</span>
-            <b id="answeredCount">0</b>
-          </div>
-          <div class="stat">
-            <span class="muted small">Aciertos provisionales</span>
-            <b id="correctCount">0</b>
-          </div>
-          <div class="numbers" id="numbers"></div>
-          <button class="btn" id="restartBtn" type="button">Generar nuevo intento</button>
-        </div>
-      </aside>
-
-      <article class="panel question-card">
-        <div class="badge-row">
-          <span class="badge" id="topicBadge">Tema</span>
-          <span class="badge" id="typeBadge">Tipo</span>
-        </div>
-        <h2 id="questionHeadline">Pregunta</h2>
-        <p class="question-text" id="questionText"></p>
-        <div class="options" id="options"></div>
-        <div class="feedback" id="feedbackBox"></div>
-        <div class="nav-actions">
-          <button class="btn" id="prevBtn" type="button">Anterior</button>
-          <button class="btn" id="nextBtn" type="button">Siguiente</button>
-          <button class="btn btn-primary hidden" id="finishBtn" type="button">Finalizar test</button>
-        </div>
-      </article>
-    </section>
-
-    <section id="results" class="results panel controls">
-      <div>
-        <p class="badge">Resultado final</p>
-        <h2 style="font-size:var(--text-2xl);margin:.5rem 0">Rendimiento del intento</h2>
-        <p class="muted">Además del puntaje, se muestra por qué cada respuesta incorrecta no era válida para ayudarte a estudiar con precisión.</p>
-      </div>
-      <div class="results-grid">
-        <div class="stat"><span class="muted small">Puntaje</span><b id="scoreText">0/0</b></div>
-        <div class="stat"><span class="muted small">Porcentaje</span><b id="percentText">0%</b></div>
-        <div class="stat"><span class="muted small">Nivel</span><b id="levelText">—</b></div>
-      </div>
-      <div class="actions">
-        <button class="btn btn-primary" id="retryBtn" type="button">Nuevo intento aleatorio</button>
-        <button class="btn" id="backConfigBtn" type="button">Volver a configuración</button>
-      </div>
-      <div id="reviewList" class="review-list"></div>
-    </section>
+<div class="app">
+  <div class="top">
+    <div class="brand"><div class="logo">PE</div><div><div class="muted">Versión depurada</div><h2>Quiz de Política Exterior del Paraguay</h2></div></div>
+    <button class="btn" id="themeToggle">Cambiar tema</button>
   </div>
 
-  <script>
-    const BANK = [
-      {id:1,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',difficulty:'alta',question:'¿Qué definición resume mejor la política exterior según la guía?',correct:'Conjunto de acciones y decisiones del Estado en el sistema internacional, basadas en el interés nacional y condicionadas por factores internos y externos.',distractors:['Actividad diplomática exclusiva de la cancillería para firmar tratados bilaterales.','Proyección cultural de una sociedad mediante actores públicos y privados sin intervención estatal.','Suma de políticas comerciales aplicadas por el gobierno para atraer inversión extranjera.','Conjunto de relaciones internacionales mantenidas por cualquier actor nacional fuera del territorio.','Acción militar y económica del Estado destinada únicamente a preservar la seguridad.','Estrategia de gobierno para mejorar la imagen del país ante la opinión pública internacional.','Política pública interna que luego puede trasladarse al sistema internacional si conviene.'],explanation:'La guía define la política exterior como acciones y decisiones del Estado más allá de sus fronteras, basadas en el interés nacional, e insiste en que intervienen condicionantes internos y externos; reducirla solo a diplomacia, comercio o seguridad la vuelve incompleta.'},
-      {id:2,topic:'Tema 1 · Fundamentos teóricos',type:'vf',question:'Solo el Estado puede ejercer política exterior en sentido jurídico; la actuación internacional de provincias o municipios se denomina paradiplomacia.',correct:true,explanationTrue:'Es correcta porque la guía distingue entre política exterior, reservada jurídicamente al Estado central, y paradiplomacia, propia de actores subnacionales.',explanationFalse:'Sería falsa si la guía atribuyera a los gobiernos locales capacidad jurídica para ejercer política exterior, pero justamente aclara que eso no ocurre.'},
-      {id:3,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Cuál es la diferencia más precisa entre política exterior de Estado y política exterior de gobierno?',correct:'La primera responde al interés supremo de la nación; la segunda puede reflejar intereses del grupo gobernante en el poder.',distractors:['La primera se dirige al plano regional y la segunda al plano global.','La primera es militar y la segunda es diplomática.','La primera la formula el Legislativo y la segunda el Ejecutivo.','La primera responde a la Constitución y la segunda a los tratados internacionales.','La primera se aplica en democracias y la segunda en dictaduras.','La primera es permanente y por eso nunca cambia; la segunda cambia cada semestre.','La primera pertenece a la cancillería y la segunda a la presidencia.'],explanation:'El error común es creer que ambas son equivalentes. La guía alerta que el interés nacional puede ser capturado por élites, por lo que la política exterior de gobierno no siempre coincide con la de Estado.'},
-      {id:4,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'Según la jerarquía del interés nacional, ¿qué secuencia es correcta?',correct:'Sobrevivencia del Estado → bienestar → promoción de valores.',distractors:['Bienestar → promoción de valores → sobrevivencia del Estado.','Promoción de valores → sobrevivencia del Estado → bienestar.','Seguridad colectiva → desarrollo tecnológico → prestigio internacional.','Soberanía económica → democracia interna → proyección cultural.','Poder militar → integración regional → cooperación internacional.','Estabilidad interna → comercio exterior → liderazgo regional.','Interés de las élites → interés de la sociedad → interés nacional.'],explanation:'La guía establece una prelación clara: primero seguridad y estabilidad, luego crecimiento y desarrollo, y recién después proyección de valores. Cambiar el orden rompe la lógica de dependencia entre objetivos.'},
-      {id:5,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Qué corriente teórica vincula el interés nacional con la identidad nacional?',correct:'El constructivismo.',distractors:['El realismo ofensivo.','El liberalismo institucional.','El marxismo estructural.','La geopolítica clásica.','La teoría de la dependencia.','El neofuncionalismo.','El positivismo jurídico.'],explanation:'En la guía, los constructivistas sostienen que los Estados actúan según cómo se identifican frente a los otros; por eso la identidad construye el interés nacional.'},
-      {id:6,topic:'Tema 1 · Fundamentos teóricos',type:'vf',question:'Para la guía, el interés nacional puede identificarse solo a partir de la interpretación del grupo en el poder, ya que no existe otro criterio operativo.',correct:false,explanationTrue:'No corresponde marcar verdadero porque la guía ofrece una segunda vía: derivarlo de condiciones internas y externas concretas, no solo de la élite gobernante.',explanationFalse:'Es falsa porque la guía admite dos maneras de identificarlo: por la interpretación del grupo en el poder o por las necesidades políticas, económicas y sociales del país en su contexto interno y externo.'},
-      {id:7,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Cuál de las siguientes NO es una de las tres vertientes del proyecto de nación?',correct:'La estructura del sistema internacional.',distractors:['El sistema político.','El modelo de desarrollo económico.','El sistema educativo.','La identidad colectiva proyectada al futuro.','La definición de estrategias para alcanzar el interés nacional.','La base doctrinal de la conducta exterior.','La forma colectiva de organizar aspiraciones nacionales.'],explanation:'La guía presenta tres vertientes: sistema político, modelo de desarrollo económico y sistema educativo. La estructura del sistema internacional es un condicionante externo, no una vertiente del proyecto de nación.'},
-      {id:8,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Qué ejemplo usa la guía para mostrar que un mismo interés nacional puede traducirse en proyectos de nación opuestos?',correct:'La disputa entre liberales y conservadores en México durante el siglo XIX.',distractors:['La rivalidad entre unionistas y secesionistas en Estados Unidos.','La tensión entre federalistas y centralistas en Argentina durante el peronismo.','La oposición entre colorados y liberales en Paraguay durante el stronismo.','La división entre monárquicos y republicanos en Brasil durante el siglo XX.','El enfrentamiento entre sandinistas y contras en Nicaragua.','La pugna entre peronistas y radicales en la transición argentina.','La disputa entre apristas y militares en el Perú del siglo XX.'],explanation:'El ejemplo explícito de la guía es México en el siglo XIX, donde liberales y conservadores compartían la preocupación por el interés nacional pero proponían estrategias radicalmente distintas.'},
-      {id:9,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Qué afirmación describe mejor la capacidad de negociación internacional?',correct:'Es la posibilidad de alcanzar el interés nacional con base en circunstancias internas y externas, y es variable y relativa.',distractors:['Es la suma fija del poder militar y económico disponible en un momento dado.','Es una cualidad jurídica estable que poseen por igual todos los Estados soberanos.','Depende exclusivamente del prestigio diplomático acumulado históricamente.','Se mide solo por la cantidad de tratados que un país logra firmar.','Es un atributo de la cancillería y no del conjunto del Estado.','Equivale al poder blando porque el uso de coerción niega la negociación.','Se reduce a la posición geográfica y al tamaño de la población.'],explanation:'La guía subraya que esta capacidad no es fija ni absoluta, porque cambia según el poder relativo del país y según circunstancias endógenas y exógenas.'},
-      {id:10,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'Según Joseph Nye, ¿qué combinación define al poder inteligente?',correct:'La articulación efectiva de poder duro y poder blando.',distractors:['La fusión entre diplomacia pública y diplomacia coercitiva.','El uso alternado de sanciones económicas y alianzas militares.','La capacidad cultural de un país para evitar toda coerción externa.','La superioridad tecnológica aplicada a campañas de imagen internacional.','La suma de poder militar y prestigio sin mediación diplomática.','La combinación de soberanía jurídica con inserción comercial.','La utilización de organismos internacionales para fines militares.'],explanation:'La guía retoma a Nye para distinguir poder duro, blando e inteligente; este último no elimina ninguno de los dos, sino que los combina estratégicamente.'},
-      {id:11,topic:'Tema 1 · Fundamentos teóricos',type:'vf',question:'Los factores internos tangibles incluyen elementos como moral nacional, cohesión social y prestigio internacional.',correct:false,explanationTrue:'Sería verdadero solo si la guía colocara esos elementos dentro de lo tangible, pero los clasifica como intangibles.',explanationFalse:'Es falsa porque moral nacional, prestigio internacional y cohesión social aparecen entre los factores internos intangibles, no entre los tangibles.'},
-      {id:12,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Cuál de estas opciones corresponde a un factor externo de la capacidad de negociación?',correct:'La opinión pública internacional.',distractors:['La estabilidad política interna.','La cohesión social.','El desarrollo económico nacional.','La moral nacional.','La población.','Las bases tecnológico-materiales.','Los recursos naturales.'],explanation:'La guía ubica la opinión pública internacional, el equilibrio de poder, los eventos internacionales y la presión de otros Estados entre los factores externos o exógenos.'},
-      {id:13,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Qué rasgo deben tener los objetivos de política exterior, según la guía?',correct:'Deben ser concretos, claros, orientados a resolver un problema y realistas.',distractors:['Deben ser amplios, ambiguos y suficientemente flexibles para evitar evaluación.','Deben ser secretos para no condicionar a los actores internos.','Deben limitarse al plano diplomático y evitar metas económicas.','Deben formularse solo en función de principios y no de intereses.','Deben proyectarse a perpetuidad, aun si cambia el contexto global.','Deben depender de la coyuntura sin derivar del interés nacional.','Deben ser idénticos para todas las administraciones.'],explanation:'La guía insiste en que los objetivos derivan del interés nacional y de la situación global, y que por eso no pueden ser vagos ni irreales.'},
-      {id:14,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'En la secuencia de toma de decisiones, ¿qué viene después de las acciones?',correct:'La evaluación y retroalimentación.',distractors:['La formulación del interés nacional.','La definición del proyecto de nación.','La identificación del Estado como actor.','La reconstrucción del equilibrio de poder global.','La desaparición de los costos y beneficios.','La delegación total a actores no gubernamentales.','La paradiplomacia subnacional.'],explanation:'La guía no termina el proceso con la acción. Señala que después hay evaluación y retroalimentación para reconsiderar o mantener la decisión.'},
-      {id:15,topic:'Tema 1 · Fundamentos teóricos',type:'vf',question:'La mediterraneidad paraguaya aparece en la guía como un condicionante geográfico histórico de su política exterior.',correct:true,explanationTrue:'Es correcta porque la guía usa expresamente el caso paraguayo para mostrar cómo la falta de litoral afecta el margen de negociación y condiciona su inserción internacional.',explanationFalse:'No sería falsa: la mediterraneidad se presenta como un ejemplo emblemático de factor geográfico interno tangible.'},
-      {id:16,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Qué plantea la guía sobre los actores no gubernamentales?',correct:'No formulan jurídicamente la política exterior, pero pueden influir de manera extrainstitucional en su contenido.',distractors:['Son jurídicamente equivalentes al Estado cuando poseen poder económico suficiente.','Solo inciden en democracias consolidadas y no en sistemas frágiles.','Actúan únicamente como ejecutores de decisiones tomadas por la cancillería.','Carecen de impacto real frente a los actores gubernamentales.','Intervienen solo en la etapa de evaluación y nunca en la formulación.','Pueden suscribir compromisos internacionales con la misma jerarquía que el Estado.','La guía los menciona como irrelevantes para el caso paraguayo.'],explanation:'La guía aclara que empresas, partidos, opinión pública, ONGs, sindicatos, iglesias o academia no hacen política exterior en sentido jurídico, pero sí presionan e influyen en la toma de decisiones.'},
-      {id:17,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'La expresión “una isla rodeada de tierra” busca resumir:',correct:'Un aislamiento multidimensional del Paraguay: geográfico, económico, político y cultural.',distractors:['La superioridad agrícola del Paraguay frente a sus vecinos.','La imposibilidad jurídica de integrarse a esquemas regionales.','El predominio exclusivo del aislamiento cultural sobre cualquier otro factor.','La neutralidad paraguaya frente a todos los conflictos regionales.','La falta de fronteras terrestres funcionales al comercio.','La autosuficiencia económica conseguida durante la colonia.','La ausencia de relaciones diplomáticas con Argentina y Brasil en todo el siglo XX.'],explanation:'La guía insiste en que la frase de Roa Bastos no debe leerse solo en clave geográfica; condensa varias dimensiones del aislamiento paraguayo.'},
-      {id:18,topic:'Tema 2 · Integración regional 1954-2018',type:'vf',question:'Según la guía, el aislamiento económico paraguayo comenzó únicamente con la dictadura de Stroessner.',correct:false,explanationTrue:'No puede ser verdadero porque la guía remonta el aislamiento económico al periodo colonial y luego lo desarrolla con Francia y otros momentos históricos.',explanationFalse:'Es falsa porque el aislamiento económico se presenta como un fenómeno de larga duración, visible ya desde la colonia y reforzado por distintas coyunturas posteriores.'},
-      {id:19,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Qué figura histórica reforzó una política de aislamiento interno y externo, exigiendo autorización para toda comunicación o viaje?',correct:'José Gaspar Rodríguez de Francia.',distractors:['Carlos Antonio López.','Francisco Solano López.','Bernardino Caballero.','Andrés Rodríguez.','Alfredo Stroessner.','Nicanor Duarte Frutos.','Eligio Ayala.'],explanation:'La guía atribuye a Francia un fuerte control de las comunicaciones y viajes, rasgo central de su política de aislamiento.'},
-      {id:20,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Qué hecho marcó el abandono del aislamiento por parte de Francisco Solano López y terminó en una guerra devastadora?',correct:'La intervención activa en asuntos regionales que desembocó en la Guerra de la Triple Alianza.',distractors:['La firma del Tratado de Asunción que creó el Mercosur.','La adhesión paraguaya a la ALALC impulsada por Washington.','La creación de la Secretaría Técnica de Planificación.','La aprobación de la Constitución de 1992.','La suscripción del Acta de Yguazú con Brasil.','La conformación de la UNASUR en 2006.','La sanción de la Ley 1635/2000.'],explanation:'La guía enlaza el abandono del aislamiento con la participación regional de Francisco Solano López y con la posterior Guerra de la Triple Alianza (1865-1870).' },
-      {id:21,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Cuál fue el primer paso hacia una mayor institucionalidad de la planificación en Paraguay?',correct:'La creación de la Secretaría Técnica de Planificación en 1962.',distractors:['La firma del Tratado de Asunción en 1991.','La fundación de la UNASUR en 2006.','La reforma constitucional de 1992.','La aprobación del PEES en 2001.','La Ley 1635/2000 de reorganización de la política exterior.','La Alianza para el Progreso en 1961.','La creación del Viceministerio de Economía e Integración.'],explanation:'La guía presenta la creación de la STP en marzo de 1962 como el inicio de una mayor institucionalidad en materia de planificación.'},
-      {id:22,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Qué organismo asesoró a Paraguay en la elaboración del primer Plan Nacional de Desarrollo?',correct:'La CEPAL.',distractors:['La OEA.','La ONUDI.','El BID.','La CAF.','La ALADI.','La UNASUR.','La OCDE.'],explanation:'Ese convenio con la CEPAL aparece como dato concreto del contexto institucional de los planes de desarrollo.'},
-      {id:23,topic:'Tema 2 · Integración regional 1954-2018',type:'vf',question:'En los primeros planes del stronismo, la integración regional ya ocupaba un lugar explícito y central.',correct:false,explanationTrue:'No es correcto marcar verdadero porque la guía diferencia claramente entre los primeros planes, más domésticos, y los posteriores, donde sí aparece la integración.',explanationFalse:'Es falsa porque los planes 1965/66 y 1967/68 no muestran una referencia explícita a la integración regional; esta surge con mayor claridad desde 1971/75.'},
-      {id:24,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Qué rasgo distingue a los planes 1971-1975 y 1977-1981 frente a los dos primeros del periodo stronista?',correct:'Incorporan explícitamente referencias a la integración regional.',distractors:['Abandonan toda mención al equilibrio financiero externo.','Rompen con la planificación estatal en favor del laissez-faire.','Declaran al Mercosur como prioridad inmediata.','Colocan a la UNASUR como principal meta diplomática.','Eliminan la infraestructura física de la agenda nacional.','Sustituyen el desarrollo por un enfoque exclusivamente militar.','Declaran inviable cualquier integración latinoamericana.'],explanation:'La guía compara los planes y remarca que los de 1971-75 y 1977-81 sí introducen la integración, incluso con un matiz de infraestructura física.'},
-      {id:25,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Qué significa que la integración pueda ser condición, proceso o resultado?',correct:'Que depende de una voluntad política, de motivos asociados al modelo de desarrollo y de una dinámica capaz de expandirse, estancarse o retroceder.',distractors:['Que toda integración regional termina necesariamente en un mercado común.','Que la integración solo puede medirse por tratados firmados.','Que la integración es siempre un resultado económico y nunca político.','Que la integración es coercitiva cuando existen asimetrías entre Estados.','Que condición, proceso y resultado son sinónimos sin valor analítico.','Que la integración se decide exclusivamente en el plano sistémico.','Que la integración no puede revertirse una vez iniciada.'],explanation:'La guía usa esta tríada para remarcar el carácter dinámico y no lineal de la integración, vinculándola además a la voluntad y al modelo de desarrollo.'},
-      {id:26,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Qué enfoque teórico usa la guía para analizar integración y planes de desarrollo?',correct:'La Economía Política Internacional, con niveles doméstico y sistémico.',distractors:['El realismo neoclásico con niveles estatal y militar.','El funcionalismo puro, limitado a la cooperación técnica.','El constructivismo poscolonial, centrado solo en la identidad.','La teoría jurídica monista de la integración.','El institucionalismo histórico sin referencia al sistema internacional.','La escuela inglesa aplicada a la diplomacia consular.','La geopolítica determinista sin dimensión económica.'],explanation:'La guía explicita que el análisis se apoya en la Economía Política Internacional por su interdisciplinariedad y por sus dos niveles analíticos: doméstico y sistémico.'},
-      {id:27,topic:'Tema 2 · Integración regional 1954-2018',type:'vf',question:'La relación pendular de Paraguay con Argentina y Brasil significa, según la guía, una cercanía alternante con ambos vecinos, aunque existen interpretaciones que matizan ese sesgo.',correct:true,explanationTrue:'Es correcta porque la guía presenta la idea de relación pendular, pero también menciona voces que relativizan una preferencia exclusiva por uno de los dos vecinos durante el stronismo.',explanationFalse:'No sería falsa: la oscilación hacia Argentina o Brasil es precisamente el sentido del concepto de política pendular mencionado en la guía.'},
-      {id:28,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'La “Marcha hacia el Este” durante el stronismo se asocia principalmente con:',correct:'La profundización del vínculo con Brasil, coronada por Itaipú Binacional.',distractors:['La apertura democrática y el pluralismo partidario.','La priorización de la relación con la Unión Europea.','La retirada de Paraguay de todos los esquemas latinoamericanos.','La ruptura comercial con Argentina y Brasil.','La adopción del Consenso de Washington.','La creación del Mercosur en 1991.','La fundación de la ALALC en 1960.'],explanation:'La guía usa esa expresión para identificar el giro hacia Brasil en tiempos de Stroessner, con Itaipú como emblema mayor.'},
-      {id:29,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Cuál de estos fue uno de los pilares económicos del stronismo señalados en la guía?',correct:'La triangulación comercial.',distractors:['La industrialización sustitutiva cerrada al comercio.','La diversificación exportadora basada en manufacturas pesadas.','La economía digital orientada a servicios.','La integración energética con la UNASUR.','La eliminación del agro como sector estratégico.','La nacionalización completa del comercio exterior.','La sustitución de Itaipú por cooperación cultural.'],explanation:'La guía menciona tres pilares: expansión de rubros agrícolas de exportación, triangulación comercial e Itaipú.'},
-      {id:30,topic:'Tema 2 · Integración regional 1954-2018',type:'vf',question:'El plano externo funcionó como legitimador del régimen stronista al ofrecer cooperación y respaldo político.',correct:true,explanationTrue:'Es correcta porque la guía concluye expresamente que el exterior legitimó al stronismo, ayudándolo a consolidar su posición interna.',explanationFalse:'No corresponde marcar falso, ya que la noción de “legitimador” aparece como una conclusión explícita del periodo.'},
-      {id:31,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Por qué la incorporación paraguaya al Mercosur tuvo un margen de negociación reducido?',correct:'Porque Paraguay se sumó cuando el proyecto ya estaba muy avanzado entre Argentina y Brasil.',distractors:['Porque ingresó sin reconocimiento internacional pleno.','Porque primero perteneció a la UNASUR y luego al Mercosur.','Porque tenía una economía totalmente cerrada al comercio.','Porque el Tratado de Asunción prohibía negociar a Estados mediterráneos.','Porque Uruguay vetó inicialmente su incorporación.','Porque la Constitución de 1992 impedía delegar competencias.','Porque la Ley 1635/2000 aún no había creado la cancillería.'],explanation:'La guía recuerda que el proceso venía gestándose desde el Acta de Yguazú de 1985, por lo que Paraguay llegó a una negociación bastante encaminada.'},
-      {id:32,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Qué idea sintetiza mejor el vínculo entre democracia e integración regional tras 1989?',correct:'Constituyeron un “binomio indivisible” para superar el aislamiento del último tramo de los años 80.',distractors:['Fueron procesos totalmente separados: uno político y otro puramente comercial.','La democracia desplazó a la integración como prioridad exterior.','La integración solo fue una imposición de Argentina y Brasil sin anclaje interno.','La integración antecedió a la democracia y por eso la hizo innecesaria.','La democracia implicó abandonar los esquemas regionales previos.','La integración se concibió como un sustituto de los planes de desarrollo.','Ambas nociones aparecen en la guía como incompatibles.'],explanation:'La guía usa esa fórmula para mostrar que la apertura democrática y la inserción regional se reforzaron mutuamente.'},
-      {id:33,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Qué hizo la Ley 1635/2000 según la guía?',correct:'Reorganizó la política exterior paraguaya y creó el Viceministerio de Economía e Integración.',distractors:['Constituyó formalmente el Mercosur.','Reemplazó a la Constitución de 1992.','Creó la Secretaría Técnica de Planificación.','Disolvió la cancillería y delegó competencias al Legislativo.','Nacionalizó Itaipú Binacional.','Instauró la Alianza para el Progreso.','Fundó la UNASUR.'],explanation:'Es uno de los hitos del periodo democrático que la guía enumera de forma explícita.'},
-      {id:34,topic:'Tema 2 · Integración regional 1954-2018',type:'vf',question:'En todos los planes del periodo democrático analizados por la guía, la integración regional aparece de manera explícita.',correct:true,explanationTrue:'Es correcta porque la guía destaca como rasgo notorio que la integración regional figura explícitamente en todos los planes democráticos examinados.',explanationFalse:'No sería falsa: justamente se contrasta esa explicitud democrática con la ambigüedad o ausencia de los primeros planes del stronismo.'},
-      {id:35,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'multiple',question:'¿Qué caracterizó al regionalismo postneoliberal mencionado en la guía?',correct:'La incorporación de temas sociales, políticos, energéticos, de seguridad e infraestructura junto a los económicos.',distractors:['La eliminación del componente político para volver al libre comercio puro.','La sustitución total del Mercosur por acuerdos bilaterales con potencias extrarregionales.','La desaparición de la agenda social en favor de la agenda militar.','La renuncia a toda forma de cooperación energética regional.','La vuelta al aislamiento diplomático paraguayo.','La subordinación exclusiva a la Doctrina de Seguridad Nacional.','La prohibición de nuevos liderazgos regionales.'],explanation:'La guía define el regionalismo postneoliberal como un viraje que amplía la agenda más allá del comercio.'},
-      {id:36,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'multiple',question:'¿Qué organización surgida en 2006 es señalada como expresión de ese nuevo contexto regional?',correct:'La UNASUR.',distractors:['La ALALC.','La ALADI.','La OMC.','La CAN.','La CEPAL.','La OCDE.','La OTCA.'],explanation:'La guía menciona que en diciembre de 2006 surgió la UNASUR y que Paraguay fue miembro fundador.'},
-      {id:37,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'vf',question:'El PND Paraguay 2030 presenta como eje estratégico la “Proyección de Paraguay en el mundo” y propone fortalecer la integración económica regional.',correct:true,explanationTrue:'Es correcta porque la guía cita expresamente ese eje y la estrategia 3.3 de fortalecimiento de la integración regional.',explanationFalse:'No sería falsa: ambos elementos están formulados textualmente en la parte dedicada al PND Paraguay 2030.'},
-      {id:38,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'multiple',question:'¿Qué matiz predominante adopta la idea de integración en el PND Paraguay 2030, según la guía?',correct:'Un matiz de infraestructura física vinculado a lo económico.',distractors:['Un matiz exclusivamente cultural y lingüístico.','Un matiz prioritariamente militar-defensivo.','Un matiz centrado en la ciudadanía sudamericana sin dimensión económica.','Un matiz exclusivamente ambiental desligado del comercio.','Un matiz consular orientado solo a la diáspora.','Un matiz judicial orientado a cortes regionales.','Un matiz religioso articulado por redes confesionales.'],explanation:'La guía destaca que la integración aparece con un tono marcadamente económico y asociado a infraestructura física.'},
-      {id:39,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'multiple',question:'¿Qué afirmación resume mejor la lógica interméstica aplicada al caso paraguayo contemporáneo?',correct:'Las necesidades internas buscan soluciones en el plano externo, mientras lo internacional también condiciona la política doméstica.',distractors:['Lo doméstico desaparece como variable cuando se habla de política exterior.','La política exterior solo traduce cambios sistémicos y nunca responde a necesidades internas.','Las políticas públicas internas y la política exterior son esferas completamente separadas.','El carácter interméstico implica priorizar la política interna y excluir compromisos externos.','La interdependencia invalida la existencia del interés nacional.','La teoría del doble nivel elimina el papel del gobierno.','La política exterior contemporánea paraguaya se explica solo por la geografía.'],explanation:'La guía define lo interméstico justamente como la interacción entre necesidades domésticas y condicionamientos internacionales.'},
-      {id:40,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'vf',question:'La guía sugiere que, en entornos de institucionalidad débil, los planes de desarrollo pueden resultar una expresión limitada de las políticas públicas reales.',correct:true,explanationTrue:'Es correcta porque el texto advierte que en contextos de institucionalidad débil la coyuntura político-económica termina señalando los rumbos efectivos.',explanationFalse:'No sería falsa: la guía formula esa limitación de modo explícito en el análisis del caso paraguayo.'},
-      {id:41,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'multiple',question:'¿Por qué el proceso participativo del PND Paraguay 2030 es relevante para el análisis de política exterior?',correct:'Porque muestra una formalización más amplia del proyecto de desarrollo e inserción internacional al involucrar a más de 2.000 actores.',distractors:['Porque reemplazó completamente a la cancillería en la toma de decisiones.','Porque convirtió al Mercosur en un actor gubernamental paraguayo.','Porque eliminó la necesidad de planes futuros.','Porque restringió la participación a mandos militares.','Porque suprimió el eje de inserción internacional.','Porque solo abordó temas presupuestarios internos.','Porque derogó los planes democráticos anteriores.'],explanation:'La guía subraya el carácter participativo del PND 2030 y su importancia como expresión formal del modelo adoptado y de la proyección externa del país.'},
-      {id:42,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'multiple',question:'¿Qué liderazgo es mencionado en la guía como valorando al Mercosur, aunque en un contexto regional ampliado y cambiante?',correct:'Nicanor Duarte Frutos.',distractors:['José Gaspar Rodríguez de Francia.','Carlos Antonio López.','Francisco Solano López.','Andrés Rodríguez.','Alfredo Stroessner.','Eligio Ayala.','Federico Franco.'],explanation:'En el apartado del regionalismo postneoliberal, la guía menciona el liderazgo de Nicanor Duarte Frutos (2003-2008).' },
-      {id:43,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'vf',question:'La guía presenta la inserción internacional paraguaya reciente como desligada de cuestiones energéticas, comerciales y de soberanía.',correct:false,explanationTrue:'No podría ser verdadero porque la propia presentación del tema habla de 13 ejes estratégicos e incluye explícitamente soberanía, energía, comercio, cooperación y derechos humanos.',explanationFalse:'Es falsa porque esos asuntos aparecen precisamente como componentes centrales de la política exterior contemporánea paraguaya.'},
-      {id:44,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'multiple',question:'¿Qué relación existe entre planes de desarrollo e integración regional en la lectura de la guía?',correct:'Los planes expresan formalmente el modelo de desarrollo y muestran cuándo la integración regional es asumida como prioridad o no.',distractors:['Los planes sustituyen por completo a la política exterior.','La integración regional solo puede existir si no hay planes nacionales.','Los planes y la integración pertenecen a esferas sin contacto analítico.','La integración regional es siempre previa al modelo de desarrollo.','Los planes impiden que el plano externo responda a necesidades internas.','La integración solo se deduce de tratados comerciales, no de planes.','Los planes democráticos excluyen toda referencia al entorno regional.'],explanation:'La guía insiste en que los planes permiten leer el modelo de desarrollo adoptado y el lugar que este da a la integración.'},
-      {id:45,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'multiple',question:'Si una pregunta del examen te pidiera relacionar infraestructura física e integración, ¿qué periodo ofrece un antecedente claro de esa asociación según la guía?',correct:'El plan 1977-1981 del periodo stronista.',distractors:['El gobierno de Francia previo a 1840.','La Guerra de la Triple Alianza.','La Ley 1635/2000.','La fundación de la ALALC en 1960.','La Constitución de 1940.','El PEES de 2001 sin antecedentes previos.','El Tratado de Asunción de 1991 como primer caso absoluto.'],explanation:'La guía remarca que el plan 1977-1981 ya vinculaba integración e infraestructura física, matiz que reaparece décadas después.'},
-      {id:46,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'vf',question:'El análisis de la guía permite concluir que la política exterior paraguaya contemporánea se entiende mejor si se articula con modelos de desarrollo y no como un campo aislado.',correct:true,explanationTrue:'Es correcta porque uno de los hilos del texto es justamente conectar política exterior, políticas públicas, planes de desarrollo e integración.',explanationFalse:'No sería falsa: la guía rechaza una mirada aislada y propone leer la política exterior junto con sus determinantes domésticos y sistémicos.'},
-      {id:47,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'multiple',question:'¿Qué opción refleja mejor el tipo de trampas conceptuales que la guía ayuda a evitar?',correct:'Confundir la integración como proceso dinámico con una simple lista de acuerdos firmados.',distractors:['Creer que la geografía no afecta nunca a la política exterior.','Sostener que todo actor con presencia internacional hace política exterior en sentido jurídico.','Pensar que bienestar antecede a la seguridad en la jerarquía del interés nacional.','Suponer que los planes democráticos ignoraron la integración regional.','Olvidar que el plano externo pudo legitimar al stronismo.','Reducir el carácter interméstico a una lógica puramente interna.','Todas las anteriores pueden ser trampas conceptuales.'],explanation:'La última opción es correcta por descarte ampliado: el examen difícil trabaja justamente con este tipo de confusiones recurrentes presentes a lo largo de la guía.'},
-      {id:48,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'multiple',question:'¿Qué combinación resume mejor la arquitectura general de la guía de estudio?',correct:'Fundamentos teóricos; integración regional del Paraguay 1954-2018; ejes estratégicos de la política exterior 2003-2026.',distractors:['Historia constitucional; derecho administrativo; comercio internacional.','Política interior; sociología política; derecho comparado.','Geografía económica; defensa nacional; historia cultural.','Solo teoría de relaciones internacionales sin aplicaciones paraguayas.','Solo cronología histórica sin marco conceptual.','Mercosur; UNASUR; OEA como únicos tres bloques.','Aislamiento; guerra; transición, sin discusión teórica ni estratégica.'],explanation:'La guía está organizada precisamente en esos tres grandes núcleos, y el juego distribuye el banco de preguntas de forma equilibrada entre ellos.'},
-      {id:49,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'vf',question:'Un test bien difícil sobre esta guía debe incluir tanto memoria factual como distinciones conceptuales finas.',correct:true,explanationTrue:'Es correcta porque el contenido combina cronología, actores, conceptos, comparaciones teóricas y relaciones causales; por eso el estudio serio exige ambas cosas.',explanationFalse:'No sería falsa: limitarse a fechas o a definiciones aisladas dejaría afuera buena parte de la complejidad de la guía.'},
-      {id:50,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'multiple',question:'¿Cuál es la mejor razón para que este juego esté separado de la guía original?',correct:'Permite practicar sin alterar el material base y facilita un entorno interactivo específico para evaluación y reintentos aleatorios.',distractors:['Porque la guía original no contiene suficiente contenido para preguntas difíciles.','Porque el HTML base no puede convivir con scripts adicionales.','Porque separar archivos elimina la necesidad de revisar respuestas.','Porque el juego debe reemplazar totalmente al material de estudio.','Porque un quiz aislado impide el uso de retroalimentación detallada.','Porque la aleatoriedad solo funciona si no existe una guía previa.','Porque la separación impide estudiar por temas.'],explanation:'Separarlo de la guía preserva el documento de estudio y permite una experiencia de práctica más enfocada, que fue justamente la recomendación adoptada.'}
-    ];
+  <section class="hero">
+    <article class="panel hero-main">
+      <div class="badge">Basado en contenido explícito de la guía</div>
+      <h1>Autoevaluación difícil, pero fiel al texto base.</h1>
+      <p class="muted">Las preguntas fueron formuladas a partir de definiciones, clasificaciones, cuadros, afirmaciones textuales y secciones visibles de la guía original, evitando preguntas meta o demasiado interpretativas.</p>
+      <div class="chips">
+        <span class="chip">50 preguntas</span><span class="chip">3 temas</span><span class="chip">Mixto</span><span class="chip">Aleatorio</span><span class="chip">Retroalimentación</span>
+      </div>
+      <div class="stats">
+        <div class="stat"><span class="muted">Banco</span><b>50</b></div>
+        <div class="stat"><span class="muted">Múltiple</span><b>34</b></div>
+        <div class="stat"><span class="muted">V/F</span><b>16</b></div>
+        <div class="stat"><span class="muted">Temas</span><b>3</b></div>
+      </div>
+    </article>
+    <aside class="panel controls">
+      <h2>Configurar prueba</h2>
+      <div class="field"><label for="count">Cantidad de preguntas</label><select id="count"><option>10</option><option>15</option><option selected>20</option><option>30</option><option>40</option><option>50</option></select></div>
+      <div class="field"><label for="mode">Modo</label><select id="mode"><option value="mixed" selected>Mixto</option><option value="multiple">Solo selección múltiple</option><option value="vf">Solo verdadero/falso</option></select></div>
+      <div class="actions"><button class="btn primary" id="start">Iniciar test</button><button class="btn" id="toggleInfo">Ver criterio</button></div>
+      <div class="feedback" id="infoBox"><p>Las preguntas se reparten de forma equilibrada entre fundamentos teóricos, integración regional 1954-2018 y política exterior contemporánea/ejes estratégicos. Cada ítem se apoya en contenido explícito del HTML base.</p></div>
+    </aside>
+  </section>
 
-    const state = { pool: [], questions: [], current: 0, answers: {} };
+  <section class="quiz" id="quiz">
+    <aside class="panel sidebar">
+      <div class="stat"><span class="muted">Progreso</span><b id="progressText">1/1</b></div>
+      <div class="stat" style="margin-top:12px"><span class="muted">Respondidas</span><b id="answered">0</b></div>
+      <div class="stat" style="margin-top:12px"><span class="muted">Aciertos</span><b id="correct">0</b></div>
+      <div class="numbers" id="numbers"></div>
+      <div class="actions" style="margin-top:14px"><button class="btn" id="regen">Nuevo intento</button></div>
+    </aside>
+    <article class="panel question-card">
+      <div class="actions" style="justify-content:space-between"><span class="badge" id="topic"></span><span class="badge" id="type"></span></div>
+      <h3 id="headline"></h3>
+      <p id="qtext"></p>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback"></div>
+      <div class="nav"><button class="btn" id="prev">Anterior</button><button class="btn" id="next">Siguiente</button><button class="btn primary hidden" id="finish">Finalizar</button></div>
+    </article>
+  </section>
 
-    const questionCount = document.getElementById('questionCount');
-    const mode = document.getElementById('mode');
-    const startBtn = document.getElementById('startBtn');
-    const previewBtn = document.getElementById('previewBtn');
-    const previewBox = document.getElementById('previewBox');
-    const quizShell = document.getElementById('quizShell');
-    const results = document.getElementById('results');
-    const numbers = document.getElementById('numbers');
-    const progressTitle = document.getElementById('progressTitle');
-    const answeredCount = document.getElementById('answeredCount');
-    const correctCount = document.getElementById('correctCount');
-    const topicBadge = document.getElementById('topicBadge');
-    const typeBadge = document.getElementById('typeBadge');
-    const questionHeadline = document.getElementById('questionHeadline');
-    const questionText = document.getElementById('questionText');
-    const options = document.getElementById('options');
-    const feedbackBox = document.getElementById('feedbackBox');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const finishBtn = document.getElementById('finishBtn');
-    const retryBtn = document.getElementById('retryBtn');
-    const restartBtn = document.getElementById('restartBtn');
-    const backConfigBtn = document.getElementById('backConfigBtn');
-    const scoreText = document.getElementById('scoreText');
-    const percentText = document.getElementById('percentText');
-    const levelText = document.getElementById('levelText');
-    const reviewList = document.getElementById('reviewList');
-    const themeToggle = document.getElementById('themeToggle');
-
-    const shuffle = arr => [...arr].sort(() => Math.random() - 0.5);
-
-    function buildPool() {
-      let filtered = BANK.filter(q => mode.value === 'mixed' ? true : mode.value === 'multiple' ? q.type === 'multiple' : q.type === 'vf');
-      const byTopic = {};
-      filtered.forEach(q => { byTopic[q.topic] ??= []; byTopic[q.topic].push(q); });
-      Object.keys(byTopic).forEach(k => byTopic[k] = shuffle(byTopic[k]));
-      const target = parseInt(questionCount.value, 10);
-      const topics = Object.keys(byTopic);
-      const selected = [];
-      let idx = 0;
-      while (selected.length < Math.min(target, filtered.length)) {
-        const topic = topics[idx % topics.length];
-        if (byTopic[topic].length) selected.push(byTopic[topic].shift());
-        idx++;
-        if (idx > 500) break;
-      }
-      return shuffle(selected).map(q => prepareQuestion(q));
-    }
-
-    function prepareQuestion(q) {
-      if (q.type === 'vf') {
-        const opts = shuffle([
-          {key:'Verdadero', value:true},
-          {key:'Falso', value:false}
-        ]);
-        return {...q, options: opts};
-      }
-      const distractors = shuffle(q.distractors).slice(0,3);
-      const finalOptions = shuffle([q.correct, ...distractors]).map((text, i) => ({key:'ABCD'[i], value:text}));
-      return {...q, options: finalOptions};
-    }
-
-    function startQuiz() {
-      state.questions = buildPool();
-      state.current = 0;
-      state.answers = {};
-      quizShell.classList.add('active');
-      results.classList.remove('active');
-      renderNumbers();
-      renderQuestion();
-      window.scrollTo({top: document.getElementById('quizShell').offsetTop - 16, behavior:'smooth'});
-    }
-
-    function renderNumbers() {
-      numbers.innerHTML = '';
-      state.questions.forEach((_, i) => {
-        const btn = document.createElement('button');
-        btn.className = 'num';
-        btn.textContent = i + 1;
-        btn.type = 'button';
-        btn.addEventListener('click', () => { state.current = i; renderQuestion(); });
-        numbers.appendChild(btn);
-      });
-      syncNumbers();
-    }
-
-    function syncNumbers() {
-      [...numbers.children].forEach((el, i) => {
-        el.classList.toggle('current', i === state.current);
-        el.classList.toggle('done', state.answers[i]?.answered);
-        el.classList.toggle('review', state.answers[i]?.answered && !state.answers[i]?.isCorrect);
-      });
-      const answered = Object.values(state.answers).filter(a => a.answered).length;
-      const correct = Object.values(state.answers).filter(a => a.isCorrect).length;
-      answeredCount.textContent = answered;
-      correctCount.textContent = correct;
-      progressTitle.textContent = `Pregunta ${state.current + 1} de ${state.questions.length}`;
-    }
-
-    function renderQuestion() {
-      const q = state.questions[state.current];
-      topicBadge.textContent = q.topic;
-      typeBadge.textContent = q.type === 'multiple' ? 'Selección múltiple' : 'Verdadero / Falso';
-      questionHeadline.textContent = `Ítem ${state.current + 1}`;
-      questionText.textContent = q.question;
-      options.innerHTML = '';
-      const saved = state.answers[state.current];
-
-      q.options.forEach((opt, i) => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'option';
-        const letter = q.type === 'multiple' ? 'ABCD'[i] : (opt.value === true ? 'V' : 'F');
-        btn.innerHTML = `<span class="letter">${letter}</span><span>${opt.key && q.type === 'vf' ? opt.key : opt.value}</span>`;
-        if (saved?.answered) {
-          const isCorrectOpt = q.type === 'vf' ? opt.value === q.correct : opt.value === q.correct;
-          const isSelected = saved.value === (q.type === 'vf' ? opt.value : opt.value);
-          if (isSelected) btn.classList.add('selected');
-          if (isCorrectOpt) btn.classList.add('correct');
-          if (isSelected && !isCorrectOpt) btn.classList.add('incorrect');
-          btn.disabled = true;
-        }
-        btn.addEventListener('click', () => answerQuestion(opt.value));
-        options.appendChild(btn);
-      });
-
-      feedbackBox.className = 'feedback';
-      feedbackBox.innerHTML = '';
-      if (saved?.answered) showFeedback(q, saved);
-      prevBtn.disabled = state.current === 0;
-      nextBtn.classList.toggle('hidden', state.current === state.questions.length - 1);
-      finishBtn.classList.toggle('hidden', state.current !== state.questions.length - 1);
-      syncNumbers();
-    }
-
-    function answerQuestion(value) {
-      const q = state.questions[state.current];
-      const isCorrect = q.type === 'vf' ? value === q.correct : value === q.correct;
-      state.answers[state.current] = { answered:true, value, isCorrect };
-      renderQuestion();
-    }
-
-    function showFeedback(q, saved) {
-      feedbackBox.classList.add('show', saved.isCorrect ? 'correct' : 'incorrect');
-      if (q.type === 'vf') {
-        const reason = saved.isCorrect ? q.explanationTrue : q.explanationFalse;
-        feedbackBox.innerHTML = `<h3>${saved.isCorrect ? 'Respuesta correcta' : 'Respuesta incorrecta'}</h3><p>${reason}</p>`;
-        return;
-      }
-      feedbackBox.innerHTML = `
-        <h3>${saved.isCorrect ? 'Respuesta correcta' : 'Respuesta incorrecta'}</h3>
-        <p><strong>Respuesta válida:</strong> ${q.correct}</p>
-        <p style="margin-top:.55rem">${q.explanation}</p>
-        ${saved.isCorrect ? '' : `<p style="margin-top:.55rem"><strong>Tu error:</strong> La opción elegida no recoge el matiz central que la guía exige distinguir en este punto.</p>`}
-      `;
-    }
-
-    function finishQuiz() {
-      const total = state.questions.length;
-      const correct = Object.values(state.answers).filter(a => a.isCorrect).length;
-      const pct = Math.round((correct / total) * 100);
-      scoreText.textContent = `${correct}/${total}`;
-      percentText.textContent = `${pct}%`;
-      levelText.textContent = pct >= 85 ? 'Dominio alto' : pct >= 70 ? 'Buen nivel' : pct >= 50 ? 'Intermedio' : 'Necesita repaso';
-      reviewList.innerHTML = '';
-      state.questions.forEach((q, i) => {
-        const ans = state.answers[i] || {answered:false,isCorrect:false,value:'Sin responder'};
-        const item = document.createElement('article');
-        item.className = `review-item ${ans.isCorrect ? 'good' : 'bad'}`;
-        let body = '';
-        if (q.type === 'vf') {
-          body = `<p><strong>Tu respuesta:</strong> ${ans.answered ? (ans.value ? 'Verdadero' : 'Falso') : 'Sin responder'}</p>
-                  <p><strong>Correcta:</strong> ${q.correct ? 'Verdadero' : 'Falso'}</p>
-                  <p style="margin-top:.45rem">${ans.isCorrect ? q.explanationTrue : q.explanationFalse}</p>`;
-        } else {
-          body = `<p><strong>Tu respuesta:</strong> ${ans.value || 'Sin responder'}</p>
-                  <p><strong>Correcta:</strong> ${q.correct}</p>
-                  <p style="margin-top:.45rem">${q.explanation}</p>
-                  ${ans.isCorrect ? '' : '<p style="margin-top:.45rem"><strong>Motivo del incorrecto:</strong> Elegiste una formulación incompleta, desplazada o conceptualmente confundible con la correcta.</p>'}`;
-        }
-        item.innerHTML = `<p class="small muted">${q.topic} · ${q.type === 'multiple' ? 'Selección múltiple' : 'Verdadero/Falso'}</p><h3 style="margin:.4rem 0 0.6rem">${i+1}. ${q.question}</h3>${body}`;
-        reviewList.appendChild(item);
-      });
-      quizShell.classList.remove('active');
-      results.classList.add('active');
-      window.scrollTo({top: results.offsetTop - 16, behavior:'smooth'});
-    }
-
-    startBtn.addEventListener('click', startQuiz);
-    previewBtn.addEventListener('click', () => previewBox.classList.toggle('show'));
-    prevBtn.addEventListener('click', () => { if (state.current > 0) { state.current--; renderQuestion(); } });
-    nextBtn.addEventListener('click', () => { if (state.current < state.questions.length - 1) { state.current++; renderQuestion(); } });
-    finishBtn.addEventListener('click', finishQuiz);
-    retryBtn.addEventListener('click', startQuiz);
-    restartBtn.addEventListener('click', startQuiz);
-    backConfigBtn.addEventListener('click', () => { results.classList.remove('active'); window.scrollTo({top:0, behavior:'smooth'}); });
-    themeToggle.addEventListener('click', () => document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
-  </script>
+  <section class="panel results" id="results">
+    <h2>Resultado del intento</h2>
+    <div class="stats"><div class="stat"><span class="muted">Puntaje</span><b id="score"></b></div><div class="stat"><span class="muted">Porcentaje</span><b id="percent"></b></div><div class="stat"><span class="muted">Nivel</span><b id="level"></b></div><div class="stat"><span class="muted">Base</span><b>Texto explícito</b></div></div>
+    <div class="actions" style="margin-top:14px"><button class="btn primary" id="retry">Nuevo intento aleatorio</button><button class="btn" id="back">Volver</button></div>
+    <div class="review-list" id="reviewList"></div>
+  </section>
+</div>
+<script>
+const BANK=[
+{id:1,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'Según la definición básica de la guía, la política exterior es:',correct:'El conjunto de acciones que lleva a cabo un Estado más allá de sus fronteras con base en el interés nacional.',distractors:['La proyección cultural de la sociedad en el exterior sin intervención estatal.','La suma de tratados comerciales firmados por el gobierno.','La acción diplomática de cualquier actor nacional fuera del territorio.','La administración interna de fronteras y migraciones.','La política económica internacional del sector privado.','La coordinación de organismos internacionales dentro de un país.','La diplomacia local de municipios y provincias.'],explanation:'La definición básica de la guía formula literalmente que la política exterior es el conjunto de acciones que lleva a cabo un Estado más allá de sus fronteras con base en el interés nacional.'},
+{id:2,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Cuáles son los cuatro elementos esenciales de la definición básica de política exterior?',correct:'Conjunto de acciones, Estado, sistema internacional e interés nacional.',distractors:['Gobierno, pueblo, territorio y soberanía.','Diplomacia, comercio, defensa y cooperación.','Interés nacional, identidad, cultura y prestigio.','Seguridad, bienestar, valores y desarrollo.','Objetivos, estrategias, instrumentos y acciones.','Cancillería, Legislativo, empresas y opinión pública.','Principios, pragmatismo, poder y negociación.'],explanation:'La guía desglosa expresamente la definición básica en cuatro preguntas: qué la compone, quién la realiza, dónde tiene lugar y para qué.'},
+{id:3,topic:'Tema 1 · Fundamentos teóricos',type:'vf',question:'La guía afirma que la política exterior es un proceso muy complejo condicionado tanto por factores internos como externos.',correct:true,explanationTrue:'Es correcta porque la definición integral indica expresamente que las decisiones y acciones hacia el exterior están determinadas por condicionantes internos y externos.',explanationFalse:'Es falsa si se negara la complejidad y la doble determinación interna-externa, porque la guía lo afirma de forma textual.'},
+{id:4,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Quién es, desde la perspectiva del Derecho Internacional, el único actor que puede adquirir responsabilidades y compromisos de política exterior?',correct:'El Estado.',distractors:['La cancillería.','El presidente.','Las organizaciones internacionales.','Las empresas transnacionales.','Las ONGs.','Los gobiernos locales.','Los partidos políticos.'],explanation:'La guía es explícita: el Estado es el único actor que puede ejercer política exterior y asumir responsabilidades jurídicas en esa materia.'},
+{id:5,topic:'Tema 1 · Fundamentos teóricos',type:'vf',question:'La paradiplomacia constituye política exterior cuando la ejercen gobiernos locales de manera sostenida.',correct:false,explanationTrue:'No puede ser verdadera porque la guía distingue con claridad que la actividad internacional de actores locales se denomina paradiplomacia, pero no constituye política exterior.',explanationFalse:'Es falsa porque la guía reserva la política exterior a los gobiernos federales o centrales y niega ese carácter a la paradiplomacia.'},
+{id:6,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Cuáles son los tres elementos básicos del Estado que menciona la guía?',correct:'Territorio, población y gobierno.',distractors:['Soberanía, pueblo y reconocimiento.','Constitución, territorio y nación.','Población, cultura e identidad.','Territorio, economía y defensa.','Gobierno, cancillería y congreso.','Frontera, ciudadanía y poder.','Pueblo, justicia y administración.'],explanation:'La guía identifica al Estado como una entidad jurídico-administrativa compuesta por territorio, población y gobierno.'},
+{id:7,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'Según la guía, dos funciones primordiales del Estado que permanecen inalteradas son:',correct:'Proveer seguridad y generar prosperidad.',distractors:['Promover integración y firmar tratados.','Ejercer coerción y controlar la opinión pública.','Defender fronteras y expandir territorio.','Garantizar bienestar y promover valores.','Regular comercio y controlar aduanas.','Administrar justicia y dirigir elecciones.','Proteger industrias y recaudar impuestos.'],explanation:'En la sección sobre el Estado, la guía indica que sus funciones primordiales siguen siendo proveer seguridad y generar prosperidad.'},
+{id:8,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Qué corriente sostiene que la identidad nacional construye el interés nacional?',correct:'El constructivismo.',distractors:['El realismo.','El liberalismo idealista.','El marxismo.','La geopolítica clásica.','El institucionalismo.','La teoría de la dependencia.','El funcionalismo.'],explanation:'La guía atribuye a los constructivistas la idea de que la identidad nacional construye el interés nacional.'},
+{id:9,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Cuál es el orden jerárquico correcto de los tres objetivos centrales del interés nacional?',correct:'Sobrevivencia del Estado, bienestar, promoción de valores.',distractors:['Bienestar, sobrevivencia del Estado, promoción de valores.','Promoción de valores, bienestar, sobrevivencia del Estado.','Seguridad, cooperación, desarrollo.','Soberanía, comercio, prestigio.','Poder, riqueza, cultura.','Defensa, diplomacia, integración.','Prosperidad, seguridad, legitimidad.'],explanation:'La guía presenta una prelación jerárquica explícita: primero seguridad y estabilidad, luego crecimiento y desarrollo, y finalmente proyección de valores.'},
+{id:10,topic:'Tema 1 · Fundamentos teóricos',type:'vf',question:'La guía advierte como error frecuente confundir política exterior de Estado con política exterior de gobierno.',correct:true,explanationTrue:'Es correcta porque la sección de interés nacional incluye un recuadro específico que señala ese error frecuente.',explanationFalse:'No sería falsa: la advertencia aparece literalmente en la guía.'},
+{id:11,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'Según la definición operativa de la guía, el interés nacional representa:',correct:'Las necesidades de un Estado para procurar su seguridad, bienestar y valores en la arena internacional.',distractors:['Las prioridades del gobierno para mantener apoyo electoral.','Los intereses económicos de las élites dominantes.','La defensa territorial frente a amenazas militares.','La identidad nacional proyectada al exterior.','La suma de objetivos diplomáticos y comerciales.','La visión estratégica de la cancillería.','Las aspiraciones culturales de la población.'],explanation:'La definición operativa es textual y menciona seguridad, bienestar y valores en la arena internacional.'},
+{id:12,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Cómo define la guía el proyecto de nación?',correct:'Como el conjunto de aspiraciones que tiene una comunidad nacional proyectadas hacia el futuro de manera colectiva.',distractors:['Como la ideología oficial del partido gobernante.','Como el plan económico quinquenal del Ejecutivo.','Como la suma de intereses regionales en pugna.','Como el programa diplomático de la cancillería.','Como la identidad cultural heredada sin proyección futura.','Como el conjunto de tratados suscritos por el Estado.','Como la política pública que sustituye al interés nacional.'],explanation:'La definición del proyecto de nación aparece formulada en esos términos en la guía.'},
+{id:13,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Cuál NO forma parte de las tres vertientes fundamentales del proyecto de nación?',correct:'La estructura del poder global.',distractors:['El sistema político.','El modelo de desarrollo económico.','El sistema educativo.','La influencia del régimen sobre la política exterior.','La relación entre educación e identidad nacional.','El vínculo entre modelo económico y acciones externas.','La proyección colectiva hacia el futuro.'],explanation:'Las tres vertientes explícitas son sistema político, modelo de desarrollo económico y sistema educativo; la estructura del poder global aparece como condicionante externo, no como vertiente.'},
+{id:14,topic:'Tema 1 · Fundamentos teóricos',type:'vf',question:'La guía sostiene que la mejor política exterior combina equilibradamente principios e intereses.',correct:true,explanationTrue:'Es correcta porque el recuadro “Principios vs. Pragmatismo” afirma literalmente que la mejor política exterior combina equilibradamente principios e intereses.',explanationFalse:'No sería falsa: esa fórmula aparece de manera expresa.'},
+{id:15,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'La capacidad de negociación internacional puede entenderse como:',correct:'La posibilidad de alcanzar el interés nacional con base en circunstancias internas y externas.',distractors:['La habilidad de firmar tratados sin intervención doméstica.','La suma del poder militar y económico de un país.','La posición jurídica soberana del Estado.','La capacidad exclusiva de la cancillería para negociar.','La influencia cultural proyectada al extranjero.','La cantidad de aliados regionales disponibles.','La posibilidad de evitar toda dependencia externa.'],explanation:'La guía la define como posibilidad de alcanzar el interés nacional según circunstancias internas y externas, además de señalar que es variable y relativa.'},
+{id:16,topic:'Tema 1 · Fundamentos teóricos',type:'vf',question:'La guía clasifica como factores tangibles internos a la moral nacional, el prestigio internacional y la cohesión social.',correct:false,explanationTrue:'No puede ser verdadera porque esos elementos están bajo la categoría de intangibles.',explanationFalse:'Es falsa porque moral nacional, prestigio internacional y cohesión social aparecen en la tabla como factores internos intangibles.'},
+{id:17,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Cuál de estos aparece en la guía como factor externo exógeno?',correct:'La opinión pública internacional.',distractors:['La estabilidad política interna.','La población.','Los recursos naturales.','La cohesión social.','Las bases tecnológico-materiales.','El desarrollo económico.','La moral nacional.'],explanation:'La tabla de capacidad de negociación ubica a la opinión pública internacional del lado de los factores externos.'},
+{id:18,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'Según Joseph Nye, el poder inteligente es:',correct:'La combinación efectiva de poder duro y poder blando.',distractors:['El predominio del poder militar sobre el cultural.','La diplomacia pública sin coerción.','La suma de sanciones y guerra.','El uso simultáneo de amenazas y premios.','La superioridad tecnológica del Estado.','La influencia ideológica desvinculada del poder económico.','La capacidad de evitar el conflicto armado.'],explanation:'La guía explica el poder inteligente como combinación efectiva de poder duro y blando.'},
+{id:19,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'Los objetivos de política exterior, según la guía, deben ser:',correct:'Concretos, claros, dirigidos a la solución de un problema y realistas.',distractors:['Secretos, flexibles y ambiguos.','Militares, económicos y permanentes.','Puramente normativos y no instrumentales.','Definidos por la coyuntura sin relación con el interés nacional.','Amplios, idealistas e imposibles de medir.','Idénticos en todos los gobiernos.','Exclusivamente externos y ajenos a la población.'],explanation:'La guía detalla esas cualidades al describir los objetivos de política exterior.'},
+{id:20,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Qué secuencia del proceso de toma de decisiones aparece en el resumen conceptual del Tema 1?',correct:'Objetivos, estrategias, instrumentos, acciones, evaluación.',distractors:['Objetivos, poder, negociación, evaluación, acciones.','Interés nacional, objetivos, guerra, tratados, evaluación.','Factores, actores, instrumentos, seguridad, valores.','Principios, estrategias, acciones, identidad, evaluación.','Proyecto de nación, objetivos, paradigmas, acciones, revisión.','Diagnóstico, cooperación, coerción, ejecución, cierre.','Intereses, capacidades, objetivos, sanciones, consenso.'],explanation:'El resumen conceptual del Tema 1 presenta literalmente esa secuencia.'},
+{id:21,topic:'Tema 1 · Fundamentos teóricos',type:'vf',question:'La guía presenta a Paraguay como caso emblemático de país mediterráneo, sin litoral marítimo, que ha tenido un condicionante geográfico histórico en su política exterior.',correct:true,explanationTrue:'Es correcta porque la sección de factores geográficos usa expresamente a Paraguay como ejemplo emblemático de mediterraneidad.',explanationFalse:'No sería falsa: el texto lo señala de manera explícita.'},
+{id:22,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Qué función cumple el poder Legislativo según la guía?',correct:'Actúa como sistema de pesos y contrapesos, aprobando tratados, ratificando nombramientos y autorizando salida de tropas.',distractors:['Diseña y ejecuta la política exterior como función principal.','Asume compromisos internacionales en nombre del Estado.','Sustituye a la cancillería en temas económicos.','Conduce directamente el servicio diplomático.','Representa al país en todas las negociaciones multilaterales.','Formula el interés nacional sin intervención del Ejecutivo.','Ejerce paradiplomacia con valor jurídico internacional.'],explanation:'La guía le atribuye específicamente esas funciones de control y contrapeso.'},
+{id:23,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Cuál actor no gubernamental es presentado como el más influyente por su poder económico y capacidad de cabildeo?',correct:'Las empresas.',distractors:['Los sindicatos.','La opinión pública general.','La academia.','Las iglesias.','Los partidos opositores.','Los medios locales.','Las ONGs.'],explanation:'La lista de actores no gubernamentales destaca a las empresas como los más influyentes.'},
+{id:24,topic:'Tema 1 · Fundamentos teóricos',type:'vf',question:'Para que la política exterior sea entendida como política pública, la guía exige que considere necesidades domésticas y que también sea influenciada por lo que ocurre en el sistema internacional.',correct:true,explanationTrue:'Es correcta porque esos dos aspectos son formulados de modo expreso en la sección sobre política exterior como política pública.',explanationFalse:'No sería falsa: el texto lo establece exactamente así.'},
+{id:25,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'La teoría del “juego de dos niveles” mencionada en la guía fue desarrollada por:',correct:'Robert Putnam.',distractors:['Joseph Nye.','Immanuel Kant.','Augusto Roa Bastos.','Nicanor Duarte Frutos.','Barbara Potthast.','John F. Kennedy.','Carlos Antonio López.'],explanation:'La guía vincula explícitamente el carácter interméstico con Putnam (1988) y su teoría del juego de dos niveles.'},
+{id:26,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'La expresión “una isla rodeada de tierra”, acuñada por Augusto Roa Bastos, busca resumir:',correct:'Una realidad de aislamiento que excede lo territorial y abarca dimensiones económicas, políticas y culturales.',distractors:['La superioridad agrícola del Paraguay colonial.','La falta absoluta de fronteras funcionales.','La imposibilidad jurídica de integrarse regionalmente.','Una condición exclusivamente geográfica.','La neutralidad diplomática permanente del Paraguay.','La autarquía comercial lograda en el siglo XX.','La ausencia de vínculos con Argentina y Brasil.'],explanation:'La guía explica que la frase no se limita a lo geográfico, sino que resume un aislamiento multidimensional.'},
+{id:27,topic:'Tema 2 · Integración regional 1954-2018',type:'vf',question:'La guía afirma que el comercio exterior paraguayo fue siempre muy limitado durante la colonia, principalmente por las condiciones tributarias.',correct:true,explanationTrue:'Es correcta porque así se formula en la parte sobre aislamiento económico.',explanationFalse:'No sería falsa: la afirmación aparece explícitamente en el texto.'},
+{id:28,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Con qué gobernante se redujo notoriamente la iniciativa privada y toda comunicación o viaje requería autorización?',correct:'José Gaspar Rodríguez de Francia.',distractors:['Carlos Antonio López.','Francisco Solano López.','Andrés Rodríguez.','Alfredo Stroessner.','Nicanor Duarte Frutos.','Eligio Ayala.','Bernardino Caballero.'],explanation:'La guía atribuye esas características al gobierno de José Gaspar Rodríguez de Francia.'},
+{id:29,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Qué hecho siguió a la intervención regional de Francisco Solano López, según la guía?',correct:'La Guerra de la Triple Alianza.',distractors:['La creación de la STP.','La firma del Tratado de Asunción.','La adhesión a la ALALC.','La fundación de la UNASUR.','La Ley 1635/2000.','La Alianza para el Progreso.','El PND Paraguay 2030.'],explanation:'La guía conecta el abandono del aislamiento por parte de Francisco Solano López con la Guerra de la Triple Alianza.'},
+{id:30,topic:'Tema 2 · Integración regional 1954-2018',type:'vf',question:'El aislamiento paraguayo es presentado en la guía como un fenómeno exclusivamente geográfico.',correct:false,explanationTrue:'No puede ser verdadero porque la guía aclara que el aislamiento es también económico, político y cultural.',explanationFalse:'Es falsa porque el recordatorio subraya que el aislamiento paraguayo es multidimensional.'},
+{id:31,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Qué organismo fue creado el 6 de marzo de 1962 como primer paso hacia mayor institucionalidad en la planificación?',correct:'La Secretaría Técnica de Planificación (STP).',distractors:['La CEPAL.','La ALALC.','La UNASUR.','El Viceministerio de Economía e Integración.','La Alianza para el Progreso.','El Mercosur.','La OEA.'],explanation:'La fecha y el organismo aparecen de forma explícita en el apartado de contexto institucional.'},
+{id:32,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Qué entidad asesoró a Paraguay en la elaboración del primer Plan Nacional de Desarrollo?',correct:'La CEPAL.',distractors:['La ALADI.','La OMC.','La CAF.','La ONU.','La OEA.','La OCDE.','La CAN.'],explanation:'La guía señala que en noviembre de 1962 la STP suscribió un convenio con la CEPAL para ese fin.'},
+{id:33,topic:'Tema 2 · Integración regional 1954-2018',type:'vf',question:'Los dos primeros planes del periodo stronista ya incorporaban explícitamente la integración regional.',correct:false,explanationTrue:'No puede ser verdadero porque la tabla marca “No se aprecia” para la integración regional en los planes 1965/1966 y 1967/1968.',explanationFalse:'Es falsa porque la integración aparece de forma explícita recién en los planes 1971/1975 y 1977/1981.'},
+{id:34,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Qué rasgo se destaca del Plan 1977/1981?',correct:'Ligó la integración a la infraestructura física.',distractors:['Eliminó toda referencia al plano externo.','Rechazó la integración latinoamericana.','Fundó el Mercosur.','Creó la STP.','Abandonó la idea de equilibrio financiero externo.','Sustituyó la planificación estatal por liberalización total.','Convirtió a Paraguay en miembro fundador de UNASUR.'],explanation:'La guía remarca que el último plan stronista vinculó integración e infraestructura física.'},
+{id:35,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'La guía define la integración como:',correct:'Una condición, un proceso o un resultado.',distractors:['Una política coercitiva entre Estados asimétricos.','Un resultado exclusivamente económico.','Un sinónimo de comercio exterior.','Una etapa posterior a la soberanía plena.','Un acuerdo jurídico irreversible.','Un producto exclusivo de la coyuntura sistémica.','Una forma de diplomacia cultural.'],explanation:'La sección metodológica lo formula literalmente así.'},
+{id:36,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Qué enfoque teórico utilizado para el análisis establece dos niveles analíticos, doméstico y sistémico?',correct:'La Economía Política Internacional (EPI).',distractors:['El realismo clásico.','El constructivismo.','La escuela inglesa.','La geopolítica.','El funcionalismo.','La teoría de juegos.','El institucionalismo neoliberal.'],explanation:'La guía lo dice expresamente en la sección “Economía Política Internacional (EPI)”.'},
+{id:37,topic:'Tema 2 · Integración regional 1954-2018',type:'vf',question:'La relación de Paraguay con Argentina y Brasil es calificada en la guía como “pendular”.',correct:true,explanationTrue:'Es correcta porque el subtítulo del apartado y su contenido usan esa calificación de forma expresa.',explanationFalse:'No sería falsa: la noción de política pendular aparece textual en la guía.'},
+{id:38,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'La “Marcha hacia el Este” se relaciona principalmente con:',correct:'La estrecha relación con Brasil durante el stronismo.',distractors:['La apertura democrática de 1989.','La relación prioritaria con la Unión Europea.','La fundación del Mercosur.','La firma de la Constitución de 1992.','La crisis financiera de los noventa.','La política exterior de Francia.','La creación de la STP.'],explanation:'La guía explica que la “Marcha hacia el Este” fue el nombre dado a la estrecha relación con Brasil.'},
+{id:39,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Cuál de estos aparece como uno de los pilares económicos del stronismo?',correct:'La triangulación comercial.',distractors:['La industrialización pesada cerrada al exterior.','La economía digital de servicios.','La ciudadanía regional ampliada.','La reforma agraria integral.','La unión aduanera con la UNASUR.','La sustitución de exportaciones agrícolas.','La renuncia a Itaipú.'],explanation:'La guía menciona expansión de rubros agrícolas de exportación, triangulación comercial y construcción de Itaipú como pilares económicos del stronismo.'},
+{id:40,topic:'Tema 2 · Integración regional 1954-2018',type:'vf',question:'Según la guía, el plano externo actuó como “legitimador” del régimen stronista.',correct:true,explanationTrue:'Es correcta porque la conclusión clave del periodo emplea justamente esa palabra.',explanationFalse:'No sería falsa: el texto lo afirma de forma explícita.'},
+{id:41,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿En qué año se fundó el Mercosur según la guía?',correct:'1991.',distractors:['1985.','1989.','1992.','2000.','2006.','1960.','1977.'],explanation:'La guía dice que el Mercosur fue fundado en 1991 por el Tratado de Asunción.'},
+{id:42,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Qué idea resume la relación entre democracia e integración regional tras 1989?',correct:'Constituyeron un “binomio indivisible”.',distractors:['Fueron procesos opuestos.','La integración reemplazó a la democracia.','La democracia hizo innecesaria la integración.','La integración fue solo un tema comercial.','La democracia anuló los planes de desarrollo.','La integración fue impuesta sin base interna.','La transición ignoró el plano regional.'],explanation:'La guía utiliza literalmente la expresión “binomio indivisible”.'},
+{id:43,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Qué creó la Ley 1635/2000?',correct:'El Viceministerio de Economía e Integración, dentro de una reorganización de la política exterior paraguaya.',distractors:['La STP.','La CEPAL.','La ALALC.','El Mercosur.','La Constitución de 1992.','La UNASUR.','La Alianza para el Progreso.'],explanation:'La guía menciona ese dato en los hitos del periodo democrático.'},
+{id:44,topic:'Tema 2 · Integración regional 1954-2018',type:'vf',question:'La guía afirma que en todos los planes del periodo democrático la integración regional es un aspecto explícito.',correct:true,explanationTrue:'Es correcta porque el texto lo resalta como un rasgo notorio del periodo democrático.',explanationFalse:'No sería falsa: esa idea aparece expresamente en el párrafo de cierre de la subsección.'},
+{id:45,topic:'Tema 3 · Política exterior contemporánea',type:'multiple',question:'Según la presentación general del Tema 3, los 13 ejes estratégicos articulan la política exterior contemporánea en materias como:',correct:'Soberanía, DDHH, energía, comercio y cooperación.',distractors:['Monarquía, fuero eclesiástico, censos y centralismo.','Aislamiento, neutralidad, autarquía y cierre comercial.','Únicamente defensa militar y seguridad fronteriza.','Solo identidad cultural y sistema educativo.','Paradiplomacia local, justicia y hacienda interna.','Exclusivamente relaciones con Argentina y Brasil.','Poder duro, guerra y alianzas militares.'],explanation:'La introducción del Tema 3 menciona expresamente esos ejes como parte de la política exterior contemporánea.'},
+{id:46,topic:'Tema 3 · Política exterior contemporánea',type:'multiple',question:'¿Qué caracterizó al regionalismo postneoliberal, según la guía?',correct:'La incorporación de temas sociales, políticos, de seguridad, energéticos y de infraestructura.',distractors:['La exclusión de toda agenda social.','El regreso al aislamiento paraguayo.','La eliminación del comercio de la agenda regional.','La sustitución del Mercosur por la ALALC.','La supresión de la infraestructura física como tema regional.','El abandono de cualquier liderazgo regional.','La desaparición de la cooperación energética.'],explanation:'El texto define así el viraje del regionalismo postneoliberal.'},
+{id:47,topic:'Tema 3 · Política exterior contemporánea',type:'multiple',question:'¿Qué organización surgió en diciembre de 2006 y tuvo a Paraguay como miembro fundador?',correct:'La UNASUR.',distractors:['La ALALC.','La CEPAL.','La ALADI.','La OMC.','La CAF.','La CAN.','La OEA.'],explanation:'La guía dice expresamente que en diciembre de 2006 surgió la UNASUR y que Paraguay fue miembro fundador.'},
+{id:48,topic:'Tema 3 · Política exterior contemporánea',type:'vf',question:'El PND Paraguay 2030 incluye como eje estratégico la “Proyección de Paraguay en el mundo”.',correct:true,explanationTrue:'Es correcta porque el cuadro de planes democráticos cita ese eje estratégico del PND Paraguay 2030.',explanationFalse:'No sería falsa: esa formulación aparece textual en la tabla.'},
+{id:49,topic:'Tema 3 · Política exterior contemporánea',type:'multiple',question:'Según la guía, la idea de integración en el PND Paraguay 2030 presenta predominantemente un matiz:',correct:'De infraestructura física vinculado a lo económico.',distractors:['Puramente cultural.','Puramente militar.','Exclusivamente consular.','Solo jurídico-constitucional.','Únicamente ambiental.','Exclusivamente religioso.','Solo educativo.'],explanation:'La guía afirma que la integración presenta un matiz predominantemente de infraestructura física vinculado a lo económico.'},
+{id:50,topic:'Tema 3 · Política exterior contemporánea',type:'vf',question:'La guía está organizada en tres grandes temas: fundamentos teóricos, integración regional 1954-2018 y ejes estratégicos de la política exterior 2003-2026.',correct:true,explanationTrue:'Es correcta porque esa organización aparece desde la portada y la presentación general del material.',explanationFalse:'No sería falsa: es la estructura explícita del documento.'}
+];
+const state={questions:[],current:0,answers:{}};
+const $=s=>document.querySelector(s);
+const $$=s=>document.querySelectorAll(s);
+const shuffle=a=>[...a].sort(()=>Math.random()-0.5);
+function prepQuestion(q){if(q.type==='vf'){return {...q,options:shuffle([{label:'Verdadero',value:true},{label:'Falso',value:false}])};} const opts=shuffle([q.correct,...shuffle(q.distractors).slice(0,3)]).map((t,i)=>({label:'ABCD'[i],value:t})); return {...q,options:opts};}
+function buildQuiz(){let base=BANK.filter(q=>$('#mode').value==='mixed'?true:$('#mode').value==='multiple'?q.type==='multiple':q.type==='vf'); const groups={}; base.forEach(q=>{(groups[q.topic]??=[]).push(q)}); Object.keys(groups).forEach(k=>groups[k]=shuffle(groups[k])); const target=parseInt($('#count').value,10); const topics=Object.keys(groups); const picked=[]; let i=0; while(picked.length<Math.min(target,base.length)){const t=topics[i%topics.length]; if(groups[t].length)picked.push(groups[t].shift()); i++; if(i>500)break;} state.questions=shuffle(picked).map(prepQuestion); state.current=0; state.answers={}; renderNumbers(); renderQuestion(); $('#quiz').classList.add('active'); $('#results').classList.remove('active'); window.scrollTo({top:$('#quiz').offsetTop-10,behavior:'smooth'});}
+function renderNumbers(){const wrap=$('#numbers'); wrap.innerHTML=''; state.questions.forEach((q,i)=>{const b=document.createElement('button'); b.className='num'; b.textContent=i+1; b.onclick=()=>{state.current=i; renderQuestion();}; wrap.appendChild(b);}); syncSidebar();}
+function syncSidebar(){const ans=Object.values(state.answers).filter(x=>x.answered).length; const cor=Object.values(state.answers).filter(x=>x.isCorrect).length; $('#answered').textContent=ans; $('#correct').textContent=cor; $('#progressText').textContent=`${state.current+1}/${state.questions.length}`; [...$('#numbers').children].forEach((n,i)=>{n.classList.toggle('current',i===state.current);n.classList.toggle('done',state.answers[i]?.answered);n.classList.toggle('bad',state.answers[i]?.answered && !state.answers[i]?.isCorrect);});}
+function renderQuestion(){const q=state.questions[state.current]; $('#topic').textContent=q.topic; $('#type').textContent=q.type==='multiple'?'Selección múltiple':'Verdadero/Falso'; $('#headline').textContent=`Pregunta ${state.current+1}`; $('#qtext').textContent=q.question; const saved=state.answers[state.current]; const box=$('#options'); box.innerHTML=''; q.options.forEach((opt,i)=>{const btn=document.createElement('button'); btn.className='option'; btn.type='button'; const letter=q.type==='multiple'?'ABCD'[i]:(opt.value===true?'V':'F'); btn.innerHTML=`<span class="letter">${letter}</span><span>${q.type==='multiple'?opt.value:opt.label}</span>`; if(saved?.answered){const sel=saved.value===opt.value; const cor=q.correct===opt.value; if(sel)btn.classList.add('selected'); if(cor)btn.classList.add('correct'); if(sel && !cor)btn.classList.add('incorrect'); btn.disabled=true;} btn.onclick=()=>answer(opt.value); box.appendChild(btn);}); $('#feedback').className='feedback'; $('#feedback').innerHTML=''; if(saved?.answered)showFeedback(q,saved); $('#prev').disabled=state.current===0; $('#next').classList.toggle('hidden',state.current===state.questions.length-1); $('#finish').classList.toggle('hidden',state.current!==state.questions.length-1); syncSidebar();}
+function answer(value){const q=state.questions[state.current]; const isCorrect=q.correct===value; state.answers[state.current]={answered:true,value,isCorrect}; renderQuestion();}
+function showFeedback(q,saved){const fb=$('#feedback'); fb.classList.add('show'); if(q.type==='vf'){fb.innerHTML=`<strong>${saved.isCorrect?'Correcta':'Incorrecta'}.</strong><p>${saved.isCorrect?q.explanationTrue:q.explanationFalse}</p>`; return;} fb.innerHTML=`<strong>${saved.isCorrect?'Correcta':'Incorrecta'}.</strong><p><b>Respuesta válida:</b> ${q.correct}</p><p>${q.explanation}</p>${saved.isCorrect?'':'<p><b>Motivo del incorrecto:</b> Tu opción no coincide con la formulación explícita o con la clasificación exacta que aparece en la guía.</p>'}`;}
+function finishQuiz(){const total=state.questions.length; const correct=Object.values(state.answers).filter(x=>x.isCorrect).length; const pct=Math.round(correct/total*100); $('#score').textContent=`${correct}/${total}`; $('#percent').textContent=`${pct}%`; $('#level').textContent=pct>=85?'Dominio alto':pct>=70?'Buen nivel':pct>=50?'Intermedio':'Necesita repaso'; const list=$('#reviewList'); list.innerHTML=''; state.questions.forEach((q,i)=>{const a=state.answers[i]||{answered:false,isCorrect:false,value:'Sin responder'}; const div=document.createElement('div'); div.className=`review ${a.isCorrect?'good':'bad'}`; let body=''; if(q.type==='vf'){body=`<p><b>Tu respuesta:</b> ${a.answered?(a.value?'Verdadero':'Falso'):'Sin responder'}</p><p><b>Correcta:</b> ${q.correct?'Verdadero':'Falso'}</p><p>${a.isCorrect?q.explanationTrue:q.explanationFalse}</p>`;} else {body=`<p><b>Tu respuesta:</b> ${a.value||'Sin responder'}</p><p><b>Correcta:</b> ${q.correct}</p><p>${q.explanation}</p>${a.isCorrect?'':'<p><b>Motivo del incorrecto:</b> Elegiste una formulación que no reproduce la información explícita correcta del texto.</p>'}`;} div.innerHTML=`<div class="muted">${q.topic} · ${q.type==='multiple'?'Selección múltiple':'Verdadero/Falso'}</div><h3 style="margin:6px 0 8px">${i+1}. ${q.question}</h3>${body}`; list.appendChild(div);}); $('#quiz').classList.remove('active'); $('#results').classList.add('active'); window.scrollTo({top:$('#results').offsetTop-10,behavior:'smooth'});}
+$('#start').onclick=buildQuiz; $('#regen').onclick=buildQuiz; $('#retry').onclick=buildQuiz; $('#back').onclick=()=>{ $('#results').classList.remove('active'); window.scrollTo({top:0,behavior:'smooth'});}; $('#toggleInfo').onclick=()=>$('#infoBox').classList.toggle('show'); $('#prev').onclick=()=>{if(state.current>0){state.current--; renderQuestion();}}; $('#next').onclick=()=>{if(state.current<state.questions.length-1){state.current++; renderQuestion();}}; $('#finish').onclick=finishQuiz; $('#themeToggle').onclick=()=>document.documentElement.setAttribute('data-theme',document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark');
+</script>
 </body>
 </html>
