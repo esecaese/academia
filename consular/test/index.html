@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Examen Consular</title>
     <style>
-        /* ===================== VARIABLES / TEMA ===================== */
+        /* ===== VARIABLES ===== */
         :root {
-            --reading-size: 18px;
             --bg: #f4f1ea;
             --bg2: #efeae0;
             --surface: #fffdf8;
@@ -21,8 +20,8 @@
             --accent-ink: #234e63;
             --accent-2: #a8772a;
             --link: #2f6f8f;
-            --shadow: 0 1px 3px rgba(40, 40, 40, .08), 0 8px 28px rgba(40, 40, 40, .07);
-            --shadow-sm: 0 1px 2px rgba(40, 40, 40, .10);
+            --shadow: 0 2px 8px rgba(40,40,40,.08), 0 8px 28px rgba(40,40,40,.07);
+            --shadow-sm: 0 1px 2px rgba(40,40,40,.10);
             --def-bg: #e9f5ee;
             --def-bd: #2e8b6f;
             --def-tx: #1c5a48;
@@ -44,7 +43,6 @@
             --mark: #ffe08a;
             --mark-active: #ff9d4d;
         }
-
         html.dark {
             --bg: #0f1216;
             --bg2: #141821;
@@ -59,8 +57,8 @@
             --accent-ink: #a6cfe6;
             --accent-2: #d8ad62;
             --link: #7fc0e2;
-            --shadow: 0 1px 3px rgba(0, 0, 0, .45), 0 10px 34px rgba(0, 0, 0, .4);
-            --shadow-sm: 0 1px 2px rgba(0, 0, 0, .5);
+            --shadow: 0 2px 8px rgba(0,0,0,.45), 0 8px 28px rgba(0,0,0,.4);
+            --shadow-sm: 0 1px 2px rgba(0,0,0,.5);
             --def-bg: #14241d;
             --def-bd: #3da583;
             --def-tx: #a8e1cc;
@@ -83,51 +81,24 @@
             --mark-active: #c2641a;
         }
 
-        /* ===================== BASE ===================== */
-        * {
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        /* ===== RESET ===== */
+        * { box-sizing: border-box; margin: 0; }
+        html { scroll-behavior: smooth; }
         body {
             margin: 0;
             background: linear-gradient(180deg, var(--bg), var(--bg2));
             color: var(--text);
             font-family: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
-            font-size: var(--reading-size);
-            line-height: 1.75;
+            font-size: 18px;
+            line-height: 1.7;
             -webkit-font-smoothing: antialiased;
+            padding: 0 0 3rem;
         }
+        a { color: var(--link); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .ui { font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif; }
 
-        a {
-            color: var(--link);
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .ui {
-            font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
-        }
-
-        /* ===================== PROGRESO ===================== */
-        #progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 3px;
-            width: 0;
-            z-index: 60;
-            background: linear-gradient(90deg, var(--accent), var(--accent-2));
-            transition: width .1s linear;
-        }
-
-        /* ===================== TOOLBAR ===================== */
+        /* ===== TOOLBAR ===== */
         .toolbar {
             position: sticky;
             top: 0;
@@ -136,278 +107,77 @@
             align-items: center;
             gap: .6rem;
             flex-wrap: wrap;
-            padding: .55rem .9rem;
+            padding: .6rem 1rem;
             background: color-mix(in srgb, var(--surface) 88%, transparent);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border);
             box-shadow: var(--shadow-sm);
             font-family: "Segoe UI", system-ui, sans-serif;
         }
-
         .toolbar .brand {
             display: flex;
             align-items: center;
             gap: .55rem;
             font-weight: 700;
             color: var(--accent-ink);
-            font-size: .98rem;
+            font-size: 1rem;
         }
-
         .toolbar .brand .logo {
             display: inline-grid;
             place-items: center;
-            width: 30px;
-            height: 30px;
+            width: 32px;
+            height: 32px;
             border-radius: 8px;
             background: linear-gradient(135deg, var(--accent), var(--accent-ink));
             color: #fff;
             font-size: 1rem;
             box-shadow: var(--shadow-sm);
         }
-
-        .toolbar .spacer {
-            flex: 1 1 auto;
-        }
-
+        .toolbar .spacer { flex: 1; }
         .tb-btn {
             cursor: pointer;
             border: 1px solid var(--border-strong);
             background: var(--surface-2);
             color: var(--text-soft);
             border-radius: 8px;
-            padding: .4rem .6rem;
+            padding: .5rem .8rem;
             font-size: .85rem;
             font-family: inherit;
             display: inline-flex;
             align-items: center;
             gap: .35rem;
+            transition: .2s;
+            white-space: nowrap;
         }
+        .tb-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .tb-btn:active { transform: scale(.96); }
 
-        .tb-btn:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        .search-wrap {
-            display: flex;
-            align-items: center;
-            gap: .3rem;
-            background: var(--surface-2);
-            border: 1px solid var(--border-strong);
-            border-radius: 9px;
-            padding: .18rem .35rem;
-        }
-
-        .search-wrap input {
-            border: 0;
-            background: transparent;
-            color: var(--text);
-            font-family: inherit;
-            font-size: .88rem;
-            padding: .28rem .3rem;
-            width: min(38vw, 210px);
-            outline: none;
-        }
-
-        .search-wrap .scount {
-            font-size: .72rem;
-            color: var(--muted);
-            min-width: 34px;
-            text-align: center;
-        }
-
-        .icon-btn {
-            cursor: pointer;
-            border: 0;
-            background: transparent;
-            color: var(--muted);
-            font-size: .95rem;
-            padding: .2rem .35rem;
-            border-radius: 6px;
-            line-height: 1;
-        }
-
-        .icon-btn:hover {
-            background: var(--border);
-            color: var(--accent);
-        }
-
-        .fs-group {
-            display: inline-flex;
-            align-items: center;
-            border: 1px solid var(--border-strong);
-            border-radius: 8px;
-            overflow: hidden;
-            background: var(--surface-2);
-        }
-
-        .fs-group button {
-            border: 0;
-            background: transparent;
-            color: var(--text-soft);
-            cursor: pointer;
-            padding: .34rem .55rem;
-            font-family: inherit;
-        }
-
-        .fs-group button:hover {
-            background: var(--border);
-            color: var(--accent);
-        }
-
-        #menuBtn {
-            display: none;
-        }
-
-        /* ===================== LAYOUT ===================== */
-        .layout {
-            display: grid;
-            grid-template-columns: 300px minmax(0, 1fr);
-            gap: 0;
-            max-width: 1320px;
-            margin: 0 auto;
-        }
-
-        .sidebar {
-            position: sticky;
-            top: 54px;
-            align-self: start;
-            height: calc(100vh - 54px);
-            overflow: auto;
-            border-right: 1px solid var(--border);
-            padding: 1.1rem .9rem 3rem;
-            font-family: "Segoe UI", system-ui, sans-serif;
-        }
-
-        .sidebar h2 {
-            font-size: .74rem;
-            letter-spacing: .12em;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin: .2rem .4rem 1rem;
-        }
-
-        .toc-actions {
-            display: flex;
-            gap: .4rem;
-            margin: 0 .3rem 1rem;
-        }
-
-        .toc-actions button {
-            flex: 1;
-            cursor: pointer;
-            border: 1px solid var(--border-strong);
-            background: var(--surface-2);
-            color: var(--text-soft);
-            border-radius: 7px;
-            padding: .34rem;
-            font-size: .72rem;
-            font-family: inherit;
-        }
-
-        .toc-actions button:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        .toc-group {
-            margin-bottom: .25rem;
-        }
-
-        .toc-unit {
-            display: flex;
-            align-items: baseline;
-            gap: .5rem;
-            padding: .42rem .55rem;
-            border-radius: 8px;
-            color: var(--text-soft);
-            font-weight: 600;
-            font-size: .86rem;
-            line-height: 1.3;
-        }
-
-        .toc-unit:hover {
-            background: var(--surface-2);
-            text-decoration: none;
-            color: var(--accent);
-        }
-
-        .toc-unit.active {
-            background: color-mix(in srgb, var(--accent) 14%, transparent);
-            color: var(--accent);
-        }
-
-        .toc-num {
-            display: inline-grid;
-            place-items: center;
-            min-width: 24px;
-            height: 22px;
-            padding: 0 .25rem;
-            border-radius: 6px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-ink));
-            color: #fff;
-            font-size: .68rem;
-            font-weight: 700;
-            flex: none;
-        }
-
-        .toc-subs {
-            display: flex;
-            flex-direction: column;
-            margin: .1rem 0 .5rem .85rem;
-            border-left: 1px solid var(--border);
-        }
-
-        .toc-sub {
-            padding: .26rem .6rem;
-            font-size: .78rem;
-            color: var(--muted);
-            border-left: 2px solid transparent;
-            margin-left: -1px;
-        }
-
-        .toc-sub:hover {
-            color: var(--accent);
-            text-decoration: none;
-            border-left-color: var(--accent);
-        }
-
-        .toc-sub.active {
-            color: var(--accent);
-            border-left-color: var(--accent);
-            font-weight: 600;
-        }
-
-        main {
-            min-width: 0;
-            padding: 1.6rem clamp(.8rem, 3vw, 2.4rem) 4rem;
-        }
-
-        .reading-wrap {
+        /* ===== CONTENEDOR PRINCIPAL ===== */
+        .container {
             max-width: 880px;
             margin: 0 auto;
+            padding: 0 1rem;
         }
 
-        /* ===================== PORTADA ===================== */
+        /* ===== PORTADA ===== */
         .hero {
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 18px;
-            padding: 2.4rem 2rem;
+            padding: 2.4rem 1.8rem;
             box-shadow: var(--shadow);
             text-align: center;
             position: relative;
             overflow: hidden;
+            margin-top: 2rem;
         }
-
         .hero::before {
             content: "";
             position: absolute;
             inset: 0;
-            background:
-                radial-gradient(900px 200px at 50% -40%, color-mix(in srgb, var(--accent) 16%, transparent), transparent);
+            background: radial-gradient(900px 200px at 50% -40%, color-mix(in srgb, var(--accent) 16%, transparent), transparent);
+            pointer-events: none;
         }
-
         .hero .kicker {
             position: relative;
             font-family: "Segoe UI", system-ui, sans-serif;
@@ -417,15 +187,13 @@
             color: var(--accent);
             font-weight: 700;
         }
-
         .hero h1 {
             position: relative;
-            font-size: clamp(1.7rem, 4.4vw, 2.7rem);
-            margin: .6rem 0 .4rem;
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            margin: .8rem 0 .3rem;
             color: var(--text);
             line-height: 1.15;
         }
-
         .hero p {
             position: relative;
             color: var(--muted);
@@ -433,923 +201,300 @@
             margin: .3rem auto 0;
             font-size: 1rem;
         }
-
         .hero .meta {
             position: relative;
             display: flex;
-            gap: .6rem;
+            gap: .8rem;
             justify-content: center;
             flex-wrap: wrap;
-            margin-top: 1.3rem;
-            font-family: "Segoe UI", system-ui, sans-serif;
+            margin-top: 1.8rem;
         }
-
-        .hero .chip {
-            background: var(--surface-2);
-            border: 1px solid var(--border);
-            border-radius: 999px;
-            padding: .3rem .8rem;
-            font-size: .78rem;
-            color: var(--text-soft);
-        }
-
-        /* ===================== ÍNDICE ===================== */
-        #indice {
-            margin-top: 2.2rem;
-            scroll-margin-top: 70px;
-        }
-
-        #indice .idx-title {
-            display: flex;
-            align-items: center;
-            gap: .6rem;
-            font-family: "Segoe UI", system-ui, sans-serif;
-            font-size: 1.35rem;
-            color: var(--accent-ink);
-            margin-bottom: 1rem;
-        }
-
-        .idx-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: .9rem;
-        }
-
-        .idx-card {
-            display: block;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 1rem 1.1rem;
-            box-shadow: var(--shadow-sm);
-            transition: transform .14s, border-color .14s, box-shadow .14s;
-            color: var(--text);
-        }
-
-        .idx-card:hover {
-            transform: translateY(-3px);
-            border-color: var(--accent);
-            box-shadow: var(--shadow);
-            text-decoration: none;
-        }
-
-        .idx-card .ic-top {
-            display: flex;
-            align-items: center;
-            gap: .55rem;
-            font-family: "Segoe UI", system-ui, sans-serif;
-            margin-bottom: .4rem;
-        }
-
-        .idx-card .ic-num {
-            display: inline-grid;
-            place-items: center;
-            min-width: 34px;
-            height: 34px;
-            border-radius: 9px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-ink));
-            color: #fff;
-            font-weight: 800;
-            font-size: .92rem;
-        }
-
-        .idx-card h3 {
-            margin: 0;
-            font-size: 1rem;
-            color: var(--accent-ink);
-            font-family: "Segoe UI", system-ui, sans-serif;
-            line-height: 1.25;
-        }
-
-        .idx-card p {
-            margin: .2rem 0 0;
-            font-size: .84rem;
-            color: var(--muted);
-            line-height: 1.5;
-        }
-
-        .idx-card.star {
-            border-color: var(--accent-2);
-            background: linear-gradient(180deg, var(--surface), color-mix(in srgb, var(--accent-2) 8%, var(--surface)));
-        }
-
-        .idx-card .badge {
-            display: inline-block;
-            margin-top: .55rem;
-            font-family: "Segoe UI", system-ui, sans-serif;
-            font-size: .68rem;
-            letter-spacing: .08em;
-            text-transform: uppercase;
+        .hero .meta .tb-btn {
             font-weight: 700;
-            color: #fff;
-            background: var(--accent-2);
-            padding: .18rem .5rem;
-            border-radius: 999px;
+            padding: .7rem 1.4rem;
+            font-size: .95rem;
+            border-width: 2px;
         }
+        .btn-accent { border-color: var(--accent) !important; color: var(--accent) !important; }
+        .btn-hard { border-color: var(--accent-2) !important; color: var(--accent-2) !important; }
 
-        /* ===================== UNIDADES ===================== */
-        section.unit {
-            margin-top: 2.6rem;
-            scroll-margin-top: 70px;
+        /* ===== SECCIÓN EXAMEN ===== */
+        .exam-section {
+            margin-top: 2rem;
+            display: none;
         }
+        .exam-section.active { display: block; }
 
-        .unit-head {
+        .exam-header {
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
-            gap: .8rem;
-            padding: 1rem 1.2rem;
+            gap: 1rem;
+            padding: 1.2rem 1.5rem;
             border-radius: 14px 14px 0 0;
             background: linear-gradient(135deg, var(--accent), var(--accent-ink));
             color: #fff;
             box-shadow: var(--shadow-sm);
         }
-
-        .unit-num {
-            display: inline-grid;
-            place-items: center;
-            min-width: 46px;
-            height: 46px;
-            border-radius: 11px;
-            background: rgba(255, 255, 255, .18);
-            font-family: "Segoe UI", system-ui, sans-serif;
-            font-weight: 800;
-            font-size: 1.15rem;
-            flex: none;
-            border: 1px solid rgba(255, 255, 255, .25);
+        .exam-header .icon {
+            font-size: 1.8rem;
+            line-height: 1;
         }
-
-        .unit-title {
-            margin: 0;
+        .exam-header h2 {
             font-family: "Segoe UI", system-ui, sans-serif;
-            font-size: clamp(1.12rem, 2.4vw, 1.5rem);
-            line-height: 1.2;
+            font-size: clamp(1.2rem, 2.8vw, 1.6rem);
+            margin: 0;
             flex: 1;
         }
-
-        .collapse-btn {
-            cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, .4);
-            background: rgba(255, 255, 255, .12);
-            color: #fff;
-            width: 34px;
-            height: 34px;
-            border-radius: 9px;
-            font-size: 1rem;
-            display: grid;
-            place-items: center;
-            transition: transform .2s;
-            flex: none;
-        }
-
-        .collapse-btn:hover {
-            background: rgba(255, 255, 255, .25);
-        }
-
-        section.unit.collapsed .collapse-btn {
-            transform: rotate(-90deg);
-        }
-
-        .unit-body {
+        .exam-body {
             background: var(--surface);
             border: 1px solid var(--border);
             border-top: 0;
             border-radius: 0 0 14px 14px;
-            padding: 1.6rem clamp(1rem, 2.5vw, 2rem) 1.4rem;
+            padding: 1.6rem 1.2rem 1.8rem;
             box-shadow: var(--shadow);
         }
-
-        section.unit.collapsed .unit-body {
-            display: none;
-        }
-
-        .unit.star .unit-head {
-            background: linear-gradient(135deg, var(--accent-2), #7d5417);
-        }
-
-        /* Encabezados internos */
-        .unit-body h3 {
-            font-family: "Segoe UI", system-ui, sans-serif;
-            color: var(--accent-ink);
-            font-size: 1.22rem;
-            margin: 2rem 0 .7rem;
-            padding-bottom: .35rem;
-            border-bottom: 2px solid var(--border);
-            scroll-margin-top: 70px;
-        }
-
-        .unit-body h3:first-child {
-            margin-top: .2rem;
-        }
-
-        .unit-body h4 {
-            font-family: "Segoe UI", system-ui, sans-serif;
-            color: var(--accent);
+        .exam-body .lead {
             font-size: 1.04rem;
-            margin: 1.3rem 0 .5rem;
-        }
-
-        .unit-body p {
-            margin: .7rem 0;
             color: var(--text-soft);
-        }
-
-        .unit-body ul,
-        .unit-body ol {
-            margin: .6rem 0 .9rem;
-            padding-left: 1.4rem;
-            color: var(--text-soft);
-        }
-
-        .unit-body li {
-            margin: .32rem 0;
-        }
-
-        .unit-body strong {
-            color: var(--text);
-        }
-
-        .lead {
-            font-size: 1.04rem;
-            color: var(--text) !important;
             border-left: 4px solid var(--accent);
-            padding: .2rem 0 .2rem 1rem;
-            margin: .4rem 0 1.2rem;
+            padding-left: 1rem;
+            margin: 0 0 1.2rem;
             font-style: italic;
         }
-
-        .term {
-            font-weight: 700;
-            color: var(--accent-ink);
+        .exam-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .8rem;
+            align-items: center;
+            margin-bottom: 1.8rem;
         }
-
-        /* ===================== CALLOUTS ===================== */
-        .callout {
-            border-radius: 10px;
-            padding: .9rem 1.05rem;
-            margin: 1.1rem 0;
+        .exam-controls label {
+            color: var(--muted);
+            font-size: .9rem;
+            font-weight: 600;
+        }
+        .exam-controls select {
+            background: var(--surface-2);
+            color: var(--text);
             border: 1px solid var(--border);
-            border-left-width: 5px;
-            box-shadow: var(--shadow-sm);
+            border-radius: 6px;
+            padding: .5rem .8rem;
+            font-size: .9rem;
+            font-family: "Segoe UI", system-ui, sans-serif;
+        }
+        .exam-controls .tb-btn {
+            font-weight: 600;
+            padding: .5rem 1.2rem;
         }
 
-        .callout .callout-t {
+        /* ===== PREGUNTAS ===== */
+        .question-card {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--note-bd);
+            border-radius: 10px;
+            padding: 1rem 1.2rem;
+            margin-bottom: 1.8rem;
+            box-shadow: var(--shadow-sm);
+            transition: .2s;
+        }
+        .question-card .q-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: .85rem;
+            color: var(--muted);
+            margin-bottom: .4rem;
             font-family: "Segoe UI", system-ui, sans-serif;
+        }
+        .question-card .q-text {
             font-weight: 700;
+            font-size: 1.05rem;
+            margin-bottom: .8rem;
+            color: var(--text);
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: .6rem;
+        }
+        .option-btn {
+            text-align: left;
+            padding: .7rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-strong);
+            background: var(--surface);
+            color: var(--text-soft);
+            cursor: pointer;
+            font-family: "Segoe UI", system-ui, sans-serif;
             font-size: .92rem;
+            transition: .2s;
             display: flex;
             align-items: center;
-            gap: .45rem;
-            margin-bottom: .35rem;
+            gap: .6rem;
         }
-
-        .callout p {
-            margin: .3rem 0;
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--accent);
+            background: color-mix(in srgb, var(--accent) 8%, var(--surface));
         }
-
-        .callout p:last-child {
-            margin-bottom: 0;
+        .option-btn:disabled { opacity: .7; cursor: default; }
+        .option-btn.selected {
+            border-color: var(--accent);
+            background: color-mix(in srgb, var(--accent) 15%, var(--surface-2));
+            color: var(--text);
         }
-
-        .callout .ico {
-            font-size: 1.05rem;
-        }
-
-        .callout.def {
-            background: var(--def-bg);
-            border-color: var(--def-bd);
-        }
-
-        .callout.def .callout-t {
+        .option-btn.correct {
+            border-color: var(--def-bd) !important;
+            background: var(--def-bg) !important;
             color: var(--def-tx);
         }
-
-        .callout.imp {
-            background: var(--imp-bg);
-            border-color: var(--imp-bd);
-        }
-
-        .callout.imp .callout-t {
-            color: var(--imp-tx);
-        }
-
-        .callout.ej {
-            background: var(--ej-bg);
-            border-color: var(--ej-bd);
-        }
-
-        .callout.ej .callout-t {
-            color: var(--ej-tx);
-        }
-
-        .callout.rec {
-            background: var(--rec-bg);
-            border-color: var(--rec-bd);
-        }
-
-        .callout.rec .callout-t {
-            color: var(--rec-tx);
-        }
-
-        .callout.err {
-            background: var(--err-bg);
-            border-color: var(--err-bd);
-        }
-
-        .callout.err .callout-t {
+        .option-btn.wrong {
+            border-color: var(--err-bd) !important;
+            background: var(--err-bg) !important;
             color: var(--err-tx);
         }
 
-        .callout.note {
-            background: var(--note-bg);
-            border-color: var(--note-bd);
-        }
-
-        .callout.note .callout-t {
-            color: var(--note-tx);
-        }
-
-        /* ===================== TABLAS ===================== */
-        .tbl-wrap {
-            overflow-x: auto;
-            margin: 1.2rem 0;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow-sm);
-        }
-
-        table.tbl {
-            border-collapse: collapse;
-            width: 100%;
-            font-size: .92rem;
-            background: var(--surface);
-            font-family: "Segoe UI", system-ui, sans-serif;
-        }
-
-        table.tbl caption {
-            caption-side: top;
-            text-align: left;
-            font-weight: 700;
-            color: var(--accent-ink);
-            padding: .7rem .9rem;
-            font-size: .95rem;
-        }
-
-        table.tbl th,
-        table.tbl td {
-            border: 1px solid var(--border);
-            padding: .6rem .75rem;
-            text-align: left;
-            vertical-align: top;
-            color: var(--text-soft);
-        }
-
-        table.tbl thead th {
-            background: color-mix(in srgb, var(--accent) 16%, var(--surface));
-            color: var(--accent-ink);
-            font-weight: 700;
-            position: sticky;
-            top: 0;
-        }
-
-        table.tbl tbody tr:nth-child(even) {
-            background: var(--surface-2);
-        }
-
-        table.tbl tbody tr:hover {
-            background: color-mix(in srgb, var(--accent) 8%, var(--surface));
-        }
-
-        table.tbl td strong {
-            color: var(--text);
-        }
-
-        /* ===================== ESQUEMAS / FLUJOS ===================== */
-        .flow {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: stretch;
-            gap: .5rem;
-            margin: 1.2rem 0;
-            font-family: "Segoe UI", system-ui, sans-serif;
-        }
-
-        .flow-step {
-            flex: 1 1 130px;
-            min-width: 120px;
-            background: var(--surface-2);
-            border: 1px solid var(--border-strong);
-            border-radius: 10px;
-            padding: .7rem .8rem;
-            position: relative;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .flow-step .fs-n {
-            font-size: .7rem;
-            font-weight: 800;
-            color: var(--accent);
-            letter-spacing: .08em;
-        }
-
-        .flow-step .fs-t {
-            font-weight: 700;
-            color: var(--text);
-            font-size: .86rem;
-            margin: .15rem 0;
-        }
-
-        .flow-step .fs-d {
-            font-size: .78rem;
-            color: var(--muted);
-            line-height: 1.45;
-        }
-
-        .flow-step:not(:last-child)::after {
-            content: "›";
-            position: absolute;
-            right: -.7rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--accent);
-            font-size: 1.4rem;
-            font-weight: 700;
-            z-index: 2;
-        }
-
-        @media(max-width:560px) {
-            .flow-step:not(:last-child)::after {
-                content: "⌄";
-                right: 50%;
-                top: auto;
-                bottom: -1.1rem;
-                transform: translateX(50%);
-            }
-        }
-
-        .keybox {
-            background: var(--surface-2);
-            border: 1px dashed var(--border-strong);
-            border-radius: 10px;
-            padding: .9rem 1.1rem;
-            margin: 1.1rem 0;
-        }
-
-        .keybox h4 {
-            margin: .1rem 0 .5rem;
-        }
-
-        .keybox dl {
-            margin: 0;
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: .35rem .9rem;
-            font-family: "Segoe UI", system-ui, sans-serif;
-            font-size: .88rem;
-        }
-
-        .keybox dt {
-            font-weight: 700;
-            color: var(--accent-ink);
-        }
-
-        .keybox dd {
-            margin: 0;
-            color: var(--text-soft);
-        }
-
-        /* ===================== EXAMEN / RESUMEN ===================== */
-        .exam {
-            margin-top: 2rem;
-            background: linear-gradient(180deg, var(--surface-2), var(--surface));
-            border: 1px solid var(--border);
-            border-left: 5px solid var(--accent-2);
-            border-radius: 10px;
-            padding: 1.1rem 1.2rem;
-        }
-
-        .exam h3 {
-            border: 0;
-            margin: .1rem 0 .7rem;
-            color: var(--accent-2) !important;
-        }
-
-        .exam ol {
-            padding-left: 1.3rem;
-        }
-
-        .exam li {
-            margin: .55rem 0;
-        }
-
-        .exam details {
-            margin: .35rem 0 .2rem;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: .1rem .7rem;
-        }
-
-        .exam summary {
-            cursor: pointer;
-            font-family: "Segoe UI", system-ui, sans-serif;
-            font-size: .82rem;
-            color: var(--accent);
-            font-weight: 600;
-            padding: .4rem 0;
-        }
-
-        .exam details[open] {
-            padding-bottom: .6rem;
-        }
-
-        .exam details p {
-            margin: .3rem 0 .2rem;
-            font-size: .92rem;
-        }
-
-        .summary {
-            margin-top: 1.6rem;
-            background: color-mix(in srgb, var(--accent) 8%, var(--surface));
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1.1rem 1.2rem;
-        }
-
-        .summary h3 {
-            border: 0;
-            margin: .1rem 0 .6rem;
-        }
-
-        .summary ul {
-            margin: .3rem 0;
-        }
-
-        .back-to-index {
-            display: inline-flex;
-            align-items: center;
-            gap: .4rem;
-            margin-top: 1.8rem;
-            font-family: "Segoe UI", system-ui, sans-serif;
-            font-size: .82rem;
-            font-weight: 600;
-            color: var(--accent);
-            border: 1px solid var(--border-strong);
-            background: var(--surface-2);
-            border-radius: 999px;
-            padding: .42rem .95rem;
-        }
-
-        .back-to-index:hover {
-            border-color: var(--accent);
-            text-decoration: none;
-            background: color-mix(in srgb, var(--accent) 10%, var(--surface));
-        }
-
-        /* ===================== MARCAS DE BÚSQUEDA ===================== */
-        mark.s-hit {
-            background: var(--mark);
-            color: inherit;
-            border-radius: 3px;
-            padding: 0 .05em;
-        }
-
-        mark.s-hit.active {
-            background: var(--mark-active);
-            color: #1b1b1b;
-            box-shadow: 0 0 0 2px var(--mark-active);
-        }
-
-        /* ===================== BOTONES FLOTANTES ===================== */
-        #toTop {
-            position: fixed;
-            right: 1.1rem;
-            bottom: 1.1rem;
-            z-index: 45;
-            width: 46px;
-            height: 46px;
-            border-radius: 50%;
-            border: 0;
-            cursor: pointer;
-            background: linear-gradient(135deg, var(--accent), var(--accent-ink));
-            color: #fff;
-            font-size: 1.2rem;
-            box-shadow: var(--shadow);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(12px);
-            transition: .25s;
-        }
-
-        #toTop.show {
-            opacity: 1;
-            visibility: visible;
-            transform: none;
-        }
-
-        #overlay {
+        /* ===== RESULTADO ===== */
+        .result-card {
             display: none;
-        }
-
-        /* ===================== FOOTER ===================== */
-        .foot {
-            max-width: 880px;
-            margin: 3rem auto 0;
+            margin-top: 2rem;
+            background: var(--imp-bg);
+            border: 1px solid var(--imp-bd);
+            border-radius: 12px;
+            padding: 1.6rem 1.2rem;
             text-align: center;
-            color: var(--muted);
-            font-size: .82rem;
-            font-family: "Segoe UI", system-ui, sans-serif;
-            border-top: 1px solid var(--border);
-            padding-top: 1.2rem;
+            box-shadow: var(--shadow);
         }
-
-        /* ===================== RESPONSIVE ===================== */
-        @media(max-width:900px) {
-            #menuBtn {
-                display: inline-flex;
-            }
-
-            .layout {
-                grid-template-columns: 1fr;
-            }
-
-            .sidebar {
-                position: fixed;
-                top: 0;
-                left: 0;
-                height: 100vh;
-                width: 285px;
-                max-width: 85vw;
-                background: var(--surface);
-                z-index: 70;
-                transform: translateX(-100%);
-                transition: transform .25s;
-                box-shadow: var(--shadow);
-                padding-top: 1.2rem;
-            }
-
-            .sidebar.open {
-                transform: none;
-            }
-
-            #overlay.show {
-                display: block;
-                position: fixed;
-                inset: 0;
-                background: rgba(0, 0, 0, .45);
-                z-index: 65;
-            }
-
-            .toolbar .brand .txt {
-                display: none;
-            }
+        .result-card.show { display: block; }
+        .result-card .score {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--imp-tx);
+            margin: 0;
         }
-
-        @media(max-width:560px) {
-            .search-wrap input {
-                width: 40vw;
-            }
-
-            .toolbar {
-                gap: .4rem;
-                padding: .5rem .6rem;
-            }
+        .result-card .sub {
+            font-size: 1.1rem;
+            color: var(--imp-tx);
+            margin: .2rem 0 0;
+            font-weight: 600;
         }
-
-        /* ===================== IMPRESIÓN / PDF A4 ===================== */
-        @page {
-            size: A4;
-            margin: 16mm 14mm 18mm;
-        }
-
-        @media print {
-
-            /* Forzar tema claro y conservar los colores del material en el PDF */
-            html,
-            html.dark {
-                --bg: #ffffff;
-                --bg2: #ffffff;
-                --surface: #ffffff;
-                --surface-2: #ffffff;
-                --text: #1c2530;
-                --text-soft: #2c3742;
-                --muted: #55606b;
-            }
-
-            :root {
-                --reading-size: 10.8pt;
-            }
-
-            * {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-
-            html,
-            body {
-                background: #fff !important;
-                line-height: 1.5;
-            }
-
-            /* Ocultar toda la interfaz interactiva */
-            .toolbar,
-            .sidebar,
-            #toTop,
-            #overlay,
-            #progress,
-            .back-to-index,
-            .toc-actions,
-            .collapse-btn,
-            #menuBtn {
-                display: none !important;
-            }
-
-            .layout {
-                display: block;
-                max-width: none;
-                margin: 0;
-                gap: 0;
-            }
-
-            main {
-                padding: 0;
-            }
-
-            .reading-wrap {
-                max-width: none;
-            }
-
-            /* Portada en su propia hoja */
-            .hero {
-                break-after: page;
-                border: 1px solid var(--border-strong);
-            }
-
-            /* Cada unidad comienza en una hoja nueva */
-            section.unit {
-                break-before: page;
-                margin-top: 0;
-            }
-
-            section.unit.collapsed .unit-body {
-                display: block !important;
-            }
-
-            /* Quitar sombras (no se ven en papel) */
-            .unit-head,
-            .unit-body,
-            .callout,
-            .tbl-wrap,
-            .exam,
-            .summary,
-            .idx-card,
-            .hero,
-            .flow-step,
-            .keybox {
-                box-shadow: none !important;
-            }
-
-            /* Evitar cortes internos poco elegantes */
-            .callout,
-            table.tbl,
-            .flow,
-            .flow-step,
-            .exam li,
-            .summary,
-            .keybox,
-            figure,
-            .idx-card,
-            details {
-                break-inside: avoid;
-            }
-
-            h2,
-            h3,
-            h4 {
-                break-after: avoid;
-            }
-
-            table.tbl thead th {
-                position: static;
-            }
-
-            a {
-                text-decoration: none;
-            }
-
-            mark.s-hit {
-                background: transparent !important;
-                box-shadow: none;
-            }
-
-            /* Mostrar todas las respuestas del examen al imprimir */
-            .exam summary {
-                display: none;
-            }
-
-            .exam details>*:not(summary) {
-                display: block !important;
-            }
-        }
-    </style>
-<style>
-        .play-btn {
-            cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, .4);
-            background: rgba(255, 255, 255, .12);
-            color: #fff;
-            width: 34px;
-            height: 34px;
-            border-radius: 9px;
+        .result-card .msg {
+            margin-top: .6rem;
             font-size: 1rem;
-            display: grid;
-            place-items: center;
-            transition: transform .2s, background .2s;
-            flex: none;
-            margin-right: 0.3rem;
+            color: var(--text-soft);
         }
-        .play-btn:hover {
-            background: rgba(255, 255, 255, .25);
-        }
-        .play-btn.playing {
-            background: rgba(255, 255, 255, .4);
-            box-shadow: 0 0 10px rgba(255, 255, 255, .3);
-        }
-        @media print {
-            .play-btn, #ttsVoiceSelect { display: none !important; }
-        }
-    </style>
-    
-    <style>
-        .option.selected { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 15%, var(--surface-2)); }
-        .option.correct { border-color: var(--def-bd) !important; background: var(--def-bg) !important; color: var(--def-tx); }
-        .option.wrong { border-color: var(--err-bd) !important; background: var(--err-bg) !important; color: var(--err-tx); }
-        .hidden { display: none !important; }
-        .active { display: block !important; }
-        
-        /* Fix transitions on buttons */
-        .option { transition: all 0.2s ease; }
-    </style>
 
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 600px) {
+            body { font-size: 16px; padding: 0 0 2rem; }
+            .container { padding: 0 .8rem; }
+            .hero { padding: 1.6rem 1rem; }
+            .hero h1 { font-size: 1.8rem; }
+            .hero .meta .tb-btn { width: 100%; justify-content: center; }
+            .exam-body { padding: 1rem .8rem; }
+            .question-card { padding: .8rem 1rem; }
+            .option-btn { font-size: .88rem; padding: .6rem .8rem; }
+            .exam-controls { flex-direction: column; align-items: stretch; }
+            .exam-controls select { width: 100%; }
+            .toolbar .brand .txt { display: none; }
+            .toolbar { padding: .4rem .6rem; }
+            .tb-btn { font-size: .8rem; padding: .4rem .6rem; }
+            .exam-header { padding: 1rem 1rem; }
+            .result-card .score { font-size: 2.4rem; }
+        }
+
+        /* ===== UTILS ===== */
+        .hidden { display: none !important; }
+        .mt-2 { margin-top: 1.5rem; }
+        .gap-1 { gap: .5rem; }
+        .fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== PRINT ===== */
+        @media print {
+            .toolbar, .exam-controls, .back-home { display: none !important; }
+            .exam-section { display: block !important; }
+            .hero { break-after: page; }
+            .question-card { break-inside: avoid; }
+            .option-btn:disabled { opacity: 1; }
+            .option-btn.correct { background: #d4edda !important; }
+            .option-btn.wrong { background: #f8d7da !important; }
+        }
+    </style>
 </head>
 <body>
+
+    <!-- ===== TOOLBAR ===== -->
     <header class="toolbar ui">
-        <span class="brand"><span class="logo">🎯</span><span class="txt">Examen Consular</span></span>
+        <span class="brand">
+            <span class="logo">🎯</span>
+            <span class="txt">Examen Consular</span>
+        </span>
         <span class="spacer"></span>
-        <button id="homeBtn" class="tb-btn" title="Volver" onclick="goHome()">🏠 Volver</button>
+        <button id="homeBtn" class="tb-btn" title="Volver al inicio">🏠 Volver</button>
         <button id="themeBtn" class="tb-btn" aria-label="Cambiar tema">🌙 Tema</button>
     </header>
 
-    <div class="layout" style="display:block;">
-        <main style="max-width: 880px; margin: 0 auto; min-width: 100%;">
-            <div class="reading-wrap">
-                
-                <section class="hero" id="homeSection" style="margin-top:2rem;">
-                    <div class="kicker">Modo Examen</div>
-                    <h1>Elegí cómo querés evaluarte hoy.</h1>
-                    <p>Tenés 2 opciones: generar un examen con todo el temario mezclado, o un examen ultra difícil filtrado solo por normativas.</p>
-                    
-                    <div class="meta" style="margin-top: 2rem;">
-                        <button class="tb-btn" id="openGame" style="font-weight:bold; color: var(--accent); border-color: var(--accent);">🎯 Examen Completo</button>
-                        <button class="tb-btn" id="openHardGame" style="font-weight:bold; color: var(--accent-2); border-color: var(--accent-2);">⚖️ Examen Normativo</button>
-                    </div>
-                </section>
+    <!-- ===== CONTENEDOR ===== -->
+    <div class="container">
 
-                <section class="unit" id="gameSection" style="display:none;" style="margin-top:1rem;">
-                    <div class="unit-head" id="gameHeader">
-                        <span class="unit-num">🎯</span>
-                        <h2 class="unit-title" id="gameTitle">Examen General</h2>
-                    </div>
-                    <div class="unit-body">
-                        <p id="gameDesc" class="lead">Elegí cuántas preguntas querés ver...</p>
-                        
-                        <div class="search-wrap" style="margin-bottom: 1.5rem; display: flex; gap: 10px; flex-wrap:wrap;">
-                            <label style="color:var(--muted); font-size:0.9rem; align-self:center;">Preguntas:</label>
-                            <select id="questionCount" style="background:var(--surface-2); color:var(--text); border:1px solid var(--border); border-radius:6px; padding:0.3rem;">
-                                <option value="5">5</option>
-                                <option value="10" selected>10</option>
-                                <option value="15">15</option>
-                                <option value="20">20</option>
-                                <option value="all">Todas</option>
-                            </select>
-                            <button class="tb-btn" id="startGameBtn" style="border-color:var(--accent); color:var(--accent); font-weight:bold;">Generar examen</button>
-                            <button class="tb-btn" id="submitGameBtn">Corregir</button>
-                        </div>
-
-                        <div id="gameContent" style="display:flex; flex-direction:column; gap:1.5rem;"></div>
-
-                        <div id="resultCard" class="callout imp" style="display:none; text-align:center; margin-top:2rem;">
-                            <h2 id="scoreText" style="margin:0; font-size:2.5rem; color:var(--imp-tx);">0/0</h2>
-                            <p id="scoreSub" style="margin:0; font-weight:bold; color:var(--imp-tx);">Resultado</p>
-                        </div>
-                    </div>
-                </section>
+        <!-- ===== PORTADA ===== -->
+        <section class="hero" id="homeSection">
+            <div class="kicker">Modo Examen</div>
+            <h1>Elegí cómo querés evaluarte hoy.</h1>
+            <p>Tenés 2 opciones: generar un examen con todo el temario mezclado, o un examen ultra difícil filtrado solo por normativas.</p>
+            <div class="meta">
+                <button class="tb-btn btn-accent" id="openGame">🎯 Examen Completo</button>
+                <button class="tb-btn btn-hard" id="openHardGame">⚖️ Examen Normativo</button>
             </div>
-        </main>
+        </section>
+
+        <!-- ===== SECCIÓN EXAMEN ===== -->
+        <section class="exam-section" id="gameSection">
+            <div class="exam-header">
+                <span class="icon" id="gameIcon">🎯</span>
+                <h2 id="gameTitle">Examen General</h2>
+            </div>
+            <div class="exam-body">
+                <p class="lead" id="gameDesc">Elegí cuántas preguntas querés ver.</p>
+
+                <div class="exam-controls">
+                    <label for="questionCount">Preguntas:</label>
+                    <select id="questionCount">
+                        <option value="5">5</option>
+                        <option value="10" selected>10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="all">Todas</option>
+                    </select>
+                    <button class="tb-btn btn-accent" id="startGameBtn">🔄 Generar</button>
+                    <button class="tb-btn" id="submitGameBtn">✅ Corregir</button>
+                </div>
+
+                <div id="gameContent" class="fade-in"></div>
+
+                <div class="result-card" id="resultCard">
+                    <p class="score" id="scoreText">0/0</p>
+                    <p class="sub" id="scoreSub">Resultado</p>
+                    <p class="msg" id="scoreMsg"></p>
+                </div>
+
+                <button class="tb-btn back-home mt-2" id="backHomeBtn">🏠 Volver al inicio</button>
+            </div>
+        </section>
+
     </div>
-    
+
     <script>
+        // ===== BANCO DE PREGUNTAS (igual que antes) =====
         const bank = [
-            // --- DIRECCIÓN DE LEGALIZACIONES (Ex SIL) ---
+            // --- DIRECCIÓN DE LEGALIZACIONES ---
             {
                 section: "Dirección de Legalizaciones",
                 q: "¿Mediante qué resolución se implementó el SIL?",
@@ -1460,7 +605,6 @@
                     "Dar de Baja – Falla de Impresión."
                 ]
             },
-
             // --- VISAS ---
             {
                 section: "Visas",
@@ -1582,7 +726,6 @@
                     "Pueden extenderse de forma indefinida si hay reciprocidad."
                 ]
             },
-
             // --- PASAPORTES ---
             {
                 section: "Pasaportes",
@@ -1674,7 +817,6 @@
                     "Certificado médico que avale la identidad visual."
                 ]
             },
-
             // --- POLÍTICA CONSULAR ---
             {
                 section: "Política Consular",
@@ -1726,7 +868,6 @@
                     "Inscripción vía telefónica o enviando un correo postal al Tribunal Superior de Justicia Electoral."
                 ]
             },
-
             // --- CONARE ---
             {
                 section: "Conare",
@@ -1828,7 +969,6 @@
                     "Un representante oficial del Alto Comisionado de las Naciones Unidas (ACNUR)."
                 ]
             },
-
             // --- DACPE ---
             {
                 section: "DACPE",
@@ -1892,49 +1032,11 @@
             }
         ];
 
-        // Variables de estado
-        let currentGameMode = 'normal'; // 'normal' o 'hard'
-        let currentTheme = "dark";
-        let currentGame = [];
-
-        // Expresión regular para encontrar normativas automáticamente
+        // ===== UTILIDADES =====
         const normRegex = /(ley|decreto|resolución|resolucion|artículo|art\.|convención|protocolo|documento n|rubro 846)/i;
 
-        const sections = [...new Set(bank.map(item => item.section))];
-
-        // Nodos UI
-        const gameSection = document.getElementById("gameSection");
-        const gameContent = document.getElementById("gameContent");
-
-        const resultCard = document.getElementById("resultCard");
-        const scoreText = document.getElementById("scoreText");
-        const scoreSub = document.getElementById("scoreSub");        const themeBtn = document.getElementById("themeBtn");
-
-        const questionCount = document.getElementById("questionCount");
-        const startGameBtn = document.getElementById("startGameBtn");
-        const submitGameBtn = document.getElementById("submitGameBtn");
-        const gameTitle = document.getElementById("gameTitle");
-        const gameDesc = document.getElementById("gameDesc");
-
-        function toggleTheme() {
-            currentTheme = currentTheme === "dark" ? "light" : "dark";
-            if (currentTheme === "dark") {
-                document.documentElement.classList.add("dark");
-            } else {
-                document.documentElement.classList.remove("dark");
-            }
-        }
-
-        function escapeHtml(str) {
-            return str
-                .replaceAll("&", "&amp;")
-                .replaceAll("<", "&lt;")
-                .replaceAll(">", "&gt;")
-                .replaceAll('"', "&quot;");
-        }
-
-        function shuffle(array) {
-            const copy = [...array];
+        function shuffle(arr) {
+            const copy = [...arr];
             for (let i = copy.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [copy[i], copy[j]] = [copy[j], copy[i]];
@@ -1942,194 +1044,223 @@
             return copy;
         }
 
-        function stopSpeech() {
-            if ("speechSynthesis" in window) {
-                window.speechSynthesis.cancel();
+        function escapeHtml(str) {
+            return str
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // ===== ESTADO =====
+        let currentTheme = "dark";
+        let currentMode = "normal"; // "normal" | "hard"
+        let currentQuestions = [];   // array de objetos con {id, section, q, a, options}
+
+        // ===== DOM REFS =====
+        const homeSection = document.getElementById("homeSection");
+        const gameSection = document.getElementById("gameSection");
+        const gameIcon = document.getElementById("gameIcon");
+        const gameTitle = document.getElementById("gameTitle");
+        const gameDesc = document.getElementById("gameDesc");
+        const gameContent = document.getElementById("gameContent");
+        const resultCard = document.getElementById("resultCard");
+        const scoreText = document.getElementById("scoreText");
+        const scoreSub = document.getElementById("scoreSub");
+        const scoreMsg = document.getElementById("scoreMsg");
+        const questionCount = document.getElementById("questionCount");
+        const startGameBtn = document.getElementById("startGameBtn");
+        const submitGameBtn = document.getElementById("submitGameBtn");
+        const openGameBtn = document.getElementById("openGame");
+        const openHardBtn = document.getElementById("openHardGame");
+        const homeBtn = document.getElementById("homeBtn");
+        const backHomeBtn = document.getElementById("backHomeBtn");
+        const themeBtn = document.getElementById("themeBtn");
+
+        // ===== FUNCIONES =====
+        function toggleTheme() {
+            if (currentTheme === "dark") {
+                document.documentElement.classList.remove("dark");
+                currentTheme = "light";
+                themeBtn.textContent = "☀️ Tema";
+            } else {
+                document.documentElement.classList.add("dark");
+                currentTheme = "dark";
+                themeBtn.textContent = "🌙 Tema";
             }
         }
 
-        function speakText(text) {
-            stopSpeech();
-            if (!("speechSynthesis" in window)) {
-                alert("Tu navegador no soporta texto a voz.");
-                return;
-            }
-            const utter = new SpeechSynthesisUtterance(text);
-            utter.lang = "es-ES";
-            utter.rate = 1;
-            utter.pitch = 1;
-            window.speechSynthesis.speak(utter);
+        function goHome() {
+            gameSection.classList.remove("active");
+            homeSection.style.display = "block";
+            resultCard.classList.remove("show");
+            gameContent.innerHTML = "";
+            currentQuestions = [];
         }
 
-        function buildGameQuestion(item, idx) {
-            const options = shuffle([item.a, ...item.distractors]).slice(0, 4);
+        function showExam() {
+            homeSection.style.display = "none";
+            gameSection.classList.add("active");
+            // scroll al inicio del examen
+            gameSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        function buildQuestion(item, idx) {
+            const opts = shuffle([item.a, ...item.distractors]).slice(0, 4);
             return {
-                id: `${item.section}-${idx}-${Math.random().toString(36).slice(2, 8)}`,
+                id: `${item.section}-${idx}-${Date.now()}-${Math.random().toString(36).slice(2,6)}`,
                 section: item.section,
                 q: item.q,
                 a: item.a,
-                options
+                options: opts
             };
         }
 
         function renderGame() {
-            resultCard.classList.remove("show");
-
-            // Filtrar el banco de datos según el modo seleccionado
-            let activeBank = bank;
-
-            if (currentGameMode === 'hard') {
-                activeBank = bank.filter(item => normRegex.test(item.q) || normRegex.test(item.a));
-                gameTitle.textContent = "⚖️ Examen Normativo (Difícil)";
-                gameDesc.textContent = "Filtrado automático: Solamente respondiendo preguntas sobre leyes, decretos, resoluciones y protocolos.";
-                startGameBtn.className = "btn btn-hard";
+            // Determinar banco según modo
+            let pool = bank;
+            if (currentMode === "hard") {
+                pool = bank.filter(item => normRegex.test(item.q) || normRegex.test(item.a));
+                gameIcon.textContent = "⚖️";
+                gameTitle.textContent = "Examen Normativo (Difícil)";
+                gameDesc.textContent = "Solo preguntas sobre leyes, decretos, resoluciones y protocolos.";
             } else {
-                gameTitle.textContent = "🎯 Examen General";
-                gameDesc.textContent = "Elegí cuántas preguntas querés ver. Cada nueva carga mezcla preguntas y alternativas de todo el banco.";
-                startGameBtn.className = "btn btn-accent";
+                gameIcon.textContent = "🎯";
+                gameTitle.textContent = "Examen General";
+                gameDesc.textContent = "Todas las áreas, preguntas mezcladas al azar.";
             }
 
-            // Determinar la cantidad de preguntas a mostrar
-            let count = questionCount.value === "all" ? activeBank.length : Number(questionCount.value);
-            count = Math.min(count, activeBank.length);
-
-            // Si no hay suficientes preguntas normativas
-            if (count === 0) {
-                gameContent.innerHTML = "<p>No se encontraron preguntas bajo este criterio.</p>";
+            if (pool.length === 0) {
+                gameContent.innerHTML = `<p style="color:var(--err-tx);">No hay preguntas que coincidan con este filtro.</p>`;
                 return;
             }
 
-            // Seleccionar las preguntas aleatorias
-            const selected = shuffle(activeBank).slice(0, count);
-            currentGame = selected.map(buildGameQuestion);
+            let count = questionCount.value === "all" ? pool.length : Number(questionCount.value);
+            count = Math.min(count, pool.length);
 
-            const pillClass = currentGameMode === 'hard' ? 'pill pill-hard' : 'pill';
+            const selected = shuffle(pool).slice(0, count);
+            currentQuestions = selected.map(buildQuestion);
 
             // Renderizar
-            gameContent.innerHTML = currentGame.map((item, index) => `
-        <div class="callout note question-card" data-question-id="${escapeHtml(item.id)}" data-answer="${escapeHtml(item.a)}">
-          <div class="callout-t" style="justify-content:space-between;">
-            <span><span class="ico">📝</span> Pregunta ${index + 1} de ${count}</span>
-            <span style="font-size:0.8rem; opacity:0.8;">${escapeHtml(item.section)}</span>
-          </div>
-          <p style="font-weight:bold; color:var(--text); font-size:1.1rem; margin-bottom:15px;">${escapeHtml(item.q)}</p>
-          <div class="options" style="display:flex; flex-direction:column; gap:8px;">
-            ${item.options.map(option => `
-              <button class="tb-btn option" type="button" data-value="${escapeHtml(option)}" style="text-align:left; justify-content:flex-start; padding:10px;">
-                ${escapeHtml(option)}
-              </button>
-            `).join("")}
-          </div>
-        </div>
-      `).join("");
+            let html = "";
+            currentQuestions.forEach((item, index) => {
+                const optsHtml = item.options.map(opt => `
+                    <button class="option-btn" data-value="${escapeHtml(opt)}" type="button">
+                        ${escapeHtml(opt)}
+                    </button>
+                `).join("");
 
-            gameContent.style.animation = 'none';
-            void gameContent.offsetWidth;
-            gameContent.style.animation = 'fadeIn 0.4s ease-out';
+                html += `
+                    <div class="question-card" data-question-id="${escapeHtml(item.id)}" data-answer="${escapeHtml(item.a)}">
+                        <div class="q-header">
+                            <span>📝 Pregunta ${index + 1} de ${count}</span>
+                            <span style="font-size:.8rem;opacity:.8;">${escapeHtml(item.section)}</span>
+                        </div>
+                        <div class="q-text">${escapeHtml(item.q)}</div>
+                        <div class="options">${optsHtml}</div>
+                    </div>
+                `;
+            });
 
-            if (gameSection.classList.contains("active")) {
-                document.getElementById('gameSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+            gameContent.innerHTML = html;
+            resultCard.classList.remove("show");
 
-            gameContent.querySelectorAll(".option").forEach(button => {
-                button.addEventListener("click", () => {
-                    const parent = button.closest(".question-card");
-                    parent.querySelectorAll(".option").forEach(opt => opt.classList.remove("selected"));
-                    button.classList.add("selected");
-                    parent.dataset.selected = button.dataset.value;
+            // Eventos de selección
+            gameContent.querySelectorAll(".option-btn").forEach(btn => {
+                btn.addEventListener("click", function() {
+                    const card = this.closest(".question-card");
+                    // Desmarcar otras opciones de la misma pregunta
+                    card.querySelectorAll(".option-btn").forEach(b => b.classList.remove("selected"));
+                    this.classList.add("selected");
+                    card.dataset.selected = this.dataset.value;
                 });
             });
+
+            // scroll suave al contenido
+            gameContent.scrollIntoView({ behavior: "smooth", block: "nearest" });
         }
 
         function submitGame() {
-            if (!currentGame.length) {
-                renderGame();
+            if (currentQuestions.length === 0) {
+                alert("Primero generá un examen.");
                 return;
             }
 
             let correct = 0;
-            const cards = [...gameContent.querySelectorAll(".question-card")];
+            const cards = gameContent.querySelectorAll(".question-card");
 
             cards.forEach(card => {
-                const selected = card.dataset.selected || "";
                 const answer = card.dataset.answer;
+                const selected = card.dataset.selected || "";
 
-                card.querySelectorAll(".option").forEach(option => {
-                    option.disabled = true;
-                    const value = option.dataset.value;
-
-                    option.classList.remove("correct", "wrong");
-
-                    if (value === answer) option.classList.add("correct");
-                    if (selected && value === selected && selected !== answer) option.classList.add("wrong");
+                const opts = card.querySelectorAll(".option-btn");
+                opts.forEach(btn => {
+                    btn.disabled = true;
+                    const val = btn.dataset.value;
+                    btn.classList.remove("correct", "wrong");
+                    if (val === answer) btn.classList.add("correct");
+                    if (selected && val === selected && selected !== answer) btn.classList.add("wrong");
                 });
 
                 if (selected === answer) correct++;
             });
 
             const total = cards.length;
-            const percent = Math.round((correct / total) * 100);
-
-            let label = "Rendimiento bajo. Volvé a repasar esa normativa.";
-            if (percent >= 50) label = "Buen avance. Estás logrando identificar las trampas.";
-            if (percent >= 75) label = "Muy buen nivel. Estás reteniendo los detalles finos.";
-            if (percent === 100) label = "Perfecto. Conocimiento dominado al máximo.";
+            const pct = Math.round((correct / total) * 100);
+            let msg = "Rendimiento bajo. Volvé a repasar esa normativa.";
+            if (pct >= 50) msg = "Buen avance. Estás logrando identificar las trampas.";
+            if (pct >= 75) msg = "Muy buen nivel. Estás reteniendo los detalles finos.";
+            if (pct === 100) msg = "Perfecto. Conocimiento dominado al máximo.";
 
             scoreText.textContent = `${correct}/${total}`;
-            scoreSub.textContent = `${percent}% de aciertos · ${label}`;
+            scoreSub.textContent = `${pct}% de aciertos`;
+            scoreMsg.textContent = msg;
             resultCard.classList.add("show");
             resultCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
         }
 
-        
-        function goHome() {
-            if (gameSection.style.display === 'block') {
-                gameSection.style.display = 'none';
-                homeSection.style.display = 'block';
-                resultCard.style.display = 'none';
-                gameContent.innerHTML = '';
-            } else {
-                window.location.href = 'index.html';
-            }
-        }
-
-        // Inicializadores de Eventos
+        // ===== EVENTOS =====
         themeBtn.addEventListener("click", toggleTheme);
 
-        const urlParams = new URLSearchParams(window.location.search);
-        currentGameMode = urlParams.get('mode') === 'hard' ? 'hard' : 'normal';
-        
-        const homeSection = document.getElementById("homeSection");
-        const gameSection = document.getElementById("gameSection");
-        const openGame = document.getElementById("openGame");
-        const openHardGame = document.getElementById("openHardGame");
-        const gameTitle = document.getElementById("gameTitle");
-        const gameDesc = document.getElementById("gameDesc");
-
-        openGame.addEventListener("click", () => {
-            currentGameMode = 'normal';
-            homeSection.style.display = 'none';
-            gameSection.style.display = 'block';
-            gameTitle.textContent = "Examen General";
-            gameDesc.textContent = "Elegí cuántas preguntas querés ver. Cada nueva carga mezcla preguntas y alternativas de todo el banco.";
+        openGameBtn.addEventListener("click", () => {
+            currentMode = "normal";
+            showExam();
             renderGame();
         });
 
-        openHardGame.addEventListener("click", () => {
-            currentGameMode = 'hard';
-            homeSection.style.display = 'none';
-            gameSection.style.display = 'block';
-            gameTitle.textContent = "Examen Normativo";
-            gameDesc.textContent = "Filtrado automático: Solamente respondiendo preguntas sobre leyes, decretos, resoluciones y protocolos.";
+        openHardBtn.addEventListener("click", () => {
+            currentMode = "hard";
+            showExam();
             renderGame();
         });
+
+        homeBtn.addEventListener("click", goHome);
+        backHomeBtn.addEventListener("click", goHome);
 
         startGameBtn.addEventListener("click", renderGame);
         submitGameBtn.addEventListener("click", submitGame);
 
-        document.addEventListener("visibilitychange", () => {
-            if (document.hidden) stopSpeech();
-        });
+        // Inicializar tema según clase inicial (dark)
+        if (document.documentElement.classList.contains("dark")) {
+            currentTheme = "dark";
+            themeBtn.textContent = "🌙 Tema";
+        } else {
+            currentTheme = "light";
+            themeBtn.textContent = "☀️ Tema";
+        }
+
+        // Si la URL tiene ?mode=hard, abrir directamente el modo difícil
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("mode") === "hard") {
+            currentMode = "hard";
+            showExam();
+            renderGame();
+        } else if (params.get("mode") === "normal") {
+            currentMode = "normal";
+            showExam();
+            renderGame();
+        }
     </script>
 </body>
 </html>
