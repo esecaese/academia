@@ -73,6 +73,11 @@
             .btn-tts-block {
                 display: none !important;
             }
+            /* mejoras para impresión: lista de ejes con más espacio */
+            .lista-ejes li {
+                margin-bottom: 0.6rem !important;
+                line-height: 1.5 !important;
+            }
         }
 
         @page {
@@ -304,6 +309,31 @@
             color: #0a3d2a;
         }
 
+        /* LISTA DE EJES: ahora vertical con espacio entre items */
+        .lista-ejes {
+            list-style: none;
+            padding-left: 0;
+            margin: 0.5rem 0 0.2rem 0;
+        }
+        .lista-ejes li {
+            padding: 0.4rem 0.6rem;
+            margin-bottom: 0.3rem;
+            border-bottom: 1px solid #e8f0e8;
+            font-size: 12px;
+            line-height: 1.5;
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+        }
+        .lista-ejes li:last-child {
+            border-bottom: none;
+        }
+        .lista-ejes .num {
+            font-weight: 700;
+            color: #1e7e34;
+            min-width: 1.8rem;
+        }
+
         /* Ajustes para pantallas pequeñas */
         @media (max-width: 640px) {
             .guide-container {
@@ -332,6 +362,10 @@
             .btn-tts-block {
                 margin-left: 0;
                 margin-top: 4px;
+            }
+            .lista-ejes li {
+                padding: 0.3rem 0.4rem;
+                font-size: 11px;
             }
         }
     </style>
@@ -384,23 +418,23 @@
         <h2>2. Ejes de la política exterior paraguaya (2003‑2026)</h2>
         <p style="margin-bottom:0.8rem;">A continuación se resumen los principales ejes temáticos, con una <strong>cita textual</strong> extraída del documento de referencia que sintetiza su esencia.</p>
 
-        <!-- LISTADO DE EJES (1 al 13) -->
+        <!-- LISTADO DE EJES (1 al 13) CON SALTOS DE LÍNEA CLAROS -->
         <div style="background:#f5f9f5; padding:0.8rem 1.5rem; border-radius:8px; margin-bottom:1.8rem; border:1px solid #d0e0d0;">
             <h3 style="margin-top:0; color:#0a3d2a; font-size:14px;">📋 Listado de ejes (1 al 13)</h3>
-            <ol style="columns:2 220px; column-gap:2rem; font-size:12px; padding-left:1.5rem; margin:0.2rem 0;">
-                <li>Gestión 2003‑2008: Límites, Cooperación Militar e Integración Fronteriza</li>
-                <li>Defensa y promoción de la democracia y los derechos humanos</li>
-                <li>Política ambiental y desarrollo sostenible</li>
-                <li>Integración regional como herramienta para superar la pobreza</li>
-                <li>Apertura de nuevos mercados y difusión de ventajas para la IED</li>
-                <li>Posición geoestratégica e integración física y logística</li>
-                <li>Optimización de la ubicación geoestratégica del país></li>
-                <li>Evolución de la política energética</li>
-                <li>Fortalecimiento de la cooperación internacional y asistencia técnica</li>
-                <li>Afirmación de la identidad nacional y desarrollo de la “Marca País”</li>
-                <li>Lucha contra el terrorismo y la delincuencia organizada transnacional</li>
-                <li>Agenda multilateral</li>
-                <li>Fortalecimiento institucional del Ministerio de Relaciones Exteriores</li>
+            <ol class="lista-ejes">
+                <li><span class="num">1.</span> GESTIÓN 2003‑2008: LÍMITES, COOPERACIÓN MILITAR E INTEGRACIÓN FRONTERIZA</li>
+                <li><span class="num">2.</span> DEFENSA Y PROMOCIÓN DE LA DEMOCRACIA Y LOS DERECHOS HUMANOS</li>
+                <li><span class="num">3.</span> POLÍTICA AMBIENTAL Y DESARROLLO SOSTENIBLE</li>
+                <li><span class="num">4.</span> INTEGRACIÓN REGIONAL COMO HERRAMIENTA PARA SUPERAR LA POBREZA</li>
+                <li><span class="num">5.</span> APERTURA DE NUEVOS MERCADOS Y DIFUSIÓN DE VENTAJAS PARA LA IED</li>
+                <li><span class="num">6.</span> POSICIÓN GEOESTRATÉGICA E INTEGRACIÓN FÍSICA Y LOGÍSTICA</li>
+                <li><span class="num">7.</span> OPTIMIZACIÓN DE LA UBICACIÓN GEOESTRATÉGICA DEL PAÍS</li>
+                <li><span class="num">8.</span> EVOLUCIÓN DE LA POLÍTICA ENERGÉTICA</li>
+                <li><span class="num">9.</span> FORTALECIMIENTO DE LA COOPERACIÓN INTERNACIONAL Y ASISTENCIA TÉCNICA</li>
+                <li><span class="num">10.</span> AFIRMACIÓN DE LA IDENTIDAD NACIONAL Y DESARROLLO DE LA “MARCA PAÍS”</li>
+                <li><span class="num">11.</span> LUCHA CONTRA EL TERRORISMO Y LA DELINCUENCIA ORGANIZADA TRANSNACIONAL</li>
+                <li><span class="num">12.</span> AGENDA MULTILATERAL</li>
+                <li><span class="num">13.</span> FORTALECIMIENTO INSTITUCIONAL DEL MINISTERIO DE RELACIONES EXTERIORES</li>
             </ol>
         </div>
 
