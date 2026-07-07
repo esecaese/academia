@@ -1,1535 +1,474 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulador Avanzado - Política Exterior</title>
-    <style>
-        :root {
-            --bg: #f8fafc; --surface: #ffffff; --surface-2: #f1f5f9;
-            --text: #0f172a; --text-dim: #64748b; --border: #e2e8f0;
-            --primary: #3b82f6; --primary-soft: #eff6ff; --accent: #2563eb;
-            --danger: #ef4444; --success: #10b981; --font-main: 'Inter', sans-serif;
-        }
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg: #0b0f19; --surface: #111827; --surface-2: #1e293b;
-                --text: #f1f5f9; --text-dim: #94a3b8; --border: #334155;
-                --primary: #3b82f6; --primary-soft: #1e3a8a;
-            }
-        }
-        body { font-family: var(--font-main); background: var(--bg); color: var(--text); padding: 20px; line-height: 1.6; }
-        .container { max-width: 800px; margin: 0 auto; }
-        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 30px; margin-bottom: 20px; }
-        .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.2s; }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        .option-btn {
-            display: block; width: 100%; text-align: left; background: var(--surface-2); border: 1px solid var(--border);
-            color: var(--text); padding: 15px; margin-bottom: 10px; border-radius: 10px; cursor: pointer; transition: 0.2s;
-        }
-        .option-btn.selected { border-color: var(--primary); background: var(--primary-soft); box-shadow: 0 0 0 2px var(--primary); }
-        .screen { display: none; }
-        .screen.active { display: block; }
-        select { width: 100%; padding: 10px; margin-bottom: 20px; border-radius: 8px; background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
-        .result-item { border-bottom: 1px solid var(--border); padding: 20px 0; }
-        .badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; margin-bottom: 10px; }
-        .badge.correct { background: rgba(16, 185, 129, 0.2); color: var(--success); }
-        .badge.incorrect { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
-        .explanation { background: var(--surface-2); padding: 15px; border-radius: 8px; margin-top: 10px; border-left: 4px solid var(--danger); font-size: 14px; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>quiz-politica-exterior-paraguay</title>
+  <meta name="description" content="Quiz interactivo y exigente sobre Política Exterior del Paraguay, con 50 preguntas, selección múltiple, verdadero/falso, aleatoriedad y retroalimentación explicativa." />
+  <style>
+    :root, [data-theme="light"] {
+      --bg:#f7f6f2; --surface:#f9f8f5; --surface-2:#fbfbf9; --surface-offset:#edeae5; --border:#d4d1ca;
+      --text:#28251d; --muted:#7a7974; --faint:#bab9b4; --primary:#01696f; --primary-hover:#0c4e54; --accent:#7a39bb;
+      --success:#437a22; --warning:#964219; --error:#a12c7b; --shadow:0 12px 32px rgba(0,0,0,.08);
+      --radius:18px; --radius-sm:12px; --space-1:.25rem; --space-2:.5rem; --space-3:.75rem; --space-4:1rem; --space-5:1.25rem; --space-6:1.5rem; --space-8:2rem; --space-10:2.5rem; --space-12:3rem;
+      --text-xs:clamp(.75rem,.7rem + .25vw,.875rem); --text-sm:clamp(.875rem,.8rem + .35vw,1rem); --text-base:clamp(1rem,.95rem + .25vw,1.125rem); --text-lg:clamp(1.125rem,1rem + .75vw,1.5rem); --text-xl:clamp(1.5rem,1.2rem + 1.25vw,2.25rem); --text-2xl:clamp(2rem,1.2rem + 2.5vw,3.5rem);
+      --grad:linear-gradient(135deg, color-mix(in srgb, var(--primary) 16%, white), color-mix(in srgb, var(--accent) 12%, white));
+    }
+    [data-theme="dark"] {
+      --bg:#171614; --surface:#1c1b19; --surface-2:#201f1d; --surface-offset:#2d2c2a; --border:#393836;
+      --text:#cdccca; --muted:#97958f; --faint:#5a5957; --primary:#4f98a3; --primary-hover:#227f8b; --accent:#a86fdf;
+      --success:#6daa45; --warning:#bb653b; --error:#d163a7; --shadow:0 16px 40px rgba(0,0,0,.35);
+      --grad:linear-gradient(135deg, color-mix(in srgb, var(--primary) 18%, transparent), color-mix(in srgb, var(--accent) 16%, transparent));
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{min-height:100dvh;font-family:Inter,system-ui,sans-serif;background:radial-gradient(circle at top left, color-mix(in srgb, var(--primary) 12%, transparent), transparent 38%), radial-gradient(circle at top right, color-mix(in srgb, var(--accent) 10%, transparent), transparent 42%), var(--bg);color:var(--text);line-height:1.6}
+    button,input,select{font:inherit}
+    button{cursor:pointer;border:none}
+    .app{max-width:1120px;margin:0 auto;padding:var(--space-6)}
+    .topbar{display:flex;gap:var(--space-3);justify-content:space-between;align-items:center;margin-bottom:var(--space-6);flex-wrap:wrap}
+    .brand{display:flex;gap:var(--space-4);align-items:center}
+    .logo{width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,var(--primary),var(--accent));display:grid;place-items:center;color:white;font-weight:800;box-shadow:var(--shadow)}
+    .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:var(--space-6);align-items:stretch}
+    .panel{background:color-mix(in srgb, var(--surface) 86%, transparent);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);backdrop-filter:blur(10px)}
+    .hero-main{padding:var(--space-8);background:var(--grad)}
+    .hero-main h1{font-size:var(--text-2xl);line-height:1.05;margin-bottom:var(--space-4)}
+    .hero-main p{max-width:58ch;color:var(--muted);font-size:var(--text-base)}
+    .chips{display:flex;gap:var(--space-2);flex-wrap:wrap;margin-top:var(--space-5)}
+    .chip{padding:.45rem .8rem;border-radius:999px;border:1px solid var(--border);background:var(--surface-2);font-size:var(--text-xs)}
+    .controls{padding:var(--space-8);display:grid;gap:var(--space-5)}
+    .form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-4)}
+    .field label{display:block;font-size:var(--text-sm);font-weight:700;margin-bottom:var(--space-2)}
+    .field select,.field input{width:100%;padding:.95rem 1rem;border-radius:14px;background:var(--surface-2);border:1px solid var(--border);color:var(--text)}
+    .actions{display:flex;gap:var(--space-3);flex-wrap:wrap}
+    .btn{padding:.95rem 1.2rem;border-radius:14px;font-weight:700;transition:.18s ease;background:var(--surface-2);color:var(--text);border:1px solid var(--border)}
+    .btn:hover{transform:translateY(-1px);border-color:var(--primary)}
+    .btn-primary{background:var(--primary);color:white;border-color:transparent}
+    .btn-primary:hover{background:var(--primary-hover)}
+    .meta-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-4);margin-top:var(--space-6)}
+    .stat{padding:var(--space-4);border-radius:16px;background:var(--surface-2);border:1px solid var(--border)}
+    .stat b{display:block;font-size:var(--text-lg)}
+    .quiz-shell{display:none;margin-top:var(--space-6);grid-template-columns:320px 1fr;gap:var(--space-6)}
+    .quiz-shell.active{display:grid}
+    .sidebar{padding:var(--space-5);position:sticky;top:var(--space-4);height:max-content}
+    .progress-ring{display:grid;gap:var(--space-4)}
+    .numbers{display:grid;grid-template-columns:repeat(5,1fr);gap:.45rem}
+    .num{height:42px;border-radius:12px;background:var(--surface-2);border:1px solid var(--border);color:var(--muted);font-weight:700}
+    .num.current{border-color:var(--primary);color:var(--primary)}
+    .num.done{background:color-mix(in srgb, var(--primary) 18%, var(--surface-2));color:var(--text)}
+    .num.review{border-color:var(--warning);color:var(--warning)}
+    .question-card{padding:var(--space-8)}
+    .badge-row{display:flex;justify-content:space-between;gap:var(--space-3);align-items:center;flex-wrap:wrap;margin-bottom:var(--space-4)}
+    .badge{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .8rem;border-radius:999px;background:var(--surface-2);border:1px solid var(--border);font-size:var(--text-xs)}
+    .question-card h2{font-size:var(--text-xl);line-height:1.2;margin-bottom:var(--space-4)}
+    .question-text{font-size:var(--text-lg);margin-bottom:var(--space-5)}
+    .options{display:grid;gap:var(--space-3)}
+    .option{padding:1rem 1rem 1rem 1.1rem;border-radius:16px;border:1px solid var(--border);background:var(--surface-2);display:flex;gap:.9rem;align-items:flex-start;text-align:left;color:var(--text)}
+    .option:hover{border-color:var(--primary)}
+    .option.selected{border-color:var(--primary);background:color-mix(in srgb, var(--primary) 14%, var(--surface-2))}
+    .option.correct{border-color:var(--success);background:color-mix(in srgb, var(--success) 15%, var(--surface-2))}
+    .option.incorrect{border-color:var(--error);background:color-mix(in srgb, var(--error) 14%, var(--surface-2))}
+    .letter{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--surface-offset);font-weight:800;flex-shrink:0}
+    .feedback{margin-top:var(--space-5);padding:var(--space-5);border-radius:16px;border:1px solid var(--border);display:none;background:var(--surface-2)}
+    .feedback.show{display:block}
+    .feedback.correct{border-color:color-mix(in srgb, var(--success) 50%, var(--border))}
+    .feedback.incorrect{border-color:color-mix(in srgb, var(--error) 50%, var(--border))}
+    .feedback h3{margin-bottom:.5rem}
+    .nav-actions{display:flex;justify-content:space-between;gap:var(--space-3);margin-top:var(--space-6);flex-wrap:wrap}
+    .results{display:none;margin-top:var(--space-6)}
+    .results.active{display:block}
+    .results-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-4);margin-top:var(--space-5)}
+    .review-list{display:grid;gap:var(--space-4);margin-top:var(--space-6)}
+    .review-item{padding:var(--space-5);border-radius:18px;background:var(--surface);border:1px solid var(--border)}
+    .review-item.good{border-color:color-mix(in srgb, var(--success) 35%, var(--border))}
+    .review-item.bad{border-color:color-mix(in srgb, var(--error) 35%, var(--border))}
+    .muted{color:var(--muted)}
+    .small{font-size:var(--text-sm)}
+    .hidden{display:none!important}
+    @media (max-width: 960px){.hero,.quiz-shell,.results-grid,.form-grid{grid-template-columns:1fr}.sidebar{position:static}.app{padding:var(--space-4)}.hero-main,.controls,.question-card{padding:var(--space-6)}.meta-grid{grid-template-columns:repeat(2,1fr)}}
+  </style>
 </head>
 <body>
-
-<div class="container">
-    <div id="setup-screen" class="screen card active">
-        <h1 style="text-align: center;">Simulador Nivel Experto</h1>
-        <p style="text-align: center; color: var(--text-dim);">Política Exterior del Paraguay - Sin preguntas repetidas</p>
-        <label>¿Cuántas preguntas deseas responder?</label>
-        <select id="q-count">
-            <option value="10">10 Preguntas</option>
-            <option value="20">20 Preguntas</option>
-            <option value="30">30 Preguntas</option>
-            <option value="40" selected>40 Preguntas (Completo)</option>
-        </select>
-        <button class="btn" style="width: 100%;" onclick="startQuiz()">Comenzar Examen Aleatorio</button>
-    </div>
-
-    <div id="quiz-screen" class="screen card">
-        <div style="color: var(--text-dim); font-weight: bold; margin-bottom: 20px;" id="q-counter"></div>
-        <h2 id="q-text" style="margin-top: 0; margin-bottom: 20px;"></h2>
-        <div id="options-container"></div>
-        <div style="text-align: right; margin-top: 20px;">
-            <button class="btn" id="next-btn" onclick="nextQuestion()" disabled>Siguiente</button>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">PE</div>
+        <div>
+          <p class="small muted">Quiz interactivo separado de la guía</p>
+          <h1 style="font-size:var(--text-lg)">Política Exterior del Paraguay</h1>
         </div>
-    </div>
+      </div>
+      <div class="actions">
+        <button class="btn" id="themeToggle" type="button">Cambiar tema</button>
+      </div>
+    </header>
 
-    <div id="results-screen" class="screen card">
-        <h1 style="text-align: center;">Resultados Finales</h1>
-        <div style="text-align: center; font-size: 40px; font-weight: bold; color: var(--accent); margin: 20px 0;" id="score-text"></div>
-        <div id="results-details"></div>
-        <div style="text-align: center; margin-top: 30px;">
-            <button class="btn" onclick="location.reload()">Volver a Jugar</button>
+    <section class="hero">
+      <article class="panel hero-main">
+        <p class="badge">Banco difícil de práctica</p>
+        <h1>Test exigente con mezcla aleatoria y retroalimentación explicada.</h1>
+        <p>Este juego está separado de tu guía y fue pensado para autoevaluación seria: 50 preguntas, combinación de selección múltiple y verdadero/falso, distractores plausibles, orden aleatorio y explicación del porqué del error.</p>
+        <div class="chips">
+          <span class="chip">3 temas</span>
+          <span class="chip">50 preguntas</span>
+          <span class="chip">4 opciones visibles</span>
+          <span class="chip">7+ distractores por múltiple</span>
+          <span class="chip">Reintento aleatorio</span>
         </div>
-    </div>
-</div>
+        <div class="meta-grid">
+          <div class="stat"><span class="muted small">Banco total</span><b>50</b></div>
+          <div class="stat"><span class="muted small">Selección múltiple</span><b>34</b></div>
+          <div class="stat"><span class="muted small">Verdadero/Falso</span><b>16</b></div>
+          <div class="stat"><span class="muted small">Temas</span><b>3</b></div>
+        </div>
+      </article>
 
-<script>
-    const ALL_QUESTIONS = [
-  {
-    "question": "En el debate sobre el 'inter\u00e9s nacional', \u00bfcu\u00e1l es el postulado central del constructivismo en contraposici\u00f3n al realismo cl\u00e1sico?",
-    "correct": "Que el inter\u00e9s nacional no est\u00e1 dado por la anarqu\u00eda del sistema, sino que se construye a partir de la identidad y los valores socioculturales.",
-    "incorrects": [
-      {
-        "text": "Que el inter\u00e9s nacional debe enfocarse en la cooperaci\u00f3n econ\u00f3mica absoluta para evitar la guerra militar.",
-        "reason": "Esta es una premisa del institucionalismo liberal, no del constructivismo."
-      },
-      {
-        "text": "Que la identidad nacional es irrelevante y las decisiones se basan en un c\u00e1lculo puramente racional de costo-beneficio.",
-        "reason": "Al contrario, el constructivismo rechaza la racionalidad pura divorciada de la identidad."
-      },
-      {
-        "text": "Que el inter\u00e9s supremo del Estado se define exclusivamente por su capacidad de proyecci\u00f3n de poder duro.",
-        "reason": "Esa es la postura del realismo estructural (neorealismo)."
-      },
-      {
-        "text": "Que no existe un inter\u00e9s nacional \u00fanico, sino un reflejo de los intereses de la clase econ\u00f3mica dominante.",
-        "reason": "Este es el postulado del marxismo y la teor\u00eda de la dependencia."
-      },
-      {
-        "text": "Que el comportamiento del Estado est\u00e1 predeterminado inmutablemente por sus factores geogr\u00e1ficos.",
-        "reason": "Eso corresponde al determinismo geopol\u00edtico."
-      },
-      {
-        "text": "Que los Estados deben ceder su soberan\u00eda a instituciones supranacionales para redefinir su inter\u00e9s.",
-        "reason": "El constructivismo analiza c\u00f3mo se forma la identidad, no aboga necesariamente por la supranacionalidad."
-      },
-      {
-        "text": "Que la pol\u00edtica exterior es independiente del proyecto de naci\u00f3n y solo responde a amenazas externas.",
-        "reason": "El constructivismo sostiene que el proyecto de naci\u00f3n e identidad son inseparables de la pol\u00edtica exterior."
-      }
-    ]
-  },
-  {
-    "question": "\u00bfQu\u00e9 rasgo distingue esencialmente a la 'pol\u00edtica exterior de Estado' frente a la 'pol\u00edtica exterior de gobierno'?",
-    "correct": "La pol\u00edtica de Estado responde a intereses supremos y permanentes de la naci\u00f3n, trascendiendo a la administraci\u00f3n de turno.",
-    "incorrects": [
-      {
-        "text": "La pol\u00edtica de Estado es ejecutada por el Legislativo, mientras que la de gobierno por el Ejecutivo.",
-        "reason": "Ambas son ejecutadas por el Ejecutivo, la diferencia radica en la temporalidad de los intereses que defienden."
-      },
-      {
-        "text": "La pol\u00edtica de Estado requiere aprobaci\u00f3n de organizaciones multilaterales para ser implementada.",
-        "reason": "Ninguna pol\u00edtica exterior soberana requiere aprobaci\u00f3n multilateral previa."
-      },
-      {
-        "text": "La pol\u00edtica de Estado se enfoca en el corto plazo y en resolver crisis inmediatas.",
-        "reason": "La pol\u00edtica de Estado se caracteriza por tener visi\u00f3n de largo plazo."
-      },
-      {
-        "text": "La pol\u00edtica de gobierno utiliza poder duro, y la pol\u00edtica de Estado utiliza poder blando.",
-        "reason": "Ambas pueden usar cualquier instrumento de poder."
-      },
-      {
-        "text": "La pol\u00edtica de gobierno est\u00e1 codificada en la Constituci\u00f3n Nacional, siendo inmodificable.",
-        "reason": "Es la pol\u00edtica de Estado la que suele estar anclada en principios constitucionales (ej. Art. 143 CN paraguaya)."
-      },
-      {
-        "text": "La pol\u00edtica de Estado permite la injerencia de actores no gubernamentales extranjeros en su formulaci\u00f3n.",
-        "reason": "La formulaci\u00f3n es potestad soberana del Estado, no de actores extranjeros."
-      },
-      {
-        "text": "La pol\u00edtica de gobierno se limita exclusivamente a la diplomacia comercial y consular.",
-        "reason": "La pol\u00edtica de gobierno abarca todas las \u00e1reas (pol\u00edtica, seguridad, comercial), pero guiada por intereses partidarios o de facci\u00f3n."
-      }
-    ]
-  },
-  {
-    "question": "Desde la perspectiva de la pol\u00edtica exterior como 'pol\u00edtica p\u00fablica', \u00bfqu\u00e9 implica su car\u00e1cter 'interm\u00e9stico'?",
-    "correct": "La difuminaci\u00f3n de las fronteras tradicionales: las necesidades internas buscan soluciones externas, y el entorno internacional condiciona lo local.",
-    "incorrects": [
-      {
-        "text": "La obligaci\u00f3n del Estado de consultar todas las decisiones internacionales mediante refer\u00e9ndum vinculante.",
-        "reason": "El car\u00e1cter interm\u00e9stico es un concepto anal\u00edtico (Juego de dos niveles de Putnam), no un mandato legal de refer\u00e9ndum."
-      },
-      {
-        "text": "La subordinaci\u00f3n total de la pol\u00edtica econ\u00f3mica nacional a los dictados de los organismos de cr\u00e9dito internacional.",
-        "reason": "Implica interacci\u00f3n e interdependencia, no necesariamente subordinaci\u00f3n absoluta."
-      },
-      {
-        "text": "El traslado de las competencias del Ministerio de Relaciones Exteriores al Ministerio del Interior.",
-        "reason": "Institucionalmente, el MRE sigue siendo el rector, aunque deba coordinar con otras agencias."
-      },
-      {
-        "text": "La primac\u00eda incondicional del derecho interno sobre los tratados internacionales ratificados.",
-        "reason": "En Paraguay, los tratados aprobados y ratificados tienen prelaci\u00f3n sobre las leyes ordinarias (Art. 137)."
-      },
-      {
-        "text": "La exclusi\u00f3n de los actores no gubernamentales (ONGs, empresas) en el proceso de toma de decisiones.",
-        "reason": "Al contrario, el enfoque de pol\u00edtica p\u00fablica reconoce el cabildeo y participaci\u00f3n de estos actores internos."
-      },
-      {
-        "text": "La aplicaci\u00f3n de principios de paradiplomacia donde las municipalidades firman acuerdos de libre comercio.",
-        "reason": "Las municipalidades no tienen potestad constitucional para firmar TLCs."
-      },
-      {
-        "text": "La renuncia a la soberan\u00eda territorial en favor de la creaci\u00f3n de enclaves econ\u00f3micos internacionales.",
-        "reason": "El concepto interm\u00e9stico no requiere ceder territorio f\u00edsico."
-      }
-    ]
-  },
-  {
-    "question": "\u00bfC\u00f3mo se define el 'poder inteligente' (smart power) en la ejecuci\u00f3n de la pol\u00edtica exterior?",
-    "correct": "La capacidad de combinar estrat\u00e9gicamente la coerci\u00f3n militar/econ\u00f3mica (poder duro) con la persuasi\u00f3n y atracci\u00f3n cultural (poder blando).",
-    "incorrects": [
-      {
-        "text": "El uso exclusivo de la diplomacia digital y las redes sociales para influir en las elecciones de otros pa\u00edses.",
-        "reason": "Eso es una forma moderna de diplomacia p\u00fablica o propaganda, pero no abarca todo el concepto de smart power."
-      },
-      {
-        "text": "La renuncia voluntaria y permanente al uso de las fuerzas armadas para garantizar la paz regional.",
-        "reason": "El poder inteligente requiere mantener el poder duro como herramienta de disuasi\u00f3n efectiva."
-      },
-      {
-        "text": "La delegaci\u00f3n de la negociaci\u00f3n diplom\u00e1tica a corporaciones tecnol\u00f3gicas multinacionales.",
-        "reason": "El Estado no delega su soberan\u00eda representativa a empresas."
-      },
-      {
-        "text": "El enfoque prioritario en sanciones econ\u00f3micas unilaterales para forzar cambios de r\u00e9gimen.",
-        "reason": "Eso es puramente poder coercitivo (poder duro/intermedio), ignorando la atracci\u00f3n del poder blando."
-      },
-      {
-        "text": "La adaptaci\u00f3n de la pol\u00edtica exterior a los algoritmos predictivos de inteligencia artificial.",
-        "reason": "El concepto de J. Nye refiere a estrategia pol\u00edtica (hard + soft), no a herramientas de software."
-      },
-      {
-        "text": "La estrategia de alineamiento incondicional con la potencia hegem\u00f3nica de turno.",
-        "reason": "El alineamiento incondicional (bandwagoning) es una estrategia de supervivencia, no una definici\u00f3n de smart power."
-      },
-      {
-        "text": "El uso de misiones de paz de la ONU para ocupar militarmente territorios en disputa.",
-        "reason": "Las misiones de paz no son fuerzas de ocupaci\u00f3n unilateral, y su uso distorsionado no define el smart power."
-      }
-    ]
-  },
-  {
-    "question": "En la clasificaci\u00f3n de factores que determinan la pol\u00edtica exterior, \u00bfqu\u00e9 constituye un factor 'intangible interno'?",
-    "correct": "La moral de la poblaci\u00f3n, la cohesi\u00f3n social y el apoyo p\u00fablico al gobierno.",
-    "incorrects": [
-      {
-        "text": "El volumen de exportaciones agr\u00edcolas y el Producto Interno Bruto.",
-        "reason": "Estos son indicadores econ\u00f3micos, por ende, factores tangibles internos."
-      },
-      {
-        "text": "La ubicaci\u00f3n geogr\u00e1fica estrat\u00e9gica como pa\u00eds mediterr\u00e1neo.",
-        "reason": "La geograf\u00eda es el factor tangible por excelencia."
-      },
-      {
-        "text": "La estructura y modernizaci\u00f3n del equipamiento de las fuerzas armadas.",
-        "reason": "El poder\u00edo militar (equipamiento, tropas) es un factor tangible."
-      },
-      {
-        "text": "El prestigio internacional y la percepci\u00f3n de otros Estados sobre el pa\u00eds.",
-        "reason": "El prestigio es intangible, pero es un factor externo (c\u00f3mo nos ven los dem\u00e1s en el sistema)."
-      },
-      {
-        "text": "La membres\u00eda y peso de voto dentro de organizaciones internacionales.",
-        "reason": "Este es un factor pol\u00edtico/institucional externo."
-      },
-      {
-        "text": "La dependencia de importaciones de derivados del petr\u00f3leo.",
-        "reason": "Es una vulnerabilidad econ\u00f3mica tangible."
-      },
-      {
-        "text": "El tama\u00f1o demogr\u00e1fico y la distribuci\u00f3n etaria de la poblaci\u00f3n.",
-        "reason": "La demograf\u00eda es un elemento material y cuantificable, por tanto tangible."
-      }
-    ]
-  },
-  {
-    "question": "\u00bfCu\u00e1l es la jerarqu\u00eda correcta y l\u00f3gica de los objetivos permanentes del inter\u00e9s nacional seg\u00fan la teor\u00eda cl\u00e1sica?",
-    "correct": "Supervivencia del Estado (seguridad), Bienestar (desarrollo econ\u00f3mico), Promoci\u00f3n de valores (identidad/principios).",
-    "incorrects": [
-      {
-        "text": "Desarrollo econ\u00f3mico, Promoci\u00f3n de la democracia, Expansi\u00f3n territorial.",
-        "reason": "La expansi\u00f3n territorial no es un objetivo permanente leg\u00edtimo moderno, y la seguridad debe ir primero."
-      },
-      {
-        "text": "Promoci\u00f3n de valores, Bienestar de la poblaci\u00f3n, Supervivencia del Estado.",
-        "reason": "Ning\u00fan Estado puede promover valores si no asegura primero su propia existencia f\u00edsica y pol\u00edtica."
-      },
-      {
-        "text": "Alianzas estrat\u00e9gicas, Inserci\u00f3n comercial, Paz perpetua.",
-        "reason": "Las alianzas y el comercio son estrategias/instrumentos, no los fines supremos en s\u00ed mismos."
-      },
-      {
-        "text": "Soberan\u00eda energ\u00e9tica, Libre navegaci\u00f3n, Derechos Humanos.",
-        "reason": "Estos son objetivos espec\u00edficos de la pol\u00edtica exterior paraguaya, no la categorizaci\u00f3n te\u00f3rica universal."
-      },
-      {
-        "text": "Poder duro, Poder blando, Poder inteligente.",
-        "reason": "Esta es la taxonom\u00eda de los recursos e instrumentos de poder, no de los objetivos."
-      },
-      {
-        "text": "Inter\u00e9s del gobierno, Inter\u00e9s de facci\u00f3n, Inter\u00e9s nacional.",
-        "reason": "El inter\u00e9s nacional es \u00fanico y superior, no debe subordinarse a facciones."
-      },
-      {
-        "text": "Seguridad hemisf\u00e9rica, Libre mercado, Cooperaci\u00f3n t\u00e9cnica.",
-        "reason": "Son reg\u00edmenes internacionales, no la prelaci\u00f3n te\u00f3rica de objetivos existenciales de un Estado."
-      }
-    ]
-  },
-  {
-    "question": "Identifique el actor gubernamental con capacidad jur\u00eddica para comprometer al Estado en pol\u00edtica exterior, frente al cual los actores no gubernamentales solo pueden ejercer influencia extrainstitucional.",
-    "correct": "El Jefe de Estado o de Gobierno, apoyado por su Canciller\u00eda.",
-    "incorrects": [
-      {
-        "text": "Las organizaciones internacionales multilaterales.",
-        "reason": "Son foros formados por Estados, no actores internos que dirigen la pol\u00edtica del pa\u00eds."
-      },
-      {
-        "text": "Las corporaciones transnacionales operando en el territorio.",
-        "reason": "Son actores no gubernamentales con gran influencia (lobby), pero sin personer\u00eda jur\u00eddica para comprometer al Estado."
-      },
-      {
-        "text": "Los gobiernos subnacionales (Gobernaciones e Intendencias).",
-        "reason": "Realizan paradiplomacia, pero la constituci\u00f3n reserva el monopolio de la pol\u00edtica exterior al gobierno central."
-      },
-      {
-        "text": "El Poder Legislativo en pleno.",
-        "reason": "Act\u00faa como contrapeso (ratifica tratados), pero la direcci\u00f3n y representaci\u00f3n oficial recae en el Ejecutivo."
-      },
-      {
-        "text": "La opini\u00f3n p\u00fablica y los medios de comunicaci\u00f3n.",
-        "reason": "Son actores no gubernamentales que condicionan la agenda, pero no ejecutan actos de Estado."
-      },
-      {
-        "text": "Los partidos pol\u00edticos en la oposici\u00f3n.",
-        "reason": "Tienen influencia pol\u00edtica interna, pero no ejercen la titularidad de la diplomacia oficial."
-      },
-      {
-        "text": "El Poder Judicial a trav\u00e9s de la Corte Suprema.",
-        "reason": "Su rol es el control de constitucionalidad interno, no la direcci\u00f3n de las relaciones diplom\u00e1ticas."
-      }
-    ]
-  },
-  {
-    "question": "\u00bfEn qu\u00e9 etapa del proceso de toma de decisiones se sit\u00faan las 'acciones' de pol\u00edtica exterior?",
-    "correct": "Son el resultado final de la evaluaci\u00f3n de opciones, materializando la elecci\u00f3n que maximiza beneficios y responde al inter\u00e9s nacional.",
-    "incorrects": [
-      {
-        "text": "Son los prop\u00f3sitos abstractos iniciales antes de definir las estrategias.",
-        "reason": "Los prop\u00f3sitos abstractos iniciales son los 'Objetivos'."
-      },
-      {
-        "text": "Son los recursos coercitivos (sanciones, fuerza militar) de uso exclusivo.",
-        "reason": "Esos son los 'Instrumentos' (poder duro/intermedio)."
-      },
-      {
-        "text": "Constituyen la etapa de retroalimentaci\u00f3n posterior a la crisis.",
-        "reason": "La retroalimentaci\u00f3n ocurre despu\u00e9s de la acci\u00f3n para evaluar su efectividad, no es la acci\u00f3n misma."
-      },
-      {
-        "text": "Son equivalentes al proyecto de naci\u00f3n a largo plazo.",
-        "reason": "El proyecto de naci\u00f3n es el marco doctrinal permanente, las acciones son respuestas concretas coyunturales."
-      },
-      {
-        "text": "Representan las demandas no satisfechas de la sociedad civil.",
-        "reason": "Eso constituye el input o demanda del entorno dom\u00e9stico, previo a la formulaci\u00f3n."
-      },
-      {
-        "text": "Son las leyes ratificadas exclusivamente por el Congreso Nacional.",
-        "reason": "Las acciones incluyen m\u00faltiples actos del Ejecutivo (votos en foros, notas diplom\u00e1ticas, visitas) sin pasar siempre por el Congreso."
-      },
-      {
-        "text": "Es el dise\u00f1o te\u00f3rico de qui\u00e9n, cu\u00e1ndo y c\u00f3mo se har\u00e1 algo.",
-        "reason": "El dise\u00f1o del 'qui\u00e9n, cu\u00e1ndo y c\u00f3mo' corresponde a la 'Estrategia', no a su ejecuci\u00f3n (la acci\u00f3n)."
-      }
-    ]
-  },
-  {
-    "question": "Bajo la teor\u00eda del Juego de Dos Niveles (Robert Putnam), \u00bfqu\u00e9 limitaci\u00f3n enfrenta un Jefe de Estado al negociar internacionalmente?",
-    "correct": "Que todo acuerdo internacional (Nivel 1) debe ser ratificado o aceptado pol\u00edticamente por las instituciones y grupos de presi\u00f3n dom\u00e9sticos (Nivel 2).",
-    "incorrects": [
-      {
-        "text": "Que las decisiones deben someterse a la aprobaci\u00f3n del Consejo de Seguridad de la ONU antes de ser v\u00e1lidas.",
-        "reason": "La teor\u00eda de Putnam refiere a la pol\u00edtica dom\u00e9stica (nivel 2), no a instancias multilaterales externas."
-      },
-      {
-        "text": "Que los gobiernos locales tienen poder de veto directo sobre cualquier pol\u00edtica del presidente.",
-        "reason": "Los gobiernos locales no tienen poder de veto directo; es el legislativo y los grupos de presi\u00f3n (lobby) los que conforman el Nivel 2."
-      },
-      {
-        "text": "Que el Estado debe tener igual poder militar que la contraparte para poder sentarse a negociar.",
-        "reason": "El poder relativo afecta, pero la teor\u00eda de Putnam aplica a negociaciones asim\u00e9tricas tambi\u00e9n."
-      },
-      {
-        "text": "Que las empresas multinacionales pueden anular tratados mediante tribunales arbitrales privados.",
-        "reason": "Los tribunales arbitrales act\u00faan a posteriori por incumplimientos, no son el 'Nivel 2' del modelo de Putnam de ratificaci\u00f3n pol\u00edtica."
-      },
-      {
-        "text": "Que la opini\u00f3n p\u00fablica internacional decide la viabilidad del acuerdo.",
-        "reason": "El Nivel 2 es estrictamente la pol\u00edtica interna (opini\u00f3n p\u00fablica nacional, congreso)."
-      },
-      {
-        "text": "Que el Presidente no puede salir del pa\u00eds durante la etapa de negociaciones.",
-        "reason": "Las negociaciones presenciales (diplomacia de cumbres) son una caracter\u00edstica central del Nivel 1."
-      },
-      {
-        "text": "Que se proh\u00edbe el uso de diplomacia secreta bajo cualquier circunstancia.",
-        "reason": "La teor\u00eda asume que a menudo el Nivel 1 opera a puerta cerrada, pero la validaci\u00f3n requiere exposici\u00f3n al Nivel 2."
-      }
-    ]
-  },
-  {
-    "question": "Identifique una debilidad inherente al Poder Legislativo cuando intenta influir directamente en el dise\u00f1o de la pol\u00edtica exterior.",
-    "correct": "Suele tener una visi\u00f3n m\u00e1s localista y carecer de cuerpos permanentes de asesores diplom\u00e1ticos especializados.",
-    "incorrects": [
-      {
-        "text": "Su incapacidad legal para ratificar tratados internacionales.",
-        "reason": "Por mandato constitucional, el Legislativo ES quien ratifica los tratados."
-      },
-      {
-        "text": "Su mandato es de menor duraci\u00f3n que el del Presidente de la Rep\u00fablica.",
-        "reason": "En Paraguay y muchos pa\u00edses, coinciden en duraci\u00f3n (5 a\u00f1os)."
-      },
-      {
-        "text": "Su subordinaci\u00f3n absoluta al Ministerio de Relaciones Exteriores.",
-        "reason": "Es un poder del Estado independiente; no est\u00e1 subordinado a un ministerio."
-      },
-      {
-        "text": "La prohibici\u00f3n de convocar a ministros para interpelaciones sobre pol\u00edtica exterior.",
-        "reason": "El Congreso s\u00ed posee la facultad constitucional de interpelar a los Ministros."
-      },
-      {
-        "text": "Su falta de representaci\u00f3n de los partidos pol\u00edticos de oposici\u00f3n.",
-        "reason": "El Legislativo es precisamente el \u00f3rgano m\u00e1s representativo y plural de todas las fuerzas pol\u00edticas."
-      },
-      {
-        "text": "La incapacidad de aprobar el presupuesto para el servicio diplom\u00e1tico.",
-        "reason": "El Congreso aprueba anualmente el Presupuesto General de la Naci\u00f3n, siendo esto una de sus principales herramientas de presi\u00f3n."
-      },
-      {
-        "text": "La obligaci\u00f3n de viajar junto al Presidente en todas las giras oficiales.",
-        "reason": "No existe tal obligaci\u00f3n; la representaci\u00f3n oficial recae en el Ejecutivo."
-      }
-    ]
-  },
-  {
-    "question": "\u00bfCu\u00e1l de las siguientes afirmaciones describe con mayor precisi\u00f3n la estrategia de la 'Marcha hacia el Este' bajo Stroessner?",
-    "correct": "Un giro geoecon\u00f3mico buscando diversificar la salida al mundo de Paraguay y romper el monopolio de tr\u00e1nsito argentino mediante obras de infraestructura hacia Brasil.",
-    "incorrects": [
-      {
-        "text": "Un aislamiento total de los mercados occidentales para integrarse al bloque socialista oriental.",
-        "reason": "Stroessner mantuvo un fuerte alineamiento anticomunista con EE.UU. y Taiw\u00e1n."
-      },
-      {
-        "text": "El traslado compulsivo de la poblaci\u00f3n campesina hacia los territorios del Chaco paraguayo.",
-        "reason": "El Chaco queda al occidente (oeste). La marcha fue hacia la frontera oriental (Alto Paran\u00e1)."
-      },
-      {
-        "text": "La renuncia a la navegaci\u00f3n del r\u00edo Paraguay a cambio de subsidios econ\u00f3micos brasile\u00f1os.",
-        "reason": "Paraguay nunca renunci\u00f3 a sus derechos fluviales, simplemente desarroll\u00f3 rutas complementarias terrestres/energ\u00e9ticas."
-      },
-      {
-        "text": "La creaci\u00f3n de una confederaci\u00f3n pol\u00edtica supranacional con Brasil anulando las fronteras.",
-        "reason": "Fue un acercamiento pragm\u00e1tico para el desarrollo, sin ceder soberan\u00eda pol\u00edtica formal."
-      },
-      {
-        "text": "El abandono del Tratado de Asunci\u00f3n y la formaci\u00f3n de una alianza militar con Argentina.",
-        "reason": "El Tratado de Asunci\u00f3n (Mercosur) es de 1991, Stroessner fue derrocado en 1989."
-      },
-      {
-        "text": "La estatizaci\u00f3n total de la agricultura para exportar exclusivamente a puertos asi\u00e1ticos.",
-        "reason": "El modelo estronista foment\u00f3 el agro-negocio privado y la colonizaci\u00f3n con inmigrantes (brasiguayos)."
-      },
-      {
-        "text": "El cierre del Puente de la Amistad para fomentar la industria de sustituci\u00f3n de importaciones.",
-        "reason": "El Puente de la Amistad fue la obra cumbre que facilit\u00f3 el comercio, no se construy\u00f3 para cerrarlo."
-      }
-    ]
-  },
-  {
-    "question": "La 'Diplomacia Pendular' paraguaya se caracteriz\u00f3 hist\u00f3ricamente por:",
-    "correct": "Oscilar alianzas t\u00e1cticas entre Brasil y Argentina para evitar la hegemon\u00eda absoluta de uno de ellos y extraer concesiones de ambos.",
-    "incorrects": [
-      {
-        "text": "Alternar el reconocimiento diplom\u00e1tico entre China Continental y Taiw\u00e1n cada cinco a\u00f1os.",
-        "reason": "Paraguay ha mantenido relaciones ininterrumpidas exclusivamente con Taiw\u00e1n desde 1957."
-      },
-      {
-        "text": "Cambiar la capital del pa\u00eds peri\u00f3dicamente entre Asunci\u00f3n y Encarnaci\u00f3n.",
-        "reason": "La capital nunca fue trasladada bajo este concepto."
-      },
-      {
-        "text": "Romper relaciones con EE.UU. durante gobiernos dem\u00f3cratas y retomarlas con republicanos.",
-        "reason": "Mantuvo relaci\u00f3n fluida con EE.UU. sin importar el partido en el poder, priorizando el anticomunismo."
-      },
-      {
-        "text": "Alternar la adhesi\u00f3n de Paraguay entre la Comunidad Andina y el Mercosur.",
-        "reason": "Paraguay es fundador del Mercosur y nunca fue miembro pleno de la CAN."
-      },
-      {
-        "text": "Ceder temporalmente territorio a Argentina a cambio de libre navegaci\u00f3n fluvial.",
-        "reason": "La diplomacia pendular buscaba proteger la soberan\u00eda, no ceder territorio."
-      },
-      {
-        "text": "El uso exclusivo de organismos multilaterales abandonando el bilateralismo.",
-        "reason": "La diplomacia pendular fue eminentemente un juego pol\u00edtico bilateral entre los tres pa\u00edses."
-      },
-      {
-        "text": "Alinear toda la pol\u00edtica exterior con el bloque sovi\u00e9tico durante la Guerra Fr\u00eda.",
-        "reason": "Paraguay form\u00f3 parte del bloque occidental anticomunista (Plan C\u00f3ndor)."
-      }
-    ]
-  },
-  {
-    "question": "A nivel de integraci\u00f3n profunda, \u00bfqu\u00e9 diferencia sustancial impide que el Mercosur actual se considere un Mercado Com\u00fan pleno?",
-    "correct": "Las severas restricciones vigentes a la libre circulaci\u00f3n de servicios y factores productivos (trabajo y capital), as\u00ed como el Arancel Externo Com\u00fan perforado.",
-    "incorrects": [
-      {
-        "text": "La ausencia de una moneda \u00fanica obligatoria para transacciones minoristas.",
-        "reason": "La moneda \u00fanica no es un requisito de un Mercado Com\u00fan, sino de una Uni\u00f3n Econ\u00f3mica."
-      },
-      {
-        "text": "La prohibici\u00f3n de que los ciudadanos del bloque viajen usando su documento de identidad nacional.",
-        "reason": "Hoy en d\u00eda el Mercosur permite viajar con c\u00e9dula de identidad sin pasaporte (Acuerdo Migratorio)."
-      },
-      {
-        "text": "La falta de un Tratado que establezca la paz perpetua entre los Estados partes.",
-        "reason": "El Tratado de Asunci\u00f3n y la zona de paz son hechos consolidados, la falla est\u00e1 en lo comercial."
-      },
-      {
-        "text": "El mantenimiento de aranceles internos del 100% para todo tipo de manufacturas.",
-        "reason": "El comercio intrazona est\u00e1 mayormente liberado de aranceles (salvo excepciones como automotriz/azucarero)."
-      },
-      {
-        "text": "La inexistencia total de \u00f3rganos institucionales como el Parlamento o Tribunal.",
-        "reason": "El Mercosur cuenta con el Parlasur y el Tribunal Permanente de Revisi\u00f3n."
-      },
-      {
-        "text": "La negativa de Paraguay a firmar el Tratado de Asunci\u00f3n.",
-        "reason": "Paraguay es signatario original del Tratado de Asunci\u00f3n (1991)."
-      },
-      {
-        "text": "El ingreso de Venezuela, que oblig\u00f3 jur\u00eddicamente a retroceder a Zona de Libre Comercio.",
-        "reason": "El retroceso o estancamiento del Mercosur es estructural y multifactorial, no dictado jur\u00eddicamente por el ingreso de Venezuela."
-      }
-    ]
-  },
-  {
-    "question": "\u00bfQu\u00e9 implicancias jur\u00eddicas y pol\u00edticas tuvo la Declaraci\u00f3n de Foz de Iguaz\u00fa (1985)?",
-    "correct": "Descomprimi\u00f3 la tensi\u00f3n por el aprovechamiento de recursos h\u00eddricos compartidos y sent\u00f3 las bases pol\u00edticas de confianza para la futura integraci\u00f3n sudamericana.",
-    "incorrects": [
-      {
-        "text": "Cre\u00f3 oficialmente el Mercosur con la inclusi\u00f3n inmediata de Paraguay y Uruguay.",
-        "reason": "Fue un acuerdo bilateral (Argentina-Brasil); el Mercosur se crear\u00eda en 1991."
-      },
-      {
-        "text": "Anul\u00f3 los tratados de Itaip\u00fa y Corpus por considerarlos atentatorios al ambiente.",
-        "reason": "No anul\u00f3 los tratados; de hecho, super\u00f3 el conflicto de la compatibilidad operativa (Acuerdo Tripartito de 1979)."
-      },
-      {
-        "text": "Estableci\u00f3 un Parlamento supranacional con poder de veto sobre leyes nacionales.",
-        "reason": "Fue una declaraci\u00f3n pol\u00edtica, no cre\u00f3 instituciones supranacionales."
-      },
-      {
-        "text": "Decret\u00f3 el uso del Real brasile\u00f1o como moneda comercial \u00fanica.",
-        "reason": "El proceso de integraci\u00f3n no inclu\u00eda (ni incluye) convergencia monetaria obligatoria."
-      },
-      {
-        "text": "Oblig\u00f3 a Paraguay a renunciar a sus derechos de navegaci\u00f3n en la Hidrov\u00eda.",
-        "reason": "Paraguay protegi\u00f3 e increment\u00f3 sus derechos de navegaci\u00f3n fluvial."
-      },
-      {
-        "text": "Expuls\u00f3 a Chile del proceso de integraci\u00f3n del Cono Sur.",
-        "reason": "Chile no participaba; la declaraci\u00f3n buscaba acercamiento, no exclusi\u00f3n."
-      },
-      {
-        "text": "Aplic\u00f3 sanciones militares contra el r\u00e9gimen estronista en Paraguay.",
-        "reason": "Fue un acuerdo de cooperaci\u00f3n pac\u00edfica bilateral argentino-brasile\u00f1a sin componentes militares sancionatorios."
-      }
-    ]
-  },
-  {
-    "question": "En la historia diplom\u00e1tica reciente de Sudam\u00e9rica, UNASUR surgi\u00f3 principalmente como:",
-    "correct": "Un proyecto de concertaci\u00f3n pol\u00edtica e infraestructura con una fuerte carga ideol\u00f3gica ('giro a la izquierda'), que buscaba excluir la influencia de EE.UU.",
-    "incorrects": [
-      {
-        "text": "Un acuerdo estrictamente aduanero y arancelario sin ning\u00fan componente pol\u00edtico.",
-        "reason": "UNASUR era eminentemente pol\u00edtico, no un \u00e1rea de libre comercio tradicional."
-      },
-      {
-        "text": "Una extensi\u00f3n de la OEA financiada directamente por Estados Unidos.",
-        "reason": "Buscaba deliberadamente desplazar a la OEA y minimizar la influencia de Washington."
-      },
-      {
-        "text": "Un bloque militar ofensivo liderado por Colombia para pacificar Centroam\u00e9rica.",
-        "reason": "Pose\u00eda un Consejo de Defensa, pero como mecanismo de confianza mutua, no ofensivo, y Colombia ten\u00eda reticencias."
-      },
-      {
-        "text": "Un tratado bilateral entre Venezuela y Cuba para exportar petr\u00f3leo subsidiado.",
-        "reason": "Eso describe al ALBA-Petrocaribe; UNASUR involucraba a 12 pa\u00edses sudamericanos."
-      },
-      {
-        "text": "La primera Uni\u00f3n Econ\u00f3mica y Monetaria de Am\u00e9rica, con el 'Sucre' como moneda.",
-        "reason": "El Sucre fue una unidad de cuenta del ALBA, UNASUR nunca implement\u00f3 una moneda real."
-      },
-      {
-        "text": "Un organismo dise\u00f1ado para administrar exclusivamente el tratado ant\u00e1rtico.",
-        "reason": "Su \u00e1mbito era la integraci\u00f3n sudamericana, no la administraci\u00f3n ant\u00e1rtica."
-      },
-      {
-        "text": "Una iniciativa paraguaya para obligar a sus vecinos a ceder puertos mar\u00edtimos.",
-        "reason": "Fue impulsada primariamente por el Brasil de Lula da Silva, no por Paraguay."
-      }
-    ]
-  },
-  {
-    "question": "\u00bfBajo qu\u00e9 figura jur\u00eddica ampar\u00f3 el Mercosur la suspensi\u00f3n de Paraguay en el a\u00f1o 2012?",
-    "correct": "El Protocolo de Ushuaia, argumentando que el sumar\u00edsimo juicio pol\u00edtico al presidente Lugo constituy\u00f3 una 'ruptura del orden democr\u00e1tico'.",
-    "incorrects": [
-      {
-        "text": "El Protocolo de Olivos, tras fallar a favor de Venezuela en una disputa comercial.",
-        "reason": "El Protocolo de Olivos es para controversias comerciales; el juicio fue pol\u00edtico (Ushuaia)."
-      },
-      {
-        "text": "El Tratado de Asunci\u00f3n, acusando a Paraguay de elevar el Arancel Externo Com\u00fan.",
-        "reason": "La suspensi\u00f3n fue por motivos estrictamente pol\u00edticos y constitucionales, no comerciales."
-      },
-      {
-        "text": "La Cl\u00e1usula Democr\u00e1tica de la OEA, ejecutada por el Parlamento del Mercosur.",
-        "reason": "El Parlasur no tiene poder ejecutivo; la decisi\u00f3n la tomaron los Presidentes (CMC) usando normas propias del Mercosur."
-      },
-      {
-        "text": "El Protocolo de Ouro Preto, ante la falta de pago de aportes a la Secretar\u00eda.",
-        "reason": "La morosidad institucional quita derecho a voto, pero no suspende la participaci\u00f3n total como bloque pol\u00edtico."
-      },
-      {
-        "text": "La Convenci\u00f3n de Viena, por violaci\u00f3n de inmunidad diplom\u00e1tica de embajadores brasile\u00f1os.",
-        "reason": "No hubo incidentes con embajadores que motivaran la sanci\u00f3n del bloque."
-      },
-      {
-        "text": "El Tratado Tripartito, alegando el uso excesivo del caudal del R\u00edo Paran\u00e1.",
-        "reason": "El Tratado de 1979 regula niveles del r\u00edo (Itaip\u00fa/Corpus), sin relaci\u00f3n con el orden democr\u00e1tico interno."
-      },
-      {
-        "text": "La Carta Magna de Asunci\u00f3n de 1991, que proh\u00edbe los juicios pol\u00edticos presidenciales.",
-        "reason": "El Tratado de 1991 no proh\u00edbe el juicio pol\u00edtico (herramienta constitucional v\u00e1lida), la disputa fue por el debido proceso (tiempo)."
-      }
-    ]
-  },
-  {
-    "question": "\u00bfPor qu\u00e9 el ingreso de Venezuela al Mercosur en 2012 gener\u00f3 una controversia jur\u00eddica sostenida por Paraguay?",
-    "correct": "Porque se aprob\u00f3 aprovechando la suspensi\u00f3n paraguaya, violando el principio del Tratado de Asunci\u00f3n que exige consenso un\u00e1nime de todos los miembros plenos para nuevas adhesiones.",
-    "incorrects": [
-      {
-        "text": "Porque Venezuela no posee territorio contiguo con ninguno de los pa\u00edses del Mercosur.",
-        "reason": "Venezuela limita extensa y directamente con Brasil."
-      },
-      {
-        "text": "Porque Paraguay exig\u00eda que Venezuela abandonara previamente la OEA.",
-        "reason": "Paraguay exig\u00eda el respeto al proceso de ratificaci\u00f3n legislativa interna (Senado paraguayo), no condiciones sobre la OEA."
-      },
-      {
-        "text": "Porque Venezuela impuso el uso obligatorio del Bol\u00edvar en el comercio del bloque.",
-        "reason": "El ingreso no conllev\u00f3 cambios monetarios obligatorios para los dem\u00e1s socios."
-      },
-      {
-        "text": "Porque el Estatuto del Mercosur proh\u00edbe expl\u00edcitamente el ingreso de pa\u00edses petroleros.",
-        "reason": "No existe tal prohibici\u00f3n econ\u00f3mica sectorial en los tratados del bloque."
-      },
-      {
-        "text": "Porque Paraguay reclamaba el pago de una deuda hist\u00f3rica de PDVSA antes de aceptar el ingreso.",
-        "reason": "La deuda con PDVSA exist\u00eda, pero el bloqueo al ingreso fue pol\u00edtico-institucional del Senado, no un chantaje formal."
-      },
-      {
-        "text": "Porque Uruguay amenaz\u00f3 con retirarse si Paraguay ejerc\u00eda su derecho a veto.",
-        "reason": "Uruguay apoy\u00f3 el ingreso junto con Argentina y Brasil (el 'lo pol\u00edtico supera a lo jur\u00eddico' de Mujica)."
-      },
-      {
-        "text": "Porque el ingreso de Venezuela obligaba a Paraguay a romper relaciones con Estados Unidos.",
-        "reason": "El Mercosur no dicta las relaciones diplom\u00e1ticas bilaterales de sus miembros con terceros."
-      }
-    ]
-  },
-  {
-    "question": "\u00bfQu\u00e9 representa el Fondo para la Convergencia Estructural del Mercosur (FOCEM) para Paraguay?",
-    "correct": "El principal instrumento solidario del bloque para mitigar asimetr\u00edas, financiando infraestructuras viales y energ\u00e9ticas (ej. l\u00ednea de 500kV) de las que Paraguay es el mayor beneficiario.",
-    "incorrects": [
-      {
-        "text": "Un banco central regional encargado de emitir billetes con valor en toda Sudam\u00e9rica.",
-        "reason": "El FOCEM reparte fondos para proyectos no reembolsables, no es un banco emisor de moneda."
-      },
-      {
-        "text": "Un arancel punitivo cobrado a los pa\u00edses que exportan sin valor agregado.",
-        "reason": "Es un fondo de cooperaci\u00f3n integrado por aportes asim\u00e9tricos (Brasil y Argentina pagan m\u00e1s), no un impuesto punitivo."
-      },
-      {
-        "text": "El presupuesto destinado a mantener operativo el Parlamento del Mercosur en Montevideo.",
-        "reason": "El Parlasur se financia del presupuesto ordinario institucional; FOCEM es para obras de infraestructura."
-      },
-      {
-        "text": "Un mecanismo para subsidiar directamente los salarios de la administraci\u00f3n p\u00fablica paraguaya.",
-        "reason": "Financia proyectos estructurales auditables, no gastos corrientes o salarios estatales."
-      },
-      {
-        "text": "Un fondo de rescate utilizado para pagar la deuda externa con el FMI.",
-        "reason": "Sus fondos tienen destino espec\u00edfico en obras f\u00edsicas y sociales, prohibido su uso para pago de deuda soberana."
-      },
-      {
-        "text": "Una entidad supranacional que fija los precios de la soja y la carne.",
-        "reason": "El Mercosur no tiene fijaci\u00f3n de precios, opera bajo econom\u00eda de libre mercado."
-      },
-      {
-        "text": "Un programa militar para estandarizar el armamento de las cuatro fuerzas armadas.",
-        "reason": "El Mercosur carece de dimensi\u00f3n militar/defensa integrada."
-      }
-    ]
-  },
-  {
-    "question": "\u00bfQu\u00e9 caracter\u00edstica define la vulnerabilidad estructural de Paraguay calificada como 'doblemente asim\u00e9trica' en la literatura de integraci\u00f3n?",
-    "correct": "Es asim\u00e9trico por el tama\u00f1o relativo de su econom\u00eda frente a potencias (Brasil/Argentina) y, a la vez, por su encierro geogr\u00e1fico (mediterraneidad).",
-    "incorrects": [
-      {
-        "text": "Posee la inflaci\u00f3n m\u00e1s alta del continente y la menor cantidad de agua dulce.",
-        "reason": "Paraguay tiene estabilidad macroecon\u00f3mica hist\u00f3rica y es una potencia h\u00eddrica mundial."
-      },
-      {
-        "text": "Tiene un territorio dividido en dos continentes y sufre de bloqueos navales europeos.",
-        "reason": "Es un pa\u00eds puramente sudamericano y no sufre bloqueos navales europeos actuales."
-      },
-      {
-        "text": "Depende totalmente de la exportaci\u00f3n de petr\u00f3leo y est\u00e1 aislado de Asia.",
-        "reason": "No exporta petr\u00f3leo; su fuerte es la agroindustria y la hidroenerg\u00eda."
-      },
-      {
-        "text": "Carece de servicio diplom\u00e1tico y no pertenece a las Naciones Unidas.",
-        "reason": "Posee una canciller\u00eda estructurada y es fundador de la ONU (1945)."
-      },
-      {
-        "text": "No produce alimentos suficientes y no tiene constituci\u00f3n nacional.",
-        "reason": "Es top 10 mundial exportador de soja/carne y su constituci\u00f3n rige desde 1992."
-      },
-      {
-        "text": "Est\u00e1 rodeado de potencias nucleares hostiles y sufre sanciones de la OEA.",
-        "reason": "El Cono Sur es zona libre de armas nucleares (Tlatelolco) y Paraguay no sufre sanciones de OEA."
-      },
-      {
-        "text": "Comparte moneda con Argentina, importando su inflaci\u00f3n y deuda.",
-        "reason": "Mantiene estricta independencia monetaria con el Guaran\u00ed."
-      }
-    ]
-  },
-  {
-    "question": "\u00bfCu\u00e1l fue el impacto del retorno de la democracia en 1989 sobre la pol\u00edtica exterior paraguaya?",
-    "correct": "El fin del aislamiento ideol\u00f3gico, permitiendo una apertura total, el ingreso al Mercosur y la diversificaci\u00f3n de relaciones internacionales basadas en principios de Estado de Derecho.",
-    "incorrects": [
-      {
-        "text": "La ruptura inmediata de todas las relaciones diplom\u00e1ticas con el hemisferio occidental.",
-        "reason": "Al contrario, se fortaleci\u00f3 la inserci\u00f3n en Occidente superando el estigma de la dictadura."
-      },
-      {
-        "text": "El retiro de Paraguay de la OEA por considerarla una herramienta del imperialismo.",
-        "reason": "La nueva constituci\u00f3n de 1992 reivindic\u00f3 la integraci\u00f3n multilateral fuertemente."
-      },
-      {
-        "text": "La militarizaci\u00f3n de la diplomacia, reemplazando civiles por generales en todas las embajadas.",
-        "reason": "Inici\u00f3 un proceso de profesionalizaci\u00f3n y desmilitarizaci\u00f3n del servicio exterior (Ley 1335)."
-      },
-      {
-        "text": "El desconocimiento de los Tratados de Itaip\u00fa y Yacyret\u00e1, paralizando ambas obras.",
-        "reason": "Los tratados se respetaron bajo el principio de continuidad jur\u00eddica del Estado."
-      },
-      {
-        "text": "El abandono del modelo agroexportador para establecer una econom\u00eda comunista planificada.",
-        "reason": "El modelo econ\u00f3mico liberal-exportador se profundiz\u00f3 tras el golpe de 1989."
-      },
-      {
-        "text": "La declaraci\u00f3n de neutralidad armada perpetua, prohibiendo al pa\u00eds firmar tratados comerciales.",
-        "reason": "Paraguay nunca adopt\u00f3 neutralidad suiza; se involucr\u00f3 activamente en el libre comercio."
-      },
-      {
-        "text": "La exigencia de indemnizaciones de guerra a Brasil y Argentina como condici\u00f3n para dialogar.",
-        "reason": "La integraci\u00f3n mercosure\u00f1a se bas\u00f3 en mirar al futuro, no en reclamos b\u00e9licos del siglo XIX."
-      }
-    ]
-  },
-  {
-    "question": "Dentro del Eje Estrat\u00e9gico de 'Reivindicaci\u00f3n de la Soberan\u00eda', \u00bfc\u00f3mo se posiciona Paraguay ante las intervenciones externas?",
-    "correct": "Rechaza cualquier injerencia en sus asuntos internos, afirmando que el modelo de desarrollo y las decisiones pol\u00edticas corresponden exclusivamente al pueblo paraguayo.",
-    "incorrects": [
-      {
-        "text": "Apoya las intervenciones armadas preventivas de la ONU para imponer democracias.",
-        "reason": "La Constituci\u00f3n proh\u00edbe la injerencia y aboga por la soluci\u00f3n pac\u00edfica de controversias."
-      },
-      {
-        "text": "Delega la revisi\u00f3n de su Constituci\u00f3n al Tribunal Permanente del Mercosur.",
-        "reason": "El orden de prelaci\u00f3n jur\u00eddica coloca a la Constituci\u00f3n Nacional por encima de todo tratado supranacional."
-      },
-      {
-        "text": "Permite que potencias extranjeras dicten sus pol\u00edticas agropecuarias para evitar sanciones comerciales.",
-        "reason": "Soberan\u00eda es precisamente resistir imposiciones for\u00e1neas sobre la estructura productiva (ej. normativas ambientales europeas unilaterales)."
-      },
-      {
-        "text": "Fomenta la secesi\u00f3n de territorios para crear zonas francas independientes bajo control de la OMC.",
-        "reason": "La integridad territorial es un pilar innegociable de la soberan\u00eda de Estado."
-      },
-      {
-        "text": "Renuncia a aplicar su c\u00f3digo penal a extranjeros que inviertan m\u00e1s de un mill\u00f3n de d\u00f3lares.",
-        "reason": "El Estado ejerce soberan\u00eda jur\u00eddica igualitaria sobre todo individuo en su territorio."
-      },
-      {
-        "text": "Cierra sistem\u00e1ticamente sus fronteras al libre tr\u00e1nsito civil en represalia por pol\u00edticas migratorias vecinas.",
-        "reason": "La defensa de la soberan\u00eda se da en el marco del derecho internacional, no de medidas hostiles aut\u00e1rquicas."
-      },
-      {
-        "text": "Supedita su voto en foros multilaterales a lo que dictamine el consenso exclusivo de UNASUR.",
-        "reason": "Conserva independencia de voto de acuerdo a sus intereses, no act\u00faa como bloque autom\u00e1tico si le perjudica."
-      }
-    ]
-  },
-  {
-    "question": "En materia de Derechos Humanos (Eje Estrat\u00e9gico), \u00bfqu\u00e9 es el SIMORE Plus?",
-    "correct": "Un sistema inform\u00e1tico paraguayo interinstitucional que vincula el cumplimiento de recomendaciones internacionales de DD.HH. con los Objetivos de Desarrollo Sostenible (ODS).",
-    "incorrects": [
-      {
-        "text": "Una fuerza policial de \u00e9lite entrenada por la ONU para intervenir en c\u00e1rceles.",
-        "reason": "Es un sistema tecnol\u00f3gico de monitoreo de datos, no una fuerza operativa de seguridad."
-      },
-      {
-        "text": "Un tratado de libre comercio condicionado al respeto a la libertad de prensa.",
-        "reason": "No es un tratado comercial, es una herramienta estatal interna de seguimiento."
-      },
-      {
-        "text": "El fondo econ\u00f3mico indemnizatorio para v\u00edctimas del terrorismo de Estado en los a\u00f1os 70.",
-        "reason": "Existe una Defensor\u00eda del Pueblo para eso; el SIMORE monitorea recomendaciones actuales vigentes."
-      },
-      {
-        "text": "Una ONG internacional con sede en Asunci\u00f3n que audita las elecciones presidenciales.",
-        "reason": "Es una plataforma del Estado Paraguayo (Canciller\u00eda + Ministerio de Justicia), no una ONG."
-      },
-      {
-        "text": "El programa de becas universitarias para refugiados en situaci\u00f3n de vulnerabilidad.",
-        "reason": "Aunque los DDHH abarcan refugiados, SIMORE es espec\u00edficamente de monitoreo de recomendaciones y tratados."
-      },
-      {
-        "text": "La cl\u00e1usula del Mercosur que sanciona penalmente a presidentes por corrupci\u00f3n.",
-        "reason": "El Mercosur no tiene jurisdicci\u00f3n penal. SIMORE es paraguayo y enfocado en DD.HH."
-      },
-      {
-        "text": "Un radar militar para vigilar violaciones de espacio a\u00e9reo por naves del narcotr\u00e1fico.",
-        "reason": "Pertenece a la dimensi\u00f3n de derechos fundamentales civiles/sociales, no vigilancia aeropespacial militar."
-      }
-    ]
-  },
-  {
-    "question": "Bajo el Eje de 'Diplomacia Energ\u00e9tica', la revisi\u00f3n del Anexo C del Tratado de Itaip\u00fa (cumplidos 50 a\u00f1os) involucr\u00f3 el debate sobre:",
-    "correct": "Las bases financieras y de prestaci\u00f3n de servicios de electricidad, incluyendo la tarifa y el destino de la energ\u00eda excedente paraguaya.",
-    "incorrects": [
-      {
-        "text": "La demolici\u00f3n de la represa para restaurar los Saltos del Guair\u00e1 y cumplir normativas de la UNESCO.",
-        "reason": "La revisi\u00f3n es estrictamente t\u00e9cnica y financiera, la infraestructura f\u00edsica (represa) es permanente y vital para ambas econom\u00edas."
-      },
-      {
-        "text": "La transferencia de la propiedad total de la represa a manos de la Rep\u00fablica del Brasil.",
-        "reason": "La soberan\u00eda sobre el 50% de la entidad es un logro hist\u00f3rico irrenunciable paraguayo."
-      },
-      {
-        "text": "La inclusi\u00f3n de Argentina y Bolivia como nuevos socios igualitarios en la represa binacional.",
-        "reason": "Itaip\u00fa es exclusivamente binacional (Brasil-Paraguay)."
-      },
-      {
-        "text": "El pago de peajes a Naciones Unidas por el uso del caudal del r\u00edo Paran\u00e1.",
-        "reason": "El r\u00edo Paran\u00e1 es recurso compartido soberano, no tributa a la ONU."
-      },
-      {
-        "text": "La prohibici\u00f3n de utilizar el r\u00edo para navegaci\u00f3n comercial mientras operen las turbinas.",
-        "reason": "La navegabilidad (esclusas proyectadas) no choca existencialmente con la revisi\u00f3n financiera del Anexo C."
-      },
-      {
-        "text": "El abandono del uso del D\u00f3lar estadounidense para pasar a facturar la energ\u00eda exclusivamente en Reales.",
-        "reason": "El Tratado estipula al D\u00f3lar como moneda de referencia fundamental para evitar devaluaciones asim\u00e9tricas."
-      },
-      {
-        "text": "La privatizaci\u00f3n de la ANDE para que empresas extranjeras controlen la distribuci\u00f3n de luz en Paraguay.",
-        "reason": "La ANDE es un monopolio estatal estrat\u00e9gico; la diplomacia defiende la soberan\u00eda el\u00e9ctrica del Estado."
-      }
-    ]
-  },
-  {
-    "question": "En cuanto al 'Trato Especial y Diferenciado para PDSL' (Pa\u00edses en Desarrollo Sin Litoral), \u00bfqu\u00e9 foro o mecanismo internacional es clave para canalizar estos reclamos?",
-    "correct": "El Programa de Acci\u00f3n de Viena y conferencias de Naciones Unidas que buscan compensaciones estructurales en infraestructura y facilitaci\u00f3n del comercio.",
-    "incorrects": [
-      {
-        "text": "El Consejo de Seguridad de la ONU, que emite resoluciones vinculantes de embargo contra pa\u00edses que nieguen acceso al mar.",
-        "reason": "El Consejo de Seguridad atiende temas de paz y guerra, no controversias log\u00edsticas o econ\u00f3micas comerciales rutinarias."
-      },
-      {
-        "text": "La Corte Penal Internacional, mediante querellas por cr\u00edmenes de lesa humanidad contra los Estados ribere\u00f1os.",
-        "reason": "La CPI juzga a individuos por genocidio y cr\u00edmenes de guerra, no cuestiones de tr\u00e1nsito comercial de Estados."
-      },
-      {
-        "text": "El Tratado del Atl\u00e1ntico Norte (OTAN), que proporciona escolta militar para la flota mercante fluvial paraguaya.",
-        "reason": "La OTAN es una alianza de defensa europea/norteamericana sin jurisdicci\u00f3n ni inter\u00e9s directo en r\u00edos sudamericanos."
-      },
-      {
-        "text": "El Parlamento Europeo, que subsidia directamente los fletes de exportadores paraguayos.",
-        "reason": "Europa apoya la integraci\u00f3n, pero la diplomacia PDSL se gestiona universalmente en la ONU (G77, OMC), no bajo tutelaje parlamentario europeo."
-      },
-      {
-        "text": "El ALBA-TCP, que garantiza transporte gratuito mar\u00edtimo a cambio de petr\u00f3leo subsidiado.",
-        "reason": "Paraguay busca derechos de tr\u00e1nsito institucionales, no acuerdos ideol\u00f3gicos de transporte."
-      },
-      {
-        "text": "La Organizaci\u00f3n de Pa\u00edses Exportadores de Petr\u00f3leo (OPEP), mediante la provisi\u00f3n de combustible libre de impuestos.",
-        "reason": "La desventaja mediterr\u00e1nea no se resuelve mendigando crudo, sino con derecho al mar y reducci\u00f3n de costos de transacci\u00f3n fronteriza."
-      },
-      {
-        "text": "El Banco Interamericano de Desarrollo (BID), asumiendo la soberan\u00eda de los puertos mar\u00edtimos de Argentina.",
-        "reason": "El BID es una banca de financiamiento, no asume soberan\u00eda ni administra puertos internacionales."
-      }
-    ]
-  },
-  {
-    "question": "Eje 'Medio Ambiente y Cambio Clim\u00e1tico': \u00bfCu\u00e1l es la postura firme de Paraguay respecto a las regulaciones de trazabilidad impulsadas por la Uni\u00f3n Europea (Ej. Reglamento Libre de Deforestaci\u00f3n)?",
-    "correct": "Sostiene que estas normativas son barreras paraarancelarias unilaterales que violan normas de la OMC e imponen costos injustos a los productores locales.",
-    "incorrects": [
-      {
-        "text": "Acepta someter toda la producci\u00f3n agr\u00edcola a la auditor\u00eda del Parlamento Europeo a cambio de subsidios.",
-        "reason": "Rechaza enf\u00e1ticamente la injerencia extranjera y la afectaci\u00f3n a su competitividad soberana."
-      },
-      {
-        "text": "Decidi\u00f3 abandonar el bloque Mercosur porque los dem\u00e1s socios acordaron firmar el tratado a ciegas.",
-        "reason": "Brasil y Argentina comparten visiones similares frente al proteccionismo verde europeo; no provoc\u00f3 salidas del bloque."
-      },
-      {
-        "text": "Propone destruir las selvas restantes para forzar a Europa a comprar productos m\u00e1s caros.",
-        "reason": "Paraguay cuenta con leyes de deforestaci\u00f3n cero en ciertas regiones y promueve la siembra directa sustentable."
-      },
-      {
-        "text": "Exige que la Uni\u00f3n Europea desmantele toda su industria automotriz como compensaci\u00f3n.",
-        "reason": "La diplomacia exige trato justo y apego a la OMC, no hace exigencias absurdas a econom\u00edas de terceros."
-      },
-      {
-        "text": "Renuncia voluntariamente a exportar soja y carne para enfocarse \u00fanicamente en servicios inform\u00e1ticos.",
-        "reason": "La econom\u00eda paraguaya es estructuralmente dependiente de sus commodities agr\u00edcolas; renunciar ser\u00eda catastr\u00f3fico."
-      },
-      {
-        "text": "Acude al Tribunal Permanente de Revisi\u00f3n del Mercosur para demandar al Banco Central Europeo.",
-        "reason": "El Tribunal del Mercosur juzga asimetr\u00edas internas, no tiene jurisdicci\u00f3n sobre normativas comunitarias europeas."
-      },
-      {
-        "text": "Promueve la salida masiva de Am\u00e9rica Latina del Acuerdo de Par\u00eds.",
-        "reason": "Paraguay sigue en el Acuerdo de Par\u00eds, separando el compromiso clim\u00e1tico global de las trabas comerciales unilaterales europeas."
-      }
-    ]
-  },
-  {
-    "question": "Respecto a la 'Diplomacia Econ\u00f3mica Comercial' y la atracci\u00f3n de Inversi\u00f3n Extranjera Directa (IED), \u00bfqu\u00e9 r\u00e9gimen jur\u00eddico interno promueve activamente la Canciller\u00eda en el exterior?",
-    "correct": "El r\u00e9gimen de Maquila, la Ley 60/90 de incentivos fiscales y el R\u00e9gimen de Zonas Francas, destacando la estabilidad macroecon\u00f3mica ('Regla Fiscal').",
-    "incorrects": [
-      {
-        "text": "La expropiaci\u00f3n sin indemnizaci\u00f3n de tierras para entregarlas gratuitamente a consorcios multinacionales.",
-        "reason": "La Constituci\u00f3n garantiza la propiedad privada (Art. 109). Nadie invertir\u00eda bajo riesgo de expropiaci\u00f3n an\u00e1rquica."
-      },
-      {
-        "text": "La obligatoriedad de que toda empresa extranjera transfiera el 51% de sus acciones al gobierno paraguayo.",
-        "reason": "El pa\u00eds fomenta el libre mercado y la propiedad privada plena de los inversionistas extranjeros (no hay ley de nacionalizaci\u00f3n forzosa)."
-      },
-      {
-        "text": "El uso exclusivo de criptomonedas (Bitcoin) para evadir el pago de aranceles en el comercio con Brasil.",
-        "reason": "La diplomacia econ\u00f3mica promociona ventajas competitivas legales, no esquemas de evasi\u00f3n aduanera."
-      },
-      {
-        "text": "La prohibici\u00f3n de repatriar utilidades durante los primeros 20 a\u00f1os de inversi\u00f3n.",
-        "reason": "Al contrario, la ley de inversiones garantiza el libre flujo de capitales y remesa de utilidades."
-      },
-      {
-        "text": "El establecimiento de monopolios estatales para importar bienes de consumo masivo.",
-        "reason": "El modelo paraguayo es de los m\u00e1s liberalizados de la regi\u00f3n, opuesto al monopolio comercial estatal."
-      },
-      {
-        "text": "El desconocimiento de los tribunales de arbitraje internacional (CIADI) en caso de disputa.",
-        "reason": "Paraguay somete disputas comerciales internacionales al CIADI para dar seguridad jur\u00eddica a los capitales."
-      },
-      {
-        "text": "La imposici\u00f3n de cuotas que obligan a contratar \u00fanicamente obreros provenientes del extranjero.",
-        "reason": "Las leyes laborales promueven el empleo de mano de obra nacional como objetivo fundamental de la Maquila."
-      }
-    ]
-  },
-  {
-    "question": "En el Eje de 'Cooperaci\u00f3n Internacional', \u00bfc\u00f3mo ha evolucionado el perfil de Paraguay en las \u00faltimas d\u00e9cadas?",
-    "correct": "Ha transitado de ser exclusivamente un pa\u00eds 'receptor' de ayuda a posicionarse gradualmente como un actor de Cooperaci\u00f3n Sur-Sur (oferente de asistencia t\u00e9cnica en \u00e1reas de \u00e9xito local).",
-    "incorrects": [
-      {
-        "text": "Ha rechazado tajantemente cualquier donaci\u00f3n financiera para evitar la dependencia del imperialismo occidental.",
-        "reason": "Paraguay recibe cooperaci\u00f3n financiera no reembolsable (ej. JICA, Koica, USAID, UE) bajo alineaci\u00f3n con sus planes nacionales."
-      },
-      {
-        "text": "Se ha convertido en el principal financista econ\u00f3mico del presupuesto regular de la Organizaci\u00f3n de Estados Americanos.",
-        "reason": "Mantiene cuotas obligatorias, pero no tiene el volumen econ\u00f3mico para sostener presupuestos de OIs enteras."
-      },
-      {
-        "text": "Decret\u00f3 el fin legal del Ministerio de Relaciones Exteriores delegando la cooperaci\u00f3n a ONGs privadas.",
-        "reason": "La cooperaci\u00f3n t\u00e9cnica es gestionada institucionalmente por agencias estatales (STP/MRE)."
-      },
-      {
-        "text": "Ha comenzado a exigir la devoluci\u00f3n con intereses de toda la ayuda social recibida en el siglo XX.",
-        "reason": "La cooperaci\u00f3n hist\u00f3rica fue no reembolsable, carece de sentido exigir su reintegro retrospectivo."
-      },
-      {
-        "text": "Desarroll\u00f3 un programa de armas de destrucci\u00f3n masiva para obligar a pa\u00edses vecinos a cooperar.",
-        "reason": "Paraguay tiene una tradici\u00f3n constitucional pacifista y carece de programas de ADM."
-      },
-      {
-        "text": "Cancel\u00f3 todos los programas de becas internacionales (BECAL) por considerarlos una fuga de cerebros.",
-        "reason": "Becal es una pol\u00edtica de Estado insignia para traer conocimiento, esencial para su desarrollo."
-      },
-      {
-        "text": "Subordin\u00f3 el control del r\u00edo Paraguay a un consorcio norteamericano a cambio de donaciones de vacunas.",
-        "reason": "La cooperaci\u00f3n no implica enajenar la soberan\u00eda del territorio ni recursos h\u00eddricos."
-      }
-    ]
-  },
-  {
-    "question": "\u00bfCu\u00e1l es la pol\u00edtica invariable y tradicional del Eje de 'Asilo Pol\u00edtico' en Paraguay?",
-    "correct": "Respeto irrestricto al asilo pol\u00edtico como instituci\u00f3n humanitaria y latinoamericana, basado en tratados internacionales, no sujeto a presiones pol\u00edticas coyunturales.",
-    "incorrects": [
-      {
-        "text": "El rechazo sistem\u00e1tico a conceder asilo a cualquier ciudadano perteneciente a pa\u00edses del Mercosur.",
-        "reason": "El asilo se juzga por el nivel de persecuci\u00f3n pol\u00edtica demostrada, sin excluir per se a ciudadanos del Mercosur."
-      },
-      {
-        "text": "La exigencia del pago de una fianza en d\u00f3lares para ingresar al pa\u00eds en condici\u00f3n de refugiado.",
-        "reason": "El refugio y asilo son derechos humanos de protecci\u00f3n, no est\u00e1n sujetos a transacciones pecuniarias."
-      },
-      {
-        "text": "La extradici\u00f3n autom\u00e1tica de los asilados si el gobierno del cual huyeron ofrece ventajas comerciales al Paraguay.",
-        "reason": "La concesi\u00f3n del asilo pol\u00edtico impide la extradici\u00f3n y no es un bien de intercambio mercantil."
-      },
-      {
-        "text": "El asilo exclusivo otorgado \u00fanicamente a dictadores militares derrocados, neg\u00e1ndolo a civiles.",
-        "reason": "El asilo aplica a cualquier persona cuya vida/libertad corra peligro por causas pol\u00edticas, sin distinguir estrato."
-      },
-      {
-        "text": "La delegaci\u00f3n de la facultad de conceder asilo directamente a la Corte Suprema de Justicia.",
-        "reason": "La concesi\u00f3n del asilo territorial y diplom\u00e1tico es prerrogativa exclusiva del Poder Ejecutivo."
-      },
-      {
-        "text": "El uso de embajadas paraguayas como c\u00e1rceles encubiertas para disidentes extranjeros.",
-        "reason": "Las embajadas otorgan asilo diplom\u00e1tico (refugio seguro), no funcionan como centros de reclusi\u00f3n."
-      },
-      {
-        "text": "La abolici\u00f3n del derecho de asilo en la Constituci\u00f3n de 1992 para evitar conflictos con potencias.",
-        "reason": "La Constituci\u00f3n Nacional consagra expl\u00edcitamente el derecho de asilo en su Art\u00edculo 43."
-      }
-    ]
-  },
-  {
-    "question": "Dentro de la inserci\u00f3n internacional paraguaya, \u00bfqu\u00e9 impacto tiene la hist\u00f3rica y continua relaci\u00f3n diplom\u00e1tica con la Rep\u00fablica de China (Taiw\u00e1n)?",
-    "correct": "Le otorga un fuerte aliado de cooperaci\u00f3n tecnol\u00f3gica y financiera, pero a la vez imposibilita formalizar relaciones diplom\u00e1ticas oficiales y TLCs con la Rep\u00fablica Popular China debido al principio de 'Una sola China'.",
-    "incorrects": [
-      {
-        "text": "Le permite a Paraguay importar productos electr\u00f3nicos taiwaneses libres de impuestos, hundiendo la industria brasile\u00f1a.",
-        "reason": "Paraguay importa masivamente de China Continental tambi\u00e9n y el Mercosur regula los aranceles (AEC)."
-      },
-      {
-        "text": "Ha provocado que la Rep\u00fablica Popular China proh\u00edba a nivel mundial la compra indirecta de soja paraguaya.",
-        "reason": "Aunque no hay relaciones formales, gigantescos vol\u00famenes de soja y carne paraguaya llegan a China continental mediante triangulaci\u00f3n privada."
-      },
-      {
-        "text": "Llev\u00f3 a la expulsi\u00f3n de Paraguay de la Asamblea General de la ONU por presiones de Beijing.",
-        "reason": "Paraguay es miembro pleno de la ONU; China tiene poder de veto en el Consejo de Seguridad, pero no puede expulsar arbitrariamente de la Asamblea."
-      },
-      {
-        "text": "Significa que Paraguay debe mantener una base de misiles taiwaneses en el Chaco.",
-        "reason": "Las relaciones son de cooperaci\u00f3n pac\u00edfica, econ\u00f3mica y t\u00e9cnica; no implica bases militares extranjeras ofensivas."
-      },
-      {
-        "text": "Oblig\u00f3 a que el guaran\u00ed paraguayo est\u00e9 respaldado en reservas de oro depositadas en Taipei.",
-        "reason": "El Banco Central del Paraguay administra soberanamente sus reservas en diversas canastas de divisas en instituciones financieras globales est\u00e1ndar."
-      },
-      {
-        "text": "Facilita el ingreso autom\u00e1tico sin visa de ciudadanos paraguayos a toda Asia Oriental.",
-        "reason": "Los reg\u00edmenes de visados son bilaterales y cada pa\u00eds asi\u00e1tico aplica los suyos independientemente de la relaci\u00f3n con Taiw\u00e1n."
-      },
-      {
-        "text": "Demuestra la adhesi\u00f3n de Paraguay al dogma marxista-leninista asi\u00e1tico.",
-        "reason": "Taiw\u00e1n es una democracia capitalista de libre mercado, hist\u00f3ricamente aliada contra el comunismo."
-      }
-    ]
-  },
-  {
-    "question": "Bajo el eje 'Promoci\u00f3n del Comercio Exterior', la pol\u00edtica agroexportadora paraguaya demanda principalmente en el exterior:",
-    "correct": "Previsibilidad de las reglas, eliminaci\u00f3n de subsidios distorsivos de pa\u00edses desarrollados, y apertura real de cuotas para carne y granos (ej. Acuerdos con la Uni\u00f3n Europea).",
-    "incorrects": [
-      {
-        "text": "El cierre de las importaciones de tecnolog\u00eda agr\u00edcola para fomentar la tracci\u00f3n a sangre local.",
-        "reason": "El agronegocio paraguayo es altamente tecnificado y requiere importaci\u00f3n de maquinaria y tecnolog\u00eda avanzada."
-      },
-      {
-        "text": "Exigir que la ONU decrete precios m\u00ednimos obligatorios para la carne a nivel mundial.",
-        "reason": "La comercializaci\u00f3n se rige por precios de libre mercado internacional (Chicago, etc.), no decretos de la ONU."
-      },
-      {
-        "text": "Fomentar el dumping, vendiendo por debajo del costo de producci\u00f3n para arruinar a vecinos.",
-        "reason": "El dumping es una pr\u00e1ctica comercial desleal sancionada por la OMC; Paraguay busca competir con ventajas comparativas leg\u00edtimas."
-      },
-      {
-        "text": "Prohibir la venta de materias primas para obligar a todos los socios a comprar productos hiper-procesados.",
-        "reason": "Si bien busca agregar valor (industrializaci\u00f3n), su fortaleza fundamental sigue siendo la exportaci\u00f3n primaria eficiente."
-      },
-      {
-        "text": "Crear un c\u00e1rtel sudamericano de la soja similar a la OPEP para extorsionar a Europa.",
-        "reason": "Paraguay promueve el libre comercio multilateral y rechaza los monopolios estatales o c\u00e1rteles extorsivos."
-      },
-      {
-        "text": "Asignar la gesti\u00f3n de la pol\u00edtica aduanera nacional al Banco Mundial.",
-        "reason": "La Aduana (hoy DNIT) ejerce el control soberano del comercio, no se delega a bancas internacionales."
-      },
-      {
-        "text": "Aceptar que organismos multilaterales limiten constitucionalmente la cantidad de vacas permitidas por hect\u00e1rea.",
-        "reason": "Se defiende la potestad regulatoria interna sobre el uso de la tierra sin intervenciones supranacionales forzosas."
-      }
-    ]
-  },
-  {
-    "question": "Al cruzar el concepto te\u00f3rico de 'factores determinantes geogr\u00e1ficos' (Tema 1) con la pol\u00edtica exterior paraguaya real, \u00bfqu\u00e9 conclusi\u00f3n se extrae sobre su diplomacia?",
-    "correct": "Que la mediterraneidad es el factor de mayor peso hist\u00f3rico estructural, obligando a una pol\u00edtica exterior enfocada en garantizar corredores bioce\u00e1nicos, integraci\u00f3n fluvial e infraestructura vecinal.",
-    "incorrects": [
-      {
-        "text": "Que ser una isla en el centro de Am\u00e9rica le permite aislarse de crisis pand\u00e9micas globales sin consecuencias.",
-        "reason": "No es una isla f\u00edsica; depende de sus vecinos terrestres para el flujo cr\u00edtico de provisiones e insumos m\u00e9dicos."
-      },
-      {
-        "text": "Que la carencia de petr\u00f3leo forz\u00f3 a Paraguay a aliarse con Venezuela renunciando a su soberan\u00eda pol\u00edtica.",
-        "reason": "Paraguay importaba de PDVSA, pero suspendi\u00f3 a Venezuela del Mercosur demostrando que no hipotec\u00f3 su pol\u00edtica exterior."
-      },
-      {
-        "text": "Que la cercan\u00eda al Ecuador (l\u00ednea ecuatorial) determina su liderazgo en tratados aeroespaciales globales.",
-        "reason": "Paraguay est\u00e1 muy al sur de la l\u00ednea del Ecuador, su inter\u00e9s espacial es marginal en su diplomacia hist\u00f3rica."
-      },
-      {
-        "text": "Que el exceso de monta\u00f1as (orograf\u00eda) dificulta sus relaciones con el bloque del Pac\u00edfico.",
-        "reason": "Paraguay es mayormente llano; la barrera andina afecta m\u00e1s la infraestructura log\u00edstica general que la pol\u00edtica en s\u00ed."
-      },
-      {
-        "text": "Que el tama\u00f1o reducido de su territorio lo descalifica jur\u00eddicamente para opinar en foros de la OMC.",
-        "reason": "La igualdad jur\u00eddica soberana (un pa\u00eds, un voto) permite que incluso microestados participen en la OMC."
-      },
-      {
-        "text": "Que poseer acceso directo a las costas del Caribe le garantiza ingresos por turismo de cruceros.",
-        "reason": "No posee acceso al mar, mucho menos al Mar Caribe."
-      },
-      {
-        "text": "Que la diplomacia ignora totalmente la geograf\u00eda, basando sus embajadas \u00fanicamente en afinidad religiosa.",
-        "reason": "La geopol\u00edtica y la geoeconom\u00eda (exportaciones, puertos francos) dictan el mapa de embajadas cr\u00edticas."
-      }
-    ]
-  },
-  {
-    "question": "\u00bfC\u00f3mo se aplica la teor\u00eda del 'Juego de dos niveles' (Putnam) al proceso de renegociaci\u00f3n del Anexo C de Itaip\u00fa?",
-    "correct": "Los negociadores paraguayos (Nivel 1) enfrentan un entorno internacional duro (Brasil), pero deben simult\u00e1neamente satisfacer la alta sensibilidad y exigencia pol\u00edtica del Congreso y opini\u00f3n p\u00fablica interna (Nivel 2) para validar el acuerdo.",
-    "incorrects": [
-      {
-        "text": "Brasil negocia simult\u00e1neamente con Paraguay y Argentina, enga\u00f1ando a ambos para obtener r\u00e9ditos dobles.",
-        "reason": "Esa es diplomacia pendular o juego triangular, no el concepto te\u00f3rico de los dos niveles de Putnam (internacional vs. dom\u00e9stico)."
-      },
-      {
-        "text": "El Canciller negocia a nivel presidencial, pero deja los detalles t\u00e9cnicos al Tribunal de Cuentas brasile\u00f1o.",
-        "reason": "El Tribunal de Cuentas brasile\u00f1o es un \u00f3rgano interno extranjero, no el 'Nivel 2' paraguayo."
-      },
-      {
-        "text": "Se requiere que el acuerdo pase por la aprobaci\u00f3n de las Naciones Unidas como segunda instancia obligatoria.",
-        "reason": "No requiere aval de la ONU; el Nivel 2 de Putnam se refiere exclusivamente al proceso de validaci\u00f3n democr\u00e1tica/institucional interno (Ej. parlamento nacional)."
-      },
-      {
-        "text": "La diplomacia paraguaya cede soberan\u00eda en el Nivel 1 a cambio de impunidad en tribunales del Nivel 2.",
-        "reason": "Interpretaci\u00f3n c\u00ednica y ajena al modelo te\u00f3rico de ratificaci\u00f3n pol\u00edtica."
-      },
-      {
-        "text": "La sociedad civil paraguaya debe negociar directamente con los fiscales del gobierno federal brasile\u00f1o.",
-        "reason": "El Estado retiene el monopolio de la negociaci\u00f3n internacional (Nivel 1)."
-      },
-      {
-        "text": "El Tratado especifica la resoluci\u00f3n de disputas mediante partidos de f\u00fatbol binacionales (Nivel l\u00fadico 2).",
-        "reason": "Absurdo total."
-      },
-      {
-        "text": "El Ejecutivo debe convocar elecciones presidenciales anticipadas para validar jur\u00eddicamente cada cl\u00e1usula renegociada.",
-        "reason": "El Nivel 2 no exige derrocar/renovar gobiernos, sino lograr ratificaci\u00f3n congresual de los tratados."
-      }
-    ]
-  },
-  {
-    "question": "\u00bfDe qu\u00e9 manera el ingreso pleno de Paraguay al Mercosur (1991) transform\u00f3 su 'Proyecto de Naci\u00f3n' econ\u00f3mico y pol\u00edtico?",
-    "correct": "Ciment\u00f3 la transici\u00f3n hacia una econom\u00eda de mercado abierta, consolid\u00f3 la inserci\u00f3n democr\u00e1tica en el sistema internacional y forz\u00f3 la profesionalizaci\u00f3n de sus est\u00e1ndares productivos y burocr\u00e1ticos.",
-    "incorrects": [
-      {
-        "text": "Consolid\u00f3 la doctrina militarista de seguridad nacional, cerrando la econom\u00eda a la competencia extranjera.",
-        "reason": "El Mercosur represent\u00f3 exactamente lo contrario: desarancelizaci\u00f3n, integraci\u00f3n y cl\u00e1usulas democr\u00e1ticas."
-      },
-      {
-        "text": "Inaugur\u00f3 la era del proteccionismo absoluto y el modelo de sustituci\u00f3n extrema de importaciones agrarias.",
-        "reason": "Paraguay desmantel\u00f3 aranceles, siendo el socio con vocaci\u00f3n m\u00e1s librecambista del bloque."
-      },
-      {
-        "text": "Permiti\u00f3 que Paraguay transfiriera todo el poder judicial a la Corte Suprema de Buenos Aires.",
-        "reason": "No existi\u00f3 delegaci\u00f3n supranacional del monopolio judicial nacional (falta de supranacionalidad del bloque)."
-      },
-      {
-        "text": "Estableci\u00f3 el sistema de partido hegem\u00f3nico \u00fanico respaldado jur\u00eddicamente por la normativa del bloque.",
-        "reason": "El Protocolo de Ushuaia exige pluralismo pol\u00edtico e instituciones democr\u00e1ticas libres."
-      },
-      {
-        "text": "Desvincul\u00f3 al Paraguay del resto del mundo occidental, enfoc\u00e1ndose solo en el comercio con Brasil.",
-        "reason": "El Mercosur busca negociar TLCs con otros bloques (ej. Uni\u00f3n Europea)."
-      },
-      {
-        "text": "Determin\u00f3 el abandono de la agricultura para convertir a Paraguay en un para\u00edso fiscal exclusivo.",
-        "reason": "La agro-ganader\u00eda se moderniz\u00f3 y potenci\u00f3 enormemente aprovechando la escala regional y global."
-      },
-      {
-        "text": "Decret\u00f3 el uso oficial e institucional de las lenguas ind\u00edgenas en todo el continente americano.",
-        "reason": "Se reconoci\u00f3 el guaran\u00ed en el bloque mucho despu\u00e9s (2006/2009), pero no oblig\u00f3 al continente ni cambi\u00f3 la base del modelo nacional econ\u00f3mico."
-      }
-    ]
-  },
-  {
-    "question": "\u00bfQu\u00e9 relaci\u00f3n existe entre la 'pol\u00edtica exterior pragm\u00e1tica' impulsada por los recientes gobiernos paraguayos y el reconocimiento de Taiw\u00e1n?",
-    "correct": "Aunque el pragmatismo sugiere buscar mercados gigantes (China), Paraguay mantiene la alianza con Taiw\u00e1n bas\u00e1ndose en una rentabilidad pol\u00edtica, hist\u00f3rica y t\u00e9cnica, mientras fomenta fuertes lazos comerciales privados indirectos con China.",
-    "incorrects": [
-      {
-        "text": "El pragmatismo dictamin\u00f3 la inmediata ruptura de v\u00ednculos con Taiw\u00e1n en el a\u00f1o 2018 para integrarse al BRICS.",
-        "reason": "Paraguay sigue reconociendo formalmente a la Rep\u00fablica de China (Taiw\u00e1n) a d\u00eda de hoy."
-      },
-      {
-        "text": "La relaci\u00f3n demuestra la falta de pragmatismo, guiada \u00fanicamente por el odio de la Canciller\u00eda al comercio asi\u00e1tico.",
-        "reason": "Paraguay importa la mayor parte de su tecnolog\u00eda y bienes de consumo de China, no hay rechazo al comercio asi\u00e1tico."
-      },
-      {
-        "text": "Taiw\u00e1n absorbe actualmente el 100% de la producci\u00f3n de soja, haciendo irrelevante a China Continental.",
-        "reason": "Taiw\u00e1n es un mercado muy peque\u00f1o y lejano (importa carne porcina y bovina); China es el principal comprador mundial de commodities agropecuarios."
-      },
-      {
-        "text": "La pol\u00edtica exterior de Estado obliga constitucionalmente a romper cualquier negocio de privados paraguayos con Pek\u00edn.",
-        "reason": "No existe tal prohibici\u00f3n; el sector privado opera regido por el libre mercado y comercia fuertemente con Pek\u00edn."
-      },
-      {
-        "text": "Mantiene Taiw\u00e1n porque el Mercosur obliga a todos sus miembros a rechazar a la Rep\u00fablica Popular China.",
-        "reason": "Falso, Brasil, Argentina y Uruguay tienen relaciones plenas e intensas con la Rep\u00fablica Popular China."
-      },
-      {
-        "text": "Paraguay se niega a venderle materia prima a China como represalia por el financiamiento chino a partidos de izquierda.",
-        "reason": "La triangulaci\u00f3n de exportaciones (v\u00eda Argentina/Uruguay) hace que la soja paraguaya termine masivamente en el mercado chino."
-      },
-      {
-        "text": "El pragmatismo exige aliarse militarmente con Taiw\u00e1n para patrullar el Mar de la China Meridional.",
-        "reason": "No hay tratado de defensa militar mutua ni proyecci\u00f3n militar paraguaya en el Pac\u00edfico."
-      }
-    ]
-  },
-  {
-    "question": "Desde la perspectiva te\u00f3rica institucional, el 'Servicio Diplom\u00e1tico y Consular' se define como un actor burocr\u00e1tico, pero \u00bfqu\u00e9 funci\u00f3n cr\u00edtica cumple para la supervivencia de la pol\u00edtica de Estado?",
-    "correct": "Proporciona continuidad, memoria institucional y peritaje t\u00e9cnico a largo plazo, amortiguando los bandazos ideol\u00f3gicos de los gobiernos de turno.",
-    "incorrects": [
-      {
-        "text": "Ejerce el poder de veto sobre las decisiones presidenciales, actuando como un cuarto poder del Estado.",
-        "reason": "Los embajadores no tienen poder de veto, ejecutan las pol\u00edticas definidas por el Ejecutivo."
-      },
-      {
-        "text": "Opera como agencia de espionaje militar aut\u00f3noma financiada con gastos reservados del Congreso.",
-        "reason": "La diplomacia es recolecci\u00f3n de informaci\u00f3n abierta y an\u00e1lisis pol\u00edtico (Ley 1335), no espionaje paramilitar aut\u00f3nomo."
-      },
-      {
-        "text": "Asegura la impunidad judicial de los actores pol\u00edticos mediante la inmunidad de jurisdicci\u00f3n permanente interna.",
-        "reason": "La inmunidad diplom\u00e1tica aplica frente a Estados receptores (extranjeros), no es un escudo frente a la justicia del propio pa\u00eds."
-      },
-      {
-        "text": "Sustituye la necesidad de ratificaci\u00f3n parlamentaria firmando acuerdos de manera secreta y vinculante.",
-        "reason": "La firma requiere Plenos Poderes, pero la vigencia interna de un Tratado requiere imperativamente aprobaci\u00f3n del Legislativo."
-      },
-      {
-        "text": "Se encarga de organizar referendos ciudadanos para avalar las candidaturas del bloque de integraci\u00f3n.",
-        "reason": "La justicia electoral interna y el parlamento asumen esas funciones; la canciller\u00eda se ocupa de las RRII."
-      },
-      {
-        "text": "Ejerce influencia financiando campa\u00f1as electorales de la oposici\u00f3n en pa\u00edses lim\u00edtrofes.",
-        "reason": "Intervenir en procesos electorales extranjeros viola tajantemente el principio fundamental de no intervenci\u00f3n."
-      },
-      {
-        "text": "Promueve la disoluci\u00f3n del Estado-Naci\u00f3n para instaurar una rep\u00fablica corporativa multinacional.",
-        "reason": "La diplomacia tradicional defiende la soberan\u00eda e intereses del Estado-Naci\u00f3n que representa."
-      }
-    ]
-  },
-  {
-    "question": "\u00bfPor qu\u00e9 las negociaciones de pol\u00edtica exterior relativas al 'Eje de Infraestructura F\u00edsica e Hidrov\u00eda' son tan sensibles para la seguridad econ\u00f3mica paraguaya?",
-    "correct": "Porque al ser pa\u00eds mediterr\u00e1neo, el cobro unilateral de peajes (ej. por parte de Argentina) o trabas aduaneras elevan dr\u00e1sticamente los costos del flete, asfixiando la competitividad de sus exportaciones agr\u00edcolas e industriales.",
-    "incorrects": [
-      {
-        "text": "Porque la hidrov\u00eda es la \u00fanica ruta por donde ingresan los turistas asi\u00e1ticos de alto poder adquisitivo.",
-        "reason": "El turismo fluvial en Paraguay es marginal; la crisis log\u00edstica asfixia el tr\u00e1fico comercial de carga pesada."
-      },
-      {
-        "text": "Porque Paraguay obtiene el 90% de sus ingresos fiscales cobrando peaje a los barcos bolivianos.",
-        "reason": "Paraguay argumenta en contra de los peajes unilaterales que limitan el libre tr\u00e1nsito, no se enriquece extorsionando el flujo comercial regional."
-      },
-      {
-        "text": "Porque un conflicto fluvial obligar\u00eda a Paraguay a desplegar submarinos nucleares en el R\u00edo de la Plata.",
-        "reason": "Paraguay carece de armada submarina nuclear y la v\u00eda de resoluci\u00f3n de estos temas (Tratado de Santa Cruz de la Sierra) es la negociaci\u00f3n y los tribunales arbitrales."
-      },
-      {
-        "text": "Porque si Argentina cobra peaje, Brasil debe obligatoriamente suspender las cuotas de Itaip\u00fa.",
-        "reason": "Las cuestiones comerciales hidroviarias operan por canales separados de los compromisos el\u00e9ctricos de las binacionales (cl\u00e1usula de no reciprocidad asim\u00e9trica forzosa)."
-      },
-      {
-        "text": "Porque los bloqueos de hidrov\u00eda reducen la exportaci\u00f3n de petr\u00f3leo paraguayo hacia Medio Oriente.",
-        "reason": "Paraguay no exporta petr\u00f3leo."
-      },
-      {
-        "text": "Porque afecta directamente la conectividad de los cables submarinos de internet de banda ancha de las empresas telef\u00f3nicas paraguayas.",
-        "reason": "Las redes de fibra \u00f3ptica tienen m\u00faltiples anillos de conexi\u00f3n terrestre redundantes hacia Brasil y Argentina, independientes de los bloqueos navieros."
-      },
-      {
-        "text": "Porque el Tratado de Asunci\u00f3n proh\u00edbe expl\u00edcitamente transportar soja en barcazas sin motor.",
-        "reason": "No existe tal prohibici\u00f3n irracional; el problema reside en el cobro de tasas sin contraprestaci\u00f3n efectiva de servicios (dragado/balizamiento)."
-      }
-    ]
-  },
-  {
-    "question": "En el Eje de 'Comercio Justo y Acceso a Mercados', \u00bfqu\u00e9 amenaza externa principal enfrenta hoy el modelo exportador paraguayo adem\u00e1s del cl\u00e1sico proteccionismo arancelario?",
-    "correct": "Las barreras paraarancelarias y medidas fitosanitarias extremas y arbitrarias impuestas por pa\u00edses desarrollados (Ej. est\u00e1ndares ambientales europeos) bajo el argumento del 'Pacto Verde'.",
-    "incorrects": [
-      {
-        "text": "Las sanciones financieras directas de la Organizaci\u00f3n Mundial del Comercio (OMC) por manipulaci\u00f3n cambiaria.",
-        "reason": "Paraguay tiene un r\u00e9gimen de flotaci\u00f3n libre del tipo de cambio, nunca ha sido sancionado por la OMC por manipulaci\u00f3n monetaria."
-      },
-      {
-        "text": "El boicot organizado de las potencias nucleares exigiendo cese de investigaci\u00f3n at\u00f3mica en el territorio guaran\u00ed.",
-        "reason": "Carece totalmente de base emp\u00edrica, ya que no existe un programa nuclear de uso b\u00e9lico ni dual en el pa\u00eds."
-      },
-      {
-        "text": "La prohibici\u00f3n absoluta de importar repuestos para maquinaria agr\u00edcola dictada por el Mercosur.",
-        "reason": "El Mercosur no proh\u00edbe importar bienes de capital, al contrario, existen reg\u00edmenes de excepci\u00f3n (BK/BIT) para favorecer la mecanizaci\u00f3n."
-      },
-      {
-        "text": "La constante depreciaci\u00f3n del D\u00f3lar estadounidense, que hace que los precios de las exportaciones paraguayas sean artificialmente altos en todo el mundo.",
-        "reason": "El d\u00f3lar suele ser fuerte, lo cual en general abarata las exportaciones paraguayas y beneficia los ingresos de los productores (pagados en USD, con costos locales en Gs)."
-      },
-      {
-        "text": "El rechazo del bloque de la Alianza del Pac\u00edfico a aceptar cualquier tipo de productos c\u00e1rnicos provenientes de pa\u00edses sin litoral.",
-        "reason": "La Alianza del Pac\u00edfico (Chile, Colombia, etc.) compra activamente y en altos vol\u00famenes productos paraguayos (ej. Chile es el principal comprador de carne bovina paraguaya)."
-      },
-      {
-        "text": "La presi\u00f3n para estatizar el 100% de los latifundios como requisito ineludible para exportar a Estados Unidos.",
-        "reason": "Estados Unidos nunca ha impuesto reformas agrarias estatizantes como prerrequisito comercial, m\u00e1s bien exige reglas fitosanitarias de sanidad animal/vegetal."
-      },
-      {
-        "text": "El chantaje del gobierno de Taiw\u00e1n que exige exclusividad monop\u00f3lica para adquirir toda la producci\u00f3n nacional.",
-        "reason": "Taiw\u00e1n opera bajo l\u00f3gicas de mercado libre, sin esquemas coercitivos monopolistas estatales sobre sus aliados diplom\u00e1ticos."
-      }
-    ]
-  },
-  {
-    "question": "Si una ONG acusa internacionalmente a Paraguay de violar DD.HH. por sus leyes de propiedad de tierras, y el Estado defiende su soberan\u00eda territorial apelando a la ley, \u00bfqu\u00e9 debate te\u00f3rico (Tema 1) de pol\u00edtica exterior se evidencia?",
-    "correct": "La tensi\u00f3n entre la soberan\u00eda nacional (autonom\u00eda interna del Estado frente al derecho local) y la presi\u00f3n de actores no gubernamentales globalizados respaldados por reg\u00edmenes internacionales (car\u00e1cter interm\u00e9stico).",
-    "incorrects": [
-      {
-        "text": "La guerra inminente entre la clase proletaria (ONGs) y la burgues\u00eda capitalista mundial que dirige el FMI.",
-        "reason": "Explicaci\u00f3n r\u00edgidamente marxista ortodoxa que no aborda los conceptos de soberan\u00eda vs actores transnacionales contempor\u00e1neos."
-      },
-      {
-        "text": "El conflicto cl\u00e1sico de la Guerra Fr\u00eda entre bloques ideol\u00f3gicos alineados con Mosc\u00fa o Washington.",
-        "reason": "El conflicto descrito es contempor\u00e1neo y no responde a la l\u00f3gica de polaridad Este-Oeste extinta."
-      },
-      {
-        "text": "La aplicaci\u00f3n inmediata de las fuerzas militares conjuntas del Mercosur para aplacar rebeliones internas.",
-        "reason": "El bloque no dispone de Fuerzas Armadas conjuntas, rige la no intervenci\u00f3n y soberan\u00eda sobre orden p\u00fablico interno."
-      },
-      {
-        "text": "El proceso de paradiplomacia de la ONG intentando firmar acuerdos comerciales en zonas rurales aut\u00f3nomas.",
-        "reason": "Las acusaciones de ONGs son presi\u00f3n pol\u00edtica global (lobby/advocacy), no firma de tratados comerciales paradiplom\u00e1ticos."
-      },
-      {
-        "text": "La demostraci\u00f3n de la superioridad absoluta del poder duro sobre cualquier herramienta de poder blando.",
-        "reason": "La actuaci\u00f3n de la ONG usando narrativas, naming & shaming e influencia es, justamente, un ejercicio de poder blando intenso."
-      },
-      {
-        "text": "La obligaci\u00f3n jur\u00eddica vinculante del Poder Ejecutivo de disolver el Congreso Nacional inmediatamente si la ONU lo ordena.",
-        "reason": "Violaci\u00f3n flagrante de la divisi\u00f3n de poderes y la constituci\u00f3n nacional; inaceptable pol\u00edtica y legalmente."
-      },
-      {
-        "text": "El principio de reciprocidad aduanera, donde Paraguay aumentar\u00eda aranceles a las importaciones de insumos de las ONGs.",
-        "reason": "Las ONGs no son estados comerciales soberanos sujetos a aranceles compensatorios (dumping/subvenciones)."
-      }
-    ]
-  },
-  {
-    "question": "Identifique el elemento clave que convierte a las hidroel\u00e9ctricas binacionales (Eje 7) no solo en un recurso econ\u00f3mico, sino en la herramienta geopol\u00edtica (Tema 1) m\u00e1s importante del pa\u00eds.",
-    "correct": "Confieren un inmenso 'poder de negociaci\u00f3n' e interdependencia asim\u00e9trica inversa, ya que la provisi\u00f3n estable de energ\u00eda limpia es fundamental para el sostenimiento de los polos industriales estrat\u00e9gicos de Brasil (S\u00e3o Paulo).",
-    "incorrects": [
-      {
-        "text": "Sirven como bases de operaciones navales ocultas para garantizar el control militar armado de la Cuenca del Plata.",
-        "reason": "Las binacionales son infraestructuras estrictamente civiles de generaci\u00f3n el\u00e9ctrica y control de inundaciones, no instalaciones b\u00e9licas secretas."
-      },
-      {
-        "text": "Permiten inundar arbitrariamente todo el territorio argentino abriendo las compuertas en caso de conflicto diplom\u00e1tico grave.",
-        "reason": "El uso del agua como arma de destrucci\u00f3n masiva (guerra ambiental) contraviene el derecho internacional humanitario y provocar\u00eda represalias fatales para el propio Paraguay."
-      },
-      {
-        "text": "Obligan a Estados Unidos y Europa a consultar con Paraguay cada decisi\u00f3n importante sobre emisiones de gases de efecto invernadero en el mundo.",
-        "reason": "Paraguay posee prestigio ambiental (energ\u00eda limpia), pero no tiene poder de veto estructural global sobre las megapotencias industriales."
-      },
-      {
-        "text": "Financian el 100% de la deuda p\u00fablica de todos los pa\u00edses miembros de UNASUR gracias a sus utilidades excedentarias.",
-        "reason": "Los ingresos y beneficios econ\u00f3micos (royalties, compensaciones) se distribuyen exclusivamente entre las altas partes contratantes (Brasil/Argentina y Paraguay)."
-      },
-      {
-        "text": "Garantizan constitucionalmente que el Director General de Itaip\u00fa sea autom\u00e1ticamente el Ministro de Relaciones Exteriores.",
-        "reason": "Institucionalmente, son cargos diferentes con funciones distintas, si bien coordinan estrechamente (el Director es ejecutor t\u00e9cnico, el MRE dirige la diplomacia)."
-      },
-      {
-        "text": "Proporcionan uranio enriquecido para la exportaci\u00f3n, posicionando al pa\u00eds como l\u00edder de la carrera at\u00f3mica pac\u00edfica.",
-        "reason": "Las represas utilizan el caudal h\u00eddrico gravitacional (energ\u00eda cin\u00e9tica), no reactores nucleares."
-      },
-      {
-        "text": "Fuerzan la adopci\u00f3n obligatoria del idioma guaran\u00ed en los sistemas educativos fronterizos brasile\u00f1os de Foz de Iguaz\u00fa bajo amenaza de cortes de luz.",
-        "reason": "Las relaciones culturales y ling\u00fc\u00edsticas fronterizas evolucionan por \u00f3smosis social (portu\u00f1ol, biling\u00fcismo), no por coacci\u00f3n hidroenerg\u00e9tica estatal."
-      }
-    ]
-  },
-  {
-    "question": "\u00bfEn qu\u00e9 sentido la postura de pol\u00edtica exterior paraguaya sobre el libre comercio converge con la premisa te\u00f3rica de la 'Escuela Liberal o Institucionalista' (Tema 1)?",
-    "correct": "Ambas asumen que el fomento de la interdependencia comercial, la apertura de fronteras y el desarrollo de instituciones (como el Mercosur y OMC) reducen los conflictos y generan un crecimiento econ\u00f3mico de beneficio mutuo (juego de suma positiva).",
-    "incorrects": [
-      {
-        "text": "En la creencia de que el libre comercio internacional invariablemente empobrece a las naciones perif\u00e9ricas y debe ser resistido mediante la planificaci\u00f3n centralizada del Estado.",
-        "reason": "Esta afirmaci\u00f3n describe exactamente los temores te\u00f3ricos de la teor\u00eda de la dependencia y el marxismo estructural, no del liberalismo internacional."
-      },
-      {
-        "text": "En que la seguridad nacional militar debe financiarse cerrando la econom\u00eda a las importaciones que compitan con la industria de armamentos estatal.",
-        "reason": "Esta pol\u00edtica proteccionista extrema para subsidiar un complejo militar-industrial refleja preceptos realistas o mercantilistas estatistas."
-      },
-      {
-        "text": "En la asunci\u00f3n de que las organizaciones comerciales multilaterales son un enga\u00f1o dise\u00f1ado exclusivamente para disolver las identidades culturales ind\u00edgenas.",
-        "reason": "Perspectiva cr\u00edtica-decolonial o posmoderna, radicalmente opuesta a la tesis institucionalista que percibe beneficios racionales en la institucionalidad."
-      },
-      {
-        "text": "En el argumento de que el comercio exterior debe estar monopolizado por el estamento militar para garantizar que las utilidades se dediquen a la construcci\u00f3n naval ofensiva.",
-        "reason": "Estrategia hiper-estatista t\u00edpica de imperios navales del siglo XVII-XVIII (mercantilismo), contraria al liberalismo de mercado del siglo XXI."
-      },
-      {
-        "text": "En la idea de que la mejor pol\u00edtica comercial de un pa\u00eds subdesarrollado es aislarse completamente, forzando la autosuficiencia alimentaria extrema y prohibiendo exportar cualquier materia prima.",
-        "reason": "Ideolog\u00eda de autarqu\u00eda extrema (Ej. Juche o aislacionismo del Dr. Francia), ant\u00edtesis filos\u00f3fica de la teor\u00eda de la interdependencia liberal."
-      },
-      {
-        "text": "En la convicci\u00f3n de que los Acuerdos de Libre Comercio son vinculantes \u00fanicamente si son refrendados un\u00e1nimemente y anualmente mediante asambleas populares directas barriales.",
-        "reason": "Mecanismo anarco-sindicalista o de democracia directa radical que colisiona con el modelo de democracia republicana representativa y las reglas de ratificaci\u00f3n del DIP."
-      },
-      {
-        "text": "En supeditar todo acuerdo comercial a la precondici\u00f3n inexcusable de que la contraparte extranjera garantice asistencia t\u00e9cnica militar para invadir a un tercer pa\u00eds.",
-        "reason": "Actitud sumamente belicista propia de un realismo ofensivo primitivo y expansionista, violatoria de los principios pacifistas y cooperativos de la Constituci\u00f3n paraguaya (Art. 143)."
-      }
-    ]
-  }
-];
+      <aside class="panel controls">
+        <div>
+          <h2 style="font-size:var(--text-xl);margin-bottom:.45rem">Configurar prueba</h2>
+          <p class="muted">Elegí cuántas preguntas querés rendir. El sistema armará una versión distinta en cada intento.</p>
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label for="questionCount">Cantidad de preguntas</label>
+            <select id="questionCount">
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20" selected>20</option>
+              <option value="30">30</option>
+              <option value="40">40</option>
+              <option value="50">50</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="mode">Modo</label>
+            <select id="mode">
+              <option value="mixed" selected>Mixto</option>
+              <option value="multiple">Solo selección múltiple</option>
+              <option value="vf">Solo verdadero / falso</option>
+            </select>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn btn-primary" id="startBtn" type="button">Iniciar test</button>
+          <button class="btn" id="previewBtn" type="button">Ver criterios</button>
+        </div>
+        <div id="previewBox" class="feedback">
+          <h3>Cómo está pensado</h3>
+          <p class="muted">Las preguntas están repartidas equilibradamente entre fundamentos teóricos, integración regional 1954-2018 y ejes estratégicos 2003-2026. En selección múltiple se eligen 3 distractores al azar desde bolsas amplias de trampas; en verdadero/falso, la corrección explica el matiz conceptual o histórico que vuelve falsa la afirmación.</p>
+        </div>
+      </aside>
+    </section>
 
-    let currentQuestions = [];
-    let currentIndex = 0;
-    let userAnswers = [];
-    let currentSelected = null;
+    <section id="quizShell" class="quiz-shell">
+      <aside class="panel sidebar">
+        <div class="progress-ring">
+          <div>
+            <p class="small muted">Progreso</p>
+            <h2 id="progressTitle" style="font-size:var(--text-xl);margin-top:.25rem">Pregunta 1</h2>
+          </div>
+          <div class="stat">
+            <span class="muted small">Respondidas</span>
+            <b id="answeredCount">0</b>
+          </div>
+          <div class="stat">
+            <span class="muted small">Aciertos provisionales</span>
+            <b id="correctCount">0</b>
+          </div>
+          <div class="numbers" id="numbers"></div>
+          <button class="btn" id="restartBtn" type="button">Generar nuevo intento</button>
+        </div>
+      </aside>
 
-    function shuffle(array) {
-        let i = array.length, j;
-        while (i !== 0) { j = Math.floor(Math.random() * i); i--; [array[i], array[j]] = [array[j], array[i]]; }
-        return array;
+      <article class="panel question-card">
+        <div class="badge-row">
+          <span class="badge" id="topicBadge">Tema</span>
+          <span class="badge" id="typeBadge">Tipo</span>
+        </div>
+        <h2 id="questionHeadline">Pregunta</h2>
+        <p class="question-text" id="questionText"></p>
+        <div class="options" id="options"></div>
+        <div class="feedback" id="feedbackBox"></div>
+        <div class="nav-actions">
+          <button class="btn" id="prevBtn" type="button">Anterior</button>
+          <button class="btn" id="nextBtn" type="button">Siguiente</button>
+          <button class="btn btn-primary hidden" id="finishBtn" type="button">Finalizar test</button>
+        </div>
+      </article>
+    </section>
+
+    <section id="results" class="results panel controls">
+      <div>
+        <p class="badge">Resultado final</p>
+        <h2 style="font-size:var(--text-2xl);margin:.5rem 0">Rendimiento del intento</h2>
+        <p class="muted">Además del puntaje, se muestra por qué cada respuesta incorrecta no era válida para ayudarte a estudiar con precisión.</p>
+      </div>
+      <div class="results-grid">
+        <div class="stat"><span class="muted small">Puntaje</span><b id="scoreText">0/0</b></div>
+        <div class="stat"><span class="muted small">Porcentaje</span><b id="percentText">0%</b></div>
+        <div class="stat"><span class="muted small">Nivel</span><b id="levelText">—</b></div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-primary" id="retryBtn" type="button">Nuevo intento aleatorio</button>
+        <button class="btn" id="backConfigBtn" type="button">Volver a configuración</button>
+      </div>
+      <div id="reviewList" class="review-list"></div>
+    </section>
+  </div>
+
+  <script>
+    const BANK = [
+      {id:1,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',difficulty:'alta',question:'¿Qué definición resume mejor la política exterior según la guía?',correct:'Conjunto de acciones y decisiones del Estado en el sistema internacional, basadas en el interés nacional y condicionadas por factores internos y externos.',distractors:['Actividad diplomática exclusiva de la cancillería para firmar tratados bilaterales.','Proyección cultural de una sociedad mediante actores públicos y privados sin intervención estatal.','Suma de políticas comerciales aplicadas por el gobierno para atraer inversión extranjera.','Conjunto de relaciones internacionales mantenidas por cualquier actor nacional fuera del territorio.','Acción militar y económica del Estado destinada únicamente a preservar la seguridad.','Estrategia de gobierno para mejorar la imagen del país ante la opinión pública internacional.','Política pública interna que luego puede trasladarse al sistema internacional si conviene.'],explanation:'La guía define la política exterior como acciones y decisiones del Estado más allá de sus fronteras, basadas en el interés nacional, e insiste en que intervienen condicionantes internos y externos; reducirla solo a diplomacia, comercio o seguridad la vuelve incompleta.'},
+      {id:2,topic:'Tema 1 · Fundamentos teóricos',type:'vf',question:'Solo el Estado puede ejercer política exterior en sentido jurídico; la actuación internacional de provincias o municipios se denomina paradiplomacia.',correct:true,explanationTrue:'Es correcta porque la guía distingue entre política exterior, reservada jurídicamente al Estado central, y paradiplomacia, propia de actores subnacionales.',explanationFalse:'Sería falsa si la guía atribuyera a los gobiernos locales capacidad jurídica para ejercer política exterior, pero justamente aclara que eso no ocurre.'},
+      {id:3,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Cuál es la diferencia más precisa entre política exterior de Estado y política exterior de gobierno?',correct:'La primera responde al interés supremo de la nación; la segunda puede reflejar intereses del grupo gobernante en el poder.',distractors:['La primera se dirige al plano regional y la segunda al plano global.','La primera es militar y la segunda es diplomática.','La primera la formula el Legislativo y la segunda el Ejecutivo.','La primera responde a la Constitución y la segunda a los tratados internacionales.','La primera se aplica en democracias y la segunda en dictaduras.','La primera es permanente y por eso nunca cambia; la segunda cambia cada semestre.','La primera pertenece a la cancillería y la segunda a la presidencia.'],explanation:'El error común es creer que ambas son equivalentes. La guía alerta que el interés nacional puede ser capturado por élites, por lo que la política exterior de gobierno no siempre coincide con la de Estado.'},
+      {id:4,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'Según la jerarquía del interés nacional, ¿qué secuencia es correcta?',correct:'Sobrevivencia del Estado → bienestar → promoción de valores.',distractors:['Bienestar → promoción de valores → sobrevivencia del Estado.','Promoción de valores → sobrevivencia del Estado → bienestar.','Seguridad colectiva → desarrollo tecnológico → prestigio internacional.','Soberanía económica → democracia interna → proyección cultural.','Poder militar → integración regional → cooperación internacional.','Estabilidad interna → comercio exterior → liderazgo regional.','Interés de las élites → interés de la sociedad → interés nacional.'],explanation:'La guía establece una prelación clara: primero seguridad y estabilidad, luego crecimiento y desarrollo, y recién después proyección de valores. Cambiar el orden rompe la lógica de dependencia entre objetivos.'},
+      {id:5,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Qué corriente teórica vincula el interés nacional con la identidad nacional?',correct:'El constructivismo.',distractors:['El realismo ofensivo.','El liberalismo institucional.','El marxismo estructural.','La geopolítica clásica.','La teoría de la dependencia.','El neofuncionalismo.','El positivismo jurídico.'],explanation:'En la guía, los constructivistas sostienen que los Estados actúan según cómo se identifican frente a los otros; por eso la identidad construye el interés nacional.'},
+      {id:6,topic:'Tema 1 · Fundamentos teóricos',type:'vf',question:'Para la guía, el interés nacional puede identificarse solo a partir de la interpretación del grupo en el poder, ya que no existe otro criterio operativo.',correct:false,explanationTrue:'No corresponde marcar verdadero porque la guía ofrece una segunda vía: derivarlo de condiciones internas y externas concretas, no solo de la élite gobernante.',explanationFalse:'Es falsa porque la guía admite dos maneras de identificarlo: por la interpretación del grupo en el poder o por las necesidades políticas, económicas y sociales del país en su contexto interno y externo.'},
+      {id:7,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Cuál de las siguientes NO es una de las tres vertientes del proyecto de nación?',correct:'La estructura del sistema internacional.',distractors:['El sistema político.','El modelo de desarrollo económico.','El sistema educativo.','La identidad colectiva proyectada al futuro.','La definición de estrategias para alcanzar el interés nacional.','La base doctrinal de la conducta exterior.','La forma colectiva de organizar aspiraciones nacionales.'],explanation:'La guía presenta tres vertientes: sistema político, modelo de desarrollo económico y sistema educativo. La estructura del sistema internacional es un condicionante externo, no una vertiente del proyecto de nación.'},
+      {id:8,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Qué ejemplo usa la guía para mostrar que un mismo interés nacional puede traducirse en proyectos de nación opuestos?',correct:'La disputa entre liberales y conservadores en México durante el siglo XIX.',distractors:['La rivalidad entre unionistas y secesionistas en Estados Unidos.','La tensión entre federalistas y centralistas en Argentina durante el peronismo.','La oposición entre colorados y liberales en Paraguay durante el stronismo.','La división entre monárquicos y republicanos en Brasil durante el siglo XX.','El enfrentamiento entre sandinistas y contras en Nicaragua.','La pugna entre peronistas y radicales en la transición argentina.','La disputa entre apristas y militares en el Perú del siglo XX.'],explanation:'El ejemplo explícito de la guía es México en el siglo XIX, donde liberales y conservadores compartían la preocupación por el interés nacional pero proponían estrategias radicalmente distintas.'},
+      {id:9,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Qué afirmación describe mejor la capacidad de negociación internacional?',correct:'Es la posibilidad de alcanzar el interés nacional con base en circunstancias internas y externas, y es variable y relativa.',distractors:['Es la suma fija del poder militar y económico disponible en un momento dado.','Es una cualidad jurídica estable que poseen por igual todos los Estados soberanos.','Depende exclusivamente del prestigio diplomático acumulado históricamente.','Se mide solo por la cantidad de tratados que un país logra firmar.','Es un atributo de la cancillería y no del conjunto del Estado.','Equivale al poder blando porque el uso de coerción niega la negociación.','Se reduce a la posición geográfica y al tamaño de la población.'],explanation:'La guía subraya que esta capacidad no es fija ni absoluta, porque cambia según el poder relativo del país y según circunstancias endógenas y exógenas.'},
+      {id:10,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'Según Joseph Nye, ¿qué combinación define al poder inteligente?',correct:'La articulación efectiva de poder duro y poder blando.',distractors:['La fusión entre diplomacia pública y diplomacia coercitiva.','El uso alternado de sanciones económicas y alianzas militares.','La capacidad cultural de un país para evitar toda coerción externa.','La superioridad tecnológica aplicada a campañas de imagen internacional.','La suma de poder militar y prestigio sin mediación diplomática.','La combinación de soberanía jurídica con inserción comercial.','La utilización de organismos internacionales para fines militares.'],explanation:'La guía retoma a Nye para distinguir poder duro, blando e inteligente; este último no elimina ninguno de los dos, sino que los combina estratégicamente.'},
+      {id:11,topic:'Tema 1 · Fundamentos teóricos',type:'vf',question:'Los factores internos tangibles incluyen elementos como moral nacional, cohesión social y prestigio internacional.',correct:false,explanationTrue:'Sería verdadero solo si la guía colocara esos elementos dentro de lo tangible, pero los clasifica como intangibles.',explanationFalse:'Es falsa porque moral nacional, prestigio internacional y cohesión social aparecen entre los factores internos intangibles, no entre los tangibles.'},
+      {id:12,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Cuál de estas opciones corresponde a un factor externo de la capacidad de negociación?',correct:'La opinión pública internacional.',distractors:['La estabilidad política interna.','La cohesión social.','El desarrollo económico nacional.','La moral nacional.','La población.','Las bases tecnológico-materiales.','Los recursos naturales.'],explanation:'La guía ubica la opinión pública internacional, el equilibrio de poder, los eventos internacionales y la presión de otros Estados entre los factores externos o exógenos.'},
+      {id:13,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Qué rasgo deben tener los objetivos de política exterior, según la guía?',correct:'Deben ser concretos, claros, orientados a resolver un problema y realistas.',distractors:['Deben ser amplios, ambiguos y suficientemente flexibles para evitar evaluación.','Deben ser secretos para no condicionar a los actores internos.','Deben limitarse al plano diplomático y evitar metas económicas.','Deben formularse solo en función de principios y no de intereses.','Deben proyectarse a perpetuidad, aun si cambia el contexto global.','Deben depender de la coyuntura sin derivar del interés nacional.','Deben ser idénticos para todas las administraciones.'],explanation:'La guía insiste en que los objetivos derivan del interés nacional y de la situación global, y que por eso no pueden ser vagos ni irreales.'},
+      {id:14,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'En la secuencia de toma de decisiones, ¿qué viene después de las acciones?',correct:'La evaluación y retroalimentación.',distractors:['La formulación del interés nacional.','La definición del proyecto de nación.','La identificación del Estado como actor.','La reconstrucción del equilibrio de poder global.','La desaparición de los costos y beneficios.','La delegación total a actores no gubernamentales.','La paradiplomacia subnacional.'],explanation:'La guía no termina el proceso con la acción. Señala que después hay evaluación y retroalimentación para reconsiderar o mantener la decisión.'},
+      {id:15,topic:'Tema 1 · Fundamentos teóricos',type:'vf',question:'La mediterraneidad paraguaya aparece en la guía como un condicionante geográfico histórico de su política exterior.',correct:true,explanationTrue:'Es correcta porque la guía usa expresamente el caso paraguayo para mostrar cómo la falta de litoral afecta el margen de negociación y condiciona su inserción internacional.',explanationFalse:'No sería falsa: la mediterraneidad se presenta como un ejemplo emblemático de factor geográfico interno tangible.'},
+      {id:16,topic:'Tema 1 · Fundamentos teóricos',type:'multiple',question:'¿Qué plantea la guía sobre los actores no gubernamentales?',correct:'No formulan jurídicamente la política exterior, pero pueden influir de manera extrainstitucional en su contenido.',distractors:['Son jurídicamente equivalentes al Estado cuando poseen poder económico suficiente.','Solo inciden en democracias consolidadas y no en sistemas frágiles.','Actúan únicamente como ejecutores de decisiones tomadas por la cancillería.','Carecen de impacto real frente a los actores gubernamentales.','Intervienen solo en la etapa de evaluación y nunca en la formulación.','Pueden suscribir compromisos internacionales con la misma jerarquía que el Estado.','La guía los menciona como irrelevantes para el caso paraguayo.'],explanation:'La guía aclara que empresas, partidos, opinión pública, ONGs, sindicatos, iglesias o academia no hacen política exterior en sentido jurídico, pero sí presionan e influyen en la toma de decisiones.'},
+      {id:17,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'La expresión “una isla rodeada de tierra” busca resumir:',correct:'Un aislamiento multidimensional del Paraguay: geográfico, económico, político y cultural.',distractors:['La superioridad agrícola del Paraguay frente a sus vecinos.','La imposibilidad jurídica de integrarse a esquemas regionales.','El predominio exclusivo del aislamiento cultural sobre cualquier otro factor.','La neutralidad paraguaya frente a todos los conflictos regionales.','La falta de fronteras terrestres funcionales al comercio.','La autosuficiencia económica conseguida durante la colonia.','La ausencia de relaciones diplomáticas con Argentina y Brasil en todo el siglo XX.'],explanation:'La guía insiste en que la frase de Roa Bastos no debe leerse solo en clave geográfica; condensa varias dimensiones del aislamiento paraguayo.'},
+      {id:18,topic:'Tema 2 · Integración regional 1954-2018',type:'vf',question:'Según la guía, el aislamiento económico paraguayo comenzó únicamente con la dictadura de Stroessner.',correct:false,explanationTrue:'No puede ser verdadero porque la guía remonta el aislamiento económico al periodo colonial y luego lo desarrolla con Francia y otros momentos históricos.',explanationFalse:'Es falsa porque el aislamiento económico se presenta como un fenómeno de larga duración, visible ya desde la colonia y reforzado por distintas coyunturas posteriores.'},
+      {id:19,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Qué figura histórica reforzó una política de aislamiento interno y externo, exigiendo autorización para toda comunicación o viaje?',correct:'José Gaspar Rodríguez de Francia.',distractors:['Carlos Antonio López.','Francisco Solano López.','Bernardino Caballero.','Andrés Rodríguez.','Alfredo Stroessner.','Nicanor Duarte Frutos.','Eligio Ayala.'],explanation:'La guía atribuye a Francia un fuerte control de las comunicaciones y viajes, rasgo central de su política de aislamiento.'},
+      {id:20,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Qué hecho marcó el abandono del aislamiento por parte de Francisco Solano López y terminó en una guerra devastadora?',correct:'La intervención activa en asuntos regionales que desembocó en la Guerra de la Triple Alianza.',distractors:['La firma del Tratado de Asunción que creó el Mercosur.','La adhesión paraguaya a la ALALC impulsada por Washington.','La creación de la Secretaría Técnica de Planificación.','La aprobación de la Constitución de 1992.','La suscripción del Acta de Yguazú con Brasil.','La conformación de la UNASUR en 2006.','La sanción de la Ley 1635/2000.'],explanation:'La guía enlaza el abandono del aislamiento con la participación regional de Francisco Solano López y con la posterior Guerra de la Triple Alianza (1865-1870).' },
+      {id:21,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Cuál fue el primer paso hacia una mayor institucionalidad de la planificación en Paraguay?',correct:'La creación de la Secretaría Técnica de Planificación en 1962.',distractors:['La firma del Tratado de Asunción en 1991.','La fundación de la UNASUR en 2006.','La reforma constitucional de 1992.','La aprobación del PEES en 2001.','La Ley 1635/2000 de reorganización de la política exterior.','La Alianza para el Progreso en 1961.','La creación del Viceministerio de Economía e Integración.'],explanation:'La guía presenta la creación de la STP en marzo de 1962 como el inicio de una mayor institucionalidad en materia de planificación.'},
+      {id:22,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Qué organismo asesoró a Paraguay en la elaboración del primer Plan Nacional de Desarrollo?',correct:'La CEPAL.',distractors:['La OEA.','La ONUDI.','El BID.','La CAF.','La ALADI.','La UNASUR.','La OCDE.'],explanation:'Ese convenio con la CEPAL aparece como dato concreto del contexto institucional de los planes de desarrollo.'},
+      {id:23,topic:'Tema 2 · Integración regional 1954-2018',type:'vf',question:'En los primeros planes del stronismo, la integración regional ya ocupaba un lugar explícito y central.',correct:false,explanationTrue:'No es correcto marcar verdadero porque la guía diferencia claramente entre los primeros planes, más domésticos, y los posteriores, donde sí aparece la integración.',explanationFalse:'Es falsa porque los planes 1965/66 y 1967/68 no muestran una referencia explícita a la integración regional; esta surge con mayor claridad desde 1971/75.'},
+      {id:24,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Qué rasgo distingue a los planes 1971-1975 y 1977-1981 frente a los dos primeros del periodo stronista?',correct:'Incorporan explícitamente referencias a la integración regional.',distractors:['Abandonan toda mención al equilibrio financiero externo.','Rompen con la planificación estatal en favor del laissez-faire.','Declaran al Mercosur como prioridad inmediata.','Colocan a la UNASUR como principal meta diplomática.','Eliminan la infraestructura física de la agenda nacional.','Sustituyen el desarrollo por un enfoque exclusivamente militar.','Declaran inviable cualquier integración latinoamericana.'],explanation:'La guía compara los planes y remarca que los de 1971-75 y 1977-81 sí introducen la integración, incluso con un matiz de infraestructura física.'},
+      {id:25,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Qué significa que la integración pueda ser condición, proceso o resultado?',correct:'Que depende de una voluntad política, de motivos asociados al modelo de desarrollo y de una dinámica capaz de expandirse, estancarse o retroceder.',distractors:['Que toda integración regional termina necesariamente en un mercado común.','Que la integración solo puede medirse por tratados firmados.','Que la integración es siempre un resultado económico y nunca político.','Que la integración es coercitiva cuando existen asimetrías entre Estados.','Que condición, proceso y resultado son sinónimos sin valor analítico.','Que la integración se decide exclusivamente en el plano sistémico.','Que la integración no puede revertirse una vez iniciada.'],explanation:'La guía usa esta tríada para remarcar el carácter dinámico y no lineal de la integración, vinculándola además a la voluntad y al modelo de desarrollo.'},
+      {id:26,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Qué enfoque teórico usa la guía para analizar integración y planes de desarrollo?',correct:'La Economía Política Internacional, con niveles doméstico y sistémico.',distractors:['El realismo neoclásico con niveles estatal y militar.','El funcionalismo puro, limitado a la cooperación técnica.','El constructivismo poscolonial, centrado solo en la identidad.','La teoría jurídica monista de la integración.','El institucionalismo histórico sin referencia al sistema internacional.','La escuela inglesa aplicada a la diplomacia consular.','La geopolítica determinista sin dimensión económica.'],explanation:'La guía explicita que el análisis se apoya en la Economía Política Internacional por su interdisciplinariedad y por sus dos niveles analíticos: doméstico y sistémico.'},
+      {id:27,topic:'Tema 2 · Integración regional 1954-2018',type:'vf',question:'La relación pendular de Paraguay con Argentina y Brasil significa, según la guía, una cercanía alternante con ambos vecinos, aunque existen interpretaciones que matizan ese sesgo.',correct:true,explanationTrue:'Es correcta porque la guía presenta la idea de relación pendular, pero también menciona voces que relativizan una preferencia exclusiva por uno de los dos vecinos durante el stronismo.',explanationFalse:'No sería falsa: la oscilación hacia Argentina o Brasil es precisamente el sentido del concepto de política pendular mencionado en la guía.'},
+      {id:28,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'La “Marcha hacia el Este” durante el stronismo se asocia principalmente con:',correct:'La profundización del vínculo con Brasil, coronada por Itaipú Binacional.',distractors:['La apertura democrática y el pluralismo partidario.','La priorización de la relación con la Unión Europea.','La retirada de Paraguay de todos los esquemas latinoamericanos.','La ruptura comercial con Argentina y Brasil.','La adopción del Consenso de Washington.','La creación del Mercosur en 1991.','La fundación de la ALALC en 1960.'],explanation:'La guía usa esa expresión para identificar el giro hacia Brasil en tiempos de Stroessner, con Itaipú como emblema mayor.'},
+      {id:29,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Cuál de estos fue uno de los pilares económicos del stronismo señalados en la guía?',correct:'La triangulación comercial.',distractors:['La industrialización sustitutiva cerrada al comercio.','La diversificación exportadora basada en manufacturas pesadas.','La economía digital orientada a servicios.','La integración energética con la UNASUR.','La eliminación del agro como sector estratégico.','La nacionalización completa del comercio exterior.','La sustitución de Itaipú por cooperación cultural.'],explanation:'La guía menciona tres pilares: expansión de rubros agrícolas de exportación, triangulación comercial e Itaipú.'},
+      {id:30,topic:'Tema 2 · Integración regional 1954-2018',type:'vf',question:'El plano externo funcionó como legitimador del régimen stronista al ofrecer cooperación y respaldo político.',correct:true,explanationTrue:'Es correcta porque la guía concluye expresamente que el exterior legitimó al stronismo, ayudándolo a consolidar su posición interna.',explanationFalse:'No corresponde marcar falso, ya que la noción de “legitimador” aparece como una conclusión explícita del periodo.'},
+      {id:31,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Por qué la incorporación paraguaya al Mercosur tuvo un margen de negociación reducido?',correct:'Porque Paraguay se sumó cuando el proyecto ya estaba muy avanzado entre Argentina y Brasil.',distractors:['Porque ingresó sin reconocimiento internacional pleno.','Porque primero perteneció a la UNASUR y luego al Mercosur.','Porque tenía una economía totalmente cerrada al comercio.','Porque el Tratado de Asunción prohibía negociar a Estados mediterráneos.','Porque Uruguay vetó inicialmente su incorporación.','Porque la Constitución de 1992 impedía delegar competencias.','Porque la Ley 1635/2000 aún no había creado la cancillería.'],explanation:'La guía recuerda que el proceso venía gestándose desde el Acta de Yguazú de 1985, por lo que Paraguay llegó a una negociación bastante encaminada.'},
+      {id:32,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Qué idea sintetiza mejor el vínculo entre democracia e integración regional tras 1989?',correct:'Constituyeron un “binomio indivisible” para superar el aislamiento del último tramo de los años 80.',distractors:['Fueron procesos totalmente separados: uno político y otro puramente comercial.','La democracia desplazó a la integración como prioridad exterior.','La integración solo fue una imposición de Argentina y Brasil sin anclaje interno.','La integración antecedió a la democracia y por eso la hizo innecesaria.','La democracia implicó abandonar los esquemas regionales previos.','La integración se concibió como un sustituto de los planes de desarrollo.','Ambas nociones aparecen en la guía como incompatibles.'],explanation:'La guía usa esa fórmula para mostrar que la apertura democrática y la inserción regional se reforzaron mutuamente.'},
+      {id:33,topic:'Tema 2 · Integración regional 1954-2018',type:'multiple',question:'¿Qué hizo la Ley 1635/2000 según la guía?',correct:'Reorganizó la política exterior paraguaya y creó el Viceministerio de Economía e Integración.',distractors:['Constituyó formalmente el Mercosur.','Reemplazó a la Constitución de 1992.','Creó la Secretaría Técnica de Planificación.','Disolvió la cancillería y delegó competencias al Legislativo.','Nacionalizó Itaipú Binacional.','Instauró la Alianza para el Progreso.','Fundó la UNASUR.'],explanation:'Es uno de los hitos del periodo democrático que la guía enumera de forma explícita.'},
+      {id:34,topic:'Tema 2 · Integración regional 1954-2018',type:'vf',question:'En todos los planes del periodo democrático analizados por la guía, la integración regional aparece de manera explícita.',correct:true,explanationTrue:'Es correcta porque la guía destaca como rasgo notorio que la integración regional figura explícitamente en todos los planes democráticos examinados.',explanationFalse:'No sería falsa: justamente se contrasta esa explicitud democrática con la ambigüedad o ausencia de los primeros planes del stronismo.'},
+      {id:35,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'multiple',question:'¿Qué caracterizó al regionalismo postneoliberal mencionado en la guía?',correct:'La incorporación de temas sociales, políticos, energéticos, de seguridad e infraestructura junto a los económicos.',distractors:['La eliminación del componente político para volver al libre comercio puro.','La sustitución total del Mercosur por acuerdos bilaterales con potencias extrarregionales.','La desaparición de la agenda social en favor de la agenda militar.','La renuncia a toda forma de cooperación energética regional.','La vuelta al aislamiento diplomático paraguayo.','La subordinación exclusiva a la Doctrina de Seguridad Nacional.','La prohibición de nuevos liderazgos regionales.'],explanation:'La guía define el regionalismo postneoliberal como un viraje que amplía la agenda más allá del comercio.'},
+      {id:36,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'multiple',question:'¿Qué organización surgida en 2006 es señalada como expresión de ese nuevo contexto regional?',correct:'La UNASUR.',distractors:['La ALALC.','La ALADI.','La OMC.','La CAN.','La CEPAL.','La OCDE.','La OTCA.'],explanation:'La guía menciona que en diciembre de 2006 surgió la UNASUR y que Paraguay fue miembro fundador.'},
+      {id:37,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'vf',question:'El PND Paraguay 2030 presenta como eje estratégico la “Proyección de Paraguay en el mundo” y propone fortalecer la integración económica regional.',correct:true,explanationTrue:'Es correcta porque la guía cita expresamente ese eje y la estrategia 3.3 de fortalecimiento de la integración regional.',explanationFalse:'No sería falsa: ambos elementos están formulados textualmente en la parte dedicada al PND Paraguay 2030.'},
+      {id:38,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'multiple',question:'¿Qué matiz predominante adopta la idea de integración en el PND Paraguay 2030, según la guía?',correct:'Un matiz de infraestructura física vinculado a lo económico.',distractors:['Un matiz exclusivamente cultural y lingüístico.','Un matiz prioritariamente militar-defensivo.','Un matiz centrado en la ciudadanía sudamericana sin dimensión económica.','Un matiz exclusivamente ambiental desligado del comercio.','Un matiz consular orientado solo a la diáspora.','Un matiz judicial orientado a cortes regionales.','Un matiz religioso articulado por redes confesionales.'],explanation:'La guía destaca que la integración aparece con un tono marcadamente económico y asociado a infraestructura física.'},
+      {id:39,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'multiple',question:'¿Qué afirmación resume mejor la lógica interméstica aplicada al caso paraguayo contemporáneo?',correct:'Las necesidades internas buscan soluciones en el plano externo, mientras lo internacional también condiciona la política doméstica.',distractors:['Lo doméstico desaparece como variable cuando se habla de política exterior.','La política exterior solo traduce cambios sistémicos y nunca responde a necesidades internas.','Las políticas públicas internas y la política exterior son esferas completamente separadas.','El carácter interméstico implica priorizar la política interna y excluir compromisos externos.','La interdependencia invalida la existencia del interés nacional.','La teoría del doble nivel elimina el papel del gobierno.','La política exterior contemporánea paraguaya se explica solo por la geografía.'],explanation:'La guía define lo interméstico justamente como la interacción entre necesidades domésticas y condicionamientos internacionales.'},
+      {id:40,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'vf',question:'La guía sugiere que, en entornos de institucionalidad débil, los planes de desarrollo pueden resultar una expresión limitada de las políticas públicas reales.',correct:true,explanationTrue:'Es correcta porque el texto advierte que en contextos de institucionalidad débil la coyuntura político-económica termina señalando los rumbos efectivos.',explanationFalse:'No sería falsa: la guía formula esa limitación de modo explícito en el análisis del caso paraguayo.'},
+      {id:41,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'multiple',question:'¿Por qué el proceso participativo del PND Paraguay 2030 es relevante para el análisis de política exterior?',correct:'Porque muestra una formalización más amplia del proyecto de desarrollo e inserción internacional al involucrar a más de 2.000 actores.',distractors:['Porque reemplazó completamente a la cancillería en la toma de decisiones.','Porque convirtió al Mercosur en un actor gubernamental paraguayo.','Porque eliminó la necesidad de planes futuros.','Porque restringió la participación a mandos militares.','Porque suprimió el eje de inserción internacional.','Porque solo abordó temas presupuestarios internos.','Porque derogó los planes democráticos anteriores.'],explanation:'La guía subraya el carácter participativo del PND 2030 y su importancia como expresión formal del modelo adoptado y de la proyección externa del país.'},
+      {id:42,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'multiple',question:'¿Qué liderazgo es mencionado en la guía como valorando al Mercosur, aunque en un contexto regional ampliado y cambiante?',correct:'Nicanor Duarte Frutos.',distractors:['José Gaspar Rodríguez de Francia.','Carlos Antonio López.','Francisco Solano López.','Andrés Rodríguez.','Alfredo Stroessner.','Eligio Ayala.','Federico Franco.'],explanation:'En el apartado del regionalismo postneoliberal, la guía menciona el liderazgo de Nicanor Duarte Frutos (2003-2008).' },
+      {id:43,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'vf',question:'La guía presenta la inserción internacional paraguaya reciente como desligada de cuestiones energéticas, comerciales y de soberanía.',correct:false,explanationTrue:'No podría ser verdadero porque la propia presentación del tema habla de 13 ejes estratégicos e incluye explícitamente soberanía, energía, comercio, cooperación y derechos humanos.',explanationFalse:'Es falsa porque esos asuntos aparecen precisamente como componentes centrales de la política exterior contemporánea paraguaya.'},
+      {id:44,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'multiple',question:'¿Qué relación existe entre planes de desarrollo e integración regional en la lectura de la guía?',correct:'Los planes expresan formalmente el modelo de desarrollo y muestran cuándo la integración regional es asumida como prioridad o no.',distractors:['Los planes sustituyen por completo a la política exterior.','La integración regional solo puede existir si no hay planes nacionales.','Los planes y la integración pertenecen a esferas sin contacto analítico.','La integración regional es siempre previa al modelo de desarrollo.','Los planes impiden que el plano externo responda a necesidades internas.','La integración solo se deduce de tratados comerciales, no de planes.','Los planes democráticos excluyen toda referencia al entorno regional.'],explanation:'La guía insiste en que los planes permiten leer el modelo de desarrollo adoptado y el lugar que este da a la integración.'},
+      {id:45,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'multiple',question:'Si una pregunta del examen te pidiera relacionar infraestructura física e integración, ¿qué periodo ofrece un antecedente claro de esa asociación según la guía?',correct:'El plan 1977-1981 del periodo stronista.',distractors:['El gobierno de Francia previo a 1840.','La Guerra de la Triple Alianza.','La Ley 1635/2000.','La fundación de la ALALC en 1960.','La Constitución de 1940.','El PEES de 2001 sin antecedentes previos.','El Tratado de Asunción de 1991 como primer caso absoluto.'],explanation:'La guía remarca que el plan 1977-1981 ya vinculaba integración e infraestructura física, matiz que reaparece décadas después.'},
+      {id:46,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'vf',question:'El análisis de la guía permite concluir que la política exterior paraguaya contemporánea se entiende mejor si se articula con modelos de desarrollo y no como un campo aislado.',correct:true,explanationTrue:'Es correcta porque uno de los hilos del texto es justamente conectar política exterior, políticas públicas, planes de desarrollo e integración.',explanationFalse:'No sería falsa: la guía rechaza una mirada aislada y propone leer la política exterior junto con sus determinantes domésticos y sistémicos.'},
+      {id:47,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'multiple',question:'¿Qué opción refleja mejor el tipo de trampas conceptuales que la guía ayuda a evitar?',correct:'Confundir la integración como proceso dinámico con una simple lista de acuerdos firmados.',distractors:['Creer que la geografía no afecta nunca a la política exterior.','Sostener que todo actor con presencia internacional hace política exterior en sentido jurídico.','Pensar que bienestar antecede a la seguridad en la jerarquía del interés nacional.','Suponer que los planes democráticos ignoraron la integración regional.','Olvidar que el plano externo pudo legitimar al stronismo.','Reducir el carácter interméstico a una lógica puramente interna.','Todas las anteriores pueden ser trampas conceptuales.'],explanation:'La última opción es correcta por descarte ampliado: el examen difícil trabaja justamente con este tipo de confusiones recurrentes presentes a lo largo de la guía.'},
+      {id:48,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'multiple',question:'¿Qué combinación resume mejor la arquitectura general de la guía de estudio?',correct:'Fundamentos teóricos; integración regional del Paraguay 1954-2018; ejes estratégicos de la política exterior 2003-2026.',distractors:['Historia constitucional; derecho administrativo; comercio internacional.','Política interior; sociología política; derecho comparado.','Geografía económica; defensa nacional; historia cultural.','Solo teoría de relaciones internacionales sin aplicaciones paraguayas.','Solo cronología histórica sin marco conceptual.','Mercosur; UNASUR; OEA como únicos tres bloques.','Aislamiento; guerra; transición, sin discusión teórica ni estratégica.'],explanation:'La guía está organizada precisamente en esos tres grandes núcleos, y el juego distribuye el banco de preguntas de forma equilibrada entre ellos.'},
+      {id:49,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'vf',question:'Un test bien difícil sobre esta guía debe incluir tanto memoria factual como distinciones conceptuales finas.',correct:true,explanationTrue:'Es correcta porque el contenido combina cronología, actores, conceptos, comparaciones teóricas y relaciones causales; por eso el estudio serio exige ambas cosas.',explanationFalse:'No sería falsa: limitarse a fechas o a definiciones aisladas dejaría afuera buena parte de la complejidad de la guía.'},
+      {id:50,topic:'Tema 3 · Ejes estratégicos 2003-2026',type:'multiple',question:'¿Cuál es la mejor razón para que este juego esté separado de la guía original?',correct:'Permite practicar sin alterar el material base y facilita un entorno interactivo específico para evaluación y reintentos aleatorios.',distractors:['Porque la guía original no contiene suficiente contenido para preguntas difíciles.','Porque el HTML base no puede convivir con scripts adicionales.','Porque separar archivos elimina la necesidad de revisar respuestas.','Porque el juego debe reemplazar totalmente al material de estudio.','Porque un quiz aislado impide el uso de retroalimentación detallada.','Porque la aleatoriedad solo funciona si no existe una guía previa.','Porque la separación impide estudiar por temas.'],explanation:'Separarlo de la guía preserva el documento de estudio y permite una experiencia de práctica más enfocada, que fue justamente la recomendación adoptada.'}
+    ];
+
+    const state = { pool: [], questions: [], current: 0, answers: {} };
+
+    const questionCount = document.getElementById('questionCount');
+    const mode = document.getElementById('mode');
+    const startBtn = document.getElementById('startBtn');
+    const previewBtn = document.getElementById('previewBtn');
+    const previewBox = document.getElementById('previewBox');
+    const quizShell = document.getElementById('quizShell');
+    const results = document.getElementById('results');
+    const numbers = document.getElementById('numbers');
+    const progressTitle = document.getElementById('progressTitle');
+    const answeredCount = document.getElementById('answeredCount');
+    const correctCount = document.getElementById('correctCount');
+    const topicBadge = document.getElementById('topicBadge');
+    const typeBadge = document.getElementById('typeBadge');
+    const questionHeadline = document.getElementById('questionHeadline');
+    const questionText = document.getElementById('questionText');
+    const options = document.getElementById('options');
+    const feedbackBox = document.getElementById('feedbackBox');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const finishBtn = document.getElementById('finishBtn');
+    const retryBtn = document.getElementById('retryBtn');
+    const restartBtn = document.getElementById('restartBtn');
+    const backConfigBtn = document.getElementById('backConfigBtn');
+    const scoreText = document.getElementById('scoreText');
+    const percentText = document.getElementById('percentText');
+    const levelText = document.getElementById('levelText');
+    const reviewList = document.getElementById('reviewList');
+    const themeToggle = document.getElementById('themeToggle');
+
+    const shuffle = arr => [...arr].sort(() => Math.random() - 0.5);
+
+    function buildPool() {
+      let filtered = BANK.filter(q => mode.value === 'mixed' ? true : mode.value === 'multiple' ? q.type === 'multiple' : q.type === 'vf');
+      const byTopic = {};
+      filtered.forEach(q => { byTopic[q.topic] ??= []; byTopic[q.topic].push(q); });
+      Object.keys(byTopic).forEach(k => byTopic[k] = shuffle(byTopic[k]));
+      const target = parseInt(questionCount.value, 10);
+      const topics = Object.keys(byTopic);
+      const selected = [];
+      let idx = 0;
+      while (selected.length < Math.min(target, filtered.length)) {
+        const topic = topics[idx % topics.length];
+        if (byTopic[topic].length) selected.push(byTopic[topic].shift());
+        idx++;
+        if (idx > 500) break;
+      }
+      return shuffle(selected).map(q => prepareQuestion(q));
+    }
+
+    function prepareQuestion(q) {
+      if (q.type === 'vf') {
+        const opts = shuffle([
+          {key:'Verdadero', value:true},
+          {key:'Falso', value:false}
+        ]);
+        return {...q, options: opts};
+      }
+      const distractors = shuffle(q.distractors).slice(0,3);
+      const finalOptions = shuffle([q.correct, ...distractors]).map((text, i) => ({key:'ABCD'[i], value:text}));
+      return {...q, options: finalOptions};
     }
 
     function startQuiz() {
-        const count = parseInt(document.getElementById('q-count').value);
-        let shuffledBank = shuffle([...ALL_QUESTIONS]).slice(0, count);
-        
-        currentQuestions = shuffledBank.map(q => {
-            let chosenIncorrects = shuffle([...q.incorrects]).slice(0, 3);
-            let options = [{ text: q.correct, isCorrect: true }];
-            chosenIncorrects.forEach(inc => options.push({ text: inc.text, isCorrect: false, reason: inc.reason }));
-            return { ...q, shuffledOptions: shuffle(options) };
-        });
-
-        currentIndex = 0;
-        userAnswers = [];
-        document.getElementById('setup-screen').classList.remove('active');
-        document.getElementById('quiz-screen').classList.add('active');
-        loadQuestion();
+      state.questions = buildPool();
+      state.current = 0;
+      state.answers = {};
+      quizShell.classList.add('active');
+      results.classList.remove('active');
+      renderNumbers();
+      renderQuestion();
+      window.scrollTo({top: document.getElementById('quizShell').offsetTop - 16, behavior:'smooth'});
     }
 
-    function loadQuestion() {
-        const q = currentQuestions[currentIndex];
-        document.getElementById('q-counter').innerText = `Pregunta ${currentIndex + 1} de ${currentQuestions.length}`;
-        document.getElementById('q-text').innerText = q.question;
-        
-        const container = document.getElementById('options-container');
-        container.innerHTML = '';
-        currentSelected = null;
-        document.getElementById('next-btn').disabled = true;
-        
-        q.shuffledOptions.forEach(opt => {
-            const btn = document.createElement('button');
-            btn.className = 'option-btn';
-            btn.innerText = opt.text;
-            btn.onclick = () => {
-                document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
-                btn.classList.add('selected');
-                currentSelected = opt;
-                document.getElementById('next-btn').disabled = false;
-            };
-            container.appendChild(btn);
-        });
-        
-        document.getElementById('next-btn').innerText = currentIndex === currentQuestions.length - 1 ? 'Finalizar Examen' : 'Siguiente';
+    function renderNumbers() {
+      numbers.innerHTML = '';
+      state.questions.forEach((_, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'num';
+        btn.textContent = i + 1;
+        btn.type = 'button';
+        btn.addEventListener('click', () => { state.current = i; renderQuestion(); });
+        numbers.appendChild(btn);
+      });
+      syncNumbers();
     }
 
-    function nextQuestion() {
-        userAnswers.push(currentSelected);
-        if (currentIndex < currentQuestions.length - 1) {
-            currentIndex++;
-            loadQuestion();
-        } else {
-            showResults();
+    function syncNumbers() {
+      [...numbers.children].forEach((el, i) => {
+        el.classList.toggle('current', i === state.current);
+        el.classList.toggle('done', state.answers[i]?.answered);
+        el.classList.toggle('review', state.answers[i]?.answered && !state.answers[i]?.isCorrect);
+      });
+      const answered = Object.values(state.answers).filter(a => a.answered).length;
+      const correct = Object.values(state.answers).filter(a => a.isCorrect).length;
+      answeredCount.textContent = answered;
+      correctCount.textContent = correct;
+      progressTitle.textContent = `Pregunta ${state.current + 1} de ${state.questions.length}`;
+    }
+
+    function renderQuestion() {
+      const q = state.questions[state.current];
+      topicBadge.textContent = q.topic;
+      typeBadge.textContent = q.type === 'multiple' ? 'Selección múltiple' : 'Verdadero / Falso';
+      questionHeadline.textContent = `Ítem ${state.current + 1}`;
+      questionText.textContent = q.question;
+      options.innerHTML = '';
+      const saved = state.answers[state.current];
+
+      q.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'option';
+        const letter = q.type === 'multiple' ? 'ABCD'[i] : (opt.value === true ? 'V' : 'F');
+        btn.innerHTML = `<span class="letter">${letter}</span><span>${opt.key && q.type === 'vf' ? opt.key : opt.value}</span>`;
+        if (saved?.answered) {
+          const isCorrectOpt = q.type === 'vf' ? opt.value === q.correct : opt.value === q.correct;
+          const isSelected = saved.value === (q.type === 'vf' ? opt.value : opt.value);
+          if (isSelected) btn.classList.add('selected');
+          if (isCorrectOpt) btn.classList.add('correct');
+          if (isSelected && !isCorrectOpt) btn.classList.add('incorrect');
+          btn.disabled = true;
         }
+        btn.addEventListener('click', () => answerQuestion(opt.value));
+        options.appendChild(btn);
+      });
+
+      feedbackBox.className = 'feedback';
+      feedbackBox.innerHTML = '';
+      if (saved?.answered) showFeedback(q, saved);
+      prevBtn.disabled = state.current === 0;
+      nextBtn.classList.toggle('hidden', state.current === state.questions.length - 1);
+      finishBtn.classList.toggle('hidden', state.current !== state.questions.length - 1);
+      syncNumbers();
     }
 
-    function showResults() {
-        document.getElementById('quiz-screen').classList.remove('active');
-        document.getElementById('results-screen').classList.add('active');
-        
-        let correctCount = 0;
-        const details = document.getElementById('results-details');
-        details.innerHTML = '';
-        
-        currentQuestions.forEach((q, i) => {
-            const ans = userAnswers[i];
-            if (ans.isCorrect) correctCount++;
-            
-            let html = `<div class="result-item">
-                <div class="badge ${ans.isCorrect ? 'correct' : 'incorrect'}">${ans.isCorrect ? '¡Acertaste!' : 'Incorrecto'}</div>
-                <h3 style="margin-top: 5px;">${i + 1}. ${q.question}</h3>
-                <p><strong>Tu respuesta:</strong> ${ans.text}</p>`;
-            
-            if (!ans.isCorrect) {
-                html += `<p style="color: var(--success);"><strong>Respuesta correcta:</strong> ${q.correct}</p>
-                         <div class="explanation"><strong>Por qué tu elección es incorrecta:</strong><br>${ans.reason}</div>`;
-            }
-            html += `</div>`;
-            details.innerHTML += html;
-        });
-        
-        const pct = Math.round((correctCount / currentQuestions.length) * 100);
-        document.getElementById('score-text').innerText = `${pct}% (${correctCount}/${currentQuestions.length})`;
+    function answerQuestion(value) {
+      const q = state.questions[state.current];
+      const isCorrect = q.type === 'vf' ? value === q.correct : value === q.correct;
+      state.answers[state.current] = { answered:true, value, isCorrect };
+      renderQuestion();
     }
-</script>
+
+    function showFeedback(q, saved) {
+      feedbackBox.classList.add('show', saved.isCorrect ? 'correct' : 'incorrect');
+      if (q.type === 'vf') {
+        const reason = saved.isCorrect ? q.explanationTrue : q.explanationFalse;
+        feedbackBox.innerHTML = `<h3>${saved.isCorrect ? 'Respuesta correcta' : 'Respuesta incorrecta'}</h3><p>${reason}</p>`;
+        return;
+      }
+      feedbackBox.innerHTML = `
+        <h3>${saved.isCorrect ? 'Respuesta correcta' : 'Respuesta incorrecta'}</h3>
+        <p><strong>Respuesta válida:</strong> ${q.correct}</p>
+        <p style="margin-top:.55rem">${q.explanation}</p>
+        ${saved.isCorrect ? '' : `<p style="margin-top:.55rem"><strong>Tu error:</strong> La opción elegida no recoge el matiz central que la guía exige distinguir en este punto.</p>`}
+      `;
+    }
+
+    function finishQuiz() {
+      const total = state.questions.length;
+      const correct = Object.values(state.answers).filter(a => a.isCorrect).length;
+      const pct = Math.round((correct / total) * 100);
+      scoreText.textContent = `${correct}/${total}`;
+      percentText.textContent = `${pct}%`;
+      levelText.textContent = pct >= 85 ? 'Dominio alto' : pct >= 70 ? 'Buen nivel' : pct >= 50 ? 'Intermedio' : 'Necesita repaso';
+      reviewList.innerHTML = '';
+      state.questions.forEach((q, i) => {
+        const ans = state.answers[i] || {answered:false,isCorrect:false,value:'Sin responder'};
+        const item = document.createElement('article');
+        item.className = `review-item ${ans.isCorrect ? 'good' : 'bad'}`;
+        let body = '';
+        if (q.type === 'vf') {
+          body = `<p><strong>Tu respuesta:</strong> ${ans.answered ? (ans.value ? 'Verdadero' : 'Falso') : 'Sin responder'}</p>
+                  <p><strong>Correcta:</strong> ${q.correct ? 'Verdadero' : 'Falso'}</p>
+                  <p style="margin-top:.45rem">${ans.isCorrect ? q.explanationTrue : q.explanationFalse}</p>`;
+        } else {
+          body = `<p><strong>Tu respuesta:</strong> ${ans.value || 'Sin responder'}</p>
+                  <p><strong>Correcta:</strong> ${q.correct}</p>
+                  <p style="margin-top:.45rem">${q.explanation}</p>
+                  ${ans.isCorrect ? '' : '<p style="margin-top:.45rem"><strong>Motivo del incorrecto:</strong> Elegiste una formulación incompleta, desplazada o conceptualmente confundible con la correcta.</p>'}`;
+        }
+        item.innerHTML = `<p class="small muted">${q.topic} · ${q.type === 'multiple' ? 'Selección múltiple' : 'Verdadero/Falso'}</p><h3 style="margin:.4rem 0 0.6rem">${i+1}. ${q.question}</h3>${body}`;
+        reviewList.appendChild(item);
+      });
+      quizShell.classList.remove('active');
+      results.classList.add('active');
+      window.scrollTo({top: results.offsetTop - 16, behavior:'smooth'});
+    }
+
+    startBtn.addEventListener('click', startQuiz);
+    previewBtn.addEventListener('click', () => previewBox.classList.toggle('show'));
+    prevBtn.addEventListener('click', () => { if (state.current > 0) { state.current--; renderQuestion(); } });
+    nextBtn.addEventListener('click', () => { if (state.current < state.questions.length - 1) { state.current++; renderQuestion(); } });
+    finishBtn.addEventListener('click', finishQuiz);
+    retryBtn.addEventListener('click', startQuiz);
+    restartBtn.addEventListener('click', startQuiz);
+    backConfigBtn.addEventListener('click', () => { results.classList.remove('active'); window.scrollTo({top:0, behavior:'smooth'}); });
+    themeToggle.addEventListener('click', () => document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+  </script>
 </body>
 </html>
