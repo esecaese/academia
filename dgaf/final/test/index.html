@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulador de Examen Extremo - Régimen Consular</title>
+<style>
+    /* ============================================================
+       BASE Y VARIABLES (Dark Premium Theme)
+    ============================================================ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+        --bg-body:       #0f172a; 
+        --bg-panel:      #1e293b; 
+        --bg-card:       #334155; 
+        
+        --text-main:     #cbd5e1; 
+        --text-heading:  #f8fafc; 
+        --text-muted:    #94a3b8; 
+        
+        --accent:        #3b82f6; 
+        --accent-hover:  #2563eb; 
+        
+        --correct:       #10b981; 
+        --correct-bg:    rgba(16, 185, 129, 0.15);
+        --incorrect:     #ef4444; 
+        --incorrect-bg:  rgba(239, 68, 68, 0.15);
+        
+        --font-main:     'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        --shadow-lg:     0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+
+    body {
+        background-color: var(--bg-body);
+        color: var(--text-main);
+        font-family: var(--font-main);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .app-container {
+        width: 100%;
+        max-width: 850px;
+        background: var(--bg-panel);
+        border-radius: 24px;
+        padding: 40px;
+        box-shadow: var(--shadow-lg);
+        border: 1px solid rgba(255,255,255,0.05);
+        position: relative;
+        overflow: hidden;
+    }
+
+    h1, h2 { color: var(--text-heading); margin-bottom: 20px; text-align: center; }
+    p { margin-bottom: 20px; font-size: 1.1rem; line-height: 1.6; text-align: center; }
+
+    /* ============================================================
+       PANTALLAS
+    ============================================================ */
+    .screen { display: none; animation: fadeIn 0.4s ease; }
+    .screen.active { display: block; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ============================================================
+       PANTALLA DE INICIO
+    ============================================================ */
+    .setup-container { text-align: center; padding: 20px 0; }
+    .slider-wrapper { margin: 40px 0; }
+    
+    input[type=range] {
+        -webkit-appearance: none;
+        width: 100%;
+        max-width: 400px;
+        background: transparent;
+    }
+    input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 28px; width: 28px;
+        border-radius: 50%;
+        background: var(--accent);
+        cursor: pointer;
+        margin-top: -10px;
+        box-shadow: 0 0 10px rgba(59,130,246,0.5);
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+        width: 100%; height: 8px;
+        cursor: pointer;
+        background: var(--bg-card);
+        border-radius: 4px;
+    }
+    
+    .question-count-display {
+        font-size: 3.5rem;
+        font-weight: 800;
+        color: var(--accent);
+        margin: 15px 0;
+    }
+
+    .btn {
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        padding: 16px 32px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .btn:hover { background: var(--accent-hover); transform: translateY(-2px); }
+    .btn:disabled { background: var(--bg-card); color: var(--text-muted); cursor: not-allowed; transform: none; }
+
+    /* ============================================================
+       PANTALLA DE QUIZ
+    ============================================================ */
+    .progress-bar {
+        width: 100%; height: 6px;
+        background: var(--bg-card);
+        border-radius: 4px;
+        margin-bottom: 30px;
+        overflow: hidden;
+    }
+    .progress-fill {
+        height: 100%; background: var(--accent);
+        width: 0%; transition: width 0.3s ease;
+    }
+
+    .question-header {
+        display: flex; justify-content: space-between;
+        color: var(--text-muted);
+        font-size: 0.9rem; margin-bottom: 15px; font-weight: 600; text-transform: uppercase;
+    }
+
+    .question-text {
+        font-size: 1.25rem; font-weight: 700; color: var(--text-heading); margin-bottom: 30px; line-height: 1.5; text-align: left;
+    }
+
+    .options-grid {
+        display: flex; flex-direction: column; gap: 12px;
+    }
+
+    .option-btn {
+        background: var(--bg-card);
+        border: 2px solid transparent;
+        color: var(--text-main);
+        padding: 18px 24px;
+        font-size: 1.05rem;
+        border-radius: 12px;
+        cursor: pointer;
+        text-align: left;
+        transition: all 0.2s;
+        line-height: 1.5;
+    }
+    .option-btn:hover:not(:disabled) {
+        background: #3f516a; border-color: var(--accent);
+    }
+    
+    .option-btn.correct {
+        background: var(--correct-bg); border-color: var(--correct); color: #fff;
+    }
+    .option-btn.incorrect {
+        background: var(--incorrect-bg); border-color: var(--incorrect); color: #fff;
+    }
+    .option-btn:disabled { cursor: default; }
+
+    .action-bar {
+        display: flex; justify-content: flex-end; margin-top: 30px;
+    }
+
+    /* ============================================================
+       PANTALLA DE RESULTADOS
+    ============================================================ */
+    .results-container { text-align: center; padding: 30px 0; }
+    .score-circle {
+        width: 160px; height: 160px;
+        border-radius: 50%;
+        background: var(--bg-card);
+        border: 8px solid var(--accent);
+        display: flex; align-items: center; justify-content: center;
+        margin: 0 auto 30px;
+        font-size: 2.8rem; font-weight: 800; color: #fff;
+    }
+    .feedback-msg { font-size: 1.2rem; margin-bottom: 40px; color: var(--text-muted); line-height: 1.5; }
+
+    @media (max-width: 600px) {
+        .app-container { padding: 30px 20px; border-radius: 16px; }
+        .question-text { font-size: 1.15rem; }
+        .option-btn { padding: 15px 20px; font-size: 0.95rem; }
+    }
+</style>
+</head>
+<body>
+
+<div class="app-container">
+    
+    <!-- PANTALLA 1: SETUP -->
+    <div id="screen-setup" class="screen active">
+        <div class="setup-container">
+            <h1>Modo Entrenamiento Experto</h1>
+            <p style="color: var(--text-muted); font-size:0.95rem;">Régimen, Corte Administrativo, Alquileres y Gastos.<br>Opciones de trampa calibradas por longitud y gramática.</p>
+            
+            <div class="slider-wrapper">
+                <input type="range" id="q-count-slider" min="1" max="50" value="25">
+                <div class="question-count-display" id="q-count-display">25</div>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">Preguntas a responder de un total de <span id="total-q-badge">50</span>.</p>
+            </div>
+
+            <button class="btn" id="start-btn">Iniciar Simulación Extrema</button>
+        </div>
+    </div>
+
+    <!-- PANTALLA 2: QUIZ -->
+    <div id="screen-quiz" class="screen">
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+        <div class="question-header">
+            <span id="q-counter">Pregunta 1 de 25</span>
+            <span id="q-type-badge">Selección Múltiple</span>
+        </div>
+        
+        <div class="question-text" id="q-text">Cargando pregunta...</div>
+        
+        <div class="options-grid" id="options-grid"></div>
+
+        <div class="action-bar">
+            <button class="btn" id="next-btn" style="display:none;">Continuar ➔</button>
+        </div>
+    </div>
+
+    <!-- PANTALLA 3: RESULTADOS -->
+    <div id="screen-results" class="screen">
+        <div class="results-container">
+            <h2>Reporte de Evaluación</h2>
+            <div class="score-circle" id="score-circle">0/25</div>
+            <div class="feedback-msg" id="feedback-msg">Evaluando...</div>
+            <button class="btn" id="restart-btn">Reiniciar Ciclo de Estudio</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // =========================================================================
+    // BASE DE DATOS (50 Preguntas: 28 MC con trampas simétricas + 22 TF)
+    // =========================================================================
+    const db = [
+        // --- 28 PREGUNTAS DE SELECCIÓN MÚLTIPLE ---
+        {
+            type: 'mc',
+            text: 'Las solicitudes de compra por un valor total de HASTA USD 4.000 por rubro, deberán ser realizadas única y exclusivamente:',
+            correct: 'Por la modalidad de reembolso financiero contra la presentación de la documentación.',
+            traps: [
+                'Por la modalidad de caja chica operativa contra la presentación de la documentación.',
+                'Por la modalidad de fondo rotatorio fijo contra la presentación de la documentación.',
+                'Por la modalidad de transferencia directa contra la presentación de la documentación.',
+                'Por la modalidad de reembolso financiero contra la autorización previa de Auditoría.',
+                'Por la modalidad de licitación restringida contra la presentación de la facturación.',
+                'Por la modalidad de pago por subrogación contra la presentación de la facturación.',
+                'Por la modalidad de reembolso anticipado contra la presentación de la cotización base.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: '¿Quiénes integran de manera exacta el Comité para evaluar compras de HASTA USD 4.000 (modalidad de reembolso)?',
+            correct: 'Director de Finanzas, UOC, Director Administrativo, Director de Presupuesto, y Rep. DAL.',
+            traps: [
+                'Director de Tesorería, UOC, Director Administrativo, Director de Patrimonio, y Rep. DAL.',
+                'Director de Finanzas, SIC, Director Administrativo, Director de Presupuesto, y Rep. DAL.',
+                'Director de Finanzas, UOC, Director de Auditoría, Director de Presupuesto, y Rep. DAL.',
+                'Director de Finanzas, UOC, Director Administrativo, Director de Presupuesto, y VMAAT.',
+                'Director de Finanzas, UOC, Director Administrativo, Director de Presupuesto, y el DGAF.',
+                'Director de Tesorería, UOC, Director Administrativo, Director de Presupuesto, y el DGAF.',
+                'Director de Patrimonio, UOC, Director Administrativo, Director de Presupuesto, Rep. DAL.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: 'En el procedimiento para compras de HASTA USD 4.000, previo a la autorización escrita del DGAF, se requiere el parecer jurídico de:',
+            correct: 'La Dirección de Asuntos Legales (DAL) sobre el cumplimiento de los procedimientos dispuestos.',
+            traps: [
+                'La Dirección Nacional de Contrataciones Públicas sobre el cumplimiento de los procedimientos.',
+                'La Dirección de Auditoría Interna Institucional sobre el cumplimiento de los procedimientos.',
+                'La Dirección de Asuntos Consulares (DAC) sobre el cumplimiento de los procedimientos dispuestos.',
+                'El Viceministerio de Administración y Asuntos Técnicos sobre el cumplimiento de los procesos.',
+                'El Departamento de Rendición de Cuentas Consulares sobre el cumplimiento de los procesos.',
+                'La Dirección General de Administración y Finanzas sobre el cumplimiento de los reglamentos.',
+                'La Dirección de Asuntos Legales (DAL) sobre la viabilidad presupuestaria de los requerimientos.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: 'Una vez realizada una adquisición (≤ USD 4.000), ¿en qué plazo el Jefe de la Misión debe remitir al DGAF las facturas originales?',
+            correct: 'Dentro de los 10 días hábiles a partir de la recepción de la autorización de compra respectiva.',
+            traps: [
+                'Dentro de los 15 días hábiles a partir de la recepción de la autorización de compra respectiva.',
+                'Dentro de los 10 días corridos a partir de la recepción de la autorización de compra respectiva.',
+                'Dentro de los 15 días corridos a partir de la recepción de la autorización de compra respectiva.',
+                'Dentro de los 05 días hábiles a partir de la finalización de la adquisición de los bienes.',
+                'Dentro de los 20 días hábiles a partir de la recepción de la autorización de compra respectiva.',
+                'Dentro de los 10 días hábiles a partir de la confirmación de la transferencia bancaria emitida.',
+                'Dentro de los 30 días corridos a partir de la notificación del dictamen de adjudicación oficial.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: '¿Cómo debe procesarse la traducción de facturas en idioma extranjero remitidas al DGAF tras una adquisición?',
+            correct: 'Debe contar con traducción no oficial debidamente aprobada y firmada por el Jefe de la Misión.',
+            traps: [
+                'Debe contar con traducción matriculada debidamente aprobada y firmada por el Jefe de la Misión.',
+                'Debe contar con traducción no oficial debidamente aprobada y firmada por el Cónsul respectivo.',
+                'Debe contar con traducción oficial debidamente legalizada y firmada por un Traductor Público.',
+                'Debe contar con traducción no oficial debidamente aprobada y firmada por la Dirección Legal.',
+                'Debe contar con traducción certificada debidamente aprobada y apostillada por el Ministerio.',
+                'Debe contar con traducción no oficial debidamente aprobada y firmada por el funcionario base.',
+                'Debe contar con traducción legalizada debidamente aprobada y firmada por el Jefe de la Misión.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: 'En caso de que una compra por reembolso (≤ USD 4.000) se realice por un monto INFERIOR al aprobado inicialmente, ¿qué establece la norma?',
+            correct: 'La suma reembolsada será estrictamente ajustada al monto de la factura y la cotización adjuntada.',
+            traps: [
+                'La suma excedente será estrictamente destinada al rubro de gastos de operación y mantenimiento.',
+                'La diferencia financiera será estrictamente retenida en la cuenta bancaria para futuras compras.',
+                'El proceso de reembolso será inmediatamente anulado debiendo reiniciarse con las nuevas cifras.',
+                'La suma reembolsada será estrictamente ajustada al dictamen del Comité de Evaluación respectivo.',
+                'La diferencia financiera será automáticamente descontada del presupuesto asignado al siguiente mes.',
+                'El remanente financiero será obligatoriamente transferido a la cuenta de recaudaciones consulares.',
+                'La suma reembolsada será estrictamente ajustada previa emisión de una nueva autorización general.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: '¿Qué dependencia se encarga de realizar los trámites pertinentes ante el MEF para la obtención y posterior remisión de los recursos tras obtener el código DNCP?',
+            correct: 'El Departamento de Tesorería de la institución encargada.',
+            traps: [
+                'El Departamento de Contabilidad de la institución encargada.',
+                'El Departamento de Presupuesto de la institución encargada.',
+                'El Departamento de Rendición de Cuentas de la institución.',
+                'El Departamento de Patrimonio de la institución encargada.',
+                'La Unidad Operativa de Contrataciones de la institución.',
+                'La Dirección General de Finanzas de la institución central.',
+                'El Viceministerio de Administración de la institución central.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: 'Para el caso de solicitudes de compra MAYORES a USD 4.000 por rubro, ¿a quién debe dirigirse por escrito la solicitud inicial?',
+            correct: 'Al titular del Viceministerio de Administración y Asuntos Técnicos (VMAAT).',
+            traps: [
+                'Al titular de la Dirección General de Administración y Finanzas (DGAF).',
+                'Al titular de la Unidad Operativa de Contrataciones Nacionales (UOC).',
+                'Al titular de la Dirección Nacional de Contrataciones Públicas (DNCP).',
+                'Al titular del Ministerio de Economía y Finanzas del Estado (MEF).',
+                'Al director de la Dirección de Asuntos Legales Institucionales (DAL).',
+                'Al titular del Departamento de Tesorería y Contabilidad Institucional.',
+                'Al encargado del Comité Permanente de Adquisiciones y Mantenimientos.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: '¿Cuál es el mínimo de ofertas requeridas y qué condición deben cumplir para solicitudes MAYORES a USD 4.000?',
+            correct: 'Como mínimo tres ofertas elaboradas por el proveedor y refrendadas por los titulares de la Misión.',
+            traps: [
+                'Como mínimo dos ofertas elaboradas por el proveedor y refrendadas por los titulares de la Misión.',
+                'Como mínimo tres ofertas elaboradas por la misión y refrendadas por los proveedores adjudicados.',
+                'Como mínimo cuatro ofertas elaboradas por el proveedor y refrendadas por los titulares de la Misión.',
+                'Como mínimo tres cotizaciones elaboradas por el proveedor y refrendadas por el Comité Permanente.',
+                'Como mínimo tres ofertas elaboradas por el proveedor y refrendadas por la Auditoría de la Misión.',
+                'Como mínimo dos ofertas elaboradas por el proveedor y certificadas por los titulares de la Misión.',
+                'Como mínimo tres ofertas elaboradas por el proveedor y refrendadas por el titular de la Cancillería.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: 'En compras MAYORES a USD 4.000, ¿quiénes integran el Comité Permanente encargado de evaluar las ofertas?',
+            correct: 'VMAAT, DGAF, Dir. Finanzas, UOC, Dir. Administrativo, Dir. Presupuesto, y Representante de DAL.',
+            traps: [
+                'Jefe Misión, DGAF, Dir. Finanzas, UOC, Dir. Administrativo, Dir. Presupuesto, y Representante DAL.',
+                'VMAAT, DNCP, Dir. Finanzas, UOC, Dir. Administrativo, Dir. Presupuesto, y Representante de DAL.',
+                'VMAAT, DGAF, Dir. Tesorería, UOC, Dir. Administrativo, Dir. Presupuesto, y Representante de DAL.',
+                'MEF, DGAF, Dir. Finanzas, UOC, Dir. Administrativo, Dir. Presupuesto, y Representante de la DAL.',
+                'VMAAT, DGAF, Dir. Finanzas, UOC, Dir. Patrimonio, Dir. Presupuesto, y Representante de la DAL.',
+                'Auditoría, DGAF, Dir. Finanzas, UOC, Dir. Administrativo, Dir. Presupuesto, y Representante DAL.',
+                'VMAAT, DGAF, Dir. Finanzas, UOC, Dir. Administrativo, Dir. Presupuesto, y Representante de SIC.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: 'En el Corte Administrativo, respecto a los comprobantes de ingresos del SIL, se debe presentar la planilla de:',
+            correct: 'Comprobantes de Ingresos y Comprobantes de Ingresos Exonerados del último mes rendido a la fecha.',
+            traps: [
+                'Comprobantes de Ingresos y Comprobantes de Egresos Extraordinarios del último mes rendido a la fecha.',
+                'Comprobantes de Ingresos y Comprobantes de Ingresos Exonerados del último trimestre rendido a la fecha.',
+                'Comprobantes de Depósito y Comprobantes de Ingresos Exonerados del último mes rendido hasta la fecha.',
+                'Comprobantes de Ingresos y Comprobantes de Ingresos Consulares del último mes rendido hasta la fecha.',
+                'Comprobantes de Gastos y Comprobantes de Ingresos Exonerados del último mes rendido hasta la fecha.',
+                'Comprobantes de Ingresos y Comprobantes de Remesas Exoneradas del último mes rendido hasta la fecha.',
+                'Comprobantes de Ingresos y Comprobantes de Ingresos Exonerados correspondientes a todo el año fiscal.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: '¿Qué documento expedido por el Departamento de Rendición de Cuentas es requisito indispensable en el Corte Administrativo?',
+            correct: 'Informe acerca de la situación y estado de la rendición física de los legajos del último trimestre.',
+            traps: [
+                'Informe acerca de la situación y estado de la rendición virtual de los legajos del último trimestre.',
+                'Informe acerca de la situación y estado de la rendición física de los legajos del último semestre.',
+                'Informe acerca de la situación y estado del balance general de los ingresos del último trimestre.',
+                'Informe acerca de la situación y estado de la rendición física de los inventarios del mes actual.',
+                'Dictamen acerca de la situación y estado de la rendición contable de facturas del último trimestre.',
+                'Informe acerca de la liquidación y estado de la rendición física de los legajos del último trimestre.',
+                'Informe acerca de la situación y estado de la conciliación bancaria de cuentas del último trimestre.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: 'Durante el Corte Administrativo, referente a la SIC (Dirección de Pasaportes y Servicios Consulares), se exige el inventario de:',
+            correct: 'Libretas de pasaportes, inventario de Visas e inventario de láminas de seguridad para las Visas.',
+            traps: [
+                'Libretas de pasaportes, inventario de Visas e inventario de estampillas fiscales para las Visas.',
+                'Libretas de consulares, inventario de Visas e inventario de láminas de seguridad para las Visas.',
+                'Libretas de pasaportes, inventario de Sellos e inventario de láminas de seguridad para las Visas.',
+                'Libretas de pasaportes, registro de Aranceles e inventario de láminas de seguridad para Visas.',
+                'Libretas de pasaportes, inventario de Visas e inventario de certificados de vida para las Visas.',
+                'Formularios migratorios, inventario de Visas e inventario de láminas de seguridad para Visas.',
+                'Libretas de pasaportes, inventario de Visas e inventario de actas de legalización de las Visas.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: 'Para certificar los saldos de la Representación durante el Corte Administrativo, se exige la presentación obligatoria de:',
+            correct: 'Arqueo de caja y conciliación bancaria de las cuentas utilizadas con sus respectivos extractos.',
+            traps: [
+                'Arqueo de caja y declaración jurada anual de las cuentas utilizadas con sus respectivos extractos.',
+                'Arqueo de bóveda y conciliación bancaria de las cuentas utilizadas con sus respectivos extractos.',
+                'Arqueo de caja y conciliación contable de las cuentas habilitadas con sus respectivos balances.',
+                'Listado de caja y conciliación bancaria de las cuentas utilizadas con sus respectivos comprobantes.',
+                'Arqueo de caja y conciliación bancaria de las cuentas de inversión con sus respectivos extractos.',
+                'Arqueo de caja y liquidación financiera de las cuentas utilizadas con sus respectivos extractos.',
+                'Arqueo mensual y conciliación bancaria de las cuentas utilizadas sin sus respectivos extractos.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: 'En la documentación del Corte Administrativo, se debe incluir la planilla de la ÚLTIMA rendición correspondiente al rubro:',
+            correct: '846 correspondiente a Subsidio y Asistencia Social a Personas y Familias del Sector Privado.',
+            traps: [
+                '845 correspondiente a Aportes a Instituciones sin Fines de Lucro y Asociaciones del Privado.',
+                '280 correspondiente a Gastos de Operación y Mantenimiento de Personas del Sector Privado.',
+                '846 correspondiente a Subsidio y Asistencia Consular a Personas y Familias del Sector Oficial.',
+                '111 correspondiente a Sueldos y Remuneraciones Básicas a Personas y Familias del Privado.',
+                '846 correspondiente a Subsidio y Asistencia Médica a Personas y Familias del Sector Privado.',
+                '910 correspondiente a Pago de Impuestos y Tasas de Personas y Familias del Sector Privado.',
+                '840 correspondiente a Transferencias y Asistencia Social a Personas y Familias del Privado.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: '¿A qué dependencia deberán ser comunicados los antecedentes si no se da cumplimiento íntegro a la provisión de documentos en el Corte?',
+            correct: 'Deberán ser comunicados a la Dirección de Auditoría Interna para su intervención correspondiente.',
+            traps: [
+                'Deberán ser comunicados a la Dirección de Asuntos Legales para su intervención correspondiente.',
+                'Deberán ser comunicados a la Dirección General de Finanzas para su intervención correspondiente.',
+                'Deberán ser comunicados al Viceministerio de Administración para su intervención respectiva.',
+                'Deberán ser comunicados a la Dirección Nacional de Compras para su intervención correspondiente.',
+                'Deberán ser comunicados a la Dirección de Rendición de Cuentas para su intervención respectiva.',
+                'Deberán ser comunicados al Departamento de Tesorería Central para su intervención correspondiente.',
+                'Deberán ser comunicados a la Contraloría General de la República para intervención correspondiente.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: 'Una vez labrada el Acta de Corte Administrativo, ¿en cuántos ejemplares originales mínimos se distribuye habitualmente?',
+            correct: 'En tres ejemplares originales: uno para el funcionario entrante, uno al saliente y uno a la DGAF.',
+            traps: [
+                'En dos ejemplares originales: uno para el funcionario entrante y uno para el funcionario saliente.',
+                'En cuatro ejemplares originales: al entrante, al saliente, a la DGAF y a la Auditoría Interna.',
+                'En tres ejemplares originales: uno para el Jefe de Misión, uno al VMAAT y uno para la DGAF.',
+                'En tres ejemplares originales: uno para el funcionario saliente, uno al VMAAT y uno a Cancillería.',
+                'En tres ejemplares originales: uno para el funcionario entrante, uno al Archivo Central y la DGAF.',
+                'En dos ejemplares originales: uno para el archivo de la Representación y otro directo a la DGAF.',
+                'En cuatro ejemplares originales: al entrante, al saliente, a la DGAF y a la Contraloría General.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: 'Culminado el Corte Administrativo, si el informe remitido por el funcionario entrante a la DGAF presenta observaciones no resueltas:',
+            correct: 'Se procederá a la retención total de la erogación del gasto de traslado hasta regularizar el caso.',
+            traps: [
+                'Se procederá a la suspensión total de la erogación del salario mensual hasta regularizar el caso.',
+                'Se procederá a la retención parcial de la erogación del gasto operativo hasta regularizar el caso.',
+                'Se procederá a la anulación total de la erogación del gasto de traslado sin opción a regularizar.',
+                'Se procederá a la retención total de la erogación del fondo rotatorio hasta regularizar el caso.',
+                'Se procederá a la intervención directa de la erogación del gasto de traslado por Auditoría Interna.',
+                'Se procederá a la retención total de la liquidación de viáticos consulares hasta regularizar todo.',
+                'Se procederá a la retención temporal de las remesas de recaudación mensual hasta regularizar.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: 'Sobre la presentación de Contratos de Alquiler, NO es necesaria la traducción al español si el documento original está redactado en:',
+            correct: 'Única y exclusivamente en los idiomas español o portugués, siendo estos los únicos exceptuados.',
+            traps: [
+                'Única y exclusivamente en los idiomas español o inglés, siendo estos los únicos exceptuados.',
+                'Única y exclusivamente en el idioma oficial del Estado receptor, siendo este el único exceptuado.',
+                'Única y exclusivamente en los idiomas español o francés, siendo estos los únicos exceptuados.',
+                'Única y exclusivamente en el idioma español, siendo este el único legalmente exceptuado siempre.',
+                'Única y exclusivamente en los idiomas portugués o inglés, siendo estos los únicos exceptuados.',
+                'Única y exclusivamente en los idiomas español, portugués o inglés, siendo los tres exceptuados.',
+                'Única y exclusivamente en el idioma materno del funcionario, siendo este el único exceptuado.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: 'En relación a los comprobantes de pago de alquileres, si el propietario o locador de la residencia resulta ser una persona física:',
+            correct: 'Deberá adjuntarse obligatoriamente una copia simple del documento de identidad de dicha persona.',
+            traps: [
+                'Deberá adjuntarse obligatoriamente una constancia notarial del documento de identidad de la misma.',
+                'Deberá adjuntarse obligatoriamente una copia apostillada del documento de identidad de la persona.',
+                'Deberá adjuntarse obligatoriamente una declaración jurada del documento de identidad de la misma.',
+                'Deberá adjuntarse obligatoriamente el comprobante de pago de impuestos fiscales de dicha persona.',
+                'Deberá adjuntarse obligatoriamente una copia simple del título de propiedad a nombre de la misma.',
+                'Deberá adjuntarse obligatoriamente un certificado de libre disposición de bienes de dicha persona.',
+                'Deberá adjuntarse obligatoriamente una certificación bancaria del documento de identidad personal.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: '¿Qué consecuencia directa acarrea el incurrir, sin causa justificada, en el retraso del envío mensual de los comprobantes de pago de alquiler?',
+            correct: 'Se retendrán administrativamente los pagos correspondientes de alquiler a los meses subsiguientes.',
+            traps: [
+                'Se anularán administrativamente los pagos correspondientes de alquiler a los meses subsiguientes.',
+                'Se descontarán administrativamente los pagos correspondientes del salario mensual del funcionario.',
+                'Se suspenderán administrativamente las remesas de gastos operativos a los meses subsiguientes.',
+                'Se retendrán administrativamente los fondos de caja chica asignados para los meses subsiguientes.',
+                'Se solicitará administrativamente la intervención de Auditoría para los meses subsiguientes.',
+                'Se multará administrativamente reduciendo el porcentaje de alquiler en los meses subsiguientes.',
+                'Se retendrán administrativamente los pagos correspondientes de viáticos a los meses subsiguientes.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: 'Para autorizar Gastos de Operación y Mantenimiento, el Jefe de Misión debe solicitar autorización al titular de la DGAF acompañando:',
+            correct: 'Mínimamente con dos ofertas elaboradas por el proveedor y refrendadas por titulares de la Misión.',
+            traps: [
+                'Mínimamente con tres ofertas elaboradas por el proveedor y refrendadas por titulares de la Misión.',
+                'Mínimamente con dos ofertas elaboradas por la Misión y refrendadas por el respectivo proveedor.',
+                'Mínimamente con tres cotizaciones elaboradas por el proveedor y visadas por titulares de Misión.',
+                'Mínimamente con dos ofertas elaboradas por el proveedor y refrendadas por el Comité Permanente.',
+                'Mínimamente con dos ofertas elaboradas por el proveedor y aprobadas por el titular de la DGAF.',
+                'Mínimamente con cuatro ofertas elaboradas por el proveedor y refrendadas por titulares de Misión.',
+                'Mínimamente con dos proformas elaboradas por el proveedor y autenticadas por notario público.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: 'En el procedimiento de evaluación de Gastos de Operación y Mantenimiento, el análisis y emisión del dictamen está a cargo de:',
+            correct: 'Director de Finanzas, UOC, Director Administrativo, Director de Presupuesto y Representante DAL.',
+            traps: [
+                'VMAAT, Director de Finanzas, UOC, Director Administrativo, Dir de Presupuesto y Representante DAL.',
+                'DGAF, Director de Finanzas, UOC, Director Administrativo, Dir de Presupuesto y Representante DAL.',
+                'Jefe de Misión, Director Finanzas, UOC, Director Administrativo, Dir Presupuesto y Auditor Interno.',
+                'Director de Tesorería, UOC, Director Administrativo, Director de Patrimonio y Representante DAL.',
+                'Director de Finanzas, UOC, Director Administrativo, Director de Presupuesto y representante SIC.',
+                'Auditoría, Director Finanzas, UOC, Director Administrativo, Dir Presupuesto y Representante DAL.',
+                'Director de Finanzas, UOC, Director de Asuntos Consulares, Dir de Presupuesto y Rep. de la DAL.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: '¿Qué acción es obligatoria si por motivos del servicio se requiere utilizar un porcentaje MAYOR al establecido en el Objeto del Gasto 280?',
+            correct: 'Se deberá solicitar autorización previa al gasto a la DGAF fundamentando las razones del excedente.',
+            traps: [
+                'Se deberá solicitar autorización posterior al gasto a la DGAF fundamentando las razones del déficit.',
+                'Se deberá solicitar autorización previa al gasto al VMAAT fundamentando las razones del excedente.',
+                'Se deberá solicitar rectificación previa del monto a la DAL fundamentando las razones operativas.',
+                'Se deberá solicitar autorización previa al gasto a la UOC fundamentando las razones del excedente.',
+                'Se deberá solicitar autorización previa al gasto al Ministro fundamentando las razones presupuestadas.',
+                'Se deberá justificar el exceso únicamente en el acta mensual adjunta a la Rendición de Cuentas.',
+                'Se deberá solicitar autorización previa al gasto a la Contraloría fundamentando tales erogaciones.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: 'Si en el Objeto del Gasto 280 se utiliza un porcentaje mayor al establecido SIN mediar la autorización correspondiente, la norma exige:',
+            correct: 'Se deberá proceder de manera obligatoria a la devolución del monto excedido si correspondiere.',
+            traps: [
+                'Se deberá proceder de manera obligatoria a la retención del salario mensual si correspondiere.',
+                'Se deberá proceder de manera obligatoria a la suspensión de la cuenta de Misión si correspondiere.',
+                'Se deberá proceder de manera obligatoria al descuento directo de la caja chica si correspondiere.',
+                'Se deberá proceder de manera obligatoria a la justificación tardía del excedente si correspondiere.',
+                'Se deberá proceder de manera obligatoria a la anulación de la factura excedida si correspondiere.',
+                'Se deberá proceder de manera obligatoria a la remisión de los antecedentes a la Auditoría Interna.',
+                'Se deberá proceder de manera obligatoria a la devolución de la totalidad del fondo si correspondiere.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: 'En compras menores a USD 4.000, los Departamentos de Contabilidad y Patrimonio intervienen en el flujo del proceso:',
+            correct: 'Al final del flujo, obligando y registrando respectivamente dichos bienes en cuentas patrimoniales.',
+            traps: [
+                'Al inicio del flujo, obligando y registrando respectivamente dichos bienes en cuentas patrimoniales.',
+                'Al medio del flujo, autorizando y registrando respectivamente dichos bienes en cuentas financieras.',
+                'Al final del flujo, inspeccionando y registrando respectivamente dichos bienes en cuentas operativas.',
+                'Antes de la compra, obligando y registrando respectivamente dichos bienes en cuentas de presupuesto.',
+                'Al final del flujo, obligando y registrando exclusivamente los inmuebles en cuentas patrimoniales.',
+                'Al final del flujo, certificando y archivando respectivamente dichos bienes en cuentas departamentales.',
+                'Inmediatamente después de la cotización, registrando dichos bienes en las cuentas correspondientes.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: 'Las traducciones exigidas para las ofertas comerciales en moneda y lengua extranjera deben ser presentadas en formato:',
+            correct: 'Traducción no oficial que debe estar expresamente aprobada y firmada por el Jefe de la Misión.',
+            traps: [
+                'Traducción certificada que debe estar expresamente aprobada y apostillada por el Ministerio Exterior.',
+                'Traducción no oficial que debe estar expresamente aprobada y firmada por el funcionario cotizante.',
+                'Traducción notarial que debe estar expresamente aprobada y firmada por el Cónsul General Actuante.',
+                'Traducción oficial que debe estar expresamente legalizada y firmada por un Traductor Matriculado.',
+                'Traducción no oficial que debe estar expresamente aprobada y validada por la Dirección de Asuntos.',
+                'Traducción simple que debe estar expresamente visada y validada por la Dirección de Presupuestos.',
+                'Traducción no oficial que debe estar expresamente aprobada y refrendada por el titular del VMAAT.'
+            ]
+        },
+        {
+            type: 'mc',
+            text: 'Dentro del Corte Administrativo, el inventario detallado de existencia debe abarcar específicamente los siguientes ítems de uso diario:',
+            correct: 'Inventario de existencia de Formularios impresos y Sellos oficiales utilizados por la Representación.',
+            traps: [
+                'Inventario de existencia de Formularios impresos y Equipos informáticos utilizados por la Misión.',
+                'Inventario de existencia de Recibos de caja y Sellos de goma utilizados por la Representación actual.',
+                'Inventario de existencia de Chequeras bancarias y Sellos oficiales utilizados por la Representación.',
+                'Inventario de existencia de Estampillas fiscales y Sellos oficiales utilizados por la Representación.',
+                'Inventario de existencia de Formularios en blanco y Visas consulares utilizados por la Representación.',
+                'Inventario de existencia de Formularios impresos y Mobiliario general utilizados por Representación.',
+                'Inventario de existencia de Documentos contables y Sellos metálicos utilizados por Representación.'
+            ]
+        },
+
+        // --- 22 PREGUNTAS DE FALSO Y VERDADERO ---
+        { type: 'tf', text: 'Las compras cuyo valor total superan los USD 4.000 por rubro, deberán ser realizadas única y exclusivamente por la modalidad de reembolso.', correct: false },
+        { type: 'tf', text: 'Para autorizar compras por reembolso de hasta USD 4.000, el titular de la DGAF actúa en carácter legal de Ordenador de Gastos Alterno.', correct: true },
+        { type: 'tf', text: 'El plazo máximo para que el Jefe de Misión remita las facturas tras una compra es de 15 días hábiles contados a partir de la autorización.', correct: false },
+        { type: 'tf', text: 'Las facturas originales emitidas en idiomas extranjeros requieren una traducción oficial aprobada por un traductor público del Estado receptor.', correct: false },
+        { type: 'tf', text: 'Si una compra se consolida por un monto inferior al aprobado por el DGAF, la suma reembolsada se ajustará al monto de la factura y cotización.', correct: true },
+        { type: 'tf', text: 'La autorización oficial para concretar el reembolso a la misión se materializa legalmente mediante una Resolución suscripta por el titular de la DGAF.', correct: true },
+        { type: 'tf', text: 'El Departamento de Contabilidad es la dependencia encargada de realizar los trámites ante el MEF para la obtención de los recursos de reembolso.', correct: false },
+        { type: 'tf', text: 'Las solicitudes de adquisición por montos mayores a USD 4.000 deben ser remitidas formalmente por escrito al titular del VMAAT.', correct: true },
+        { type: 'tf', text: 'El Comité Permanente encargado de evaluar compras superiores a USD 4.000 se encuentra integrado, entre otros miembros, por el titular del VMAAT.', correct: true },
+        { type: 'tf', text: 'En la verificación de las ofertas, el Jefe de Misión debe garantizar que la actividad comercial del proveedor se vincule con el bien adquirido.', correct: true },
+        { type: 'tf', text: 'Durante el Corte Administrativo, se exige remitir el detalle del último cheque emitido o de la última orden de transferencia bancaria ejecutada.', correct: true },
+        { type: 'tf', text: 'Para finalizar el Corte Administrativo, es obligatorio presentar la planilla de rendición del rubro 845 Aportes a Instituciones sin Fines de Lucro.', correct: false },
+        { type: 'tf', text: 'El acta del Corte Administrativo debe labrarse tradicionalmente en cuatro ejemplares originales para su respectiva distribución departamental.', correct: false },
+        { type: 'tf', text: 'Si el informe post-Corte remitido por el funcionario entrante presenta observaciones, se procede a retener el pago de los gastos de traslado del saliente.', correct: true },
+        { type: 'tf', text: 'Todo contrato de alquiler presentado por un funcionario y redactado en idioma portugués exige obligatoriamente acompañar una traducción al español.', correct: false },
+        { type: 'tf', text: 'La normativa establece que no se aceptarán comprobantes de pago de alquiler que presenten enmiendas o tachaduras de ningún tipo o grado.', correct: true },
+        { type: 'tf', text: 'Si el locador de la residencia es una persona física, el funcionario está exento de presentar una copia del documento de identidad de dicho propietario.', correct: false },
+        { type: 'tf', text: 'Para alojamientos temporales tipo hotel, el reembolso exige remitir los comprobantes originales acompañados por una declaración jurada anexa.', correct: true },
+        { type: 'tf', text: 'Para autorizar Gastos de Operación y Mantenimiento, la Misión debe remitir como mínimo tres ofertas comerciales debidamente elaboradas.', correct: false },
+        { type: 'tf', text: 'El comité encargado de emitir dictámenes sobre los Gastos de Operación y Mantenimiento está integrado de forma obligatoria por el titular de la DGAF.', correct: false },
+        { type: 'tf', text: 'La utilización de un porcentaje mayor al establecido en el rubro 280 requiere obligatoriamente una autorización previa por parte de la DGAF.', correct: true },
+        { type: 'tf', text: 'En caso de no dar cumplimiento íntegro a los documentos del Corte Administrativo, los antecedentes se comunicarán a la Dirección de Auditoría Interna.', correct: true }
+    ];
+
+    // =========================================================================
+    // LÓGICA DEL SIMULADOR
+    // =========================================================================
+    let selectedQuestions = [];
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    const screenSetup = document.getElementById('screen-setup');
+    const screenQuiz = document.getElementById('screen-quiz');
+    const screenResults = document.getElementById('screen-results');
+    
+    const slider = document.getElementById('q-count-slider');
+    const sliderDisplay = document.getElementById('q-count-display');
+    const totalBadge = document.getElementById('total-q-badge');
+    const startBtn = document.getElementById('start-btn');
+    
+    const qCounter = document.getElementById('q-counter');
+    const qTypeBadge = document.getElementById('q-type-badge');
+    const qText = document.getElementById('q-text');
+    const optionsGrid = document.getElementById('options-grid');
+    const nextBtn = document.getElementById('next-btn');
+    const progressFill = document.getElementById('progress-fill');
+
+    // Setup inicial
+    totalBadge.textContent = db.length;
+    slider.max = db.length;
+    slider.value = 25; // Default recomendado
+    sliderDisplay.textContent = slider.value;
+
+    slider.addEventListener('input', (e) => {
+        sliderDisplay.textContent = e.target.value;
+    });
+
+    // Fisher-Yates shuffle
+    function shuffleArray(array) {
+        let curId = array.length;
+        while (0 !== curId) {
+            let randId = Math.floor(Math.random() * curId);
+            curId -= 1;
+            let tmp = array[curId];
+            array[curId] = array[randId];
+            array[randId] = tmp;
+        }
+        return array;
+    }
+
+    function showScreen(screenId) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(screenId).classList.add('active');
+    }
+
+    startBtn.addEventListener('click', () => {
+        let count = parseInt(slider.value);
+        let shuffledDb = shuffleArray([...db]);
+        selectedQuestions = shuffledDb.slice(0, count);
+        currentQuestionIndex = 0;
+        score = 0;
+        showScreen('screen-quiz');
+        renderQuestion();
+    });
+
+    function renderQuestion() {
+        nextBtn.style.display = 'none';
+        optionsGrid.innerHTML = '';
+        
+        let q = selectedQuestions[currentQuestionIndex];
+        
+        qCounter.textContent = `Pregunta ${currentQuestionIndex + 1} de ${selectedQuestions.length}`;
+        progressFill.style.width = `${((currentQuestionIndex) / selectedQuestions.length) * 100}%`;
+        qText.textContent = q.text;
+
+        if (q.type === 'tf') {
+            qTypeBadge.textContent = "Falso / Verdadero";
+            qTypeBadge.style.color = "#a78bfa"; 
+            
+            createOptionButton('Verdadero', q.correct === true);
+            createOptionButton('Falso', q.correct === false);
+        } else {
+            qTypeBadge.textContent = "Selección Múltiple";
+            qTypeBadge.style.color = "#38bdf8"; 
+            
+            // Selección aleatoria de 3 trampas de las 7 disponibles
+            let trapPool = shuffleArray([...q.traps]);
+            let selectedTraps = trapPool.slice(0, 3);
+            
+            let finalOptions = [
+                { text: q.correct, isCorrect: true },
+                { text: selectedTraps[0], isCorrect: false },
+                { text: selectedTraps[1], isCorrect: false },
+                { text: selectedTraps[2], isCorrect: false }
+            ];
+            
+            finalOptions = shuffleArray(finalOptions);
+            
+            finalOptions.forEach(opt => {
+                createOptionButton(opt.text, opt.isCorrect);
+            });
+        }
+    }
+
+    function createOptionButton(text, isCorrect) {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = text;
+        
+        // Identificador invisible para revelar la correcta después
+        btn.dataset.correct = isCorrect; 
+        
+        btn.onclick = () => handleAnswer(btn, isCorrect);
+        optionsGrid.appendChild(btn);
+    }
+
+    function handleAnswer(clickedBtn, isCorrect) {
+        const allBtns = optionsGrid.querySelectorAll('.option-btn');
+        allBtns.forEach(b => {
+            b.disabled = true;
+            if (b.dataset.correct === 'true') { 
+                b.classList.add('correct');
+            }
+        });
+
+        if (isCorrect) {
+            score++;
+        } else {
+            clickedBtn.classList.add('incorrect');
+        }
+
+        nextBtn.style.display = 'block';
+    }
+
+    nextBtn.addEventListener('click', () => {
+        currentQuestionIndex++;
+        if (currentQuestionIndex >= selectedQuestions.length) {
+            endQuiz();
+        } else {
+            renderQuestion();
+        }
+    });
+
+    function endQuiz() {
+        showScreen('screen-results');
+        document.getElementById('score-circle').textContent = `${score}/${selectedQuestions.length}`;
+        
+        let pct = (score / selectedQuestions.length) * 100;
+        let msg = document.getElementById('feedback-msg');
+        
+        if(pct === 100) msg.textContent = "¡Rendimiento Perfecto! Dominas el régimen a nivel normativo y técnico.";
+        else if (pct >= 85) msg.textContent = "¡Sobresaliente! Tienes un conocimiento excepcional de los procedimientos y plazos.";
+        else if (pct >= 70) msg.textContent = "Aprobado. Buen manejo general, pero los detalles y excepciones requieren un repaso extra.";
+        else msg.textContent = "Evaluación Insuficiente. La similitud en las respuestas requiere que memorices la norma con mayor precisión. ¡Sigue practicando!";
+    }
+
+    document.getElementById('restart-btn').addEventListener('click', () => {
+        showScreen('screen-setup');
+    });
+
+</script>
+</body>
+</html>
