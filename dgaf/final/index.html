@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Documento Unificado - Régimen y Procedimientos</title>
+<style>
+    /* ============================================================
+       BASE / RESET
+    ============================================================ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root{
+        --bg:            #14141a;
+        --bg-panel:      #1c1c24;
+        --bg-card:       #232330;
+        --bg-card-sub:   #1a1a22;
+        --bg-highlight:  #1c2a3a;
+        --border-soft:   #2c2c38;
+        --border-card:   #3b82f6;
+        --border-sub:    #6b7280;
+        --border-hl:     #2d4a6a;
+        --text-main:     #e7e6e2;
+        --text-dim:      #b9b8c3;
+        --text-heading:  #f4f3ee;
+        --text-h3:       #a9b8ee;
+        --accent:        #3b82f6;
+        --accent-hover:  #2563eb;
+        --letter-mark:   #f0b429;
+        --font-heading: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        --font-body: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", "Noto Serif", serif;
+    }
+
+    body{
+        background-color: var(--bg);
+        color: var(--text-main);
+        font-family: var(--font-body);
+        font-size: 17px;
+        line-height: 1.75;
+        padding: 32px 16px 60px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .container{
+        max-width: 210mm;
+        width: 100%;
+        background-color: var(--bg-panel);
+        padding: 48px 56px;
+        border-radius: 18px;
+        box-shadow: 0 10px 40px rgba(0,0,0,.55);
+    }
+
+    /* ============================================================
+       BARRA SUPERIOR DE CONTROLES
+    ============================================================ */
+    .toolbar{
+        max-width: 210mm;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 22px;
+        padding: 16px 20px;
+        background: var(--bg-panel);
+        border-radius: 14px;
+        box-shadow: 0 6px 24px rgba(0,0,0,.4);
+    }
+
+    .print-btn{
+        background-color: var(--accent);
+        color: #fff;
+        border: none;
+        padding: 11px 26px;
+        font-family: var(--font-heading);
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 40px;
+        cursor: pointer;
+        transition: background .25s, transform .15s;
+        box-shadow: 0 4px 14px rgba(59,130,246,.35);
+        white-space: nowrap;
+    }
+    .print-btn:hover{ background-color: var(--accent-hover); transform: scale(1.02); }
+    .print-btn:active{ transform: scale(.98); }
+
+    .voice-picker{
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: var(--font-heading);
+        font-size: .92rem;
+        color: var(--text-dim);
+        flex: 1;
+        min-width: 240px;
+    }
+    .voice-picker label{ white-space: nowrap; }
+    .voice-picker select{
+        flex: 1;
+        min-width: 160px;
+        background: var(--bg-card);
+        color: var(--text-main);
+        border: 1px solid var(--border-soft);
+        border-radius: 8px;
+        padding: 8px 10px;
+        font-family: var(--font-heading);
+        font-size: .9rem;
+    }
+
+    .rate-picker{
+        display:flex; align-items:center; gap:6px;
+        font-family: var(--font-heading);
+        font-size:.85rem; color: var(--text-dim);
+        white-space: nowrap;
+    }
+    .rate-picker input[type="range"]{ width: 90px; }
+
+    .tts-status{
+        font-family: var(--font-heading);
+        font-size: .82rem;
+        color: var(--accent);
+        min-width: 90px;
+    }
+
+    /* ============================================================
+       BOTONES TTS (bloque / ítem)
+    ============================================================ */
+    .tts-btn{
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        cursor: pointer;
+        background: transparent;
+        color: var(--accent);
+        font-size: 1rem;
+        line-height: 1;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        vertical-align: middle;
+        transition: background .2s, color .2s, transform .15s;
+        flex: none;
+    }
+    .tts-btn:hover{ background: rgba(59,130,246,.18); transform: scale(1.08); }
+    .tts-btn.playing{ color: #fff; background: var(--accent); animation: pulse 1.4s ease-in-out infinite; }
+    @keyframes pulse{
+        0%,100%{ box-shadow: 0 0 0 0 rgba(59,130,246,.55); }
+        50%{ box-shadow: 0 0 0 6px rgba(59,130,246,0); }
+    }
+
+    .tts-btn.block-btn{
+        width: 34px; height: 34px; font-size: 1.15rem;
+        background: var(--bg-card);
+        border: 1px solid var(--border-soft);
+    }
+    .tts-btn.block-btn:hover{ background: rgba(59,130,246,.2); }
+
+    .block-head{
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 25px;
+    }
+    .block-head h1{ margin-bottom: 0; }
+
+    p.item-row{
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    p.item-row .tts-btn{ margin-top: 2px; flex-shrink: 0; }
+    p.item-row .item-text{ flex: 1; }
+
+    .tts-btn.li-btn{
+        width: 26px;
+        height: 26px;
+        font-size: .9rem;
+        margin-right: 6px;
+        vertical-align: middle;
+        transform: translateY(-2px);
+    }
+
+    /* ============================================================
+       SEPARACIÓN DE BLOQUES / TIPOGRAFÍA
+    ============================================================ */
+    .section{
+        margin-bottom: 56px;
+        padding-bottom: 40px;
+        border-bottom: 2px solid var(--border-soft);
+    }
+    .section:last-child{ border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+    h1{
+        font-family: var(--font-heading);
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--text-heading);
+        border-left: 6px solid var(--accent);
+        padding-left: 18px;
+        letter-spacing: -.3px;
+    }
+
+    h2{
+        font-family: var(--font-heading);
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: #d7d6de;
+        margin-top: 26px;
+        margin-bottom: 16px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--border-soft);
+    }
+
+    h3{
+        font-family: var(--font-heading);
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: var(--text-h3);
+        margin-top: 24px;
+        margin-bottom: 12px;
+    }
+
+    p{ margin-bottom: 4px; }
+
+    .card{
+        background-color: var(--bg-card);
+        border-radius: 12px;
+        padding: 22px 26px;
+        margin: 18px 0 14px;
+        border-left: 4px solid var(--border-card);
+        box-shadow: 0 2px 10px rgba(0,0,0,.28);
+    }
+
+    .card-sub{
+        background-color: var(--bg-card-sub);
+        border-radius: 10px;
+        padding: 16px 22px;
+        margin: 14px 0 14px 22px;
+        border-left: 3px solid var(--border-sub);
+    }
+
+    ul, ol{ padding-left: 26px; margin: 10px 0 14px; }
+    li{ margin-bottom: 10px; padding-right: 4px; }
+    .card > p{ margin-bottom: 10px; }
+
+    .clause{ margin-bottom: 26px; padding-left: 4px; }
+    .clause:last-child{ margin-bottom: 0; }
+    .clause strong{ color: var(--letter-mark); font-weight: 700; }
+    .clause .sub-clause{
+        display: block;
+        padding-left: 30px;
+        margin-top: 6px;
+        color: var(--text-dim);
+    }
+    .clause p{ margin-bottom: 14px; }
+    .clause p:last-child{ margin-bottom: 0; }
+
+    .highlight-box{
+        background-color: var(--bg-highlight);
+        border: 1px solid var(--border-hl);
+        border-radius: 10px;
+        padding: 22px 26px;
+        margin: 22px 0;
+        color: #c3d7f2;
+    }
+    .highlight-box p{ margin-bottom: 14px; }
+    .highlight-box p:last-child{ margin-bottom: 0; }
+
+    /* ============================================================
+       IMPRESIÓN — A4, texto siempre negro, sin cortes que rompan lectura
+    ============================================================ */
+    @media print{
+        body{
+            background: #fff !important;
+            color: #000 !important;
+            padding: 0 !important;
+            font-size: 12.5pt;
+            line-height: 1.55;
+        }
+        .toolbar{ display: none !important; }
+        .container{
+            background: #fff !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+            max-width: 100% !important;
+            padding: 0 !important;
+        }
+        .tts-btn{ display: none !important; }
+        .block-head{ gap: 0; }
+
+        h1, h2, h3, h4, strong, b{ color: #000 !important; }
+        h1{ border-left-color: #1a4d8c !important; }
+        h2{ border-bottom-color: #999 !important; }
+        h3{ color: #0b2b5c !important; }
+        .clause strong{ color: #000 !important; text-decoration: underline; }
+
+        .card{
+            background: #f4f4f4 !important;
+            border-left-color: #1a4d8c !important;
+            box-shadow: none !important;
+            border: 1px solid #ccc !important;
+        }
+        .card-sub{ background: #ececec !important; border-left-color: #555 !important; }
+        .highlight-box{ background: #eef4fa !important; border-color: #6b8db5 !important; color: #000 !important; }
+
+        .section{ border-bottom-color: #aaa !important; }
+
+        /* Evita que un ítem, párrafo o cláusula quede partido entre dos páginas */
+        p, li, .clause, .card-sub, .highlight-box, h1, h2, h3{
+            break-inside: avoid;
+            page-break-inside: avoid;
+            orphans: 3;
+            widows: 3;
+        }
+        h1, h2, h3{ break-after: avoid; page-break-after: avoid; }
+        .block-head{ break-after: avoid; page-break-after: avoid; }
+
+        ul, ol{ padding-left: 20px; }
+
+        @page{ size: A4; margin: 16mm 18mm; }
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 640px){
+        .container{ padding: 26px 20px; }
+        h1{ font-size: 1.55rem; }
+        .card{ padding: 16px 16px; }
+        .card-sub{ margin-left: 0; padding: 14px 16px; }
+        body{ font-size: 16px; }
+        .voice-picker{ min-width: 100%; }
+    }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+    <button class="print-btn" id="printBtn">🖨️ Imprimir / Exportar a PDF (A4)</button>
+
+    <div class="voice-picker">
+        <label for="voiceSelect">🔈 Voz:</label>
+        <select id="voiceSelect"></select>
+    </div>
+
+    <div class="rate-picker">
+        <label for="rateRange">Velocidad</label>
+        <input type="range" id="rateRange" min="0.6" max="1.6" step="0.1" value="1">
+        <span id="rateLabel">1.0x</span>
+    </div>
+
+    <span class="tts-status" id="ttsStatus"></span>
+</div>
+
+<div class="container" id="documento-unificado">
+
+    <!-- ========================================== -->
+    <!-- BLOQUE 1: RÉGIMEN DE CONTRATACIONES         -->
+    <!-- ========================================== -->
+    <div class="section">
+        <div class="block-head"><h1>Régimen de Contrataciones</h1></div>
+
+        <div class="clause">
+            <p><strong>1)</strong> Las solicitudes de compra presentadas por un valor total de hasta USD 4.000,00 (dólares de los Estados Unidos de América cuatro mil) por rubro, deberán ser realizadas única y exclusivamente por la modalidad de reembolso.<br>
+            Las Misiones Diplomáticas, Representaciones Permanentes u Oficinas Consulares deberán ceñirse al siguiente procedimiento:</p>
+        </div>
+
+        <div class="card">
+            <p>El comité estará integrado por:</p>
+            <ul>
+                <li>Director de Finanzas.</li>
+                <li>Director de la Unidad Operativa de Contratación.</li>
+                <li>Director Administrativo.</li>
+                <li>Director de Presupuesto.</li>
+                <li>Representante de la Dirección de Asuntos Legales.</li>
+            </ul>
+        </div>
+
+        <div class="clause">
+            <p><strong>c)</strong> El análisis de la misma, se realizará bajo su responsabilidad y con absoluta independencia de criterio evaluando las ofertas y emitiendo un dictamen recomendando la adjudicación, rectificación o rechazo en su caso, en este caso se remitirá al Jefe de la Misión Diplomática, Representación Permanente u Oficina Consular la notificación correspondiente.</p>
+            <p><strong>d)</strong> Una vez emitido dicho dictamen, el mismo en caso de ser positivo será remitido al titular de la Dirección General de Administración y Finanzas con todas las documentaciones que lo respaldan.</p>
+        </div>
+
+        <div class="clause">
+            <p><strong>e)</strong> El Director General de Administración y Finanzas, en su carácter de Ordenador de Gastos Alterno, previo parecer jurídico de la Dirección de Asuntos Legales sobre el cumplimiento de los procedimientos dispuestos en la presente reglamentación, autorizará por escrito al Jefe de la Misión Diplomática, Representación Permanente u Oficina Consular la realización de la compra, teniendo en cuenta a la oferta con el precio más económico.</p>
+            <p><strong>f)</strong> Una vez realizada la adquisición, el Jefe de la Misión Diplomática, Representación Permanente u Oficina Consular remitirá al titular de la Dirección General de Administración y Finanzas, dentro de los 10 (diez) días hábiles a partir de la recepción de la autorización, las facturas originales de compra debidamente refrendadas por el titular de la Misión Diplomática, Representación Permanente u Oficina Consular respectiva, en caso de facturas en idiomas extranjeros, las mismas deberán contar con la debida traducción al idioma español (traducción no oficial aprobada y firmada por el Jefe de la Misión Diplomática, Representación Permanente u Oficina Consular). Así también una constancia de recepción satisfactoria de los bienes o servicios, con su debida conformidad.</p>
+            <p><strong>g)</strong> Cuando la compra se realice por un monto inferior al aprobado inicialmente, la suma reembolsada será ajustada al monto de la factura y la cotización adjuntada.</p>
+            <p><strong>h)</strong> El Director General de Administración y Finanzas, en su carácter de Ordenador de Gastos Alterno, será quien autorice el reembolso mediante Resolución.</p>
+            <p><strong>i)</strong> Suscripta la Resolución, el titular de la Dirección de la Unidad Operativa de Contratación procederá a comunicar la autorización del procedimiento de contratación a la Dirección Nacional de Contrataciones Públicas, con todas las documentaciones que la respaldan, a fin de obtener el código de contratación correspondiente.</p>
+            <p><strong>j)</strong> Obtenido el código de contratación, el Departamento de Tesorería procederá a realizar los trámites pertinentes ante el Ministerio de Economía y Finanzas para la obtención y posterior remisión de los recursos para el reembolso correspondiente de la compra del bien o prestación del servicio, de conformidad con los términos de la oferta autorizada.</p>
+            <p><strong>k)</strong> El Departamento de Contabilidad y el Departamento de Patrimonio obligarán y registrarán respectivamente dichos bienes en las cuentas patrimoniales.</p>
+        </div>
+
+        <div class="clause">
+            <p><strong>2)</strong> En el caso de que las solicitudes de compra sean mayores a USD 4.000.- (dólares de los Estados Unidos de América cuatro mil) por rubro, las Misiones Diplomáticas, Representaciones Permanentes u Oficinas Consulares deberán ceñirse al siguiente procedimiento:</p>
+
+            <p><strong>a)</strong> El Jefe de la Misión Diplomática, Representación Permanente u Oficina Consular solicitará por escrito al titular del Viceministerio de Administración y Asuntos Técnicos la adquisición de los bienes y/o contratación de servicios para la Misión Diplomática, la Representación Permanente u Oficina Consular a su cargo, justificando la necesidad de la misma e informando la cantidad, descripción y especificaciones técnicas de los equipos y/o artículos a ser adquiridos los cuales deberán contar con criterios de racionalidad, austeridad y disciplina presupuestaria, adjuntando como mínimo tres (3) ofertas de personas físicas o jurídicas, las cuales deberán estar elaboradas por el proveedor y refrendadas por los titulares de la Misión Diplomática, Representación Permanente u Oficina Consular, quienes además verificarán que los oferentes cuenten con la solvencia técnica, económica y legal suficiente para responder a los compromisos asumidos con el Estado paraguayo y cumplir satisfactoriamente con el contrato, así como que su actividad comercial se encuentre vinculada con el tipo de bienes a ser adquiridos, las ofertas indicarán:</p>
+            <ul>
+                <li>La cantidad, descripción y especificaciones técnicas de los bienes o servicios.</li>
+                <li>Precios unitarios.</li>
+                <li>Impuestos agregados.</li>
+                <li>Fecha de vigencia de lo ofertado.</li>
+                <li>La debida traducción al idioma español – (Traducción no oficial aprobada y firmada por el Jefe de la Misión Diplomática, Representación Permanente u Oficina Consular).</li>
+            </ul>
+            <p class="sub-clause">El Comité Permanente podrá solicitar documentaciones adicionales a las descritas anteriormente, en caso de que las considere necesarias, las cuales igualmente deberán ser refrendadas por el Jefe de la Misión Diplomática, Representación Permanente u Oficina Consular.</p>
+
+            <p><strong>b)</strong> Remitida dicha solicitud, la evaluación de las ofertas presentadas para este proceso de contratación estará a cargo del Comité Permanente el cual se integrará de la siguiente manera:</p>
+            <div class="card-sub">
+                <ul>
+                    <li>Viceministro de Administración y Asuntos Técnicos.</li>
+                    <li>Director General de Administración y Finanzas.</li>
+                    <li>Director de Finanzas.</li>
+                    <li>Director de la Unidad Operativa de Contratación.</li>
+                    <li>Director Administrativo.</li>
+                    <li>Director de Presupuesto.</li>
+                    <li>Representante de la Dirección de Asuntos Legales.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- BLOQUE 2: CORTE ADMINISTRATIVO              -->
+    <!-- ========================================== -->
+    <div class="section">
+        <div class="block-head"><h1>Corte Administrativo</h1></div>
+
+        <div class="card">
+            <ul>
+                <li><strong>a)</strong> Disposición Legal de nombramiento del funcionario que recibe la Representación y de término de funciones de quién entrega, si correspondiere;</li>
+                <li><strong>b)</strong> Planilla de Relación de Ingresos;</li>
+                <li><strong>c)</strong> Balance mensual de valores;</li>
+                <li><strong>d)</strong> Planilla de Rendición de Comprobantes de Ingresos del último mes rendido y hasta la fecha del corte (SII);</li>
+                <li><strong>e)</strong> Planilla de Rendición de Comprobantes de Ingresos Exonerados del último mes rendido y hasta la fecha del corte (SII);</li>
+                <li><strong>f)</strong> Detalle de las Recaudaciones Consulares del último mes rendido y hasta la fecha del corte (SII);</li>
+                <li><strong>g)</strong> Depósito y Resumen de las recaudaciones consulares del último mes rendido y hasta la fecha del corte, para el SII y para las representaciones que utilizan estampillas consulares;</li>
+                <li><strong>h)</strong> Planilla de Rendición de Comprobantes de Ingresos del último mes rendido (Serie MRE) y hasta la fecha del corte;</li>
+                <li><strong>i)</strong> Recibo de la Dirección General de Administración y Finanzas en el que conste la recepción de las recaudaciones consulares del último mes rendido;</li>
+                <li><strong>j)</strong> Nota de la última rendición de las recaudaciones consulares remitidas a la Dirección General de Administración y Finanzas;</li>
+                <li><strong>k)</strong> Planilla de Síntesis de Gastos de Operación y Mantenimiento del último mes y a la fecha del corte y copia de la nota de acuse de recibo del Departamento de Rendición de Cuentas de la última presentación realizada;</li>
+                <li><strong>l)</strong> Informe del Departamento de Rendición de Cuentas acerca de la situación y estado de la rendición física de los legajos rendidos del último trimestre dentro del ejercicio fiscal vigente;</li>
+                <li><strong>m)</strong> Informe mensual a la Dirección de Pasaportes y Servicios Consulares (SIC);</li>
+                <li><strong>n)</strong> Inventario de existencia de Formularios y Sellos;</li>
+                <li><strong>o)</strong> Inventario de libretas de pasaportes, inventario de Visas e inventario de láminas de seguridad para Visas (SIC);</li>
+                <li><strong>p)</strong> Arqueo de caja y conciliación bancaria de las cuentas utilizadas por la Representación con sus respectivos extractos a la fecha del acto;</li>
+                <li><strong>q)</strong> Detalle del último cheque emitido u orden de transferencia bancaria y la última orden de trabajo, según Resolución anual que reglamenta la Rendición de Cuentas de los Gastos de Operación y Mantenimiento;</li>
+            </ul>
+        </div>
+
+        <div class="card" style="margin-top: 10px;">
+            <ul>
+                <li><strong>r)</strong> Informe detallado de la adquisición de bienes y la ejecución de obras durante el período de mandato;</li>
+                <li><strong>s)</strong> Informe sobre las Patentes de vehículos (Diplomático, Consular o de Cortesía) que fueran habilitadas a nombre de la Representación;</li>
+                <li><strong>t)</strong> Copia de la carta de devolución de la Credencial Diplomática y/o Consular de conformidad a las disposiciones del Estado Receptor;</li>
+                <li><strong>u)</strong> Último inventario de bienes de uso;</li>
+                <li><strong>v)</strong> Detalle de compromisos financieros de Gastos de Operación y Mantenimiento pendientes de pago a la fecha del acto;</li>
+                <li><strong>w)</strong> Detalle de compromisos comerciales a la fecha del acto;</li>
+                <li><strong>x)</strong> Planilla de última Rendición del rubro 846 "Subsidio y Asistencia Social a Personas y Familias del Sector Privado";</li>
+                <li><strong>y)</strong> Otros documentos de compromiso asumidos por la Representación que estén relacionados con el Acto Administrativo.</li>
+            </ul>
+        </div>
+
+        <div class="highlight-box">
+            <p>En caso de no dar cumplimiento íntegramente de las condiciones expresadas en el Artículo anterior, en lo relativo a la provisión de los documentos mencionados, los antecedentes deberán ser comunicados a la Dirección de Auditoría Interna para su intervención correspondiente.</p>
+            <p>Cumplidos los procedimientos pertinentes se labrará un Acta, de conformidad con las normas y procedimientos dispuestos en el Anexo Guía, que aprueba los formularios que forman parte de la presente Resolución, en tres ejemplares originales, de los cuales uno corresponderá al funcionario entrante, otro al funcionario saliente y otro a la Dirección General de Administración y Finanzas. De ser necesario se proveerán ejemplares adicionales para el Encargado designado y para el funcionario técnico del Ministerio de Relaciones Exteriores interviniente.</p>
+            <p>Una vez culminado el Acto Administrativo y habiéndose dado cumplimiento íntegro a lo establecido en el Artículo 1° de la presente Resolución, el funcionario entrante y/o encargado deberá remitir un informe sobre lo actuado a la Dirección General de Administración y Finanzas, que con base en tal informe, autorizará el pago, en su totalidad, del gasto de traslado correspondiente al funcionario responsable saliente. En caso de que el informe no sea satisfactorio y que existan observaciones, se procederá a la retención de dicha erogación hasta tanto tales observaciones sean regularizadas.</p>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- BLOQUE 3: ALQUILERES                        -->
+    <!-- ========================================== -->
+    <div class="section">
+        <div class="block-head"><h1>Alquileres</h1></div>
+
+        <div class="clause">
+            <p><strong>a)</strong> Los funcionarios del servicio exterior deberán remitir a la Dirección General de Administración y Finanzas sus respectivos contratos de alquiler en versión original o copias autenticadas por Notario/Escribano público.</p>
+            <p class="sub-clause">En caso de que el contrato esté en un idioma distinto del español o del portugués, se deberá acompañar la correspondiente traducción al español.</p>
+            <p class="sub-clause">El comprobante de pago deberá reunir los requisitos legales establecidos para cada país sede en el que el funcionario se encuentre prestando servicio. En caso de que el propietario o locador fuera persona física, deberá adjuntarse copia del documento de identidad de esta.</p>
+
+            <p><strong>b)</strong> Los funcionarios del Servicio Exterior deberán remitir una declaración jurada, cuyo modelo obre en anexo y forma parte integrante de la presente Resolución, en la cual den de que los datos contenidos en el contrato enviado a la Dirección General de Administración y Finanzas son fidedignos y que los comprobantes de pago se ajustan a las normas legales del Estado Receptor.</p>
+
+            <p><strong>c)</strong> Remitir a la Dirección General de Administración y Finanzas el comprobante de pago de alquiler del mes anterior, en original o copia. Se retendrán los pagos correspondientes a los meses subsiguientes toda vez que el funcionario sin causa justificada, incurra en el retraso de envío de comprobantes de pago. No se aceptarán comprobantes de pagos con enmiendas y/o tachaduras.</p>
+
+            <p><strong>d)</strong> En caso de alojamientos u hospedajes temporales de residencia, sean estos hoteles, apart. hotel o de características similares, se deberá remitir a la Dirección General de Administración y Finanzas los comprobantes de pagos en versión original o copia para su reembolso correspondiente. En tales casos los comprobantes deberán estar acompañados por la declaración jurada anexo a la presente Resolución.</p>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- BLOQUE 4: GASTOS DE OPERACIÓN Y MANTENIM.   -->
+    <!-- ========================================== -->
+    <div class="section">
+        <div class="block-head"><h1>Gastos de Operación y Mantenimiento</h1></div>
+
+        <div class="clause">
+            <p><strong>a)</strong> El Jefe de la Misión Diplomática, Representación Permanente u Oficina Consular solicitará por escrito al titular de la Dirección General de Administración y Finanzas la autorización de compra, acompañando la solicitud mínimamente con dos (2) ofertas de personas físicas o jurídicas, las cuales deberán estar elaboradas por el proveedor y refrendadas por los titulares de la Misión Diplomática, Representación Permanente u Oficina Consular, quienes además verificarán que los oferentes cuenten con la solvencia técnica, económica y legal suficiente para responder a los compromisos asumidos con el Estado paraguayo y cumplir satisfactoriamente con la solicitud, así como que su actividad comercial se encuentre vinculada con el tipo de bienes a ser adquiridos. Las ofertas indicarán:</p>
+            <ul>
+                <li>La cantidad, descripción y especificaciones técnicas de los bienes o servicios.</li>
+                <li>Precios unitarios.</li>
+                <li>Impuestos agregados.</li>
+                <li>Fecha de vigencia de lo ofertado.</li>
+                <li>La debida traducción al idioma español. (Traducción no oficial aprobada y firmada por el Jefe de la Misión Diplomática, Representación Permanente u Oficina Consular).</li>
+            </ul>
+            <p class="sub-clause">El Comité Permanente podrá solicitar documentaciones adicionales a las descritas anteriormente, en caso de que las considere necesarias, las cuales igualmente deberán ser refrendadas por el Jefe de la Misión Diplomática, Representación Permanente u Oficina Consular.</p>
+
+            <p><strong>b)</strong> Remitida dicha solicitud, la evaluación de las ofertas presentadas para este proceso de contratación estará a cargo del Comité Permanente el cual se integrará de la siguiente manera:</p>
+            <div class="card-sub">
+                <ul>
+                    <li>Director de Finanzas.</li>
+                    <li>Director de la Unidad Operativa de Contratación.</li>
+                    <li>Director Administrativo.</li>
+                    <li>Director de Presupuesto.</li>
+                    <li>Representante de la Dirección de Asuntos Legales.</li>
+                </ul>
+            </div>
+
+            <p><strong>c)</strong> El análisis de la misma, se realizará bajo su responsabilidad y con absoluta independencia de criterio evaluando las ofertas y emitiendo un dictamen recomendando la adjudicación, rectificación o rechazo en su caso, en este último caso se remitirá al Jefe de la Misión Diplomática, Representación Permanente u Oficina Consular la notificación correspondiente.</p>
+
+            <p><strong>d)</strong> Una vez emitido dicho dictamen, el mismo en caso de ser positivo será remitido al titular de la Dirección General de Administración y Finanzas con todas las documentaciones que lo respaldan.</p>
+        </div>
+
+        <div class="highlight-box" style="margin-top: 20px;">
+            <p>Si por motivos de servicio se requiera utilizar un porcentaje mayor a lo establecido en el Objeto del Gasto 280 Otros Servicios en General, se deberá solicitar autorización previa al gasto, a la Dirección General de Administración y Finanzas, fundamentando las razones, la que deberá ser anexada a la Rendición de Cuentas. Si no medie la autorización correspondiente, se deberá proceder a la devolución del monto excedido, si correspondiere.</p>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- FIN DEL DOCUMENTO                          -->
+    <!-- ========================================== -->
+
+</div>
+
+<script>
+(function(){
+    "use strict";
+
+    var STORAGE_KEY = "tts-voice-uri";
+    var synth = window.speechSynthesis;
+    var voiceSelect = document.getElementById("voiceSelect");
+    var rateRange = document.getElementById("rateRange");
+    var rateLabel = document.getElementById("rateLabel");
+    var statusEl = document.getElementById("ttsStatus");
+
+    var currentUtterance = null;
+    var currentBtn = null;
+
+    /* ---------- Voces ---------- */
+    function populateVoices(){
+        var voices = synth ? synth.getVoices() : [];
+        if (!voices.length) return;
+
+        // Preferir voces en español primero
+        voices.sort(function(a, b){
+            var aEs = a.lang.toLowerCase().indexOf("es") === 0 ? 0 : 1;
+            var bEs = b.lang.toLowerCase().indexOf("es") === 0 ? 0 : 1;
+            if (aEs !== bEs) return aEs - bEs;
+            return a.name.localeCompare(b.name);
+        });
+
+        voiceSelect.innerHTML = "";
+        voices.forEach(function(v){
+            var opt = document.createElement("option");
+            opt.value = v.voiceURI;
+            opt.textContent = v.name + " (" + v.lang + ")";
+            voiceSelect.appendChild(opt);
+        });
+
+        var saved = localStorage.getItem(STORAGE_KEY);
+        if (saved && voices.some(function(v){ return v.voiceURI === saved; })){
+            voiceSelect.value = saved;
+        }
+    }
+
+    if (synth){
+        populateVoices();
+        synth.onvoiceschanged = populateVoices;
+    }
+
+    voiceSelect.addEventListener("change", function(){
+        localStorage.setItem(STORAGE_KEY, voiceSelect.value);
+    });
+
+    rateRange.addEventListener("input", function(){
+        rateLabel.textContent = parseFloat(rateRange.value).toFixed(1) + "x";
+    });
+
+    /* ---------- Reproducción ---------- */
+    function stopSpeech(){
+        if (synth) synth.cancel();
+        if (currentBtn) currentBtn.classList.remove("playing");
+        currentUtterance = null;
+        currentBtn = null;
+        statusEl.textContent = "";
+    }
+
+    function speak(text, btn){
+        if (!synth){
+            alert("Este navegador no soporta síntesis de voz.");
+            return;
+        }
+
+        // Si el mismo botón está reproduciendo, se detiene (toggle)
+        if (currentBtn === btn){
+            stopSpeech();
+            return;
+        }
+
+        stopSpeech();
+
+        var utter = new SpeechSynthesisUtterance(text);
+        var voices = synth.getVoices();
+        var chosenURI = voiceSelect.value;
+        var voice = voices.find(function(v){ return v.voiceURI === chosenURI; });
+        if (voice) utter.voice = voice;
+        utter.lang = voice ? voice.lang : "es-ES";
+        utter.rate = parseFloat(rateRange.value) || 1;
+
+        utter.onstart = function(){
+            btn.classList.add("playing");
+            statusEl.textContent = "Reproduciendo…";
+        };
+        utter.onend = function(){
+            btn.classList.remove("playing");
+            statusEl.textContent = "";
+            currentUtterance = null;
+            currentBtn = null;
+        };
+        utter.onerror = function(){
+            btn.classList.remove("playing");
+            statusEl.textContent = "";
+        };
+
+        currentUtterance = utter;
+        currentBtn = btn;
+        synth.speak(utter);
+    }
+
+    function makeBtn(text, extraClass){
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "tts-btn" + (extraClass ? " " + extraClass : "");
+        btn.innerHTML = "🔊";
+        btn.title = "Escuchar";
+        btn.setAttribute("aria-label", "Escuchar este contenido");
+        btn.addEventListener("click", function(e){
+            e.preventDefault();
+            speak(text, btn);
+        });
+        return btn;
+    }
+
+    /* ---------- Inyección de botones: BLOQUES ---------- */
+    document.querySelectorAll(".section").forEach(function(section){
+        var text = section.textContent.replace(/\s+/g, " ").trim();
+        var head = section.querySelector(".block-head");
+        if (head){
+            var btn = makeBtn(text, "block-btn");
+            head.appendChild(btn);
+        }
+    });
+
+    /* ---------- Inyección de botones: ÍTEMS ---------- */
+
+    // Para <li> (dentro de listas con viñetas): botón inline al inicio,
+    // sin envolver en flex, para no romper la viñeta ni la validez de la lista.
+    function addBtnToListItem(li){
+        var text = li.textContent.replace(/\s+/g, " ").trim();
+        if (!text) return;
+        var btn = makeBtn(text, "li-btn");
+        li.insertBefore(btn, li.firstChild);
+    }
+
+    // Para <p> dentro de .clause / .highlight-box: se usa un layout en flex
+    // (botón + texto) ya que estos párrafos no llevan viñeta.
+    function wrapParagraph(p){
+        var text = p.textContent.replace(/\s+/g, " ").trim();
+        if (!text) return;
+        var btn = makeBtn(text);
+        var textWrap = document.createElement("span");
+        textWrap.className = "item-text";
+        while (p.firstChild){ textWrap.appendChild(p.firstChild); }
+        p.appendChild(btn);
+        p.appendChild(textWrap);
+        p.classList.add("item-row");
+    }
+
+    document.querySelectorAll(".card li, .card-sub li").forEach(addBtnToListItem);
+    document.querySelectorAll(".clause > p, .highlight-box > p").forEach(wrapParagraph);
+
+    /* ---------- Botón de impresión ---------- */
+    document.getElementById("printBtn").addEventListener("click", function(){
+        window.print();
+    });
+
+})();
+</script>
+
+</body>
+</html>
