@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Simulador de Examen Extremo - Régimen Consular</title>
+<title>Simulador de Examen Experto - Régimen Consular</title>
 <style>
     /* ============================================================
        BASE Y VARIABLES (Dark Premium Theme)
@@ -37,9 +37,9 @@
         font-family: var(--font-main);
         display: flex;
         justify-content: center;
-        align-items: center;
+        align-items: flex-start; /* Ajustado para permitir scroll natural */
         min-height: 100vh;
-        padding: 20px;
+        padding: 40px 20px;
         -webkit-font-smoothing: antialiased;
     }
 
@@ -52,10 +52,9 @@
         box-shadow: var(--shadow-lg);
         border: 1px solid rgba(255,255,255,0.05);
         position: relative;
-        overflow: hidden;
     }
 
-    h1, h2 { color: var(--text-heading); margin-bottom: 20px; text-align: center; }
+    h1, h2, h3 { color: var(--text-heading); margin-bottom: 20px; text-align: center; }
     p { margin-bottom: 20px; font-size: 1.1rem; line-height: 1.6; text-align: center; }
 
     /* ============================================================
@@ -111,6 +110,7 @@
         border-radius: 12px;
         cursor: pointer;
         transition: all 0.2s;
+        display: inline-block;
     }
     .btn:hover { background: var(--accent-hover); transform: translateY(-2px); }
     .btn:disabled { background: var(--bg-card); color: var(--text-muted); cursor: not-allowed; transform: none; }
@@ -173,9 +173,9 @@
     }
 
     /* ============================================================
-       PANTALLA DE RESULTADOS
+       PANTALLA DE RESULTADOS Y FEEDBACK
     ============================================================ */
-    .results-container { text-align: center; padding: 30px 0; }
+    .results-container { padding: 10px 0; }
     .score-circle {
         width: 160px; height: 160px;
         border-radius: 50%;
@@ -185,12 +185,46 @@
         margin: 0 auto 30px;
         font-size: 2.8rem; font-weight: 800; color: #fff;
     }
-    .feedback-msg { font-size: 1.2rem; margin-bottom: 40px; color: var(--text-muted); line-height: 1.5; }
+    .feedback-msg { font-size: 1.2rem; margin-bottom: 40px; color: var(--text-muted); line-height: 1.5; text-align: center;}
+    
+    .mistakes-section {
+        margin-top: 40px;
+        border-top: 1px solid var(--bg-card);
+        padding-top: 30px;
+    }
+    .mistakes-section h3 { text-align: left; font-size: 1.5rem; margin-bottom: 20px; }
+    
+    .mistake-card {
+        background: rgba(0,0,0,0.2);
+        border-left: 4px solid var(--incorrect);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    .mistake-q { font-weight: 700; color: var(--text-heading); margin-bottom: 12px; font-size: 1.1rem; text-align: left;}
+    .ans-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; font-size: 0.95rem; }
+    .ans-label { font-weight: 600; min-width: 110px; flex-shrink: 0;}
+    .ans-wrong { color: var(--incorrect); }
+    .ans-correct { color: var(--correct); }
+    
+    .explanation-box {
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        font-size: 0.95rem;
+        color: var(--text-main);
+        line-height: 1.6;
+    }
+    .explanation-box strong { color: var(--accent); }
+
+    .center-btn { text-align: center; margin-top: 40px; }
 
     @media (max-width: 600px) {
+        body { padding: 20px 10px; }
         .app-container { padding: 30px 20px; border-radius: 16px; }
         .question-text { font-size: 1.15rem; }
         .option-btn { padding: 15px 20px; font-size: 0.95rem; }
+        .ans-row { flex-direction: column; gap: 2px; }
     }
 </style>
 </head>
@@ -202,7 +236,7 @@
     <div id="screen-setup" class="screen active">
         <div class="setup-container">
             <h1>Modo Entrenamiento Experto</h1>
-            <p style="color: var(--text-muted); font-size:0.95rem;">Régimen, Corte Administrativo, Alquileres y Gastos.<br>Opciones de trampa calibradas por longitud y gramática.</p>
+            <p style="color: var(--text-muted); font-size:0.95rem;">Selecciona la cantidad de preguntas. Al finalizar verás el reporte detallado de tus errores con la justificación normativa.</p>
             
             <div class="slider-wrapper">
                 <input type="range" id="q-count-slider" min="1" max="50" value="25">
@@ -237,7 +271,16 @@
             <h2>Reporte de Evaluación</h2>
             <div class="score-circle" id="score-circle">0/25</div>
             <div class="feedback-msg" id="feedback-msg">Evaluando...</div>
-            <button class="btn" id="restart-btn">Reiniciar Ciclo de Estudio</button>
+            
+            <!-- Contenedor para el desglose de errores -->
+            <div id="mistakes-container" class="mistakes-section" style="display: none;">
+                <h3>Análisis de Errores:</h3>
+                <div id="mistakes-list"></div>
+            </div>
+
+            <div class="center-btn">
+                <button class="btn" id="restart-btn">Reiniciar Ciclo de Estudio</button>
+            </div>
         </div>
     </div>
 
@@ -245,14 +288,15 @@
 
 <script>
     // =========================================================================
-    // BASE DE DATOS (50 Preguntas: 28 MC con trampas simétricas + 22 TF)
+    // BASE DE DATOS (50 Preguntas con EXPLICACIONES INCLUIDAS)
     // =========================================================================
     const db = [
-        // --- 28 PREGUNTAS DE SELECCIÓN MÚLTIPLE ---
+        // --- PREGUNTAS MÚLTIPLES ---
         {
             type: 'mc',
             text: 'Las solicitudes de compra por un valor total de HASTA USD 4.000 por rubro, deberán ser realizadas única y exclusivamente:',
             correct: 'Por la modalidad de reembolso financiero contra la presentación de la documentación.',
+            explanation: 'La norma establece expresamente en el numeral 1 que para compras hasta USD 4.000, la única modalidad permitida es "exclusivamente por la modalidad de reembolso".',
             traps: [
                 'Por la modalidad de caja chica operativa contra la presentación de la documentación.',
                 'Por la modalidad de fondo rotatorio fijo contra la presentación de la documentación.',
@@ -267,6 +311,7 @@
             type: 'mc',
             text: '¿Quiénes integran de manera exacta el Comité para evaluar compras de HASTA USD 4.000 (modalidad de reembolso)?',
             correct: 'Director de Finanzas, UOC, Director Administrativo, Director de Presupuesto, y Rep. DAL.',
+            explanation: 'Según el listado explícito de la norma para este procedimiento, el comité lo integran esos 5 miembros. No intervienen VMAAT ni DGAF en esta etapa de evaluación.',
             traps: [
                 'Director de Tesorería, UOC, Director Administrativo, Director de Patrimonio, y Rep. DAL.',
                 'Director de Finanzas, SIC, Director Administrativo, Director de Presupuesto, y Rep. DAL.',
@@ -281,6 +326,7 @@
             type: 'mc',
             text: 'En el procedimiento para compras de HASTA USD 4.000, previo a la autorización escrita del DGAF, se requiere el parecer jurídico de:',
             correct: 'La Dirección de Asuntos Legales (DAL) sobre el cumplimiento de los procedimientos dispuestos.',
+            explanation: 'El inciso "e" señala que el DGAF autoriza "previo parecer jurídico de la DAL sobre el cumplimiento de los procedimientos dispuestos en la presente reglamentación".',
             traps: [
                 'La Dirección Nacional de Contrataciones Públicas sobre el cumplimiento de los procedimientos.',
                 'La Dirección de Auditoría Interna Institucional sobre el cumplimiento de los procedimientos.',
@@ -295,6 +341,7 @@
             type: 'mc',
             text: 'Una vez realizada una adquisición (≤ USD 4.000), ¿en qué plazo el Jefe de la Misión debe remitir al DGAF las facturas originales?',
             correct: 'Dentro de los 10 días hábiles a partir de la recepción de la autorización de compra respectiva.',
+            explanation: 'El inciso "f" especifica que las facturas originales deben remitirse "dentro de los 10 días hábiles a partir de la recepción de la autorización". Cuidado con confundir días hábiles con corridos.',
             traps: [
                 'Dentro de los 15 días hábiles a partir de la recepción de la autorización de compra respectiva.',
                 'Dentro de los 10 días corridos a partir de la recepción de la autorización de compra respectiva.',
@@ -309,6 +356,7 @@
             type: 'mc',
             text: '¿Cómo debe procesarse la traducción de facturas en idioma extranjero remitidas al DGAF tras una adquisición?',
             correct: 'Debe contar con traducción no oficial debidamente aprobada y firmada por el Jefe de la Misión.',
+            explanation: 'La normativa es flexible y solo exige una traducción "no oficial", pero impone el requisito de que esté "aprobada y firmada por el Jefe de la Misión". No requiere un traductor público matriculado.',
             traps: [
                 'Debe contar con traducción matriculada debidamente aprobada y firmada por el Jefe de la Misión.',
                 'Debe contar con traducción no oficial debidamente aprobada y firmada por el Cónsul respectivo.',
@@ -323,6 +371,7 @@
             type: 'mc',
             text: 'En caso de que una compra por reembolso (≤ USD 4.000) se realice por un monto INFERIOR al aprobado inicialmente, ¿qué establece la norma?',
             correct: 'La suma reembolsada será estrictamente ajustada al monto de la factura y la cotización adjuntada.',
+            explanation: 'El inciso "g" indica que si se compra por un monto inferior, el reembolso se recorta y se "ajusta al monto de la factura y la cotización". El sobrante no se queda en la Misión.',
             traps: [
                 'La suma excedente será estrictamente destinada al rubro de gastos de operación y mantenimiento.',
                 'La diferencia financiera será estrictamente retenida en la cuenta bancaria para futuras compras.',
@@ -335,8 +384,9 @@
         },
         {
             type: 'mc',
-            text: '¿Qué dependencia se encarga de realizar los trámites pertinentes ante el MEF para la obtención y posterior remisión de los recursos tras obtener el código DNCP?',
+            text: '¿Qué dependencia se encarga de realizar los trámites ante el MEF para la obtención y remisión de los recursos tras obtener el código DNCP?',
             correct: 'El Departamento de Tesorería de la institución encargada.',
+            explanation: 'El inciso "j" confiere al "Departamento de Tesorería" la potestad de realizar los trámites ante el Ministerio de Economía y Finanzas (MEF) para obtener los recursos.',
             traps: [
                 'El Departamento de Contabilidad de la institución encargada.',
                 'El Departamento de Presupuesto de la institución encargada.',
@@ -351,6 +401,7 @@
             type: 'mc',
             text: 'Para el caso de solicitudes de compra MAYORES a USD 4.000 por rubro, ¿a quién debe dirigirse por escrito la solicitud inicial?',
             correct: 'Al titular del Viceministerio de Administración y Asuntos Técnicos (VMAAT).',
+            explanation: 'A diferencia de las compras menores, el inciso 2(a) establece que para compras mayores a USD 4.000, el Jefe de Misión debe dirigir la solicitud por escrito directamente al VMAAT.',
             traps: [
                 'Al titular de la Dirección General de Administración y Finanzas (DGAF).',
                 'Al titular de la Unidad Operativa de Contrataciones Nacionales (UOC).',
@@ -365,6 +416,7 @@
             type: 'mc',
             text: '¿Cuál es el mínimo de ofertas requeridas y qué condición deben cumplir para solicitudes MAYORES a USD 4.000?',
             correct: 'Como mínimo tres ofertas elaboradas por el proveedor y refrendadas por los titulares de la Misión.',
+            explanation: 'Para compras mayores, el numeral 2(a) exige explícitamente "mínimo tres (3) ofertas", a diferencia de los Gastos de Mantenimiento que exigen dos.',
             traps: [
                 'Como mínimo dos ofertas elaboradas por el proveedor y refrendadas por los titulares de la Misión.',
                 'Como mínimo tres ofertas elaboradas por la misión y refrendadas por los proveedores adjudicados.',
@@ -379,6 +431,7 @@
             type: 'mc',
             text: 'En compras MAYORES a USD 4.000, ¿quiénes integran el Comité Permanente encargado de evaluar las ofertas?',
             correct: 'VMAAT, DGAF, Dir. Finanzas, UOC, Dir. Administrativo, Dir. Presupuesto, y Representante de DAL.',
+            explanation: 'Este es el Comité "ampliado". Se suman a los 5 miembros habituales, las dos máximas autoridades administrativas: El titular del VMAAT y el titular de la DGAF.',
             traps: [
                 'Jefe Misión, DGAF, Dir. Finanzas, UOC, Dir. Administrativo, Dir. Presupuesto, y Representante DAL.',
                 'VMAAT, DNCP, Dir. Finanzas, UOC, Dir. Administrativo, Dir. Presupuesto, y Representante de DAL.',
@@ -393,6 +446,7 @@
             type: 'mc',
             text: 'En el Corte Administrativo, respecto a los comprobantes de ingresos del SIL, se debe presentar la planilla de:',
             correct: 'Comprobantes de Ingresos y Comprobantes de Ingresos Exonerados del último mes rendido a la fecha.',
+            explanation: 'Las documentaciones "d" y "e" del Corte exigen las planillas tanto de los ingresos normales como de los ingresos exonerados del SIL, siempre del último mes rendido y hasta la fecha de corte.',
             traps: [
                 'Comprobantes de Ingresos y Comprobantes de Egresos Extraordinarios del último mes rendido a la fecha.',
                 'Comprobantes de Ingresos y Comprobantes de Ingresos Exonerados del último trimestre rendido a la fecha.',
@@ -407,6 +461,7 @@
             type: 'mc',
             text: '¿Qué documento expedido por el Departamento de Rendición de Cuentas es requisito indispensable en el Corte Administrativo?',
             correct: 'Informe acerca de la situación y estado de la rendición física de los legajos del último trimestre.',
+            explanation: 'El inciso "l" especifica que el informe sobre los legajos físicos debe abarcar el último TRIMESTRE dentro del ejercicio fiscal vigente.',
             traps: [
                 'Informe acerca de la situación y estado de la rendición virtual de los legajos del último trimestre.',
                 'Informe acerca de la situación y estado de la rendición física de los legajos del último semestre.',
@@ -421,6 +476,7 @@
             type: 'mc',
             text: 'Durante el Corte Administrativo, referente a la SIC (Dirección de Pasaportes y Servicios Consulares), se exige el inventario de:',
             correct: 'Libretas de pasaportes, inventario de Visas e inventario de láminas de seguridad para las Visas.',
+            explanation: 'Inciso "o" del Corte Administrativo: Los elementos de máxima seguridad a rendir al SIC son libretas de pasaportes, visas y las láminas de seguridad.',
             traps: [
                 'Libretas de pasaportes, inventario de Visas e inventario de estampillas fiscales para las Visas.',
                 'Libretas de consulares, inventario de Visas e inventario de láminas de seguridad para las Visas.',
@@ -435,6 +491,7 @@
             type: 'mc',
             text: 'Para certificar los saldos de la Representación durante el Corte Administrativo, se exige la presentación obligatoria de:',
             correct: 'Arqueo de caja y conciliación bancaria de las cuentas utilizadas con sus respectivos extractos.',
+            explanation: 'El inciso "p" exige el Arqueo de caja sumado a la conciliación bancaria. Y fundamental: acompañados de los "extractos a la fecha del acto".',
             traps: [
                 'Arqueo de caja y declaración jurada anual de las cuentas utilizadas con sus respectivos extractos.',
                 'Arqueo de bóveda y conciliación bancaria de las cuentas utilizadas con sus respectivos extractos.',
@@ -449,6 +506,7 @@
             type: 'mc',
             text: 'En la documentación del Corte Administrativo, se debe incluir la planilla de la ÚLTIMA rendición correspondiente al rubro:',
             correct: '846 correspondiente a Subsidio y Asistencia Social a Personas y Familias del Sector Privado.',
+            explanation: 'Se trata del Rubro 846, como lo señala el inciso "x". Suele usarse para asistencia a connacionales en vulnerabilidad (sector privado).',
             traps: [
                 '845 correspondiente a Aportes a Instituciones sin Fines de Lucro y Asociaciones del Privado.',
                 '280 correspondiente a Gastos de Operación y Mantenimiento de Personas del Sector Privado.',
@@ -463,6 +521,7 @@
             type: 'mc',
             text: '¿A qué dependencia deberán ser comunicados los antecedentes si no se da cumplimiento íntegro a la provisión de documentos en el Corte?',
             correct: 'Deberán ser comunicados a la Dirección de Auditoría Interna para su intervención correspondiente.',
+            explanation: 'El apartado posterior a los requisitos del Corte advierte explícitamente que la falta de documentos acarrea la comunicación a la "Dirección de Auditoría Interna".',
             traps: [
                 'Deberán ser comunicados a la Dirección de Asuntos Legales para su intervención correspondiente.',
                 'Deberán ser comunicados a la Dirección General de Finanzas para su intervención correspondiente.',
@@ -477,6 +536,7 @@
             type: 'mc',
             text: 'Una vez labrada el Acta de Corte Administrativo, ¿en cuántos ejemplares originales mínimos se distribuye habitualmente?',
             correct: 'En tres ejemplares originales: uno para el funcionario entrante, uno al saliente y uno a la DGAF.',
+            explanation: 'La norma establece que el acta se labrará en tres (3) ejemplares originales para resguardar a las tres partes interesadas: Entrante, Saliente y la Central (DGAF).',
             traps: [
                 'En dos ejemplares originales: uno para el funcionario entrante y uno para el funcionario saliente.',
                 'En cuatro ejemplares originales: al entrante, al saliente, a la DGAF y a la Auditoría Interna.',
@@ -491,6 +551,7 @@
             type: 'mc',
             text: 'Culminado el Corte Administrativo, si el informe remitido por el funcionario entrante a la DGAF presenta observaciones no resueltas:',
             correct: 'Se procederá a la retención total de la erogación del gasto de traslado hasta regularizar el caso.',
+            explanation: 'Para garantizar la pulcritud del corte, la penalidad administrativa para el saliente que no aclara observaciones es la "retención del pago, en su totalidad, del gasto de traslado".',
             traps: [
                 'Se procederá a la suspensión total de la erogación del salario mensual hasta regularizar el caso.',
                 'Se procederá a la retención parcial de la erogación del gasto operativo hasta regularizar el caso.',
@@ -505,6 +566,7 @@
             type: 'mc',
             text: 'Sobre la presentación de Contratos de Alquiler, NO es necesaria la traducción al español si el documento original está redactado en:',
             correct: 'Única y exclusivamente en los idiomas español o portugués, siendo estos los únicos exceptuados.',
+            explanation: 'La normativa hace una excepción expresa en la Sección de Alquileres, inciso "a", eximiendo de la traducción únicamente si el contrato está en español o "portugués".',
             traps: [
                 'Única y exclusivamente en los idiomas español o inglés, siendo estos los únicos exceptuados.',
                 'Única y exclusivamente en el idioma oficial del Estado receptor, siendo este el único exceptuado.',
@@ -519,6 +581,7 @@
             type: 'mc',
             text: 'En relación a los comprobantes de pago de alquileres, si el propietario o locador de la residencia resulta ser una persona física:',
             correct: 'Deberá adjuntarse obligatoriamente una copia simple del documento de identidad de dicha persona.',
+            explanation: 'Para evitar pagos a personas inexistentes o prestanombres, si el locador es persona física (no empresa), se exige copia del documento de identidad (Sección Alquileres, inc. "a").',
             traps: [
                 'Deberá adjuntarse obligatoriamente una constancia notarial del documento de identidad de la misma.',
                 'Deberá adjuntarse obligatoriamente una copia apostillada del documento de identidad de la persona.',
@@ -533,6 +596,7 @@
             type: 'mc',
             text: '¿Qué consecuencia directa acarrea el incurrir, sin causa justificada, en el retraso del envío mensual de los comprobantes de pago de alquiler?',
             correct: 'Se retendrán administrativamente los pagos correspondientes de alquiler a los meses subsiguientes.',
+            explanation: 'Según el inciso "c" de Alquileres: "Se retendrán los pagos correspondientes a los meses subsiguientes toda vez que el funcionario sin causa justificada, incurra en el retraso".',
             traps: [
                 'Se anularán administrativamente los pagos correspondientes de alquiler a los meses subsiguientes.',
                 'Se descontarán administrativamente los pagos correspondientes del salario mensual del funcionario.',
@@ -547,6 +611,7 @@
             type: 'mc',
             text: 'Para autorizar Gastos de Operación y Mantenimiento, el Jefe de Misión debe solicitar autorización al titular de la DGAF acompañando:',
             correct: 'Mínimamente con dos ofertas elaboradas por el proveedor y refrendadas por titulares de la Misión.',
+            explanation: 'Cuidado con confundir con Compras Mayores (que piden 3 ofertas). Para el rubro de Gastos de Operación, la norma específica requiere "mínimamente dos (2) ofertas".',
             traps: [
                 'Mínimamente con tres ofertas elaboradas por el proveedor y refrendadas por titulares de la Misión.',
                 'Mínimamente con dos ofertas elaboradas por la Misión y refrendadas por el respectivo proveedor.',
@@ -561,6 +626,7 @@
             type: 'mc',
             text: 'En el procedimiento de evaluación de Gastos de Operación y Mantenimiento, el análisis y emisión del dictamen está a cargo de:',
             correct: 'Director de Finanzas, UOC, Director Administrativo, Director de Presupuesto y Representante DAL.',
+            explanation: 'El Comité que evalúa Gastos de Operación es exactamente el mismo "Comité Básico" que evalúa compras menores a USD 4.000. No incluye al DGAF ni VMAAT.',
             traps: [
                 'VMAAT, Director de Finanzas, UOC, Director Administrativo, Dir de Presupuesto y Representante DAL.',
                 'DGAF, Director de Finanzas, UOC, Director Administrativo, Dir de Presupuesto y Representante DAL.',
@@ -575,6 +641,7 @@
             type: 'mc',
             text: '¿Qué acción es obligatoria si por motivos del servicio se requiere utilizar un porcentaje MAYOR al establecido en el Objeto del Gasto 280?',
             correct: 'Se deberá solicitar autorización previa al gasto a la DGAF fundamentando las razones del excedente.',
+            explanation: 'La caja (Highlight box) al final del documento señala claramente que si se excederá el Objeto de Gasto 280, se debe pedir autorización PREVIA al gasto a la DGAF.',
             traps: [
                 'Se deberá solicitar autorización posterior al gasto a la DGAF fundamentando las razones del déficit.',
                 'Se deberá solicitar autorización previa al gasto al VMAAT fundamentando las razones del excedente.',
@@ -589,6 +656,7 @@
             type: 'mc',
             text: 'Si en el Objeto del Gasto 280 se utiliza un porcentaje mayor al establecido SIN mediar la autorización correspondiente, la norma exige:',
             correct: 'Se deberá proceder de manera obligatoria a la devolución del monto excedido si correspondiere.',
+            explanation: 'Como medida punitiva, la normativa indica que "si no media la autorización correspondiente, se deberá proceder a la devolución del monto excedido".',
             traps: [
                 'Se deberá proceder de manera obligatoria a la retención del salario mensual si correspondiere.',
                 'Se deberá proceder de manera obligatoria a la suspensión de la cuenta de Misión si correspondiere.',
@@ -603,6 +671,7 @@
             type: 'mc',
             text: 'En compras menores a USD 4.000, los Departamentos de Contabilidad y Patrimonio intervienen en el flujo del proceso:',
             correct: 'Al final del flujo, obligando y registrando respectivamente dichos bienes en cuentas patrimoniales.',
+            explanation: 'Es el paso final del procedimiento "k". Solo después de comprar, reembolsar y tener código de DNCP, Contabilidad y Patrimonio obligan y registran el bien adquirido.',
             traps: [
                 'Al inicio del flujo, obligando y registrando respectivamente dichos bienes en cuentas patrimoniales.',
                 'Al medio del flujo, autorizando y registrando respectivamente dichos bienes en cuentas financieras.',
@@ -617,6 +686,7 @@
             type: 'mc',
             text: 'Las traducciones exigidas para las ofertas comerciales en moneda y lengua extranjera deben ser presentadas en formato:',
             correct: 'Traducción no oficial que debe estar expresamente aprobada y firmada por el Jefe de la Misión.',
+            explanation: 'Tanto para las facturas como para las ofertas, la norma flexibiliza pidiendo solo una "Traducción no oficial", pero descarga la responsabilidad de firma en el Jefe de la Misión.',
             traps: [
                 'Traducción certificada que debe estar expresamente aprobada y apostillada por el Ministerio Exterior.',
                 'Traducción no oficial que debe estar expresamente aprobada y firmada por el funcionario cotizante.',
@@ -631,6 +701,7 @@
             type: 'mc',
             text: 'Dentro del Corte Administrativo, el inventario detallado de existencia debe abarcar específicamente los siguientes ítems de uso diario:',
             correct: 'Inventario de existencia de Formularios impresos y Sellos oficiales utilizados por la Representación.',
+            explanation: 'El inciso "n" es muy conciso: Pide inventariar los "Formularios y Sellos". Es el material básico de oficina sensible de toda Misión o Consulado.',
             traps: [
                 'Inventario de existencia de Formularios impresos y Equipos informáticos utilizados por la Misión.',
                 'Inventario de existencia de Recibos de caja y Sellos de goma utilizados por la Representación actual.',
@@ -642,37 +713,40 @@
             ]
         },
 
-        // --- 22 PREGUNTAS DE FALSO Y VERDADERO ---
-        { type: 'tf', text: 'Las compras cuyo valor total superan los USD 4.000 por rubro, deberán ser realizadas única y exclusivamente por la modalidad de reembolso.', correct: false },
-        { type: 'tf', text: 'Para autorizar compras por reembolso de hasta USD 4.000, el titular de la DGAF actúa en carácter legal de Ordenador de Gastos Alterno.', correct: true },
-        { type: 'tf', text: 'El plazo máximo para que el Jefe de Misión remita las facturas tras una compra es de 15 días hábiles contados a partir de la autorización.', correct: false },
-        { type: 'tf', text: 'Las facturas originales emitidas en idiomas extranjeros requieren una traducción oficial aprobada por un traductor público del Estado receptor.', correct: false },
-        { type: 'tf', text: 'Si una compra se consolida por un monto inferior al aprobado por el DGAF, la suma reembolsada se ajustará al monto de la factura y cotización.', correct: true },
-        { type: 'tf', text: 'La autorización oficial para concretar el reembolso a la misión se materializa legalmente mediante una Resolución suscripta por el titular de la DGAF.', correct: true },
-        { type: 'tf', text: 'El Departamento de Contabilidad es la dependencia encargada de realizar los trámites ante el MEF para la obtención de los recursos de reembolso.', correct: false },
-        { type: 'tf', text: 'Las solicitudes de adquisición por montos mayores a USD 4.000 deben ser remitidas formalmente por escrito al titular del VMAAT.', correct: true },
-        { type: 'tf', text: 'El Comité Permanente encargado de evaluar compras superiores a USD 4.000 se encuentra integrado, entre otros miembros, por el titular del VMAAT.', correct: true },
-        { type: 'tf', text: 'En la verificación de las ofertas, el Jefe de Misión debe garantizar que la actividad comercial del proveedor se vincule con el bien adquirido.', correct: true },
-        { type: 'tf', text: 'Durante el Corte Administrativo, se exige remitir el detalle del último cheque emitido o de la última orden de transferencia bancaria ejecutada.', correct: true },
-        { type: 'tf', text: 'Para finalizar el Corte Administrativo, es obligatorio presentar la planilla de rendición del rubro 845 Aportes a Instituciones sin Fines de Lucro.', correct: false },
-        { type: 'tf', text: 'El acta del Corte Administrativo debe labrarse tradicionalmente en cuatro ejemplares originales para su respectiva distribución departamental.', correct: false },
-        { type: 'tf', text: 'Si el informe post-Corte remitido por el funcionario entrante presenta observaciones, se procede a retener el pago de los gastos de traslado del saliente.', correct: true },
-        { type: 'tf', text: 'Todo contrato de alquiler presentado por un funcionario y redactado en idioma portugués exige obligatoriamente acompañar una traducción al español.', correct: false },
-        { type: 'tf', text: 'La normativa establece que no se aceptarán comprobantes de pago de alquiler que presenten enmiendas o tachaduras de ningún tipo o grado.', correct: true },
-        { type: 'tf', text: 'Si el locador de la residencia es una persona física, el funcionario está exento de presentar una copia del documento de identidad de dicho propietario.', correct: false },
-        { type: 'tf', text: 'Para alojamientos temporales tipo hotel, el reembolso exige remitir los comprobantes originales acompañados por una declaración jurada anexa.', correct: true },
-        { type: 'tf', text: 'Para autorizar Gastos de Operación y Mantenimiento, la Misión debe remitir como mínimo tres ofertas comerciales debidamente elaboradas.', correct: false },
-        { type: 'tf', text: 'El comité encargado de emitir dictámenes sobre los Gastos de Operación y Mantenimiento está integrado de forma obligatoria por el titular de la DGAF.', correct: false },
-        { type: 'tf', text: 'La utilización de un porcentaje mayor al establecido en el rubro 280 requiere obligatoriamente una autorización previa por parte de la DGAF.', correct: true },
-        { type: 'tf', text: 'En caso de no dar cumplimiento íntegro a los documentos del Corte Administrativo, los antecedentes se comunicarán a la Dirección de Auditoría Interna.', correct: true }
+        // --- PREGUNTAS DE FALSO Y VERDADERO ---
+        { type: 'tf', text: 'Las compras cuyo valor total superan los USD 4.000 por rubro, deberán ser realizadas única y exclusivamente por la modalidad de reembolso.', correct: false, explanation: 'FALSO. La modalidad de "reembolso exclusivo" aplica únicamente para compras de HASTA USD 4.000 (Numeral 1). Las mayores a 4.000 llevan otro proceso (Numeral 2).' },
+        { type: 'tf', text: 'Para autorizar compras por reembolso de hasta USD 4.000, el titular de la DGAF actúa en carácter legal de Ordenador de Gastos Alterno.', correct: true, explanation: 'VERDADERO. El inciso "e" y el inciso "h" otorgan expresamente al DGAF el rol administrativo de "Ordenador de Gastos Alterno" en este proceso.' },
+        { type: 'tf', text: 'El plazo máximo para que el Jefe de Misión remita las facturas tras una compra es de 15 días hábiles contados a partir de la autorización.', correct: false, explanation: 'FALSO. El plazo normativo, según el inciso "f", es de 10 días hábiles (no 15) a partir de la recepción de la autorización.' },
+        { type: 'tf', text: 'Las facturas originales emitidas en idiomas extranjeros requieren una traducción oficial aprobada por un traductor público del Estado receptor.', correct: false, explanation: 'FALSO. La norma permite que sea una "traducción no oficial", siempre y cuando esté aprobada y firmada por el Jefe de la Misión.' },
+        { type: 'tf', text: 'Si una compra se consolida por un monto inferior al aprobado por el DGAF, la suma reembolsada se ajustará al monto de la factura y cotización.', correct: true, explanation: 'VERDADERO. El inciso "g" prohíbe quedarse con el excedente; la suma debe ajustarse al monto real ejecutado y facturado.' },
+        { type: 'tf', text: 'La autorización oficial para concretar el reembolso a la misión se materializa legalmente mediante una Resolución suscripta por el titular de la DGAF.', correct: true, explanation: 'VERDADERO. El inciso "h" confirma que el DGAF autoriza el reembolso emitiendo una Resolución formal.' },
+        { type: 'tf', text: 'El Departamento de Contabilidad es la dependencia encargada de realizar los trámites ante el MEF para la obtención de los recursos de reembolso.', correct: false, explanation: 'FALSO. El encargado de realizar los trámites ante el MEF (Ministerio de Economía y Finanzas) es el "Departamento de Tesorería" (Inciso j).' },
+        { type: 'tf', text: 'Las solicitudes de adquisición por montos mayores a USD 4.000 deben ser remitidas formalmente por escrito al titular del VMAAT.', correct: true, explanation: 'VERDADERO. A diferencia de las compras menores (que van a DGAF), las mayores a USD 4.000 (Numeral 2.a) se solicitan primero al Viceministerio (VMAAT).' },
+        { type: 'tf', text: 'El Comité Permanente encargado de evaluar compras superiores a USD 4.000 se encuentra integrado, entre otros miembros, por el titular del VMAAT.', correct: true, explanation: 'VERDADERO. En el procedimiento de montos mayores, el Comité Permanente incorpora a las altas gerencias: el VMAAT y el DGAF.' },
+        { type: 'tf', text: 'En la verificación de las ofertas, el Jefe de Misión debe garantizar que la actividad comercial del proveedor se vincule con el bien adquirido.', correct: true, explanation: 'VERDADERO. El numeral 2.a exige al Jefe de Misión verificar la solvencia del proveedor y que su actividad comercial esté lógicamente vinculada al bien requerido.' },
+        { type: 'tf', text: 'Durante el Corte Administrativo, se exige remitir el detalle del último cheque emitido o de la última orden de transferencia bancaria ejecutada.', correct: true, explanation: 'VERDADERO. El inciso "q" del Corte Administrativo lo exige explícitamente para asegurar la trazabilidad del saldo final entregado.' },
+        { type: 'tf', text: 'Para finalizar el Corte Administrativo, es obligatorio presentar la planilla de rendición del rubro 845 Aportes a Instituciones sin Fines de Lucro.', correct: false, explanation: 'FALSO. La planilla de rendición que se exige en el inciso "x" del Corte es la del rubro 846 (Subsidio y Asistencia Social a Personas y Familias del Sector Privado).' },
+        { type: 'tf', text: 'El acta del Corte Administrativo debe labrarse tradicionalmente en cuatro ejemplares originales para su respectiva distribución departamental.', correct: false, explanation: 'FALSO. La norma dicta labrarla en tres (3) ejemplares: funcionario entrante, saliente y DGAF. Solo de ser necesario se imprimen más.' },
+        { type: 'tf', text: 'Si el informe post-Corte remitido por el funcionario entrante presenta observaciones, se procede a retener el pago de los gastos de traslado del saliente.', correct: true, explanation: 'VERDADERO. Es una medida preventiva. La DGAF retiene la erogación del gasto de traslado hasta que las observaciones sean regularizadas.' },
+        { type: 'tf', text: 'Todo contrato de alquiler presentado por un funcionario y redactado en idioma portugués exige obligatoriamente acompañar una traducción al español.', correct: false, explanation: 'FALSO. La norma (Sección Alquileres, inc. "a") hace una excepción puntual exonerando de la traducción a los contratos redactados en portugués.' },
+        { type: 'tf', text: 'La normativa establece que no se aceptarán comprobantes de pago de alquiler que presenten enmiendas o tachaduras de ningún tipo o grado.', correct: true, explanation: 'VERDADERO. El inciso "c" de Alquileres es tajante: "No se aceptarán comprobantes de pagos con enmiendas y/o tachaduras".' },
+        { type: 'tf', text: 'Si el locador de la residencia es una persona física, el funcionario está exento de presentar una copia del documento de identidad de dicho propietario.', correct: false, explanation: 'FALSO. Todo lo contrario. Si el locador es persona física (no empresa), la norma (inciso a) obliga a adjuntar copia de su documento de identidad.' },
+        { type: 'tf', text: 'Para alojamientos temporales tipo hotel, el reembolso exige remitir los comprobantes originales acompañados por una declaración jurada anexa.', correct: true, explanation: 'VERDADERO. El inciso "d" prevé la estancia en hoteles o apart hoteles temporales, pero condiciona el reembolso a la entrega del original y una declaración jurada.' },
+        { type: 'tf', text: 'Para autorizar Gastos de Operación y Mantenimiento, la Misión debe remitir como mínimo tres ofertas comerciales debidamente elaboradas.', correct: false, explanation: 'FALSO. Según el numeral "a" de la sección Gastos de Operación, la solicitud debe acompañarse "mínimamente con dos (2) ofertas". Las tres (3) ofertas aplican para Compras Mayores a 4k.' },
+        { type: 'tf', text: 'El comité encargado de emitir dictámenes sobre los Gastos de Operación y Mantenimiento está integrado de forma obligatoria por el titular de la DGAF.', correct: false, explanation: 'FALSO. Dicho comité está integrado por 5 directores (Finanzas, UOC, Administrativo, Ppto y DAL). El DGAF es quien recibe el dictamen, no quien lo integra.' },
+        { type: 'tf', text: 'La utilización de un porcentaje mayor al establecido en el rubro 280 requiere obligatoriamente una autorización previa por parte de la DGAF.', correct: true, explanation: 'VERDADERO. La normativa advierte expresamente que, si se excederá el rubro de Otros Servicios, debe solicitarse autorización PREVIA al gasto a la DGAF.' },
+        { type: 'tf', text: 'En caso de no dar cumplimiento íntegro a los documentos del Corte Administrativo, los antecedentes se comunicarán a la Dirección de Auditoría Interna.', correct: true, explanation: 'VERDADERO. La norma obliga a comunicar el incumplimiento de los documentos requeridos a la Dirección de Auditoría Interna para su intervención.' }
     ];
 
     // =========================================================================
-    // LÓGICA DEL SIMULADOR
+    // LÓGICA DEL SIMULADOR Y REGISTRO DE ERRORES
     // =========================================================================
     let selectedQuestions = [];
     let currentQuestionIndex = 0;
     let score = 0;
+    
+    // Array para almacenar los errores de la sesión actual
+    let mistakes = []; 
 
     const screenSetup = document.getElementById('screen-setup');
     const screenQuiz = document.getElementById('screen-quiz');
@@ -690,17 +764,19 @@
     const nextBtn = document.getElementById('next-btn');
     const progressFill = document.getElementById('progress-fill');
 
-    // Setup inicial
+    // UI Feedback elements
+    const mistakesContainer = document.getElementById('mistakes-container');
+    const mistakesList = document.getElementById('mistakes-list');
+
     totalBadge.textContent = db.length;
     slider.max = db.length;
-    slider.value = 25; // Default recomendado
+    slider.value = 25; 
     sliderDisplay.textContent = slider.value;
 
     slider.addEventListener('input', (e) => {
         sliderDisplay.textContent = e.target.value;
     });
 
-    // Fisher-Yates shuffle
     function shuffleArray(array) {
         let curId = array.length;
         while (0 !== curId) {
@@ -722,8 +798,12 @@
         let count = parseInt(slider.value);
         let shuffledDb = shuffleArray([...db]);
         selectedQuestions = shuffledDb.slice(0, count);
+        
+        // Reset variables
         currentQuestionIndex = 0;
         score = 0;
+        mistakes = []; 
+        
         showScreen('screen-quiz');
         renderQuestion();
     });
@@ -741,14 +821,12 @@
         if (q.type === 'tf') {
             qTypeBadge.textContent = "Falso / Verdadero";
             qTypeBadge.style.color = "#a78bfa"; 
-            
-            createOptionButton('Verdadero', q.correct === true);
-            createOptionButton('Falso', q.correct === false);
+            createOptionButton('Verdadero', q.correct === true, q);
+            createOptionButton('Falso', q.correct === false, q);
         } else {
             qTypeBadge.textContent = "Selección Múltiple";
             qTypeBadge.style.color = "#38bdf8"; 
             
-            // Selección aleatoria de 3 trampas de las 7 disponibles
             let trapPool = shuffleArray([...q.traps]);
             let selectedTraps = trapPool.slice(0, 3);
             
@@ -762,24 +840,23 @@
             finalOptions = shuffleArray(finalOptions);
             
             finalOptions.forEach(opt => {
-                createOptionButton(opt.text, opt.isCorrect);
+                createOptionButton(opt.text, opt.isCorrect, q);
             });
         }
     }
 
-    function createOptionButton(text, isCorrect) {
+    // Se agrega el objeto de la pregunta (qObj) para extraer data en caso de error
+    function createOptionButton(text, isCorrect, qObj) {
         const btn = document.createElement('button');
         btn.className = 'option-btn';
         btn.textContent = text;
-        
-        // Identificador invisible para revelar la correcta después
         btn.dataset.correct = isCorrect; 
         
-        btn.onclick = () => handleAnswer(btn, isCorrect);
+        btn.onclick = () => handleAnswer(btn, isCorrect, text, qObj);
         optionsGrid.appendChild(btn);
     }
 
-    function handleAnswer(clickedBtn, isCorrect) {
+    function handleAnswer(clickedBtn, isCorrect, userText, qObj) {
         const allBtns = optionsGrid.querySelectorAll('.option-btn');
         allBtns.forEach(b => {
             b.disabled = true;
@@ -792,6 +869,17 @@
             score++;
         } else {
             clickedBtn.classList.add('incorrect');
+            
+            // Determinar texto correcto para F/V
+            let correctText = qObj.type === 'tf' ? (qObj.correct ? "Verdadero" : "Falso") : qObj.correct;
+            
+            // Guardar el error
+            mistakes.push({
+                question: qObj.text,
+                userAns: userText,
+                correctAns: correctText,
+                explanation: qObj.explanation
+            });
         }
 
         nextBtn.style.display = 'block';
@@ -816,10 +904,42 @@
         if(pct === 100) msg.textContent = "¡Rendimiento Perfecto! Dominas el régimen a nivel normativo y técnico.";
         else if (pct >= 85) msg.textContent = "¡Sobresaliente! Tienes un conocimiento excepcional de los procedimientos y plazos.";
         else if (pct >= 70) msg.textContent = "Aprobado. Buen manejo general, pero los detalles y excepciones requieren un repaso extra.";
-        else msg.textContent = "Evaluación Insuficiente. La similitud en las respuestas requiere que memorices la norma con mayor precisión. ¡Sigue practicando!";
+        else msg.textContent = "Evaluación Insuficiente. La similitud en las respuestas requiere que memorices la norma con mayor precisión. Revisa tus errores abajo.";
+
+        // Renderizar el desglose de errores
+        if (mistakes.length > 0) {
+            mistakesContainer.style.display = 'block';
+            mistakesList.innerHTML = ''; // Limpiar anteriores
+            
+            mistakes.forEach((err, index) => {
+                const card = document.createElement('div');
+                card.className = 'mistake-card';
+                card.innerHTML = `
+                    <div class="mistake-q">${index + 1}. ${err.question}</div>
+                    
+                    <div class="ans-row">
+                        <div class="ans-label ans-wrong">Tu respuesta:</div>
+                        <div>${err.userAns}</div>
+                    </div>
+                    
+                    <div class="ans-row">
+                        <div class="ans-label ans-correct">Respuesta Correcta:</div>
+                        <div>${err.correctAns}</div>
+                    </div>
+                    
+                    <div class="explanation-box">
+                        <strong>Justificación Legal:</strong> ${err.explanation}
+                    </div>
+                `;
+                mistakesList.appendChild(card);
+            });
+        } else {
+            mistakesContainer.style.display = 'none'; // Si hay 100% no se muestra el panel
+        }
     }
 
     document.getElementById('restart-btn').addEventListener('click', () => {
+        window.scrollTo(0, 0); // Regresar el scroll arriba
         showScreen('screen-setup');
     });
 
