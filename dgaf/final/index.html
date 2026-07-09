@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guía de Estudio · Dirección General de Administración y Finanzas</title>
+    <!-- Integración de Google Fonts: Montserrat y Raleway -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
         /* ===================== VARIABLES / TEMA ===================== */
         :root {
@@ -97,7 +102,7 @@
             margin: 0;
             background: linear-gradient(180deg, var(--bg), var(--bg2));
             color: var(--text);
-            font-family: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+            font-family: 'Raleway', Georgia, serif;
             font-size: var(--reading-size);
             line-height: 1.75;
             -webkit-font-smoothing: antialiased;
@@ -421,6 +426,7 @@
 
         .hero h1 {
             position: relative;
+            font-family: 'Montserrat', sans-serif;
             font-size: clamp(1.7rem, 4.4vw, 2.7rem);
             margin: .6rem 0 .4rem;
             color: var(--text);
@@ -518,7 +524,7 @@
             margin: 0;
             font-size: 1rem;
             color: var(--accent-ink);
-            font-family: "Segoe UI", system-ui, sans-serif;
+            font-family: 'Montserrat', "Segoe UI", system-ui, sans-serif;
             line-height: 1.25;
         }
 
@@ -581,7 +587,7 @@
 
         .unit-title {
             margin: 0;
-            font-family: "Segoe UI", system-ui, sans-serif;
+            font-family: 'Montserrat', "Segoe UI", system-ui, sans-serif;
             font-size: clamp(1.12rem, 2.4vw, 1.5rem);
             line-height: 1.2;
             flex: 1;
@@ -629,7 +635,7 @@
 
         /* Encabezados internos */
         .unit-body h3 {
-            font-family: "Segoe UI", system-ui, sans-serif;
+            font-family: 'Montserrat', "Segoe UI", system-ui, sans-serif;
             color: var(--accent-ink);
             font-size: 1.22rem;
             margin: 2rem 0 .7rem;
@@ -643,7 +649,7 @@
         }
 
         .unit-body h4 {
-            font-family: "Segoe UI", system-ui, sans-serif;
+            font-family: 'Montserrat', "Segoe UI", system-ui, sans-serif;
             color: var(--accent);
             font-size: 1.04rem;
             margin: 1.3rem 0 .5rem;
@@ -694,7 +700,7 @@
         }
 
         .callout .callout-t {
-            font-family: "Segoe UI", system-ui, sans-serif;
+            font-family: 'Montserrat', "Segoe UI", system-ui, sans-serif;
             font-weight: 700;
             font-size: .92rem;
             display: flex;
@@ -1215,7 +1221,8 @@
                 box-shadow: none !important;
             }
 
-            /* Evitar cortes internos poco elegantes */
+            /* HACK AVANZADO DE IMPRESIÓN: 
+               Convertir elementos de bloque en inline-block evita cortes horizontales en motores Webkit/Blink */
             .callout,
             table.tbl,
             .flow,
@@ -1229,19 +1236,33 @@
             .idx-card,
             .card,
             .clause,
+            details {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+                -webkit-column-break-inside: avoid !important;
+                display: inline-block !important; 
+                width: 100% !important;
+                vertical-align: top;
+                margin-bottom: 20px !important;
+            }
+
             p,
             li,
-            details {
-                break-inside: avoid;
+            .sub-clause {
+                orphans: 4 !important;
+                widows: 4 !important;
                 page-break-inside: avoid;
+                break-inside: avoid;
             }
 
             h2,
             h3,
             h4,
             .unit-head {
-                break-after: avoid;
-                page-break-after: avoid;
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+                -webkit-column-break-after: avoid !important;
+                margin-bottom: 10px !important;
             }
 
             table.tbl thead th {
@@ -1302,7 +1323,7 @@
     <!-- ===================== TOOLBAR ===================== -->
     <header class="toolbar ui">
         <button id="menuBtn" class="tb-btn" aria-label="Abrir índice">☰</button>
-        <span class="brand"><span class="logo">🏛️</span><span class="txt">Régimen Consular</span></span>
+        <span class="brand"><span class="logo">🏛️</span><span class="txt">Dirección General de Administración y Finanzas</span></span>
         <span class="spacer"></span>
         <div class="search-wrap">
             <span aria-hidden="true">🔎</span>
@@ -1425,7 +1446,7 @@
                             <div class="flow-step">
                                 <div class="fs-n">COMITÉ BÁSICO</div>
                                 <div class="fs-t">Evaluación Técnica</div>
-                                <div class="fs-d">Dir. Finanzas, UOC, Dir. Adm., Dir. Ppto., y DAL.</div>
+                                <div class="fs-d">Finanzas, UOC, Administrativo, Presupuesto, y DAL.</div>
                             </div>
                         </div>
                         <div class="flow" style="margin-top: 0.5rem;">
@@ -1494,7 +1515,7 @@
                             <h4>Comité Permanente (Ampliado)</h4>
                             <dl>
                                 <dt>Miembros</dt>
-                                <dd>VMAAT, DGAF, Director de Finanzas, UOC, Director Administrativo, Director de Presupuesto, Representante de la DAL.</dd>
+                                <dd>VMAAT, DGAF, Finanzas, UOC, Administrativo, Presupuesto, Representante de la DAL.</dd>
                             </dl>
                         </div>
                         <p><strong>b)</strong> Remitida la solicitud, la evaluación de las ofertas estará a cargo del Comité Permanente citado.</p>
@@ -1624,7 +1645,7 @@
                             <h4>Comité Permanente de Evaluación (O.G. 280)</h4>
                             <dl>
                                 <dt>Miembros</dt>
-                                <dd>Director de Finanzas, UOC, Director Administrativo, Director de Presupuesto, Representante de la DAL.</dd>
+                                <dd>Finanzas, UOC, Administrativo, Presupuesto, Representante de la DAL.</dd>
                             </dl>
                         </div>
 
@@ -1678,7 +1699,7 @@
                 </section>
 
                 <div class="foot ui">
-                    <p>Guía de Estudio Integral · Régimen y Procedimientos Consulares.</p>
+                    <p>Guía de Estudio Integral · Dirección General de Administración y Finanzas.</p>
                     <p>5 unidades integradas · Funciona sin conexión a Internet · Atajo: pulsa <strong>/</strong> para buscar.</p>
                 </div>
             </div>
@@ -2013,4 +2034,3 @@
 </body>
 
 </html>
-
