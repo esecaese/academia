@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Día de la Amistad - Academia Diplomática</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hidden-state { display: none !important; }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-300 min-h-screen flex items-center justify-center p-4 selection:bg-white selection:text-black">
+
+    <div class="w-full max-w-lg bg-zinc-900 border border-zinc-800 rounded-3xl shadow-2xl p-6 sm:p-10 relative overflow-hidden">
+        
+        <!-- Background decorative elements -->
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-zinc-800 via-white to-zinc-800 opacity-20"></div>
+        
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-2xl sm:text-3xl font-semibold text-white tracking-tight mb-2">Amigo Invisible</h1>
+            <p class="text-sm text-zinc-500">Academia Diplomática 2026</p>
+        </div>
+
+        <!-- Loading State -->
+        <div id="state-loading" class="flex flex-col items-center justify-center py-12">
+            <i class="ph ph-spinner-gap animate-spin text-4xl text-white mb-4"></i>
+            <p class="text-sm text-zinc-400">Conectando de forma segura...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="state-error" class="hidden-state fade-in flex flex-col items-center justify-center py-12 text-center px-4">
+            <i class="ph ph-warning-circle text-5xl text-red-400 mb-4"></i>
+            <h3 class="text-lg font-medium text-white mb-2" id="error-title">Atención</h3>
+            <p id="error-message" class="text-sm text-zinc-400 mb-8 max-w-sm leading-relaxed">Ha ocurrido un error.</p>
+            <button onclick="resetToStart()" class="px-6 py-2 bg-zinc-800 hover:bg-zinc-700 text-white rounded-full transition-colors text-sm font-medium">Entendido, volver atrás</button>
+        </div>
+
+        <!-- Step 1: Select User -->
+        <div id="state-select-user" class="hidden-state fade-in">
+            <p class="text-center text-sm mb-6 text-zinc-400">¿Quién eres? Selecciona tu nombre para continuar.</p>
+            <div id="names-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <!-- Buttons will be injected here via JS -->
+            </div>
+        </div>
+
+        <!-- Step 2: Confirm Draw -->
+        <div id="state-confirm" class="hidden-state fade-in flex flex-col items-center text-center py-6">
+            <div class="w-16 h-16 bg-zinc-800 rounded-full flex items-center justify-center mb-4 border border-zinc-700">
+                <i class="ph ph-user text-2xl text-white"></i>
+            </div>
+            <h2 id="welcome-name" class="text-xl font-medium text-white mb-2">Hola, Nombre</h2>
+            <p class="text-sm text-zinc-400 mb-8 max-w-xs">
+                Asegúrate de que nadie esté mirando tu pantalla antes de revelar a tu amigo invisible.<br><br>
+                <span class="text-yellow-500 font-medium">Solo podrás ver este resultado en este dispositivo.</span>
+            </p>
+            
+            <button id="btn-reveal" onclick="revealMatch()" class="w-full sm:w-auto px-8 py-3 bg-white text-black hover:bg-zinc-200 transition-colors rounded-full font-medium shadow-[0_0_20px_rgba(255,255,255,0.1)] flex items-center justify-center gap-2">
+                <i class="ph ph-gift"></i> Revelar mi Amigo
+            </button>
+            <button onclick="resetToStart()" class="mt-4 text-xs text-zinc-500 hover:text-zinc-300 transition-colors">No soy yo, volver atrás</button>
+        </div>
+
+        <!-- Step 3: Result -->
+        <div id="state-result" class="hidden-state fade-in flex flex-col items-center text-center py-8">
+            <p class="text-sm text-zinc-400 mb-4 uppercase tracking-widest text-xs">Te toca regalar a</p>
+            <div class="px-8 py-4 bg-zinc-950 border border-zinc-800 rounded-2xl mb-8 shadow-inner w-full">
+                <h2 id="result-name" class="text-3xl font-semibold text-white">Nombre</h2>
+            </div>
+            <div class="flex flex-col items-center gap-2 text-xs text-zinc-500 bg-zinc-800/50 px-4 py-3 rounded-xl max-w-xs text-center">
+                <span class="flex items-center justify-center gap-2 text-zinc-300"><i class="ph ph-lock-key"></i> Información asegurada</span>
+                <span>Por seguridad, el sistema ha bloqueado tu nombre para otros. Anota esto y cierra la ventana.</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Tu configuración oficial
+        const firebaseConfig = {
+            apiKey: "AIzaSyANDeRrN6liAFwireLLdY9szELNs7TFtBg",
+            authDomain: "academiarrhh-b4b7b.firebaseapp.com",
+            databaseURL: "https://academiarrhh-b4b7b-default-rtdb.firebaseio.com",
+            projectId: "academiarrhh-b4b7b",
+            storageBucket: "academiarrhh-b4b7b.firebasestorage.app",
+            messagingSenderId: "885021112736",
+            appId: "1:885021112736:web:18e7ce247050ecf8718cc5"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // Uso de ruta estricta requerida por arquitecturas seguras en Firebase
+        const appId = "academiarrhh-b4b7b";
+        const MATCHES_DOC_PATH = doc(db, 'artifacts', appId, 'public', 'data', 'amigo_invisible', '2026');
+
+        const CLASSMATES = [
+            "Adriano", "Eduardo", "Jorge", "David", "Sven", 
+            "Pamela", "Silvia", "Stella", "Sonia", "Susan", 
+            "Reina", "Jose", "Roxana"
+        ];
+
+        let currentUser = null;
+        let claimedList = [];
+        let globalMatches = null;
+
+        const hideAllStates = () => {
+            const states = ['state-loading', 'state-error', 'state-select-user', 'state-confirm', 'state-result'];
+            states.forEach(state => document.getElementById(state).classList.add('hidden-state'));
+        };
+
+        const showState = (stateId) => {
+            hideAllStates();
+            document.getElementById(stateId).classList.remove('hidden-state');
+        };
+
+        const showError = (message, title = "Atención") => {
+            document.getElementById('error-title').textContent = title;
+            document.getElementById('error-message').textContent = message;
+            showState('state-error');
+        };
+
+        window.resetToStart = () => {
+            const savedUser = localStorage.getItem('ad_secretsanta_user');
+            // Si intenta volver atrás pero su dispositivo ya está amarrado a un usuario
+            if (savedUser && globalMatches && globalMatches[savedUser]) {
+                document.getElementById('result-name').textContent = globalMatches[savedUser];
+                showState('state-result');
+                return;
+            }
+            currentUser = null;
+            showState('state-select-user');
+        };
+
+        // Genera un anillo cerrado donde todos regalan y todos reciben, nadie repite y nadie se toca a sí mismo.
+        const generateMatches = (names) => {
+            let shuffled = [...names];
+            // Shuffle usando Fisher-Yates
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            
+            let matches = {};
+            for (let i = 0; i < shuffled.length; i++) {
+                const giver = shuffled[i];
+                const receiver = shuffled[(i + 1) % shuffled.length]; // El último le da al primero
+                matches[giver] = receiver;
+            }
+            return matches;
+        };
+
+        window.handleNameSelection = (name) => {
+            const savedUser = localStorage.getItem('ad_secretsanta_user');
+            if (savedUser) {
+                // El dispositivo ya tiene dueño, forzamos mostrar su resultado
+                resetToStart();
+                return;
+            }
+
+            if (claimedList.includes(name)) {
+                // Escenario: Intentan elegir a alguien que ya retiró su nombre desde OTRO dispositivo
+                showError(`${name} ya retiró su amigo secreto desde otro dispositivo. Si eres tú, usa el celular donde te registraste.`, "Nombre bloqueado");
+                return;
+            }
+
+            currentUser = name;
+            document.getElementById('welcome-name').textContent = `Hola, ${name}`;
+            showState('state-confirm');
+        };
+
+        window.revealMatch = async () => {
+            if (!currentUser) return;
+            const authUser = auth.currentUser;
+            if (!authUser) {
+                showError("No hay conexión segura con el servidor. Recarga la página.");
+                return;
+            }
+            
+            const btn = document.getElementById('btn-reveal');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="ph ph-spinner-gap animate-spin"></i> Procesando...';
+            btn.disabled = true;
+
+            try {
+                const docSnap = await getDoc(MATCHES_DOC_PATH);
+                let currentMatches;
+                let currentClaimed = [];
+                let currentRevelados = {};
+
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    currentMatches = data.matches;
+                    currentClaimed = data.claimed || [];
+                    currentRevelados = data.revelados || {};
+                } else {
+                    // Solo el primer valiente genera el listado de todo el grupo
+                    currentMatches = generateMatches(CLASSMATES);
+                }
+
+                // Checkeo extra por si dos personas tocan el mismo nombre al mismo segundo
+                if (currentClaimed.includes(currentUser)) {
+                    showError("¡Alguien más acaba de retirar este nombre! Si no fuiste tú, contacta al administrador.", "Demasiado tarde");
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    return;
+                }
+
+                currentClaimed.push(currentUser);
+                
+                // Registro explícito en la base de datos (relación Persona-Amigo)
+                currentRevelados[currentUser] = {
+                    amigo_asignado: currentMatches[currentUser],
+                    fecha_revelacion: new Date().toISOString()
+                };
+
+                // Actualizamos Firebase
+                await setDoc(MATCHES_DOC_PATH, {
+                    matches: currentMatches,
+                    claimed: currentClaimed,
+                    revelados: currentRevelados,
+                    updatedAt: new Date().toISOString()
+                }, { merge: true });
+
+                // Bloqueamos el dispositivo local
+                localStorage.setItem('ad_secretsanta_user', currentUser);
+                
+                const myMatch = currentMatches[currentUser];
+                
+                // Mostrar el resultado con un pequeño retraso teatral
+                setTimeout(() => {
+                    document.getElementById('result-name').textContent = myMatch;
+                    showState('state-result');
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }, 800);
+
+            } catch (error) {
+                console.error("Error al revelar:", error);
+                showError(`No tienes permisos para escribir en la base de datos. Debes configurar las 'Reglas' en Firestore a 'true'. Error: ${error.message}`);
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        };
+
+        const renderGrid = () => {
+            const grid = document.getElementById('names-grid');
+            grid.innerHTML = ''; 
+            
+            CLASSMATES.sort().forEach(name => {
+                const isClaimed = claimedList.includes(name);
+                const btn = document.createElement('button');
+                
+                if (isClaimed) {
+                    btn.className = 'py-3 px-4 bg-zinc-900 border border-zinc-800 text-zinc-500 rounded-xl text-sm font-medium flex items-center justify-center gap-2 opacity-80 hover:bg-zinc-800 cursor-pointer transition-colors';
+                    btn.innerHTML = `<i class="ph ph-lock-key"></i> ${name}`;
+                    // Al hacer clic en un bloqueado desde otro dispositivo, lanza la advertencia
+                    btn.onclick = () => handleNameSelection(name);
+                } else {
+                    btn.className = 'py-3 px-4 bg-zinc-800 hover:bg-zinc-700 hover:text-white border border-zinc-700 hover:border-zinc-500 rounded-xl text-sm font-medium transition-all text-zinc-300 shadow-sm';
+                    btn.textContent = name;
+                    btn.onclick = () => handleNameSelection(name);
+                }
+                
+                grid.appendChild(btn);
+            });
+        };
+
+        const initApp = async () => {
+            try {
+                // 1. Iniciar sesión anónima PRIMERO
+                const userCredential = await signInAnonymously(auth);
+                const user = userCredential.user;
+                
+                // Guardián de seguridad: Si no hay usuario (ej. fallo de red), detener.
+                if (!user) return;
+
+                // 2. Escuchar datos en tiempo real (solo ocurre si hay sesión válida)
+                onSnapshot(MATCHES_DOC_PATH, (docSnap) => {
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        globalMatches = data.matches;
+                        claimedList = data.claimed || [];
+                    } else {
+                        globalMatches = null;
+                        claimedList = [];
+                    }
+                    
+                    const savedUser = localStorage.getItem('ad_secretsanta_user');
+                    
+                    // Si el dispositivo actual ya participó
+                    if (savedUser && globalMatches && globalMatches[savedUser]) {
+                        document.getElementById('result-name').textContent = globalMatches[savedUser];
+                        showState('state-result');
+                    } else {
+                        renderGrid();
+                        // Mostrar selector si estamos en carga o en error (para poder volver a intentar)
+                        const currentState = ['state-loading', 'state-error'].some(id => !document.getElementById(id).classList.contains('hidden-state'));
+                        if (currentState) {
+                            showState('state-select-user');
+                        }
+                    }
+                }, (error) => {
+                    console.error("Firestore listener error:", error);
+                    // Este es el error que te sale cuando tus reglas de Firestore dicen "false"
+                    showError("Firebase rechazó la conexión por Reglas de Seguridad. Ve a Firebase > Firestore > Reglas y pon 'allow read, write: if true;'", "Permiso Denegado");
+                });
+
+            } catch (error) {
+                console.error("Authentication error:", error);
+                showError("No se pudo establecer conexión segura (Authentication failed).");
+            }
+        };
+
+        // Iniciar
+        initApp();
+
+    </script>
+</body>
+</html>
