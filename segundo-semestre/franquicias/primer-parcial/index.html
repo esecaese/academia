@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Régimen de Inmunidades y Privilegios — Guía Parcial 1</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root{
+      --bg: #171511;
+      --bg-raised: #1e1c17;
+      --ink: #e9e3d6;
+      --ink-dim: #a39b8b;
+      --ink-faint: #6b6558;
+      --rule: #35312a;
+      --gold: #c9a25a;
+      --gold-soft: #8f7845;
+      --teal: #7fb0a6;
+      --serif: 'Source Serif 4', Georgia, serif;
+      --sans: 'Inter', sans-serif;
+    }
+    *{ box-sizing: border-box; }
+    html{ scroll-behavior: smooth; }
+    body{
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--serif);
+      -webkit-font-smoothing: antialiased;
+    }
+    .sans{ font-family: var(--sans); }
+    ::selection{ background: rgba(201,162,90,.25); color: #fff; }
+    ::-webkit-scrollbar{ width: 9px; }
+    ::-webkit-scrollbar-track{ background: transparent; }
+    ::-webkit-scrollbar-thumb{ background: var(--rule); border-radius: 999px; }
+
+    #progress{
+      position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+      background: linear-gradient(90deg, var(--gold-soft), var(--gold));
+      z-index: 60; transition: width .1s linear;
+    }
+
+    .prose-body p{ margin: 0 0 1.15em 0; font-size: clamp(1rem, .96rem + .2vw, 1.09rem); line-height: 1.85; color: var(--ink); }
+    .prose-body strong{ color: #fbf3e2; font-weight: 600; }
+    .prose-body em{ color: var(--gold); font-style: normal; }
+
+    .cite{
+      border-left: 2px solid var(--gold-soft);
+      padding: .15rem 0 .15rem 1.15rem;
+      margin: 1.3rem 0;
+    }
+    .cite.teal{ border-left-color: var(--teal); }
+    .cite-label{
+      font-family: var(--sans); font-size: .72rem; font-weight: 600;
+      letter-spacing: .08em; text-transform: uppercase; color: var(--gold);
+      margin-bottom: .3rem; display: block;
+    }
+    .cite.teal .cite-label{ color: var(--teal); }
+    .cite p{ font-size: clamp(.95rem, .92rem + .15vw, 1.02rem); color: var(--ink-dim); line-height: 1.75; margin: 0; }
+
+    .secnum{ font-family: var(--sans); font-weight: 700; color: var(--ink-faint); font-size: .8rem; letter-spacing: .1em; }
+
+    .obligatorio{ font-family: var(--sans); font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
+    .obligatorio::before{ content: '● '; }
+
+    #toc a, .section-link{ display:block; padding: .3rem 0; color: var(--ink-faint); font-size: .84rem; line-height: 1.4; transition: color .15s ease, border-color .15s ease; border-left: 2px solid transparent; padding-left: .85rem; }
+    #toc a:hover{ color: var(--ink-dim); }
+    #toc a.active, .section-link.active{ color: var(--gold); border-left-color: var(--gold); }
+
+    #mobile-toc .section-link{ display:inline-block; white-space:nowrap; padding: .9rem .1rem; margin-right: 1.4rem; border-left:none; border-bottom: 2px solid transparent; }
+    #mobile-toc .section-link.active{ border-left:none; border-bottom-color: var(--gold); }
+
+    .divider{ border: none; border-top: 1px solid var(--rule); margin: 3.5rem 0; }
+
+    .check-row{ display:flex; gap:.85rem; align-items:flex-start; padding: .7rem 0; cursor:pointer; }
+    .check-box{
+      flex-shrink:0; width:1.2rem; height:1.2rem; margin-top:.2rem; border-radius:4px;
+      border: 1.5px solid var(--ink-faint); display:flex; align-items:center; justify-content:center;
+      transition: all .15s ease;
+    }
+    .check-row.done .check-box{ background: var(--gold); border-color: var(--gold); }
+    .check-row.done .check-text{ color: var(--ink-faint); text-decoration: line-through; }
+    .check-text{ font-size: clamp(1rem, .97rem + .15vw, 1.03rem); color: var(--ink); line-height: 1.6; }
+
+    #print-btn{
+      position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 55;
+      background: var(--bg-raised); border: 1px solid var(--rule); color: var(--ink-dim);
+      border-radius: 999px; padding: .7rem 1.1rem; font-family: var(--sans); font-size: .8rem; font-weight: 600;
+      display:flex; align-items:center; gap:.5rem; box-shadow: 0 6px 20px rgba(0,0,0,.35);
+      transition: color .15s ease, border-color .15s ease;
+    }
+    #print-btn:hover{ color: var(--gold); border-color: var(--gold-soft); }
+
+    @media (max-width: 1023px){ #toc-wrap{ display:none; } }
+    @media (min-width: 1024px){ #mobile-toc{ display:none; } }
+
+    /* ---------- Impresión / A4 ---------- */
+    @page{ size: A4; margin: 16mm 14mm; }
+    @media print{
+      :root{
+        --bg:#ffffff; --bg-raised:#f3f3f3; --ink:#161616; --ink-dim:#3a3a3a; --ink-faint:#5c5c5c;
+        --rule:#cfcfcf; --gold:#7a5f28; --gold-soft:#7a5f28; --teal:#2f6e63;
+      }
+      body{ background:#fff; }
+      #progress, #toc-wrap, #mobile-toc, #print-btn, .no-print{ display:none !important; }
+      .max-w-6xl, .max-w-3xl{ max-width:100% !important; }
+      .px-6{ padding-left:0 !important; padding-right:0 !important; }
+      article{ padding-bottom: 0 !important; }
+      h2, h3{ break-after: avoid; }
+      .cite{ break-inside: avoid; }
+      section{ break-inside: avoid-page; }
+      a{ color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress" class="no-print"></div>
+
+  <!-- Nav móvil -->
+  <div id="mobile-toc" class="sans sticky top-0 z-50 bg-[var(--bg)]/95 backdrop-blur border-b border-[var(--rule)] overflow-x-auto no-print">
+    <div class="flex px-6 text-[11px] tracking-[.08em] uppercase text-[var(--ink-faint)]">
+      <a href="#unidad1" class="section-link">Unidad 1</a>
+      <a href="#unidad2" class="section-link">Unidad 2</a>
+      <a href="#jurisprudencia" class="section-link">Jurisprudencia</a>
+      <a href="#casos" class="section-link">Casos</a>
+      <a href="#preguntas" class="section-link">Preguntas</a>
+      <a href="#recomendacion" class="section-link">Cierre</a>
+    </div>
+  </div>
+
+  <!-- Masthead -->
+  <header class="max-w-3xl mx-auto px-6 pt-12 sm:pt-16 pb-10">
+    <p class="sans text-[11px] sm:text-xs tracking-[.15em] uppercase text-[var(--gold)] mb-4">Academia Diplomática y Consular "Carlos Antonio López"</p>
+    <h1 class="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-[#fbf3e2] leading-tight mb-4">Régimen de Inmunidades<br>y Privilegios</h1>
+    <p class="text-base sm:text-lg text-[var(--ink-dim)] mb-6">Guía de estudio para el Parcial Nº 1 — cobertura de las Clases 1 a 6</p>
+    <div class="sans flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-[var(--ink-faint)] border-t border-[var(--rule)] pt-5">
+      <span>Martes 15 de septiembre</span>
+      <span class="w-1 h-1 rounded-full bg-[var(--ink-faint)]"></span>
+      <span>Sección B</span>
+      <span class="w-1 h-1 rounded-full bg-[var(--ink-faint)]"></span>
+      <span>30 puntos</span>
+      <span class="no-print inline-flex items-center gap-5">
+        <span class="w-1 h-1 rounded-full bg-[var(--ink-faint)]"></span>
+        <span id="reading-time">— min de lectura</span>
+      </span>
+    </div>
+  </header>
+
+  <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-12">
+
+    <!-- TOC escritorio -->
+    <div id="toc-wrap" class="no-print">
+      <nav id="toc" class="sticky top-10 sans">
+        <p class="text-[10px] tracking-[.15em] uppercase text-[var(--ink-faint)] mb-2 pl-[calc(.85rem+2px)]">En esta guía</p>
+        <a href="#unidad1" class="section-link">Unidad 1 — Fundamentos</a>
+        <a href="#unidad2" class="section-link">Unidad 2 — Personal e inmunidades</a>
+        <a href="#jurisprudencia" class="section-link">Jurisprudencia CIJ</a>
+        <a href="#casos" class="section-link">Casos prácticos</a>
+        <a href="#preguntas" class="section-link">Preguntas guía</a>
+        <a href="#recomendacion" class="section-link">Recomendación final</a>
+      </nav>
+    </div>
+
+    <!-- Article -->
+    <article class="max-w-3xl pb-24 sm:pb-32">
+
+      <!-- UNIDAD 1 -->
+      <section id="unidad1" class="scroll-mt-24 lg:scroll-mt-10">
+        <p class="secnum mb-2">UNIDAD Nº 1</p>
+        <h2 class="text-2xl sm:text-3xl font-semibold text-[#fbf3e2] mb-8 leading-snug">Fundamentos Jurídicos del Régimen de Inmunidades</h2>
+
+        <h3 class="text-lg sm:text-xl font-semibold text-[#fbf3e2] mt-10 mb-3">1. Historia y evolución del régimen</h3>
+        <div class="prose-body">
+          <p>El régimen de inmunidades diplomáticas es uno de los institutos más antiguos del derecho internacional: sus raíces
+          se remontan a la costumbre de la antigüedad y la Edad Media, cuando ya se reconocía protección especial a los enviados
+          de un soberano ante otro, bajo la idea de que agredir a un embajador equivalía a agredir al Estado que representaba.
+          Esa práctica se fue consolidando a lo largo de los siglos —con hitos como el desarrollo de la diplomacia permanente a
+          partir del Renacimiento y el Congreso de Viena de 1815— hasta llegar a su codificación definitiva en el siglo XX: la
+          <strong>Convención de Viena sobre Relaciones Diplomáticas (1961)</strong> y la <strong>Convención de Viena sobre
+          Relaciones Consulares (1963)</strong>, que sistematizaron la costumbre internacional en dos instrumentos multilaterales
+          de aplicación prácticamente universal y que siguen siendo hoy la fuente normativa central de la materia.</p>
+        </div>
+
+        <h3 class="text-lg sm:text-xl font-semibold text-[#fbf3e2] mt-10 mb-3">2. Naturaleza jurídica y teorías doctrinales</h3>
+        <div class="prose-body">
+          <p>La pregunta de fondo que responden estas teorías es por qué un Estado acepta que un agente extranjero quede fuera
+          del alcance de sus propios tribunales. Se han propuesto tres respuestas, y la tercera es la que rige hoy.</p>
+        </div>
+        <div class="cite">
+          <span class="cite-label">Representatividad</span>
+          <p>El agente diplomático personifica al Estado acreditante ante el Estado receptor. Como ningún Estado soberano
+          puede someter a otro a su jurisdicción (<em>par in parem non habet imperium</em>), la inmunidad del agente deriva de
+          esa representación de la soberanía extranjera.</p>
+        </div>
+        <div class="cite">
+          <span class="cite-label">Extraterritorialidad</span>
+          <p>Teoría clásica, hoy superada: consideraba que los locales de la misión —y por extensión el agente— se encontraban
+          ficticiamente fuera del territorio del Estado receptor, como una prolongación del territorio del Estado acreditante.</p>
+        </div>
+        <div class="cite">
+          <span class="cite-label">Necesidad funcional — fundamento vigente</span>
+          <p>Adoptada expresamente por el preámbulo de la CVRD: las inmunidades no se otorgan en beneficio de la persona, sino
+          para garantizar el desempeño eficaz de las funciones de las misiones diplomáticas en representación de sus Estados.
+          Es la base doctrinal dominante en la actualidad y la que debe citarse como fundamento último del régimen.</p>
+        </div>
+
+        <h3 class="text-lg sm:text-xl font-semibold text-[#fbf3e2] mt-10 mb-1">3. Convención de Viena sobre Relaciones Diplomáticas</h3>
+        <p class="obligatorio mb-4">Lectura obligatoria — CVRD</p>
+        <div class="cite">
+          <span class="cite-label">Art. 29 — Inviolabilidad personal</span>
+          <p>El agente diplomático no puede ser objeto de ninguna forma de arresto o detención. El Estado receptor debe
+          tratarlo con el debido respeto y adoptar todas las medidas adecuadas para impedir cualquier atentado contra su
+          persona, libertad o dignidad.</p>
+        </div>
+        <div class="cite">
+          <span class="cite-label">Art. 30 — Inviolabilidad de residencia</span>
+          <p>La residencia particular del agente diplomático goza de la misma inviolabilidad y protección que los locales
+          de la misión. Sus documentos, correspondencia y bienes también son inviolables, salvo la excepción del art. 31.3.</p>
+        </div>
+        <div class="cite">
+          <span class="cite-label">Art. 31 — Inmunidad penal y civil</span>
+          <p>Establece inmunidad penal absoluta ante los tribunales del Estado receptor, e inmunidad civil y administrativa
+          con tres excepciones: acción real sobre inmueble privado en el Estado receptor (salvo que se posea en representación
+          del Estado acreditante para fines de la misión), acción sucesoria a título privado, y acción relativa a actividad
+          profesional o comercial ejercida fuera de las funciones oficiales.</p>
+        </div>
+        <div class="cite">
+          <span class="cite-label">Art. 32 — Renuncia a inmunidad</span>
+          <p>La inmunidad pertenece al Estado acreditante, no al individuo: solo ese Estado puede renunciarla, y la renuncia
+          debe ser siempre expresa.</p>
+        </div>
+        <div class="cite">
+          <span class="cite-label">Arts. 34–36 — Exenciones fiscales y aduaneras</span>
+          <p>El agente diplomático está exento de impuestos y gravámenes personales, reales, nacionales, regionales o
+          municipales —con excepciones puntuales como impuestos indirectos incluidos en el precio de bienes o servicios— y
+          goza de franquicia aduanera para los objetos destinados a su uso y al de su familia.</p>
+        </div>
+        <div class="cite">
+          <span class="cite-label">Art. 37 — Personal A&amp;T y dependientes</span>
+          <p>Extiende los privilegios de los arts. 29 a 36 a los familiares que forman parte del núcleo del agente
+          diplomático (si no son nacionales del Estado receptor) y reconoce al personal administrativo y técnico —y a sus
+          familias— los privilegios de los arts. 29 a 35, con la inmunidad civil y administrativa limitada a los actos
+          realizados en ejercicio de sus funciones.</p>
+        </div>
+        <div class="cite">
+          <span class="cite-label">Art. 8 — Nacionalidad del personal diplomático</span>
+          <p>Los miembros del personal diplomático deben tener, en principio, la nacionalidad del Estado acreditante; solo
+          pueden ser nacionales del Estado receptor con el consentimiento de este, consentimiento que puede retirarse en
+          cualquier momento. Se aplica por analogía a los agregados militares.</p>
+        </div>
+
+        <h3 class="text-lg sm:text-xl font-semibold text-[#fbf3e2] mt-10 mb-1">4. Convención de Viena sobre Relaciones Consulares</h3>
+        <p class="obligatorio mb-4">Lectura obligatoria — CVRC</p>
+        <div class="cite teal">
+          <span class="cite-label">Art. 31 — Inviolabilidad limitada de locales consulares</span>
+          <p>A diferencia de la misión diplomática, la inviolabilidad de los locales consulares es limitada: las
+          autoridades del Estado receptor no pueden ingresar a la parte usada exclusivamente para el trabajo consular salvo
+          consentimiento del jefe de la oficina, consentimiento que puede presumirse en caso de incendio u otra emergencia
+          que exija medidas de protección inmediatas.</p>
+        </div>
+        <div class="cite teal">
+          <span class="cite-label">Art. 33 — Inviolabilidad de archivos</span>
+          <p>Los archivos y documentos consulares son inviolables en todo momento y cualquiera sea el lugar en que se
+          encuentren.</p>
+        </div>
+        <div class="cite teal">
+          <span class="cite-label">Art. 41 — Jurisdicción penal (delito grave)</span>
+          <p>Los funcionarios consulares no pueden ser detenidos preventivamente ni sometidos a otras formas de limitación
+          de su libertad, salvo en caso de delito grave y en cumplimiento de una decisión de autoridad judicial competente.</p>
+        </div>
+        <div class="cite teal">
+          <span class="cite-label">Art. 42 — Comunicación obligatoria</span>
+          <p>Ante el arresto, detención o procesamiento de un funcionario consular, el Estado receptor debe notificarlo con
+          prontitud al jefe de la oficina consular; si el afectado es el propio jefe, la notificación se dirige al Estado
+          que envía por vía diplomática.</p>
+        </div>
+        <div class="cite teal">
+          <span class="cite-label">Art. 43 — Inmunidad funcional</span>
+          <p>Los funcionarios y empleados consulares no están sometidos a la jurisdicción de las autoridades del Estado
+          receptor por los actos ejecutados en ejercicio de sus funciones, salvo excepciones (acción civil por contrato no
+          suscrito como agente del Estado que envía, o por daños causados por un vehículo, buque o aeronave).</p>
+        </div>
+        <div class="cite teal">
+          <span class="cite-label">Art. 44 — Obligación de comparecer como testigo</span>
+          <p>Pueden ser requeridos a declarar como testigos, pero si un funcionario consular se niega a hacerlo no puede
+          aplicársele ninguna medida coercitiva ni sanción.</p>
+        </div>
+        <div class="cite teal">
+          <span class="cite-label">Art. 45 — Renuncia</span>
+          <p>El Estado que envía puede renunciar a los privilegios e inmunidades de sus funcionarios consulares; la
+          renuncia debe ser siempre expresa y comunicada por escrito.</p>
+        </div>
+        <div class="cite teal">
+          <span class="cite-label">Arts. 46–47 — Exenciones migratorias y laborales</span>
+          <p>Los funcionarios consulares y sus familiares no están obligados a inscribirse como extranjeros ni a obtener
+          permiso de residencia, y quedan exentos, en principio, de los permisos de trabajo.</p>
+        </div>
+        <div class="cite teal">
+          <span class="cite-label">Art. 71 — Nacionales del Estado receptor</span>
+          <p>Los funcionarios consulares que son nacionales o residentes permanentes del Estado receptor solo gozan de las
+          facilidades, privilegios e inmunidades que ese Estado les conceda expresamente: el trato es sustancialmente más
+          limitado que el del personal extranjero.</p>
+        </div>
+
+        <h3 class="text-lg sm:text-xl font-semibold text-[#fbf3e2] mt-10 mb-3">5. Clasificación de inmunidades</h3>
+        <div class="prose-body">
+          <p>La distinción más importante para el examen es la que existe entre <strong>inmunidad personal</strong>
+          (<em>ratione personae</em>) e <strong>inmunidad funcional</strong> (<em>ratione materiae</em>). La primera protege
+          a la persona en todos sus actos, oficiales y privados, mientras dure su cargo; la segunda cubre únicamente los
+          actos realizados en ejercicio de la función.</p>
+          <p>Sobre esa base se distinguen cinco categorías: la inmunidad <strong>diplomática</strong>, de tipo personal y
+          amplia (Arts. 29 y 31 CVRD); la <strong>consular</strong>, predominantemente funcional (Art. 43 CVRC); la del
+          personal <strong>A&amp;T</strong>, funcional pero con inviolabilidad personal reconocida para actos oficiales; la de
+          los <strong>organismos internacionales</strong>, de origen convencional propio y no derivada de la CVRD/CVRC; y la
+          de las <strong>agregadurías militares</strong>, que se equiparan al personal diplomático por aplicación analógica
+          del Art. 8 CVRD.</p>
+        </div>
+
+        <h3 class="text-lg sm:text-xl font-semibold text-[#fbf3e2] mt-10 mb-3">6. Reciprocidad</h3>
+        <div class="prose-body">
+          <p>La reciprocidad es un principio rector del derecho diplomático y consular: el trato que un Estado dispensa a
+          los agentes de otro Estado tiende a replicarse en sentido inverso. No es una norma jurídica autónoma, sino un
+          criterio práctico que orienta decisiones administrativas concretas. Se manifiesta, por ejemplo, en el otorgamiento
+          de <strong>placas CD/CC</strong> según el trato que ese país conceda a los agentes paraguayos; en el alcance de las
+          <strong>franquicias</strong> aduaneras, muchas veces condicionadas a la reciprocidad efectiva; en los regímenes de
+          <strong>visas</strong>, con exenciones o facilitaciones recíprocas entre Estados; en la extensión de beneficios a
+          los <strong>dependientes</strong>, sujeta a que el otro Estado haga lo propio; en las categorías y trato de las
+          <strong>credenciales</strong>; y en el trato que reciben las gestiones ante el <strong>RUN/DNRA</strong>.</p>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- UNIDAD 2 -->
+      <section id="unidad2" class="scroll-mt-24 lg:scroll-mt-10">
+        <p class="secnum mb-2">UNIDAD Nº 2</p>
+        <h2 class="text-2xl sm:text-3xl font-semibold text-[#fbf3e2] mb-8 leading-snug">Inmunidades Diplomáticas, Consulares, Militares y A&amp;T</h2>
+
+        <h3 class="text-lg sm:text-xl font-semibold text-[#fbf3e2] mt-10 mb-3">1. Alcance del personal diplomático, consular y A&amp;T</h3>
+        <div class="prose-body">
+          <p>Este es el eje comparativo más preguntado en parciales: a igual jerarquía nominal, el nivel de protección
+          jurídica cambia radicalmente según se trate de personal diplomático, consular o A&amp;T.</p>
+          <p><strong>Diplomáticos.</strong> Gozan de inviolabilidad personal absoluta y de inviolabilidad de residencia
+          equivalente a la de los locales de la misión. Tienen inmunidad penal absoluta e inmunidad civil con las
+          excepciones del Art. 31.1 CVRD. Cuentan con exenciones fiscales, y sus dependientes acreditados —si no son
+          nacionales del receptor— reciben el mismo trato.</p>
+          <p><strong>Consulares.</strong> Su inmunidad es funcional: solo cubre actos de servicio. La residencia particular
+          no es inviolable, a diferencia del diplomático. Pueden ser detenidos por delito grave con decisión judicial
+          (Art. 41 CVRC), y tienen obligación de comparecer como testigos, aunque sin poder ser forzados a hacerlo.</p>
+          <p><strong>A&amp;T.</strong> Tienen inmunidad funcional equiparable a la consular en materia civil y
+          administrativa, pero conservan inviolabilidad personal e inmunidad penal similares a las del diplomático
+          (Art. 37.2 CVRD). Sus dependientes no gozan de privilegios personales propios, solo derivados.</p>
+        </div>
+
+        <h3 class="text-lg sm:text-xl font-semibold text-[#fbf3e2] mt-10 mb-3">2. Documentos, visas y credenciales</h3>
+        <p class="obligatorio mb-4">Res. 35/97</p>
+        <div class="prose-body">
+          <p>Cada sigla identifica una categoría de acreditación ante la Cancillería, con requisitos y beneficios
+          diferenciados: <strong>CD</strong>, Cuerpo Diplomático, para el personal diplomático extranjero; <strong>CC</strong>,
+          Cuerpo Consular, para funcionarios consulares extranjeros; <strong>OF</strong>, funcionarios de organismos
+          acreditados en el marco de un acuerdo de sede; <strong>CCH</strong>, Cuerpo Consular Honorario, con régimen más
+          acotado que el de carrera; <strong>FS</strong>, personal administrativo y técnico de misiones y consulados; y
+          <strong>OI</strong>, agentes de organismos internacionales con sede o representación en el país. El régimen
+          incluye además a los dependientes de cada categoría, sujetos a limitaciones específicas (edad, condición de
+          estudiante, no ejercicio de actividad remunerada, entre otras).</p>
+          <p class="text-sm text-[var(--ink-faint)]">Confirmá la definición exacta de cada sigla con el material de
+          cátedra: la Res. 35/97 fija el detalle operativo y suele preguntarse de forma literal.</p>
+        </div>
+
+        <h3 class="text-lg sm:text-xl font-semibold text-[#fbf3e2] mt-10 mb-1">3. Organismos internacionales y acuerdos de sede</h3>
+        <p class="obligatorio mb-4">Lectura obligatoria</p>
+        <div class="prose-body">
+          <p>Cuando un organismo internacional se instala en el país, su régimen de inmunidades no nace de la CVRD/CVRC
+          sino de un <strong>acuerdo de sede</strong> específico negociado con el Estado paraguayo. Estos acuerdos suelen
+          replicar la lógica de necesidad funcional, pero con alcance propio y autónomo.</p>
+        </div>
+        <div class="cite">
+          <span class="cite-label">Acuerdo de Sede ISM (2007)</span>
+          <p>Regula, entre otros puntos: inviolabilidad de la sede y de los archivos del organismo, inmunidad de
+          jurisdicción frente a tribunales locales, exenciones tributarias sobre sus actividades oficiales, prerrogativas
+          para su personal, el régimen aplicable a los nacionales del Estado sede que trabajan para el organismo, la
+          protección de las comunicaciones oficiales y la posibilidad de renuncia expresa a la inmunidad.</p>
+        </div>
+        <div class="cite">
+          <span class="cite-label">Ley 3953/09 — JICA</span>
+          <p>Establece el marco para la Agencia de Cooperación Internacional del Japón en Paraguay: exenciones
+          tributarias sobre sus operaciones, facilidades migratorias para su personal expatriado, prerrogativas
+          equivalentes a las de otros organismos de cooperación, protección de sus locales y un régimen especial para la
+          importación de automóviles afectados a su misión.</p>
+        </div>
+        <p class="text-sm text-[var(--ink-faint)] mt-3">Verificá el texto exacto de ambos instrumentos en el material de
+        cátedra.</p>
+
+        <h3 class="text-lg sm:text-xl font-semibold text-[#fbf3e2] mt-10 mb-3">4. Agregadurías militares y beneplácito</h3>
+        <div class="cite">
+          <span class="cite-label">Art. 8 CVRD — aplicación analógica</span>
+          <p>Se aplica por analogía a los agregados militares: en principio deben ser nacionales del Estado acreditante,
+          y solo pueden ser nacionales del Estado receptor con su consentimiento expreso.</p>
+        </div>
+        <div class="prose-body">
+          <p><strong>Beneplácito.</strong> Es el consentimiento previo que el Estado receptor debe otorgar antes del
+          nombramiento de un jefe de misión o de un agregado militar. Su naturaleza es discrecional y no requiere
+          fundamentación; si no se concede, el Estado acreditante no puede insistir con esa persona. El flujo típico es:
+          propuesta informal del Estado que envía, evaluación por el Estado receptor, otorgamiento o denegación, y recién
+          entonces la formalización de la acreditación. Su efecto principal es filtrar, antes de que el nombramiento se
+          haga público, a la persona propuesta.</p>
+          <p><strong>Responsabilidad del Estado receptor.</strong> Debe adoptar todas las medidas adecuadas para proteger
+          al personal acreditado y sus locales; su responsabilidad internacional se compromete si no actúa con la debida
+          diligencia frente a atentados o violaciones conocidas.</p>
+          <p><strong>Allanamientos: consular vs. diplomático.</strong> Esta es la diferencia central del programa. La
+          inviolabilidad de los locales diplomáticos (Art. 22 CVRD) es prácticamente absoluta: las autoridades del
+          receptor no pueden ingresar bajo ninguna circunstancia sin autorización del jefe de misión. La de los locales
+          consulares (Art. 31 CVRC) es limitada: se admite el ingreso sin consentimiento expreso en emergencias (incendio
+          u otro siniestro que exija medidas de protección inmediatas), consentimiento que en esos casos se presume.</p>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- JURISPRUDENCIA -->
+      <section id="jurisprudencia" class="scroll-mt-24 lg:scroll-mt-10">
+        <p class="secnum mb-2">JURISPRUDENCIA</p>
+        <h2 class="text-2xl sm:text-3xl font-semibold text-[#fbf3e2] mb-2 leading-snug">Jurisprudencia de la Corte Internacional de Justicia</h2>
+        <p class="obligatorio mb-8">Lectura obligatoria</p>
+
+        <h3 class="text-lg sm:text-xl font-semibold text-[#fbf3e2] mt-8 mb-3">Congo vs. Bélgica (2002) — Orden de arresto del 11 de abril de 2000</h3>
+        <div class="prose-body">
+          <p><strong>Hecho.</strong> Bélgica emitió una orden de arresto internacional contra el entonces Ministro de
+          Relaciones Exteriores de la República Democrática del Congo, en ejercicio de su cargo, por presuntos crímenes de
+          lesa humanidad.</p>
+          <p><strong>Cuestión.</strong> ¿Puede un tribunal nacional ejercer jurisdicción penal, incluso por delitos graves
+          de derecho internacional, sobre un ministro de relaciones exteriores en funciones?</p>
+          <p><strong>Regla que fija la Corte.</strong> Los ministros de relaciones exteriores en ejercicio —al igual que
+          los jefes de Estado y de gobierno— gozan de inmunidad penal e inviolabilidad plenas ante jurisdicciones
+          extranjeras mientras dure su cargo, sin importar la gravedad del delito imputado. Esa inmunidad es de naturaleza
+          procesal: no exime de responsabilidad penal en sí misma, solo impide que se la persiga mientras el funcionario
+          está en el cargo.</p>
+        </div>
+
+        <h3 class="text-lg sm:text-xl font-semibold text-[#fbf3e2] mt-10 mb-3">Alemania vs. Italia (2012) — Inmunidades jurisdiccionales del Estado</h3>
+        <div class="prose-body">
+          <p><strong>Hecho.</strong> Tribunales italianos admitieron demandas civiles contra Alemania por crímenes
+          cometidos por las fuerzas armadas alemanas durante la Segunda Guerra Mundial, y llegaron a ejecutar sentencias
+          sobre bienes alemanes situados en Italia.</p>
+          <p><strong>Cuestión.</strong> ¿Puede un Estado ser privado de su inmunidad de jurisdicción ante tribunales de
+          otro Estado invocando la gravedad de las violaciones al derecho internacional humanitario?</p>
+          <p><strong>Regla que fija la Corte.</strong> El derecho internacional consuetudinario continúa exigiendo que se
+          reconozca inmunidad a un Estado por actos de sus fuerzas armadas realizados en un conflicto armado, incluso
+          frente a violaciones graves del derecho humanitario. La inmunidad del Estado es una cuestión procesal,
+          independiente de la licitud o ilicitud del acto subyacente.</p>
+        </div>
+
+        <h3 class="text-lg sm:text-xl font-semibold text-[#fbf3e2] mt-10 mb-3">Irán vs. EE.UU. (2023) — Ciertos activos iraníes</h3>
+        <div class="prose-body">
+          <p><strong>Hecho.</strong> Tribunales estadounidenses habilitaron el embargo y la ejecución de activos del
+          Estado iraní —incluyendo activos de empresas estatales— para satisfacer sentencias dictadas contra Irán en
+          juicios vinculados a acusaciones de terrorismo.</p>
+          <p><strong>Cuestión.</strong> ¿Hasta dónde llega la inmunidad de ejecución de un Estado y de sus entidades sobre
+          bienes situados en el extranjero?</p>
+          <p><strong>Regla que fija la Corte.</strong> Estados Unidos violó la inmunidad soberana de Irán al permitir la
+          ejecución sobre activos de sociedades estatales iraníes con personalidad jurídica propia, sin una justificación
+          suficiente para desconocer esa separación. El fallo reafirma que la inmunidad de ejecución sobre bienes
+          estatales es un límite exigible incluso frente a políticas nacionales de lucha contra el terrorismo.</p>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- CASOS PRÁCTICOS -->
+      <section id="casos" class="scroll-mt-24 lg:scroll-mt-10">
+        <p class="secnum mb-2">APLICACIÓN</p>
+        <h2 class="text-2xl sm:text-3xl font-semibold text-[#fbf3e2] mb-8 leading-snug">Casos prácticos que deben dominar</h2>
+
+        <h3 class="text-lg sm:text-xl font-semibold text-[#fbf3e2] mt-8 mb-3">Caso 1 — Vehículo CD conducido por chofer paraguayo</h3>
+        <div class="prose-body">
+          <p>El vehículo con placa CD pertenece a la misión y está protegido por la inviolabilidad de los medios de
+          transporte de la misión (Art. 22.3 CVRD): no puede ser objeto de registro, requisa, embargo ni ejecución. Esa
+          protección recae sobre el bien, no sobre quien lo conduce.</p>
+          <p>El chofer paraguayo no tiene inmunidad: al no ser agente diplomático ni personal acreditado, responde
+          plenamente ante la jurisdicción paraguaya por su conducta.</p>
+          <p><strong>Actuaciones permitidas/prohibidas.</strong> La autoridad puede identificar al chofer, labrar actas,
+          iniciar diligencias sobre él y, en su caso, requerir la reparación del daño; lo que no puede hacer es allanar,
+          incautar o ejecutar el vehículo sin consentimiento de la misión.</p>
+          <p>Corresponde siempre la intervención del MRE como canal entre la autoridad local y la misión, para coordinar
+          cualquier gestión que involucre al vehículo o a la misión como tal.</p>
+        </div>
+
+        <h3 class="text-lg sm:text-xl font-semibold text-[#fbf3e2] mt-10 mb-3">Caso 2 — Agregado militar en incidente de tránsito</h3>
+        <div class="prose-body">
+          <p>El agregado militar, equiparado al personal diplomático, goza de inviolabilidad personal (Art. 29 CVRD): no
+          puede ser detenido ni arrestado en el lugar del hecho.</p>
+          <p>Su inmunidad penal (Art. 31 CVRD) es absoluta: no puede ser sometido a proceso penal ante tribunales
+          paraguayos por el incidente.</p>
+          <p>Si el hecho deriva en una situación que involucra a personal consular o requiere coordinación entre
+          autoridades, se activa el deber de comunicación obligatoria (Art. 42 CVRC) como estándar de buena práctica
+          administrativa, notificando con prontitud por vía diplomática.</p>
+          <p>Un incidente de este tipo puede tener impacto en el beneplácito futuro de ese agregado o de su misión, aun
+          cuando no exista consecuencia penal directa.</p>
+        </div>
+
+        <h3 class="text-lg sm:text-xl font-semibold text-[#fbf3e2] mt-10 mb-3">Caso 3 — Cónsul detenido por delito grave</h3>
+        <div class="prose-body">
+          <p>El Art. 41 CVRC habilita, excepcionalmente, la detención de un funcionario consular cuando se trata de un
+          delito grave y existe una decisión de autoridad judicial competente: a diferencia del diplomático, el cónsul no
+          tiene inviolabilidad personal absoluta.</p>
+          <p>Su residencia no es inviolable, por lo que puede ser objeto de medidas que sobre la residencia de un
+          diplomático no procederían sin consentimiento.</p>
+          <p>Fuera del supuesto de delito grave, sigue rigiendo su inmunidad funcional (Art. 43 CVRC): no responde ante
+          la jurisdicción local por los actos realizados en ejercicio de sus funciones consulares.</p>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- PREGUNTAS GUÍA -->
+      <section id="preguntas" class="scroll-mt-24 lg:scroll-mt-10">
+        <p class="secnum mb-2">AUTOEVALUACIÓN</p>
+        <h2 class="text-2xl sm:text-3xl font-semibold text-[#fbf3e2] mb-2 leading-snug">Preguntas guía para estudiar</h2>
+        <p class="text-[var(--ink-faint)] mb-6 sans text-sm">Marcá cada una a medida que puedas responderla de memoria — queda guardado en este dispositivo.</p>
+        <div id="lista-preguntas" class="divide-y divide-[var(--rule)]"></div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- RECOMENDACIÓN FINAL -->
+      <section id="recomendacion" class="scroll-mt-24 lg:scroll-mt-10">
+        <p class="secnum mb-2">CIERRE</p>
+        <h2 class="text-2xl sm:text-3xl font-semibold text-[#fbf3e2] mb-8 leading-snug">Recomendación final</h2>
+
+        <h3 class="text-base sm:text-lg font-semibold text-[#fbf3e2] mb-3">Lectura obligatoria</h3>
+        <ul class="prose-body list-disc list-outside pl-5 mb-8">
+          <li>CVRD: Arts. 29–37 + Art. 8</li>
+          <li>CVRC: Arts. 31–47</li>
+          <li>Acuerdo de Sede ISM (2007)</li>
+          <li>Ley 3953/09 (JICA)</li>
+        </ul>
+
+        <h3 class="text-base sm:text-lg font-semibold text-[#fbf3e2] mb-3">Repaso obligatorio</h3>
+        <ul class="prose-body list-disc list-outside pl-5">
+          <li>Clases 1 a 6</li>
+          <li>Casos prácticos</li>
+          <li>Credenciales</li>
+          <li>Beneplácito</li>
+          <li>Clasificación de inmunidades</li>
+        </ul>
+      </section>
+
+      <p class="sans text-center text-xs text-[var(--ink-faint)] mt-20">Fin de la Guía de Estudio — Parcial 15 de septiembre</p>
+    </article>
+  </div>
+
+  <button id="print-btn" class="no-print" onclick="window.print()" aria-label="Imprimir o guardar como PDF">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m0-10V5a2 2 0 012-2h6a2 2 0 012 2v2M7 17v3a1 1 0 001 1h8a1 1 0 001-1v-3H7z"/></svg>
+    Imprimir / PDF
+  </button>
+
+  <script>
+    // ---------- Barra de progreso de lectura ----------
+    const progressBar = document.getElementById('progress');
+    function updateProgress(){
+      const h = document.documentElement;
+      const scrolled = h.scrollTop;
+      const height = h.scrollHeight - h.clientHeight;
+      progressBar.style.width = (height > 0 ? (scrolled / height) * 100 : 0) + '%';
+    }
+    document.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+
+    // ---------- Tiempo estimado de lectura ----------
+    const wordCount = document.querySelector('article').innerText.trim().split(/\s+/).length;
+    document.getElementById('reading-time').textContent = Math.max(1, Math.round(wordCount / 210)) + ' min de lectura';
+
+    // ---------- Preguntas guía (checklist con localStorage) ----------
+    const preguntas = [
+      '¿Cuál es la diferencia entre inmunidad personal y funcional?',
+      '¿Por qué la residencia consular no es inviolable?',
+      '¿Qué artículos aplican a un accidente con vehículo CD?',
+      '¿Qué implica el Art. 8 CVRD para agregados militares?',
+      '¿Qué diferencia hay entre un acuerdo de sede y la CVRD?',
+      '¿Qué errores operativos son frecuentes en RUN/DNRA?',
+      '¿Qué significa que la inmunidad pertenece al Estado acreditante?'
+    ];
+    const STORAGE_KEY = 'franquicias-parcial1-preguntas';
+    function getChecked(){ try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch { return {}; } }
+    function setChecked(s){ try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch {} }
+
+    const state = getChecked();
+    const lista = document.getElementById('lista-preguntas');
+    lista.innerHTML = preguntas.map((txt, i) => `
+      <div class="check-row ${state[i] ? 'done' : ''}" data-index="${i}">
+        <span class="check-box">
+          <svg class="w-3 h-3 text-[#171511] ${state[i] ? '' : 'hidden'}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+        </span>
+        <span class="check-text">${txt}</span>
+      </div>`).join('');
+
+    lista.addEventListener('click', (e) => {
+      const row = e.target.closest('.check-row');
+      if (!row) return;
+      const idx = row.dataset.index;
+      const s = getChecked();
+      s[idx] = !s[idx];
+      setChecked(s);
+      row.classList.toggle('done', !!s[idx]);
+      row.querySelector('.check-box svg').classList.toggle('hidden', !s[idx]);
+    });
+
+    // ---------- Navegación activa (escritorio + móvil) al hacer scroll ----------
+    const sectionLinks = document.querySelectorAll('.section-link');
+    const tracked = ['unidad1','unidad2','jurisprudencia','casos','preguntas','recomendacion'].map(id => document.getElementById(id));
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          sectionLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id));
+        }
+      });
+    }, { rootMargin: '-15% 0px -70% 0px' });
+    tracked.forEach(s => s && obs.observe(s));
+  </script>
+</body>
+</html>
