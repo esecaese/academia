@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test — Régimen de Inmunidades y Privilegios</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root{
+      --bg: #171511;
+      --bg-raised: #1e1c17;
+      --bg-card: #1c1a15;
+      --ink: #e9e3d6;
+      --ink-dim: #a39b8b;
+      --ink-faint: #6b6558;
+      --rule: #35312a;
+      --gold: #c9a25a;
+      --gold-soft: #8f7845;
+      --teal: #7fb0a6;
+      --green: #7fbf8f;
+      --red: #d9776b;
+      --serif: 'Source Serif 4', Georgia, serif;
+      --sans: 'Inter', sans-serif;
+    }
+    *{ box-sizing: border-box; }
+    body{ background: var(--bg); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; min-height: 100vh; }
+    .serif{ font-family: var(--serif); }
+    ::selection{ background: rgba(201,162,90,.25); color: #fff; }
+    [hidden]{ display: none !important; }
+
+    .btn{
+      font-family: var(--sans); font-weight: 600; border-radius: 12px; padding: .8rem 1.4rem;
+      transition: all .15s ease; cursor: pointer; border: 1px solid var(--rule);
+    }
+    .btn-gold{ background: var(--gold); color: #1a1712; border-color: var(--gold); }
+    .btn-gold:hover{ filter: brightness(1.08); }
+    .btn-ghost{ background: transparent; color: var(--ink-dim); }
+    .btn-ghost:hover{ color: var(--gold); border-color: var(--gold-soft); }
+
+    .qty-btn{
+      font-family: var(--sans); font-weight: 700; border-radius: 12px; padding: .9rem .5rem;
+      border: 1.5px solid var(--rule); background: var(--bg-card); color: var(--ink-dim);
+      transition: all .15s ease; cursor: pointer; text-align: center;
+    }
+    .qty-btn:hover{ border-color: var(--gold-soft); color: var(--ink); }
+    .qty-btn.selected{ border-color: var(--gold); background: rgba(201,162,90,.12); color: var(--gold); }
+
+    #quiz-progress-track{ height: 6px; background: var(--rule); border-radius: 999px; overflow: hidden; }
+    #quiz-progress-bar{ height: 100%; background: linear-gradient(90deg, var(--gold-soft), var(--gold)); border-radius: 999px; transition: width .3s ease; }
+
+    .option-btn{
+      display: flex; align-items: center; gap: .9rem; width: 100%; text-align: left;
+      background: var(--bg-card); border: 1.5px solid var(--rule); border-radius: 14px;
+      padding: 1rem 1.15rem; font-family: var(--sans); font-size: .98rem; color: var(--ink);
+      cursor: pointer; transition: all .15s ease; line-height: 1.5;
+    }
+    .option-btn:hover:not(:disabled){ border-color: var(--gold-soft); background: var(--bg-raised); }
+    .option-btn:disabled{ cursor: default; }
+    .option-letter{
+      flex-shrink: 0; width: 1.8rem; height: 1.8rem; border-radius: 8px; border: 1.5px solid var(--rule);
+      display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .82rem; color: var(--ink-faint);
+    }
+    .option-btn.correct{ border-color: var(--green); background: rgba(127,191,143,.1); }
+    .option-btn.correct .option-letter{ border-color: var(--green); background: var(--green); color: #12271a; }
+    .option-btn.incorrect{ border-color: var(--red); background: rgba(217,119,107,.1); }
+    .option-btn.incorrect .option-letter{ border-color: var(--red); background: var(--red); color: #2b1310; }
+    .option-btn.dim{ opacity: .5; }
+
+    .explain-box{
+      border-left: 2px solid var(--gold-soft); padding: .1rem 0 .1rem 1rem; margin-top: 1.1rem;
+      font-size: .9rem; color: var(--ink-dim); line-height: 1.65;
+    }
+
+    .review-card{ border: 1px solid var(--rule); border-radius: 14px; padding: 1.2rem 1.3rem; background: var(--bg-card); }
+    .review-tag{ font-family: var(--sans); font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+
+    ::-webkit-scrollbar{ width: 9px; }
+    ::-webkit-scrollbar-track{ background: transparent; }
+    ::-webkit-scrollbar-thumb{ background: var(--rule); border-radius: 999px; }
+  </style>
+</head>
+<body>
+
+  <div class="max-w-2xl mx-auto px-6 py-10 sm:py-16">
+
+    <a href="../" class="sans text-xs text-[var(--ink-faint)] hover:text-[var(--gold)] transition inline-flex items-center gap-1.5 mb-8">
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      Volver a la guía
+    </a>
+
+    <!-- ============ PANTALLA 1: SETUP ============ -->
+    <section id="screen-setup">
+      <p class="sans text-xs tracking-[.15em] uppercase text-[var(--gold)] mb-3">Autoevaluación cronometrada por vos</p>
+      <h1 class="serif text-3xl sm:text-4xl font-semibold text-[#fbf3e2] leading-tight mb-3">Test — Régimen de Inmunidades<br class="hidden sm:block"> y Privilegios</h1>
+      <p class="text-[var(--ink-dim)] leading-relaxed mb-8">
+        Banco de <strong class="text-[var(--ink)]" id="bank-size">— preguntas</strong> de opción múltiple, con distractores basados en
+        confusiones frecuentes del programa (artículos cruzados entre CVRD y CVRC, inmunidad personal vs. funcional,
+        excepciones, jurisprudencia). Las preguntas y sus opciones se mezclan en cada intento.
+      </p>
+
+      <p class="sans text-xs font-semibold uppercase tracking-wide text-[var(--ink-faint)] mb-3">¿Cuántas preguntas querés responder?</p>
+      <div id="qty-grid" class="grid grid-cols-4 sm:grid-cols-7 gap-2.5 mb-8"></div>
+
+      <button id="btn-start" class="btn btn-gold w-full sm:w-auto">Comenzar test</button>
+
+      <p class="sans text-xs text-[var(--ink-faint)] mt-10 border-t border-[var(--rule)] pt-5">
+        Tu progreso de esta sesión no se guarda: cada intento arranca de cero, con orden aleatorio.
+      </p>
+    </section>
+
+    <!-- ============ PANTALLA 2: QUIZ ============ -->
+    <section id="screen-quiz" hidden>
+      <div class="flex items-center justify-between mb-3 sans text-xs text-[var(--ink-faint)]">
+        <span id="quiz-position">Pregunta 1 de 20</span>
+        <span id="quiz-score">Aciertos: 0</span>
+      </div>
+      <div id="quiz-progress-track" class="mb-8"><div id="quiz-progress-bar" style="width:0%"></div></div>
+
+      <p id="quiz-topic" class="sans text-[11px] tracking-[.1em] uppercase text-[var(--gold)] mb-2"></p>
+      <h2 id="quiz-question" class="serif text-xl sm:text-2xl font-semibold text-[#fbf3e2] leading-snug mb-7"></h2>
+
+      <div id="quiz-options" class="space-y-3"></div>
+
+      <div id="quiz-explain" class="explain-box" hidden></div>
+
+      <div class="mt-8 flex justify-end">
+        <button id="btn-next" class="btn btn-gold" disabled>Siguiente</button>
+      </div>
+    </section>
+
+    <!-- ============ PANTALLA 3: RESULTADOS ============ -->
+    <section id="screen-results" hidden>
+      <p class="sans text-xs tracking-[.15em] uppercase text-[var(--gold)] mb-3">Resultado</p>
+      <h2 class="serif text-3xl sm:text-4xl font-semibold text-[#fbf3e2] mb-2" id="result-score">0 / 0</h2>
+      <p class="text-[var(--ink-dim)] mb-1" id="result-pct">0% de aciertos</p>
+      <p class="text-[var(--ink-dim)] leading-relaxed mb-8" id="result-msg"></p>
+
+      <div class="flex flex-wrap gap-3 mb-12">
+        <button id="btn-retry" class="btn btn-gold">Nuevo intento</button>
+        <a href="../" class="btn btn-ghost">Volver a la guía</a>
+      </div>
+
+      <div id="review-wrap" hidden>
+        <h3 class="sans text-sm font-semibold uppercase tracking-wide text-[var(--ink-faint)] mb-4">Repaso de preguntas falladas</h3>
+        <div id="review-list" class="space-y-4"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // =========================================================
+    // Banco de preguntas (58) — Régimen de Inmunidades y Privilegios
+    // options[correct] es el texto de la respuesta correcta
+    // =========================================================
+    const BANK = [
+      // ---- Historia y teorías doctrinales ----
+      { topic:'Teorías doctrinales', q:'¿Cuál es el fundamento doctrinal reconocido expresamente en el preámbulo de la CVRD para justificar las inmunidades diplomáticas?', options:['La extraterritorialidad de la misión','La necesidad funcional','La reciprocidad automática entre Estados','La cortesía internacional (comitas gentium)'], correct:1, explain:'El preámbulo de la CVRD adopta expresamente la necesidad funcional como fundamento de las inmunidades.' },
+      { topic:'Teorías doctrinales', q:'La teoría de la extraterritorialidad sostiene que...', options:['el agente diplomático personifica la soberanía de su Estado','los locales de la misión se consideran ficticiamente fuera del territorio del Estado receptor','las inmunidades buscan garantizar el desempeño eficaz de las funciones','la inmunidad depende del trato recíproco entre Estados'], correct:1, explain:'Es la teoría clásica, hoy superada por la necesidad funcional.' },
+      { topic:'Historia', q:'¿En qué año se codificó la Convención de Viena sobre Relaciones Diplomáticas?', options:['1815','1945','1961','1963'], correct:2 },
+      { topic:'Historia', q:'¿En qué año se codificó la Convención de Viena sobre Relaciones Consulares?', options:['1961','1963','1969','1972'], correct:1 },
+      { topic:'Teorías doctrinales', q:'Según la teoría de la representatividad, la inmunidad del agente diplomático deriva de...', options:['que personifica al Estado acreditante, y ningún Estado soberano puede someter a otro a su jurisdicción','que su residencia se convierte en territorio extranjero','la necesidad de eficacia funcional exclusivamente','un acuerdo de sede específico'], correct:0, explain:'Se resume en el principio par in parem non habet imperium.' },
+
+      // ---- CVRD ----
+      { topic:'CVRD', q:'¿Qué artículo de la CVRD regula la inviolabilidad personal del agente diplomático?', options:['Art. 22','Art. 29','Art. 31','Art. 37'], correct:1 },
+      { topic:'CVRD', q:'¿Cuál de las siguientes NO es una excepción a la inmunidad civil del Art. 31.1 CVRD?', options:['Acción real sobre inmueble privado en el Estado receptor','Acción sucesoria a título privado','Acción relativa a actividad profesional o comercial fuera de sus funciones','Acción penal por delito grave'], correct:3, explain:'El Art. 31 no contempla excepciones a la inmunidad penal, que es absoluta; las tres primeras son excepciones a la inmunidad civil, no a la penal.' },
+      { topic:'CVRD', q:'La renuncia a la inmunidad diplomática (Art. 32 CVRD)...', options:['puede hacerla el propio agente en cualquier momento','solo puede hacerla el Estado acreditante, y debe ser expresa','se presume si el agente no la invoca','puede hacerla el Estado receptor unilateralmente'], correct:1 },
+      { topic:'CVRD', q:'¿Qué garantiza el Art. 22.3 CVRD respecto de los medios de transporte de la misión?', options:['Exención total de impuestos de circulación','Inmunidad de registro, requisa, embargo o ejecución','Placas diplomáticas obligatorias en todo el país','Inmunidad penal automática para quien los conduzca'], correct:1 },
+      { topic:'CVRD', q:'El personal administrativo y técnico (A&T), según el Art. 37.2 CVRD, goza de los privilegios de los Arts. 29 a 35, pero con una limitación en materia...', options:['penal','fiscal','civil y administrativa, restringida a actos oficiales','migratoria'], correct:2 },
+      { topic:'CVRD', q:'¿Qué exige el Art. 8 CVRD respecto de la nacionalidad del personal diplomático?', options:['Deben ser siempre nacionales del Estado receptor','Deben ser, en principio, nacionales del Estado acreditante, salvo consentimiento del receptor','Pueden tener doble nacionalidad sin ninguna restricción','No existe ninguna regla sobre nacionalidad'], correct:1 },
+      { topic:'CVRD', q:'Las exenciones fiscales y aduaneras del agente diplomático están reguladas en...', options:['Arts. 34–36 CVRD','Arts. 41–43 CVRC','Art. 71 CVRC','Art. 8 CVRD'], correct:0 },
+      { topic:'CVRD', q:'La inviolabilidad de la residencia particular del agente diplomático (Art. 30 CVRD) se equipara a...', options:['la inviolabilidad de archivos consulares','la inviolabilidad de los locales de la misión','la inmunidad funcional consular','la inmunidad de los organismos internacionales'], correct:1 },
+      { topic:'CVRD', q:'Los familiares del agente diplomático que forman parte de su núcleo gozan de privilegios según el Art. 37 CVRD, siempre que...', options:['sean mayores de edad','no sean nacionales del Estado receptor','estén inscriptos en el RUN','tengan credencial OI'], correct:1 },
+      { topic:'CVRD', q:'¿Cuál es la naturaleza de la inmunidad penal del agente diplomático conforme al Art. 31.1 CVRD?', options:['Absoluta, sin excepciones','Relativa, salvo delito grave','Sujeta a reciprocidad','Limitada a actos oficiales'], correct:0 },
+
+      // ---- CVRC ----
+      { topic:'CVRC', q:'¿Qué artículo de la CVRC regula la inviolabilidad de los archivos consulares?', options:['Art. 31','Art. 33','Art. 41','Art. 43'], correct:1 },
+      { topic:'CVRC', q:'A diferencia de la CVRD, la inviolabilidad de los locales consulares (Art. 31 CVRC) permite el ingreso de las autoridades del receptor...', options:['en cualquier circunstancia y sin aviso previo','con consentimiento del jefe de la oficina, que puede presumirse en emergencias como un incendio','únicamente con orden judicial previa','nunca, bajo ninguna circunstancia'], correct:1 },
+      { topic:'CVRC', q:'¿Bajo qué condición puede detenerse preventivamente a un funcionario consular según el Art. 41 CVRC?', options:['Nunca, goza de inmunidad absoluta','En caso de delito grave y por decisión de autoridad judicial competente','Solo con autorización del Estado que envía','Ante cualquier infracción de tránsito'], correct:1 },
+      { topic:'CVRC', q:'Ante el arresto de un funcionario consular, el Art. 42 CVRC exige...', options:['notificación con prontitud al jefe de la oficina consular (o al Estado que envía si el afectado es el jefe)','su liberación inmediata sin excepción','su traslado inmediato a la embajada','que no se comunique nada hasta la sentencia firme'], correct:0 },
+      { topic:'CVRC', q:'La inmunidad funcional del Art. 43 CVRC cubre los actos del funcionario consular...', options:['tanto oficiales como estrictamente privados','únicamente los ejecutados en ejercicio de sus funciones consulares','solo los posteriores al cese del cargo','ninguno, es solo un beneficio fiscal'], correct:1 },
+      { topic:'CVRC', q:'Si un funcionario consular se niega a comparecer como testigo (Art. 44 CVRC), el Estado receptor...', options:['puede aplicarle medidas coercitivas','no puede aplicarle ninguna medida coercitiva ni sanción','debe expulsarlo del país','puede detenerlo por desacato'], correct:1 },
+      { topic:'CVRC', q:'La renuncia a los privilegios consulares (Art. 45 CVRC) debe ser...', options:['tácita, basta con no invocarla','expresa y comunicada por escrito','verbal, ante cualquier juez','automática al asumir el cargo'], correct:1 },
+      { topic:'CVRC', q:'Los funcionarios consulares que son nacionales o residentes permanentes del Estado receptor (Art. 71 CVRC) gozan de...', options:['las mismas inmunidades que el personal extranjero','solo las facilidades que el Estado receptor les conceda expresamente','inmunidad diplomática plena','ninguna protección en absoluto'], correct:1 },
+      { topic:'CVRC', q:'Las excepciones a la inmunidad funcional consular del Art. 43 CVRC incluyen la acción civil derivada de un contrato no suscrito como agente del Estado que envía y...', options:['daños causados por vehículo, buque o aeronave','delitos contra la propiedad','infracciones administrativas menores','incumplimiento de un visado'], correct:0 },
+      { topic:'CVRC', q:'¿Qué exime el Art. 46 CVRC a los funcionarios consulares y sus familiares?', options:['De pagar impuestos aduaneros','De inscribirse como extranjeros y de obtener permiso de residencia','De la jurisdicción penal por delito grave','De la obligación de comparecer como testigos'], correct:1 },
+
+      // ---- Clasificación ----
+      { topic:'Clasificación', q:'La inmunidad "ratione personae" se caracteriza por...', options:['cubrir solo los actos oficiales','proteger a la persona en todos sus actos, oficiales y privados, mientras dure el cargo','aplicarse solo a organismos internacionales','requerir renuncia expresa del Estado receptor para activarse'], correct:1 },
+      { topic:'Clasificación', q:'La inmunidad "ratione materiae" (funcional) se caracteriza por...', options:['cubrir únicamente los actos realizados en ejercicio de la función','proteger todos los actos del agente, sin distinción','ser exclusiva de los jefes de Estado','no requerir ningún tipo de acreditación'], correct:0 },
+      { topic:'Clasificación', q:'¿Qué tipo de inmunidad predomina en el personal diplomático?', options:['Funcional','Personal, de tipo amplio','No tienen inmunidad','Solo fiscal'], correct:1 },
+      { topic:'Clasificación', q:'¿Qué tipo de inmunidad predomina en el personal consular de carrera?', options:['Personal absoluta','Funcional','Ninguna','Solo migratoria'], correct:1 },
+      { topic:'Clasificación', q:'La inmunidad de las agregadurías militares se fundamenta en...', options:['un tratado autónomo específico para agregados militares','la aplicación analógica del Art. 8 CVRD, equiparándolos al personal diplomático','el Art. 43 CVRC','la Ley 3953/09'], correct:1 },
+
+      // ---- Reciprocidad ----
+      { topic:'Reciprocidad', q:'El principio de reciprocidad en el derecho diplomático y consular implica que...', options:['es una norma jurídica autónoma de cumplimiento obligatorio','es un criterio práctico que orienta el trato dispensado a los agentes de otro Estado, tendiendo a replicarse en sentido inverso','solo aplica a las inmunidades penales','fue derogado por la CVRD de 1961'], correct:1 },
+      { topic:'Reciprocidad', q:'¿Cuál de estos aspectos NO suele regirse por criterios de reciprocidad?', options:['Placas CD/CC','Franquicias aduaneras','La inviolabilidad personal del Art. 29 CVRD','Regímenes de visas'], correct:2, explain:'La inviolabilidad personal es una garantía convencional, no depende de reciprocidad.' },
+      { topic:'Reciprocidad', q:'La reciprocidad orienta, entre otras cosas, el trato aplicado en las gestiones ante...', options:['la Corte Internacional de Justicia','el RUN/DNRA','el Congreso Nacional','la OMC'], correct:1 },
+
+      // ---- Alcance del personal ----
+      { topic:'Alcance del personal', q:'A diferencia del agente diplomático, el funcionario consular...', options:['tiene inviolabilidad de residencia','puede ser detenido por delito grave con decisión judicial competente','tiene inmunidad penal absoluta','no puede ser citado como testigo bajo ninguna circunstancia'], correct:1 },
+      { topic:'Alcance del personal', q:'Los dependientes del personal A&T, a diferencia de los dependientes de un diplomático...', options:['tienen exactamente los mismos privilegios personales','no gozan de privilegios personales propios, solo derivados','tienen inmunidad penal absoluta propia','están exentos de toda regulación migratoria'], correct:1 },
+      { topic:'Alcance del personal', q:'¿Cuál de los siguientes SÍ goza de inviolabilidad de residencia particular equivalente a la de los locales de la misión?', options:['El funcionario consular de carrera','El agente diplomático','El personal de servicio local','El cónsul honorario'], correct:1 },
+      { topic:'Alcance del personal', q:'El personal A&T conserva inviolabilidad personal e inmunidad penal similares a las del diplomático, pero su inmunidad civil y administrativa se limita a...', options:['los actos realizados en ejercicio de sus funciones','los primeros dos años de la misión','los bienes muebles únicamente','nada, no tiene ninguna inmunidad civil'], correct:0 },
+      { topic:'Alcance del personal', q:'¿Qué elemento distingue principalmente al personal diplomático del personal consular en cuanto al alcance de su inmunidad?', options:['El diplomático tiene inmunidad personal amplia; el consular, predominantemente funcional','No existe ninguna diferencia relevante entre ambos','El consular tiene mayor protección que el diplomático','Solo el consular goza de exenciones fiscales'], correct:0 },
+
+      // ---- Documentos y credenciales ----
+      { topic:'Credenciales', q:'La sigla "CD" en el sistema de acreditación de la Cancillería identifica a...', options:['Cuerpo Diplomático','Cuerpo Consular Honorario','Funcionario de Servicio','Organismo Internacional'], correct:0 },
+      { topic:'Credenciales', q:'La sigla "CCH" corresponde a...', options:['Cuerpo Consular de carrera','Cuerpo Consular Honorario','Credencial Civil Homologada','Cuerpo Consular con Habilitación'], correct:1 },
+      { topic:'Credenciales', q:'El régimen de credenciales de la Cancillería paraguaya (Res. 35/97) incluye limitaciones específicas para...', options:['los dependientes (edad, condición de estudiante, no ejercicio de actividad remunerada)','únicamente los jefes de misión','solo el personal de servicio','los organismos internacionales exclusivamente'], correct:0 },
+
+      // ---- Organismos internacionales ----
+      { topic:'Organismos internacionales', q:'El régimen de inmunidades de un organismo internacional con sede en el país deriva de...', options:['la CVRD directamente','la CVRC directamente','un acuerdo de sede específico negociado con el Estado paraguayo','la costumbre internacional exclusivamente'], correct:2 },
+      { topic:'Organismos internacionales', q:'El Acuerdo de Sede ISM (2007) regula, entre otros puntos...', options:['la inmunidad de jurisdicción y la inviolabilidad de la sede y archivos del organismo','exclusivamente el régimen de visas para turistas','la jurisdicción penal de agregados militares','el trato RUN/DNRA'], correct:0 },
+      { topic:'Organismos internacionales', q:'La Ley 3953/09 establece el marco de privilegios para...', options:['el Cuerpo Consular Honorario','la Agencia de Cooperación Internacional del Japón (JICA)','los agregados militares','el Acuerdo de Sede ISM'], correct:1 },
+
+      // ---- Agregadurías militares y beneplácito ----
+      { topic:'Beneplácito', q:'El "beneplácito" es...', options:['una sanción diplomática','el consentimiento previo, discrecional y no fundamentado, que el Estado receptor debe dar antes del nombramiento de un jefe de misión o agregado militar','un tipo de inmunidad funcional','un documento migratorio para dependientes'], correct:1 },
+      { topic:'Beneplácito', q:'Si el Estado receptor no otorga el beneplácito a una persona propuesta...', options:['el Estado acreditante puede insistir igualmente','el nombramiento queda automáticamente aprobado a los 30 días','el Estado acreditante no puede insistir con esa persona','se activa un arbitraje internacional obligatorio'], correct:2 },
+      { topic:'Beneplácito', q:'La diferencia central entre el allanamiento de locales diplomáticos y consulares es que...', options:['ambos son igualmente absolutos, sin excepción','el diplomático (Art. 22 CVRD) es prácticamente absoluto; el consular (Art. 31 CVRC) admite ingreso presumido en emergencias','el consular es más protegido que el diplomático','ninguno de los dos admite excepciones de ningún tipo'], correct:1 },
+
+      // ---- Jurisprudencia ----
+      { topic:'Jurisprudencia CIJ', q:'En el caso Congo vs. Bélgica (2002), la CIJ resolvió que un ministro de relaciones exteriores en funciones...', options:['puede ser juzgado por crímenes graves sin ninguna inmunidad','goza de inmunidad penal e inviolabilidad plenas ante jurisdicciones extranjeras mientras dure su cargo, sin importar la gravedad del delito','solo tiene inmunidad si el delito es menor','pierde toda inmunidad al salir de su país'], correct:1 },
+      { topic:'Jurisprudencia CIJ', q:'La inmunidad reconocida en el caso Congo vs. Bélgica es de naturaleza...', options:['sustantiva: exime de responsabilidad penal para siempre','procesal: impide la persecución mientras dure el cargo, sin eximir de responsabilidad en sí misma','exclusivamente fiscal','aplicable solo a jefes de Estado, nunca a cancilleres'], correct:1 },
+      { topic:'Jurisprudencia CIJ', q:'En Alemania vs. Italia (2012), la CIJ determinó que un Estado...', options:['pierde su inmunidad de jurisdicción automáticamente ante violaciones graves de derecho humanitario','conserva inmunidad de jurisdicción por actos de sus fuerzas armadas en conflicto armado, incluso ante violaciones graves','solo tiene inmunidad si paga una indemnización previa','no tiene inmunidad frente a ningún tribunal extranjero'], correct:1 },
+      { topic:'Jurisprudencia CIJ', q:'El fallo Alemania vs. Italia reafirma que la inmunidad del Estado es una cuestión...', options:['procesal, independiente de la licitud del acto subyacente','sustantiva, que depende de si el acto fue lícito','inexistente en el derecho internacional actual','exclusiva de los tratados bilaterales'], correct:0 },
+      { topic:'Jurisprudencia CIJ', q:'En Irán vs. EE.UU. (2023), la CIJ concluyó que Estados Unidos violó la inmunidad soberana de Irán al...', options:['negar visas a diplomáticos iraníes','permitir la ejecución sobre activos de empresas estatales iraníes con personalidad jurídica propia, sin justificación suficiente','expulsar al embajador iraní','cerrar la embajada de Irán en Washington'], correct:1 },
+      { topic:'Jurisprudencia CIJ', q:'El caso Irán vs. EE.UU. (2023) reafirma un límite exigible incluso frente a políticas antiterroristas: la...', options:['inmunidad de ejecución sobre bienes estatales','inmunidad penal absoluta de los jefes de Estado','inviolabilidad de los archivos consulares','necesidad funcional como único fundamento válido'], correct:0 },
+
+      // ---- Casos prácticos ----
+      { topic:'Caso práctico', q:'Un vehículo con placa CD es conducido por un chofer paraguayo que provoca un accidente. Conforme al Art. 22.3 CVRD, la protección del vehículo...', options:['se extiende automáticamente al chofer, quien queda inmune','recae sobre el bien, no sobre el chofer, que responde plenamente ante la jurisdicción paraguaya','desaparece por completo porque el chofer no es diplomático','solo aplica si el vehículo estaba estacionado'], correct:1 },
+      { topic:'Caso práctico', q:'En el caso del vehículo CD, ¿qué puede hacer la autoridad paraguaya respecto del vehículo sin consentimiento de la misión?', options:['Embargarlo','Requisarlo','Identificar al chofer y labrar actas, sin allanar ni ejecutar el vehículo','Ejecutarlo judicialmente'], correct:2 },
+      { topic:'Caso práctico', q:'Un agregado militar provoca un incidente de tránsito. Conforme al Art. 31 CVRD, su inmunidad penal es...', options:['relativa, según la gravedad del hecho','absoluta: no puede ser sometido a proceso penal ante tribunales paraguayos','inexistente, se lo trata como a un civil','condicionada a que pague una fianza'], correct:1 },
+      { topic:'Caso práctico', q:'Un incidente de tránsito protagonizado por un agregado militar, aunque no genere consecuencia penal, puede tener impacto en...', options:['el beneplácito futuro de ese agregado o su misión','la inviolabilidad de los archivos consulares','la Ley 3953/09','el Acuerdo de Sede ISM'], correct:0 },
+      { topic:'Caso práctico', q:'Un cónsul es detenido por un delito grave con orden judicial. ¿Qué artículo habilita esa detención excepcional?', options:['Art. 29 CVRD','Art. 41 CVRC','Art. 8 CVRD','Art. 22 CVRD'], correct:1 },
+
+      // ---- Preguntas adicionales de integración (para superar 50 con margen) ----
+      { topic:'Integración', q:'Si un agente diplomático realiza una actividad comercial privada fuera de sus funciones oficiales y es demandado civilmente por ella, esa acción...', options:['está cubierta por la inmunidad civil absoluta del Art. 31 CVRD','es una de las excepciones expresas a la inmunidad civil del Art. 31.1 CVRD','solo puede tramitarse si el Estado acreditante paga una multa previa','se rige exclusivamente por el derecho consular'], correct:1 },
+      { topic:'Integración', q:'Un organismo internacional invoca la inviolabilidad de su sede ante una orden judicial paraguaya. ¿En qué instrumento debe basarse esa defensa?', options:['La CVRD de 1961','La CVRC de 1963','Su acuerdo de sede específico con el Estado paraguayo','El Art. 41 CVRC'], correct:2 },
+      { topic:'Integración', q:'¿Qué tienen en común el Art. 32 CVRD y el Art. 45 CVRC?', options:['Ambos regulan la inviolabilidad de residencia','Ambos exigen que la renuncia a la inmunidad sea expresa','Ambos regulan exenciones aduaneras','Ambos se refieren a la jurisdicción penal por delito grave'], correct:1 },
+      { topic:'Integración', q:'Un dependiente de un agente A&T solicita el mismo trato migratorio que un dependiente diplomático. Conforme al programa, esa equiparación...', options:['es correcta: ambos dependientes tienen privilegios idénticos','es incorrecta: los dependientes de A&T no tienen privilegios personales propios, solo derivados','depende exclusivamente de la reciprocidad del Estado acreditante','solo aplica si el dependiente es menor de edad'], correct:1 },
+      { topic:'Integración', q:'¿Cuál de estas parejas artículo–convención está correctamente asociada?', options:['Art. 41 – CVRD','Art. 29 – CVRC','Art. 43 – CVRC','Art. 33 – CVRD'], correct:2, explain:'El Art. 43 (inmunidad funcional) pertenece a la CVRC; el Art. 41 y el Art. 33 son también de la CVRC, y el Art. 29 es de la CVRD — por eso las otras combinaciones están cruzadas.' }
+    ];
+
+    // =========================================================
+    // Utilidades
+    // =========================================================
+    function shuffle(arr){
+      const a = arr.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function prepareQuestion(item){
+      const order = shuffle([0,1,2,3]);
+      const options = order.map(i => item.options[i]);
+      const correctIndex = order.indexOf(item.correct);
+      return { topic:item.topic, q:item.q, options, correctIndex, explain:item.explain || '' };
+    }
+
+    // =========================================================
+    // Estado
+    // =========================================================
+    let quizQuestions = [];
+    let currentIndex = 0;
+    let score = 0;
+    let missed = [];
+    const LETTERS = ['A','B','C','D'];
+
+    // =========================================================
+    // Pantalla de configuración
+    // =========================================================
+    document.getElementById('bank-size').textContent = BANK.length + ' preguntas';
+
+    const QTY_OPTIONS = [10, 15, 20, 25, 30, 40, BANK.length];
+    let selectedQty = 20;
+
+    const qtyGrid = document.getElementById('qty-grid');
+    qtyGrid.innerHTML = QTY_OPTIONS.map(n => `
+      <button class="qty-btn ${n === selectedQty ? 'selected' : ''}" data-n="${n}">${n === BANK.length ? 'Todas' : n}</button>
+    `).join('');
+
+    qtyGrid.addEventListener('click', (e) => {
+      const btn = e.target.closest('.qty-btn');
+      if (!btn) return;
+      selectedQty = Number(btn.dataset.n);
+      qtyGrid.querySelectorAll('.qty-btn').forEach(b => b.classList.toggle('selected', Number(b.dataset.n) === selectedQty));
+    });
+
+    document.getElementById('btn-start').addEventListener('click', startQuiz);
+    document.getElementById('btn-retry').addEventListener('click', () => {
+      document.getElementById('screen-results').hidden = true;
+      document.getElementById('screen-setup').hidden = false;
+    });
+
+    function startQuiz(){
+      const bank = shuffle(BANK).slice(0, selectedQty);
+      quizQuestions = bank.map(prepareQuestion);
+      currentIndex = 0;
+      score = 0;
+      missed = [];
+
+      document.getElementById('screen-setup').hidden = true;
+      document.getElementById('screen-results').hidden = true;
+      document.getElementById('screen-quiz').hidden = false;
+
+      renderQuestion();
+    }
+
+    // =========================================================
+    // Pantalla de quiz
+    // =========================================================
+    const elPosition = document.getElementById('quiz-position');
+    const elScore = document.getElementById('quiz-score');
+    const elProgressBar = document.getElementById('quiz-progress-bar');
+    const elTopic = document.getElementById('quiz-topic');
+    const elQuestion = document.getElementById('quiz-question');
+    const elOptions = document.getElementById('quiz-options');
+    const elExplain = document.getElementById('quiz-explain');
+    const btnNext = document.getElementById('btn-next');
+
+    function renderQuestion(){
+      const total = quizQuestions.length;
+      const item = quizQuestions[currentIndex];
+
+      elPosition.textContent = `Pregunta ${currentIndex + 1} de ${total}`;
+      elScore.textContent = `Aciertos: ${score}`;
+      elProgressBar.style.width = ((currentIndex) / total * 100) + '%';
+      elTopic.textContent = item.topic;
+      elQuestion.textContent = item.q;
+      elExplain.hidden = true;
+      elExplain.textContent = '';
+      btnNext.disabled = true;
+      btnNext.textContent = currentIndex === total - 1 ? 'Ver resultados' : 'Siguiente';
+
+      elOptions.innerHTML = item.options.map((opt, i) => `
+        <button class="option-btn" data-i="${i}">
+          <span class="option-letter">${LETTERS[i]}</span>
+          <span>${opt}</span>
+        </button>
+      `).join('');
+    }
+
+    elOptions.addEventListener('click', (e) => {
+      const btn = e.target.closest('.option-btn');
+      if (!btn || btn.disabled) return;
+
+      const item = quizQuestions[currentIndex];
+      const chosen = Number(btn.dataset.i);
+      const isCorrect = chosen === item.correctIndex;
+
+      if (isCorrect) score++;
+      else missed.push({ ...item, chosenIndex: chosen });
+
+      const allBtns = elOptions.querySelectorAll('.option-btn');
+      allBtns.forEach((b, i) => {
+        b.disabled = true;
+        if (i === item.correctIndex) b.classList.add('correct');
+        else if (i === chosen) b.classList.add('incorrect');
+        else b.classList.add('dim');
+      });
+
+      if (item.explain) {
+        elExplain.textContent = item.explain;
+        elExplain.hidden = false;
+      }
+
+      elScore.textContent = `Aciertos: ${score}`;
+      btnNext.disabled = false;
+    });
+
+    btnNext.addEventListener('click', () => {
+      if (currentIndex < quizQuestions.length - 1) {
+        currentIndex++;
+        renderQuestion();
+      } else {
+        finishQuiz();
+      }
+    });
+
+    // =========================================================
+    // Pantalla de resultados
+    // =========================================================
+    function finishQuiz(){
+      document.getElementById('screen-quiz').hidden = true;
+      document.getElementById('screen-results').hidden = false;
+
+      const total = quizQuestions.length;
+      const pct = Math.round((score / total) * 100);
+
+      document.getElementById('result-score').textContent = `${score} / ${total}`;
+      document.getElementById('result-pct').textContent = `${pct}% de aciertos`;
+
+      let msg;
+      if (pct >= 90) msg = 'Dominio sólido del programa. Repasá igual la jurisprudencia y los artículos que hayas fallado.';
+      else if (pct >= 70) msg = 'Buen nivel general. Repasá los temas de las preguntas falladas antes del parcial.';
+      else if (pct >= 50) msg = 'Vas por buen camino, pero conviene repasar varias unidades con más detenimiento.';
+      else msg = 'Convendría releer la guía completa antes de repetir el test.';
+      document.getElementById('result-msg').textContent = msg;
+
+      const reviewWrap = document.getElementById('review-wrap');
+      const reviewList = document.getElementById('review-list');
+      if (missed.length === 0) {
+        reviewWrap.hidden = true;
+      } else {
+        reviewWrap.hidden = false;
+        reviewList.innerHTML = missed.map(m => `
+          <div class="review-card">
+            <p class="review-tag text-[var(--gold)] mb-2">${m.topic}</p>
+            <p class="serif text-[var(--ink)] font-semibold mb-3">${m.q}</p>
+            <p class="text-sm text-[var(--red)] mb-1">Tu respuesta: ${m.options[m.chosenIndex]}</p>
+            <p class="text-sm text-[var(--green)] mb-2">Correcta: ${m.options[m.correctIndex]}</p>
+            ${m.explain ? `<p class="text-xs text-[var(--ink-faint)] leading-relaxed">${m.explain}</p>` : ''}
+          </div>
+        `).join('');
+      }
+    }
+  </script>
+</body>
+</html>
