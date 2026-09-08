@@ -77,19 +77,11 @@
 
     .divider{ border: none; border-top: 1px solid var(--rule); margin: 3.5rem 0; }
 
-    .qa-item{ border-bottom: 1px solid var(--rule); padding: .3rem 0 1.1rem 0; margin-bottom: .3rem; }
+    .qa-item{ border-bottom: 1px solid var(--rule); padding: .3rem 0 1.1rem 0; margin-bottom: 1rem; }
     .qa-item:last-child{ border-bottom: none; }
-    .qa-answer{ margin: .1rem 0 0 2.05rem; font-family: var(--sans); font-size: .92rem; line-height: 1.65; color: var(--ink-dim); }
+    .qa-question{ font-size: clamp(1rem, .97rem + .15vw, 1.03rem); color: var(--ink); line-height: 1.6; font-weight: 600; margin-bottom: .5rem; }
+    .qa-answer{ margin: 0; font-family: var(--sans); font-size: .92rem; line-height: 1.65; color: var(--ink-dim); }
     .qa-answer-label{ display:block; font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); margin-bottom: .25rem; }
-    .check-row{ display:flex; gap:.85rem; align-items:flex-start; padding: .7rem 0 .3rem 0; cursor:pointer; }
-    .check-box{
-      flex-shrink:0; width:1.2rem; height:1.2rem; margin-top:.2rem; border-radius:4px;
-      border: 1.5px solid var(--ink-faint); display:flex; align-items:center; justify-content:center;
-      transition: all .15s ease;
-    }
-    .check-row.done .check-box{ background: var(--gold); border-color: var(--gold); }
-    .check-row.done .check-text{ color: var(--ink-faint); text-decoration: line-through; }
-    .check-text{ font-size: clamp(1rem, .97rem + .15vw, 1.03rem); color: var(--ink); line-height: 1.6; }
 
     #print-btn{
       position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 55;
@@ -524,7 +516,13 @@
       <section id="preguntas" class="scroll-mt-24 lg:scroll-mt-10">
         <p class="secnum mb-2">AUTOEVALUACIÓN</p>
         <h2 class="text-2xl sm:text-3xl font-semibold text-[#fbf3e2] mb-2 leading-snug">Preguntas guía para estudiar</h2>
-        <p class="text-[var(--ink-faint)] mb-6 sans text-sm">Tapá la respuesta con la mano y respondé antes de leerla. El check queda guardado en este dispositivo.</p>
+        <p class="text-[var(--ink-faint)] mb-6 sans text-sm">Tapá la respuesta con la mano y respondé antes de leerla.</p>
+
+        <a href="./test/" class="no-print sans inline-flex items-center gap-2 mb-8 px-4 py-2.5 rounded-full border border-[var(--gold-soft)] text-[var(--gold)] text-sm font-semibold hover:bg-[rgba(201,162,90,.1)] transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          Practicar con el test de 63 preguntas
+        </a>
+
         <div id="lista-preguntas"></div>
       </section>
 
@@ -553,7 +551,7 @@
     const wordCount = document.querySelector('article').innerText.trim().split(/\s+/).length;
     document.getElementById('reading-time').textContent = Math.max(1, Math.round(wordCount / 210)) + ' min de lectura';
 
-    // ---------- Preguntas guía (con respuesta, checklist con localStorage) ----------
+    // ---------- Preguntas guía (con respuesta) ----------
     const preguntas = [
       {
         q: '¿Cuál es la diferencia entre inmunidad personal y funcional?',
@@ -588,33 +586,12 @@
         a: '(i) Acción real sobre un inmueble privado situado en el Estado receptor, salvo que se posea en representación del Estado acreditante para fines de la misión; (ii) acción sucesoria en la que el agente participe a título privado; y (iii) acción relativa a una actividad profesional o comercial ejercida fuera de sus funciones oficiales.'
       }
     ];
-    const STORAGE_KEY = 'franquicias-parcial1-preguntas';
-    function getChecked(){ try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch { return {}; } }
-    function setChecked(s){ try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch {} }
-
-    const state = getChecked();
     const lista = document.getElementById('lista-preguntas');
-    lista.innerHTML = preguntas.map((item, i) => `
+    lista.innerHTML = preguntas.map((item) => `
       <div class="qa-item">
-        <div class="check-row ${state[i] ? 'done' : ''}" data-index="${i}">
-          <span class="check-box">
-            <svg class="w-3 h-3 text-[#171511] ${state[i] ? '' : 'hidden'}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
-          </span>
-          <span class="check-text">${item.q}</span>
-        </div>
+        <p class="qa-question">${item.q}</p>
         <p class="qa-answer"><span class="qa-answer-label">Respuesta</span>${item.a}</p>
       </div>`).join('');
-
-    lista.addEventListener('click', (e) => {
-      const row = e.target.closest('.check-row');
-      if (!row) return;
-      const idx = row.dataset.index;
-      const s = getChecked();
-      s[idx] = !s[idx];
-      setChecked(s);
-      row.classList.toggle('done', !!s[idx]);
-      row.querySelector('.check-box svg').classList.toggle('hidden', !s[idx]);
-    });
 
     // ---------- Navegación activa (escritorio + móvil) al hacer scroll ----------
     const sectionLinks = document.querySelectorAll('.section-link');
