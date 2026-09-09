@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convención de Viena sobre Relaciones Consulares — Guía Arts. 1 al 17</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:        #f6f3ec;
+    --paper:     #fffdf8;
+    --ink:       #22282e;
+    --ink-soft:  #414a52;
+    --ink-dim:   #6d757d;
+    --rule:      #e3ddcf;
+    --rule-soft: #eee9dd;
+    --accent:    #8a5a2b;
+    --accent-bg: #f4e6ce;
+    --blue:      #2f6180;
+    --blue-bg:   #eaf1f6;
+    --serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+    --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#15171a; --paper:#1c1f22; --ink:#e9e5dd; --ink-soft:#c6c2b9; --ink-dim:#8f8b83;
+      --rule:#34383c; --rule-soft:#26292c; --accent:#d9a566; --accent-bg:#2a2419;
+      --blue:#8ab6d0; --blue-bg:#1b2429;
+    }
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--serif); font-size:18px; line-height:1.78;
+    -webkit-font-smoothing:antialiased;
+  }
+  .sans{ font-family:var(--sans); }
+
+  /* ---------- Barra de progreso ---------- */
+  #progress{
+    position:fixed; top:0; left:0; height:3px; width:0%;
+    background:var(--accent); z-index:60; transition:width .1s linear;
+  }
+
+  /* ---------- Cabecera ---------- */
+  header.masthead{
+    max-width:780px; margin:0 auto; padding:52px 22px 30px;
+  }
+  .eyebrow{
+    font-family:var(--sans); font-size:12px; font-weight:600;
+    letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin:0 0 14px;
+  }
+  h1{
+    font-size:clamp(1.9rem, 1.4rem + 2.2vw, 2.9rem);
+    line-height:1.15; font-weight:700; letter-spacing:-.01em; margin:0 0 14px;
+  }
+  .subtitle{ font-size:1.1rem; color:var(--ink-soft); margin:0 0 22px; }
+  .meta{
+    font-family:var(--sans); font-size:.86rem; color:var(--ink-dim);
+    border-top:1px solid var(--rule); padding-top:16px;
+    display:flex; flex-wrap:wrap; gap:8px 18px; align-items:center;
+  }
+  .meta .dot{ width:4px; height:4px; border-radius:50%; background:var(--ink-dim); display:inline-block; }
+
+  /* ---------- Índice ---------- */
+  nav.toc{
+    max-width:780px; margin:0 auto 10px; padding:0 22px;
+  }
+  nav.toc ol{
+    list-style:none; margin:0; padding:18px 20px;
+    background:var(--paper); border:1px solid var(--rule); border-radius:10px;
+    font-family:var(--sans); font-size:.9rem; columns:2; column-gap:26px;
+  }
+  nav.toc li{ margin:0 0 7px; break-inside:avoid; }
+  nav.toc a{ color:var(--ink-soft); text-decoration:none; }
+  nav.toc a:hover{ color:var(--accent); }
+  nav.toc .toc-title{
+    font-family:var(--sans); font-size:.72rem; font-weight:700; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--ink-dim); margin:0 0 10px;
+  }
+  @media (max-width:560px){ nav.toc ol{ columns:1; } }
+
+  /* ---------- Cuerpo ---------- */
+  main{ max-width:780px; margin:0 auto; padding:10px 22px 90px; }
+
+  section{ margin-top:52px; scroll-margin-top:20px; }
+  .kicker{
+    font-family:var(--sans); font-size:.72rem; font-weight:700; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--ink-dim); margin:0 0 6px;
+  }
+  h2{
+    font-size:clamp(1.4rem, 1.2rem + .8vw, 1.85rem); line-height:1.25;
+    font-weight:700; margin:0 0 10px; letter-spacing:-.005em;
+  }
+  h3{
+    font-size:1.18rem; font-weight:700; line-height:1.35;
+    margin:34px 0 8px; padding-top:2px;
+  }
+  h4{
+    font-family:var(--sans); font-size:.95rem; font-weight:700;
+    margin:22px 0 6px; color:var(--ink);
+  }
+  p{ margin:0 0 1.05em; }
+  .lead{ color:var(--ink-soft); font-size:1.04rem; }
+  strong{ font-weight:700; }
+  mark{
+    background:var(--accent-bg); color:inherit; padding:.05em .18em; border-radius:3px;
+    box-decoration-break:clone; -webkit-box-decoration-break:clone;
+  }
+  ul, ol{ margin:0 0 1.1em; padding-left:1.35em; }
+  li{ margin:0 0 .5em; }
+  .hr{ border:0; border-top:1px solid var(--rule); margin:48px 0 0; }
+
+  /* ---------- Tarjeta de artículo ---------- */
+  .art{
+    background:var(--paper); border:1px solid var(--rule);
+    border-left:3px solid var(--accent); border-radius:8px;
+    padding:16px 20px; margin:20px 0;
+  }
+  .art > :last-child{ margin-bottom:0; }
+  .art-num{
+    font-family:var(--sans); font-size:.72rem; font-weight:700; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--accent); display:block; margin-bottom:6px;
+  }
+  .art-title{ font-weight:700; font-size:1.05rem; display:block; margin-bottom:6px; }
+
+  /* ---------- Cajas de apoyo ---------- */
+  .box{
+    background:var(--blue-bg); border:1px solid var(--rule);
+    border-left:3px solid var(--blue); border-radius:8px;
+    padding:14px 18px; margin:20px 0;
+    font-family:var(--sans); font-size:.94rem; line-height:1.65;
+  }
+  .box > :last-child{ margin-bottom:0; }
+  .box-label{
+    display:block; font-size:.7rem; font-weight:700; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--blue); margin-bottom:5px;
+  }
+
+  /* ---------- Lista de funciones ---------- */
+  .fx{ list-style:none; padding:0; margin:18px 0; }
+  .fx li{
+    display:flex; gap:12px; padding:11px 0; border-bottom:1px solid var(--rule-soft);
+    margin:0; break-inside:avoid;
+  }
+  .fx li:last-child{ border-bottom:none; }
+  .fx .tag{
+    flex:0 0 auto; font-family:var(--sans); font-size:.74rem; font-weight:700;
+    color:var(--accent); background:var(--accent-bg); border-radius:4px;
+    padding:2px 7px; height:fit-content; margin-top:4px; min-width:28px; text-align:center;
+  }
+  .fx .txt{ flex:1 1 auto; }
+  .fx .txt b{ display:block; font-size:1rem; }
+  .fx .txt span{ display:block; color:var(--ink-soft); font-size:.97rem; }
+
+  /* ---------- Tabla ---------- */
+  .table-wrap{ overflow-x:auto; margin:20px 0; }
+  table{
+    width:100%; border-collapse:collapse; font-family:var(--sans);
+    font-size:.9rem; background:var(--paper);
+  }
+  th, td{ border:1px solid var(--rule); padding:9px 12px; text-align:left; vertical-align:top; }
+  th{ background:var(--accent-bg); font-weight:700; color:var(--ink); }
+  td:first-child{ white-space:nowrap; font-weight:600; }
+
+  /* ---------- Preguntas ---------- */
+  .qa{ border-bottom:1px solid var(--rule); padding:14px 0; break-inside:avoid; }
+  .qa:last-child{ border-bottom:none; }
+  .qa .q{ font-weight:700; margin:0 0 6px; }
+  .qa .a{
+    font-family:var(--sans); font-size:.94rem; line-height:1.65;
+    color:var(--ink-soft); margin:0;
+  }
+  .qa .a b{
+    display:block; font-size:.68rem; font-weight:700; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--accent); margin-bottom:3px;
+  }
+
+  /* ---------- Botón imprimir ---------- */
+  #print-btn{
+    position:fixed; right:18px; bottom:18px; z-index:55;
+    background:var(--paper); border:1px solid var(--rule); color:var(--ink-soft);
+    border-radius:999px; padding:11px 18px; cursor:pointer;
+    font-family:var(--sans); font-size:.85rem; font-weight:600;
+    box-shadow:0 4px 16px rgba(0,0,0,.12);
+  }
+  #print-btn:hover{ color:var(--accent); border-color:var(--accent); }
+
+  footer{
+    max-width:780px; margin:0 auto; padding:0 22px 40px;
+    font-family:var(--sans); font-size:.82rem; color:var(--ink-dim);
+  }
+
+  @media (max-width:640px){
+    body{ font-size:17px; }
+    header.masthead{ padding:34px 18px 24px; }
+    main{ padding:8px 18px 90px; }
+    nav.toc{ padding:0 18px; }
+    .art{ padding:14px 16px; }
+  }
+
+  /* ---------- Impresión A4 ---------- */
+  @page{ size:A4; margin:16mm 15mm; }
+  @media print{
+    :root{
+      --bg:#fff; --paper:#fff; --ink:#000; --ink-soft:#1f1f1f; --ink-dim:#444;
+      --rule:#bbb; --rule-soft:#ddd; --accent:#6b4318; --accent-bg:#f2ede5;
+      --blue:#2b5570; --blue-bg:#f2f5f8;
+    }
+    body{ background:#fff; font-size:10.5pt; line-height:1.5; }
+    #progress, #print-btn, .no-print{ display:none !important; }
+    header.masthead, nav.toc, main, footer{ max-width:100%; padding-left:0; padding-right:0; }
+    header.masthead{ padding-top:0; }
+    h1{ font-size:22pt; }
+    h2{ font-size:15pt; }
+    h3{ font-size:12pt; margin-top:16pt; }
+    section{ margin-top:20pt; }
+    h1, h2, h3, h4{ break-after:avoid; page-break-after:avoid; }
+    .art, .box, .qa, .fx li, tr{ break-inside:avoid; page-break-inside:avoid; }
+    .art, .box{ box-shadow:none; }
+    nav.toc ol{ border:1px solid #bbb; }
+    a{ color:inherit; text-decoration:none; }
+    .page-break{ break-before:page; page-break-before:always; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress" class="no-print"></div>
+
+<header class="masthead">
+  <p class="eyebrow">Academia Diplomática y Consular "Carlos Antonio López"</p>
+  <h1>Convención de Viena sobre<br>Relaciones Consulares</h1>
+  <p class="subtitle">Guía de estudio para el Primer Parcial — Artículos 1 al 17, explicados en palabras simples.</p>
+  <div class="meta">
+    <span>Convención de 1963</span>
+    <span class="dot"></span>
+    <span>Capítulo I, Secciones I y II</span>
+    <span class="dot"></span>
+    <span>Arts. 1 a 17</span>
+    <span class="dot no-print"></span>
+    <span id="reading-time" class="no-print">— min de lectura</span>
+  </div>
+</header>
+
+<nav class="toc no-print">
+  <p class="toc-title">Contenido</p>
+  <ol>
+    <li><a href="#panorama">Panorama general</a></li>
+    <li><a href="#art1">Art. 1 — Definiciones</a></li>
+    <li><a href="#art2">Art. 2 — Cómo nacen las relaciones consulares</a></li>
+    <li><a href="#art3">Art. 3 — Quién ejerce las funciones</a></li>
+    <li><a href="#art4">Art. 4 — Apertura de una oficina consular</a></li>
+    <li><a href="#art5">Art. 5 — Funciones consulares</a></li>
+    <li><a href="#art6">Art. 6 — Fuera de la circunscripción</a></li>
+    <li><a href="#art7">Art. 7 — Funciones en un tercer Estado</a></li>
+    <li><a href="#art8">Art. 8 — Funciones por cuenta de otro Estado</a></li>
+    <li><a href="#art9">Art. 9 — Clases de jefes de oficina</a></li>
+    <li><a href="#art10">Art. 10 — Nombramiento y admisión</a></li>
+    <li><a href="#art11">Art. 11 — Carta patente</a></li>
+    <li><a href="#art12">Art. 12 — Exequátur</a></li>
+    <li><a href="#art13">Art. 13 — Admisión provisional</a></li>
+    <li><a href="#art14">Art. 14 — Aviso a las autoridades locales</a></li>
+    <li><a href="#art15">Art. 15 — Jefe interino</a></li>
+    <li><a href="#art16">Art. 16 — Precedencia</a></li>
+    <li><a href="#art17">Art. 17 — Actos diplomáticos</a></li>
+    <li><a href="#resumen">Cuadro resumen</a></li>
+    <li><a href="#claves">Puntos que más se preguntan</a></li>
+    <li><a href="#preguntas">Preguntas de repaso</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<!-- ============ PANORAMA ============ -->
+<section id="panorama">
+  <p class="kicker">Para empezar</p>
+  <h2>Panorama general</h2>
+  <p class="lead">La Convención de Viena sobre Relaciones Consulares (CVRC) se firmó en Viena en 1963 y es el
+  tratado que ordena, en un solo texto, cómo funcionan los consulados en todo el mundo. Antes de ella el tema
+  se resolvía por costumbre y por tratados sueltos entre países.</p>
+
+  <p>Su idea central aparece en el preámbulo y conviene tenerla siempre presente: <mark>los privilegios e
+  inmunidades no se dan para beneficiar a las personas, sino para que las oficinas consulares puedan cumplir
+  bien su trabajo</mark> en nombre de sus Estados. Es la llamada <strong>teoría de la necesidad funcional</strong>.
+  El preámbulo también aclara que todo lo que la Convención no regule sigue rigiéndose por la costumbre
+  internacional.</p>
+
+  <p>Los artículos 1 al 17 responden, en orden, a cuatro preguntas básicas:</p>
+  <ul>
+    <li><strong>¿De qué estamos hablando?</strong> — el vocabulario oficial (Art. 1).</li>
+    <li><strong>¿Cómo se establecen las relaciones consulares y las oficinas?</strong> (Arts. 2 a 4).</li>
+    <li><strong>¿Qué hace un consulado y dónde puede hacerlo?</strong> (Arts. 5 a 8).</li>
+    <li><strong>¿Quién dirige la oficina y cómo llega a ese cargo?</strong> (Arts. 9 a 17).</li>
+  </ul>
+
+  <div class="box">
+    <span class="box-label">Dos palabras que se repiten en toda la Convención</span>
+    <p><strong>Estado que envía:</strong> el país que abre el consulado y manda a sus funcionarios (también
+    se lo llama Estado mandante o acreditante).<br>
+    <strong>Estado receptor:</strong> el país en cuyo territorio funciona ese consulado.</p>
+  </div>
+</section>
+
+<hr class="hr">
+
+<!-- ============ ART 1 ============ -->
+<section id="art1">
+  <p class="kicker">Sección I — Artículo 1</p>
+  <h2>Definiciones: el vocabulario oficial</h2>
+  <p class="lead">El artículo 1 es un diccionario. Define las palabras que después se usan en todo el tratado,
+  así nadie discute qué significa cada término. Suele preguntarse en el parcial, por eso conviene aprenderlo bien.</p>
+
+  <h3>Las oficinas y el territorio</h3>
+  <ul class="fx">
+    <li><span class="tag">a</span><span class="txt"><b>Oficina consular</b><span>Es todo consulado general, consulado, viceconsulado o agencia consular. Son las cuatro clases de oficinas que existen.</span></span></li>
+    <li><span class="tag">b</span><span class="txt"><b>Circunscripción consular</b><span>El territorio asignado a una oficina consular para trabajar. Es su zona geográfica de competencia.</span></span></li>
+    <li><span class="tag">j</span><span class="txt"><b>Locales consulares</b><span>Los edificios o partes de edificios y el terreno al lado de ellos que se usan <mark>exclusivamente</mark> para la oficina consular. No importa quién sea el dueño: importa el uso exclusivo.</span></span></li>
+    <li><span class="tag">k</span><span class="txt"><b>Archivos consulares</b><span>Todos los papeles, documentos, correspondencia, libros, películas, cintas grabadas y registros de la oficina; también las cifras y claves, los ficheros y hasta los muebles hechos para protegerlos y conservarlos.</span></span></li>
+  </ul>
+
+  <h3>Las personas</h3>
+  <ul class="fx">
+    <li><span class="tag">c</span><span class="txt"><b>Jefe de oficina consular</b><span>La persona encargada de dirigir la oficina.</span></span></li>
+    <li><span class="tag">d</span><span class="txt"><b>Funcionario consular</b><span>Toda persona encargada del ejercicio de funciones consulares, <mark>incluido el jefe de la oficina</mark>. Es quien hace el trabajo consular propiamente dicho.</span></span></li>
+    <li><span class="tag">e</span><span class="txt"><b>Empleado consular</b><span>Quien trabaja en el servicio administrativo o técnico de la oficina (secretaría, contabilidad, informática, etc.).</span></span></li>
+    <li><span class="tag">f</span><span class="txt"><b>Miembro del personal de servicio</b><span>Quien trabaja en el servicio doméstico de la oficina (limpieza, chofer de la oficina, portería).</span></span></li>
+    <li><span class="tag">i</span><span class="txt"><b>Miembro del personal privado</b><span>Quien está empleado <mark>solo en el servicio particular</mark> de un miembro de la oficina consular. Trabaja para la persona, no para el consulado.</span></span></li>
+  </ul>
+
+  <h3>Dos palabras parecidas que no significan lo mismo</h3>
+  <div class="art">
+    <span class="art-num">Art. 1, letras g y h</span>
+    <p><strong>Miembros de la oficina consular:</strong> funcionarios consulares + empleados consulares +
+    personal de servicio. Es decir, <mark>todos, incluido el jefe</mark>.</p>
+    <p><strong>Miembros del personal consular:</strong> lo mismo, pero <mark>sin el jefe de la oficina</mark>
+    (funcionarios consulares salvo el jefe, empleados consulares y personal de servicio).</p>
+    <p>Regla para no confundirse: "de la <em>oficina</em>" incluye al jefe; "del <em>personal</em>" lo deja afuera.</p>
+  </div>
+
+  <h3>Las dos categorías de funcionarios consulares</h3>
+  <p>El mismo artículo 1 aclara que hay <strong>funcionarios consulares de carrera</strong> (diplomáticos de
+  profesión, pagados por el Estado que envía) y <strong>funcionarios consulares honorarios</strong> (personas
+  designadas para el cargo, muchas veces residentes o incluso nacionales del Estado receptor, que no viven de
+  ese trabajo). El Capítulo II de la Convención se aplica a las oficinas dirigidas por funcionarios de carrera
+  y el Capítulo III a las dirigidas por honorarios.</p>
+
+  <p>Por último, el artículo 1 remite al <strong>artículo 71</strong> para el caso especial de los miembros de
+  la oficina consular que sean nacionales o residentes permanentes del Estado receptor: ellos tienen un régimen
+  más reducido de privilegios.</p>
+</section>
+
+<hr class="hr">
+
+<!-- ============ ART 2 ============ -->
+<section id="art2">
+  <p class="kicker">Artículo 2</p>
+  <h2>Cómo nacen las relaciones consulares</h2>
+
+  <div class="art">
+    <span class="art-num">Art. 2</span>
+    <span class="art-title">Tres reglas cortas y muy preguntadas</span>
+    <ul>
+      <li>Las relaciones consulares se establecen por <mark>consentimiento mutuo</mark> de los dos Estados. Nadie
+      puede imponer un consulado.</li>
+      <li>Si dos Estados acuerdan establecer <strong>relaciones diplomáticas</strong>, se entiende que también
+      aceptaron las <strong>relaciones consulares</strong>, salvo que digan expresamente lo contrario. El
+      consentimiento diplomático "arrastra" al consular.</li>
+      <li>La <strong>ruptura de relaciones diplomáticas no rompe automáticamente</strong> las relaciones
+      consulares. Pueden pelearse a nivel político y seguir atendiendo a sus ciudadanos.</li>
+    </ul>
+  </div>
+
+  <div class="box">
+    <span class="box-label">Por qué importa</span>
+    <p>Esta última regla muestra el sentido práctico de lo consular: la tarea del consulado es asistir a las
+    personas, y esa necesidad no desaparece cuando los gobiernos se enojan entre sí.</p>
+  </div>
+</section>
+
+<!-- ============ ART 3 ============ -->
+<section id="art3">
+  <p class="kicker">Artículo 3</p>
+  <h2>Quién ejerce las funciones consulares</h2>
+  <div class="art">
+    <span class="art-num">Art. 3</span>
+    <p>Las funciones consulares las ejercen las <strong>oficinas consulares</strong>. Pero también pueden
+    ejercerlas las <strong>misiones diplomáticas</strong> (embajadas), de acuerdo con las reglas de esta misma
+    Convención.</p>
+  </div>
+  <p>De ahí que muchas embajadas tengan una "sección consular" adentro: es la aplicación directa de este artículo.</p>
+</section>
+
+<!-- ============ ART 4 ============ -->
+<section id="art4">
+  <p class="kicker">Artículo 4</p>
+  <h2>Apertura de una oficina consular</h2>
+  <p class="lead">Todo el artículo gira alrededor de una sola palabra: <mark>consentimiento del Estado receptor</mark>.
+  Sin él no se abre ni se cambia nada.</p>
+
+  <div class="art">
+    <span class="art-num">Art. 4</span>
+    <span class="art-title">Qué necesita autorización</span>
+    <ul>
+      <li>No se puede establecer una oficina consular en el territorio del Estado receptor <strong>sin su
+      consentimiento</strong>.</li>
+      <li>La <strong>sede</strong> (en qué ciudad), la <strong>clase</strong> (consulado general, consulado,
+      viceconsulado o agencia) y la <strong>circunscripción</strong> (qué zona abarca) las fija el Estado que
+      envía, pero deben ser <strong>aprobadas por el Estado receptor</strong>.</li>
+      <li>Cualquier <strong>cambio posterior</strong> de esos tres datos también necesita el consentimiento del
+      Estado receptor.</li>
+      <li>Si un consulado general o un consulado quiere abrir un <strong>viceconsulado o una agencia consular en
+      otra localidad</strong>, hace falta consentimiento nuevamente.</li>
+      <li>Si se quiere abrir una <strong>dependencia fuera de la sede</strong> de una oficina ya existente (una
+      especie de sucursal), se necesita el <mark>consentimiento previo y expreso</mark> del Estado receptor.</li>
+    </ul>
+  </div>
+
+  <div class="box">
+    <span class="box-label">Truco para recordar</span>
+    <p>Los tres datos que siempre se aprueban juntos son <strong>sede, clase y circunscripción</strong>. Si
+    cambia cualquiera de los tres, vuelve a pedirse permiso.</p>
+  </div>
+</section>
+
+<hr class="hr">
+
+<!-- ============ ART 5 ============ -->
+<section id="art5">
+  <p class="kicker">Artículo 5 — el artículo central</p>
+  <h2>Las funciones consulares</h2>
+  <p class="lead">Es el artículo más largo y el más importante de este tramo. Enumera trece funciones, de la
+  letra <strong>a</strong> a la <strong>m</strong>. No es una lista cerrada: la última letra deja la puerta
+  abierta a otras tareas.</p>
+
+  <ul class="fx">
+    <li><span class="tag">a</span><span class="txt"><b>Proteger intereses</b><span>Proteger en el Estado receptor los intereses del Estado que envía y de sus nacionales, sean personas físicas o empresas, dentro de los límites que permite el derecho internacional. Es la función madre: de ella derivan casi todas las demás.</span></span></li>
+    <li><span class="tag">b</span><span class="txt"><b>Fomentar relaciones</b><span>Impulsar el desarrollo de las relaciones comerciales, económicas, culturales y científicas entre los dos Estados, y promover además relaciones amistosas entre ellos.</span></span></li>
+    <li><span class="tag">c</span><span class="txt"><b>Informar</b><span>Enterarse <mark>por medios lícitos</mark> de cómo está la vida comercial, económica, cultural y científica del Estado receptor, informar de eso a su gobierno y dar datos a los interesados. "Por medios lícitos" es la línea que separa la información legítima del espionaje.</span></span></li>
+    <li><span class="tag">d</span><span class="txt"><b>Pasaportes y visas</b><span>Expedir pasaportes y documentos de viaje a los nacionales del Estado que envía, y otorgar visados o documentos adecuados a las personas que quieran viajar a ese Estado.</span></span></li>
+    <li><span class="tag">e</span><span class="txt"><b>Ayuda y asistencia</b><span>Prestar ayuda y asistencia a los nacionales del Estado que envía, tanto a las personas como a las empresas. Es la asistencia consular en sentido amplio.</span></span></li>
+    <li><span class="tag">f</span><span class="txt"><b>Notario y registro civil</b><span>Actuar como notario y como funcionario del registro civil, y cumplir funciones similares y otras de carácter administrativo, <mark>siempre que no se opongan a las leyes del Estado receptor</mark>.</span></span></li>
+    <li><span class="tag">g</span><span class="txt"><b>Sucesiones</b><span>Velar por los intereses de sus nacionales, personas o empresas, en los casos de sucesión por causa de muerte ocurridos en el territorio del Estado receptor, siempre conforme a las leyes de ese Estado.</span></span></li>
+    <li><span class="tag">h</span><span class="txt"><b>Menores e incapaces</b><span>Cuidar los intereses de los menores y de otras personas sin capacidad plena que sean nacionales del Estado que envía, sobre todo cuando haga falta abrirles una tutela o curatela, dentro de los límites de la ley local.</span></span></li>
+    <li><span class="tag">i</span><span class="txt"><b>Representación ante tribunales</b><span>Representar a sus nacionales, o conseguir que alguien los represente adecuadamente, ante los tribunales y autoridades del Estado receptor, para pedir medidas provisionales que protejan sus derechos cuando <mark>por estar ausentes o por cualquier otro motivo no puedan defenderse a tiempo</mark>. Se hace siguiendo la práctica y los procedimientos locales.</span></span></li>
+    <li><span class="tag">j</span><span class="txt"><b>Notificaciones y exhortos</b><span>Comunicar decisiones judiciales y extrajudiciales y diligenciar comisiones rogatorias (pedidos de un juez extranjero), según los acuerdos internacionales vigentes o, si no los hay, de un modo compatible con las leyes del Estado receptor.</span></span></li>
+    <li><span class="tag">k</span><span class="txt"><b>Control de buques y aeronaves</b><span>Ejercer los derechos de control e inspección sobre los buques con bandera del Estado que envía y sobre las aeronaves matriculadas en él, y también sobre sus tripulaciones.</span></span></li>
+    <li><span class="tag">l</span><span class="txt"><b>Asistencia a buques y aeronaves</b><span>Prestarles ayuda: recibir la declaración sobre el viaje, examinar y sellar los documentos de a bordo, hacer averiguaciones sobre los incidentes del viaje y resolver los conflictos entre el capitán, los oficiales y los marineros —siempre que las leyes del Estado que envía lo autoricen y sin invadir las facultades de las autoridades locales.</span></span></li>
+    <li><span class="tag">m</span><span class="txt"><b>Otras funciones</b><span>Cualquier otra función que le confíe el Estado que envía, con dos condiciones: que <mark>no esté prohibida por las leyes del Estado receptor</mark> o que este no se oponga, o bien que esté prevista en los acuerdos internacionales vigentes entre ambos Estados.</span></span></li>
+  </ul>
+
+  <div class="box">
+    <span class="box-label">Cómo memorizar las trece funciones</span>
+    <p>Agrupalas en cinco bloques: <strong>(1) proteger y promover</strong> (a, b, c) · <strong>(2) documentos y
+    asistencia a personas</strong> (d, e) · <strong>(3) función administrativa y de familia</strong> (f, g, h) ·
+    <strong>(4) función judicial</strong> (i, j) · <strong>(5) buques y aeronaves</strong> (k, l), más la
+    <strong>cláusula abierta</strong> (m).</p>
+  </div>
+
+  <div class="box">
+    <span class="box-label">Límite común a todas</span>
+    <p>Fijate que casi todas las letras repiten la misma frase: "conforme a las leyes y reglamentos del Estado
+    receptor". El cónsul no ejerce autoridad sobre el territorio ajeno: trabaja <mark>dentro</mark> del derecho
+    local, no por encima de él.</p>
+  </div>
+</section>
+
+<hr class="hr">
+
+<!-- ============ ARTS 6-8 ============ -->
+<section id="art6">
+  <p class="kicker">Artículo 6</p>
+  <h2>Trabajar fuera de la circunscripción</h2>
+  <div class="art">
+    <span class="art-num">Art. 6</span>
+    <p>El funcionario consular puede ejercer sus funciones <strong>fuera de su circunscripción</strong> solo en
+    <mark>circunstancias especiales</mark> y con el <mark>consentimiento del Estado receptor</mark>.</p>
+  </div>
+  <p>Ejemplo típico: un accidente o una catástrofe que afecta a nacionales del Estado que envía en una zona que
+  le corresponde a otro consulado.</p>
+</section>
+
+<section id="art7">
+  <p class="kicker">Artículo 7</p>
+  <h2>Funciones en un tercer Estado</h2>
+  <div class="art">
+    <span class="art-num">Art. 7</span>
+    <p>El Estado que envía puede encargar a una oficina consular ya instalada en un país que también atienda
+    a <strong>otro país</strong> (concurrencia o multiacreditación consular). Para eso debe
+    <mark>notificar a todos los Estados interesados</mark> y ninguno de ellos debe <mark>oponerse
+    expresamente</mark>.</p>
+  </div>
+  <p>Ejemplo: un consulado en Buenos Aires que además atiende los asuntos consulares de su país en Uruguay.</p>
+</section>
+
+<section id="art8">
+  <p class="kicker">Artículo 8</p>
+  <h2>Funciones por cuenta de un tercer Estado</h2>
+  <div class="art">
+    <span class="art-num">Art. 8</span>
+    <p>Una oficina consular puede ejercer funciones consulares en el Estado receptor <strong>en nombre de un
+    tercer Estado</strong>, previa notificación adecuada al Estado receptor y siempre que este <mark>no se
+    oponga</mark>.</p>
+  </div>
+
+  <div class="box">
+    <span class="box-label">No confundir los artículos 7 y 8</span>
+    <p><strong>Art. 7:</strong> el mismo consulado extiende su trabajo <em>hacia otro territorio</em>, siempre
+    para su propio Estado.<br>
+    <strong>Art. 8:</strong> el consulado se queda donde está, pero <em>atiende los asuntos de otro Estado</em>
+    (por ejemplo, un país sin consulado propio le pide que asista a sus ciudadanos).</p>
+  </div>
+</section>
+
+<hr class="hr">
+
+<!-- ============ ART 9 ============ -->
+<section id="art9" class="page-break">
+  <p class="kicker">Sección II — Artículo 9</p>
+  <h2>Clases de jefes de oficina consular</h2>
+  <p class="lead">A partir de aquí la Convención pasa a hablar de las personas que dirigen la oficina: cómo se
+  las nombra, cómo se las autoriza y en qué orden se ubican.</p>
+
+  <div class="art">
+    <span class="art-num">Art. 9</span>
+    <span class="art-title">Cuatro clases, en este orden</span>
+    <ol>
+      <li><strong>Cónsules generales</strong></li>
+      <li><strong>Cónsules</strong></li>
+      <li><strong>Vicecónsules</strong></li>
+      <li><strong>Agentes consulares</strong></li>
+    </ol>
+    <p>Esa clasificación vale para los <mark>jefes de oficina</mark>. Los Estados siguen siendo libres de
+    ponerle el nombre que quieran a los funcionarios consulares que <mark>no sean jefes</mark> de la oficina.</p>
+  </div>
+
+  <div class="box">
+    <span class="box-label">Ojo con la correspondencia</span>
+    <p>Cada clase de jefe se corresponde con una clase de oficina del artículo 1: cónsul general dirige un
+    consulado general, cónsul un consulado, vicecónsul un viceconsulado y agente consular una agencia consular.</p>
+  </div>
+</section>
+
+<!-- ============ ART 10 ============ -->
+<section id="art10">
+  <p class="kicker">Artículo 10</p>
+  <h2>Nombramiento y admisión del jefe</h2>
+  <div class="art">
+    <span class="art-num">Art. 10</span>
+    <p>Hay dos actos, uno de cada Estado: <mark>el Estado que envía nombra</mark> al jefe de la oficina y
+    <mark>el Estado receptor lo admite</mark> al ejercicio de sus funciones.</p>
+    <p>Las formalidades de ese nombramiento y de esa admisión se rigen por las leyes, reglamentos y usos de cada
+    Estado: las del nombramiento por las del Estado que envía y las de la admisión por las del Estado receptor,
+    siempre respetando lo que dice la Convención.</p>
+  </div>
+</section>
+
+<!-- ============ ART 11 ============ -->
+<section id="art11">
+  <p class="kicker">Artículo 11</p>
+  <h2>La carta patente</h2>
+  <div class="art">
+    <span class="art-num">Art. 11</span>
+    <span class="art-title">El documento que acredita al jefe</span>
+    <p>El Estado que envía le entrega al jefe de la oficina un documento —la <strong>carta patente</strong> u
+    otro instrumento parecido— que se extiende <mark>para cada nombramiento</mark> y que contiene cuatro datos:</p>
+    <ul>
+      <li>su <strong>nombre completo</strong>;</li>
+      <li>su <strong>clase y categoría</strong>;</li>
+      <li>la <strong>circunscripción consular</strong>;</li>
+      <li>la <strong>sede</strong> de la oficina.</li>
+    </ul>
+    <p>Ese documento se envía al gobierno del Estado receptor <strong>por vía diplomática</strong> o por otra vía
+    apropiada.</p>
+    <p>Si el Estado receptor lo acepta, la carta patente puede reemplazarse por una simple
+    <strong>notificación</strong> que contenga esos mismos datos.</p>
+  </div>
+</section>
+
+<!-- ============ ART 12 ============ -->
+<section id="art12">
+  <p class="kicker">Artículo 12</p>
+  <h2>El exequátur</h2>
+  <p class="lead">Es una de las palabras clave de toda la materia: la autorización con la que el Estado receptor
+  permite al jefe de la oficina consular empezar a trabajar.</p>
+
+  <div class="art">
+    <span class="art-num">Art. 12</span>
+    <ul>
+      <li>El jefe de la oficina es admitido mediante una autorización del Estado receptor llamada
+      <strong>exequátur</strong>, <mark>cualquiera sea la forma</mark> que esa autorización tenga.</li>
+      <li>El Estado que <strong>niega el exequátur no está obligado a explicar por qué</strong>. Es una decisión
+      discrecional y no necesita fundarse.</li>
+      <li>Como regla, el jefe <mark>no puede iniciar sus funciones antes de recibir el exequátur</mark>. Las
+      excepciones son los artículos 13 (admisión provisional) y 15 (jefe interino).</li>
+    </ul>
+  </div>
+
+  <div class="box">
+    <span class="box-label">Paralelo útil</span>
+    <p>El exequátur cumple en lo consular un papel parecido al del <em>plácet</em> o beneplácito en lo
+    diplomático, con una diferencia práctica: el beneplácito se pide antes del nombramiento del embajador,
+    mientras que el exequátur se otorga después, sobre un jefe consular ya nombrado y con su carta patente
+    presentada.</p>
+  </div>
+</section>
+
+<!-- ============ ART 13 ============ -->
+<section id="art13">
+  <p class="kicker">Artículo 13</p>
+  <h2>Admisión provisional</h2>
+  <div class="art">
+    <span class="art-num">Art. 13</span>
+    <p>Mientras se tramita el exequátur, el Estado receptor puede admitir <mark>provisionalmente</mark> al jefe
+    de la oficina para que ejerza sus funciones. En ese caso se le aplican todas las disposiciones de la
+    Convención, igual que si ya tuviera el exequátur.</p>
+  </div>
+  <p>Es una solución práctica: evita que la oficina quede paralizada por una demora administrativa.</p>
+</section>
+
+<!-- ============ ART 14 ============ -->
+<section id="art14">
+  <p class="kicker">Artículo 14</p>
+  <h2>Aviso a las autoridades locales</h2>
+  <div class="art">
+    <span class="art-num">Art. 14</span>
+    <p>Apenas el jefe de la oficina es admitido —aunque sea de forma provisional— el Estado receptor debe
+    <mark>comunicarlo inmediatamente a las autoridades competentes de la circunscripción</mark> (gobernación,
+    policía, aduanas, tribunales, etc.).</p>
+    <p>Además, debe <strong>asegurarse de que se tomen las medidas necesarias</strong> para que ese jefe pueda
+    cumplir su trabajo y gozar del trato que la Convención le reconoce.</p>
+  </div>
+  <p>Sin este aviso, el reconocimiento quedaría solo en la capital y las autoridades locales no sabrían a quién
+  tienen enfrente.</p>
+</section>
+
+<!-- ============ ART 15 ============ -->
+<section id="art15">
+  <p class="kicker">Artículo 15</p>
+  <h2>El jefe interino</h2>
+  <p class="lead">Qué pasa cuando el jefe titular no puede ejercer o el cargo queda vacante.</p>
+
+  <div class="art">
+    <span class="art-num">Art. 15</span>
+    <span class="art-title">Quién lo reemplaza y cómo se avisa</span>
+    <ul>
+      <li>Si el jefe <strong>no puede ejercer sus funciones</strong> o si el <strong>puesto está vacante</strong>,
+      puede actuar provisionalmente como jefe un <strong>jefe interino</strong> (o gerente interino).</li>
+      <li>Su nombre completo se comunica al <strong>Ministerio de Relaciones Exteriores</strong> del Estado
+      receptor o a la autoridad que este indique. La comunicación la hace, en este orden: la misión diplomática
+      del Estado que envía; si no hay misión, el propio jefe de la oficina consular; y si él no puede, cualquier
+      autoridad competente del Estado que envía. Por regla general el aviso se hace <mark>por adelantado</mark>.</li>
+      <li>El Estado receptor puede exigir <strong>su consentimiento</strong> para aceptar como jefe interino a
+      alguien que no sea agente diplomático ni funcionario consular del Estado que envía en ese país.</li>
+    </ul>
+  </div>
+
+  <div class="art">
+    <span class="art-num">Art. 15 — trato que recibe</span>
+    <ul>
+      <li>Las autoridades del Estado receptor deben <strong>ayudarlo y protegerlo</strong>.</li>
+      <li>Mientras dure el interinato se le aplica la Convención <mark>en la misma medida que al jefe
+      titular</mark>.</li>
+      <li>Pero el Estado receptor <strong>no está obligado</strong> a darle facilidades, privilegios e
+      inmunidades que el titular tenía por reunir condiciones que el interino no reúne.</li>
+      <li>Si el interino designado es un <strong>miembro del personal diplomático</strong> de la embajada de su
+      país en ese Estado, <mark>sigue gozando de sus privilegios e inmunidades diplomáticos</mark>, salvo que el
+      Estado receptor se oponga.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ ART 16 ============ -->
+<section id="art16">
+  <p class="kicker">Artículo 16</p>
+  <h2>Precedencia entre jefes de oficina</h2>
+  <p class="lead">La precedencia es el orden protocolar: quién va primero en actos y ceremonias. Las reglas se
+  aplican <strong>dentro de cada clase</strong> (todos los cónsules generales entre sí, todos los cónsules entre
+  sí, etc.).</p>
+
+  <div class="art">
+    <span class="art-num">Art. 16</span>
+    <span class="art-title">Reglas en orden de aplicación</span>
+    <ol>
+      <li><strong>Regla general:</strong> manda la <mark>fecha del exequátur</mark>. El que lo obtuvo antes va
+      primero.</li>
+      <li><strong>Si hubo admisión provisional:</strong> vale la <mark>fecha de esa admisión provisional</mark>,
+      y ese lugar se conserva incluso después de que llegue el exequátur.</li>
+      <li><strong>Empate en la misma fecha:</strong> se desempata por la fecha en que se presentó la carta
+      patente o la notificación de nombramiento.</li>
+      <li><strong>Jefes interinos:</strong> van <mark>después de todos los jefes titulares</mark>. Entre ellos se
+      ordenan por la fecha en que asumieron como interinos, según la notificación del artículo 15.</li>
+      <li><strong>Funcionarios honorarios que son jefes de oficina:</strong> en cada clase van
+      <mark>después de todos los jefes de carrera</mark>, y entre ellos se aplican las mismas reglas anteriores.</li>
+      <li><strong>Regla final:</strong> los jefes de oficina consular tienen precedencia sobre los funcionarios
+      consulares que <strong>no</strong> son jefes de oficina.</li>
+    </ol>
+  </div>
+
+  <div class="box">
+    <span class="box-label">Resumen en una línea</span>
+    <p>Primero la clase, después la fecha (exequátur o admisión provisional), después la carta patente. Los
+    titulares antes que los interinos, y los de carrera antes que los honorarios.</p>
+  </div>
+</section>
+
+<!-- ============ ART 17 ============ -->
+<section id="art17">
+  <p class="kicker">Artículo 17</p>
+  <h2>Cuando el cónsul hace actos diplomáticos</h2>
+
+  <div class="art">
+    <span class="art-num">Art. 17 — primera parte</span>
+    <span class="art-title">Actos diplomáticos en el Estado receptor</span>
+    <p>Si en un país el Estado que envía <strong>no tiene misión diplomática</strong> y tampoco está
+    representado por la embajada de un tercer país, se puede autorizar a un funcionario consular a realizar
+    <strong>actos diplomáticos</strong>, con el <mark>consentimiento del Estado receptor</mark> y sin que eso
+    cambie su condición de cónsul.</p>
+    <p>Punto clave: realizar esos actos <mark>no le da derecho a privilegios e inmunidades diplomáticos</mark>.
+    Hace tareas de embajador, pero conserva el estatuto consular.</p>
+  </div>
+
+  <div class="art">
+    <span class="art-num">Art. 17 — segunda parte</span>
+    <span class="art-title">Representación ante organizaciones internacionales</span>
+    <p>Un funcionario consular puede, <strong>previa notificación al Estado receptor</strong>, actuar como
+    representante de su país ante <strong>cualquier organización intergubernamental</strong>.</p>
+    <p>En ese papel sí tiene derecho a los privilegios e inmunidades que le den la costumbre internacional o los
+    acuerdos internacionales aplicables. Pero <mark>en el ejercicio de sus funciones consulares no goza de más
+    inmunidad de jurisdicción</mark> que la que la Convención da a cualquier funcionario consular.</p>
+  </div>
+
+  <div class="box">
+    <span class="box-label">La idea de fondo</span>
+    <p>El artículo 17 permite ampliar las tareas del cónsul por razones prácticas, pero cuida que esa ampliación
+    <strong>no se convierta en un atajo</strong> para conseguir inmunidades diplomáticas.</p>
+  </div>
+</section>
+
+<hr class="hr">
+
+<!-- ============ RESUMEN ============ -->
+<section id="resumen" class="page-break">
+  <p class="kicker">Repaso rápido</p>
+  <h2>Cuadro resumen de los artículos 1 al 17</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Art.</th><th>Tema</th><th>Idea para recordar</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Definiciones</td><td>Diccionario del tratado: oficinas, circunscripción, locales, archivos y todas las categorías de personas.</td></tr>
+        <tr><td>2</td><td>Establecimiento de relaciones</td><td>Consentimiento mutuo; lo diplomático arrastra lo consular; romper lo diplomático no rompe lo consular.</td></tr>
+        <tr><td>3</td><td>Quién ejerce</td><td>Las oficinas consulares y también las misiones diplomáticas.</td></tr>
+        <tr><td>4</td><td>Apertura de oficina</td><td>Sede, clase y circunscripción se aprueban por el Estado receptor; todo cambio también.</td></tr>
+        <tr><td>5</td><td>Funciones consulares</td><td>Trece funciones, de la a a la m; la letra m deja la lista abierta.</td></tr>
+        <tr><td>6</td><td>Fuera de la circunscripción</td><td>Solo en circunstancias especiales y con consentimiento.</td></tr>
+        <tr><td>7</td><td>En un tercer Estado</td><td>Atender otro país, notificando y sin oposición expresa.</td></tr>
+        <tr><td>8</td><td>Por cuenta de otro Estado</td><td>Trabajar en nombre de un tercer Estado, con notificación y sin oposición.</td></tr>
+        <tr><td>9</td><td>Clases de jefes</td><td>Cónsul general, cónsul, vicecónsul y agente consular.</td></tr>
+        <tr><td>10</td><td>Nombramiento y admisión</td><td>Uno nombra, el otro admite.</td></tr>
+        <tr><td>11</td><td>Carta patente</td><td>Nombre, clase y categoría, circunscripción y sede; se envía por vía diplomática.</td></tr>
+        <tr><td>12</td><td>Exequátur</td><td>Autorización para empezar; puede negarse sin explicar los motivos.</td></tr>
+        <tr><td>13</td><td>Admisión provisional</td><td>Puede trabajar antes del exequátur, con la Convención aplicada igual.</td></tr>
+        <tr><td>14</td><td>Aviso a la circunscripción</td><td>El Estado receptor avisa a las autoridades locales y facilita su trabajo.</td></tr>
+        <tr><td>15</td><td>Jefe interino</td><td>Reemplazo por ausencia o vacancia; se notifica a la Cancillería; mismo trato, con límites.</td></tr>
+        <tr><td>16</td><td>Precedencia</td><td>Fecha del exequátur o de la admisión provisional; interinos y honorarios van después.</td></tr>
+        <tr><td>17</td><td>Actos diplomáticos</td><td>Puede hacerlos, pero sin ganar inmunidades diplomáticas.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ CLAVES ============ -->
+<section id="claves">
+  <p class="kicker">Atención</p>
+  <h2>Puntos que más se preguntan</h2>
+  <ul>
+    <li>La diferencia entre <strong>miembros de la oficina consular</strong> (incluye al jefe) y <strong>miembros
+    del personal consular</strong> (no lo incluye).</li>
+    <li>Que los <strong>locales consulares</strong> se definen por el <strong>uso exclusivo</strong>, sin importar
+    quién es el propietario.</li>
+    <li>Que la <strong>ruptura de relaciones diplomáticas no rompe</strong> las consulares (Art. 2).</li>
+    <li>Los <strong>tres datos</strong> que aprueba el Estado receptor al abrir una oficina: sede, clase y
+    circunscripción (Art. 4).</li>
+    <li>Las <strong>trece funciones</strong> del Art. 5 y, sobre todo, la frase "por medios lícitos" de la letra c.</li>
+    <li>La diferencia entre el <strong>Art. 7</strong> (funciones en un tercer Estado) y el <strong>Art. 8</strong>
+    (funciones por cuenta de un tercer Estado).</li>
+    <li>Las <strong>cuatro clases</strong> de jefes de oficina y su correspondencia con las cuatro clases de
+    oficinas.</li>
+    <li>Los <strong>cuatro datos</strong> de la carta patente (Art. 11).</li>
+    <li>Que el <strong>exequátur puede negarse sin dar motivos</strong> (Art. 12).</li>
+    <li>Que la <strong>precedencia</strong> se mide por la fecha del exequátur, salvo que haya habido admisión
+    provisional (Art. 16).</li>
+    <li>Que hacer <strong>actos diplomáticos no otorga inmunidades diplomáticas</strong> (Art. 17).</li>
+  </ul>
+</section>
+
+<hr class="hr">
+
+<!-- ============ PREGUNTAS ============ -->
+<section id="preguntas">
+  <p class="kicker">Autoevaluación</p>
+  <h2>Preguntas de repaso</h2>
+
+  <div class="qa">
+    <p class="q">¿Cuáles son las cuatro clases de oficinas consulares?</p>
+    <p class="a"><b>Respuesta</b>Consulado general, consulado, viceconsulado y agencia consular (Art. 1). Se
+    corresponden con las cuatro clases de jefes del Art. 9: cónsul general, cónsul, vicecónsul y agente consular.</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">¿Qué diferencia hay entre "miembros de la oficina consular" y "miembros del personal consular"?</p>
+    <p class="a"><b>Respuesta</b>Los miembros de la oficina consular son los funcionarios consulares, los empleados
+    consulares y el personal de servicio, incluido el jefe de la oficina. Los miembros del personal consular son
+    los mismos, pero sin el jefe de la oficina.</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">¿Qué comprende la expresión "archivos consulares"?</p>
+    <p class="a"><b>Respuesta</b>Todos los papeles, documentos, correspondencia, libros, películas, cintas
+    grabadas y registros de la oficina, además de las cifras y claves, los ficheros y los muebles destinados a
+    protegerlos y conservarlos.</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">Si dos Estados rompen relaciones diplomáticas, ¿quedan rotas también las consulares?</p>
+    <p class="a"><b>Respuesta</b>No. El Art. 2 dice expresamente que la ruptura de relaciones diplomáticas no
+    entraña <em>ipso facto</em> la ruptura de las relaciones consulares. En cambio, el consentimiento para
+    establecer relaciones diplomáticas sí implica el consentimiento para las consulares, salvo indicación en
+    contrario.</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">¿Qué elementos de una oficina consular requieren la aprobación del Estado receptor?</p>
+    <p class="a"><b>Respuesta</b>La sede, la clase y la circunscripción consular. El Estado que envía los fija,
+    pero necesitan aprobación del receptor, y cualquier modificación posterior también. Lo mismo vale para abrir
+    un viceconsulado o agencia en otra localidad y, con consentimiento previo y expreso, para abrir una
+    dependencia fuera de la sede de una oficina existente (Art. 4).</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">¿Cuál es la función consular "madre" de la que derivan las demás?</p>
+    <p class="a"><b>Respuesta</b>La del Art. 5, letra a: proteger en el Estado receptor los intereses del Estado
+    que envía y de sus nacionales, personas físicas o jurídicas, dentro de los límites del derecho internacional.</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">¿Qué límite fija la Convención a la función de informarse sobre el Estado receptor?</p>
+    <p class="a"><b>Respuesta</b>Que la información se obtenga <em>por medios lícitos</em> (Art. 5, letra c). Esa
+    frase es la que separa la tarea legítima de información del espionaje.</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">¿Puede un cónsul actuar como notario o encargado del registro civil?</p>
+    <p class="a"><b>Respuesta</b>Sí, según el Art. 5, letra f, junto con otras funciones administrativas
+    similares, siempre que no se opongan a las leyes y reglamentos del Estado receptor.</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">¿En qué caso puede el cónsul representar a un nacional ante los tribunales locales?</p>
+    <p class="a"><b>Respuesta</b>Cuando el nacional, por estar ausente o por cualquier otra causa, no pueda
+    defender sus derechos oportunamente. El cónsul lo representa o gestiona su representación adecuada, conforme
+    a la práctica y los procedimientos del Estado receptor, para obtener medidas provisionales de protección
+    (Art. 5, letra i).</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">¿Es cerrada la lista de funciones del artículo 5?</p>
+    <p class="a"><b>Respuesta</b>No. La letra m permite ejercer cualquier otra función confiada por el Estado que
+    envía, siempre que no esté prohibida por las leyes del Estado receptor o que este no se oponga, o que esté
+    prevista en acuerdos internacionales vigentes entre ambos Estados.</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">¿Cuál es la diferencia entre los artículos 7 y 8?</p>
+    <p class="a"><b>Respuesta</b>En el Art. 7 la oficina consular ejerce funciones en un tercer Estado, siempre
+    para su propio Estado, previa notificación a los Estados interesados y sin oposición expresa de ninguno. En
+    el Art. 8 la oficina se mantiene en el Estado receptor pero ejerce funciones por cuenta de un tercer Estado,
+    con notificación adecuada y sin oposición del receptor.</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">¿Qué es el exequátur y puede negarse?</p>
+    <p class="a"><b>Respuesta</b>Es la autorización del Estado receptor que admite al jefe de la oficina consular
+    al ejercicio de sus funciones, cualquiera sea su forma. Puede negarse, y el Estado que lo niega no está
+    obligado a comunicar los motivos (Art. 12).</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">¿Puede un jefe de oficina consular empezar a trabajar antes de recibir el exequátur?</p>
+    <p class="a"><b>Respuesta</b>Por regla general no. Las excepciones son la admisión provisional del Art. 13 y
+    el caso del jefe interino del Art. 15.</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">¿Qué datos debe contener la carta patente?</p>
+    <p class="a"><b>Respuesta</b>Nombre completo del jefe, su clase y categoría, la circunscripción consular y la
+    sede de la oficina. Se extiende para cada nombramiento y se transmite por vía diplomática u otra vía
+    apropiada; si el Estado receptor lo acepta, puede sustituirse por una notificación con esos mismos datos
+    (Art. 11).</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">¿Qué debe hacer el Estado receptor apenas admite a un jefe de oficina consular?</p>
+    <p class="a"><b>Respuesta</b>Comunicarlo inmediatamente a las autoridades competentes de la circunscripción
+    consular y velar por que se tomen las medidas necesarias para que el jefe pueda cumplir sus deberes y
+    beneficiarse del trato previsto en la Convención (Art. 14). Esto rige incluso si la admisión fue provisional.</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">¿Quién comunica el nombre del jefe interino y a quién?</p>
+    <p class="a"><b>Respuesta</b>Se comunica al Ministerio de Relaciones Exteriores del Estado receptor o a la
+    autoridad que este designe. Lo hace la misión diplomática del Estado que envía; si no hay misión, el jefe de
+    la oficina consular; y si él no puede, cualquier autoridad competente del Estado que envía. Por regla general
+    la comunicación se hace por adelantado (Art. 15).</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">¿El jefe interino goza del mismo trato que el titular?</p>
+    <p class="a"><b>Respuesta</b>En principio sí: se le aplica la Convención en la misma medida y las autoridades
+    locales deben ayudarlo y protegerlo. Pero el Estado receptor no está obligado a concederle facilidades,
+    privilegios e inmunidades que el titular disfrutaba por condiciones que el interino no reúne. Si el interino
+    es un miembro del personal diplomático de la misión, conserva sus privilegios e inmunidades diplomáticos
+    salvo oposición del Estado receptor (Art. 15).</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">¿Cómo se determina la precedencia entre jefes de oficina consular?</p>
+    <p class="a"><b>Respuesta</b>Dentro de cada clase, por la fecha de concesión del exequátur; si hubo admisión
+    provisional previa, por la fecha de esa admisión, orden que se mantiene luego del exequátur; en caso de misma
+    fecha, por la fecha de presentación de la carta patente o notificación. Los jefes interinos van después de
+    todos los titulares y los funcionarios honorarios jefes de oficina después de todos los de carrera de su
+    clase. Además, los jefes de oficina preceden a los funcionarios consulares que no son jefes (Art. 16).</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">¿Un cónsul que realiza actos diplomáticos adquiere inmunidades diplomáticas?</p>
+    <p class="a"><b>Respuesta</b>No. El Art. 17 lo autoriza solo cuando el Estado que envía no tiene misión
+    diplomática allí ni está representado por la de un tercer Estado, y con consentimiento del Estado receptor;
+    su estatuto sigue siendo consular y esos actos no le dan derecho a privilegios e inmunidades diplomáticos.</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">¿Y si actúa como representante ante una organización intergubernamental?</p>
+    <p class="a"><b>Respuesta</b>Puede hacerlo previa notificación al Estado receptor, y en ese carácter tiene
+    derecho a los privilegios e inmunidades que le reconozcan la costumbre internacional o los acuerdos
+    internacionales. Sin embargo, en el desempeño de sus funciones consulares no tiene más inmunidad de
+    jurisdicción que la de cualquier funcionario consular (Art. 17).</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">¿Cuál es el fundamento de los privilegios e inmunidades consulares?</p>
+    <p class="a"><b>Respuesta</b>La necesidad funcional: según el preámbulo de la Convención, no se otorgan en
+    beneficio de las personas, sino para garantizar el eficaz desempeño de las funciones de las oficinas
+    consulares en nombre de sus Estados.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>Guía de estudio — Convención de Viena sobre Relaciones Consulares (1963), artículos 1 al 17.
+  Material de repaso; para citar en el examen conviene siempre verificar el texto oficial de la Convención.</p>
+</footer>
+
+<button id="print-btn" class="no-print" type="button">Imprimir / PDF A4</button>
+
+<script>
+  // Barra de progreso de lectura
+  var bar = document.getElementById('progress');
+  function updateProgress(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+  }
+  document.addEventListener('scroll', updateProgress, { passive:true });
+  updateProgress();
+
+  // Tiempo estimado de lectura
+  var words = document.querySelector('main').innerText.trim().split(/\s+/).length;
+  document.getElementById('reading-time').textContent =
+    Math.max(1, Math.round(words / 200)) + ' min de lectura';
+
+  // Botón de impresión
+  document.getElementById('print-btn').addEventListener('click', function(){ window.print(); });
+</script>
+
+</body>
+</html>
